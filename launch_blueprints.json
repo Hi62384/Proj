@@ -1,0 +1,263 @@
+[
+  {
+    "title": "Blueprint 1 Original modular workshop asset kit",
+    "id": "O01",
+    "subtitle": "First paid test only if the craft and demand gates pass",
+    "points": [
+      [
+        "Specific niche and customer",
+        "Solo or small-team developers making an original cozy workshop, crafting or small interior game. The customer needs a coherent compact environment that imports cleanly. This is not a Coraline fan-art product and contains no copied characters, logos, soundtrack, distinctive props or other unlicensed material."
+      ],
+      [
+        "Exact product",
+        "A 12–20-piece original low-poly workshop/interior kit: modular floor/wall sections, workbench, shelves, containers and a few distinctive tools/props. Include GLB/glTF, editable source, material palette, documented units/pivots, collision examples and a small Godot scene. Start with five finished pieces as the craft test. Avoid promising all engines, thousands of assets or future monthly additions."
+      ],
+      [
+        "Competitive advantage",
+        "A complete adoption package: consistent scale, sensible pivots, a tested assembly example, readable file names and measured performance characteristics. Kenney and low-priced packs are strong alternatives. Buyers must prefer the style or integration quality enough to pay. Do not advertise universal “optimized” performance without specifying the test scene, renderer and hardware."
+      ],
+      [
+        "Demand evidence and validation",
+        "Verified paid low-poly offers and broad asset marketplaces exist (S08, S13–S15). They prove competition and asking prices, not sales. Show the five-piece demo to five target developers who have a relevant project. Continue only if three prefer it for a real use and two pay the entry price for a finished small pack. If users prefer the free substitute, change the offer or choose the calculator alternative."
+      ],
+      [
+        "Pricing and monetization",
+        "Proposed realized average order CAD29. If using a USD-only storefront, choose an explicit USD price and update the model for actual conversion/discounts rather than promising exact CAD proceeds. A five-piece sampler is free; the coherent complete pack is paid. Later bundle complementary packs with an honest discount. Never count a bundle sale as separate full-price sales of its parts."
+      ],
+      [
+        "Platform and software",
+        "Use existing suitable art tools and Godot for the demo. Blender is a possible source authoring tool if the creator can use it. Use scripts only for repetitive export, naming and checks. Sell through eligible itch.io or Fab channels. Godot's official store can host an appropriate free sample under its rules; it is not the paid checkout plan."
+      ],
+      [
+        "Required accounts and services",
+        "A creator marketplace account, official payout/tax onboarding and a support address after approval. A private source backup is useful. A custom website, paid render farm and annual marketplace subscription are not prerequisites. Any purchased material must explicitly allow the intended redistribution, not merely use in an end product."
+      ],
+      [
+        "Technical architecture",
+        "Maintain folders for editable source, exported neutral-format assets, engine demo, previews, tests and licences. A manifest lists asset IDs, dimensions, pivot convention, polygon/material counts, authorship and file hashes. Separate export code from the assets. The demo references only files included in the package. No network dependency is needed for the purchased product."
+      ],
+      [
+        "Detailed implementation steps",
+        "1. Write the style and scale guide. 2. Sketch an original room arrangement with no franchise references. 3. Build five representative pieces and assess time/quality. 4. Have target developers compare them with alternatives. 5. Complete only the smallest useful kit. 6. Set pivots/units and apply transforms consistently. 7. Add collision examples and named materials. 8. Export GLB/glTF and verify in a fresh project. 9. Assemble a runnable demo. 10. Record accurate screenshots and a 30-second walkthrough. 11. Write licence, import guide and compatibility list. 12. Package sources and exports, run a clean-machine import test and create versioned downloads."
+      ],
+      [
+        "AI and automation",
+        "AI may help write export scripts, create checklists or propose original brainstorming directions. It does not establish rights or artistic quality. If AI-generated material is used, confirm commercial redistribution rights and each marketplace's disclosure policy. Automate filename checks, archive contents, preview generation and integrity hashes; a human approves visual quality and provenance."
+      ],
+      [
+        "Hosting and deployment",
+        "Native marketplace delivery is enough initially. Put the free demo and documentation on a suitable host only when useful. Keep the previous pack version available for customers. Large downloads should use platform storage or a bounded object store; do not assume unlimited bandwidth on every free plan."
+      ],
+      [
+        "Payment integration",
+        "Choose one initial storefront and test delivery and refund handling before promotion. itch.io's published default-share example includes platform and processing charges; Fab's 88% publisher share is a different structure. Verify payout eligibility, holds, currency and required tax forms. Do not automatically add customers to unrelated email campaigns."
+      ],
+      [
+        "Customer acquisition",
+        "Lead with the playable scene and an honest source-file preview. Use precise category tags and one helpful guide such as assembling a workshop scene with consistent collisions. Offer a truly usable sampler. Ask genuine buyers for optional honest feedback without rewards contingent on positivity. Reuse the localization-tool audience only when the pack is relevant, with consent-aware cross-promotion."
+      ],
+      [
+        "QA and testing",
+        "Open the archive on a clean path with no source-tool dependencies. Check missing textures, inverted normals, transforms, pivots, duplicate names, material counts, collision alignment, licence files and engine imports. Test the exact listed renderer/version. Measure performance on a documented test system, but do not generalize a single FPS number to all games. Inspect every object and preview."
+      ],
+      [
+        "Estimated operating expenses",
+        "CAD0–15/month early fixed costs plus seller/processor fees, currency conversion and optional promotion. Setup may need CAD0–150 for legitimate tools/testing, depending on existing equipment. Original creation labour is the main cost. Do not outsource a large pack to an unknown creator without a clear rights contract and budget approval."
+      ],
+      [
+        "Realistic profitability model",
+        "Twenty CAD29 orders produce CAD580 gross. With a 16% blended fee/refund/acquisition allowance and CAD1/order variable cost, less CAD5 fixed, the comparison case is about CAD462 pretax net. A 40-hour setup valued at CAD25/hour is CAD1,000 of labour, so roughly 43 orders at CAD23.36 contribution are needed to recover that labour before fixed costs. This is why a one-sale pack is not automatically a good passive investment."
+      ],
+      [
+        "First paying customers",
+        "Have two or three relevant developers try the free sampler in their own projects. Show the finished pack and ask whether it is worth its stated price for an actual scene. Deliver the working asset pack immediately on purchase. Record which files they use and where import friction occurs. Friends' encouragement and giveaway downloads are not a substitute for purchase decisions."
+      ],
+      [
+        "Expansion path",
+        "Add one complementary extension only after at least ten paid sales and evidence customers need it. Keep source conventions compatible so a bundle has real value. An annual asset subscription requires a sustainable update promise and demonstrated renewal interest; it is not assumed. Test engine-neutral exports before adding more engine-specific packaging."
+      ],
+      [
+        "Minimizing manual operations",
+        "Prefer immutable assets and neutral formats, a single supported demo, clear licences and concise import instructions. Make the sample mirror the paid structure so buyers understand compatibility. Fix systematic import issues once rather than offering bespoke integration support. Batch minor updates and reserve time for major engine changes."
+      ],
+      [
+        "Success and failure thresholds",
+        "Pass the five-piece craft test within about 12 hours, then obtain two paid buyers before expanding. Aim for under 15 minutes to import the sample and under 10 minutes of support per order. Stop after ten qualified demonstrations and two offer revisions with no paid demand, or if differentiated production consistently exceeds the setup ceiling. Switch to a production calculator if art is the bottleneck."
+      ]
+    ]
+  },
+  {
+    "title": "Blueprint 2 Offline localization quality checker",
+    "id": "O02",
+    "subtitle": "Second product with reusable validation software",
+    "points": [
+      [
+        "Specific niche and customer",
+        "Independent game studios with 1–5 developers, localizing a small game into several languages using CSV or JSON. They own their files and do not want to migrate into a full translation-management platform. Exclude teams already satisfied with Weblate/Crowdin and anyone needing professional linguistic review."
+      ],
+      [
+        "Exact product",
+        "A downloadable local browser application plus a small CLI using the same rule engine. Version one accepts a source locale and target locales in a documented CSV/JSON schema. It reports missing/duplicate keys, required blanks, placeholder differences, malformed supported markup, unexpected line breaks, configurable length warnings and structural/encoding errors. Output: readable HTML plus machine-readable JSON. No translation, automatic rewriting, cloud upload or unsupported compliance promise."
+      ],
+      [
+        "Competitive advantage",
+        "Fast first result, explicit local processing, useful game-specific examples and reports that explain each rule. The free alternative is substantial: Weblate already checks many defects. A paid advantage must be demonstrated through a simpler workflow and correct handling of the customer's formats. Sell tested convenience and maintenance, not the assertion that nobody else can validate strings."
+      ],
+      [
+        "Demand evidence and validation",
+        "Verified: Weblate's documented checks show the problem class and its pricing shows a paid localization market (S21–S22). Unverified: willingness to buy this standalone product. Before building beyond 45 hours, conduct five voluntary problem demos and seek three CAD49 purchases. At least two buyers should use it again within 30 days. Ask about their most recent broken string/import and current workaround; do not lead with feature ideas."
+      ],
+      [
+        "Pricing and monetization",
+        "Offer a genuinely useful free single-file checker. Paid personal licence: CAD49 for the current version and 12 months of updates; the purchased version keeps working. Test a CAD99 small-team licence only after team demand appears. An optional renewal for future updates must be separately and clearly priced. No renewal or team upsell revenue is assumed in the portfolio model."
+      ],
+      [
+        "Platform and software",
+        "Use a small TypeScript codebase with one pure validation core. Papa Parse can handle CSV; Ajv can validate schemas. Use native JSON parsing. Add a reviewed ICU parser only when needed. Keep a dependency lockfile and licence inventory. Do not copy a GPL localization implementation into a proprietary package without understanding and complying with its licence. Browser-first delivery avoids code-signing and installation friction at launch."
+      ],
+      [
+        "Required accounts and services",
+        "For implementation after approval: a source repository, eligible seller/MoR account, a support email and optional commercial-compatible static host. The initial prototype needs none of the paid services. The user completes sensitive identity, payout and tax onboarding directly on the official platform. Confirm Canada eligibility and product approval before relying on a checkout date. No accounts have been created by this report."
+      ],
+      [
+        "Technical architecture",
+        "Separate modules for import adapters, normalized string records, rules, diagnostics and report rendering. A record contains file, locale, key, source, target and optional character budget. A diagnostic contains stable rule ID, severity, location, evidence and suggested action. A Web Worker handles larger inputs without freezing the UI. The core is deterministic and has no network dependency; licence/update checks are separate and cannot block existing offline work."
+      ],
+      [
+        "Detailed implementation steps",
+        "1. Define the accepted CSV columns and JSON nesting rules with examples. 2. Create 30 synthetic good/bad fixtures covering all checks and CSV edge cases. 3. Parse without losing leading zeros or changing source strings. 4. Normalize to records and validate structure. 5. Compare placeholder multisets with separate handling for named and positional forms. 6. Add supported markup parsing and conservative length warnings. 7. Render an escaped report with file/key links. 8. Add drag-and-drop and a source-locale selector. 9. Add CLI exit codes: success, failed checks, invalid input. 10. Package a local zip, sample files, licence notices and quick-start. 11. Test on the exact supported browsers/OSes. 12. Have three fresh users complete the sample without coaching before selling."
+      ],
+      [
+        "AI and automation",
+        "Use AI for draft tests, explanations and documentation, then check every claim against the actual rule. Production checks do not need an AI API. Generate changelog drafts from approved commits. A support assistant can retrieve known answers and draft replies; unresolved false positives, refunds, security reports and compatibility promises go to a human. Never upload customer strings into an AI tool without a specific approved data flow."
+      ],
+      [
+        "Hosting and deployment",
+        "Distribute the paid zip through native storefront delivery initially. A public demo can run as a static site on a commercial-compatible host. Keep releases immutable and attach SHA-256 hashes plus a version manifest. Do not host the storefront on GitHub Pages. Ship one supported browser baseline first; add native installers only when enough customers justify signing, notarization and multi-OS support costs."
+      ],
+      [
+        "Payment integration",
+        "Use hosted checkout with the exact licence/support/refund terms visible. In test mode verify purchase, duplicate webhook, delayed webhook, refund, receipt resend and outage scenarios. If native storefront delivery suffices, do not build an entitlement backend yet. When needed, verify webhook signatures, store unique event IDs and reconcile paid orders daily. Keep payment/API secrets server-side. MoR approval is a dependency, not a certainty."
+      ],
+      [
+        "Customer acquisition",
+        "Publish three useful pages: diagnosing missing localization keys, avoiding placeholder breakage and preparing a game string file for translators. Each should contain a real sample and a working free tool. Share one honest demo in communities that permit it. An opt-in email can deliver a useful checklist; marketing consent must be distinct from download delivery. Do not automate community replies or buy reviews. SEO may take months; early learning comes from qualified voluntary demos."
+      ],
+      [
+        "QA and testing",
+        "Test commas/newlines inside quoted CSV, UTF-8 BOM, empty values, duplicate keys, malformed JSON, emoji/Unicode, mixed locale names, escaped braces, positional placeholders, HTML/BBCode edge cases and malicious strings in reports. Verify sources are never modified and no file content leaves the device. Include limits on file size, rows and regex complexity. Compare rule output with an independent expected result, not an AI's self-assessment. Unsupported syntax must warn rather than silently pass."
+      ],
+      [
+        "Estimated operating expenses",
+        "Initially CAD0–30/month excluding owner time and selling fees; optional domain, CI and support tools should remain within cash reserves. Payment costs depend on mix: Lemon Squeezy base 5% plus US$0.50 has additional international/subscription/PayPal/payout conditions (S03–S05). The detailed model uses explicit allowances and delays. There is no mandatory production AI bill."
+      ],
+      [
+        "Realistic profitability model",
+        "A simplified 15-order month at CAD49 gross is CAD735. With 11% blended variable allowance, CAD1 per order and CAD10 fixed cost, operating net is about CAD629. This is not the portfolio base forecast; it assumes 15 purchases can be acquired. At 2% qualified-visitor conversion it takes about 750 qualified visits. At CAD25/hour, 20 monthly hours of total work consume another CAD500 of economic value. Test real conversion before buying traffic."
+      ],
+      [
+        "First paying customers",
+        "Demonstrate the checker on synthetic files and then let willing prospects run their own files locally. Ask them to choose whether the working version is worth CAD49 for their next release. Sell only after delivery and refund handling work. The first three should ideally be unrelated buyers with actual projects. Record why they paid and what they used; do not compensate people for positive reviews or count complimentary licences as paid validation."
+      ],
+      [
+        "Expansion path",
+        "First add only the most frequently requested format or rule. Next test a team CI report and optional rule-update plan. Reuse the core for a supplier-catalogue pilot only after the game tool's operations are stable. A translation service, hosted LLM or full translation platform is a separate business with different expertise and workload, not an automatic extension."
+      ],
+      [
+        "Minimizing manual operations",
+        "Keep a small compatibility matrix, deterministic fixtures, clear errors and a two-minute sample workflow. Turn repeat tickets into documentation and tests. Batch releases monthly unless a serious bug needs faster action. Publish the support window and avoid custom per-customer promises. Keep paid files usable offline so entitlement outages do not create emergencies."
+      ],
+      [
+        "Success and failure thresholds",
+        "Proceed after three paid licences, two repeat users, at least 80% of observed users completing the first useful run without help, and no unresolved critical data/security bug. Treat these as small-sample gates, not proof of scale. Revise or stop after ten qualified demos and two substantial offer changes with no purchases. Pause acquisition if support exceeds 20 minutes/order or refunds exceed 10% on a meaningful cohort; investigate rather than hiding the issue."
+      ]
+    ]
+  },
+  {
+    "title": "Blueprint 3 Supplier catalogue CSV preflight subscription",
+    "id": "O04",
+    "subtitle": "Later option gated by repeated paid business use",
+    "points": [
+      [
+        "Specific niche and customer",
+        "Small wholesalers or specialist suppliers who repeatedly receive product catalogues from several vendors and import them into one storefront/back-office format. Choose one product vertical only after research, such as non-regulated hobby supplies. Exclude health, financial, children's or customer-personal-data files at launch."
+      ],
+      [
+        "Exact product",
+        "A browser-local validator and mapper for supplier product CSVs. It checks required fields, SKU uniqueness, leading-zero preservation, numeric formats, units, currency-code consistency and approved destination columns. It outputs an annotated error report and a separate proposed export. The first subscription includes saved supplier mappings, history metadata and bounded team use; no automatic production catalogue writes."
+      ],
+      [
+        "Competitive advantage",
+        "A specific repeated import workflow, clear corrections and privacy-conscious local processing. CSVbox/Dromo already solve broad import infrastructure, so do not rebuild them generically. The hypothesis is that a small vertical buyer values ready-to-use schemas and fewer failed imports more than a developer-oriented SDK. Validate that hypothesis before creating billing/account infrastructure."
+      ],
+      [
+        "Demand evidence and validation",
+        "CSVbox and Dromo publish paid products (S23–S24). Their prices do not prove this niche's demand. Interview five businesses about the last import, frequency, file formats, current correction time and failure cost. Seek three paid pilots using sanitized files, two repeat import cycles and two explicit continuation requests. If only one pilot pays, the base strategy keeps this product unlaunched."
+      ],
+      [
+        "Pricing and monetization",
+        "Proposed CAD59/month for one business, a clearly bounded number of profiles/jobs and an initial 50,000-row/10 MB per-file limit subject to performance testing. A pilot can be a transparent one-time CAD59 product access payment. Optional higher-volume pricing comes later. If use is occasional, offer credits or a one-time local licence. No unlimited usage or annual subscription until repeated value is demonstrated."
+      ],
+      [
+        "Platform and software",
+        "Reuse the tested parser/rule/report modules from the localization checker. Use Papa Parse and JSON Schema/Ajv after licence/security review. Put file processing in a Web Worker; store schemas and account metadata, not raw catalogues, by default. Use a small commercial-compatible static/Workers backend only for auth, entitlements, settings and job summaries."
+      ],
+      [
+        "Required accounts and services",
+        "After pilot approval: code repository, hosting/database, eligible recurring-payment provider, transactional-email service and a support channel. Confirm whether the pilot is software access or a custom service, because payment-provider category rules differ. Customer credentials to storefronts are not needed for the first version. Persistent integrations require separate approval and proper security review."
+      ],
+      [
+        "Technical architecture",
+        "Client: file picker → parse → explicit field mapping → validation → human review → new exported file. Core records preserve raw cell text alongside parsed values. Rule schemas version with a supplier/destination ID. Backend stores tenant/account IDs, schema versions, billing state and aggregate metrics. Sensitive file contents remain local. Every export includes the rule-set version and a summary of changes proposed."
+      ],
+      [
+        "Detailed implementation steps",
+        "1. Pick the single recurring workflow from interviews. 2. Document destination fields and obtain sample rights. 3. Replace real identifiers/data with sanitized fixtures. 4. Build a schema with required fields and accepted units. 5. Preserve SKU strings and leading zeros. 6. Detect decimal/thousands formats explicitly and require confirmation when ambiguous. 7. Validate duplicates, empty fields and value ranges using the buyer's rules. 8. Show a preview of mapped columns and all proposed changes. 9. Export a new file without touching the original. 10. Have the buyer import into a sandbox or review manually. 11. Repeat on a second supplier file. 12. Add saved mappings only after the workflow is stable. 13. Add account separation, checkout, cancellation and limits after the three-pilot gate."
+      ],
+      [
+        "AI and automation",
+        "AI can suggest a column mapping with confidence and evidence, but the user approves it before use. Default mappings and validations should be deterministic. Do not silently infer currency, product identity, tax treatment or safety information. Avoid a production AI API initially; if added, cap tokens and get specific authorization for data transmission. Scheduled jobs must only read approved feeds and write reviewable outputs."
+      ],
+      [
+        "Hosting and deployment",
+        "Deploy a versioned static frontend and a small entitlement/schema API. Use staging with synthetic data and tenant-isolation tests. Keep a rollback version and database migration plan. Local processing supports a useful fallback when the backend is unavailable. No service-level guarantee beyond demonstrated solo support capacity."
+      ],
+      [
+        "Payment integration",
+        "Choose an approved recurring SaaS checkout with a customer portal. Clearly show monthly price, quotas, renewal, cancellation and refund terms. Verify signatures, persist idempotent events and treat failed payments as a grace-state transition, not immediate deletion. Test upgrade, cancellation, refund, failed renewal and replay. Raw customer files must not appear in invoice descriptions or webhook metadata."
+      ],
+      [
+        "Customer acquisition",
+        "Start with permissioned interviews and a public sample using synthetic supplier data. After real pilots, publish a case study only with approval and measured savings. Seek a narrow software implementer or supplier association as a referral source. An integration guide and downloadable schema sample can become durable search traffic. Avoid mass email, harvested contacts and claims that “every wholesaler needs this.”"
+      ],
+      [
+        "QA and testing",
+        "Test thousands separators, decimal commas, negative/zero prices, unusual Unicode SKUs, duplicate rows, leading zeros, empty columns, inconsistent units, very large cells, embedded newlines, malicious spreadsheet formulas and malformed encodings. Ensure no automatic rounding or case folding changes identifiers. Verify browser memory/time limits and cancel behaviour. Test tenant separation and deletion/retention rules for stored metadata. Ask the customer to verify the proposed export against a known good import."
+      ],
+      [
+        "Estimated operating expenses",
+        "Early hosted operation: roughly CAD20–80/month plus fees and CAD1–5/account/month variable allowance, dependent on architecture and support tools. Local processing lowers compute/storage cost. If every account needs 30 minutes of monthly help, 15 accounts cost 7.5 owner hours before acquisition; this must be reflected in the decision, not hidden behind cheap hosting."
+      ],
+      [
+        "Realistic profitability model",
+        "At CAD59/month, a 10% fee/refund allowance and CAD4 variable cost imply CAD49.10 contribution/account before fixed/acquisition costs. Fifteen active accounts with CAD30 fixed cost give about CAD707 monthly operating net. At 5% monthly churn, 15 accounts lose roughly 0.75 accounts/month on average; new acquisition must first replace those losses. Tiny cohorts cannot support a reliable LTV estimate. The detailed portfolio base does not assume this launch succeeds."
+      ],
+      [
+        "First paying customers",
+        "Demonstrate the exact file workflow and ask for a bounded paid pilot. Work only with files the customer may share and use synthetic/sanitized examples where possible. Define acceptance: the report identifies agreed errors and produces a reviewed export, not a guarantee that all business data is correct. A customer confirms the import in its own sandbox. Repeat one cycle before proposing monthly renewal."
+      ],
+      [
+        "Expansion path",
+        "First standardize onboarding for the original vertical. Next add a requested supplier or destination schema, not another industry. Offer team/history features if repeatedly requested. Only after stable retention and low support should you test a second vertical or API. A connector that writes live inventory is a materially riskier product with separate authorization, audit and rollback requirements."
+      ],
+      [
+        "Minimizing manual operations",
+        "Publish a five-minute sample workflow, explicit supported schema list and actionable error explanations. Save approved mappings, but show schema drift instead of guessing. Use read-only API/webhook reconciliation, usage caps, cancelled-job handling and a support form requiring a sanitized reproduction. Decline bespoke spreadsheet repair under a low-priced self-serve subscription."
+      ],
+      [
+        "Success and failure thresholds",
+        "Launch recurring access only after three paying pilots, two repeat cycles and two continuation requests; seek 80% self-serve completion and under 15 minutes support/account/month before scaling. Pause if monthly logo churn is above 8% across a sufficiently observed cohort, if contribution is negative, or if most work is custom. Stop after five pilots if no repeat use emerges. Security, data-corruption or unauthorized-write defects block launch regardless of sales."
+      ]
+    ]
+  }
+]

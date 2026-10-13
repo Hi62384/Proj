@@ -1,0 +1,3447 @@
+{
+  "as_of": "2026-10-13",
+  "currency": "CAD",
+  "weights": {
+    "long_term_net_profit": 20,
+    "success_evidence": 20,
+    "automation": 15,
+    "scale": 10,
+    "low_workload": 15,
+    "cost_efficiency": 8,
+    "validation_speed": 7,
+    "repeatability": 5
+  },
+  "scenario_warning": "All volume, setup, workload, cost and net figures are analyst hypotheses, not observed sales. Unit contribution includes illustrative fees/refunds/acquisition/variable costs; source facts are separately labelled. Base/optimistic represent conditional month-12 run rates after validation, not probability-weighted expected returns. No-sales downside excludes startup sunk cost and owner labour. Royalty/advertising rows use creator receipts or per-thousand units as described, not retail sales.",
+  "opportunities": [
+    {
+      "id": "O01",
+      "name": "Original modular game art kits",
+      "category": "Digital asset licensing",
+      "buyer": "Indie game teams",
+      "offer": "A cohesive original workshop/interior kit with GLB sources and tested Godot demo",
+      "advantage": "Consistent scale, collisions, documentation and measured draw-call budget",
+      "competition": "Kenney; Fab and itch.io packs",
+      "acquisition": "One free sampler, searchable demo, permitted marketplace listing",
+      "automatable": "Delivery, licence receipts, sample generation and regression checks",
+      "maintenance": "Quarterly engine import checks; support for genuine defects",
+      "risk": "Generic art price pressure; IP provenance; assumed art skill",
+      "startup_cad": [
+        0,
+        150
+      ],
+      "setup_hours": [
+        24,
+        60
+      ],
+      "weekly_maintenance_hours": [
+        0.25,
+        1
+      ],
+      "first_revenue_weeks": [
+        1,
+        6
+      ],
+      "illustrative_unit_price_cad": 29,
+      "base_monthly_units": 20,
+      "optimistic_monthly_units": 100,
+      "monthly_fixed_cost_cad": 5,
+      "variable_fraction_including_fees_refunds": 0.16,
+      "variable_cost_per_unit_cad": 1,
+      "monthly_net_scenarios_cad": [
+        -5,
+        462,
+        2331
+      ],
+      "scores": [
+        3,
+        4,
+        5,
+        4,
+        5,
+        5,
+        5,
+        4
+      ],
+      "weighted_score": 85,
+      "sources": [
+        "S07",
+        "S08",
+        "S13",
+        "S14",
+        "S15"
+      ],
+      "evidence": "Paid offers observed; niche demand unvalidated",
+      "automation": "High fulfilment; acquisition not passive",
+      "scalability": "Medium-high",
+      "passivity": "Low-maintenance catalogue",
+      "portfolio_fit": "Conditional core",
+      "rank": 1,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Relevant platform fee/policy sources are linked. Canadian account approval, tax interview, payout method and listing acceptance must be verified before launch; no seller account was created."
+    },
+    {
+      "id": "O02",
+      "name": "Offline localization quality checker",
+      "category": "Developer desktop software",
+      "buyer": "Small game studios localizing CSV/JSON/PO without a full translation suite",
+      "offer": "Local-only placeholder, key, markup and length checks plus HTML/JSON reports",
+      "advantage": "No file upload or migration; game-specific rules and reproducible CI output",
+      "competition": "Weblate; Crowdin; custom scripts",
+      "acquisition": "Free checker limited by convenience, precise search tutorials, opt-in demo users",
+      "automatable": "Deterministic checks, downloads, updates and licence issuance",
+      "maintenance": "Rules and parser updates; false-positive review; no claim to certify translation",
+      "risk": "Strong free alternatives; uncertain willingness to pay",
+      "startup_cad": [
+        0,
+        150
+      ],
+      "setup_hours": [
+        45,
+        90
+      ],
+      "weekly_maintenance_hours": [
+        0.5,
+        2
+      ],
+      "first_revenue_weeks": [
+        2,
+        8
+      ],
+      "illustrative_unit_price_cad": 49,
+      "base_monthly_units": 15,
+      "optimistic_monthly_units": 80,
+      "monthly_fixed_cost_cad": 10,
+      "variable_fraction_including_fees_refunds": 0.11,
+      "variable_cost_per_unit_cad": 1,
+      "monthly_net_scenarios_cad": [
+        -10,
+        629,
+        3399
+      ],
+      "scores": [
+        4,
+        3,
+        5,
+        5,
+        4,
+        5,
+        4,
+        5
+      ],
+      "weighted_score": 83.6,
+      "sources": [
+        "S03",
+        "S04",
+        "S21",
+        "S22"
+      ],
+      "evidence": "Problem verified; narrower standalone paid proposition a hypothesis",
+      "automation": "High fulfilment; acquisition not passive",
+      "scalability": "High",
+      "passivity": "Low-maintenance after validation",
+      "portfolio_fit": "Conditional core",
+      "rank": 2,
+      "competition_level": "Medium-high; exact niche gap unproven",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O06",
+      "name": "Specialized production calculators",
+      "category": "Spreadsheet downloads",
+      "buyer": "Small studios and independent production managers",
+      "offer": "Editable localization budgets, game asset estimates or print-run costing models",
+      "advantage": "Verified formulas, realistic examples and clean instructions",
+      "competition": "Free spreadsheets; Etsy; custom internal sheets",
+      "acquisition": "Free worked example, search pages and product-led referrals",
+      "automatable": "Delivery, versions and test cases",
+      "maintenance": "Annual assumptions review; formula/support fixes",
+      "risk": "Wrong calculations; broad generic templates weak",
+      "startup_cad": [
+        0,
+        100
+      ],
+      "setup_hours": [
+        15,
+        40
+      ],
+      "weekly_maintenance_hours": [
+        0.25,
+        1
+      ],
+      "first_revenue_weeks": [
+        1,
+        8
+      ],
+      "illustrative_unit_price_cad": 29,
+      "base_monthly_units": 15,
+      "optimistic_monthly_units": 80,
+      "monthly_fixed_cost_cad": 5,
+      "variable_fraction_including_fees_refunds": 0.15,
+      "variable_cost_per_unit_cad": 1,
+      "monthly_net_scenarios_cad": [
+        -5,
+        350,
+        1887
+      ],
+      "scores": [
+        3,
+        3,
+        5,
+        4,
+        5,
+        5,
+        5,
+        5
+      ],
+      "weighted_score": 82,
+      "sources": [
+        "S03",
+        "S32",
+        "S33"
+      ],
+      "evidence": "Route established; specific use and sales need proof",
+      "automation": "High fulfilment; acquisition not passive",
+      "scalability": "Medium-high",
+      "passivity": "Low-maintenance catalogue",
+      "portfolio_fit": "Adjacent optional product",
+      "rank": 3,
+      "competition_level": "Medium-high; exact niche gap unproven",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O08",
+      "name": "Original shader and VFX collection",
+      "category": "Digital asset licensing",
+      "buyer": "Game developers wanting coherent visual effects",
+      "offer": "Tested shaders with presets, performance tables and demos",
+      "advantage": "Useful art direction and performance tuning rather than copied snippets",
+      "competition": "Godot Shaders; free engine examples; Fab",
+      "acquisition": "Interactive demo, limited sampler and comparison tutorial",
+      "automatable": "Packaging, downloads and visual regression captures",
+      "maintenance": "Engine rendering changes; platform bugs",
+      "risk": "Free substitutes; copying preview assets without rights",
+      "startup_cad": [
+        0,
+        100
+      ],
+      "setup_hours": [
+        25,
+        60
+      ],
+      "weekly_maintenance_hours": [
+        0.5,
+        1.5
+      ],
+      "first_revenue_weeks": [
+        2,
+        8
+      ],
+      "illustrative_unit_price_cad": 29,
+      "base_monthly_units": 15,
+      "optimistic_monthly_units": 70,
+      "monthly_fixed_cost_cad": 5,
+      "variable_fraction_including_fees_refunds": 0.16,
+      "variable_cost_per_unit_cad": 1,
+      "monthly_net_scenarios_cad": [
+        -5,
+        345,
+        1630
+      ],
+      "scores": [
+        3,
+        3,
+        5,
+        4,
+        5,
+        5,
+        4,
+        5
+      ],
+      "weighted_score": 80.6,
+      "sources": [
+        "S78",
+        "S08",
+        "S07"
+      ],
+      "evidence": "Paid distribution available; strong free competition",
+      "automation": "High fulfilment; acquisition not passive",
+      "scalability": "Medium-high",
+      "passivity": "Low-maintenance after validation",
+      "portfolio_fit": "Adjacent optional product",
+      "rank": 4,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Relevant platform fee/policy sources are linked. Canadian account approval, tax interview, payout method and listing acceptance must be verified before launch; no seller account was created."
+    },
+    {
+      "id": "O09",
+      "name": "Original interface sound effects",
+      "category": "Audio licensing",
+      "buyer": "Small games and applications",
+      "offer": "Consistent UI sounds with loudness variants and clean metadata",
+      "advantage": "A coherent sonic language and practical naming",
+      "competition": "Kenney; itch.io sound packs; sound libraries",
+      "acquisition": "Audio sampler, engine demo and asset marketplace search",
+      "automatable": "Preview creation, packaging, licences and delivery",
+      "maintenance": "File checks and rare support",
+      "risk": "Price compression; source recordings and commercial rights",
+      "startup_cad": [
+        0,
+        200
+      ],
+      "setup_hours": [
+        20,
+        60
+      ],
+      "weekly_maintenance_hours": [
+        0.25,
+        1
+      ],
+      "first_revenue_weeks": [
+        2,
+        10
+      ],
+      "illustrative_unit_price_cad": 19,
+      "base_monthly_units": 20,
+      "optimistic_monthly_units": 100,
+      "monthly_fixed_cost_cad": 5,
+      "variable_fraction_including_fees_refunds": 0.18,
+      "variable_cost_per_unit_cad": 1,
+      "monthly_net_scenarios_cad": [
+        -5,
+        287,
+        1453
+      ],
+      "scores": [
+        3,
+        3,
+        5,
+        4,
+        5,
+        4,
+        4,
+        5
+      ],
+      "weighted_score": 79,
+      "sources": [
+        "S79",
+        "S15",
+        "S07"
+      ],
+      "evidence": "Live paid offers observed; no verified sales data",
+      "automation": "High fulfilment; acquisition not passive",
+      "scalability": "Medium-high",
+      "passivity": "Low-maintenance catalogue",
+      "portfolio_fit": "Adjacent optional product",
+      "rank": 5,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Relevant platform fee/policy sources are linked. Canadian account approval, tax interview, payout method and listing acceptance must be verified before launch; no seller account was created."
+    },
+    {
+      "id": "O04",
+      "name": "Supplier catalogue CSV preflight",
+      "category": "Vertical B2B SaaS",
+      "buyer": "Small wholesalers repeatedly importing supplier catalogues",
+      "offer": "Validate SKU uniqueness, units, decimal formats, required fields and retailer-specific mappings",
+      "advantage": "One import workflow with saved supplier profiles and actionable error files",
+      "competition": "CSVbox; Dromo; spreadsheet formulas",
+      "acquisition": "Industry-specific import templates; consented design partners; referral channel",
+      "automatable": "Schema validation, saved mappings, scheduled reports, billing",
+      "maintenance": "Schema drift; onboarding; support; customer files need privacy safeguards",
+      "risk": "Enterprise trust; commoditized generic import; ongoing customer acquisition",
+      "startup_cad": [
+        50,
+        500
+      ],
+      "setup_hours": [
+        80,
+        160
+      ],
+      "weekly_maintenance_hours": [
+        2,
+        5
+      ],
+      "first_revenue_weeks": [
+        4,
+        16
+      ],
+      "illustrative_unit_price_cad": 59,
+      "base_monthly_units": 15,
+      "optimistic_monthly_units": 70,
+      "monthly_fixed_cost_cad": 30,
+      "variable_fraction_including_fees_refunds": 0.1,
+      "variable_cost_per_unit_cad": 4,
+      "monthly_net_scenarios_cad": [
+        -30,
+        707,
+        3407
+      ],
+      "scores": [
+        5,
+        3,
+        4,
+        5,
+        3,
+        4,
+        3,
+        5
+      ],
+      "weighted_score": 78.6,
+      "sources": [
+        "S23",
+        "S24",
+        "S64",
+        "S73"
+      ],
+      "evidence": "Paid category established; target vertical must be validated",
+      "automation": "Medium-high with human exceptions",
+      "scalability": "High",
+      "passivity": "Operating business",
+      "portfolio_fit": "Conditional core",
+      "rank": 6,
+      "competition_level": "Medium-high; exact niche gap unproven",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O12",
+      "name": "Normalized public-data API",
+      "category": "Data licensing",
+      "buyer": "Small analytics vendors and consultants",
+      "offer": "Versioned Canadian geographic/economic table API with provenance",
+      "advantage": "Stable identifiers, revisions, cache and developer ergonomics",
+      "competition": "Statistics Canada free APIs; data aggregators",
+      "acquisition": "Free sample endpoint and integration guides",
+      "automatable": "Official API ingestion, schemas, caching and metering",
+      "maintenance": "Upstream schema changes, revisions and accuracy",
+      "risk": "Free upstream; wrong units; licence scope; reliability expectations",
+      "startup_cad": [
+        50,
+        400
+      ],
+      "setup_hours": [
+        80,
+        160
+      ],
+      "weekly_maintenance_hours": [
+        1.5,
+        4
+      ],
+      "first_revenue_weeks": [
+        6,
+        24
+      ],
+      "illustrative_unit_price_cad": 49,
+      "base_monthly_units": 15,
+      "optimistic_monthly_units": 80,
+      "monthly_fixed_cost_cad": 30,
+      "variable_fraction_including_fees_refunds": 0.1,
+      "variable_cost_per_unit_cad": 3,
+      "monthly_net_scenarios_cad": [
+        -30,
+        587,
+        3258
+      ],
+      "scores": [
+        5,
+        2,
+        5,
+        5,
+        4,
+        4,
+        2,
+        4
+      ],
+      "weighted_score": 78.2,
+      "sources": [
+        "S60",
+        "S61",
+        "S58"
+      ],
+      "evidence": "Data rights verified for covered data; commercial demand hypothetical",
+      "automation": "High fulfilment; acquisition not passive",
+      "scalability": "High",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 7,
+      "competition_level": "Medium-high; exact niche gap unproven",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O07",
+      "name": "Procedural Blender production add-on",
+      "category": "Software licensing",
+      "buyer": "Artists doing repetitive packing, naming or scene assembly",
+      "offer": "Batch export/LOD/scene-cleanup workflow for a defined asset pipeline",
+      "advantage": "Repeatable minutes saved with a constrained compatibility matrix",
+      "competition": "Superhive add-ons; Blender free extensions",
+      "acquisition": "Before/after video, sample and Superhive search",
+      "automatable": "Licence/delivery, deterministic processing, test scenes",
+      "maintenance": "Blender API changes, edge files and documentation",
+      "risk": "GPL redistribution and support obligations; marketplace fees",
+      "startup_cad": [
+        0,
+        200
+      ],
+      "setup_hours": [
+        45,
+        100
+      ],
+      "weekly_maintenance_hours": [
+        1,
+        3
+      ],
+      "first_revenue_weeks": [
+        3,
+        12
+      ],
+      "illustrative_unit_price_cad": 49,
+      "base_monthly_units": 15,
+      "optimistic_monthly_units": 70,
+      "monthly_fixed_cost_cad": 10,
+      "variable_fraction_including_fees_refunds": 0.4,
+      "variable_cost_per_unit_cad": 1,
+      "monthly_net_scenarios_cad": [
+        -10,
+        416,
+        1978
+      ],
+      "scores": [
+        4,
+        3,
+        5,
+        4,
+        4,
+        4,
+        3,
+        4
+      ],
+      "weighted_score": 77.6,
+      "sources": [
+        "S51",
+        "S54"
+      ],
+      "evidence": "Paid marketplace established; original workflow unvalidated",
+      "automation": "High fulfilment; acquisition not passive",
+      "scalability": "Medium-high",
+      "passivity": "Low-maintenance after validation",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 8,
+      "competition_level": "Medium-high; exact niche gap unproven",
+      "eligibility_note": "Relevant platform fee/policy sources are linked. Canadian account approval, tax interview, payout method and listing acceptance must be verified before launch; no seller account was created."
+    },
+    {
+      "id": "O10",
+      "name": "Tested developer workflow starter kits",
+      "category": "Code downloads",
+      "buyer": "Solo developers needing CI/testing/release foundations",
+      "offer": "Small tested starter repo and documentation for a narrow engine or web stack",
+      "advantage": "Reproducible setup and useful upgrade policy",
+      "competition": "Free GitHub templates; engine demos; boilerplate sellers",
+      "acquisition": "Free minimal edition and high-intent setup guides",
+      "automatable": "Delivery, dependency tests and releases",
+      "maintenance": "Dependency/security updates and compatibility",
+      "risk": "Free substitutes; secrets accidentally shipped; perpetual support promises",
+      "startup_cad": [
+        0,
+        150
+      ],
+      "setup_hours": [
+        30,
+        80
+      ],
+      "weekly_maintenance_hours": [
+        1,
+        3
+      ],
+      "first_revenue_weeks": [
+        2,
+        10
+      ],
+      "illustrative_unit_price_cad": 49,
+      "base_monthly_units": 12,
+      "optimistic_monthly_units": 60,
+      "monthly_fixed_cost_cad": 10,
+      "variable_fraction_including_fees_refunds": 0.12,
+      "variable_cost_per_unit_cad": 1,
+      "monthly_net_scenarios_cad": [
+        -10,
+        495,
+        2517
+      ],
+      "scores": [
+        3,
+        3,
+        5,
+        4,
+        4,
+        5,
+        4,
+        5
+      ],
+      "weighted_score": 77.6,
+      "sources": [
+        "S18",
+        "S56",
+        "S65"
+      ],
+      "evidence": "Implementation feasible; paid differentiation unverified",
+      "automation": "High fulfilment; acquisition not passive",
+      "scalability": "Medium-high",
+      "passivity": "Low-maintenance after validation",
+      "portfolio_fit": "Adjacent optional product",
+      "rank": 9,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O11",
+      "name": "Federal procurement niche digest",
+      "category": "Licensed data subscription",
+      "buyer": "Small suppliers in one non-regulated product category",
+      "offer": "Filtered federal opportunities and amendment alerts with exact source links",
+      "advantage": "Relevance and change tracking for a narrow niche",
+      "competition": "CanadaBuys free alerts; MERX; other tender services",
+      "acquisition": "Public sample digest and opt-in supplier associations",
+      "automatable": "Licensed feed ingestion, deduplication, deterministic filters and delivery",
+      "maintenance": "Data outages, classification mistakes and date changes",
+      "risk": "Missing bids; licensing of attachments; spam risk; free alternatives",
+      "startup_cad": [
+        50,
+        300
+      ],
+      "setup_hours": [
+        50,
+        100
+      ],
+      "weekly_maintenance_hours": [
+        2,
+        4
+      ],
+      "first_revenue_weeks": [
+        4,
+        16
+      ],
+      "illustrative_unit_price_cad": 39,
+      "base_monthly_units": 20,
+      "optimistic_monthly_units": 100,
+      "monthly_fixed_cost_cad": 25,
+      "variable_fraction_including_fees_refunds": 0.1,
+      "variable_cost_per_unit_cad": 2,
+      "monthly_net_scenarios_cad": [
+        -25,
+        637,
+        3285
+      ],
+      "scores": [
+        5,
+        3,
+        4,
+        5,
+        3,
+        4,
+        3,
+        4
+      ],
+      "weighted_score": 77.6,
+      "sources": [
+        "S58",
+        "S59",
+        "S62",
+        "S68"
+      ],
+      "evidence": "Paid category verified; niche value and feed reliability need pilot",
+      "automation": "Medium-high with human exceptions",
+      "scalability": "High",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 10,
+      "competition_level": "Medium-high; exact niche gap unproven",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O05",
+      "name": "Inspection report generator",
+      "category": "Vertical B2B SaaS",
+      "buyer": "Non-regulated equipment-maintenance businesses",
+      "offer": "Turn customer-entered checklists and photos into branded service reports",
+      "advantage": "One exact report workflow and reliable layout; no invented inspection findings",
+      "competition": "PDFMonkey; Documint; existing field-service suites",
+      "acquisition": "Sample report search pages; supplier partnerships; consented pilots",
+      "automatable": "Templates, PDF rendering, receipts and retention deletion",
+      "maintenance": "Template changes; upload failures; support and data handling",
+      "risk": "Do not generate safety certifications or falsify inspections",
+      "startup_cad": [
+        50,
+        500
+      ],
+      "setup_hours": [
+        60,
+        140
+      ],
+      "weekly_maintenance_hours": [
+        2,
+        5
+      ],
+      "first_revenue_weeks": [
+        4,
+        16
+      ],
+      "illustrative_unit_price_cad": 69,
+      "base_monthly_units": 12,
+      "optimistic_monthly_units": 60,
+      "monthly_fixed_cost_cad": 30,
+      "variable_fraction_including_fees_refunds": 0.1,
+      "variable_cost_per_unit_cad": 5,
+      "monthly_net_scenarios_cad": [
+        -30,
+        655,
+        3396
+      ],
+      "scores": [
+        4,
+        3,
+        4,
+        5,
+        3,
+        4,
+        3,
+        5
+      ],
+      "weighted_score": 74.6,
+      "sources": [
+        "S25",
+        "S73",
+        "S64"
+      ],
+      "evidence": "Paid rendering exists; vertical willingness to pay untested",
+      "automation": "Medium-high with human exceptions",
+      "scalability": "High",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 11,
+      "competition_level": "Medium-high; exact niche gap unproven",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O15",
+      "name": "Interactive technical micro-course",
+      "category": "Evergreen education",
+      "buyer": "Developers learning a specific shipping workflow",
+      "offer": "One finished project, exercises and auto-checks",
+      "advantage": "Outcome-focused, version-pinned, concise teaching",
+      "competition": "GDQuest; Udemy; free tutorials",
+      "acquisition": "One genuinely useful free lesson and project demo",
+      "automatable": "Checkout, access and exercise feedback",
+      "maintenance": "Questions and engine-version updates",
+      "risk": "Requires teaching credibility and periodic content renewal",
+      "startup_cad": [
+        0,
+        200
+      ],
+      "setup_hours": [
+        45,
+        100
+      ],
+      "weekly_maintenance_hours": [
+        1,
+        3
+      ],
+      "first_revenue_weeks": [
+        3,
+        12
+      ],
+      "illustrative_unit_price_cad": 59,
+      "base_monthly_units": 12,
+      "optimistic_monthly_units": 60,
+      "monthly_fixed_cost_cad": 10,
+      "variable_fraction_including_fees_refunds": 0.2,
+      "variable_cost_per_unit_cad": 2,
+      "monthly_net_scenarios_cad": [
+        -10,
+        532,
+        2702
+      ],
+      "scores": [
+        4,
+        3,
+        4,
+        4,
+        4,
+        4,
+        3,
+        4
+      ],
+      "weighted_score": 74.6,
+      "sources": [
+        "S30",
+        "S31",
+        "S42",
+        "S43"
+      ],
+      "evidence": "Paid category verified; no audience or instructor reputation assumed",
+      "automation": "Medium-high with human exceptions",
+      "scalability": "Medium-high",
+      "passivity": "Low-maintenance after validation",
+      "portfolio_fit": "Adjacent optional product",
+      "rank": 12,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Relevant platform fee/policy sources are linked. Canadian account approval, tax interview, payout method and listing acceptance must be verified before launch; no seller account was created."
+    },
+    {
+      "id": "O40",
+      "name": "Email domain configuration monitor",
+      "category": "B2B monitoring",
+      "buyer": "Agencies managing authorized client domains",
+      "offer": "Monitor expiry and SPF/DKIM/DMARC configuration drift",
+      "advantage": "Clear actionable change reports and audit history",
+      "competition": "Free DNS checkers; DMARC vendors",
+      "acquisition": "Free domain check, agency referrals",
+      "automatable": "Read-only DNS checks, deduplication and alerts",
+      "maintenance": "False positives; DNS-provider changes; support",
+      "risk": "Security-sensitive claims; monitor only verified domains",
+      "startup_cad": [
+        20,
+        200
+      ],
+      "setup_hours": [
+        35,
+        90
+      ],
+      "weekly_maintenance_hours": [
+        1.5,
+        4
+      ],
+      "first_revenue_weeks": [
+        3,
+        12
+      ],
+      "illustrative_unit_price_cad": 19,
+      "base_monthly_units": 25,
+      "optimistic_monthly_units": 120,
+      "monthly_fixed_cost_cad": 15,
+      "variable_fraction_including_fees_refunds": 0.12,
+      "variable_cost_per_unit_cad": 1,
+      "monthly_net_scenarios_cad": [
+        -15,
+        378,
+        1871
+      ],
+      "scores": [
+        4,
+        3,
+        5,
+        4,
+        3,
+        4,
+        3,
+        4
+      ],
+      "weighted_score": 74.6,
+      "sources": [
+        "S26",
+        "S63",
+        "S73"
+      ],
+      "evidence": "Paid monitoring category; narrow demand needs proof",
+      "automation": "High fulfilment; acquisition not passive",
+      "scalability": "Medium-high",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 13,
+      "competition_level": "Medium-high; exact niche gap unproven",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O03",
+      "name": "Godot release preflight tool",
+      "category": "Developer desktop software",
+      "buyer": "Studios shipping multiple export targets",
+      "offer": "Batch resource/path/size checks and reproducible release manifests",
+      "advantage": "Cross-platform CI reports and approved rule sets beyond free web-export helpers",
+      "competition": "Greenlight; Godot built-ins; glTF Validator",
+      "acquisition": "Useful open checker and integration guide; paid team rules only after pilot",
+      "automatable": "Read-only project scan, reports, release packaging",
+      "maintenance": "Engine-version compatibility; false positive triage",
+      "risk": "New free competitors; code changes could damage projects if auto-fix enabled",
+      "startup_cad": [
+        0,
+        200
+      ],
+      "setup_hours": [
+        50,
+        100
+      ],
+      "weekly_maintenance_hours": [
+        1,
+        3
+      ],
+      "first_revenue_weeks": [
+        3,
+        12
+      ],
+      "illustrative_unit_price_cad": 59,
+      "base_monthly_units": 10,
+      "optimistic_monthly_units": 60,
+      "monthly_fixed_cost_cad": 10,
+      "variable_fraction_including_fees_refunds": 0.12,
+      "variable_cost_per_unit_cad": 1,
+      "monthly_net_scenarios_cad": [
+        -10,
+        499,
+        3045
+      ],
+      "scores": [
+        4,
+        2,
+        5,
+        4,
+        4,
+        4,
+        3,
+        4
+      ],
+      "weighted_score": 73.6,
+      "sources": [
+        "S17",
+        "S18",
+        "S19",
+        "S20"
+      ],
+      "evidence": "Verified technical pain; paid demand weak",
+      "automation": "High fulfilment; acquisition not passive",
+      "scalability": "Medium-high",
+      "passivity": "Low-maintenance after validation",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 14,
+      "competition_level": "Medium-high; exact niche gap unproven",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O19",
+      "name": "Original technical ebook",
+      "category": "Publishing royalties",
+      "buyer": "Practitioners with one concrete learning need",
+      "offer": "Tested how-to reference with original examples",
+      "advantage": "Real expertise and maintained examples",
+      "competition": "KDP books; free docs; AI answers",
+      "acquisition": "Sample chapter, indexed examples, relevant marketplace",
+      "automatable": "Delivery, royalties and update notifications",
+      "maintenance": "Corrections and version changes",
+      "risk": "Low discovery; AI-content disclosure; copyright",
+      "startup_cad": [
+        0,
+        200
+      ],
+      "setup_hours": [
+        40,
+        100
+      ],
+      "weekly_maintenance_hours": [
+        0.5,
+        2
+      ],
+      "first_revenue_weeks": [
+        3,
+        16
+      ],
+      "illustrative_unit_price_cad": 15,
+      "base_monthly_units": 30,
+      "optimistic_monthly_units": 150,
+      "monthly_fixed_cost_cad": 5,
+      "variable_fraction_including_fees_refunds": 0.4,
+      "variable_cost_per_unit_cad": 1,
+      "monthly_net_scenarios_cad": [
+        -5,
+        235,
+        1195
+      ],
+      "scores": [
+        3,
+        3,
+        5,
+        4,
+        4,
+        4,
+        3,
+        4
+      ],
+      "weighted_score": 73.6,
+      "sources": [
+        "S38",
+        "S39"
+      ],
+      "evidence": "Publishing route verified; sales highly uncertain",
+      "automation": "High fulfilment; acquisition not passive",
+      "scalability": "Medium-high",
+      "passivity": "Low-maintenance after validation",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 15,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Relevant platform fee/policy sources are linked. Canadian account approval, tax interview, payout method and listing acceptance must be verified before launch; no seller account was created."
+    },
+    {
+      "id": "O21",
+      "name": "Industry Notion workspace",
+      "category": "Productivity templates",
+      "buyer": "Small studios or agencies managing repeatable work",
+      "offer": "A complete lightweight production tracking workflow",
+      "advantage": "Clear onboarding and useful data model",
+      "competition": "Free Notion templates; Notion marketplace",
+      "acquisition": "Free lite workflow and specific use-case guide",
+      "automatable": "Duplication, delivery and update messages",
+      "maintenance": "Notion feature changes; customer setup questions",
+      "risk": "Marketplace approval delays; templates copied; workflow mismatch",
+      "startup_cad": [
+        0,
+        100
+      ],
+      "setup_hours": [
+        15,
+        45
+      ],
+      "weekly_maintenance_hours": [
+        0.5,
+        2
+      ],
+      "first_revenue_weeks": [
+        2,
+        12
+      ],
+      "illustrative_unit_price_cad": 29,
+      "base_monthly_units": 15,
+      "optimistic_monthly_units": 70,
+      "monthly_fixed_cost_cad": 5,
+      "variable_fraction_including_fees_refunds": 0.12,
+      "variable_cost_per_unit_cad": 1,
+      "monthly_net_scenarios_cad": [
+        -5,
+        363,
+        1711
+      ],
+      "scores": [
+        3,
+        2,
+        5,
+        4,
+        4,
+        5,
+        4,
+        4
+      ],
+      "weighted_score": 72.6,
+      "sources": [
+        "S32"
+      ],
+      "evidence": "Channel eligible in Canada; demand and approval unproven",
+      "automation": "High fulfilment; acquisition not passive",
+      "scalability": "Medium-high",
+      "passivity": "Low-maintenance after validation",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 16,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Canada is on Notion's supported list, but payment approval is waitlisted and may take months. Third-party checkout is an alternative under the documented rules (S32)."
+    },
+    {
+      "id": "O20",
+      "name": "Original classroom activity resources",
+      "category": "Educational downloads",
+      "buyer": "Teachers buying ready-to-use activities",
+      "offer": "Original tested lesson materials and answer keys",
+      "advantage": "Curriculum alignment and classroom usability",
+      "competition": "TPT catalogue; school-created resources",
+      "acquisition": "Free sample and teacher feedback",
+      "automatable": "Delivery and versioning",
+      "maintenance": "Curriculum updates; feedback and accessibility",
+      "risk": "Need educational expertise; new TPT exclusivity weakens diversification",
+      "startup_cad": [
+        45,
+        200
+      ],
+      "setup_hours": [
+        25,
+        70
+      ],
+      "weekly_maintenance_hours": [
+        0.5,
+        2
+      ],
+      "first_revenue_weeks": [
+        2,
+        12
+      ],
+      "illustrative_unit_price_cad": 9,
+      "base_monthly_units": 40,
+      "optimistic_monthly_units": 200,
+      "monthly_fixed_cost_cad": 5,
+      "variable_fraction_including_fees_refunds": 0.48,
+      "variable_cost_per_unit_cad": 0.5,
+      "monthly_net_scenarios_cad": [
+        -5,
+        162,
+        831
+      ],
+      "scores": [
+        3,
+        3,
+        5,
+        4,
+        4,
+        3,
+        3,
+        4
+      ],
+      "weighted_score": 72,
+      "sources": [
+        "S40",
+        "S41"
+      ],
+      "evidence": "Paid category; practical teacher expertise not assumed",
+      "automation": "High fulfilment; acquisition not passive",
+      "scalability": "Medium-high",
+      "passivity": "Low-maintenance after validation",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 17,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Relevant platform fee/policy sources are linked. Canadian account approval, tax interview, payout method and listing acceptance must be verified before launch; no seller account was created."
+    },
+    {
+      "id": "O13",
+      "name": "Agency website regression monitoring",
+      "category": "Recurring B2B software",
+      "buyer": "Small web agencies with permitted client sites",
+      "offer": "Scheduled screenshots, form smoke tests and change reports",
+      "advantage": "Agency-specific client reports and low-noise triage",
+      "competition": "Checkly; visual monitoring vendors; Playwright scripts",
+      "acquisition": "Agency demo on owner-controlled site and integration referrals",
+      "automatable": "Browser checks, diff grouping and notifications",
+      "maintenance": "False alarms, browser updates and test selectors",
+      "risk": "High support; credentials; privacy; reliable monitoring is not passive",
+      "startup_cad": [
+        50,
+        300
+      ],
+      "setup_hours": [
+        50,
+        100
+      ],
+      "weekly_maintenance_hours": [
+        2,
+        5
+      ],
+      "first_revenue_weeks": [
+        3,
+        12
+      ],
+      "illustrative_unit_price_cad": 59,
+      "base_monthly_units": 12,
+      "optimistic_monthly_units": 60,
+      "monthly_fixed_cost_cad": 30,
+      "variable_fraction_including_fees_refunds": 0.12,
+      "variable_cost_per_unit_cad": 8,
+      "monthly_net_scenarios_cad": [
+        -30,
+        497,
+        2605
+      ],
+      "scores": [
+        4,
+        3,
+        4,
+        4,
+        3,
+        4,
+        3,
+        4
+      ],
+      "weighted_score": 71.6,
+      "sources": [
+        "S26",
+        "S27",
+        "S63"
+      ],
+      "evidence": "Paid monitoring category; differentiated niche unvalidated",
+      "automation": "Medium-high with human exceptions",
+      "scalability": "Medium-high",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 18,
+      "competition_level": "Medium-high; exact niche gap unproven",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O14",
+      "name": "Asset attribution inventory tool",
+      "category": "Developer software",
+      "buyer": "Studios managing third-party asset licences",
+      "offer": "Local inventory with source URLs, licence text and exportable credits",
+      "advantage": "Audit trail and missing-information warnings; no legal certification",
+      "competition": "Spreadsheets; SPDX tooling; package scanners",
+      "acquisition": "Free credits template and asset-licence workflow guide",
+      "automatable": "File hashes, metadata import, credits generation",
+      "maintenance": "Licence ambiguity needs human/legal review",
+      "risk": "Misleading compliance claims; personal information in files",
+      "startup_cad": [
+        0,
+        150
+      ],
+      "setup_hours": [
+        35,
+        80
+      ],
+      "weekly_maintenance_hours": [
+        1,
+        2.5
+      ],
+      "first_revenue_weeks": [
+        3,
+        12
+      ],
+      "illustrative_unit_price_cad": 39,
+      "base_monthly_units": 12,
+      "optimistic_monthly_units": 60,
+      "monthly_fixed_cost_cad": 10,
+      "variable_fraction_including_fees_refunds": 0.12,
+      "variable_cost_per_unit_cad": 1,
+      "monthly_net_scenarios_cad": [
+        -10,
+        390,
+        1989
+      ],
+      "scores": [
+        3,
+        2,
+        5,
+        4,
+        4,
+        5,
+        3,
+        4
+      ],
+      "weighted_score": 71.2,
+      "sources": [
+        "S12",
+        "S20",
+        "S78"
+      ],
+      "evidence": "Workflow plausible; willingness to pay not established",
+      "automation": "High fulfilment; acquisition not passive",
+      "scalability": "Medium-high",
+      "passivity": "Low-maintenance after validation",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 19,
+      "competition_level": "Medium-high; exact niche gap unproven",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O17",
+      "name": "Original icon and component library",
+      "category": "Design asset licensing",
+      "buyer": "Product designers in a narrow industry",
+      "offer": "Consistent icons and accessible UI examples in SVG/Figma",
+      "advantage": "Domain coverage and coherent visual grammar",
+      "competition": "Lucide; Material Icons; Creative Market",
+      "acquisition": "Free subset, accurate naming and developer docs",
+      "automatable": "Exports, packaging, checkout and updates",
+      "maintenance": "New icons, style/format fixes",
+      "risk": "Generic icons widely free; rights in symbols",
+      "startup_cad": [
+        0,
+        150
+      ],
+      "setup_hours": [
+        30,
+        80
+      ],
+      "weekly_maintenance_hours": [
+        0.5,
+        2
+      ],
+      "first_revenue_weeks": [
+        2,
+        10
+      ],
+      "illustrative_unit_price_cad": 29,
+      "base_monthly_units": 15,
+      "optimistic_monthly_units": 70,
+      "monthly_fixed_cost_cad": 5,
+      "variable_fraction_including_fees_refunds": 0.25,
+      "variable_cost_per_unit_cad": 1,
+      "monthly_net_scenarios_cad": [
+        -5,
+        306,
+        1448
+      ],
+      "scores": [
+        3,
+        2,
+        5,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "weighted_score": 71,
+      "sources": [
+        "S52",
+        "S50",
+        "S03"
+      ],
+      "evidence": "Paid asset route; generic version weak",
+      "automation": "High fulfilment; acquisition not passive",
+      "scalability": "Medium-high",
+      "passivity": "Low-maintenance after validation",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 20,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O22",
+      "name": "Specialist presentation template system",
+      "category": "Design downloads",
+      "buyer": "Consultants with recurring report formats",
+      "offer": "Editable layouts, charts and data storytelling examples",
+      "advantage": "Useful industry structure rather than decorative slides",
+      "competition": "Creative Market; Canva; free Office themes",
+      "acquisition": "Before/after samples and specific keyword search",
+      "automatable": "File packaging, delivery and compatibility tests",
+      "maintenance": "PowerPoint/Keynote compatibility; support",
+      "risk": "Generic templates commoditized; font/image rights",
+      "startup_cad": [
+        0,
+        150
+      ],
+      "setup_hours": [
+        20,
+        60
+      ],
+      "weekly_maintenance_hours": [
+        0.25,
+        1.5
+      ],
+      "first_revenue_weeks": [
+        2,
+        12
+      ],
+      "illustrative_unit_price_cad": 29,
+      "base_monthly_units": 15,
+      "optimistic_monthly_units": 70,
+      "monthly_fixed_cost_cad": 5,
+      "variable_fraction_including_fees_refunds": 0.5,
+      "variable_cost_per_unit_cad": 1,
+      "monthly_net_scenarios_cad": [
+        -5,
+        198,
+        940
+      ],
+      "scores": [
+        3,
+        2,
+        5,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "weighted_score": 71,
+      "sources": [
+        "S52"
+      ],
+      "evidence": "Paid channel verified; niche differentiation untested",
+      "automation": "High fulfilment; acquisition not passive",
+      "scalability": "Medium-high",
+      "passivity": "Low-maintenance after validation",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 21,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Relevant platform fee/policy sources are linked. Canadian account approval, tax interview, payout method and listing acceptance must be verified before launch; no seller account was created."
+    },
+    {
+      "id": "O41",
+      "name": "API contract drift monitor",
+      "category": "Developer monitoring",
+      "buyer": "Teams consuming permissioned APIs",
+      "offer": "Detect schema or documented response changes in authorized test calls",
+      "advantage": "Versioned fixtures and useful diffs",
+      "competition": "Contract-test tools; vendor changelogs",
+      "acquisition": "Open test library and integration examples",
+      "automatable": "Scheduled sample calls, schema checks and notices",
+      "maintenance": "False alerts; rate limits; changing authentication",
+      "risk": "API terms; secrets handling; low urgency until failure",
+      "startup_cad": [
+        20,
+        300
+      ],
+      "setup_hours": [
+        50,
+        110
+      ],
+      "weekly_maintenance_hours": [
+        2,
+        4
+      ],
+      "first_revenue_weeks": [
+        4,
+        16
+      ],
+      "illustrative_unit_price_cad": 29,
+      "base_monthly_units": 20,
+      "optimistic_monthly_units": 100,
+      "monthly_fixed_cost_cad": 20,
+      "variable_fraction_including_fees_refunds": 0.12,
+      "variable_cost_per_unit_cad": 3,
+      "monthly_net_scenarios_cad": [
+        -20,
+        430,
+        2232
+      ],
+      "scores": [
+        4,
+        2,
+        5,
+        4,
+        3,
+        4,
+        3,
+        4
+      ],
+      "weighted_score": 70.6,
+      "sources": [
+        "S18",
+        "S26",
+        "S63"
+      ],
+      "evidence": "Problem plausible; paid need requires interviews",
+      "automation": "High fulfilment; acquisition not passive",
+      "scalability": "Medium-high",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 22,
+      "competition_level": "Medium-high; exact niche gap unproven",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O45",
+      "name": "Authorized product-feed connector",
+      "category": "Integration subscriptions",
+      "buyer": "Small merchants with licensed supplier feeds",
+      "offer": "Transform permitted supplier feeds into one storefront format",
+      "advantage": "Reliable mapping and drift warnings",
+      "competition": "Shopify apps; agency scripts; CSVbox",
+      "acquisition": "Supplier partnerships and integration documentation",
+      "automatable": "Fetch, transform, validate and sandbox preview",
+      "maintenance": "Schema changes; inventory discrepancies; support",
+      "risk": "Data rights; stale prices; no unapproved live writes",
+      "startup_cad": [
+        50,
+        400
+      ],
+      "setup_hours": [
+        70,
+        150
+      ],
+      "weekly_maintenance_hours": [
+        2,
+        5
+      ],
+      "first_revenue_weeks": [
+        4,
+        16
+      ],
+      "illustrative_unit_price_cad": 39,
+      "base_monthly_units": 20,
+      "optimistic_monthly_units": 100,
+      "monthly_fixed_cost_cad": 25,
+      "variable_fraction_including_fees_refunds": 0.12,
+      "variable_cost_per_unit_cad": 4,
+      "monthly_net_scenarios_cad": [
+        -25,
+        581,
+        3007
+      ],
+      "scores": [
+        4,
+        3,
+        4,
+        4,
+        3,
+        3,
+        3,
+        4
+      ],
+      "weighted_score": 70,
+      "sources": [
+        "S23",
+        "S48"
+      ],
+      "evidence": "Adjacent paid category; written feed rights and buyer approval needed",
+      "automation": "Medium-high with human exceptions",
+      "scalability": "Medium-high",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 23,
+      "competition_level": "Medium-high; exact niche gap unproven",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O38",
+      "name": "Human-reviewed AI extraction workflow",
+      "category": "AI B2B SaaS",
+      "buyer": "Businesses converting non-sensitive supplier documents",
+      "offer": "Extract specified fields with confidence and source links",
+      "advantage": "Domain schema and explicit exceptions",
+      "competition": "OCR/AI vendors and built-in document tools",
+      "acquisition": "Public sample documents and consented pilots",
+      "automatable": "OCR, structured extraction, validation and review queue",
+      "maintenance": "Low-confidence review; changing formats; privacy requests",
+      "risk": "Hallucinations and sensitive uploads; labour can dominate",
+      "startup_cad": [
+        50,
+        500
+      ],
+      "setup_hours": [
+        70,
+        160
+      ],
+      "weekly_maintenance_hours": [
+        3,
+        8
+      ],
+      "first_revenue_weeks": [
+        4,
+        16
+      ],
+      "illustrative_unit_price_cad": 79,
+      "base_monthly_units": 15,
+      "optimistic_monthly_units": 70,
+      "monthly_fixed_cost_cad": 30,
+      "variable_fraction_including_fees_refunds": 0.12,
+      "variable_cost_per_unit_cad": 15,
+      "monthly_net_scenarios_cad": [
+        -30,
+        788,
+        3786
+      ],
+      "scores": [
+        5,
+        2,
+        4,
+        5,
+        2,
+        3,
+        3,
+        4
+      ],
+      "weighted_score": 69,
+      "sources": [
+        "S24",
+        "S73"
+      ],
+      "evidence": "Adjacent paid feature; AI accuracy and labour costs unvalidated",
+      "automation": "Medium-high with human exceptions",
+      "scalability": "High",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 24,
+      "competition_level": "Medium-high; exact niche gap unproven",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O33",
+      "name": "Premium WordPress utility add-on",
+      "category": "Software subscriptions",
+      "buyer": "Website owners and agencies",
+      "offer": "A narrow accessibility/content-workflow convenience",
+      "advantage": "Reliable updates and compatibility within exact scope",
+      "competition": "Large plugin ecosystem and free plugins",
+      "acquisition": "Free compliant plugin plus genuinely separate premium product",
+      "automatable": "Licences, update delivery and payments",
+      "maintenance": "Security updates; theme/plugin conflicts",
+      "risk": "Large attack surface; GPL rules; support burden",
+      "startup_cad": [
+        50,
+        400
+      ],
+      "setup_hours": [
+        80,
+        160
+      ],
+      "weekly_maintenance_hours": [
+        3,
+        8
+      ],
+      "first_revenue_weeks": [
+        4,
+        16
+      ],
+      "illustrative_unit_price_cad": 8,
+      "base_monthly_units": 60,
+      "optimistic_monthly_units": 300,
+      "monthly_fixed_cost_cad": 30,
+      "variable_fraction_including_fees_refunds": 0.12,
+      "variable_cost_per_unit_cad": 1,
+      "monthly_net_scenarios_cad": [
+        -30,
+        332,
+        1782
+      ],
+      "scores": [
+        4,
+        3,
+        4,
+        4,
+        2,
+        4,
+        3,
+        4
+      ],
+      "weighted_score": 68.6,
+      "sources": [
+        "S55",
+        "S03"
+      ],
+      "evidence": "Paid software route; hard to make passive",
+      "automation": "Medium-high with human exceptions",
+      "scalability": "Medium-high",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 25,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O50",
+      "name": "Print-and-play tabletop game",
+      "category": "Original IP downloads",
+      "buyer": "Hobbyists wanting small original tabletop experiences",
+      "offer": "A playtested ruleset and printable components",
+      "advantage": "Distinctive mechanics and clear layout",
+      "competition": "Free games; itch.io creators; tabletop publishers",
+      "acquisition": "Playable sampler and genuine playtest community",
+      "automatable": "Delivery, print exports and versioning",
+      "maintenance": "Rules clarifications and playtesting",
+      "risk": "Discoverability; copying established IP; testing labour",
+      "startup_cad": [
+        0,
+        150
+      ],
+      "setup_hours": [
+        35,
+        100
+      ],
+      "weekly_maintenance_hours": [
+        0.5,
+        2
+      ],
+      "first_revenue_weeks": [
+        3,
+        16
+      ],
+      "illustrative_unit_price_cad": 12,
+      "base_monthly_units": 20,
+      "optimistic_monthly_units": 120,
+      "monthly_fixed_cost_cad": 5,
+      "variable_fraction_including_fees_refunds": 0.18,
+      "variable_cost_per_unit_cad": 1,
+      "monthly_net_scenarios_cad": [
+        -5,
+        172,
+        1056
+      ],
+      "scores": [
+        3,
+        2,
+        5,
+        4,
+        4,
+        4,
+        3,
+        3
+      ],
+      "weighted_score": 68.6,
+      "sources": [
+        "S07",
+        "S13"
+      ],
+      "evidence": "Distribution route exists; play demand requires tests",
+      "automation": "High fulfilment; acquisition not passive",
+      "scalability": "Medium-high",
+      "passivity": "Low-maintenance after validation",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 26,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Relevant platform fee/policy sources are linked. Canadian account approval, tax interview, payout method and listing acceptance must be verified before launch; no seller account was created."
+    },
+    {
+      "id": "O51",
+      "name": "Original music cue licensing",
+      "category": "Music royalties/licences",
+      "buyer": "Game teams and small video producers",
+      "offer": "Loopable original compositions with stems",
+      "advantage": "Clear synchronization/game licence and usable edits",
+      "competition": "Music libraries; free tracks; AI music supply",
+      "acquisition": "Genre sampler and direct portfolio search",
+      "automatable": "Preview watermarks, delivery and licence receipts",
+      "maintenance": "Rights disputes; metadata and catalogue upkeep",
+      "risk": "Composition skill; sample clearance; Content ID conflicts",
+      "startup_cad": [
+        0,
+        300
+      ],
+      "setup_hours": [
+        40,
+        120
+      ],
+      "weekly_maintenance_hours": [
+        0.5,
+        2
+      ],
+      "first_revenue_weeks": [
+        3,
+        16
+      ],
+      "illustrative_unit_price_cad": 29,
+      "base_monthly_units": 12,
+      "optimistic_monthly_units": 80,
+      "monthly_fixed_cost_cad": 10,
+      "variable_fraction_including_fees_refunds": 0.25,
+      "variable_cost_per_unit_cad": 1,
+      "monthly_net_scenarios_cad": [
+        -10,
+        239,
+        1650
+      ],
+      "scores": [
+        3,
+        2,
+        5,
+        4,
+        4,
+        3,
+        3,
+        4
+      ],
+      "weighted_score": 68,
+      "sources": [
+        "S07",
+        "S13"
+      ],
+      "evidence": "Paid asset category visible; composition skill not assumed",
+      "automation": "High fulfilment; acquisition not passive",
+      "scalability": "Medium-high",
+      "passivity": "Low-maintenance after validation",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 27,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Relevant platform fee/policy sources are linked. Canadian account approval, tax interview, payout method and listing acceptance must be verified before launch; no seller account was created."
+    },
+    {
+      "id": "O32",
+      "name": "Narrow Shopify operations app",
+      "category": "App subscriptions",
+      "buyer": "Merchants with a repeatable catalog/order task",
+      "offer": "One tightly scoped integration with measurable time savings",
+      "advantage": "Excellent narrow workflow and low support",
+      "competition": "Shopify App Store incumbents; native Shopify features",
+      "acquisition": "App-store search and merchant partnerships",
+      "automatable": "Billing, tasks, webhooks and monitoring",
+      "maintenance": "API deprecations; data requests; merchant support",
+      "risk": "Platform dependence and protected customer data",
+      "startup_cad": [
+        100,
+        800
+      ],
+      "setup_hours": [
+        100,
+        220
+      ],
+      "weekly_maintenance_hours": [
+        3,
+        8
+      ],
+      "first_revenue_weeks": [
+        6,
+        20
+      ],
+      "illustrative_unit_price_cad": 29,
+      "base_monthly_units": 25,
+      "optimistic_monthly_units": 150,
+      "monthly_fixed_cost_cad": 40,
+      "variable_fraction_including_fees_refunds": 0.08,
+      "variable_cost_per_unit_cad": 3,
+      "monthly_net_scenarios_cad": [
+        -40,
+        552,
+        3512
+      ],
+      "scores": [
+        5,
+        2,
+        4,
+        5,
+        2,
+        3,
+        2,
+        4
+      ],
+      "weighted_score": 67.6,
+      "sources": [
+        "S48",
+        "S73"
+      ],
+      "evidence": "Paid ecosystem established; ongoing operations significant",
+      "automation": "Medium-high with human exceptions",
+      "scalability": "High",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 28,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Relevant platform fee/policy sources are linked. Canadian account approval, tax interview, payout method and listing acceptance must be verified before launch; no seller account was created."
+    },
+    {
+      "id": "O34",
+      "name": "Privacy-first browser extension",
+      "category": "Software subscription",
+      "buyer": "Professionals repeating a local browser workflow",
+      "offer": "Local tab/page formatting tool with minimal permissions",
+      "advantage": "Narrow utility and demonstrable privacy",
+      "competition": "Free extensions; browser built-ins",
+      "acquisition": "Store search and small tutorial examples",
+      "automatable": "Updates, licences and task execution",
+      "maintenance": "Browser policy changes and user support",
+      "risk": "Permissions scrutiny; platform changes; weak willingness to pay",
+      "startup_cad": [
+        20,
+        200
+      ],
+      "setup_hours": [
+        50,
+        120
+      ],
+      "weekly_maintenance_hours": [
+        1.5,
+        4
+      ],
+      "first_revenue_weeks": [
+        3,
+        16
+      ],
+      "illustrative_unit_price_cad": 8,
+      "base_monthly_units": 50,
+      "optimistic_monthly_units": 250,
+      "monthly_fixed_cost_cad": 15,
+      "variable_fraction_including_fees_refunds": 0.15,
+      "variable_cost_per_unit_cad": 0.5,
+      "monthly_net_scenarios_cad": [
+        -15,
+        300,
+        1560
+      ],
+      "scores": [
+        4,
+        2,
+        4,
+        4,
+        3,
+        4,
+        3,
+        4
+      ],
+      "weighted_score": 67.6,
+      "sources": [
+        "S49"
+      ],
+      "evidence": "Platform exists; paid value unproven",
+      "automation": "Medium-high with human exceptions",
+      "scalability": "Medium-high",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 29,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O35",
+      "name": "Paid developer editor extension",
+      "category": "Software licensing",
+      "buyer": "Developers in a specific file format/toolchain",
+      "offer": "Schema-aware checks and workflow shortcuts",
+      "advantage": "Domain-specific correctness and latency",
+      "competition": "Free VS Code extensions and AI coding tools",
+      "acquisition": "Free minimal extension and relevant docs",
+      "automatable": "Updates, deterministic checks and licences",
+      "maintenance": "Editor changes; security review; bug reports",
+      "risk": "AI/free competition; publisher authentication changes",
+      "startup_cad": [
+        0,
+        200
+      ],
+      "setup_hours": [
+        50,
+        120
+      ],
+      "weekly_maintenance_hours": [
+        1.5,
+        4
+      ],
+      "first_revenue_weeks": [
+        3,
+        16
+      ],
+      "illustrative_unit_price_cad": 39,
+      "base_monthly_units": 12,
+      "optimistic_monthly_units": 80,
+      "monthly_fixed_cost_cad": 10,
+      "variable_fraction_including_fees_refunds": 0.12,
+      "variable_cost_per_unit_cad": 1,
+      "monthly_net_scenarios_cad": [
+        -10,
+        390,
+        2656
+      ],
+      "scores": [
+        4,
+        2,
+        4,
+        4,
+        3,
+        4,
+        3,
+        4
+      ],
+      "weighted_score": 67.6,
+      "sources": [
+        "S56"
+      ],
+      "evidence": "Technically feasible; monetization must be tested",
+      "automation": "Medium-high with human exceptions",
+      "scalability": "Medium-high",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 30,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O36",
+      "name": "Figma production plugin",
+      "category": "Design software subscriptions",
+      "buyer": "Designers preparing handoffs or batch exports",
+      "offer": "One reliable naming/audit/export workflow",
+      "advantage": "Specific workflow time saved",
+      "competition": "Figma native tools and community plugins",
+      "acquisition": "Community discovery, demonstrations and free tier",
+      "automatable": "Local file checks, billing and entitlement",
+      "maintenance": "Figma API changes and support",
+      "risk": "Creator approval; limitations; free competition",
+      "startup_cad": [
+        0,
+        200
+      ],
+      "setup_hours": [
+        50,
+        120
+      ],
+      "weekly_maintenance_hours": [
+        1.5,
+        4
+      ],
+      "first_revenue_weeks": [
+        3,
+        16
+      ],
+      "illustrative_unit_price_cad": 9,
+      "base_monthly_units": 40,
+      "optimistic_monthly_units": 200,
+      "monthly_fixed_cost_cad": 10,
+      "variable_fraction_including_fees_refunds": 0.18,
+      "variable_cost_per_unit_cad": 0.5,
+      "monthly_net_scenarios_cad": [
+        -10,
+        265,
+        1366
+      ],
+      "scores": [
+        4,
+        2,
+        4,
+        4,
+        3,
+        4,
+        3,
+        4
+      ],
+      "weighted_score": 67.6,
+      "sources": [
+        "S50"
+      ],
+      "evidence": "Plugins may monetize; paid-file approval pause must not be conflated",
+      "automation": "Medium-high with human exceptions",
+      "scalability": "Medium-high",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 31,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Figma lists Canada for selling but new paid-file creator approvals are paused in the reviewed guidance. Confirm current plugin monetization route before building (S50)."
+    },
+    {
+      "id": "O37",
+      "name": "Specialized rendering API",
+      "category": "Usage API",
+      "buyer": "Developers needing a consistent output format",
+      "offer": "Narrow thumbnail/report rendering with predictable assets",
+      "advantage": "One hard workflow and reliable caching",
+      "competition": "ScreenshotOne; Browserless; PDFMonkey",
+      "acquisition": "SDK examples and precise technical search",
+      "automatable": "Metering, queues, rendering and billing",
+      "maintenance": "Browser patches; SSRF protection; abuse",
+      "risk": "24/7 reliability, hostile URLs and infrastructure cost",
+      "startup_cad": [
+        50,
+        500
+      ],
+      "setup_hours": [
+        100,
+        220
+      ],
+      "weekly_maintenance_hours": [
+        3,
+        8
+      ],
+      "first_revenue_weeks": [
+        6,
+        24
+      ],
+      "illustrative_unit_price_cad": 39,
+      "base_monthly_units": 20,
+      "optimistic_monthly_units": 100,
+      "monthly_fixed_cost_cad": 30,
+      "variable_fraction_including_fees_refunds": 0.1,
+      "variable_cost_per_unit_cad": 8,
+      "monthly_net_scenarios_cad": [
+        -30,
+        512,
+        2680
+      ],
+      "scores": [
+        5,
+        2,
+        4,
+        5,
+        2,
+        3,
+        2,
+        4
+      ],
+      "weighted_score": 67.6,
+      "sources": [
+        "S25",
+        "S27",
+        "S28"
+      ],
+      "evidence": "Profitable operator self-report exists; very competitive",
+      "automation": "Medium-high with human exceptions",
+      "scalability": "High",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 32,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O43",
+      "name": "Appointment reminder integration",
+      "category": "B2B subscription",
+      "buyer": "Non-health businesses already holding customer consent",
+      "offer": "Simple calendar-linked reminders and rescheduling links",
+      "advantage": "One niche integration and low-friction setup",
+      "competition": "Booking suites and calendar notifications",
+      "acquisition": "Industry referrals and existing-client pilots",
+      "automatable": "Calendar webhooks and permissioned reminders",
+      "maintenance": "Delivery failures; opt-outs; calendar errors",
+      "risk": "Phone/email privacy and consent; integration support",
+      "startup_cad": [
+        50,
+        400
+      ],
+      "setup_hours": [
+        50,
+        120
+      ],
+      "weekly_maintenance_hours": [
+        2,
+        6
+      ],
+      "first_revenue_weeks": [
+        4,
+        16
+      ],
+      "illustrative_unit_price_cad": 29,
+      "base_monthly_units": 20,
+      "optimistic_monthly_units": 100,
+      "monthly_fixed_cost_cad": 20,
+      "variable_fraction_including_fees_refunds": 0.15,
+      "variable_cost_per_unit_cad": 5,
+      "monthly_net_scenarios_cad": [
+        -20,
+        373,
+        1945
+      ],
+      "scores": [
+        4,
+        3,
+        4,
+        4,
+        2,
+        3,
+        3,
+        4
+      ],
+      "weighted_score": 67,
+      "sources": [
+        "S68",
+        "S69",
+        "S73"
+      ],
+      "evidence": "Model plausible; strong incumbent bundles",
+      "automation": "Medium-high with human exceptions",
+      "scalability": "Medium-high",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 33,
+      "competition_level": "Medium-high; exact niche gap unproven",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O52",
+      "name": "Original photo presets and LUTs",
+      "category": "Digital downloads",
+      "buyer": "Photographers needing a defined repeatable look",
+      "offer": "Tested presets with source examples and adjustment guide",
+      "advantage": "Consistent results across realistic inputs",
+      "competition": "Free presets; Creative Market; editing software",
+      "acquisition": "Before/after samples and tutorials",
+      "automatable": "Delivery, packaging and preview generation",
+      "maintenance": "Software/color-space changes; user support",
+      "risk": "Generic looks trivial to copy; misleading samples",
+      "startup_cad": [
+        0,
+        150
+      ],
+      "setup_hours": [
+        20,
+        60
+      ],
+      "weekly_maintenance_hours": [
+        0.5,
+        1.5
+      ],
+      "first_revenue_weeks": [
+        2,
+        12
+      ],
+      "illustrative_unit_price_cad": 19,
+      "base_monthly_units": 15,
+      "optimistic_monthly_units": 80,
+      "monthly_fixed_cost_cad": 5,
+      "variable_fraction_including_fees_refunds": 0.5,
+      "variable_cost_per_unit_cad": 1,
+      "monthly_net_scenarios_cad": [
+        -5,
+        123,
+        675
+      ],
+      "scores": [
+        2,
+        2,
+        5,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "weighted_score": 67,
+      "sources": [
+        "S52"
+      ],
+      "evidence": "Established channel; differentiation weak",
+      "automation": "High fulfilment; acquisition not passive",
+      "scalability": "Medium-high",
+      "passivity": "Low-maintenance after validation",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 34,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Relevant platform fee/policy sources are linked. Canadian account approval, tax interview, payout method and listing acceptance must be verified before launch; no seller account was created."
+    },
+    {
+      "id": "O16",
+      "name": "Specialized font family",
+      "category": "Font licensing",
+      "buyer": "Designers needing a distinctive, technically sound display font",
+      "offer": "Original family with language coverage and clear licence tiers",
+      "advantage": "Quality kerning and niche utility",
+      "competition": "MyFonts; Google Fonts; independent foundries",
+      "acquisition": "Specimen search pages and design marketplaces",
+      "automatable": "Delivery, licensing and specimen previews",
+      "maintenance": "Font bugs; language coverage; licence support",
+      "risk": "High skill barrier and free competition",
+      "startup_cad": [
+        0,
+        300
+      ],
+      "setup_hours": [
+        80,
+        200
+      ],
+      "weekly_maintenance_hours": [
+        0.25,
+        1.5
+      ],
+      "first_revenue_weeks": [
+        4,
+        20
+      ],
+      "illustrative_unit_price_cad": 39,
+      "base_monthly_units": 10,
+      "optimistic_monthly_units": 70,
+      "monthly_fixed_cost_cad": 10,
+      "variable_fraction_including_fees_refunds": 0.5,
+      "variable_cost_per_unit_cad": 1,
+      "monthly_net_scenarios_cad": [
+        -10,
+        175,
+        1285
+      ],
+      "scores": [
+        3,
+        2,
+        5,
+        4,
+        4,
+        3,
+        2,
+        4
+      ],
+      "weighted_score": 66.6,
+      "sources": [
+        "S57",
+        "S52"
+      ],
+      "evidence": "Established royalty channel; specialist skill not assumed",
+      "automation": "High fulfilment; acquisition not passive",
+      "scalability": "Medium-high",
+      "passivity": "Low-maintenance after validation",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 35,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Relevant platform fee/policy sources are linked. Canadian account approval, tax interview, payout method and listing acceptance must be verified before launch; no seller account was created."
+    },
+    {
+      "id": "O18",
+      "name": "Original functional CAD and STL plans",
+      "category": "Design licensing",
+      "buyer": "Hobbyists making organizers and non-safety-critical fixtures",
+      "offer": "Dimensioned original designs with tested printable files",
+      "advantage": "Tested fit and clear assembly instructions",
+      "competition": "Printables free models; marketplace designers",
+      "acquisition": "Print demos, community-permitted showcases and search",
+      "automatable": "Downloads and customizable parameter export",
+      "maintenance": "Physical tests; printer variability; support",
+      "risk": "No tested hardware available assumed; avoid safety-critical parts",
+      "startup_cad": [
+        50,
+        500
+      ],
+      "setup_hours": [
+        30,
+        100
+      ],
+      "weekly_maintenance_hours": [
+        1,
+        3
+      ],
+      "first_revenue_weeks": [
+        3,
+        12
+      ],
+      "illustrative_unit_price_cad": 15,
+      "base_monthly_units": 20,
+      "optimistic_monthly_units": 100,
+      "monthly_fixed_cost_cad": 10,
+      "variable_fraction_including_fees_refunds": 0.2,
+      "variable_cost_per_unit_cad": 2,
+      "monthly_net_scenarios_cad": [
+        -10,
+        190,
+        990
+      ],
+      "scores": [
+        3,
+        3,
+        4,
+        4,
+        3,
+        3,
+        3,
+        4
+      ],
+      "weighted_score": 66,
+      "sources": [
+        "S80",
+        "S35"
+      ],
+      "evidence": "Marketplace exists; testing/fees/eligibility must be confirmed",
+      "automation": "Medium-high with human exceptions",
+      "scalability": "Medium-high",
+      "passivity": "Low-maintenance after validation",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 36,
+      "competition_level": "Medium-high; exact niche gap unproven",
+      "eligibility_note": "Printables membership fees and Canada payout access were not fully verified; do not commit to that route before checking. Original plans can instead be assessed on an eligible digital storefront (S80/S35)."
+    },
+    {
+      "id": "O24",
+      "name": "Specialized stock photography",
+      "category": "Stock royalties",
+      "buyer": "Publishers needing authentic niche subjects",
+      "offer": "Original technical/process photographs with releases",
+      "advantage": "Hard-to-recreate real subjects and metadata",
+      "competition": "Adobe Stock contributors; free libraries",
+      "acquisition": "Stock search and accurate keywording",
+      "automatable": "Upload metadata assistance and royalty collection",
+      "maintenance": "Shoots, releases and curation",
+      "risk": "Camera/access skills; releases; small royalties",
+      "startup_cad": [
+        0,
+        500
+      ],
+      "setup_hours": [
+        40,
+        120
+      ],
+      "weekly_maintenance_hours": [
+        0.5,
+        2
+      ],
+      "first_revenue_weeks": [
+        4,
+        24
+      ],
+      "illustrative_unit_price_cad": 1,
+      "base_monthly_units": 100,
+      "optimistic_monthly_units": 500,
+      "monthly_fixed_cost_cad": 5,
+      "variable_fraction_including_fees_refunds": 0.2,
+      "variable_cost_per_unit_cad": 0,
+      "monthly_net_scenarios_cad": [
+        -5,
+        75,
+        395
+      ],
+      "scores": [
+        2,
+        3,
+        5,
+        4,
+        4,
+        3,
+        2,
+        3
+      ],
+      "weighted_score": 65.6,
+      "sources": [
+        "S36",
+        "S37"
+      ],
+      "evidence": "Stock route established; unit value illustrative net royalty basis",
+      "automation": "High fulfilment; acquisition not passive",
+      "scalability": "Medium-high",
+      "passivity": "Low-maintenance after validation",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 37,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Relevant platform fee/policy sources are linked. Canadian account approval, tax interview, payout method and listing acceptance must be verified before launch; no seller account was created."
+    },
+    {
+      "id": "O25",
+      "name": "Motion graphics and video loops",
+      "category": "Stock royalties",
+      "buyer": "Editors needing useful original motion elements",
+      "offer": "Loopable backgrounds and alpha overlays with clear licence",
+      "advantage": "Consistent technical quality and compositing utility",
+      "competition": "Adobe Stock; Envato; free motion libraries",
+      "acquisition": "Preview reels and targeted stock metadata",
+      "automatable": "Rendering variants and delivery",
+      "maintenance": "Software/codec changes and review rejections",
+      "risk": "Heavy rendering; AI labelling; market oversupply",
+      "startup_cad": [
+        0,
+        400
+      ],
+      "setup_hours": [
+        30,
+        100
+      ],
+      "weekly_maintenance_hours": [
+        0.5,
+        2
+      ],
+      "first_revenue_weeks": [
+        4,
+        20
+      ],
+      "illustrative_unit_price_cad": 8,
+      "base_monthly_units": 15,
+      "optimistic_monthly_units": 90,
+      "monthly_fixed_cost_cad": 10,
+      "variable_fraction_including_fees_refunds": 0.5,
+      "variable_cost_per_unit_cad": 0.5,
+      "monthly_net_scenarios_cad": [
+        -10,
+        43,
+        305
+      ],
+      "scores": [
+        3,
+        2,
+        5,
+        4,
+        4,
+        3,
+        2,
+        3
+      ],
+      "weighted_score": 65.6,
+      "sources": [
+        "S36",
+        "S52"
+      ],
+      "evidence": "Channel established; niche sales uncertain",
+      "automation": "High fulfilment; acquisition not passive",
+      "scalability": "Medium-high",
+      "passivity": "Low-maintenance after validation",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 38,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Relevant platform fee/policy sources are linked. Canadian account approval, tax interview, payout method and listing acceptance must be verified before launch; no seller account was created."
+    },
+    {
+      "id": "O48",
+      "name": "Small premium original game",
+      "category": "Game sales",
+      "buyer": "Players in a well-defined genre",
+      "offer": "A complete compact game using original or rights-cleared assets",
+      "advantage": "Distinctive play experience with a polished demo",
+      "competition": "Thousands of new games and free alternatives",
+      "acquisition": "Demo, events and legitimate creator coverage",
+      "automatable": "Digital distribution, updates and receipts",
+      "maintenance": "Bug fixes; reviews; compatibility",
+      "risk": "Hit-driven demand and large setup workload",
+      "startup_cad": [
+        0,
+        1000
+      ],
+      "setup_hours": [
+        120,
+        500
+      ],
+      "weekly_maintenance_hours": [
+        1,
+        5
+      ],
+      "first_revenue_weeks": [
+        8,
+        40
+      ],
+      "illustrative_unit_price_cad": 12,
+      "base_monthly_units": 50,
+      "optimistic_monthly_units": 500,
+      "monthly_fixed_cost_cad": 15,
+      "variable_fraction_including_fees_refunds": 0.3,
+      "variable_cost_per_unit_cad": 1,
+      "monthly_net_scenarios_cad": [
+        -15,
+        355,
+        3685
+      ],
+      "scores": [
+        4,
+        2,
+        5,
+        5,
+        3,
+        2,
+        1,
+        3
+      ],
+      "weighted_score": 65.6,
+      "sources": [
+        "S07",
+        "S76"
+      ],
+      "evidence": "Distribution proven; no sales forecast evidence for this game",
+      "automation": "High fulfilment; acquisition not passive",
+      "scalability": "High",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 39,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Relevant platform fee/policy sources are linked. Canadian account approval, tax interview, payout method and listing acceptance must be verified before launch; no seller account was created."
+    },
+    {
+      "id": "O28",
+      "name": "Useful specialist calculator site",
+      "category": "Ads and sponsorship",
+      "buyer": "A narrow professional or hobby audience",
+      "offer": "Accurate calculators with optional paid exports",
+      "advantage": "Real utility, transparent formulas and speed",
+      "competition": "Free calculators; spreadsheets; search answers",
+      "acquisition": "Search intent, links from communities and embed partnerships",
+      "automatable": "Calculations, ad serving where eligible and uptime checks",
+      "maintenance": "Formula QA; ad/privacy controls; search changes",
+      "risk": "Requires large traffic; RPM not predictable; legal risk for regulated formulas",
+      "startup_cad": [
+        0,
+        250
+      ],
+      "setup_hours": [
+        35,
+        100
+      ],
+      "weekly_maintenance_hours": [
+        1,
+        3
+      ],
+      "first_revenue_weeks": [
+        8,
+        32
+      ],
+      "illustrative_unit_price_cad": 8,
+      "base_monthly_units": 20,
+      "optimistic_monthly_units": 150,
+      "monthly_fixed_cost_cad": 10,
+      "variable_fraction_including_fees_refunds": 0.1,
+      "variable_cost_per_unit_cad": 0,
+      "monthly_net_scenarios_cad": [
+        -10,
+        134,
+        1070
+      ],
+      "scores": [
+        3,
+        2,
+        5,
+        4,
+        3,
+        4,
+        2,
+        4
+      ],
+      "weighted_score": 65.2,
+      "sources": [
+        "S63",
+        "S67",
+        "S74"
+      ],
+      "evidence": "Illustrative revenue per thousand visits; sponsorship demand unproven",
+      "automation": "High fulfilment; acquisition not passive",
+      "scalability": "Medium-high",
+      "passivity": "Low-maintenance after validation",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 40,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O39",
+      "name": "Bounded support knowledge assistant",
+      "category": "AI B2B subscription",
+      "buyer": "Small software companies with owned documentation",
+      "offer": "Answer from approved docs with citations and escalation",
+      "advantage": "Known corpus, abstention and high-quality testing",
+      "competition": "Helpdesk vendors; general AI assistants",
+      "acquisition": "Documentation demo and founder referrals",
+      "automatable": "Retrieval, answer drafting and analytics",
+      "maintenance": "Hallucinations; prompt injection; changes to docs",
+      "risk": "Brand harm; private data exposure; price competition",
+      "startup_cad": [
+        50,
+        400
+      ],
+      "setup_hours": [
+        60,
+        140
+      ],
+      "weekly_maintenance_hours": [
+        3,
+        7
+      ],
+      "first_revenue_weeks": [
+        4,
+        16
+      ],
+      "illustrative_unit_price_cad": 59,
+      "base_monthly_units": 15,
+      "optimistic_monthly_units": 70,
+      "monthly_fixed_cost_cad": 25,
+      "variable_fraction_including_fees_refunds": 0.12,
+      "variable_cost_per_unit_cad": 12,
+      "monthly_net_scenarios_cad": [
+        -25,
+        574,
+        2769
+      ],
+      "scores": [
+        4,
+        2,
+        4,
+        5,
+        2,
+        3,
+        3,
+        4
+      ],
+      "weighted_score": 65,
+      "sources": [
+        "S73",
+        "S63"
+      ],
+      "evidence": "Implementation hypothesis; no autonomous consequential support",
+      "automation": "Medium-high with human exceptions",
+      "scalability": "High",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 41,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O42",
+      "name": "Accessibility issue reporting",
+      "category": "B2B software reports",
+      "buyer": "Agencies checking their own client websites",
+      "offer": "Automated issue inventory with remediation links",
+      "advantage": "Useful developer workflow; never certify legal compliance",
+      "competition": "Free scanners; browser tools; agency services",
+      "acquisition": "Sample report and existing agency channel",
+      "automatable": "Permitted scanning and issue grouping",
+      "maintenance": "Human review and false positives",
+      "risk": "Automation cannot test all accessibility; legal claims risk",
+      "startup_cad": [
+        20,
+        250
+      ],
+      "setup_hours": [
+        40,
+        100
+      ],
+      "weekly_maintenance_hours": [
+        2,
+        5
+      ],
+      "first_revenue_weeks": [
+        3,
+        16
+      ],
+      "illustrative_unit_price_cad": 39,
+      "base_monthly_units": 15,
+      "optimistic_monthly_units": 80,
+      "monthly_fixed_cost_cad": 20,
+      "variable_fraction_including_fees_refunds": 0.12,
+      "variable_cost_per_unit_cad": 5,
+      "monthly_net_scenarios_cad": [
+        -20,
+        420,
+        2326
+      ],
+      "scores": [
+        4,
+        2,
+        4,
+        4,
+        2,
+        4,
+        3,
+        4
+      ],
+      "weighted_score": 64.6,
+      "sources": [
+        "S63",
+        "S73",
+        "S74"
+      ],
+      "evidence": "Legitimate narrow audit tool; certification excluded",
+      "automation": "Medium-high with human exceptions",
+      "scalability": "Medium-high",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 42,
+      "competition_level": "Medium-high; exact niche gap unproven",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O49",
+      "name": "Browser game portal licensing",
+      "category": "Ad share and sponsorship",
+      "buyer": "Browser players and game portals",
+      "offer": "A polished original replayable HTML5 game",
+      "advantage": "Retention and good performance without manipulative ads",
+      "competition": "Portal catalogues and mobile games",
+      "acquisition": "Portal review and playable demos",
+      "automatable": "Ad SDK, distribution and analytics",
+      "maintenance": "SDK/browser changes; game balance; platform policy",
+      "risk": "Admission and revenue share uncertain; child privacy concerns",
+      "startup_cad": [
+        0,
+        500
+      ],
+      "setup_hours": [
+        100,
+        300
+      ],
+      "weekly_maintenance_hours": [
+        1,
+        4
+      ],
+      "first_revenue_weeks": [
+        6,
+        24
+      ],
+      "illustrative_unit_price_cad": 3,
+      "base_monthly_units": 100,
+      "optimistic_monthly_units": 1000,
+      "monthly_fixed_cost_cad": 15,
+      "variable_fraction_including_fees_refunds": 0.1,
+      "variable_cost_per_unit_cad": 0,
+      "monthly_net_scenarios_cad": [
+        -15,
+        255,
+        2685
+      ],
+      "scores": [
+        3,
+        2,
+        5,
+        5,
+        3,
+        3,
+        2,
+        3
+      ],
+      "weighted_score": 64.6,
+      "sources": [
+        "S77",
+        "S18"
+      ],
+      "evidence": "Illustrative creator revenue per thousand plays; payout terms unverified",
+      "automation": "High fulfilment; acquisition not passive",
+      "scalability": "High",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 43,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Relevant platform fee/policy sources are linked. Canadian account approval, tax interview, payout method and listing acceptance must be verified before launch; no seller account was created."
+    },
+    {
+      "id": "O23",
+      "name": "Canva creator royalties",
+      "category": "Platform royalties",
+      "buyer": "Canva users choosing reusable design templates",
+      "offer": "Accepted original Canva templates for a narrow use case",
+      "advantage": "Design craft and useful customization",
+      "competition": "Other Canva creators; built-in library",
+      "acquisition": "Canva discovery after programme approval",
+      "automatable": "Template distribution and royalty allocation",
+      "maintenance": "New designs and policy/quality review",
+      "risk": "Acceptance not assured; payout opaque; AI restrictions",
+      "startup_cad": [
+        0,
+        150
+      ],
+      "setup_hours": [
+        25,
+        80
+      ],
+      "weekly_maintenance_hours": [
+        0.5,
+        2
+      ],
+      "first_revenue_weeks": [
+        4,
+        24
+      ],
+      "illustrative_unit_price_cad": 1,
+      "base_monthly_units": 100,
+      "optimistic_monthly_units": 500,
+      "monthly_fixed_cost_cad": 0,
+      "variable_fraction_including_fees_refunds": 0.2,
+      "variable_cost_per_unit_cad": 0,
+      "monthly_net_scenarios_cad": [
+        0,
+        80,
+        400
+      ],
+      "scores": [
+        2,
+        2,
+        5,
+        4,
+        4,
+        4,
+        2,
+        3
+      ],
+      "weighted_score": 63.2,
+      "sources": [
+        "S53"
+      ],
+      "evidence": "Eligibility constrained; price is illustrative royalty per use, not observed",
+      "automation": "High fulfilment; acquisition not passive",
+      "scalability": "Medium-high",
+      "passivity": "Low-maintenance after validation",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 44,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Canva creator admission is selective; element applications were paused in reviewed guidance. Royalty and payout eligibility for this applicant are not established (S53)."
+    },
+    {
+      "id": "O29",
+      "name": "Verified specialist directory",
+      "category": "Paid listings and sponsorship",
+      "buyer": "Suppliers seeking an audience of relevant buyers",
+      "offer": "Opt-in directory with useful filters and verified details",
+      "advantage": "Curation and buyer intent rather than scraped volume",
+      "competition": "Search engines; industry associations; other directories",
+      "acquisition": "Free useful dataset and partnerships",
+      "automatable": "Listing renewals, expiry reminders and search",
+      "maintenance": "Moderation, outdated listings and paid-placement disclosure",
+      "risk": "Chicken-and-egg demand; stale data; scraping/consent issues",
+      "startup_cad": [
+        20,
+        300
+      ],
+      "setup_hours": [
+        40,
+        100
+      ],
+      "weekly_maintenance_hours": [
+        2,
+        5
+      ],
+      "first_revenue_weeks": [
+        6,
+        24
+      ],
+      "illustrative_unit_price_cad": 49,
+      "base_monthly_units": 10,
+      "optimistic_monthly_units": 60,
+      "monthly_fixed_cost_cad": 15,
+      "variable_fraction_including_fees_refunds": 0.12,
+      "variable_cost_per_unit_cad": 2,
+      "monthly_net_scenarios_cad": [
+        -15,
+        396,
+        2452
+      ],
+      "scores": [
+        4,
+        2,
+        4,
+        4,
+        2,
+        4,
+        2,
+        4
+      ],
+      "weighted_score": 63.2,
+      "sources": [
+        "S29",
+        "S68",
+        "S74"
+      ],
+      "evidence": "Adjacent paid listings exist; exact niche hypothesis",
+      "automation": "Medium-high with human exceptions",
+      "scalability": "Medium-high",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 45,
+      "competition_level": "Medium-high; exact niche gap unproven",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O44",
+      "name": "Simple digital signage scheduler",
+      "category": "B2B subscription",
+      "buyer": "Small businesses with existing display hardware",
+      "offer": "A browser player with remote schedule and offline cache",
+      "advantage": "One content workflow and reliable fallback",
+      "competition": "Established signage vendors; slide decks",
+      "acquisition": "Demonstration on owner equipment and industry referrals",
+      "automatable": "Publishing, cache and device heartbeat",
+      "maintenance": "Offline devices; hardware/browser support",
+      "risk": "Physical hardware support defeats low-maintenance aim",
+      "startup_cad": [
+        50,
+        400
+      ],
+      "setup_hours": [
+        70,
+        150
+      ],
+      "weekly_maintenance_hours": [
+        2,
+        6
+      ],
+      "first_revenue_weeks": [
+        4,
+        16
+      ],
+      "illustrative_unit_price_cad": 15,
+      "base_monthly_units": 40,
+      "optimistic_monthly_units": 200,
+      "monthly_fixed_cost_cad": 25,
+      "variable_fraction_including_fees_refunds": 0.12,
+      "variable_cost_per_unit_cad": 2,
+      "monthly_net_scenarios_cad": [
+        -25,
+        423,
+        2215
+      ],
+      "scores": [
+        4,
+        2,
+        4,
+        4,
+        2,
+        3,
+        3,
+        4
+      ],
+      "weighted_score": 63,
+      "sources": [
+        "S63",
+        "S64"
+      ],
+      "evidence": "Business hypothesis; direct demand research required",
+      "automation": "Medium-high with human exceptions",
+      "scalability": "Medium-high",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 46,
+      "competition_level": "Medium-high; exact niche gap unproven",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O53",
+      "name": "Fixed-scope automation setup service",
+      "category": "Productized service",
+      "buyer": "Small firms needing one repetitive process improved",
+      "offer": "A paid discovery plus a documented workflow with handover",
+      "advantage": "Specific result and reusable components",
+      "competition": "Freelancers; automation agencies; self-service tools",
+      "acquisition": "Referrals and inbound demos; consented prospect calls",
+      "automatable": "Repeatable testing, deployment checklist and documentation",
+      "maintenance": "Client scoping, meetings and exception handling",
+      "risk": "Client-specific work remains substantial; credentials/security",
+      "startup_cad": [
+        0,
+        200
+      ],
+      "setup_hours": [
+        15,
+        50
+      ],
+      "weekly_maintenance_hours": [
+        5,
+        15
+      ],
+      "first_revenue_weeks": [
+        1,
+        8
+      ],
+      "illustrative_unit_price_cad": 500,
+      "base_monthly_units": 3,
+      "optimistic_monthly_units": 10,
+      "monthly_fixed_cost_cad": 25,
+      "variable_fraction_including_fees_refunds": 0.08,
+      "variable_cost_per_unit_cad": 100,
+      "monthly_net_scenarios_cad": [
+        -25,
+        1055,
+        3575
+      ],
+      "scores": [
+        4,
+        4,
+        2,
+        2,
+        1,
+        5,
+        5,
+        3
+      ],
+      "weighted_score": 63,
+      "sources": [
+        "S66",
+        "S73"
+      ],
+      "evidence": "Can fund product discovery; fails passive-income criterion",
+      "automation": "Operationally intensive",
+      "scalability": "Limited by labour",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 47,
+      "competition_level": "Medium-high; exact niche gap unproven",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O46",
+      "name": "Backup restore verification reports",
+      "category": "B2B monitoring",
+      "buyer": "Small teams testing backups they control",
+      "offer": "Sandbox restore checks and evidence reports",
+      "advantage": "Proof of recovery, not merely backup-success messages",
+      "competition": "Backup vendors and internal scripts",
+      "acquisition": "Technical demonstration and agency partnerships",
+      "automatable": "Scheduled sandbox restoration, checksums and summaries",
+      "maintenance": "Security incidents; incompatible backup versions; review",
+      "risk": "High security/data responsibility; no deletion/production actions",
+      "startup_cad": [
+        100,
+        600
+      ],
+      "setup_hours": [
+        80,
+        180
+      ],
+      "weekly_maintenance_hours": [
+        3,
+        8
+      ],
+      "first_revenue_weeks": [
+        6,
+        20
+      ],
+      "illustrative_unit_price_cad": 79,
+      "base_monthly_units": 10,
+      "optimistic_monthly_units": 50,
+      "monthly_fixed_cost_cad": 40,
+      "variable_fraction_including_fees_refunds": 0.12,
+      "variable_cost_per_unit_cad": 10,
+      "monthly_net_scenarios_cad": [
+        -40,
+        555,
+        2936
+      ],
+      "scores": [
+        4,
+        2,
+        4,
+        4,
+        2,
+        3,
+        2,
+        4
+      ],
+      "weighted_score": 61.6,
+      "sources": [
+        "S63",
+        "S73"
+      ],
+      "evidence": "High-value hypothesis but poor first low-risk product",
+      "automation": "Medium-high with human exceptions",
+      "scalability": "Medium-high",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 48,
+      "competition_level": "Medium-high; exact niche gap unproven",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O30",
+      "name": "Niche job board",
+      "category": "Employer listing fees",
+      "buyer": "Employers in a hard-to-reach specialty",
+      "offer": "Curated direct-submitted jobs with transparent salary/location fields",
+      "advantage": "Concentrated candidate audience",
+      "competition": "Remote OK; LinkedIn; specialist boards",
+      "acquisition": "Free opted-in candidate community and employer referrals",
+      "automatable": "Payments, expiry, duplicate checking and notifications",
+      "maintenance": "Fraud moderation and employer support",
+      "risk": "Audience acquisition difficult; unsafe/fake jobs; cyclical demand",
+      "startup_cad": [
+        20,
+        400
+      ],
+      "setup_hours": [
+        40,
+        120
+      ],
+      "weekly_maintenance_hours": [
+        2,
+        5
+      ],
+      "first_revenue_weeks": [
+        6,
+        24
+      ],
+      "illustrative_unit_price_cad": 99,
+      "base_monthly_units": 5,
+      "optimistic_monthly_units": 30,
+      "monthly_fixed_cost_cad": 20,
+      "variable_fraction_including_fees_refunds": 0.12,
+      "variable_cost_per_unit_cad": 2,
+      "monthly_net_scenarios_cad": [
+        -20,
+        406,
+        2534
+      ],
+      "scores": [
+        4,
+        2,
+        4,
+        4,
+        2,
+        3,
+        2,
+        3
+      ],
+      "weighted_score": 60.6,
+      "sources": [
+        "S29"
+      ],
+      "evidence": "Paid model verified; vendor audience cannot be assumed",
+      "automation": "Medium-high with human exceptions",
+      "scalability": "Medium-high",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 49,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O47",
+      "name": "Licensed industry benchmark brief",
+      "category": "Paid newsletter/data report",
+      "buyer": "Operators needing a recurring non-regulated benchmark",
+      "offer": "Original analysis of licensed aggregate data with source dates",
+      "advantage": "Interpretation and consistent definitions",
+      "competition": "Free data portals; consultants; newsletters",
+      "acquisition": "Sample issue and voluntary subscription",
+      "automatable": "Data update, charts and draft assembly",
+      "maintenance": "Editorial verification and explanation",
+      "risk": "Continuous writing; data errors; open source does not mean resale rights",
+      "startup_cad": [
+        20,
+        250
+      ],
+      "setup_hours": [
+        30,
+        80
+      ],
+      "weekly_maintenance_hours": [
+        2,
+        5
+      ],
+      "first_revenue_weeks": [
+        4,
+        20
+      ],
+      "illustrative_unit_price_cad": 15,
+      "base_monthly_units": 40,
+      "optimistic_monthly_units": 200,
+      "monthly_fixed_cost_cad": 15,
+      "variable_fraction_including_fees_refunds": 0.12,
+      "variable_cost_per_unit_cad": 1,
+      "monthly_net_scenarios_cad": [
+        -15,
+        473,
+        2425
+      ],
+      "scores": [
+        3,
+        2,
+        4,
+        4,
+        2,
+        4,
+        3,
+        4
+      ],
+      "weighted_score": 60.6,
+      "sources": [
+        "S58",
+        "S60",
+        "S61"
+      ],
+      "evidence": "Data rights route established; subscription demand hypothesis",
+      "automation": "Medium-high with human exceptions",
+      "scalability": "Medium-high",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 50,
+      "competition_level": "Medium-high; exact niche gap unproven",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O54",
+      "name": "Managed open-source hosting",
+      "category": "Hosting subscriptions",
+      "buyer": "Users of a permissively licensed niche tool",
+      "offer": "Secure hosted instance, backups and upgrades",
+      "advantage": "Convenience and operations customers do not want to own",
+      "competition": "Original project's hosted service and cloud hosts",
+      "acquisition": "Documentation and community contributions, where permitted",
+      "automatable": "Provisioning, billing, backups and health checks",
+      "maintenance": "Incidents; security patches; migrations and restore tests",
+      "risk": "Licence restrictions; high availability; on-call workload",
+      "startup_cad": [
+        100,
+        700
+      ],
+      "setup_hours": [
+        70,
+        160
+      ],
+      "weekly_maintenance_hours": [
+        3,
+        10
+      ],
+      "first_revenue_weeks": [
+        4,
+        20
+      ],
+      "illustrative_unit_price_cad": 29,
+      "base_monthly_units": 25,
+      "optimistic_monthly_units": 120,
+      "monthly_fixed_cost_cad": 40,
+      "variable_fraction_including_fees_refunds": 0.1,
+      "variable_cost_per_unit_cad": 8,
+      "monthly_net_scenarios_cad": [
+        -40,
+        413,
+        2132
+      ],
+      "scores": [
+        4,
+        2,
+        4,
+        4,
+        1,
+        3,
+        3,
+        4
+      ],
+      "weighted_score": 60,
+      "sources": [
+        "S22",
+        "S54",
+        "S66"
+      ],
+      "evidence": "Paid hosting model exists; licence and support burden decisive",
+      "automation": "Medium-high with human exceptions",
+      "scalability": "Medium-high",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 51,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Canada-compatible direct software route can use Lemon Squeezy subject to product/account approval (S05/S06), or Stripe Canada with seller tax obligations (S64); specific marketplace acceptance and payout onboarding remain unverified."
+    },
+    {
+      "id": "O26",
+      "name": "Original print-on-demand shop",
+      "category": "Physical product margin",
+      "buyer": "Buyers in a defined interest community",
+      "offer": "A small line of genuinely original designs",
+      "advantage": "Recognizable original art and accurate product photos",
+      "competition": "Etsy/POD sellers; mass retail",
+      "acquisition": "Organic community fit and repeat buyers",
+      "automatable": "Order transfer, printing, shipping notifications",
+      "maintenance": "Sizing, returns, delivery delays and customer complaints",
+      "risk": "Thin margin; working capital; copycats; buyer-remorse costs",
+      "startup_cad": [
+        50,
+        500
+      ],
+      "setup_hours": [
+        20,
+        60
+      ],
+      "weekly_maintenance_hours": [
+        2,
+        5
+      ],
+      "first_revenue_weeks": [
+        2,
+        12
+      ],
+      "illustrative_unit_price_cad": 35,
+      "base_monthly_units": 25,
+      "optimistic_monthly_units": 150,
+      "monthly_fixed_cost_cad": 15,
+      "variable_fraction_including_fees_refunds": 0.18,
+      "variable_cost_per_unit_cad": 22,
+      "monthly_net_scenarios_cad": [
+        -15,
+        153,
+        990
+      ],
+      "scores": [
+        2,
+        3,
+        4,
+        3,
+        2,
+        3,
+        4,
+        3
+      ],
+      "weighted_score": 57.4,
+      "sources": [
+        "S33",
+        "S34",
+        "S44",
+        "S45"
+      ],
+      "evidence": "Fulfilment available; weak fit for sub-hour maintenance",
+      "automation": "Medium-high with human exceptions",
+      "scalability": "Limited by labour",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 52,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Relevant platform fee/policy sources are linked. Canadian account approval, tax interview, payout method and listing acceptance must be verified before launch; no seller account was created."
+    },
+    {
+      "id": "O27",
+      "name": "Tested niche affiliate comparison site",
+      "category": "Affiliate commissions",
+      "buyer": "Readers making informed specialist purchases",
+      "offer": "Original test results and calculators with disclosed links",
+      "advantage": "Evidence and experience that AI summaries cannot replace",
+      "competition": "Publishers; Reddit; direct vendor content",
+      "acquisition": "Search and referrals; maintain genuinely useful comparisons",
+      "automatable": "Link checks, price updates through authorized feeds",
+      "maintenance": "Hands-on tests; update changed offers",
+      "risk": "Algorithm concentration; low commission; disclosure and data rights",
+      "startup_cad": [
+        0,
+        500
+      ],
+      "setup_hours": [
+        60,
+        180
+      ],
+      "weekly_maintenance_hours": [
+        2,
+        5
+      ],
+      "first_revenue_weeks": [
+        8,
+        40
+      ],
+      "illustrative_unit_price_cad": 3,
+      "base_monthly_units": 50,
+      "optimistic_monthly_units": 300,
+      "monthly_fixed_cost_cad": 20,
+      "variable_fraction_including_fees_refunds": 0.05,
+      "variable_cost_per_unit_cad": 0,
+      "monthly_net_scenarios_cad": [
+        -20,
+        122,
+        835
+      ],
+      "scores": [
+        3,
+        2,
+        3,
+        4,
+        2,
+        3,
+        1,
+        4
+      ],
+      "weighted_score": 53.2,
+      "sources": [
+        "S46",
+        "S47",
+        "S67",
+        "S74"
+      ],
+      "evidence": "Affiliate route verified; commission per conversion illustrative",
+      "automation": "Operationally intensive",
+      "scalability": "Medium-high",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 53,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Relevant platform fee/policy sources are linked. Canadian account approval, tax interview, payout method and listing acceptance must be verified before launch; no seller account was created."
+    },
+    {
+      "id": "O31",
+      "name": "Niche digital marketplace",
+      "category": "Take rate",
+      "buyer": "Buyers and creators with a specific transaction problem",
+      "offer": "Curated rights-cleared inventory and narrow buyer workflow",
+      "advantage": "An actual liquidity or trust problem solved",
+      "competition": "Fab; Etsy; existing direct seller stores",
+      "acquisition": "Recruit supply and buyers manually first",
+      "automatable": "Checkout, delivery and payouts where permitted",
+      "maintenance": "Disputes, IP claims, moderation and tax complexity",
+      "risk": "Two-sided cold start; payments approval; high workload",
+      "startup_cad": [
+        200,
+        2000
+      ],
+      "setup_hours": [
+        150,
+        400
+      ],
+      "weekly_maintenance_hours": [
+        5,
+        15
+      ],
+      "first_revenue_weeks": [
+        12,
+        40
+      ],
+      "illustrative_unit_price_cad": 15,
+      "base_monthly_units": 30,
+      "optimistic_monthly_units": 200,
+      "monthly_fixed_cost_cad": 100,
+      "variable_fraction_including_fees_refunds": 0.1,
+      "variable_cost_per_unit_cad": 3,
+      "monthly_net_scenarios_cad": [
+        -100,
+        215,
+        2000
+      ],
+      "scores": [
+        5,
+        1,
+        3,
+        5,
+        1,
+        1,
+        1,
+        3
+      ],
+      "weighted_score": 52,
+      "sources": [
+        "S08",
+        "S33",
+        "S64"
+      ],
+      "evidence": "Legitimate model, poor first-business fit",
+      "automation": "Operationally intensive",
+      "scalability": "High",
+      "passivity": "Operating business",
+      "portfolio_fit": "Alternative, not simultaneous launch",
+      "rank": 54,
+      "competition_level": "High; abundant established/free substitutes",
+      "eligibility_note": "Relevant platform fee/policy sources are linked. Canadian account approval, tax interview, payout method and listing acceptance must be verified before launch; no seller account was created."
+    }
+  ]
+}

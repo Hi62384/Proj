@@ -1,0 +1,714 @@
+[
+  {
+    "id": "S01",
+    "title": "Gumroad pricing",
+    "url": "https://gumroad.com/pricing",
+    "type": "Official fee schedule",
+    "finding": "Direct sales 10% + US$0.50; Discover sales 30%; merchant-of-record model. Processor charges and refunds require current help-page review.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S02",
+    "title": "Gumroad fees help",
+    "url": "https://gumroad.com/help/article/66-gumroads-fees",
+    "type": "Official fee schedule",
+    "finding": "Direct sale platform fee is 10% + US$0.50; processor fees can be additional. Discover 30% includes processing. Do not model every direct sale at only 10%.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S03",
+    "title": "Lemon Squeezy pricing",
+    "url": "https://www.lemonsqueezy.com/pricing",
+    "type": "Official fee schedule",
+    "finding": "Base digital-product processing 5% + US$0.50, no monthly processing subscription; merchant of record.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S04",
+    "title": "Lemon Squeezy fee details",
+    "url": "https://docs.lemonsqueezy.com/help/getting-started/fees",
+    "type": "Official fee schedule",
+    "finding": "Adds 1.5% for non-US transactions, 1.5% PayPal, 0.5% subscriptions; fees on order total including tax. Non-US bank payout fee 1%. Other marketing fees can apply.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S05",
+    "title": "Lemon Squeezy supported countries",
+    "url": "https://docs.lemonsqueezy.com/help/getting-started/supported-countries",
+    "type": "Official eligibility",
+    "finding": "Canada appears in supported bank-payout countries. Business approval and identity verification remain necessary; some customer countries are excluded.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S06",
+    "title": "Lemon Squeezy prohibited products",
+    "url": "https://docs.lemonsqueezy.com/help/getting-started/prohibited-products",
+    "type": "Official policy",
+    "finding": "Product-category approval is required; consult prohibited-product rules before selecting it for a service, marketplace or AI product.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S07",
+    "title": "itch.io payment documentation",
+    "url": "https://itch.io/docs/creators/payments",
+    "type": "Official fee and payout documentation",
+    "finding": "Open revenue sharing; example uses default 10% plus generally 2.9% + US$0.30 processor charges. Direct and collected-payout modes differ, as do tax and payout obligations.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S08",
+    "title": "Fab publisher programme",
+    "url": "https://www.fab.com/o/become-a-publisher",
+    "type": "Official marketplace",
+    "finding": "Publishers receive 88% revenue share; supports multiple engines and digital asset types. Acceptance, tax interview and payout onboarding required.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S09",
+    "title": "Unity publishing",
+    "url": "https://assetstore.unity.com/publishing/publish-and-sell-assets",
+    "type": "Official marketplace",
+    "finding": "No publishing fee; publishers retain 70%; minimum asset price US$4.99. Submission review and tax/payout profile required.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S10",
+    "title": "Godot Asset Store submission",
+    "url": "https://docs.godotengine.org/en/stable/community/asset_store/submitting_to_asset_store.html",
+    "type": "Official platform policy",
+    "finding": "Paid assets cannot yet be uploaded. Functional assets, correct licences and AI disclosure required.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S11",
+    "title": "Godot store roadmap",
+    "url": "https://store.godotengine.org/roadmap/",
+    "type": "Official roadmap",
+    "finding": "Buy/sell support remains a future feature; roadmap text may lag release status, so do not assume future paid checkout availability.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S12",
+    "title": "Godot engine licence",
+    "url": "https://docs.godotengine.org/en/4.1/about/complying_with_licenses.html",
+    "type": "Official licence guidance",
+    "finding": "Commercial games allowed; MIT notice obligations apply. Engine permission does not licence third-party game characters, art, music or assets.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S13",
+    "title": "Current paid game asset listings",
+    "url": "https://itch.io/game-assets/store",
+    "type": "Marketplace observation",
+    "finding": "Approximately 59,951 paid listings displayed at research time. Evidence of substantial supply, not buyer counts or seller profitability.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S14",
+    "title": "Modular low-poly city pack",
+    "url": "https://eldamarstudio.itch.io/low-poly-modular-city-pack/purchase",
+    "type": "Creator product listing",
+    "finding": "US$19 list price and US$9.50 sale price observed. A live offer demonstrates asking price, not sales or profit.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S15",
+    "title": "Kenney asset catalogue",
+    "url": "https://kenney.nl/assets",
+    "type": "Creator catalogue",
+    "finding": "Broad free asset catalogue including 2D, 3D, UI, audio and textures; strong substitute for generic packs.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S16",
+    "title": "Godot save system competitors",
+    "url": "https://itch.io/game-assets/tag-godot/tag-save-system",
+    "type": "Marketplace observation",
+    "finding": "Many paid and free save-system listings; observed paid examples around US$3–15. Generic save plugins face substantial price pressure.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S17",
+    "title": "Greenlight web export toolkit",
+    "url": "https://store.godotengine.org/asset/impact-cores/greenlight-web-export-toolkit/",
+    "type": "Creator product listing",
+    "finding": "Free MIT toolkit checks several Godot web-export issues. Listing updated 10 October 2026 and marked unstable. Strong substitute; no paid-demand proof.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S18",
+    "title": "Godot command line documentation",
+    "url": "https://docs.godotengine.org/en/4.6/tutorials/editor/command_line_tutorial.html",
+    "type": "Official technical documentation",
+    "finding": "Headless command-line exports supported; installed editor/export templates and matching export preset required.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S19",
+    "title": "Godot export troubleshooting",
+    "url": "https://docs.godotengine.org/en/4.1/about/troubleshooting.html",
+    "type": "Official technical documentation",
+    "finding": "PCK paths are case-sensitive; missing resources and case mismatch can break export. Older documentation establishes problem, not current prevalence.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S20",
+    "title": "Khronos glTF validator",
+    "url": "https://github.com/KhronosGroup/glTF-Validator/blob/main/README.md",
+    "type": "Official open-source project",
+    "finding": "Existing browser and CLI validators produce structured asset reports; reuse only after reviewing current licence, rather than rebuilding basic validation.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S21",
+    "title": "Weblate quality checks",
+    "url": "https://docs.weblate.org/en/latest/user/checks.html",
+    "type": "Official technical documentation",
+    "finding": "Existing localization checks cover placeholders, plurals, markup and format errors. Strong free/self-hosted substitute; linguistic correctness still needs judgment.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S22",
+    "title": "Weblate pricing",
+    "url": "https://weblate.org/en/hosting/",
+    "type": "Official paid product",
+    "finding": "Hosted localization products have paid plans. Header starts at EUR39/month; specific monthly/annual and string-count prices must be checked in calculator.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S23",
+    "title": "CSVbox pricing",
+    "url": "https://csvbox.io/pricing/",
+    "type": "Official paid product",
+    "finding": "CSV validation/import product with sandbox and paid plans; Startup displayed US$16/month billed yearly. Many capabilities already commoditized.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S24",
+    "title": "Dromo pricing",
+    "url": "https://dromo.io/pricing",
+    "type": "Official paid product",
+    "finding": "Professional advertised US$599/month including 250 production imports then US$3/import. Enterprise features and security claims are vendor statements.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S25",
+    "title": "PDFMonkey pricing",
+    "url": "https://pdfmonkey.io/pricing/",
+    "type": "Official paid product",
+    "finding": "September 2026 page: free 20 documents/month; Starter EUR5/month for 300, Pro EUR15/month for 3,000. Generic rendering is inexpensive.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S26",
+    "title": "Distill pricing",
+    "url": "https://distill.io/pricing/",
+    "type": "Official paid product",
+    "finding": "Website-change monitoring free tier and US$15/35/80+ monthly plans. Offer has strong free competition; target monitoring requires permission/terms review.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S27",
+    "title": "ScreenshotOne founder milestone",
+    "url": "https://screenshotone.com/blog/200000-arr-and-400-paying-customers/",
+    "type": "Owner-reported outcome",
+    "finding": "10 April 2025 founder report: US$200,000 ARR and 400+ paying customers after nearly three years. Unaudited revenue, not net profit or typical results.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S28",
+    "title": "ScreenshotOne company information",
+    "url": "https://screenshotone.com/about/",
+    "type": "Owner-reported outcome",
+    "finding": "Company describes itself as bootstrapped and profitable. No audited current income statement inspected.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S29",
+    "title": "Remote OK employer checkout",
+    "url": "https://remoteok.com/hire-remotely",
+    "type": "Official paid offer",
+    "finding": "Job posting starts at US$299 for 30 days with dynamic pricing and optional paid additions. Renewal and refund terms matter; audience claims are vendor claims.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S30",
+    "title": "GDQuest course offers",
+    "url": "https://school.gdquest.com/",
+    "type": "Official paid offer",
+    "finding": "Specialized Godot learning products have paid offers. Search crawl was older, so exact prices are not treated as live validated launch anchors.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S31",
+    "title": "GDQuest lifetime-bundle change",
+    "url": "https://www.gdquest.com/news/2023/07/discontinuing-ultimate-bundle/",
+    "type": "Operator experience",
+    "finding": "2023 explanation says continuing development does not fit unlimited lifetime-future-content pricing. Historical lesson, not current revenue evidence.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S32",
+    "title": "Notion template selling",
+    "url": "https://www.notion.com/help/selling-on-marketplace",
+    "type": "Official fees and eligibility",
+    "finding": "8% + US$0.40; non-US payout FX fee 1%; Canada supported; approval/waitlist can take months; payout holds and minimum apply.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S33",
+    "title": "Etsy fees",
+    "url": "https://www.etsy.com/ca/legal/fees/",
+    "type": "Official fee policy",
+    "finding": "US$0.20 listing charge and 6.5% transaction fee; extra processing, regulatory, FX and Offsite Ads fees can apply. Setup fee may be shown on onboarding.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S34",
+    "title": "Etsy Payments",
+    "url": "https://www.etsy.com/legal/etsy-payments/",
+    "type": "Official fee policy",
+    "finding": "Canada domestic/US orders 3% + CAD0.25; other international orders 4% + CAD0.25, exclusive of applicable tax.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S35",
+    "title": "Etsy creativity standards",
+    "url": "https://www.etsy.com/ca/legal/creativity/",
+    "type": "Official content policy",
+    "finding": "Seller-prompted AI creations have conditions; original design responsibility remains. AI prompt bundles do not qualify. Check current disclosure requirements.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S36",
+    "title": "Adobe Stock generative AI rules",
+    "url": "https://helpx.adobe.com/stock/contributor/submit-your-content/submit-generative-ai-content/adobe-stock-generative-ai-faq.html",
+    "type": "Official content policy",
+    "finding": "June 2026 guidance permits qualifying, labelled AI images/vectors/videos; rights and technical quality required; excessive similar submissions are spam.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S37",
+    "title": "Adobe Stock royalties",
+    "url": "https://helpx.adobe.com/stock/contributor/get-started/become-contributor/contributor-faq-for-cce-cct-pro-edition.html",
+    "type": "Official royalty policy",
+    "finding": "33% content-revenue royalty described for qualifying photos/illustrations/vectors, with pooled allocation for Pro Edition. Individual download values vary.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S38",
+    "title": "KDP ebook royalties",
+    "url": "https://kdp.amazon.com/en_US/help/topic/G200634500",
+    "type": "Official royalty policy",
+    "finding": "35% or qualifying 70% royalty; delivery costs, customer territories, price rules and refunds matter. Not a universal 70% margin.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S39",
+    "title": "KDP content policy",
+    "url": "https://kdp.amazon.com/en_US/help/topic/G200672390",
+    "type": "Official content policy",
+    "finding": "AI-generated text/images/translations require disclosure to KDP; AI assistance treated differently; rights and customer-quality obligations apply.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S40",
+    "title": "TPT seller fees",
+    "url": "https://help.teacherspayteachers.com/hc/en-us/articles/360044219891-Seller-Fees-and-Payout-Rates",
+    "type": "Official policy updated 2026-10-01",
+    "finding": "Basic: US$29 one-time, 55% payout and US$0.30/resource. New Exclusive: US$59.95/year, 80% through 2026 then 77.5% from 2027; exclusivity applies.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S41",
+    "title": "TPT exclusivity",
+    "url": "https://help.teacherspayteachers.com/hc/en-us/articles/53904743536276-Exclusive-Seller-FAQs-for-New-Sellers-and-Basic-Sellers",
+    "type": "Official policy updated 2026-10-01",
+    "finding": "Exclusive sellers must sell digital educational resources through TPT; conflicts with a multi-checkout portfolio. Existing Premium programme changed.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S42",
+    "title": "Udemy course revenue share",
+    "url": "https://support.udemy.com/hc/en-us/sections/206458448-Instructor-payments-general",
+    "type": "Official fee policy",
+    "finding": "97% on qualifying instructor-referred course transactions versus 37% otherwise; other deductions and refunds affect earnings.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S43",
+    "title": "Udemy subscription pool",
+    "url": "https://support.udemy.com/hc/en-us/articles/115013221767-How-do-I-Earn-Revenue-From-Udemy-Business-and-Subscription-Plans",
+    "type": "Official royalty policy",
+    "finding": "2026 subscription instructor pool is 15% of eligible subscription revenue and allocated by learner engagement, not 15% of an individual's course price.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S44",
+    "title": "Printful costs",
+    "url": "https://help.printful.com/hc/en-us/articles/50261163157905-How-much-does-Printful-cost",
+    "type": "Official fulfilment costs",
+    "finding": "Free account option; merchant pays product/printing/shipping/tax on orders. Customer storefront receipts and fulfilment billing have separate cash timing.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S45",
+    "title": "Printful returns",
+    "url": "https://help.printful.com/hc/en-us/articles/50263870468753-What-is-Printful-s-return-and-refund-policy",
+    "type": "Official returns policy",
+    "finding": "Buyer remorse/wrong size not covered by standard fulfilment returns. Seller's consumer-law obligations remain; defect/loss claim deadlines apply.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S46",
+    "title": "Amazon Canada commission rates",
+    "url": "https://associates.amazon.ca/help/node/topic/GRXPHT8U84RAYDXZ",
+    "type": "Official affiliate schedule",
+    "finding": "Category rates range from zero to 10%; computers/consoles 1% and many categories 3–6%. Refunds and attribution conditions reduce payable commissions.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S47",
+    "title": "Amazon Associates policies",
+    "url": "https://associates.amazon.ca/help/operating/policies",
+    "type": "Official affiliate rules",
+    "finding": "Link, content, attribution, promotion and payout rules apply; no fake reviews, self-dealing or unauthorized product-data reuse.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S48",
+    "title": "Shopify app distribution",
+    "url": "https://shopify.dev/docs/apps/launch/app-store-review",
+    "type": "Official platform policy",
+    "finding": "Eligible reduced programme: 0% on first US$1m and 15% afterward; registration/eligibility and billing requirements apply. Protected customer data adds obligations.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S49",
+    "title": "Chrome developer account",
+    "url": "https://developer.chrome.com/docs/webstore/register/",
+    "type": "Official platform policy",
+    "finding": "One-time registration fee and developer agreement required. Amount should be verified at onboarding; external billing and privacy implementation needed.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S50",
+    "title": "Figma paid resources",
+    "url": "https://help.figma.com/hc/en-us/articles/12067637274519-About-selling-Community-resources",
+    "type": "Official platform policy",
+    "finding": "15% fee; Canada supported. New paid-file creator approval is paused; do not assume paid-file access. Plugins/widgets have separate rules.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S51",
+    "title": "Superhive creator pricing",
+    "url": "https://superhivemarket.com/pricing",
+    "type": "Official fee schedule",
+    "finding": "Free plan: 70% commission less US$0.49 item fee and 5.5% merchant fee; paid plans raise commission but add recurring fees. Review actual calculator before use.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S52",
+    "title": "Creative Market earnings",
+    "url": "https://support.creativemarket.com/hc/en-us/articles/201193714-All-About-Shop-Sales-Analytics",
+    "type": "Official fee schedule",
+    "finding": "Default creator share 50%; rates vary by shop/product. Discounts can affect earnings.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S53",
+    "title": "Canva Creators",
+    "url": "https://www.canva.com/creators/",
+    "type": "Official programme policy",
+    "finding": "Application/portfolio required; element creator application paused. Qualifying creators earn royalties, not a guaranteed per-template return. Heavy AI-generated submissions restricted.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S54",
+    "title": "Blender extension platform",
+    "url": "https://extensions.blender.org/about/",
+    "type": "Official platform policy",
+    "finding": "Official extension platform offers GPL-compliant software. Monetization and redistribution rights require licence-aware packaging.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S55",
+    "title": "WordPress plugin developer rules",
+    "url": "https://en-gb.wordpress.org/plugins/developers/",
+    "type": "Official platform policy",
+    "finding": "Repository restrictions on trialware/licence gates apply. A separately distributed paid add-on or genuine service must comply with detailed rules.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S56",
+    "title": "VS Code extension publishing",
+    "url": "https://code.visualstudio.com/api/working-with-extensions/publishing-extension",
+    "type": "Official technical policy",
+    "finding": "Marketplace publication workflow and security requirements documented. Global PAT retirement announced for 1 December 2026; use supported secure publishing.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S57",
+    "title": "Monotype foundry royalties",
+    "url": "https://foundrysupport.monotype.com/hc/en-us/sections/360011729512-Getting-Started",
+    "type": "Official royalty policy",
+    "finding": "Foundry guidance advertises 50% on MyFonts and 25% on other covered channels. Actual agreement and eligible rights govern.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S58",
+    "title": "Canada open licence",
+    "url": "https://open.canada.ca/open-government-licence-canada",
+    "type": "Government licence",
+    "finding": "Commercial reuse of covered information allowed with attribution; excludes personal information, third-party rights and official marks; no endorsement.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S59",
+    "title": "CanadaBuys dataset",
+    "url": "https://open.canada.ca/data/dataset/6abd20d4-7a1c-4b38-baa2-9525d0bb2fd2",
+    "type": "Government open dataset",
+    "finding": "Tender-notice CSV feeds available under Open Government Licence. Data freshness and individual attachment rights still need checks.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S60",
+    "title": "Statistics Canada developer access",
+    "url": "https://www.statcan.gc.ca/en/developers",
+    "type": "Government API documentation",
+    "finding": "Web Data Service, daily deltas and CSV tables available; preserve units, vintages and revision metadata.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S61",
+    "title": "Statistics Canada licence FAQ",
+    "url": "https://www.statcan.gc.ca/en/terms-conditions/open-licence-faq",
+    "type": "Government licence",
+    "finding": "Covered open information can be commercially redistributed; not all restricted microdata or separately licensed products are included.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S62",
+    "title": "MERX pricing",
+    "url": "https://www.merx.com/public/pricing",
+    "type": "Official paid product",
+    "finding": "Canadian national tender subscription advertised CAD80/month annual billing or CAD160/month monthly billing. Broader coverage than a federal-feed-only product.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S63",
+    "title": "Cloudflare Workers pricing",
+    "url": "https://developers.cloudflare.com/workers/platform/pricing/",
+    "type": "Official infrastructure pricing",
+    "finding": "Workers paid base US$5/month; static requests free; requests, CPU, storage and other products have quotas/overages. Free plans unsuitable for unbounded guarantees.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S64",
+    "title": "Stripe Canada pricing",
+    "url": "https://stripe.com/en-ca/pricing",
+    "type": "Official payment pricing",
+    "finding": "Domestic cards 2.9% + CAD0.30; international +0.8%, FX +2% when applicable. Billing/tax/disputes are additional products or fees.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S65",
+    "title": "GitHub Pages limits",
+    "url": "https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits",
+    "type": "Official hosting policy",
+    "finding": "GitHub Pages may not be used as free hosting primarily for ecommerce/commercial SaaS. Use appropriate commercial hosting.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S66",
+    "title": "n8n licensing guidance",
+    "url": "https://support.n8n.io/article/can-i-use-your-license-for-my-use-case",
+    "type": "Official licensing guidance",
+    "finding": "Community licence permits bounded internal uses; hosting n8n as a service/white-labelling requires commercial licensing. Verify use-specific terms.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S67",
+    "title": "Google spam policy",
+    "url": "https://developers.google.com/search/docs/essentials/spam-policies",
+    "type": "Official distribution policy",
+    "finding": "Scaled content and doorway abuse can remove search visibility. AI-generated volume is not a durable distribution strategy.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S68",
+    "title": "CASL guidance",
+    "url": "https://crtc.gc.ca/eng/com500/guide.htm",
+    "type": "Canadian regulator guidance",
+    "finding": "Commercial electronic messages generally need consent, identification and unsubscribe. Asking for consent by unsolicited commercial email is itself covered.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S69",
+    "title": "CASL FAQ",
+    "url": "https://crtc.gc.ca/eng/com500/faq500.htm",
+    "type": "Canadian regulator guidance",
+    "finding": "Express/implied consent conditions vary; public address is not blanket permission. Keep evidence and honour opt-outs.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S70",
+    "title": "CRA GST HST registration",
+    "url": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses/when-register-charge.html",
+    "type": "Canadian tax authority",
+    "finding": "CAD30,000 small-supplier threshold concerns worldwide taxable supplies across businesses and associates, with single-quarter and rolling-quarter timing rules.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S71",
+    "title": "CRA business reporting",
+    "url": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/sole-proprietorships-partnerships/report-business-income-expenses.html",
+    "type": "Canadian tax authority",
+    "finding": "Sole proprietors generally report business income and expenses on T2125; income tax differs from sales tax.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S72",
+    "title": "CRA record retention",
+    "url": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/sole-proprietorships-partnerships/business-records.html",
+    "type": "Canadian tax authority",
+    "finding": "Business records generally retained at least six years from end of relevant tax year; track gross income, fees, expenses and supporting documents.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S73",
+    "title": "OPC privacy guide",
+    "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/pipeda-compliance-help/guide_org/",
+    "type": "Canadian regulator guidance",
+    "finding": "Accountability, meaningful consent, safeguards, limited collection/retention and breach obligations matter. Provincial and international rules may also apply.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S74",
+    "title": "Competition Bureau disclosures",
+    "url": "https://competition-bureau.canada.ca/en/deceptive-marketing-practices/types-deceptive-marketing-practices/influencer-marketing-and-competition-act",
+    "type": "Canadian regulator guidance",
+    "finding": "Material connections in promotion require clear disclosure; avoid unsubstantiated performance claims and disguised advertisements.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S75",
+    "title": "YouTube originality policy clarification",
+    "url": "https://support.google.com/youtube/thread/356734251?hl=en&msgid=364056726",
+    "type": "Official policy clarification",
+    "finding": "Mass-produced/repetitive inauthentic content ineligible for monetization; AI use alone is not the sole test.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S76",
+    "title": "Steam Direct fee",
+    "url": "https://partner.steamgames.com/doc/gettingstarted/appfee",
+    "type": "Official distribution policy",
+    "finding": "US$100 or equivalent fee per app; recoupment conditions apply. This does not establish a standard distribution revenue split.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S77",
+    "title": "CrazyGames developer FAQ",
+    "url": "https://docs.crazygames.com/faq/",
+    "type": "Official distribution policy",
+    "finding": "Advertising revenue share and optional in-game purchases; publication on other platforms generally compatible. Review current contract and approval before budgeting.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S78",
+    "title": "Godot shader licence examples",
+    "url": "https://godotshaders.com/license/",
+    "type": "Community platform licence rules",
+    "finding": "Shader code licences can be CC0, MIT or GPL; preview art/video is not automatically covered. Many free substitutes.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S79",
+    "title": "UI audio marketplace",
+    "url": "https://itch.io/game-assets/store/tag-interface/tag-sound-effects",
+    "type": "Marketplace observation",
+    "finding": "Paid UI sound packs at diverse prices, including US$1–15 examples. Listings show competition, not verified earnings.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S80",
+    "title": "Printables clubs",
+    "url": "https://www.printables.com/clubs",
+    "type": "Marketplace observation",
+    "finding": "Creator memberships and exclusive model catalogues exist; exact current seller fees and Canada payout eligibility not verified in this review.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S81",
+    "title": "Papa Parse",
+    "url": "https://www.papaparse.com/",
+    "type": "Official open-source project",
+    "finding": "Browser-local CSV parsing, streaming, worker support and structured parsing errors; pin and review the actual dependency version before shipping.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S82",
+    "title": "Ajv JSON schema validator",
+    "url": "https://github.com/ajv-validator/ajv",
+    "type": "Official open-source project",
+    "finding": "Reusable JSON Schema validation library; review bundled version, licence and security before redistribution.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S83",
+    "title": "FormatJS",
+    "url": "https://github.com/formatjs/formatjs",
+    "type": "Official open-source project",
+    "finding": "ICU message-format tooling can support parsing; integrate only the needed package and preserve required notices.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S84",
+    "title": "Lemon Squeezy webhooks",
+    "url": "https://docs.lemonsqueezy.com/guides/developer-guide/webhooks",
+    "type": "Official implementation guide",
+    "finding": "Order/subscription/refund events supported; verify signatures, persist events and process idempotently. Provider retries are finite, so reconcile separately.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S85",
+    "title": "Lemon Squeezy licensing",
+    "url": "https://docs.lemonsqueezy.com/help/licensing/generating-license-keys",
+    "type": "Official implementation guide",
+    "finding": "Managed licence keys are available; do not put private API keys in client apps or make bought offline files unusable during a billing outage.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S86",
+    "title": "GitHub Actions billing",
+    "url": "https://docs.github.com/en/billing/concepts/product-billing/github-actions",
+    "type": "Official infrastructure pricing",
+    "finding": "CI free allowances depend on plan/repository/runner type. Configure spending limits and avoid assuming every private-repo build is free.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "S87",
+    "title": "Playwright",
+    "url": "https://github.com/microsoft/playwright",
+    "type": "Official open-source project",
+    "finding": "Browser testing framework supports Chromium, Firefox and WebKit; useful for checkout and UI regression tests.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "F01",
+    "title": "Lemon Squeezy payout timing and minimum",
+    "url": "https://docs.lemonsqueezy.com/help/getting-started/getting-paid",
+    "type": "Official payment-platform documentation",
+    "finding": "Payout timing, holds and US$50 threshold inform cash-timing assumptions. Actual account approval and first settlement may differ.",
+    "checked": "2026-10-13"
+  },
+  {
+    "id": "F02",
+    "title": "Lemon Squeezy refunds and chargebacks",
+    "url": "https://docs.lemonsqueezy.com/help/payments/refunds-chargebacks",
+    "type": "Official payment-platform documentation",
+    "finding": "Refund/dispute handling and a US$15 chargeback fee inform the conservative model. Check applicable current transaction reversal treatment before launch.",
+    "checked": "2026-10-13"
+  }
+]

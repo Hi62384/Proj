@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "new_niche_slices": 197,
+  "new_explicit_offer_hypotheses": 1182,
+  "preserved_original_source_records": 114,
+  "total_indexed_records": 1296,
+  "opportunity_ids_unique": true,
+  "new_ideas_per_niche": 6,
+  "registered_primary_and_category_sources_new": 21,
+  "original_source_registries_still_referenced": [
+    "sources.json (89)",
+    "research_merge/fast_cash_sources.json (47)"
+  ],
+  "unit_economics": "1182 recalculated exactly against documented mode assumptions",
+  "no_sales_case": "Available for each new hypothesis",
+  "source_link_integrity": "All expanded references resolve to source registry; URLs are not individually fetched from this build environment",
+  "network_requests_in_dashboard": "none",
+  "user_accounts_or_sales_created": false,
+  "niche_bias": "No personal-profile or Godot score adjustment",
+  "javascript_syntax": "PASS via Node 22",
+  "offline_interaction_smoke_test": "PASS: 1,296 records, 197 niches, 21 sources; initial render, search, source/sector/track/regulated filters, pagination and reset.",
+  "render_qa": "Browser screenshot not verified; manual visual review recommended",
+  "warnings": [
+    "Market demand for exact offers is not verified",
+    "All new scores/costs/timelines are illustrative; model-cluster scores have common priors",
+    "No automatic customer acquisition",
+    "197 niche names do not represent 197 distinct revenue models",
+    "Existing two finance models remain distinct, not added"
+  ]
+}

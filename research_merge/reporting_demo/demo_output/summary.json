@@ -1,0 +1,32 @@
+{
+  "record_count": 8,
+  "from": "2026-10-01",
+  "to": "2026-10-07",
+  "revenue": "1288.00",
+  "input_cost": "432.00",
+  "revenue_minus_input_cost": "856.00",
+  "channels": [
+    {
+      "channel": "Direct",
+      "records": 3,
+      "revenue": "453.00",
+      "cost": "165.00",
+      "revenue_minus_input_cost": "288.00"
+    },
+    {
+      "channel": "Marketplace",
+      "records": 2,
+      "revenue": "388.00",
+      "cost": "125.00",
+      "revenue_minus_input_cost": "263.00"
+    },
+    {
+      "channel": "Referral",
+      "records": 3,
+      "revenue": "447.00",
+      "cost": "142.00",
+      "revenue_minus_input_cost": "305.00"
+    }
+  ],
+  "note": "Input revenue minus input cost is NOT net business profit; other expenses/taxes may be absent."
+}

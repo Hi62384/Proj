@@ -1,0 +1,15 @@
+{
+  "repo_commit": "86d724f58d3647ab2822d7904128be882cba8b29",
+  "repo_records": 54,
+  "fast_records": 60,
+  "total_records": 114,
+  "clusters": 96,
+  "equivalent_pairs": 18,
+  "adjacent_pairs": 31,
+  "repo_source_references": 89,
+  "fast_source_references": 47,
+  "source_reference_total": 136,
+  "as_of": "2026-10-13",
+  "currency": "CAD",
+  "comparison": "Estimates and category demand signals only; no paid validations established."
+}

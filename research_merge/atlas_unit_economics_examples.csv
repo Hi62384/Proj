@@ -1,0 +1,7 @@
+mode,model,unit_price_cad,monthly_paid_units_assumed,platform_fee_allowance_pct,refund_allowance_pct,variable_delivery_cost_cad,fixed_monthly_cost_cad,net_contribution_per_unit_cad,zero_sales_loss_cad,conditional_operating_profit_cad,owner_time_not_deducted,demand_unverified
+F,Fast-cash productized service,499,3,8.0,3.0,28,30,416.11,-30,1218.33,True,True
+R,Managed recurring monitoring,129,12,6.0,3.0,8,75,109.39,-75,1237.68,True,True
+D,Self-service digital download,39,20,12.0,4.0,1.5,20,31.26,-20,605.2,True,True
+I,"Specific app, connector or integration",99,12,9.0,3.0,7,95,80.12,-95,866.44,True,True
+A,Original licensed asset product,39,22,14.0,4.0,1,15,30.98,-15,666.56,True,True
+P,"Paid data, research or digest",49,25,10.0,4.0,5,45,37.14,-45,883.5,True,True

@@ -1,0 +1,41 @@
+{
+  "source_repository": "Hi62384/Proj",
+  "baseline_commit": "86d724f58d3647ab2822d7904128be882cba8b29",
+  "additive": true,
+  "added_paths": [
+    "Combined_Online_Income_Research.html",
+    "research_merge/Actuals_template.csv",
+    "research_merge/Fast_Cash_Research_and_Model.xlsx",
+    "research_merge/INTAKE_AND_ACCEPTANCE.md",
+    "research_merge/MERGE_METADATA.json",
+    "research_merge/MERGE_QA.json",
+    "research_merge/OUTREACH.md",
+    "research_merge/Operations_template.csv",
+    "research_merge/PILOT_OFFER.md",
+    "research_merge/README.md",
+    "research_merge/RESEARCH_RECONCILIATION.md",
+    "research_merge/fast_cash_60_opportunities.csv",
+    "research_merge/fast_cash_assumptions.json",
+    "research_merge/fast_cash_full_playbook.md",
+    "research_merge/fast_cash_sources.json",
+    "research_merge/merged_114_opportunity_index.csv",
+    "research_merge/overlap_crosswalk.csv",
+    "research_merge/reporting_demo/README.md",
+    "research_merge/reporting_demo/demo_output/channel_summary.csv",
+    "research_merge/reporting_demo/demo_output/report.html",
+    "research_merge/reporting_demo/demo_output/summary.json",
+    "research_merge/reporting_demo/report_builder.py",
+    "research_merge/reporting_demo/synthetic_sample.csv",
+    "research_merge/reporting_demo/tests/test_report_builder.py",
+    "research_merge/separate_scenario_comparison.csv"
+  ],
+  "validation": {
+    "repo_records": 54,
+    "fast_records": 60,
+    "equivalent_pairs": 18,
+    "adjacent_pairs": 31,
+    "clusters": 96,
+    "no_original_paths_modified": true,
+    "note": "Cross-study links and proxy scores are heuristic; revenue does not combine."
+  }
+}

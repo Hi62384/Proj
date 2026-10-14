@@ -1,0 +1,195 @@
+{
+  "as_of": "2026-10-13",
+  "limits": "Market precedents only, not exact-offer validation",
+  "sources": {
+    "UPWORK": {
+      "title": "Upwork In-Demand Skills 2026 completed-work analysis",
+      "url": "https://www.upwork.com/press/releases/upworks-in-demand-skills-2026-demand-for-top-ai-skills-more-than-doubles-as-ai-is-embedded-into-everyday-work",
+      "grade": "E1 broad work-category spending",
+      "scope": "US-origin completed freelance projects in 2025; not validation for a named niche offer.",
+      "id": "UPWORK",
+      "checked": "2026-10-13",
+      "use": "industry-level evidence or provider terms only"
+    },
+    "HOME": {
+      "title": "2026 Jobber Home Service Trends Report",
+      "url": "https://www.getjobber.com/home-service-trends-report/",
+      "grade": "E2 survey/category signal",
+      "scope": "Survey of 1,050 US home-service owners; no exact customer willingness-to-pay established.",
+      "id": "HOME",
+      "checked": "2026-10-13",
+      "use": "industry-level evidence or provider terms only"
+    },
+    "SQUARE": {
+      "title": "Square Canada restaurants/retail pricing",
+      "url": "https://squareup.com/ca/en/point-of-sale/restaurants/pricing",
+      "grade": "E2 paid category",
+      "scope": "Canadian paid POS and operations features; prices verify established services, not adjacent product demand.",
+      "id": "SQUARE",
+      "checked": "2026-10-13",
+      "use": "industry-level evidence or provider terms only"
+    },
+    "BUILDIUM": {
+      "title": "Buildium property management prices",
+      "url": "https://www.buildium.com/pricing/",
+      "grade": "E2 paid category",
+      "scope": "Property-management software category spending, not a new seller\u2019s opportunity validation.",
+      "id": "BUILDIUM",
+      "checked": "2026-10-13",
+      "use": "industry-level evidence or provider terms only"
+    },
+    "CLIO": {
+      "title": "Clio Canadian legal practice pricing",
+      "url": "https://www.clio.com/ca/pricing/",
+      "grade": "E2 paid category",
+      "scope": "Legal workflow software subscription prices; does not validate regulated-adjacent offers.",
+      "id": "CLIO",
+      "checked": "2026-10-13",
+      "use": "industry-level evidence or provider terms only"
+    },
+    "GLOFOX": {
+      "title": "Glofox club management software plans",
+      "url": "https://www.glofox.com/plans/",
+      "grade": "E2 adjacent category",
+      "scope": "Paid fitness management software; for non-fitness sectors this is only a generic adjacent illustration, not sector-specific evidence.",
+      "id": "GLOFOX",
+      "checked": "2026-10-13",
+      "use": "industry-level evidence or provider terms only"
+    },
+    "THINKIFIC": {
+      "title": "Thinkific course platform",
+      "url": "https://www.thinkific.com/pricing/",
+      "grade": "E4 distribution/pricing",
+      "scope": "Course seller infrastructure; neither course sales nor topic demand proven.",
+      "id": "THINKIFIC",
+      "checked": "2026-10-13",
+      "use": "industry-level evidence or provider terms only"
+    },
+    "TPT": {
+      "title": "TPT seller fees (2026)",
+      "url": "https://help.teacherspayteachers.com/hc/en-us/articles/360044219891-Seller-Fees-and-Payout-Rates",
+      "grade": "E4 platform terms",
+      "scope": "Seller economics including October 2026 tier change; not curriculum-product demand.",
+      "id": "TPT",
+      "checked": "2026-10-13",
+      "use": "industry-level evidence or provider terms only"
+    },
+    "SHOPIFY": {
+      "title": "Shopify developer app revenue share",
+      "url": "https://shopify.dev/docs/apps/launch/distribution/revenue-share",
+      "grade": "E4 software distribution",
+      "scope": "App-store developer fee policy; seller demand and review approval unproven.",
+      "id": "SHOPIFY",
+      "checked": "2026-10-13",
+      "use": "industry-level evidence or provider terms only"
+    },
+    "ETSY": {
+      "title": "Etsy fees and taxes",
+      "url": "https://help.etsy.com/hc/en-us/articles/115014483627-What-are-the-Fees-and-Taxes-for-Selling-on-Etsy",
+      "grade": "E4 platform terms",
+      "scope": "Seller fees and restrictions; visibility and actual digital-product sales not proven.",
+      "id": "ETSY",
+      "checked": "2026-10-13",
+      "use": "industry-level evidence or provider terms only"
+    },
+    "CREATIVE": {
+      "title": "Gumroad pricing",
+      "url": "https://gumroad.com/pricing",
+      "grade": "E4 storefront",
+      "scope": "Digital storefront fees only; no evidence anyone will discover a listing.",
+      "id": "CREATIVE",
+      "checked": "2026-10-13",
+      "use": "industry-level evidence or provider terms only"
+    },
+    "KDP": {
+      "title": "Amazon Kindle Direct Publishing royalties",
+      "url": "https://kdp.amazon.com/en_US/earn?region=canada",
+      "grade": "E4 distribution terms",
+      "scope": "Royalty options, not book sales or search placement.",
+      "id": "KDP",
+      "checked": "2026-10-13",
+      "use": "industry-level evidence or provider terms only"
+    },
+    "PRINTIFY": {
+      "title": "Printify print-on-demand prices",
+      "url": "https://printify.com/pricing/",
+      "grade": "E4 fulfillment",
+      "scope": "POD fulfillment availability; fees, returns, shipping and customer acquisition still need validation.",
+      "id": "PRINTIFY",
+      "checked": "2026-10-13",
+      "use": "industry-level evidence or provider terms only"
+    },
+    "CHAMBER": {
+      "title": "US Chamber 2026 small-business technology report",
+      "url": "https://www.uschamber.com/technology/2026-empowering-small-business-report",
+      "grade": "E2 survey/cross-industry",
+      "scope": "Technology adoption survey; does not predict sales for any specific idea.",
+      "id": "CHAMBER",
+      "checked": "2026-10-13",
+      "use": "industry-level evidence or provider terms only"
+    },
+    "STRIPE": {
+      "title": "Stripe Canada Payment Links prices",
+      "url": "https://stripe.com/en-ca/payments/payment-links",
+      "grade": "E4 payments",
+      "scope": "Published domestic card starting rates; verify cross-border, FX, taxes and payout lag.",
+      "id": "STRIPE",
+      "checked": "2026-10-13",
+      "use": "industry-level evidence or provider terms only"
+    },
+    "SERVICEFEES": {
+      "title": "Upwork freelancer service fee",
+      "url": "https://support.upwork.com/hc/en-us/articles/211062538-Learn-about-the-Freelancer-Service-Fee",
+      "grade": "E4 marketplace costs",
+      "scope": "0\u201315% individual contract fee plus paid proposals; no paid customer guarantee.",
+      "id": "SERVICEFEES",
+      "checked": "2026-10-13",
+      "use": "industry-level evidence or provider terms only"
+    },
+    "CRA": {
+      "title": "CRA GST/HST registration requirements",
+      "url": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses/when-register-charge.html",
+      "grade": "Official Canadian rule",
+      "scope": "General $30,000 small-supplier rules; exceptions, tax classification and foreign sales require individual review.",
+      "id": "CRA",
+      "checked": "2026-10-13",
+      "use": "industry-level evidence or provider terms only"
+    },
+    "CASL": {
+      "title": "CRTC commercial electronic messages guidance",
+      "url": "https://crtc.gc.ca/eng/com500/faq500.htm",
+      "grade": "Official Canadian rule",
+      "scope": "Consent, identification and unsubscribe requirements; opt-in or buyer-requested channels preferred.",
+      "id": "CASL",
+      "checked": "2026-10-13",
+      "use": "industry-level evidence or provider terms only"
+    },
+    "PRIVACY": {
+      "title": "OPC September 2026 third-party privacy guidance",
+      "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-for-businesses/appropriate-handling-of-personal-information/gd_third-party_202609/",
+      "grade": "2026 draft guidance",
+      "scope": "Service providers must be assessed appropriately; draft consulted through Dec 2026.",
+      "id": "PRIVACY",
+      "checked": "2026-10-13",
+      "use": "industry-level evidence or provider terms only"
+    },
+    "GOOGLE": {
+      "title": "Google scaled content spam policies",
+      "url": "https://developers.google.com/search/docs/essentials/spam-policies",
+      "grade": "Official policy",
+      "scope": "Generating many near-duplicate pages to manipulate rankings can violate spam policies.",
+      "id": "GOOGLE",
+      "checked": "2026-10-13",
+      "use": "industry-level evidence or provider terms only"
+    },
+    "PRESS": {
+      "title": "Investigative test of passive-income side hustles October 2026",
+      "url": "https://www.theguardian.com/business/ng-interactive/2026/oct/13/influencers-passive-income-side-hustles",
+      "grade": "Qualitative counterexample",
+      "scope": "A single published trial lost money; not a statistical benchmark for all side hustles.",
+      "id": "PRESS",
+      "checked": "2026-10-13",
+      "use": "industry-level evidence or provider terms only"
+    }
+  }
+}

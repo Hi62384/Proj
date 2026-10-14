@@ -1,0 +1,378 @@
+{
+  "U26": {
+    "id": "U26",
+    "title": "Upwork In-Demand Skills 2026",
+    "url": "https://www.upwork.com/research/in-demand-skills-2026",
+    "signal": "Contracted US-origin work; 2025 freelancer earnings. Paid category demand, not a new seller's odds or exact offer validation.",
+    "grade": "E1",
+    "checked": "2026-10-12"
+  },
+  "UJ": {
+    "id": "UJ",
+    "title": "Upwork automation job listings",
+    "url": "https://www.upwork.com/freelance-jobs/automation/",
+    "signal": "Public automation requests visible; individual availability, budgets and fit must be rechecked. Postings are not completed purchases.",
+    "grade": "E3",
+    "checked": "2026-10-12"
+  },
+  "AA": {
+    "id": "AA",
+    "title": "AgencyAnalytics pricing",
+    "url": "https://agencyanalytics.com/pricing",
+    "signal": "Displayed USD20 per client/month billed annually; vendor says 7,000+ agencies. Established reporting competition.",
+    "grade": "E2",
+    "checked": "2026-10-12"
+  },
+  "MX": {
+    "id": "MX",
+    "title": "Matrixify pricing",
+    "url": "https://matrixify.app/pricing/",
+    "signal": "Plans displayed $20/$50/$200 per 30 days; normalization service must solve work outside the import app.",
+    "grade": "E2",
+    "checked": "2026-10-12"
+  },
+  "MR": {
+    "id": "MR",
+    "title": "Matrixify Shopify listing",
+    "url": "https://apps.shopify.com/excel-export-import",
+    "signal": "Priced merchant app and user reviews; evidence of an operating category, not guaranteed service demand.",
+    "grade": "E2",
+    "checked": "2026-10-12"
+  },
+  "CK": {
+    "id": "CK",
+    "title": "Checkly pricing",
+    "url": "https://www.checklyhq.com/pricing/",
+    "signal": "Paid browser/API monitoring; quotas and overages. No claim all products are included in a single headline price.",
+    "grade": "E2",
+    "checked": "2026-10-12"
+  },
+  "PA": {
+    "id": "PA",
+    "title": "Parseur pricing",
+    "url": "https://parseur.com/pricing",
+    "signal": "20 pages/month free; table displays $49/month for 100 pages and $129 for 1,000. Pricing in USD; verify selected tier.",
+    "grade": "E2",
+    "checked": "2026-10-12"
+  },
+  "GD": {
+    "id": "GD",
+    "title": "itch.io Godot assets",
+    "url": "https://itch.io/game-assets/tag-godot",
+    "signal": "Paid and free Godot assets with price listings; no verified unit sales or seller profits.",
+    "grade": "E3",
+    "checked": "2026-10-12"
+  },
+  "SH": {
+    "id": "SH",
+    "title": "itch.io shader assets",
+    "url": "https://itch.io/game-assets/tag-shaders",
+    "signal": "Multiple paid shader/VFX listings and extensive free competition; supply and pricing evidence only.",
+    "grade": "E3",
+    "checked": "2026-10-12"
+  },
+  "IN": {
+    "id": "IN",
+    "title": "Insycle pricing",
+    "url": "https://www.insycle.com/pricing/",
+    "signal": "Commercial CRM deduplication/normalization category. Vendor pricing, not independent willingness-to-pay for our service.",
+    "grade": "E2",
+    "checked": "2026-10-12"
+  },
+  "WP": {
+    "id": "WP",
+    "title": "WP Buffs care plans",
+    "url": "https://wpbuffs.com/plans/",
+    "signal": "Commercial WordPress maintenance plans; ongoing responsibility makes this not passive.",
+    "grade": "E2",
+    "checked": "2026-10-12"
+  },
+  "DM": {
+    "id": "DM",
+    "title": "dmarcian pricing",
+    "url": "https://dmarcian.com/pricing/",
+    "signal": "Commercial email-authentication monitoring category; restrict service to authorized domains and legitimate mail.",
+    "grade": "E2",
+    "checked": "2026-10-12"
+  },
+  "PD": {
+    "id": "PD",
+    "title": "PandaDoc pricing",
+    "url": "https://www.pandadoc.com/pricing/",
+    "signal": "Paid document/proposal workflow software; do not offer regulated legal advice.",
+    "grade": "E2",
+    "checked": "2026-10-12"
+  },
+  "MK": {
+    "id": "MK",
+    "title": "Make pricing",
+    "url": "https://www.make.com/pricing",
+    "signal": "Automation infrastructure and metered plans; implementation is an opportunity hypothesis, not platform resale permission.",
+    "grade": "E3",
+    "checked": "2026-10-12"
+  },
+  "N8": {
+    "id": "N8",
+    "title": "n8n pricing",
+    "url": "https://n8n.io/pricing/",
+    "signal": "Commercial workflow software and published plans; underlying workflows can support consulting.",
+    "grade": "E3",
+    "checked": "2026-10-12"
+  },
+  "N8L": {
+    "id": "N8L",
+    "title": "n8n Sustainable Use License",
+    "url": "https://docs.n8n.io/sustainable-use-license",
+    "signal": "Consulting/customer-owned workflows differ from white-label hosted resale; confirm license for embedding.",
+    "grade": "E4",
+    "checked": "2026-10-12"
+  },
+  "SP": {
+    "id": "SP",
+    "title": "Shopify app distribution revenue share",
+    "url": "https://shopify.dev/docs/apps/launch/distribution/revenue-share",
+    "signal": "Eligibility-dependent developer revenue share; app launch/review and processing fees apply.",
+    "grade": "E4",
+    "checked": "2026-10-12"
+  },
+  "SE": {
+    "id": "SE",
+    "title": "Shopify developer ecosystem",
+    "url": "https://www.shopify.com/news/billion-dollar-ecosystem",
+    "signal": "Shopify reports over US$1.3B developer payouts in prior year; aggregate ecosystem spending, not typical app income.",
+    "grade": "E1",
+    "checked": "2026-10-12"
+  },
+  "BL": {
+    "id": "BL",
+    "title": "Superhive marketplace",
+    "url": "https://superhivemarket.com/",
+    "signal": "Commercial Blender addon market. Listing prices and marketplace access are not verified individual sales.",
+    "grade": "E3",
+    "checked": "2026-10-12"
+  },
+  "FA": {
+    "id": "FA",
+    "title": "Fab publishing",
+    "url": "https://www.fab.com/o/become-a-publisher",
+    "signal": "Digital asset distribution; publisher review and rights requirements. Distribution evidence only.",
+    "grade": "E4",
+    "checked": "2026-10-12"
+  },
+  "NO": {
+    "id": "NO",
+    "title": "Notion paid template marketplace",
+    "url": "https://www.notion.com/help/selling-on-marketplace",
+    "signal": "Paid template checkout and creator requirements; marketplace availability is not proof of sales.",
+    "grade": "E4",
+    "checked": "2026-10-12"
+  },
+  "ET": {
+    "id": "ET",
+    "title": "Etsy fees",
+    "url": "https://www.etsy.com/legal/fees/",
+    "signal": "Listing/transaction fees plus additional processing, regional and advertising fees where applicable.",
+    "grade": "E4",
+    "checked": "2026-10-12"
+  },
+  "EC": {
+    "id": "EC",
+    "title": "Etsy creativity standards",
+    "url": "https://www.etsy.com/legal/creativity/",
+    "signal": "Originality/design, production-partner and AI disclosure requirements constrain digital and POD products.",
+    "grade": "E4",
+    "checked": "2026-10-12"
+  },
+  "VI": {
+    "id": "VI",
+    "title": "Visualping pricing",
+    "url": "https://visualping.io/pricing",
+    "signal": "Paid change-monitoring plans; free alerts and paid competition reduce generic monitor differentiation.",
+    "grade": "E2",
+    "checked": "2026-10-12"
+  },
+  "BA": {
+    "id": "BA",
+    "title": "Bannerbear API pricing",
+    "url": "https://www.bannerbear.com/pricing/",
+    "signal": "USD49/month published entry paid tier; template image/document rendering category.",
+    "grade": "E2",
+    "checked": "2026-10-12"
+  },
+  "CC": {
+    "id": "CC",
+    "title": "CloudConvert pricing",
+    "url": "https://cloudconvert.com/pricing",
+    "signal": "Usage-based file conversion credits; commodity competition for generic conversion.",
+    "grade": "E2",
+    "checked": "2026-10-12"
+  },
+  "ME": {
+    "id": "ME",
+    "title": "MERX procurement opportunities",
+    "url": "https://www.merx.com/",
+    "signal": "Existing procurement discovery business. Use licensed official feeds; no permission to resell MERX content inferred.",
+    "grade": "E2",
+    "checked": "2026-10-12"
+  },
+  "IC": {
+    "id": "IC",
+    "title": "Intercom pricing",
+    "url": "https://www.intercom.com/pricing",
+    "signal": "Commercial support and AI-support market; unit costs and human escalation matter.",
+    "grade": "E2",
+    "checked": "2026-10-12"
+  },
+  "CA": {
+    "id": "CA",
+    "title": "Cal.com pricing and workflows",
+    "url": "https://cal.com/pricing",
+    "signal": "Free/paid scheduling and workflow features; prefer implementation over another generic scheduler.",
+    "grade": "E2",
+    "checked": "2026-10-12"
+  },
+  "PF": {
+    "id": "PF",
+    "title": "Printful pricing",
+    "url": "https://www.printful.com/pricing",
+    "signal": "On-demand fulfillment infrastructure, not evidence a particular design sells; fulfillment/shipping costs remain.",
+    "grade": "E4",
+    "checked": "2026-10-12"
+  },
+  "HA": {
+    "id": "HA",
+    "title": "HubSpot affiliate program",
+    "url": "https://www.hubspot.com/partners/affiliates",
+    "signal": "Affiliate distribution exists; approval, terms, attribution and audience acquisition remain constraints.",
+    "grade": "E4",
+    "checked": "2026-10-12"
+  },
+  "AD": {
+    "id": "AD",
+    "title": "Adobe Stock contributor royalties",
+    "url": "https://helpx.adobe.com/stock/contributor/payments-earnings/royalties-pricing/pricing-payment-guidelines.html",
+    "signal": "Royalty distribution for accepted stock assets; low per-license economics possible; no sales forecast.",
+    "grade": "E4",
+    "checked": "2026-10-12"
+  },
+  "CH": {
+    "id": "CH",
+    "title": "Chrome Web Store policies",
+    "url": "https://developer.chrome.com/docs/webstore/program-policies/policies",
+    "signal": "Extension distribution and user-data policies; approval and permission requirements, not demand evidence.",
+    "grade": "E4",
+    "checked": "2026-10-12"
+  },
+  "ST": {
+    "id": "ST",
+    "title": "Stripe Canada pricing",
+    "url": "https://stripe.com/en-ca/pricing",
+    "signal": "Domestic cards 2.9% + CAD0.30; Billing pay-as-you-go 0.7%; foreign/FX and other fees may apply.",
+    "grade": "E4",
+    "checked": "2026-10-12"
+  },
+  "UF": {
+    "id": "UF",
+    "title": "Upwork freelancer fees",
+    "url": "https://support.upwork.com/hc/en-us/articles/211062538-Learn-about-the-Freelancer-Service-Fee",
+    "signal": "Published contract fee 0%-15%; actual fee shown before proposal/contract. Do not assume universal 10%.",
+    "grade": "E4",
+    "checked": "2026-10-12"
+  },
+  "UC": {
+    "id": "UC",
+    "title": "Upwork Connects",
+    "url": "https://support.upwork.com/hc/en-us/articles/211062898-Understanding-and-using-Connects",
+    "signal": "Connects USD0.15 each; proposal cost varies; $0 plan cannot rely on unlimited free proposals.",
+    "grade": "E4",
+    "checked": "2026-10-12"
+  },
+  "IT": {
+    "id": "IT",
+    "title": "itch.io payments",
+    "url": "https://itch.io/docs/creators/payments",
+    "signal": "Creator-selected platform share; default example 10% plus processing; payouts/withholding and payment mode matter.",
+    "grade": "E4",
+    "checked": "2026-10-12"
+  },
+  "LS": {
+    "id": "LS",
+    "title": "Lemon Squeezy pricing",
+    "url": "https://www.lemonsqueezy.com/pricing",
+    "signal": "Base 5% + US$0.50, with edge-case surcharges; merchant of record for approved products.",
+    "grade": "E4",
+    "checked": "2026-10-12"
+  },
+  "GM": {
+    "id": "GM",
+    "title": "Gumroad pricing",
+    "url": "https://gumroad.com/pricing",
+    "signal": "Published direct 10% + $0.50; Discover 30%; confirm all transaction charges for selected checkout.",
+    "grade": "E4",
+    "checked": "2026-10-12"
+  },
+  "CR": {
+    "id": "CR",
+    "title": "CRTC CASL FAQ",
+    "url": "https://crtc.gc.ca/eng/com500/faq500.htm",
+    "signal": "Consent, identification and unsubscribe; public addresses are not blanket permission; international and DM coverage.",
+    "grade": "E4",
+    "checked": "2026-10-12"
+  },
+  "TX": {
+    "id": "TX",
+    "title": "CRA GST/HST registration",
+    "url": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses/when-register-charge.html",
+    "signal": "Small-supplier rules generally CAD30,000 worldwide taxable supplies; single-quarter and four-quarter tests differ.",
+    "grade": "E4",
+    "checked": "2026-10-12"
+  },
+  "PR": {
+    "id": "PR",
+    "title": "Privacy Commissioner outsourcing",
+    "url": "https://www.priv.gc.ca/en/privacy-topics/employers-and-employees/outsourcing/02_05_d_57_os_01/",
+    "signal": "PIPEDA privacy/accountability considerations for outsourced data processing.",
+    "grade": "E4",
+    "checked": "2026-10-12"
+  },
+  "CW": {
+    "id": "CW",
+    "title": "Cloudflare Workers pricing",
+    "url": "https://developers.cloudflare.com/workers/platform/pricing/",
+    "signal": "Metered serverless runtime; compute/storage/queues have separate limits and costs.",
+    "grade": "E4",
+    "checked": "2026-10-12"
+  },
+  "GH": {
+    "id": "GH",
+    "title": "GitHub Actions scheduled events",
+    "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows",
+    "signal": "Schedules can delay/drop under load; use Actions for CI, not promised precise uptime monitoring.",
+    "grade": "E4",
+    "checked": "2026-10-12"
+  },
+  "WH": {
+    "id": "WH",
+    "title": "Stripe webhook integration",
+    "url": "https://docs.stripe.com/webhooks",
+    "signal": "Verify signatures, tolerate duplicate/reordered events and acknowledge quickly.",
+    "grade": "E4",
+    "checked": "2026-10-12"
+  },
+  "PO": {
+    "id": "PO",
+    "title": "Stripe payouts",
+    "url": "https://docs.stripe.com/payouts",
+    "signal": "First payouts and settlement may lag sale; account/country-specific restrictions apply.",
+    "grade": "E4",
+    "checked": "2026-10-12"
+  },
+  "OA": {
+    "id": "OA",
+    "title": "OpenAI ChatGPT/API billing",
+    "url": "https://help.openai.com/en/articles/9039756-managing-billing-for-chatgpt-and-the-api-platform",
+    "signal": "ChatGPT and API billing are separate; plan business API expenses independently.",
+    "grade": "E4",
+    "checked": "2026-10-12"
+  }
+}

@@ -1,0 +1,50 @@
+repo_ref,fast_ref,relation,reason
+REPO-O01,FAST-O22,equivalent,Original modular asset kits / environments
+REPO-O02,FAST-O29,adjacent,Local technical validators with different files and buyers
+REPO-O03,FAST-O12,adjacent,Godot release checking is a specific kind of dev utility
+REPO-O04,FAST-O02,adjacent,Catalog preflight software versus human cleanup
+REPO-O04,FAST-O13,adjacent,Shared catalog checks but different recurring deliverable
+REPO-O05,FAST-O26,adjacent,Inspection document generator versus generic PDF API
+REPO-O06,FAST-O40,adjacent,"Both calculators, different operational domains"
+REPO-O06,FAST-O25,adjacent,"Inventory spreadsheet is operational, not identical calculator"
+REPO-O07,FAST-O17,adjacent,Blender add-ons with different export/production scope
+REPO-O08,FAST-O18,equivalent,Original shader/VFX collections
+REPO-O09,FAST-O23,equivalent,Original interface and game sound-effects library
+REPO-O10,FAST-O33,adjacent,Generic starter kits versus tested CI starter
+REPO-O11,FAST-O46,equivalent,Federal tender/procurement digest
+REPO-O12,FAST-O56,adjacent,Licensed niche dataset may feed a normalized API
+REPO-O13,FAST-O03,equivalent,Agency browser/form-path monitoring
+REPO-O13,FAST-O28,adjacent,Broader website QA versus form-path coverage
+REPO-O15,FAST-O53,equivalent,Focused technical mini-courses
+REPO-O17,FAST-O24,equivalent,Original icon/component resource libraries
+REPO-O18,FAST-O49,adjacent,STL plans versus CNC/laser-cut patterns
+REPO-O19,FAST-O50,adjacent,Technical ebook versus practice workbook
+REPO-O20,FAST-O50,adjacent,Educational handouts versus technical practice workbook
+REPO-O21,FAST-O42,equivalent,Industry-specific Notion workspace templates
+REPO-O26,FAST-O59,equivalent,Original niche print-on-demand merchandise
+REPO-O27,FAST-O60,equivalent,Specialized software comparison affiliate site
+REPO-O27,FAST-O58,adjacent,Affiliate tutorials versus a comparison site
+REPO-O29,FAST-O52,equivalent,Opt-in/verified specialist supplier directory
+REPO-O30,FAST-O54,equivalent,Specialist employment board
+REPO-O32,FAST-O30,equivalent,Niche Shopify merchant app
+REPO-O33,FAST-O31,adjacent,WordPress-family plugins with different functions
+REPO-O33,FAST-O32,adjacent,Generic premium plugin versus form-test plugin
+REPO-O34,FAST-O44,adjacent,Browser extensions with different privacy/automation uses
+REPO-O35,FAST-O45,adjacent,Editor extensions with differing schema functions
+REPO-O37,FAST-O34,equivalent,Website screenshot is a bounded rendering API
+REPO-O37,FAST-O35,adjacent,Barcodes/labels have a different rendering buyer
+REPO-O38,FAST-O04,equivalent,Human-reviewed document extraction to structured data
+REPO-O39,FAST-O20,equivalent,Bounded approved-document support assistant
+REPO-O40,FAST-O15,adjacent,Email domain setup versus ongoing configuration monitoring
+REPO-O41,FAST-O37,equivalent,API schema/contract drift monitoring
+REPO-O43,FAST-O38,equivalent,Consent-based appointment reminder integration
+REPO-O45,FAST-O09,adjacent,Authorized export versus product-feed connector
+REPO-O46,FAST-O16,adjacent,Restore verification versus ongoing WordPress care
+REPO-O47,FAST-O56,adjacent,Industry benchmark report versus dataset license
+REPO-O53,FAST-O01,adjacent,General setup service versus report-specific sprint
+REPO-O53,FAST-O06,adjacent,Repair service is not equivalent to reporting setup
+REPO-O53,FAST-O07,adjacent,General service versus spreadsheet repair
+REPO-O53,FAST-O08,adjacent,General service versus CRM de-duplication
+REPO-O53,FAST-O14,adjacent,General service versus onboarding setup
+REPO-O02,FAST-O45,adjacent,Localization checker and VS Code validator share parser tech
+REPO-O42,FAST-O28,adjacent,Accessibility reporting and broken-link monitoring differ

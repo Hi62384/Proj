@@ -1,0 +1,28 @@
+study,scenario,budget_cad,month,revenue_cad,operating_profit_cad,economic_profit_cad,owner_hours,subscriptions,owner_hour_value_cad
+Repo asset + localization + conditional catalog SaaS,pessimistic,500,1,0.0,-75.0,-1126.25,42.0,0,25
+Repo asset + localization + conditional catalog SaaS,pessimistic,500,3,0.0,-75.37,-1189.12,44.5,0,25
+Repo asset + localization + conditional catalog SaaS,pessimistic,500,6,0.0,0.0,-363.75,14.6,0,25
+Repo asset + localization + conditional catalog SaaS,pessimistic,500,12,0.0,0.0,-15.0,0.6,0,25
+Repo asset + localization + conditional catalog SaaS,pessimistic,500,24,0.0,0.0,-6.25,0.3,0,25
+Repo asset + localization + conditional catalog SaaS,base,500,1,29.0,-51.93,-1104.43,42.1,0,25
+Repo asset + localization + conditional catalog SaaS,base,500,3,78.0,-10.57,-1128.57,44.7,0,25
+Repo asset + localization + conditional catalog SaaS,base,500,6,293.0,164.98,-727.06,35.7,0,25
+Repo asset + localization + conditional catalog SaaS,base,500,12,390.0,303.46,-131.54,17.4,0,25
+Repo asset + localization + conditional catalog SaaS,base,500,24,751.0,603.78,266.28,13.5,0,25
+Repo asset + localization + conditional catalog SaaS,optimistic,500,1,116.0,19.08,-1087.17,44.3,0,25
+Repo asset + localization + conditional catalog SaaS,optimistic,500,3,379.0,241.1,-991.65,49.3,0,25
+Repo asset + localization + conditional catalog SaaS,optimistic,500,6,935.0,769.71,-364.79,45.4,0,25
+Repo asset + localization + conditional catalog SaaS,optimistic,500,12,2136.0,1776.44,837.19,37.6,5,25
+Repo asset + localization + conditional catalog SaaS,optimistic,500,24,4766.0,4023.8,3142.3,35.3,20,25
+Fast-cash reporting service + monitoring + toolkit,pessimistic,,1,0.0,-85.0,-1225.0,38.0,,30
+Fast-cash reporting service + monitoring + toolkit,pessimistic,,3,0.0,0.0,-30.0,1.0,,30
+Fast-cash reporting service + monitoring + toolkit,pessimistic,,6,0.0,0.0,0.0,0.0,,30
+Fast-cash reporting service + monitoring + toolkit,pessimistic,,12,0.0,0.0,0.0,0.0,,30
+Fast-cash reporting service + monitoring + toolkit,base,,1,687.4,410.14,-1698.86,70.3,,30
+Fast-cash reporting service + monitoring + toolkit,base,,3,4105.27,3157.06,905.81,75.04,,30
+Fast-cash reporting service + monitoring + toolkit,base,,6,6374.44,4446.66,2254.34,73.08,,30
+Fast-cash reporting service + monitoring + toolkit,base,,12,12608.05,7961.93,5478.7,82.77,,30
+Fast-cash reporting service + monitoring + toolkit,optimistic,,1,1924.12,1311.52,-1324.35,87.86,,30
+Fast-cash reporting service + monitoring + toolkit,optimistic,,3,10176.53,7299.52,4436.76,95.43,,30
+Fast-cash reporting service + monitoring + toolkit,optimistic,,6,26112.66,17125.76,13636.39,116.31,,30
+Fast-cash reporting service + monitoring + toolkit,optimistic,,12,69552.05,39984.47,36280.95,123.45,,30

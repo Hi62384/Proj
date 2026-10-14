@@ -1,0 +1,5234 @@
+{
+  "version": "1.0.0",
+  "as_of": "2026-10-14",
+  "warning": "216 offer hypotheses informed by category/platform research, not 216 verified demand studies. Price ranges are analyst test prices, not observed customer contracts. Related workflows can overlap older ideas. CAPITAL entries are research-only personal capital activities, not revenue-generating business offers.",
+  "records": [
+    {
+      "id": "CUR-01-01",
+      "category_id": "C01",
+      "subcategory_id": "C01-1",
+      "mode": "M",
+      "name": "Citation-locked knowledge article drafts",
+      "buyer": "Small support teams",
+      "deliverable": "Draft answers only from an approved source library and attach sentence-level source references",
+      "price_hypothesis_cad": [
+        39,
+        149
+      ],
+      "main_barrier": "Hallucinated claims and private documents",
+      "first_paid_test": "Sell a reviewed trial of ten articles with a pre-agreed unsupported-claim test",
+      "source_ids": [
+        "R-DESCRIPT",
+        "R-ADOBE",
+        "R-YOUTUBE",
+        "R-ETSY",
+        "R-ENVATO"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-01-02",
+      "category_id": "C01",
+      "subcategory_id": "C01-2",
+      "mode": "D",
+      "name": "AI content editorial acceptance kit",
+      "buyer": "Independent publishers",
+      "deliverable": "An original checklist, regression examples and scorecard for factuality, rights and repetition",
+      "price_hypothesis_cad": [
+        29,
+        79
+      ],
+      "main_barrier": "A checklist is not a quality guarantee",
+      "first_paid_test": "Ask three editors to audit the same sample before offering the complete editable kit",
+      "source_ids": [
+        "R-DESCRIPT",
+        "R-ADOBE",
+        "R-YOUTUBE",
+        "R-ETSY",
+        "R-ENVATO"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-01-03",
+      "category_id": "C01",
+      "subcategory_id": "C01-3",
+      "mode": "A",
+      "name": "Original product-scene background collection",
+      "buyer": "Small product photographers",
+      "deliverable": "A coherent licensed pack of compositing backgrounds with masks and sample edits",
+      "price_hypothesis_cad": [
+        19,
+        69
+      ],
+      "main_barrier": "Platform AI restrictions and stock rights",
+      "first_paid_test": "Show twelve original scenes and seek two paid licences before expanding themes",
+      "source_ids": [
+        "R-DESCRIPT",
+        "R-ADOBE",
+        "R-YOUTUBE",
+        "R-ETSY",
+        "R-ENVATO"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-01-04",
+      "category_id": "C01",
+      "subcategory_id": "C01-4",
+      "mode": "F",
+      "name": "Webinar-to-resource pilot",
+      "buyer": "B2B training companies",
+      "deliverable": "Transform one authorized webinar into a reviewed guide, chapter index and social excerpts",
+      "price_hypothesis_cad": [
+        250,
+        600
+      ],
+      "main_barrier": "Editing time and speaker permissions",
+      "first_paid_test": "Ask one buyer to pay for a capped transformation with factual and quotation approval",
+      "source_ids": [
+        "R-DESCRIPT",
+        "R-ADOBE",
+        "R-YOUTUBE",
+        "R-ETSY",
+        "R-ENVATO"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-01-05",
+      "category_id": "C01",
+      "subcategory_id": "C01-2",
+      "mode": "M",
+      "name": "Brand terminology quality checker",
+      "buyer": "Multi-author content teams",
+      "deliverable": "Check approved terminology, prohibited claims and missing disclosures against a versioned rulebook",
+      "price_hypothesis_cad": [
+        39,
+        199
+      ],
+      "main_barrier": "False positives and legal interpretation",
+      "first_paid_test": "Run a read-only pilot on twenty approved samples and measure review minutes",
+      "source_ids": [
+        "R-DESCRIPT",
+        "R-ADOBE",
+        "R-YOUTUBE",
+        "R-ETSY",
+        "R-ENVATO"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-01-06",
+      "category_id": "C01",
+      "subcategory_id": "C01-1",
+      "mode": "D",
+      "name": "Retrieval evaluation fixture pack",
+      "buyer": "Teams building internal assistants",
+      "deliverable": "Original fictional source documents, adversarial questions and an objective answer rubric",
+      "price_hypothesis_cad": [
+        49,
+        199
+      ],
+      "main_barrier": "Free alternatives and benchmark overfitting",
+      "first_paid_test": "Sell one bounded evaluation set after a developer tests five representative cases",
+      "source_ids": [
+        "R-DESCRIPT",
+        "R-ADOBE",
+        "R-YOUTUBE",
+        "R-ETSY",
+        "R-ENVATO"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-02-01",
+      "category_id": "C02",
+      "subcategory_id": "C02-1",
+      "mode": "C",
+      "name": "Original tool-explainer video channel",
+      "buyer": "Viewers learning a specific practical workflow",
+      "deliverable": "Faceless screen-recorded lessons with original demonstrations and downloadable examples",
+      "price_hypothesis_cad": [
+        0,
+        0
+      ],
+      "main_barrier": "Audience dependency and production labor",
+      "first_paid_test": "Publish three genuinely useful episodes and measure qualified product clicks before scaling",
+      "source_ids": [
+        "R-DESCRIPT",
+        "R-YOUTUBE",
+        "R-YT_DISCLOSE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-02-02",
+      "category_id": "C02",
+      "subcategory_id": "C02-2",
+      "mode": "F",
+      "name": "Authorized podcast highlight edits",
+      "buyer": "Independent video podcast teams",
+      "deliverable": "Six manually reviewed short clips from one buyer-owned recording with captions and source timestamps",
+      "price_hypothesis_cad": [
+        200,
+        500
+      ],
+      "main_barrier": "Poor clip selection and repetitive revisions",
+      "first_paid_test": "Offer one fixed-length episode pilot with two example edits and one revision",
+      "source_ids": [
+        "R-DESCRIPT",
+        "R-YOUTUBE",
+        "R-YT_DISCLOSE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-02-03",
+      "category_id": "C02",
+      "subcategory_id": "C02-3",
+      "mode": "A",
+      "name": "Editable technical explainer motion kit",
+      "buyer": "Training video producers",
+      "deliverable": "Original diagram animations, title cards and editable scene files for one coherent visual style",
+      "price_hypothesis_cad": [
+        29,
+        129
+      ],
+      "main_barrier": "Compatibility and asset licensing",
+      "first_paid_test": "Sell a small tested pack after three editors import and render the sample",
+      "source_ids": [
+        "R-DESCRIPT",
+        "R-YOUTUBE",
+        "R-YT_DISCLOSE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-02-04",
+      "category_id": "C02",
+      "subcategory_id": "C02-4",
+      "mode": "D",
+      "name": "Video production cost-and-reuse workbook",
+      "buyer": "Small publishing teams",
+      "deliverable": "A workbook separating editing time, rights costs, platform revenue and reusable footage inventory",
+      "price_hypothesis_cad": [
+        29,
+        79
+      ],
+      "main_barrier": "Incorrect formula assumptions",
+      "first_paid_test": "Test ten known cases with a creator before offering the full workbook",
+      "source_ids": [
+        "R-DESCRIPT",
+        "R-YOUTUBE",
+        "R-YT_DISCLOSE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-02-05",
+      "category_id": "C02",
+      "subcategory_id": "C02-2",
+      "mode": "I",
+      "name": "Caption safe-area preflight utility",
+      "buyer": "Teams publishing vertical video",
+      "deliverable": "Detect captions outside configurable safe areas and export review overlays without uploading footage",
+      "price_hypothesis_cad": [
+        39,
+        149
+      ],
+      "main_barrier": "Platform layouts change",
+      "first_paid_test": "Find two editors who pay to batch-check ten clips against their current placement rules",
+      "source_ids": [
+        "R-DESCRIPT",
+        "R-YOUTUBE",
+        "R-YT_DISCLOSE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-02-06",
+      "category_id": "C02",
+      "subcategory_id": "C02-4",
+      "mode": "R",
+      "name": "Published-video broken-link watch",
+      "buyer": "Course and tutorial publishers",
+      "deliverable": "Monitor owner-supplied description URLs and report verified dead destinations in a monthly digest",
+      "price_hypothesis_cad": [
+        19,
+        79
+      ],
+      "main_barrier": "Automated platform access restrictions",
+      "first_paid_test": "Test only supplied URLs with permission and obtain one renewal before expanding",
+      "source_ids": [
+        "R-DESCRIPT",
+        "R-YOUTUBE",
+        "R-YT_DISCLOSE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-03-01",
+      "category_id": "C03",
+      "subcategory_id": "C03-1",
+      "mode": "A",
+      "name": "Original accessible interface earcons",
+      "buyer": "App designers",
+      "deliverable": "A consistent original UI-sound pack with loudness variants, names and event-use examples",
+      "price_hypothesis_cad": [
+        19,
+        79
+      ],
+      "main_barrier": "Distinctiveness and recordings provenance",
+      "first_paid_test": "Sell a compact sample-backed licence to two app teams",
+      "source_ids": [
+        "R-DESCRIPT",
+        "R-ITCH",
+        "R-ENVATO"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": [
+        "REPO-O09",
+        "FAST-O26"
+      ]
+    },
+    {
+      "id": "CUR-03-02",
+      "category_id": "C03",
+      "subcategory_id": "C03-2",
+      "mode": "F",
+      "name": "Podcast loudness and clipping QA",
+      "buyer": "Podcast production agencies",
+      "deliverable": "Analyze one episode batch and return measured loudness, clipping timestamps and approved corrections",
+      "price_hypothesis_cad": [
+        150,
+        400
+      ],
+      "main_barrier": "Listening and correction time",
+      "first_paid_test": "Deliver a paid two-episode trial using explicit technical acceptance thresholds",
+      "source_ids": [
+        "R-DESCRIPT",
+        "R-ITCH",
+        "R-ENVATO"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-03-03",
+      "category_id": "C03",
+      "subcategory_id": "C03-3",
+      "mode": "D",
+      "name": "Local audio archive organizer",
+      "buyer": "Independent audio producers",
+      "deliverable": "Rename and validate approved WAV metadata with preview-only changes and an undo manifest",
+      "price_hypothesis_cad": [
+        39,
+        129
+      ],
+      "main_barrier": "Destructive rename risk",
+      "first_paid_test": "Charge for a pilot after a synthetic archive round-trip test and buyer preview",
+      "source_ids": [
+        "R-DESCRIPT",
+        "R-ITCH",
+        "R-ENVATO"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-03-04",
+      "category_id": "C03",
+      "subcategory_id": "C03-4",
+      "mode": "F",
+      "name": "Consent-based narration production pack",
+      "buyer": "Training-content owners",
+      "deliverable": "Prepare licensed stock-voice narration from approved scripts, pronunciation notes and timed segments",
+      "price_hypothesis_cad": [
+        200,
+        700
+      ],
+      "main_barrier": "Voice rights and pronunciation QA",
+      "first_paid_test": "Quote one short module only after voice licence and script approval",
+      "source_ids": [
+        "R-DESCRIPT",
+        "R-ITCH",
+        "R-ENVATO"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-03-05",
+      "category_id": "C03",
+      "subcategory_id": "C03-1",
+      "mode": "A",
+      "name": "Original field-recording ambience library",
+      "buyer": "Indie filmmakers",
+      "deliverable": "A themed collection of original ambience recordings with clean loops and documented provenance",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Recording skill and releases",
+      "first_paid_test": "Sell one small field-recorded collection rather than promise a recurring library",
+      "source_ids": [
+        "R-DESCRIPT",
+        "R-ITCH",
+        "R-ENVATO"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-03-06",
+      "category_id": "C03",
+      "subcategory_id": "C03-3",
+      "mode": "I",
+      "name": "Podcast chapter export converter",
+      "buyer": "Podcast editors",
+      "deliverable": "Convert approved chapter markers between a small supported set of formats with timestamp validation",
+      "price_hypothesis_cad": [
+        29,
+        89
+      ],
+      "main_barrier": "Many free format converters",
+      "first_paid_test": "Demonstrate a difficult real export and request payment before adding more formats",
+      "source_ids": [
+        "R-DESCRIPT",
+        "R-ITCH",
+        "R-ENVATO"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-04-01",
+      "category_id": "C04",
+      "subcategory_id": "C04-1",
+      "mode": "D",
+      "name": "Practical operations playbook series",
+      "buyer": "Owners of small service teams",
+      "deliverable": "Original process guides with editable worksheets and tested examples for one recurring task",
+      "price_hypothesis_cad": [
+        29,
+        89
+      ],
+      "main_barrier": "Generic AI writing and unsupported advice",
+      "first_paid_test": "Sell one guide after three target users complete its worked workflow",
+      "source_ids": [
+        "R-KDP",
+        "R-BEEHIIV",
+        "R-GHOST"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-04-02",
+      "category_id": "C04",
+      "subcategory_id": "C04-2",
+      "mode": "P",
+      "name": "Verified product-policy change newsletter",
+      "buyer": "Small merchants in one ecosystem",
+      "deliverable": "Explain source-linked changes, dates and affected workflows without copying full vendor articles",
+      "price_hypothesis_cad": [
+        15,
+        49
+      ],
+      "main_barrier": "Update burden and no existing audience",
+      "first_paid_test": "Produce two sample issues and seek five paid commitments before a weekly schedule",
+      "source_ids": [
+        "R-KDP",
+        "R-BEEHIIV",
+        "R-GHOST"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-04-03",
+      "category_id": "C04",
+      "subcategory_id": "C04-3",
+      "mode": "M",
+      "name": "Editorial source-and-quote ledger",
+      "buyer": "Small publications",
+      "deliverable": "Track permission status, quotations, sources and correction history for approved drafts",
+      "price_hypothesis_cad": [
+        19,
+        79
+      ],
+      "main_barrier": "Existing editorial tools",
+      "first_paid_test": "Run a paid trial with one editor and a bounded article volume",
+      "source_ids": [
+        "R-KDP",
+        "R-BEEHIIV",
+        "R-GHOST"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-04-04",
+      "category_id": "C04",
+      "subcategory_id": "C04-4",
+      "mode": "A",
+      "name": "Original nonfiction layout system",
+      "buyer": "Independent authors",
+      "deliverable": "Print-ready and accessible ebook layouts, style presets and a documented compatibility sample",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Fonts and distribution requirements",
+      "first_paid_test": "Sell one format-tested pack after two authors use a sample chapter",
+      "source_ids": [
+        "R-KDP",
+        "R-BEEHIIV",
+        "R-GHOST"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-04-05",
+      "category_id": "C04",
+      "subcategory_id": "C04-1",
+      "mode": "L",
+      "name": "Fictional case-study workbook",
+      "buyer": "Vocational instructors",
+      "deliverable": "Original business scenarios with instructor notes and independently checked answer keys",
+      "price_hypothesis_cad": [
+        19,
+        79
+      ],
+      "main_barrier": "Pedagogical quality and resemblance to existing exams",
+      "first_paid_test": "Have an instructor test one lesson before selling the complete module",
+      "source_ids": [
+        "R-KDP",
+        "R-BEEHIIV",
+        "R-GHOST"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-04-06",
+      "category_id": "C04",
+      "subcategory_id": "C04-2",
+      "mode": "P",
+      "name": "Public-data industry chart letter",
+      "buyer": "Small suppliers",
+      "deliverable": "A monthly original chart and explanation built from licensed official data with vintage labels",
+      "price_hypothesis_cad": [
+        19,
+        59
+      ],
+      "main_barrier": "Readers may prefer free data",
+      "first_paid_test": "Offer one clear decision-use sample and seek paid renewals rather than email signups",
+      "source_ids": [
+        "R-KDP",
+        "R-BEEHIIV",
+        "R-GHOST"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-05-01",
+      "category_id": "C05",
+      "subcategory_id": "C05-1",
+      "mode": "I",
+      "name": "Canonical-and-redirect preflight",
+      "buyer": "Small web agencies",
+      "deliverable": "Read an owner-approved crawl export and identify conflicting canonicals or redirect loops",
+      "price_hypothesis_cad": [
+        49,
+        149
+      ],
+      "main_barrier": "False positives and incumbent SEO suites",
+      "first_paid_test": "Sell an export-only audit after a developer confirms the flagged cases",
+      "source_ids": [
+        "R-AHREFS",
+        "R-GOOGLE_SPAM"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-05-02",
+      "category_id": "C05",
+      "subcategory_id": "C05-2",
+      "mode": "C",
+      "name": "Original specification comparison site",
+      "buyer": "Buyers of one unregulated product class",
+      "deliverable": "Publish source-linked measurements, hands-on comparisons and clearly disclosed affiliate links",
+      "price_hypothesis_cad": [
+        0,
+        0
+      ],
+      "main_barrier": "Testing expense and search dependence",
+      "first_paid_test": "Create three useful comparisons and test qualified clicks before adding affiliate spend",
+      "source_ids": [
+        "R-AHREFS",
+        "R-GOOGLE_SPAM"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-05-03",
+      "category_id": "C05",
+      "subcategory_id": "C05-3",
+      "mode": "M",
+      "name": "Search snippet length previewer",
+      "buyer": "Multilingual publishing teams",
+      "deliverable": "Preview and lint title/description variants against configurable editorial rules",
+      "price_hypothesis_cad": [
+        15,
+        59
+      ],
+      "main_barrier": "Strong free substitutes",
+      "first_paid_test": "Seek two paid team licences for workflow conveniences after a free example",
+      "source_ids": [
+        "R-AHREFS",
+        "R-GOOGLE_SPAM"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-05-04",
+      "category_id": "C05",
+      "subcategory_id": "C05-4",
+      "mode": "R",
+      "name": "Owner-approved content freshness monitor",
+      "buyer": "Specialist publishers",
+      "deliverable": "Track expiry dates and broken citations in a supplied content inventory",
+      "price_hypothesis_cad": [
+        29,
+        129
+      ],
+      "main_barrier": "Not all freshness can be detected automatically",
+      "first_paid_test": "Sell a bounded monthly review that distinguishes factual review from link checks",
+      "source_ids": [
+        "R-AHREFS",
+        "R-GOOGLE_SPAM"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-05-05",
+      "category_id": "C05",
+      "subcategory_id": "C05-1",
+      "mode": "D",
+      "name": "Website migration acceptance workbook",
+      "buyer": "Agencies moving small websites",
+      "deliverable": "An original URL mapping, redirect-test and launch sign-off workbook with fixtures",
+      "price_hypothesis_cad": [
+        39,
+        129
+      ],
+      "main_barrier": "Responsibility for revenue-impacting migrations",
+      "first_paid_test": "Sell the checklist and tests without performing unapproved production changes",
+      "source_ids": [
+        "R-AHREFS",
+        "R-GOOGLE_SPAM"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-05-06",
+      "category_id": "C05",
+      "subcategory_id": "C05-3",
+      "mode": "D",
+      "name": "Local structured-data fixture tester",
+      "buyer": "Content teams",
+      "deliverable": "Validate sample structured-data fields and report errors without promising rich-result placement",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Rule changes and ranking promises",
+      "first_paid_test": "Test against agreed fixtures and require two paid users before adding CMS adapters",
+      "source_ids": [
+        "R-AHREFS",
+        "R-GOOGLE_SPAM"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-06-01",
+      "category_id": "C06",
+      "subcategory_id": "C06-1",
+      "mode": "R",
+      "name": "Campaign URL and tracking-parameter QA",
+      "buyer": "Small paid-media agencies",
+      "deliverable": "Read approved campaign exports and flag missing destinations, inconsistent tags and dead links",
+      "price_hypothesis_cad": [
+        49,
+        199
+      ],
+      "main_barrier": "Platform API permission and false alarms",
+      "first_paid_test": "Run a paid read-only audit on one account export and time each reviewed defect",
+      "source_ids": [
+        "R-AGENCY",
+        "R-METABASE",
+        "R-UPWORK_DEMAND"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-06-02",
+      "category_id": "C06",
+      "subcategory_id": "C06-2",
+      "mode": "F",
+      "name": "Marketing-spend reconciliation pilot",
+      "buyer": "Small ecommerce teams",
+      "deliverable": "Reconcile agreed ad-cost exports with a clearly defined sales report, without claiming causal attribution",
+      "price_hypothesis_cad": [
+        299,
+        900
+      ],
+      "main_barrier": "Attribution ambiguity and private data",
+      "first_paid_test": "Agree exact matching rules and obtain payment for one period before automation",
+      "source_ids": [
+        "R-AGENCY",
+        "R-METABASE",
+        "R-UPWORK_DEMAND"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-06-03",
+      "category_id": "C06",
+      "subcategory_id": "C06-3",
+      "mode": "D",
+      "name": "Creative experiment decision workbook",
+      "buyer": "Small marketing teams",
+      "deliverable": "A calculator for test costs, sample limitations and clearly labelled observed outcomes",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Misinterpreted statistics",
+      "first_paid_test": "Use synthetic cases and have a qualified reviewer test the decision notes",
+      "source_ids": [
+        "R-AGENCY",
+        "R-METABASE",
+        "R-UPWORK_DEMAND"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-06-04",
+      "category_id": "C06",
+      "subcategory_id": "C06-4",
+      "mode": "M",
+      "name": "Landing-page form regression monitor",
+      "buyer": "Agencies with permission to test sites",
+      "deliverable": "Check a few approved paths using safe test inputs and route confirmed failures",
+      "price_hypothesis_cad": [
+        39,
+        149
+      ],
+      "main_barrier": "Alert noise and impact on real leads",
+      "first_paid_test": "Sell a limited pilot with no real purchases and agreed test destinations",
+      "source_ids": [
+        "R-AGENCY",
+        "R-METABASE",
+        "R-UPWORK_DEMAND"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-06-05",
+      "category_id": "C06",
+      "subcategory_id": "C06-3",
+      "mode": "A",
+      "name": "Original vertical-video ad layout kit",
+      "buyer": "Small direct-to-consumer brands",
+      "deliverable": "Editable layouts with typography, safe-area guides and original motion elements",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Platform-specific design and asset rights",
+      "first_paid_test": "Show a coherent sample and sell source files without promising ad performance",
+      "source_ids": [
+        "R-AGENCY",
+        "R-METABASE",
+        "R-UPWORK_DEMAND"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-06-06",
+      "category_id": "C06",
+      "subcategory_id": "C06-2",
+      "mode": "D",
+      "name": "Campaign reporting definitions dictionary",
+      "buyer": "Multi-client agencies",
+      "deliverable": "An editable metric glossary and mapping workbook preventing inconsistent KPI definitions",
+      "price_hypothesis_cad": [
+        49,
+        149
+      ],
+      "main_barrier": "Buyer-specific terminology",
+      "first_paid_test": "Sell a standard team licence after two agencies validate sample definitions",
+      "source_ids": [
+        "R-AGENCY",
+        "R-METABASE",
+        "R-UPWORK_DEMAND"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-07-01",
+      "category_id": "C07",
+      "subcategory_id": "C07-1",
+      "mode": "D",
+      "name": "Consent inventory and send-check kit",
+      "buyer": "Small newsletter teams",
+      "deliverable": "An original consent-record template and pre-send checklist for owner review",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Not a legal compliance certification",
+      "first_paid_test": "Test usability with one permissioned email operator and seek paid template users",
+      "source_ids": [
+        "R-MAILERLITE",
+        "R-CASL",
+        "R-N8N"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-07-02",
+      "category_id": "C07",
+      "subcategory_id": "C07-2",
+      "mode": "F",
+      "name": "CRM duplicate review export",
+      "buyer": "Small B2B service teams",
+      "deliverable": "Produce a review-only duplicate candidate file with confidence reasons and no automatic merges",
+      "price_hypothesis_cad": [
+        250,
+        650
+      ],
+      "main_barrier": "Lost records from mistaken merges",
+      "first_paid_test": "Use redacted samples and a paid export-only milestone",
+      "source_ids": [
+        "R-MAILERLITE",
+        "R-CASL",
+        "R-N8N"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-07-03",
+      "category_id": "C07",
+      "subcategory_id": "C07-3",
+      "mode": "M",
+      "name": "Approved-scope proposal assembler",
+      "buyer": "Small agencies",
+      "deliverable": "Build proposals from owner-approved scope blocks, prices and revision limits",
+      "price_hypothesis_cad": [
+        29,
+        129
+      ],
+      "main_barrier": "Contract language and uncontrolled commitments",
+      "first_paid_test": "Sell one capped pilot with human approval before anything is sent",
+      "source_ids": [
+        "R-MAILERLITE",
+        "R-CASL",
+        "R-N8N"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-07-04",
+      "category_id": "C07",
+      "subcategory_id": "C07-4",
+      "mode": "I",
+      "name": "Signed intake-to-project handoff adapter",
+      "buyer": "Small consulting teams",
+      "deliverable": "Create internal task records from approved intake with deduplication and consent records",
+      "price_hypothesis_cad": [
+        49,
+        179
+      ],
+      "main_barrier": "Permission leaks and duplicate actions",
+      "first_paid_test": "Test synthetic submissions and charge for one supported system pair",
+      "source_ids": [
+        "R-MAILERLITE",
+        "R-CASL",
+        "R-N8N"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-07-05",
+      "category_id": "C07",
+      "subcategory_id": "C07-1",
+      "mode": "R",
+      "name": "Owner-domain email DNS change alerts",
+      "buyer": "Small businesses",
+      "deliverable": "Monitor authorized SPF, DKIM and DMARC record changes and explain detected differences",
+      "price_hypothesis_cad": [
+        19,
+        69
+      ],
+      "main_barrier": "Security claims and interpretation",
+      "first_paid_test": "Verify domain control and sell a bounded alert plan with no guaranteed deliverability",
+      "source_ids": [
+        "R-MAILERLITE",
+        "R-CASL",
+        "R-N8N"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-07-06",
+      "category_id": "C07",
+      "subcategory_id": "C07-2",
+      "mode": "D",
+      "name": "CRM migration field-map toolkit",
+      "buyer": "Independent CRM implementers",
+      "deliverable": "Reusable mapping worksheets, fixtures and validation checks for one export/import pair",
+      "price_hypothesis_cad": [
+        49,
+        199
+      ],
+      "main_barrier": "Vendor schema changes",
+      "first_paid_test": "Get payment for a tested mapping pack rather than an unlimited migration service",
+      "source_ids": [
+        "R-MAILERLITE",
+        "R-CASL",
+        "R-N8N"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-08-01",
+      "category_id": "C08",
+      "subcategory_id": "C08-1",
+      "mode": "D",
+      "name": "Cross-platform publishing approval board",
+      "buyer": "Small communications teams",
+      "deliverable": "A reusable content calendar with owner sign-off, rights status and destination tracking",
+      "price_hypothesis_cad": [
+        19,
+        79
+      ],
+      "main_barrier": "Template competition",
+      "first_paid_test": "Observe three teams use a sample week and seek two paid copies",
+      "source_ids": [
+        "R-BUFFER",
+        "R-PATREON",
+        "R-BEEHIIV"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-08-02",
+      "category_id": "C08",
+      "subcategory_id": "C08-2",
+      "mode": "A",
+      "name": "Original community onboarding resources",
+      "buyer": "Paid membership operators",
+      "deliverable": "Welcome pages, role guides and reusable moderation examples with editable source files",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Generic policies may not fit community needs",
+      "first_paid_test": "Sell a small original pack after two operators complete onboarding with it",
+      "source_ids": [
+        "R-BUFFER",
+        "R-PATREON",
+        "R-BEEHIIV"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-08-03",
+      "category_id": "C08",
+      "subcategory_id": "C08-3",
+      "mode": "I",
+      "name": "Membership entitlement reconciliation",
+      "buyer": "Membership businesses",
+      "deliverable": "Compare authorized exports to flag access inconsistencies without revoking accounts",
+      "price_hypothesis_cad": [
+        49,
+        199
+      ],
+      "main_barrier": "Incorrect removal of paid access",
+      "first_paid_test": "Sell a read-only reconciliation pilot with owner-approved fixtures",
+      "source_ids": [
+        "R-BUFFER",
+        "R-PATREON",
+        "R-BEEHIIV"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-08-04",
+      "category_id": "C08",
+      "subcategory_id": "C08-4",
+      "mode": "P",
+      "name": "Creator sponsorship inventory digest",
+      "buyer": "Niche publishers",
+      "deliverable": "Organize volunteered campaign requirements and disclosed sponsorship slots in one opt-in catalogue",
+      "price_hypothesis_cad": [
+        29,
+        149
+      ],
+      "main_barrier": "Two-sided audience and disclosure obligations",
+      "first_paid_test": "Recruit opt-in entries and get one genuine paid placement before charging broadly",
+      "source_ids": [
+        "R-BUFFER",
+        "R-PATREON",
+        "R-BEEHIIV"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-08-05",
+      "category_id": "C08",
+      "subcategory_id": "C08-1",
+      "mode": "M",
+      "name": "Social asset usage-rights scheduler",
+      "buyer": "Agencies",
+      "deliverable": "Track owner-supplied asset licences, permitted channels and expiry reminders",
+      "price_hypothesis_cad": [
+        29,
+        129
+      ],
+      "main_barrier": "Not a substitute for legal licence review",
+      "first_paid_test": "Seek one paid team pilot with approved records and no automatic publication",
+      "source_ids": [
+        "R-BUFFER",
+        "R-PATREON",
+        "R-BEEHIIV"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-08-06",
+      "category_id": "C08",
+      "subcategory_id": "C08-2",
+      "mode": "D",
+      "name": "Community moderation escalation kit",
+      "buyer": "Small online communities",
+      "deliverable": "Original triage categories, escalation templates and incident logging forms",
+      "price_hypothesis_cad": [
+        29,
+        89
+      ],
+      "main_barrier": "Sensitive incidents need trained people",
+      "first_paid_test": "Have an operator evaluate fictional scenarios before selling the resource pack",
+      "source_ids": [
+        "R-BUFFER",
+        "R-PATREON",
+        "R-BEEHIIV"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-09-01",
+      "category_id": "C09",
+      "subcategory_id": "C09-1",
+      "mode": "D",
+      "name": "Micro-agency onboarding workspace",
+      "buyer": "Small service agencies",
+      "deliverable": "A reusable project intake, scope, milestone and handoff workspace with fictional examples",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Crowded template market",
+      "first_paid_test": "Ask two agencies to buy after using a free miniature workflow",
+      "source_ids": [
+        "R-NOTION",
+        "R-ETSY",
+        "R-ITCH"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": [
+        "REPO-O21",
+        "FAST-O30"
+      ]
+    },
+    {
+      "id": "CUR-09-02",
+      "category_id": "C09",
+      "subcategory_id": "C09-2",
+      "mode": "D",
+      "name": "Offline household document index",
+      "buyer": "Households organizing records",
+      "deliverable": "A printable and local spreadsheet index storing locations, not actual credentials",
+      "price_hypothesis_cad": [
+        15,
+        49
+      ],
+      "main_barrier": "Privacy and unclear differentiation",
+      "first_paid_test": "Test the blank template with three volunteers without collecting their data",
+      "source_ids": [
+        "R-NOTION",
+        "R-ETSY",
+        "R-ITCH"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-09-03",
+      "category_id": "C09",
+      "subcategory_id": "C09-3",
+      "mode": "A",
+      "name": "Editable multilingual event sign pack",
+      "buyer": "Community event organizers",
+      "deliverable": "Original signage layouts with tested print sizes and editable text fields",
+      "price_hypothesis_cad": [
+        19,
+        79
+      ],
+      "main_barrier": "Language accuracy and fonts",
+      "first_paid_test": "Sell a small event-ready set after a print proof and language review",
+      "source_ids": [
+        "R-NOTION",
+        "R-ETSY",
+        "R-ITCH"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-09-04",
+      "category_id": "C09",
+      "subcategory_id": "C09-4",
+      "mode": "D",
+      "name": "Freelance quote margin calculator",
+      "buyer": "Independent service providers",
+      "deliverable": "A tested calculator separating labor, fees, revisions, acquisition cost and taxes",
+      "price_hypothesis_cad": [
+        29,
+        89
+      ],
+      "main_barrier": "Assumptions mistaken for advice",
+      "first_paid_test": "Check ten hand-computed scenarios and get two paid copies",
+      "source_ids": [
+        "R-NOTION",
+        "R-ETSY",
+        "R-ITCH"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-09-05",
+      "category_id": "C09",
+      "subcategory_id": "C09-1",
+      "mode": "D",
+      "name": "Rental equipment handoff workbook",
+      "buyer": "Small rental businesses",
+      "deliverable": "Condition checklists, turnaround planning and non-sensitive item logs",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Physical liability and local rules",
+      "first_paid_test": "Test an administrative-only version with one real operator",
+      "source_ids": [
+        "R-NOTION",
+        "R-ETSY",
+        "R-ITCH"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-09-06",
+      "category_id": "C09",
+      "subcategory_id": "C09-2",
+      "mode": "D",
+      "name": "Digital product launch economics planner",
+      "buyer": "New digital-product sellers",
+      "deliverable": "A workbook for zero-sales downside, break-even customers and support-time budgeting",
+      "price_hypothesis_cad": [
+        19,
+        79
+      ],
+      "main_barrier": "Buyers may prefer free spreadsheets",
+      "first_paid_test": "Give one worked example and seek paid sales without income claims",
+      "source_ids": [
+        "R-NOTION",
+        "R-ETSY",
+        "R-ITCH"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-10-01",
+      "category_id": "C10",
+      "subcategory_id": "C10-1",
+      "mode": "A",
+      "name": "Small-business visual identity system",
+      "buyer": "Brand-led product sellers",
+      "deliverable": "Original reusable palette, layout and typography assets with licensed font guidance",
+      "price_hypothesis_cad": [
+        39,
+        149
+      ],
+      "main_barrier": "Not trademark clearance",
+      "first_paid_test": "Sell a style pack with actual editable files and explicit rights boundaries",
+      "source_ids": [
+        "R-CANVA",
+        "R-ADOBE",
+        "R-ETSY",
+        "R-ENVATO"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-10-02",
+      "category_id": "C10",
+      "subcategory_id": "C10-2",
+      "mode": "A",
+      "name": "Original industrial process icon library",
+      "buyer": "Technical publishers",
+      "deliverable": "Consistent editable icons with monochrome and high-contrast variants",
+      "price_hypothesis_cad": [
+        29,
+        129
+      ],
+      "main_barrier": "Established free icon sets",
+      "first_paid_test": "Test recognition with target users before expanding from a paid small pack",
+      "source_ids": [
+        "R-CANVA",
+        "R-ADOBE",
+        "R-ETSY",
+        "R-ENVATO"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-10-03",
+      "category_id": "C10",
+      "subcategory_id": "C10-3",
+      "mode": "A",
+      "name": "Evidence-first pitch-deck layout kit",
+      "buyer": "B2B founders",
+      "deliverable": "Original slide layouts separating observed metrics, assumptions and source notes",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Template saturation",
+      "first_paid_test": "Sell a concise tested layout set with no invented business traction",
+      "source_ids": [
+        "R-CANVA",
+        "R-ADOBE",
+        "R-ETSY",
+        "R-ENVATO"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-10-04",
+      "category_id": "C10",
+      "subcategory_id": "C10-4",
+      "mode": "I",
+      "name": "Print preflight helper for designers",
+      "buyer": "Small print studios",
+      "deliverable": "Check supplied file dimensions, naming and required production metadata",
+      "price_hypothesis_cad": [
+        49,
+        199
+      ],
+      "main_barrier": "Does not guarantee print color or machine safety",
+      "first_paid_test": "Validate a limited input family with one print professional before selling",
+      "source_ids": [
+        "R-CANVA",
+        "R-ADOBE",
+        "R-ETSY",
+        "R-ENVATO"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-10-05",
+      "category_id": "C10",
+      "subcategory_id": "C10-2",
+      "mode": "A",
+      "name": "Original diagram component library",
+      "buyer": "Course and documentation authors",
+      "deliverable": "Editable arrows, callouts and simple process components in compatible formats",
+      "price_hypothesis_cad": [
+        19,
+        79
+      ],
+      "main_barrier": "Quality and free alternatives",
+      "first_paid_test": "Seek two paid users of an actual rendered sample set",
+      "source_ids": [
+        "R-CANVA",
+        "R-ADOBE",
+        "R-ETSY",
+        "R-ENVATO"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-10-06",
+      "category_id": "C10",
+      "subcategory_id": "C10-4",
+      "mode": "D",
+      "name": "Design asset licence inventory template",
+      "buyer": "Small creative teams",
+      "deliverable": "An editable source and usage-rights inventory with renewal reminders",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Legal interpretations remain human",
+      "first_paid_test": "Sell a blank resource after a rights manager tests the workflow",
+      "source_ids": [
+        "R-CANVA",
+        "R-ADOBE",
+        "R-ETSY",
+        "R-ENVATO"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-11-01",
+      "category_id": "C11",
+      "subcategory_id": "C11-1",
+      "mode": "A",
+      "name": "Original product-photography prop models",
+      "buyer": "Small visualization studios",
+      "deliverable": "A compact model pack with clean topology, dimensions and neutral materials",
+      "price_hypothesis_cad": [
+        39,
+        149
+      ],
+      "main_barrier": "Art quality and licences",
+      "first_paid_test": "Obtain two paid licences after import/render tests in supported tools",
+      "source_ids": [
+        "R-FAB",
+        "R-ITCH",
+        "R-ETSY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": [
+        "REPO-O01",
+        "FAST-O25"
+      ]
+    },
+    {
+      "id": "CUR-11-02",
+      "category_id": "C11",
+      "subcategory_id": "C11-2",
+      "mode": "D",
+      "name": "Parametric storage-bin CAD templates",
+      "buyer": "Hobby makers",
+      "deliverable": "Original non-load-bearing configurable organizers with documented dimensions",
+      "price_hypothesis_cad": [
+        19,
+        79
+      ],
+      "main_barrier": "Fit and print tolerances",
+      "first_paid_test": "Produce physical test prints before selling files or promising fit",
+      "source_ids": [
+        "R-FAB",
+        "R-ITCH",
+        "R-ETSY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-11-03",
+      "category_id": "C11",
+      "subcategory_id": "C11-3",
+      "mode": "A",
+      "name": "Original laser-cut packaging patterns",
+      "buyer": "Small craft brands",
+      "deliverable": "Editable patterns with material-thickness assumptions and assembly diagrams",
+      "price_hypothesis_cad": [
+        29,
+        129
+      ],
+      "main_barrier": "Fire and fabrication safety",
+      "first_paid_test": "Test with an experienced operator and sell files with machine-specific limitations",
+      "source_ids": [
+        "R-FAB",
+        "R-ITCH",
+        "R-ETSY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-11-04",
+      "category_id": "C11",
+      "subcategory_id": "C11-4",
+      "mode": "I",
+      "name": "3D batch naming and scale auditor",
+      "buyer": "Asset teams",
+      "deliverable": "Preview scale, naming and missing-file issues without automatically modifying originals",
+      "price_hypothesis_cad": [
+        49,
+        149
+      ],
+      "main_barrier": "Application compatibility",
+      "first_paid_test": "Sell one supported-tool version after regression and user import checks",
+      "source_ids": [
+        "R-FAB",
+        "R-ITCH",
+        "R-ETSY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-11-05",
+      "category_id": "C11",
+      "subcategory_id": "C11-1",
+      "mode": "A",
+      "name": "Original scientific exhibit prop kit",
+      "buyer": "Museum and education designers",
+      "deliverable": "Illustrative non-certified display models with source and attribution inventory",
+      "price_hypothesis_cad": [
+        39,
+        199
+      ],
+      "main_barrier": "Scientific accuracy and reproduction rights",
+      "first_paid_test": "Have a domain reviewer check the small sample before licensing",
+      "source_ids": [
+        "R-FAB",
+        "R-ITCH",
+        "R-ETSY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-11-06",
+      "category_id": "C11",
+      "subcategory_id": "C11-4",
+      "mode": "D",
+      "name": "3D delivery acceptance fixture pack",
+      "buyer": "Freelance asset producers",
+      "deliverable": "Example models and tests for scale, pivots, normals and missing textures",
+      "price_hypothesis_cad": [
+        29,
+        129
+      ],
+      "main_barrier": "Tool-version maintenance",
+      "first_paid_test": "Seek three paid team licences for one tested production format",
+      "source_ids": [
+        "R-FAB",
+        "R-ITCH",
+        "R-ETSY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-12-01",
+      "category_id": "C12",
+      "subcategory_id": "C12-1",
+      "mode": "D",
+      "name": "Original short puzzle game",
+      "buyer": "Puzzle players",
+      "deliverable": "A finished small offline game with original mechanics, art and accessibility options",
+      "price_hypothesis_cad": [
+        5,
+        19
+      ],
+      "main_barrier": "Hit-driven demand and support",
+      "first_paid_test": "Test a playable demo and sell a complete small release before a larger scope",
+      "source_ids": [
+        "R-ITCH",
+        "R-FAB"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-12-02",
+      "category_id": "C12",
+      "subcategory_id": "C12-2",
+      "mode": "I",
+      "name": "Save-file migration test toolkit",
+      "buyer": "Small game teams",
+      "deliverable": "Original fixtures and CLI checks for supported save-version changes",
+      "price_hypothesis_cad": [
+        39,
+        149
+      ],
+      "main_barrier": "Free libraries and project-specific formats",
+      "first_paid_test": "Sell one bounded format adapter after a real team tests its migration cases",
+      "source_ids": [
+        "R-ITCH",
+        "R-FAB"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-12-03",
+      "category_id": "C12",
+      "subcategory_id": "C12-3",
+      "mode": "A",
+      "name": "Original tabletop encounter resources",
+      "buyer": "Independent game masters",
+      "deliverable": "Original maps, tokens and scenario prompts with clear licences",
+      "price_hypothesis_cad": [
+        19,
+        79
+      ],
+      "main_barrier": "Unlicensed franchises and crowded discovery",
+      "first_paid_test": "Sell a coherent sampler-backed pack without copying settings or characters",
+      "source_ids": [
+        "R-ITCH",
+        "R-FAB"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-12-04",
+      "category_id": "C12",
+      "subcategory_id": "C12-4",
+      "mode": "D",
+      "name": "Interactive fractions practice game",
+      "buyer": "Parents and instructors",
+      "deliverable": "A small original browser learning activity with checked answers and no accounts",
+      "price_hypothesis_cad": [
+        9,
+        39
+      ],
+      "main_barrier": "Educational accuracy and child privacy",
+      "first_paid_test": "Test with adults/instructors and avoid collecting children’s personal data",
+      "source_ids": [
+        "R-ITCH",
+        "R-FAB"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-12-05",
+      "category_id": "C12",
+      "subcategory_id": "C12-2",
+      "mode": "D",
+      "name": "Game-release checklist and fixture kit",
+      "buyer": "Small studios",
+      "deliverable": "Reproducible tests for package contents, resolution settings and missing resources",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Platform changes",
+      "first_paid_test": "Sell one supported engine-independent packaging workflow after a clean-build test",
+      "source_ids": [
+        "R-ITCH",
+        "R-FAB"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": [
+        "REPO-O03"
+      ]
+    },
+    {
+      "id": "CUR-12-06",
+      "category_id": "C12",
+      "subcategory_id": "C12-3",
+      "mode": "A",
+      "name": "Original accessible board-game print kit",
+      "buyer": "Family game buyers",
+      "deliverable": "Print-ready cards, rules and high-contrast variants for a tested original game",
+      "price_hypothesis_cad": [
+        9,
+        39
+      ],
+      "main_barrier": "Playtesting time and low discovery",
+      "first_paid_test": "Run several real playtests and sell the finished compact edition",
+      "source_ids": [
+        "R-ITCH",
+        "R-FAB"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-13-01",
+      "category_id": "C13",
+      "subcategory_id": "C13-1",
+      "mode": "L",
+      "name": "Practical spreadsheet audit mini-course",
+      "buyer": "Small-business operators",
+      "deliverable": "Short original lessons with tested workbooks, exercises and worked answers",
+      "price_hypothesis_cad": [
+        39,
+        149
+      ],
+      "main_barrier": "Teaching quality and learner acquisition",
+      "first_paid_test": "Sell one clearly scoped module before filming a full course",
+      "source_ids": [
+        "R-TEACHABLE",
+        "R-KDP",
+        "R-NOTION"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-13-02",
+      "category_id": "C13",
+      "subcategory_id": "C13-2",
+      "mode": "D",
+      "name": "Original trade-math practice sheets",
+      "buyer": "Vocational instructors",
+      "deliverable": "Problem sets and checked solutions covering non-safety-critical arithmetic",
+      "price_hypothesis_cad": [
+        19,
+        69
+      ],
+      "main_barrier": "Incorrect answers and copied exams",
+      "first_paid_test": "Have an instructor verify every solution and purchase one classroom licence",
+      "source_ids": [
+        "R-TEACHABLE",
+        "R-KDP",
+        "R-NOTION"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-13-03",
+      "category_id": "C13",
+      "subcategory_id": "C13-3",
+      "mode": "I",
+      "name": "Instructor quiz-format converter",
+      "buyer": "Course creators",
+      "deliverable": "Convert instructor-owned question banks between two supported formats",
+      "price_hypothesis_cad": [
+        39,
+        149
+      ],
+      "main_barrier": "Copyright and fragile imports",
+      "first_paid_test": "Charge for a sample-tested limited conversion with no exam-bank scraping",
+      "source_ids": [
+        "R-TEACHABLE",
+        "R-KDP",
+        "R-NOTION"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-13-04",
+      "category_id": "C13",
+      "subcategory_id": "C13-4",
+      "mode": "L",
+      "name": "Employee spreadsheet hygiene module",
+      "buyer": "Small employers",
+      "deliverable": "A reusable internal course on backups, validation and accidental data disclosure",
+      "price_hypothesis_cad": [
+        79,
+        299
+      ],
+      "main_barrier": "Claims of certification and policy fit",
+      "first_paid_test": "Sell a team pilot with completion feedback and explicit non-certification language",
+      "source_ids": [
+        "R-TEACHABLE",
+        "R-KDP",
+        "R-NOTION"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-13-05",
+      "category_id": "C13",
+      "subcategory_id": "C13-2",
+      "mode": "A",
+      "name": "Original classroom diagram library",
+      "buyer": "Teachers",
+      "deliverable": "Editable original diagrams with text alternatives and print-friendly versions",
+      "price_hypothesis_cad": [
+        19,
+        79
+      ],
+      "main_barrier": "Curriculum fit and asset rights",
+      "first_paid_test": "Sell a tested subject-specific starter collection",
+      "source_ids": [
+        "R-TEACHABLE",
+        "R-KDP",
+        "R-NOTION"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-13-06",
+      "category_id": "C13",
+      "subcategory_id": "C13-3",
+      "mode": "D",
+      "name": "Learning-outcome alignment workbook",
+      "buyer": "Independent course authors",
+      "deliverable": "A planning tool mapping objectives, lessons, assessments and evidence",
+      "price_hypothesis_cad": [
+        29,
+        89
+      ],
+      "main_barrier": "Too abstract to create buyer value",
+      "first_paid_test": "Observe three authors design a lesson and seek paid adoption",
+      "source_ids": [
+        "R-TEACHABLE",
+        "R-KDP",
+        "R-NOTION"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-14-01",
+      "category_id": "C14",
+      "subcategory_id": "C14-1",
+      "mode": "A",
+      "name": "Original local-service website template",
+      "buyer": "Small web agencies",
+      "deliverable": "A responsive editable site template with service pages, original assets and accessibility notes",
+      "price_hypothesis_cad": [
+        49,
+        199
+      ],
+      "main_barrier": "Market saturation and platform compatibility",
+      "first_paid_test": "Sell one tested template via an approved marketplace or direct demo",
+      "source_ids": [
+        "R-WEBFLOW",
+        "R-FRAMER",
+        "R-SHOPIFY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-14-02",
+      "category_id": "C14",
+      "subcategory_id": "C14-2",
+      "mode": "I",
+      "name": "Digital-download licence display component",
+      "buyer": "Small storefront developers",
+      "deliverable": "A reusable product-page component showing licence terms and supported versions",
+      "price_hypothesis_cad": [
+        29,
+        129
+      ],
+      "main_barrier": "Legal text and storefront changes",
+      "first_paid_test": "Sell a tested component with owner-supplied terms instead of universal legal claims",
+      "source_ids": [
+        "R-WEBFLOW",
+        "R-FRAMER",
+        "R-SHOPIFY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-14-03",
+      "category_id": "C14",
+      "subcategory_id": "C14-3",
+      "mode": "A",
+      "name": "Case-study landing-page template set",
+      "buyer": "B2B agencies",
+      "deliverable": "Original layouts distinguishing sourced outcomes from hypothetical examples",
+      "price_hypothesis_cad": [
+        39,
+        149
+      ],
+      "main_barrier": "No automatic conversion uplift",
+      "first_paid_test": "Demonstrate real page performance and sell source files to two agencies",
+      "source_ids": [
+        "R-WEBFLOW",
+        "R-FRAMER",
+        "R-SHOPIFY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-14-04",
+      "category_id": "C14",
+      "subcategory_id": "C14-4",
+      "mode": "D",
+      "name": "Static-site broken-resource checker",
+      "buyer": "Small publishers",
+      "deliverable": "Local checks for missing assets and internal links in a built-site folder",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Free tools",
+      "first_paid_test": "Get a paid buyer for a simple interface or specific workflow gap",
+      "source_ids": [
+        "R-WEBFLOW",
+        "R-FRAMER",
+        "R-SHOPIFY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-14-05",
+      "category_id": "C14",
+      "subcategory_id": "C14-2",
+      "mode": "I",
+      "name": "Accessible product comparison component",
+      "buyer": "Commerce designers",
+      "deliverable": "Keyboard-usable comparison tables with responsive behavior and editable data",
+      "price_hypothesis_cad": [
+        49,
+        149
+      ],
+      "main_barrier": "Accessibility needs manual testing",
+      "first_paid_test": "Have users test the component and sell it with scoped conformance notes",
+      "source_ids": [
+        "R-WEBFLOW",
+        "R-FRAMER",
+        "R-SHOPIFY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-14-06",
+      "category_id": "C14",
+      "subcategory_id": "C14-4",
+      "mode": "R",
+      "name": "Owner-authorized release smoke checks",
+      "buyer": "Small web agencies",
+      "deliverable": "Repeat a few approved noncritical browser tests after site deployments",
+      "price_hypothesis_cad": [
+        49,
+        199
+      ],
+      "main_barrier": "False alerts and production side effects",
+      "first_paid_test": "Sell a capped read-only/test-account pilot with exact response terms",
+      "source_ids": [
+        "R-WEBFLOW",
+        "R-FRAMER",
+        "R-SHOPIFY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-15-01",
+      "category_id": "C15",
+      "subcategory_id": "C15-1",
+      "mode": "M",
+      "name": "Small supplier approval tracker",
+      "buyer": "Independent purchasing teams",
+      "deliverable": "Track requested documents, owner decisions and expiries without certifying compliance",
+      "price_hypothesis_cad": [
+        39,
+        199
+      ],
+      "main_barrier": "Workflow-specific onboarding",
+      "first_paid_test": "Get three paid pilots and repeated use before multi-tenant development",
+      "source_ids": [
+        "R-INTERCOM",
+        "R-N8N",
+        "R-JOBBER"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-15-02",
+      "category_id": "C15",
+      "subcategory_id": "C15-2",
+      "mode": "M",
+      "name": "Creative proof sign-off portal",
+      "buyer": "Small print/design teams",
+      "deliverable": "Versioned file previews and explicit buyer approvals with downloadable history",
+      "price_hypothesis_cad": [
+        29,
+        149
+      ],
+      "main_barrier": "Private files and existing products",
+      "first_paid_test": "Sell one bounded team pilot using access-controlled storage",
+      "source_ids": [
+        "R-INTERCOM",
+        "R-N8N",
+        "R-JOBBER"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-15-03",
+      "category_id": "C15",
+      "subcategory_id": "C15-3",
+      "mode": "M",
+      "name": "Shared equipment booking rules tool",
+      "buyer": "Community workshops",
+      "deliverable": "Owner-configured availability and approval routing with no safety authorization",
+      "price_hypothesis_cad": [
+        29,
+        129
+      ],
+      "main_barrier": "Booking conflicts and member privacy",
+      "first_paid_test": "Test one room/equipment group and obtain renewal evidence",
+      "source_ids": [
+        "R-INTERCOM",
+        "R-N8N",
+        "R-JOBBER"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-15-04",
+      "category_id": "C15",
+      "subcategory_id": "C15-4",
+      "mode": "M",
+      "name": "Approved-answer support directory",
+      "buyer": "Small subscription businesses",
+      "deliverable": "Search vetted help articles and escalate unknown answers rather than invent them",
+      "price_hypothesis_cad": [
+        39,
+        199
+      ],
+      "main_barrier": "Hallucinations and knowledge drift",
+      "first_paid_test": "Sell one source-limited pilot with a measurable answer-accuracy set",
+      "source_ids": [
+        "R-INTERCOM",
+        "R-N8N",
+        "R-JOBBER"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-15-05",
+      "category_id": "C15",
+      "subcategory_id": "C15-1",
+      "mode": "M",
+      "name": "Recurring client deliverable tracker",
+      "buyer": "Small agencies",
+      "deliverable": "Track agreed outputs, review dates and acceptance across a limited client roster",
+      "price_hypothesis_cad": [
+        29,
+        129
+      ],
+      "main_barrier": "Crowded project-management category",
+      "first_paid_test": "Prove one unmet handoff problem and two paid subscriptions",
+      "source_ids": [
+        "R-INTERCOM",
+        "R-N8N",
+        "R-JOBBER"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-15-06",
+      "category_id": "C15",
+      "subcategory_id": "C15-2",
+      "mode": "M",
+      "name": "Client file-request completion portal",
+      "buyer": "Bookkeepers and agencies",
+      "deliverable": "Request approved non-sensitive documents and show missing-item status without storing credentials",
+      "price_hypothesis_cad": [
+        39,
+        179
+      ],
+      "main_barrier": "Sensitive uploads and retention",
+      "first_paid_test": "Start with fictional documents and a privacy-reviewed design partner",
+      "source_ids": [
+        "R-INTERCOM",
+        "R-N8N",
+        "R-JOBBER"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-16-01",
+      "category_id": "C16",
+      "subcategory_id": "C16-1",
+      "mode": "D",
+      "name": "Local batch image metadata scrubber",
+      "buyer": "Privacy-conscious creators",
+      "deliverable": "Preview and remove selected metadata from supported images while preserving originals",
+      "price_hypothesis_cad": [
+        29,
+        89
+      ],
+      "main_barrier": "Metadata removal is not guaranteed anonymity",
+      "first_paid_test": "Demonstrate before/after metadata on test files and sell a bounded offline tool",
+      "source_ids": [
+        "R-APPLE_FEES",
+        "R-APPLE_ID",
+        "R-PLAY_FEES",
+        "R-PLAY_ID"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-16-02",
+      "category_id": "C16",
+      "subcategory_id": "C16-2",
+      "mode": "M",
+      "name": "Mobile equipment checkout log",
+      "buyer": "Small creative teams",
+      "deliverable": "Offline-first item loans and due dates with explicit synchronization consent",
+      "price_hypothesis_cad": [
+        9,
+        29
+      ],
+      "main_barrier": "Store identity disclosures and device support",
+      "first_paid_test": "Validate one device family with paying team testers",
+      "source_ids": [
+        "R-APPLE_FEES",
+        "R-APPLE_ID",
+        "R-PLAY_FEES",
+        "R-PLAY_ID"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-16-03",
+      "category_id": "C16",
+      "subcategory_id": "C16-3",
+      "mode": "D",
+      "name": "Offline event budget calculator",
+      "buyer": "Independent organizers",
+      "deliverable": "A local application with tested cost scenarios and exportable summaries",
+      "price_hypothesis_cad": [
+        19,
+        79
+      ],
+      "main_barrier": "Free alternatives and mistaken forecasts",
+      "first_paid_test": "Use known arithmetic fixtures and sell a non-financial-advice utility",
+      "source_ids": [
+        "R-APPLE_FEES",
+        "R-APPLE_ID",
+        "R-PLAY_FEES",
+        "R-PLAY_ID"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-16-04",
+      "category_id": "C16",
+      "subcategory_id": "C16-4",
+      "mode": "D",
+      "name": "Device photo-transfer manifest checker",
+      "buyer": "Photographers",
+      "deliverable": "Compare user-selected transfer manifests to flag missing files without deletion",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Filesystem access and false missing-file alerts",
+      "first_paid_test": "Sell after zero-loss read-only tests on a supported file family",
+      "source_ids": [
+        "R-APPLE_FEES",
+        "R-APPLE_ID",
+        "R-PLAY_FEES",
+        "R-PLAY_ID"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-16-05",
+      "category_id": "C16",
+      "subcategory_id": "C16-1",
+      "mode": "D",
+      "name": "Local duplicate-document review tool",
+      "buyer": "Freelancers",
+      "deliverable": "Identify exact duplicate hashes and produce a review list without deleting originals",
+      "price_hypothesis_cad": [
+        29,
+        89
+      ],
+      "main_barrier": "Commodity tools and privacy",
+      "first_paid_test": "Prove one specific workflow convenience and seek paid early users",
+      "source_ids": [
+        "R-APPLE_FEES",
+        "R-APPLE_ID",
+        "R-PLAY_FEES",
+        "R-PLAY_ID"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-16-06",
+      "category_id": "C16",
+      "subcategory_id": "C16-3",
+      "mode": "D",
+      "name": "Offline text-expansion snippet organizer",
+      "buyer": "Small support teams",
+      "deliverable": "Store approved non-secret text snippets locally with categories and export",
+      "price_hypothesis_cad": [
+        19,
+        69
+      ],
+      "main_barrier": "Existing free tools",
+      "first_paid_test": "Ask two teams to pay for an explicit usability gap before expanding",
+      "source_ids": [
+        "R-APPLE_FEES",
+        "R-APPLE_ID",
+        "R-PLAY_FEES",
+        "R-PLAY_ID"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-17-01",
+      "category_id": "C17",
+      "subcategory_id": "C17-1",
+      "mode": "I",
+      "name": "Browser form-accessibility preview helper",
+      "buyer": "Web designers",
+      "deliverable": "Read-only checks and overlays for labels, keyboard order and form instructions",
+      "price_hypothesis_cad": [
+        19,
+        79
+      ],
+      "main_barrier": "Store review and incomplete conformance testing",
+      "first_paid_test": "Have designers test known fixtures and buy a narrowly scoped extension",
+      "source_ids": [
+        "R-CHROME",
+        "R-SHOPIFY",
+        "R-N8N_LICENSE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-17-02",
+      "category_id": "C17",
+      "subcategory_id": "C17-2",
+      "mode": "I",
+      "name": "Commerce product-field completeness plugin",
+      "buyer": "Small merchants",
+      "deliverable": "Flag missing owner-defined fields before export without modifying live products",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Existing apps and schema changes",
+      "first_paid_test": "Run a paid one-store pilot with explicit access scopes",
+      "source_ids": [
+        "R-CHROME",
+        "R-SHOPIFY",
+        "R-N8N_LICENSE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-17-03",
+      "category_id": "C17",
+      "subcategory_id": "C17-3",
+      "mode": "I",
+      "name": "Editor documentation-link verifier",
+      "buyer": "Documentation teams",
+      "deliverable": "Validate links in local Markdown and generate an actionable diff",
+      "price_hypothesis_cad": [
+        19,
+        79
+      ],
+      "main_barrier": "Free competition and network permissions",
+      "first_paid_test": "Sell a workflow-specific convenience after a sample repository trial",
+      "source_ids": [
+        "R-CHROME",
+        "R-SHOPIFY",
+        "R-N8N_LICENSE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-17-04",
+      "category_id": "C17",
+      "subcategory_id": "C17-4",
+      "mode": "I",
+      "name": "Permissioned form-to-ticket connector",
+      "buyer": "Small service teams",
+      "deliverable": "Create deduplicated internal tickets with a fixed mapping and audit trail",
+      "price_hypothesis_cad": [
+        49,
+        199
+      ],
+      "main_barrier": "Credential scopes and retries",
+      "first_paid_test": "Test duplicate/failed events and charge for one supported pair",
+      "source_ids": [
+        "R-CHROME",
+        "R-SHOPIFY",
+        "R-N8N_LICENSE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-17-05",
+      "category_id": "C17",
+      "subcategory_id": "C17-1",
+      "mode": "I",
+      "name": "Local-first research citation clipper",
+      "buyer": "Researchers",
+      "deliverable": "Capture user-selected citations with source dates and export locally",
+      "price_hypothesis_cad": [
+        19,
+        79
+      ],
+      "main_barrier": "Publisher rights and broad browser access",
+      "first_paid_test": "Prototype minimal permissions and get two paid researchers",
+      "source_ids": [
+        "R-CHROME",
+        "R-SHOPIFY",
+        "R-N8N_LICENSE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-17-06",
+      "category_id": "C17",
+      "subcategory_id": "C17-2",
+      "mode": "I",
+      "name": "Merchant return-reason export adapter",
+      "buyer": "Small ecommerce operators",
+      "deliverable": "Normalize authorized return tags into one analytical export",
+      "price_hypothesis_cad": [
+        49,
+        149
+      ],
+      "main_barrier": "Personal data and platform rules",
+      "first_paid_test": "Sell a redacted export pilot with no refund actions",
+      "source_ids": [
+        "R-CHROME",
+        "R-SHOPIFY",
+        "R-N8N_LICENSE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-18-01",
+      "category_id": "C18",
+      "subcategory_id": "C18-1",
+      "mode": "D",
+      "name": "Release artifact provenance toolkit",
+      "buyer": "Small software teams",
+      "deliverable": "Hash manifests, version checks and reproducible packaging templates",
+      "price_hypothesis_cad": [
+        49,
+        199
+      ],
+      "main_barrier": "Free tooling and supply-chain trust",
+      "first_paid_test": "Sell a documented fixture-tested kit after one team uses a release sample",
+      "source_ids": [
+        "R-CHECKLY",
+        "R-CHROME",
+        "R-N8N_LICENSE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-18-02",
+      "category_id": "C18",
+      "subcategory_id": "C18-2",
+      "mode": "D",
+      "name": "CSV edge-case regression dataset",
+      "buyer": "Data-tool developers",
+      "deliverable": "Original synthetic fixtures covering delimiters, encodings, money and invalid dates",
+      "price_hypothesis_cad": [
+        29,
+        149
+      ],
+      "main_barrier": "Dataset quality and free substitutes",
+      "first_paid_test": "Get a paid licence after developers find meaningful uncovered cases",
+      "source_ids": [
+        "R-CHECKLY",
+        "R-CHROME",
+        "R-N8N_LICENSE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-18-03",
+      "category_id": "C18",
+      "subcategory_id": "C18-3",
+      "mode": "R",
+      "name": "Owner-approved dependency licence report",
+      "buyer": "Small product teams",
+      "deliverable": "Inventory dependencies and highlight changed declared licences for human review",
+      "price_hypothesis_cad": [
+        39,
+        149
+      ],
+      "main_barrier": "Not legal clearance and data completeness",
+      "first_paid_test": "Run a paid read-only export review and measure false flags",
+      "source_ids": [
+        "R-CHECKLY",
+        "R-CHROME",
+        "R-N8N_LICENSE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-18-04",
+      "category_id": "C18",
+      "subcategory_id": "C18-4",
+      "mode": "I",
+      "name": "API documentation example verifier",
+      "buyer": "Small API companies",
+      "deliverable": "Run approved synthetic examples against a test environment and report drift",
+      "price_hypothesis_cad": [
+        49,
+        199
+      ],
+      "main_barrier": "Test credentials and costly API actions",
+      "first_paid_test": "Charge for a bounded test-only pilot with action allowlists",
+      "source_ids": [
+        "R-CHECKLY",
+        "R-CHROME",
+        "R-N8N_LICENSE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-18-05",
+      "category_id": "C18",
+      "subcategory_id": "C18-2",
+      "mode": "D",
+      "name": "Webhook replay test harness",
+      "buyer": "Developers adding billing integrations",
+      "deliverable": "Replay fictional duplicate, delayed and out-of-order events locally",
+      "price_hypothesis_cad": [
+        49,
+        199
+      ],
+      "main_barrier": "Security and provider-specific assumptions",
+      "first_paid_test": "Sell a tested package with no real payment credentials",
+      "source_ids": [
+        "R-CHECKLY",
+        "R-CHROME",
+        "R-N8N_LICENSE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-18-06",
+      "category_id": "C18",
+      "subcategory_id": "C18-4",
+      "mode": "D",
+      "name": "Customer SDK migration guide generator",
+      "buyer": "API product teams",
+      "deliverable": "Compare approved schemas and draft versioned migration notes for developer review",
+      "price_hypothesis_cad": [
+        49,
+        199
+      ],
+      "main_barrier": "Incorrect changes and hallucinated guidance",
+      "first_paid_test": "Sell a sample-reviewed migration for one small API version",
+      "source_ids": [
+        "R-CHECKLY",
+        "R-CHROME",
+        "R-N8N_LICENSE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-19-01",
+      "category_id": "C19",
+      "subcategory_id": "C19-1",
+      "mode": "M",
+      "name": "Quote-document rendering API",
+      "buyer": "Small quoting applications",
+      "deliverable": "Render owner-supplied structured quotes using vetted templates and strict quotas",
+      "price_hypothesis_cad": [
+        29,
+        149
+      ],
+      "main_barrier": "Abuse, private data and existing APIs",
+      "first_paid_test": "Get two paid integrators for a limited volume before scaling",
+      "source_ids": [
+        "R-PDFMONKEY",
+        "R-SCREENSHOT",
+        "R-STATCAN",
+        "R-ALPHAVANTAGE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-19-02",
+      "category_id": "C19",
+      "subcategory_id": "C19-2",
+      "mode": "M",
+      "name": "Accessible chart-image API",
+      "buyer": "Report builders",
+      "deliverable": "Generate charts with machine-readable data summaries and text alternatives",
+      "price_hypothesis_cad": [
+        19,
+        129
+      ],
+      "main_barrier": "Charts can mislead and rendering costs",
+      "first_paid_test": "Sell one bounded chart family with tested visual fixtures",
+      "source_ids": [
+        "R-PDFMONKEY",
+        "R-SCREENSHOT",
+        "R-STATCAN",
+        "R-ALPHAVANTAGE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-19-03",
+      "category_id": "C19",
+      "subcategory_id": "C19-3",
+      "mode": "M",
+      "name": "Unit-and-currency-label validation API",
+      "buyer": "Inventory developers",
+      "deliverable": "Validate declared units and currency labels without guessing conversions",
+      "price_hypothesis_cad": [
+        29,
+        149
+      ],
+      "main_barrier": "Business-specific semantics",
+      "first_paid_test": "Secure a paid integration for one explicit schema and failure test set",
+      "source_ids": [
+        "R-PDFMONKEY",
+        "R-SCREENSHOT",
+        "R-STATCAN",
+        "R-ALPHAVANTAGE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-19-04",
+      "category_id": "C19",
+      "subcategory_id": "C19-4",
+      "mode": "M",
+      "name": "Customer API quota statement service",
+      "buyer": "Small API vendors",
+      "deliverable": "Turn authorized usage exports into readable statements with deterministic totals",
+      "price_hypothesis_cad": [
+        39,
+        199
+      ],
+      "main_barrier": "Metering disputes and source integrity",
+      "first_paid_test": "Reconcile one billing period in a paid read-only pilot",
+      "source_ids": [
+        "R-PDFMONKEY",
+        "R-SCREENSHOT",
+        "R-STATCAN",
+        "R-ALPHAVANTAGE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-19-05",
+      "category_id": "C19",
+      "subcategory_id": "C19-2",
+      "mode": "M",
+      "name": "Safe barcode-label rendering API",
+      "buyer": "Inventory software vendors",
+      "deliverable": "Generate a few supported barcode formats with checksum tests and print dimensions",
+      "price_hypothesis_cad": [
+        19,
+        99
+      ],
+      "main_barrier": "Print scanning quality and standards",
+      "first_paid_test": "Have buyers scan physical test labels before taking production orders",
+      "source_ids": [
+        "R-PDFMONKEY",
+        "R-SCREENSHOT",
+        "R-STATCAN",
+        "R-ALPHAVANTAGE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-19-06",
+      "category_id": "C19",
+      "subcategory_id": "C19-3",
+      "mode": "M",
+      "name": "Licensed public-data normalization endpoint",
+      "buyer": "Analysts",
+      "deliverable": "Normalize one licensed official series with units, vintages and provenance",
+      "price_hypothesis_cad": [
+        29,
+        149
+      ],
+      "main_barrier": "Free upstream and licence conditions",
+      "first_paid_test": "Sell one useful endpoint with explicit freshness rather than broad data scraping",
+      "source_ids": [
+        "R-PDFMONKEY",
+        "R-SCREENSHOT",
+        "R-STATCAN",
+        "R-ALPHAVANTAGE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-20-01",
+      "category_id": "C20",
+      "subcategory_id": "C20-1",
+      "mode": "F",
+      "name": "Weekly sales export report setup",
+      "buyer": "Small ecommerce/agency teams",
+      "deliverable": "One source-reconciled CSV-to-report workflow with a reusable local runner",
+      "price_hypothesis_cad": [
+        299,
+        699
+      ],
+      "main_barrier": "Scope creep and existing reporting tools",
+      "first_paid_test": "Use the existing synthetic demonstration and one funded fixed-scope pilot",
+      "source_ids": [
+        "R-METABASE",
+        "R-AGENCY",
+        "R-UPWORK_DEMAND"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": [
+        "FAST-O01"
+      ]
+    },
+    {
+      "id": "CUR-20-02",
+      "category_id": "C20",
+      "subcategory_id": "C20-2",
+      "mode": "D",
+      "name": "Spreadsheet input-contract validator",
+      "buyer": "Small operations teams",
+      "deliverable": "A local checker for expected headers, types and required fields in agreed exports",
+      "price_hypothesis_cad": [
+        39,
+        149
+      ],
+      "main_barrier": "Ambiguous formulas and formats",
+      "first_paid_test": "Sell a supported-schema version after three users test bad inputs",
+      "source_ids": [
+        "R-METABASE",
+        "R-AGENCY",
+        "R-UPWORK_DEMAND"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": [
+        "FAST-O07"
+      ]
+    },
+    {
+      "id": "CUR-20-03",
+      "category_id": "C20",
+      "subcategory_id": "C20-3",
+      "mode": "F",
+      "name": "Inventory snapshot reconciliation",
+      "buyer": "Small wholesalers",
+      "deliverable": "Compare two approved snapshots and explain quantity differences without adjusting stock",
+      "price_hypothesis_cad": [
+        299,
+        799
+      ],
+      "main_barrier": "Unit errors and missing transactions",
+      "first_paid_test": "Agree matching rules, sample totals and one paid reporting period",
+      "source_ids": [
+        "R-METABASE",
+        "R-AGENCY",
+        "R-UPWORK_DEMAND"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-20-04",
+      "category_id": "C20",
+      "subcategory_id": "C20-4",
+      "mode": "D",
+      "name": "Service capacity scenario planner",
+      "buyer": "Small agencies",
+      "deliverable": "Separate booked work, speculative sales, owner hours and contractor costs in a tested workbook",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Forecasts mistaken for real demand",
+      "first_paid_test": "Use a zero-sales scenario and obtain two paid buyers",
+      "source_ids": [
+        "R-METABASE",
+        "R-AGENCY",
+        "R-UPWORK_DEMAND"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-20-05",
+      "category_id": "C20",
+      "subcategory_id": "C20-1",
+      "mode": "R",
+      "name": "Bounded monthly operations digest",
+      "buyer": "Small recurring-service businesses",
+      "deliverable": "Generate an approved KPI report from a fixed export with failure alerts",
+      "price_hypothesis_cad": [
+        79,
+        199
+      ],
+      "main_barrier": "Format drift and manual exceptions",
+      "first_paid_test": "Require an accepted setup and two paid renewals before expanding",
+      "source_ids": [
+        "R-METABASE",
+        "R-AGENCY",
+        "R-UPWORK_DEMAND"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-20-06",
+      "category_id": "C20",
+      "subcategory_id": "C20-3",
+      "mode": "D",
+      "name": "Export quality assessment workbook",
+      "buyer": "Business analysts",
+      "deliverable": "An editable framework for duplicates, missing values, field definitions and reconciliation",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Generic data quality tools",
+      "first_paid_test": "Sell to two analysts after they apply a sample to a real permitted export",
+      "source_ids": [
+        "R-METABASE",
+        "R-AGENCY",
+        "R-UPWORK_DEMAND"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-21-01",
+      "category_id": "C21",
+      "subcategory_id": "C21-1",
+      "mode": "F",
+      "name": "Supplier purchase-order extraction pilot",
+      "buyer": "Small distributors",
+      "deliverable": "Extract a limited document family to validated CSV with human exception review",
+      "price_hypothesis_cad": [
+        399,
+        899
+      ],
+      "main_barrier": "OCR and arithmetic errors",
+      "first_paid_test": "Use twenty authorized pages and a written correctness/exception rule",
+      "source_ids": [
+        "R-PARSEUR",
+        "R-PDFMONKEY",
+        "R-N8N",
+        "R-N8N_LICENSE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": [
+        "FAST-O04"
+      ]
+    },
+    {
+      "id": "CUR-21-02",
+      "category_id": "C21",
+      "subcategory_id": "C21-2",
+      "mode": "M",
+      "name": "Approved job-completion report assembler",
+      "buyer": "Small service companies",
+      "deliverable": "Produce reports from structured owner entries with evidence links and version history",
+      "price_hypothesis_cad": [
+        39,
+        149
+      ],
+      "main_barrier": "Not a safety inspection certificate",
+      "first_paid_test": "Obtain paid usage for an administrative-only report type",
+      "source_ids": [
+        "R-PARSEUR",
+        "R-PDFMONKEY",
+        "R-N8N",
+        "R-N8N_LICENSE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-21-03",
+      "category_id": "C21",
+      "subcategory_id": "C21-3",
+      "mode": "I",
+      "name": "Document intake routing workflow",
+      "buyer": "Small agencies",
+      "deliverable": "Route approved files by explicit rules, prevent duplicate jobs and log exceptions",
+      "price_hypothesis_cad": [
+        99,
+        499
+      ],
+      "main_barrier": "Confidential information and misrouting",
+      "first_paid_test": "Test fictional documents and a single authorized destination",
+      "source_ids": [
+        "R-PARSEUR",
+        "R-PDFMONKEY",
+        "R-N8N",
+        "R-N8N_LICENSE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-21-04",
+      "category_id": "C21",
+      "subcategory_id": "C21-4",
+      "mode": "D",
+      "name": "Local PDF field-presence checker",
+      "buyer": "Small document teams",
+      "deliverable": "Check required text fields on supported digitally generated PDFs without editing originals",
+      "price_hypothesis_cad": [
+        39,
+        149
+      ],
+      "main_barrier": "Scans and unknown layouts unsupported",
+      "first_paid_test": "Sell one bounded template family after verified edge-case testing",
+      "source_ids": [
+        "R-PARSEUR",
+        "R-PDFMONKEY",
+        "R-N8N",
+        "R-N8N_LICENSE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-21-05",
+      "category_id": "C21",
+      "subcategory_id": "C21-1",
+      "mode": "D",
+      "name": "Extraction gold-set builder",
+      "buyer": "Teams evaluating extraction products",
+      "deliverable": "Organize human-labelled fictional samples and compare extracted fields reproducibly",
+      "price_hypothesis_cad": [
+        49,
+        199
+      ],
+      "main_barrier": "Annotation quality and privacy",
+      "first_paid_test": "Sell a tool validated against manually checked examples",
+      "source_ids": [
+        "R-PARSEUR",
+        "R-PDFMONKEY",
+        "R-N8N",
+        "R-N8N_LICENSE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-21-06",
+      "category_id": "C21",
+      "subcategory_id": "C21-3",
+      "mode": "D",
+      "name": "Business workflow failure-drill kit",
+      "buyer": "Automation implementers",
+      "deliverable": "Original scenarios and test templates for retries, duplication, quota and permission failures",
+      "price_hypothesis_cad": [
+        49,
+        199
+      ],
+      "main_barrier": "Complex customer workflows",
+      "first_paid_test": "Have implementers pay for one practical tested automation family",
+      "source_ids": [
+        "R-PARSEUR",
+        "R-PDFMONKEY",
+        "R-N8N",
+        "R-N8N_LICENSE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-22-01",
+      "category_id": "C22",
+      "subcategory_id": "C22-1",
+      "mode": "F",
+      "name": "Supplier CSV cleanup and preflight",
+      "buyer": "Small merchants",
+      "deliverable": "Normalize one approved supplier file and create a dry-run import error report",
+      "price_hypothesis_cad": [
+        399,
+        799
+      ],
+      "main_barrier": "Overwriting live catalogs and existing import apps",
+      "first_paid_test": "Sell an export-only pilot after reviewing a redacted sample",
+      "source_ids": [
+        "R-MATRIXIFY",
+        "R-ZOHO_INVENTORY",
+        "R-GORGIAS",
+        "R-SHOPIFY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": [
+        "FAST-O02",
+        "REPO-O04"
+      ]
+    },
+    {
+      "id": "CUR-22-02",
+      "category_id": "C22",
+      "subcategory_id": "C22-2",
+      "mode": "D",
+      "name": "Product-bundle margin planner",
+      "buyer": "Independent merchants",
+      "deliverable": "Calculate bundle economics including payment, returns, shipping and acquisition assumptions",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Hidden costs and unrealistic demand",
+      "first_paid_test": "Reconcile known example orders and seek two paid users",
+      "source_ids": [
+        "R-MATRIXIFY",
+        "R-ZOHO_INVENTORY",
+        "R-GORGIAS",
+        "R-SHOPIFY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-22-03",
+      "category_id": "C22",
+      "subcategory_id": "C22-3",
+      "mode": "I",
+      "name": "Order-to-inventory discrepancy adapter",
+      "buyer": "Small fulfillment teams",
+      "deliverable": "Match authorized exports and flag discrepancies without changing order states",
+      "price_hypothesis_cad": [
+        79,
+        299
+      ],
+      "main_barrier": "Customer data and matching errors",
+      "first_paid_test": "Get a paid bounded reconciliation with manual review",
+      "source_ids": [
+        "R-MATRIXIFY",
+        "R-ZOHO_INVENTORY",
+        "R-GORGIAS",
+        "R-SHOPIFY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-22-04",
+      "category_id": "C22",
+      "subcategory_id": "C22-4",
+      "mode": "M",
+      "name": "Support response source checker",
+      "buyer": "Small commerce teams",
+      "deliverable": "Check drafted answers against owner-approved policy text and escalate unknowns",
+      "price_hypothesis_cad": [
+        39,
+        149
+      ],
+      "main_barrier": "Wrong refunds or customer promises",
+      "first_paid_test": "Use fictional tickets and sell one limited quality-review pilot",
+      "source_ids": [
+        "R-MATRIXIFY",
+        "R-ZOHO_INVENTORY",
+        "R-GORGIAS",
+        "R-SHOPIFY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-22-05",
+      "category_id": "C22",
+      "subcategory_id": "C22-1",
+      "mode": "R",
+      "name": "Catalog policy and completeness watch",
+      "buyer": "Merchant agencies",
+      "deliverable": "Monitor owner-supplied fields for missing data or agreed rule changes",
+      "price_hypothesis_cad": [
+        49,
+        179
+      ],
+      "main_barrier": "Rule drift and false compliance assurance",
+      "first_paid_test": "Test one account export and obtain renewal for useful findings",
+      "source_ids": [
+        "R-MATRIXIFY",
+        "R-ZOHO_INVENTORY",
+        "R-GORGIAS",
+        "R-SHOPIFY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-22-06",
+      "category_id": "C22",
+      "subcategory_id": "C22-2",
+      "mode": "D",
+      "name": "Original product photography shot planner",
+      "buyer": "Small sellers",
+      "deliverable": "Editable shot lists and file-naming templates tied to one product class",
+      "price_hypothesis_cad": [
+        19,
+        69
+      ],
+      "main_barrier": "Generic content and platform photo requirements",
+      "first_paid_test": "Sell a tested practical sample with no copied example images",
+      "source_ids": [
+        "R-MATRIXIFY",
+        "R-ZOHO_INVENTORY",
+        "R-GORGIAS",
+        "R-SHOPIFY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-23-01",
+      "category_id": "C23",
+      "subcategory_id": "C23-1",
+      "mode": "A",
+      "name": "Original hobby-club merchandise collection",
+      "buyer": "Opt-in niche clubs",
+      "deliverable": "A small original graphic set fulfilled by an approved print partner",
+      "price_hypothesis_cad": [
+        25,
+        65
+      ],
+      "main_barrier": "Thin margin and trademark conflicts",
+      "first_paid_test": "Order a sample and secure real preorders before listing many variants",
+      "source_ids": [
+        "R-PRINTFUL",
+        "R-ETSY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-23-02",
+      "category_id": "C23",
+      "subcategory_id": "C23-2",
+      "mode": "A",
+      "name": "Personalized event keepsake print",
+      "buyer": "Event hosts",
+      "deliverable": "A buyer-customized original design with reviewed text and print proof",
+      "price_hypothesis_cad": [
+        25,
+        90
+      ],
+      "main_barrier": "Reprint errors and shipping",
+      "first_paid_test": "Test one format, proof every order and budget a reprint reserve",
+      "source_ids": [
+        "R-PRINTFUL",
+        "R-ETSY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-23-03",
+      "category_id": "C23",
+      "subcategory_id": "C23-3",
+      "mode": "D",
+      "name": "Print partner order-cost workbook",
+      "buyer": "Small print sellers",
+      "deliverable": "Track unit production, destination shipping, refunds and actual landed margin",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Provider prices change",
+      "first_paid_test": "Reconcile sample invoices and sell a blank template",
+      "source_ids": [
+        "R-PRINTFUL",
+        "R-ETSY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-23-04",
+      "category_id": "C23",
+      "subcategory_id": "C23-4",
+      "mode": "R",
+      "name": "POD exception dashboard",
+      "buyer": "Small print businesses",
+      "deliverable": "Analyze permitted order exports for stalled shipments and repeated defect patterns",
+      "price_hypothesis_cad": [
+        39,
+        149
+      ],
+      "main_barrier": "Not a guaranteed shipping-tracking service",
+      "first_paid_test": "Sell a manual export pilot with source timestamps and update limitations",
+      "source_ids": [
+        "R-PRINTFUL",
+        "R-ETSY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-23-05",
+      "category_id": "C23",
+      "subcategory_id": "C23-1",
+      "mode": "A",
+      "name": "Original illustrated wall-print series",
+      "buyer": "Home-decor buyers",
+      "deliverable": "A coherent original limited collection with checked printable/physical options",
+      "price_hypothesis_cad": [
+        15,
+        80
+      ],
+      "main_barrier": "Crowded art discovery and rights",
+      "first_paid_test": "Test a small paid collection using real proofs and no fake scarcity",
+      "source_ids": [
+        "R-PRINTFUL",
+        "R-ETSY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-23-06",
+      "category_id": "C23",
+      "subcategory_id": "C23-3",
+      "mode": "I",
+      "name": "Personalization spelling approval utility",
+      "buyer": "Print sellers",
+      "deliverable": "Capture buyer-approved text and create a production manifest without automatically ordering",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Incorrect fulfilment and privacy",
+      "first_paid_test": "Sell one supported workflow after testing approval history and duplicate submissions",
+      "source_ids": [
+        "R-PRINTFUL",
+        "R-ETSY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-24-01",
+      "category_id": "C24",
+      "subcategory_id": "C24-1",
+      "mode": "P",
+      "name": "Opt-in regional supplier capabilities directory",
+      "buyer": "Small purchasing teams",
+      "deliverable": "Verified voluntary profiles with capability fields, dates and correction routes",
+      "price_hypothesis_cad": [
+        19,
+        99
+      ],
+      "main_barrier": "Stale listings and two-sided demand",
+      "first_paid_test": "Get ten consenting suppliers and one paying information user first",
+      "source_ids": [
+        "R-CANADABUYS",
+        "R-WORKABLE",
+        "R-CASL"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": [
+        "FAST-O43",
+        "REPO-O29"
+      ]
+    },
+    {
+      "id": "CUR-24-02",
+      "category_id": "C24",
+      "subcategory_id": "C24-2",
+      "mode": "M",
+      "name": "Specialist contract-role board",
+      "buyer": "Employers in one trade",
+      "deliverable": "Verified paid listings with expiry, scam screening and clear hiring scope",
+      "price_hypothesis_cad": [
+        49,
+        199
+      ],
+      "main_barrier": "No audience and unsafe listings",
+      "first_paid_test": "Secure one employer payment and a relevant subscriber pool before coding a platform",
+      "source_ids": [
+        "R-CANADABUYS",
+        "R-WORKABLE",
+        "R-CASL"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-24-03",
+      "category_id": "C24",
+      "subcategory_id": "C24-3",
+      "mode": "F",
+      "name": "Permissioned buyer-introduction pilot",
+      "buyer": "Niche B2B operators",
+      "deliverable": "A small set of mutually consented introductions with scope and contact permissions",
+      "price_hypothesis_cad": [
+        200,
+        800
+      ],
+      "main_barrier": "Spam and unverifiable lead quality",
+      "first_paid_test": "Agree what a qualified introduction means and price a limited test",
+      "source_ids": [
+        "R-CANADABUYS",
+        "R-WORKABLE",
+        "R-CASL"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-24-04",
+      "category_id": "C24",
+      "subcategory_id": "C24-4",
+      "mode": "D",
+      "name": "Marketplace seller-quality audit workbook",
+      "buyer": "Small marketplace operators",
+      "deliverable": "Review templates for listing evidence, dispute handling and policy changes",
+      "price_hypothesis_cad": [
+        49,
+        149
+      ],
+      "main_barrier": "Not legal compliance or fraud prevention guarantee",
+      "first_paid_test": "Sell to one operator after testing fictional cases",
+      "source_ids": [
+        "R-CANADABUYS",
+        "R-WORKABLE",
+        "R-CASL"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-24-05",
+      "category_id": "C24",
+      "subcategory_id": "C24-1",
+      "mode": "P",
+      "name": "Accessible venue-information directory",
+      "buyer": "Event organizers",
+      "deliverable": "Source-linked public access information with owner confirmations and review dates",
+      "price_hypothesis_cad": [
+        19,
+        79
+      ],
+      "main_barrier": "Information may be incomplete or outdated",
+      "first_paid_test": "Validate one locality with venue permission and paid organizer interest",
+      "source_ids": [
+        "R-CANADABUYS",
+        "R-WORKABLE",
+        "R-CASL"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-24-06",
+      "category_id": "C24",
+      "subcategory_id": "C24-4",
+      "mode": "M",
+      "name": "Listing expiry and duplicate checker",
+      "buyer": "Directory operators",
+      "deliverable": "Review owner-provided listings for exact duplicates and stale dates",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Mistaken merges and incumbent functionality",
+      "first_paid_test": "Sell a no-write pilot with explainable candidate flags",
+      "source_ids": [
+        "R-CANADABUYS",
+        "R-WORKABLE",
+        "R-CASL"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-25-01",
+      "category_id": "C25",
+      "subcategory_id": "C25-1",
+      "mode": "P",
+      "name": "Licensed supplier-specification dataset",
+      "buyer": "Small industrial analysts",
+      "deliverable": "Normalize one permissioned product family with field definitions and source provenance",
+      "price_hypothesis_cad": [
+        49,
+        249
+      ],
+      "main_barrier": "Commercial redistribution rights",
+      "first_paid_test": "Obtain written reuse rights and sell a small verified sample dataset",
+      "source_ids": [
+        "R-STATCAN",
+        "R-CANADABUYS",
+        "R-SEC"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-25-02",
+      "category_id": "C25",
+      "subcategory_id": "C25-2",
+      "mode": "P",
+      "name": "Narrow official-tender digest",
+      "buyer": "Small suppliers",
+      "deliverable": "Filter official opportunities by agreed scope and show source links and dates",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Missed tenders and attachment rights",
+      "first_paid_test": "Sell a capped monthly digest without promising completeness",
+      "source_ids": [
+        "R-STATCAN",
+        "R-CANADABUYS",
+        "R-SEC"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-25-03",
+      "category_id": "C25",
+      "subcategory_id": "C25-3",
+      "mode": "P",
+      "name": "Original operational benchmark brief",
+      "buyer": "Small business associations",
+      "deliverable": "Aggregate consenting participants with minimum group sizes and methodology notes",
+      "price_hypothesis_cad": [
+        79,
+        299
+      ],
+      "main_barrier": "Reidentification and unrepresentative samples",
+      "first_paid_test": "Get participant permission and one paying sponsor before collecting more data",
+      "source_ids": [
+        "R-STATCAN",
+        "R-CANADABUYS",
+        "R-SEC"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-25-04",
+      "category_id": "C25",
+      "subcategory_id": "C25-4",
+      "mode": "R",
+      "name": "Owner-approved policy change monitor",
+      "buyer": "Multi-store operators",
+      "deliverable": "Track a limited set of public policy pages with diffs and human-reviewed summaries",
+      "price_hypothesis_cad": [
+        39,
+        149
+      ],
+      "main_barrier": "False changes and advice claims",
+      "first_paid_test": "Demonstrate a meaningful change and seek a paid renewal",
+      "source_ids": [
+        "R-STATCAN",
+        "R-CANADABUYS",
+        "R-SEC"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-25-05",
+      "category_id": "C25",
+      "subcategory_id": "C25-1",
+      "mode": "D",
+      "name": "Official-data vintage comparison toolkit",
+      "buyer": "Economic analysts",
+      "deliverable": "Compare downloaded official series versions with units and revision metadata",
+      "price_hypothesis_cad": [
+        49,
+        149
+      ],
+      "main_barrier": "Statistical interpretation and licences",
+      "first_paid_test": "Sell to analysts who test a known revision case",
+      "source_ids": [
+        "R-STATCAN",
+        "R-CANADABUYS",
+        "R-SEC"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-25-06",
+      "category_id": "C25",
+      "subcategory_id": "C25-2",
+      "mode": "P",
+      "name": "Grant application requirement organizer",
+      "buyer": "Small nonprofits",
+      "deliverable": "A source-linked requirements matrix and deadline planner, not eligibility advice",
+      "price_hypothesis_cad": [
+        49,
+        149
+      ],
+      "main_barrier": "Stale deadlines and adviser obligations",
+      "first_paid_test": "Get a paid administrative-only trial and verify every cited source",
+      "source_ids": [
+        "R-STATCAN",
+        "R-CANADABUYS",
+        "R-SEC"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-26-01",
+      "category_id": "C26",
+      "subcategory_id": "C26-1",
+      "mode": "D",
+      "name": "Invoice completeness and arithmetic checker",
+      "buyer": "Small administrative teams",
+      "deliverable": "Check owner-approved invoice fields and totals locally without filing taxes",
+      "price_hypothesis_cad": [
+        49,
+        149
+      ],
+      "main_barrier": "Tax rules and personal data",
+      "first_paid_test": "Validate fictional examples with a qualified bookkeeper before paid release",
+      "source_ids": [
+        "R-WAVE",
+        "R-ZOHO_BOOKS",
+        "R-CRA"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-26-02",
+      "category_id": "C26",
+      "subcategory_id": "C26-2",
+      "mode": "D",
+      "name": "Cash runway scenario workbook",
+      "buyer": "Small product businesses",
+      "deliverable": "Separate available cash, payout holds, commitments, refunds and speculative revenue",
+      "price_hypothesis_cad": [
+        39,
+        129
+      ],
+      "main_barrier": "Forecast assumptions and advice",
+      "first_paid_test": "Have a qualified reviewer test fixtures and sell a template with clear limits",
+      "source_ids": [
+        "R-WAVE",
+        "R-ZOHO_BOOKS",
+        "R-CRA"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-26-03",
+      "category_id": "C26",
+      "subcategory_id": "C26-3",
+      "mode": "F",
+      "name": "Payment-export reconciliation pilot",
+      "buyer": "Small digital sellers",
+      "deliverable": "Match authorized order, refund and payout exports with exception notes",
+      "price_hypothesis_cad": [
+        399,
+        999
+      ],
+      "main_barrier": "Financial mistakes and private records",
+      "first_paid_test": "Agree exact identities and obtain a qualified-review paid pilot",
+      "source_ids": [
+        "R-WAVE",
+        "R-ZOHO_BOOKS",
+        "R-CRA"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-26-04",
+      "category_id": "C26",
+      "subcategory_id": "C26-4",
+      "mode": "L",
+      "name": "Revenue-versus-cash literacy module",
+      "buyer": "New small-business owners",
+      "deliverable": "Original educational examples distinguishing sales, expenses, settlements and profit",
+      "price_hypothesis_cad": [
+        39,
+        129
+      ],
+      "main_barrier": "Not tax or investment advice",
+      "first_paid_test": "Have an instructor/bookkeeper validate a short paid module",
+      "source_ids": [
+        "R-WAVE",
+        "R-ZOHO_BOOKS",
+        "R-CRA"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-26-05",
+      "category_id": "C26",
+      "subcategory_id": "C26-1",
+      "mode": "I",
+      "name": "Expense-category review assistant",
+      "buyer": "Small bookkeeping practices",
+      "deliverable": "Suggest categories from practice-approved rules and flag uncertainty for bookkeeper decision",
+      "price_hypothesis_cad": [
+        79,
+        249
+      ],
+      "main_barrier": "Misclassification and sensitive data",
+      "first_paid_test": "Use fictional receipts and a licensed professional-led pilot",
+      "source_ids": [
+        "R-WAVE",
+        "R-ZOHO_BOOKS",
+        "R-CRA"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-26-06",
+      "category_id": "C26",
+      "subcategory_id": "C26-3",
+      "mode": "D",
+      "name": "Multi-currency label reconciliation kit",
+      "buyer": "Operations analysts",
+      "deliverable": "Identify mixed-currency records and require explicit exchange assumptions rather than silent conversion",
+      "price_hypothesis_cad": [
+        49,
+        149
+      ],
+      "main_barrier": "FX meaning and compliance",
+      "first_paid_test": "Sell after hand-checked examples with clear exclusions",
+      "source_ids": [
+        "R-WAVE",
+        "R-ZOHO_BOOKS",
+        "R-CRA"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-27-01",
+      "category_id": "C27",
+      "subcategory_id": "C27-1",
+      "mode": "P",
+      "name": "Source-linked filing change digest",
+      "buyer": "Small financial research teams",
+      "deliverable": "Compare public filings and highlight document changes with context and source links",
+      "price_hypothesis_cad": [
+        49,
+        199
+      ],
+      "main_barrier": "Financial advice and data reuse boundaries",
+      "first_paid_test": "Obtain regulatory review and sell a factual non-personalized sample digest",
+      "source_ids": [
+        "R-SEC",
+        "R-ALPHAVANTAGE",
+        "R-OSC"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-27-02",
+      "category_id": "C27",
+      "subcategory_id": "C27-2",
+      "mode": "D",
+      "name": "Local brokerage-export journal",
+      "buyer": "Individuals organizing their records",
+      "deliverable": "Import supported personal exports and reconcile trades without recommendations or trade execution",
+      "price_hypothesis_cad": [
+        39,
+        129
+      ],
+      "main_barrier": "Privacy, tax assumptions and corporate actions",
+      "first_paid_test": "Test fictional records and clearly separate recordkeeping from advice",
+      "source_ids": [
+        "R-SEC",
+        "R-ALPHAVANTAGE",
+        "R-OSC"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-27-03",
+      "category_id": "C27",
+      "subcategory_id": "C27-3",
+      "mode": "D",
+      "name": "Backtest bias diagnostic toolkit",
+      "buyer": "Quant research learners",
+      "deliverable": "Original fixtures showing look-ahead bias, leakage, costs and out-of-sample failure",
+      "price_hypothesis_cad": [
+        49,
+        199
+      ],
+      "main_barrier": "Misleading performance claims",
+      "first_paid_test": "Sell educational tests with losing examples and no strategy-return promise",
+      "source_ids": [
+        "R-SEC",
+        "R-ALPHAVANTAGE",
+        "R-OSC"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-27-04",
+      "category_id": "C27",
+      "subcategory_id": "C27-4",
+      "mode": "CAPITAL",
+      "name": "Diversified long-horizon investing research",
+      "buyer": "Owner investing personal capital",
+      "deliverable": "A research checklist on fees, risk, diversification and suitability, not a business to launch",
+      "price_hypothesis_cad": [
+        0,
+        0
+      ],
+      "main_barrier": "Capital loss and unsuitable allocations",
+      "first_paid_test": "Consult qualified advice and keep capital returns outside the business sales ledger",
+      "source_ids": [
+        "R-SEC",
+        "R-ALPHAVANTAGE",
+        "R-OSC"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-27-05",
+      "category_id": "C27",
+      "subcategory_id": "C27-4",
+      "mode": "CAPITAL",
+      "name": "Paper-trading automation study",
+      "buyer": "Owner studying execution systems",
+      "deliverable": "A fictional-account simulation of slippage, fees, outages and drawdown controls",
+      "price_hypothesis_cad": [
+        0,
+        0
+      ],
+      "main_barrier": "Backtests do not predict profit",
+      "first_paid_test": "Keep every run simulated with no credentials or live orders; no expected-return score",
+      "source_ids": [
+        "R-SEC",
+        "R-ALPHAVANTAGE",
+        "R-OSC"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-27-06",
+      "category_id": "C27",
+      "subcategory_id": "C27-1",
+      "mode": "M",
+      "name": "Market-data licence and freshness tracker",
+      "buyer": "Small financial software teams",
+      "deliverable": "Track contracted entitlements, source timestamps and redistribution approvals",
+      "price_hypothesis_cad": [
+        79,
+        299
+      ],
+      "main_barrier": "Exchange/vendor agreements and stale data",
+      "first_paid_test": "Sell an administrative pilot only after qualified rights review",
+      "source_ids": [
+        "R-SEC",
+        "R-ALPHAVANTAGE",
+        "R-OSC"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-28-01",
+      "category_id": "C28",
+      "subcategory_id": "C28-1",
+      "mode": "D",
+      "name": "Small-product data inventory workbook",
+      "buyer": "Independent software vendors",
+      "deliverable": "An original map of collected fields, retention, processors and deletion responsibilities",
+      "price_hypothesis_cad": [
+        39,
+        149
+      ],
+      "main_barrier": "Not legal compliance advice",
+      "first_paid_test": "Test with privacy professionals and sell a blank editable workbook",
+      "source_ids": [
+        "R-PIPEDA",
+        "R-CHECKLY",
+        "R-CHROME"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-28-02",
+      "category_id": "C28",
+      "subcategory_id": "C28-2",
+      "mode": "R",
+      "name": "Authorized public endpoint change checks",
+      "buyer": "Small web businesses",
+      "deliverable": "Monitor permitted public TLS and availability properties with limited alerts",
+      "price_hypothesis_cad": [
+        29,
+        129
+      ],
+      "main_barrier": "No security certification and incident liability",
+      "first_paid_test": "Verify authorization and sell exact checks with bounded response promises",
+      "source_ids": [
+        "R-PIPEDA",
+        "R-CHECKLY",
+        "R-CHROME"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-28-03",
+      "category_id": "C28",
+      "subcategory_id": "C28-3",
+      "mode": "D",
+      "name": "Local secret-exposure preflight helper",
+      "buyer": "Small developers",
+      "deliverable": "Flag known test-secret patterns and sensitive filenames before packaging",
+      "price_hypothesis_cad": [
+        39,
+        149
+      ],
+      "main_barrier": "False negatives and credential handling",
+      "first_paid_test": "Ship synthetic fixtures and state that scans are not a security guarantee",
+      "source_ids": [
+        "R-PIPEDA",
+        "R-CHECKLY",
+        "R-CHROME"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-28-04",
+      "category_id": "C28",
+      "subcategory_id": "C28-4",
+      "mode": "M",
+      "name": "Evidence request organizer",
+      "buyer": "Small vendors answering questionnaires",
+      "deliverable": "Store approved non-secret evidence links, owners and expiry reminders",
+      "price_hypothesis_cad": [
+        49,
+        199
+      ],
+      "main_barrier": "Private audit files and false attestations",
+      "first_paid_test": "Run a paid pilot without automatically answering certification questions",
+      "source_ids": [
+        "R-PIPEDA",
+        "R-CHECKLY",
+        "R-CHROME"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-28-05",
+      "category_id": "C28",
+      "subcategory_id": "C28-1",
+      "mode": "D",
+      "name": "Public seller-disclosure review kit",
+      "buyer": "Brand-led digital sellers",
+      "deliverable": "A checklist for profiles, receipts, metadata, support and registry exposure",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Complete anonymity cannot be guaranteed",
+      "first_paid_test": "Compare actual seller test flows and obtain professional review before selling claims",
+      "source_ids": [
+        "R-PIPEDA",
+        "R-CHECKLY",
+        "R-CHROME"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-28-06",
+      "category_id": "C28",
+      "subcategory_id": "C28-3",
+      "mode": "D",
+      "name": "Permission manifest for small integrations",
+      "buyer": "Automation developers",
+      "deliverable": "A template and checker recording scopes, owners, expiry and revocation steps",
+      "price_hypothesis_cad": [
+        39,
+        129
+      ],
+      "main_barrier": "Vendor scope changes",
+      "first_paid_test": "Get paid users for one supported integration family with synthetic keys only",
+      "source_ids": [
+        "R-PIPEDA",
+        "R-CHECKLY",
+        "R-CHROME"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-29-01",
+      "category_id": "C29",
+      "subcategory_id": "C29-1",
+      "mode": "D",
+      "name": "Offline placeholder and key validator",
+      "buyer": "Small localization teams",
+      "deliverable": "Compare approved string files for missing keys and placeholder mismatches without uploads",
+      "price_hypothesis_cad": [
+        49,
+        149
+      ],
+      "main_barrier": "Free localization platforms",
+      "first_paid_test": "Sell after a team tests one recurring file workflow and false-positive rate",
+      "source_ids": [
+        "R-WEBLATE",
+        "R-W3C",
+        "R-DESCRIPT"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": [
+        "REPO-O02"
+      ]
+    },
+    {
+      "id": "CUR-29-02",
+      "category_id": "C29",
+      "subcategory_id": "C29-2",
+      "mode": "F",
+      "name": "Caption timing and readability QA",
+      "buyer": "Course publishers",
+      "deliverable": "Check authorized subtitles for overlaps, speed and missing speaker cues with human review",
+      "price_hypothesis_cad": [
+        200,
+        500
+      ],
+      "main_barrier": "Language accuracy and accessibility scope",
+      "first_paid_test": "Sell one module with qualified caption review and exact coverage",
+      "source_ids": [
+        "R-WEBLATE",
+        "R-W3C",
+        "R-DESCRIPT"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-29-03",
+      "category_id": "C29",
+      "subcategory_id": "C29-3",
+      "mode": "I",
+      "name": "Accessible chart-table companion exporter",
+      "buyer": "Report creators",
+      "deliverable": "Export chart data tables and text summaries for human editorial review",
+      "price_hypothesis_cad": [
+        39,
+        149
+      ],
+      "main_barrier": "Automated text can misdescribe charts",
+      "first_paid_test": "Validate representative charts with accessibility reviewers before a paid pilot",
+      "source_ids": [
+        "R-WEBLATE",
+        "R-W3C",
+        "R-DESCRIPT"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-29-04",
+      "category_id": "C29",
+      "subcategory_id": "C29-4",
+      "mode": "D",
+      "name": "Multilingual glossary approval workspace",
+      "buyer": "Small distributed teams",
+      "deliverable": "Track approved terms, source context and reviewer sign-off",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Translation expertise and privacy",
+      "first_paid_test": "Seek two paid teams after testing a small approved glossary",
+      "source_ids": [
+        "R-WEBLATE",
+        "R-W3C",
+        "R-DESCRIPT"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-29-05",
+      "category_id": "C29",
+      "subcategory_id": "C29-3",
+      "mode": "D",
+      "name": "Keyboard-navigation regression fixture kit",
+      "buyer": "Small web agencies",
+      "deliverable": "Original test pages and checklists exposing common keyboard failures",
+      "price_hypothesis_cad": [
+        49,
+        149
+      ],
+      "main_barrier": "Does not certify WCAG conformance",
+      "first_paid_test": "Have an accessibility professional review fixtures and sell scoped training use",
+      "source_ids": [
+        "R-WEBLATE",
+        "R-W3C",
+        "R-DESCRIPT"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-29-06",
+      "category_id": "C29",
+      "subcategory_id": "C29-1",
+      "mode": "M",
+      "name": "Translation export drift monitor",
+      "buyer": "Content teams",
+      "deliverable": "Watch owner-supplied export structures and flag schema/key changes",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Source access and false alerts",
+      "first_paid_test": "Sell a limited file-based pilot before live integrations",
+      "source_ids": [
+        "R-WEBLATE",
+        "R-W3C",
+        "R-DESCRIPT"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-30-01",
+      "category_id": "C30",
+      "subcategory_id": "C30-1",
+      "mode": "D",
+      "name": "Rental turnover coordination workbook",
+      "buyer": "Small property managers",
+      "deliverable": "Owner-reviewed tasks, dates and supply planning without tenant personal data",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Local rules and physical condition judgments",
+      "first_paid_test": "Test administrative usability with one manager and seek paid copies",
+      "source_ids": [
+        "R-BUILDIUM",
+        "R-JOBBER",
+        "R-SORTLY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-30-02",
+      "category_id": "C30",
+      "subcategory_id": "C30-2",
+      "mode": "D",
+      "name": "Trade quote scope-and-revision planner",
+      "buyer": "Independent contractors",
+      "deliverable": "A reusable administrative quote calculator with explicit labor/material assumptions",
+      "price_hypothesis_cad": [
+        39,
+        149
+      ],
+      "main_barrier": "Not engineering or code compliance",
+      "first_paid_test": "Have a contractor verify sample arithmetic and sell only bounded planning support",
+      "source_ids": [
+        "R-BUILDIUM",
+        "R-JOBBER",
+        "R-SORTLY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-30-03",
+      "category_id": "C30",
+      "subcategory_id": "C30-3",
+      "mode": "I",
+      "name": "Construction change-order status adapter",
+      "buyer": "Small project administrators",
+      "deliverable": "Normalize approved status exports and show unsigned or conflicting records",
+      "price_hypothesis_cad": [
+        79,
+        299
+      ],
+      "main_barrier": "Contract consequences and sensitive project data",
+      "first_paid_test": "Sell read-only reporting after authority and acceptance review",
+      "source_ids": [
+        "R-BUILDIUM",
+        "R-JOBBER",
+        "R-SORTLY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-30-04",
+      "category_id": "C30",
+      "subcategory_id": "C30-4",
+      "mode": "R",
+      "name": "Equipment service-date reminder register",
+      "buyer": "Small property/trade teams",
+      "deliverable": "Track owner-entered maintenance dates and acknowledgments without diagnosing equipment",
+      "price_hypothesis_cad": [
+        29,
+        129
+      ],
+      "main_barrier": "Missed reminders and safety duties",
+      "first_paid_test": "Offer administrative reminders only with clear noncritical coverage and backup",
+      "source_ids": [
+        "R-BUILDIUM",
+        "R-JOBBER",
+        "R-SORTLY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-30-05",
+      "category_id": "C30",
+      "subcategory_id": "C30-1",
+      "mode": "A",
+      "name": "Original property handover documentation pack",
+      "buyer": "Small landlords/property services",
+      "deliverable": "Blank inventory photo guides, key handoff and condition-record layouts",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Legal tenancy forms and personal information",
+      "first_paid_test": "Use owner-reviewed administrative templates, not substitute lease advice",
+      "source_ids": [
+        "R-BUILDIUM",
+        "R-JOBBER",
+        "R-SORTLY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-30-06",
+      "category_id": "C30",
+      "subcategory_id": "C30-2",
+      "mode": "F",
+      "name": "Unquoted-job export reconciliation",
+      "buyer": "Small home-service firms",
+      "deliverable": "Flag unmatched inquiry and quote references in approved exports without contacting leads",
+      "price_hypothesis_cad": [
+        299,
+        699
+      ],
+      "main_barrier": "Consent and matching errors",
+      "first_paid_test": "Sell one period of source-reconciled reporting with no automatic messaging",
+      "source_ids": [
+        "R-BUILDIUM",
+        "R-JOBBER",
+        "R-SORTLY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-31-01",
+      "category_id": "C31",
+      "subcategory_id": "C31-1",
+      "mode": "D",
+      "name": "Inventory unit-consistency validator",
+      "buyer": "Small warehouse teams",
+      "deliverable": "Flag mixed declared units, duplicate SKUs and impossible required-field combinations",
+      "price_hypothesis_cad": [
+        49,
+        179
+      ],
+      "main_barrier": "Operational disruption from guesses",
+      "first_paid_test": "Use explicit mappings and sell an export-only accepted pilot",
+      "source_ids": [
+        "R-ZOHO_INVENTORY",
+        "R-SORTLY",
+        "R-JOBBER"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-31-02",
+      "category_id": "C31",
+      "subcategory_id": "C31-2",
+      "mode": "R",
+      "name": "Supplier document-expiry register",
+      "buyer": "Small manufacturers",
+      "deliverable": "Track owner-validated document due dates and evidence locations",
+      "price_hypothesis_cad": [
+        49,
+        199
+      ],
+      "main_barrier": "Not a compliance certification",
+      "first_paid_test": "Get a paid administrative pilot with manual owner approval of dates",
+      "source_ids": [
+        "R-ZOHO_INVENTORY",
+        "R-SORTLY",
+        "R-JOBBER"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-31-03",
+      "category_id": "C31",
+      "subcategory_id": "C31-3",
+      "mode": "D",
+      "name": "Small-batch production capacity workbook",
+      "buyer": "Makers and light manufacturers",
+      "deliverable": "Calculate scenarios from user inputs for labor, setup time, waste and throughput",
+      "price_hypothesis_cad": [
+        49,
+        199
+      ],
+      "main_barrier": "Safety, machine limits and optimistic assumptions",
+      "first_paid_test": "Validate arithmetic with an operator and include zero-demand scenarios",
+      "source_ids": [
+        "R-ZOHO_INVENTORY",
+        "R-SORTLY",
+        "R-JOBBER"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-31-04",
+      "category_id": "C31",
+      "subcategory_id": "C31-4",
+      "mode": "F",
+      "name": "Shipping invoice exception report",
+      "buyer": "Small logistics teams",
+      "deliverable": "Compare authorized billed weights/zones to approved reference tables",
+      "price_hypothesis_cad": [
+        399,
+        999
+      ],
+      "main_barrier": "Contract rates and reconciliation accuracy",
+      "first_paid_test": "Sell one reviewed period without disputing invoices automatically",
+      "source_ids": [
+        "R-ZOHO_INVENTORY",
+        "R-SORTLY",
+        "R-JOBBER"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-31-05",
+      "category_id": "C31",
+      "subcategory_id": "C31-2",
+      "mode": "P",
+      "name": "Permissioned supplier lead-time digest",
+      "buyer": "Small purchasing groups",
+      "deliverable": "Aggregate supplier-provided updates with timestamps and uncertainty labels",
+      "price_hypothesis_cad": [
+        39,
+        149
+      ],
+      "main_barrier": "Commercial data rights and stale promises",
+      "first_paid_test": "Get opt-in suppliers plus one paying buyer before subscribing to data",
+      "source_ids": [
+        "R-ZOHO_INVENTORY",
+        "R-SORTLY",
+        "R-JOBBER"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-31-06",
+      "category_id": "C31",
+      "subcategory_id": "C31-3",
+      "mode": "I",
+      "name": "Bill-of-materials export preflight",
+      "buyer": "Small product teams",
+      "deliverable": "Check referenced items, required units and version fields in supported BOM exports",
+      "price_hypothesis_cad": [
+        79,
+        299
+      ],
+      "main_barrier": "No engineering validation",
+      "first_paid_test": "Sell a read-only file check with qualified interpretation of flagged issues",
+      "source_ids": [
+        "R-ZOHO_INVENTORY",
+        "R-SORTLY",
+        "R-JOBBER"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-32-01",
+      "category_id": "C32",
+      "subcategory_id": "C32-1",
+      "mode": "D",
+      "name": "Menu contribution calculator",
+      "buyer": "Independent restaurants",
+      "deliverable": "A tested workbook separating recipe cost, waste, payment fees and staff assumptions",
+      "price_hypothesis_cad": [
+        29,
+        129
+      ],
+      "main_barrier": "Not allergen or food-safety guidance",
+      "first_paid_test": "Have an operator validate calculations using approved fictional examples",
+      "source_ids": [
+        "R-SQUARE",
+        "R-JOBBER",
+        "R-ETSY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-32-02",
+      "category_id": "C32",
+      "subcategory_id": "C32-2",
+      "mode": "D",
+      "name": "Guest turnover operations pack",
+      "buyer": "Small accommodation operators",
+      "deliverable": "Reusable cleaning coordination, supply check and issue-routing forms",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Personal data and local hospitality rules",
+      "first_paid_test": "Sell an administrative-only pack after one operator trial",
+      "source_ids": [
+        "R-SQUARE",
+        "R-JOBBER",
+        "R-ETSY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-32-03",
+      "category_id": "C32",
+      "subcategory_id": "C32-3",
+      "mode": "P",
+      "name": "Verified niche itinerary resource",
+      "buyer": "Travellers with a narrow need",
+      "deliverable": "Original source-linked itineraries with dated checks and explicit update limits",
+      "price_hypothesis_cad": [
+        15,
+        59
+      ],
+      "main_barrier": "Outdated access, pricing or safety details",
+      "first_paid_test": "Validate a small destination sample and seek paid downloads",
+      "source_ids": [
+        "R-SQUARE",
+        "R-JOBBER",
+        "R-ETSY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-32-04",
+      "category_id": "C32",
+      "subcategory_id": "C32-4",
+      "mode": "I",
+      "name": "Booking export conflict checker",
+      "buyer": "Small venue businesses",
+      "deliverable": "Flag overlapping reservations in approved exports without changing bookings",
+      "price_hypothesis_cad": [
+        49,
+        199
+      ],
+      "main_barrier": "Timezone and business-rule ambiguity",
+      "first_paid_test": "Get payment for one system's read-only calendar reconciliation",
+      "source_ids": [
+        "R-SQUARE",
+        "R-JOBBER",
+        "R-ETSY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-32-05",
+      "category_id": "C32",
+      "subcategory_id": "C32-1",
+      "mode": "D",
+      "name": "Catering event quantity planner",
+      "buyer": "Small caterers",
+      "deliverable": "Explicit user-input planning for portions and costs with uncertainty notes",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Food safety and professional judgment",
+      "first_paid_test": "Test with an experienced operator and avoid autonomous nutrition/safety advice",
+      "source_ids": [
+        "R-SQUARE",
+        "R-JOBBER",
+        "R-ETSY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-32-06",
+      "category_id": "C32",
+      "subcategory_id": "C32-2",
+      "mode": "R",
+      "name": "Owner-supplied hospitality asset-link monitor",
+      "buyer": "Small hotels",
+      "deliverable": "Check approved menu, booking and guest-information URLs for broken destinations",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "No guarantee of total website functionality",
+      "first_paid_test": "Run safe public-link checks and get a paid renewal",
+      "source_ids": [
+        "R-SQUARE",
+        "R-JOBBER",
+        "R-ETSY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-33-01",
+      "category_id": "C33",
+      "subcategory_id": "C33-1",
+      "mode": "D",
+      "name": "Clinic nonclinical supply tracker",
+      "buyer": "Small practices",
+      "deliverable": "A blank operational inventory workbook excluding patient records and medical decisions",
+      "price_hypothesis_cad": [
+        39,
+        129
+      ],
+      "main_barrier": "Sector privacy and clinical relevance",
+      "first_paid_test": "Use fictional supplies and require qualified practice review before paid use",
+      "source_ids": [
+        "R-JANE",
+        "R-PIPEDA"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-33-02",
+      "category_id": "C33",
+      "subcategory_id": "C33-2",
+      "mode": "D",
+      "name": "Personal habit reflection workbook",
+      "buyer": "Adults tracking routines",
+      "deliverable": "A local journal with user-entered goals, no diagnosis and no health-outcome claims",
+      "price_hypothesis_cad": [
+        15,
+        49
+      ],
+      "main_barrier": "Wellness claims and sensitive entries",
+      "first_paid_test": "Sell a blank privacy-conscious tool without collecting journal contents",
+      "source_ids": [
+        "R-JANE",
+        "R-PIPEDA"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-33-03",
+      "category_id": "C33",
+      "subcategory_id": "C33-3",
+      "mode": "A",
+      "name": "Original clinic wayfinding sign kit",
+      "buyer": "Practice administrators",
+      "deliverable": "Editable nonclinical signage with legible layouts and language-review placeholders",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Accessibility and required notices",
+      "first_paid_test": "Have a practice review wording and sell only original editable assets",
+      "source_ids": [
+        "R-JANE",
+        "R-PIPEDA"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-33-04",
+      "category_id": "C33",
+      "subcategory_id": "C33-4",
+      "mode": "I",
+      "name": "Staff-only room booking checker",
+      "buyer": "Small practices",
+      "deliverable": "Compare approved room calendars without patient identity or appointment notes",
+      "price_hypothesis_cad": [
+        49,
+        149
+      ],
+      "main_barrier": "Calendar privacy and operational consequences",
+      "first_paid_test": "Test fictional schedules and obtain explicit authorization for a paid pilot",
+      "source_ids": [
+        "R-JANE",
+        "R-PIPEDA"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-33-05",
+      "category_id": "C33",
+      "subcategory_id": "C33-1",
+      "mode": "D",
+      "name": "Practice vendor-renewal workbook",
+      "buyer": "Practice managers",
+      "deliverable": "Track software/licence renewals and invoice approvals without medical data",
+      "price_hypothesis_cad": [
+        39,
+        129
+      ],
+      "main_barrier": "Contract duties and privacy",
+      "first_paid_test": "Sell a template after a practice manager tests one renewal cycle",
+      "source_ids": [
+        "R-JANE",
+        "R-PIPEDA"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-33-06",
+      "category_id": "C33",
+      "subcategory_id": "C33-3",
+      "mode": "L",
+      "name": "Patient-data minimization training scenarios",
+      "buyer": "Practice administrators",
+      "deliverable": "Original fictional examples and checklists reviewed by qualified privacy staff",
+      "price_hypothesis_cad": [
+        79,
+        299
+      ],
+      "main_barrier": "Not legal/clinical certification",
+      "first_paid_test": "Require expert review and a paid training pilot before broader licensing",
+      "source_ids": [
+        "R-JANE",
+        "R-PIPEDA"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-34-01",
+      "category_id": "C34",
+      "subcategory_id": "C34-1",
+      "mode": "I",
+      "name": "Recruitment status export reconciler",
+      "buyer": "Small recruiters",
+      "deliverable": "Match authorized candidate-stage exports with no automated ranking or hiring decisions",
+      "price_hypothesis_cad": [
+        79,
+        249
+      ],
+      "main_barrier": "Applicant privacy and discriminatory effects",
+      "first_paid_test": "Use fictional candidates and a privacy-reviewed read-only pilot",
+      "source_ids": [
+        "R-WORKABLE",
+        "R-PIPEDA",
+        "R-TEACHABLE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-34-02",
+      "category_id": "C34",
+      "subcategory_id": "C34-2",
+      "mode": "D",
+      "name": "Employee onboarding task template",
+      "buyer": "Small employers",
+      "deliverable": "Role-neutral administrative task lists and approvals without sensitive employee fields",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Employment law and overcollection",
+      "first_paid_test": "Sell an adaptable workflow reviewed by the buyer's responsible staff",
+      "source_ids": [
+        "R-WORKABLE",
+        "R-PIPEDA",
+        "R-TEACHABLE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-34-03",
+      "category_id": "C34",
+      "subcategory_id": "C34-3",
+      "mode": "M",
+      "name": "Training expiry acknowledgment tracker",
+      "buyer": "Small teams",
+      "deliverable": "Record owner-approved training dates and reminders without certifying competence",
+      "price_hypothesis_cad": [
+        29,
+        129
+      ],
+      "main_barrier": "Missed deadlines and official qualification claims",
+      "first_paid_test": "Sell a limited administrative pilot with manual backup",
+      "source_ids": [
+        "R-WORKABLE",
+        "R-PIPEDA",
+        "R-TEACHABLE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-34-04",
+      "category_id": "C34",
+      "subcategory_id": "C34-4",
+      "mode": "D",
+      "name": "Applicant-controlled project evidence organizer",
+      "buyer": "Job seekers",
+      "deliverable": "A local workspace collecting personal project descriptions and verifiable skill examples",
+      "price_hypothesis_cad": [
+        19,
+        59
+      ],
+      "main_barrier": "Misrepresentation and no guaranteed hiring",
+      "first_paid_test": "Test usability with volunteers and sell without inventing credentials",
+      "source_ids": [
+        "R-WORKABLE",
+        "R-PIPEDA",
+        "R-TEACHABLE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-34-05",
+      "category_id": "C34",
+      "subcategory_id": "C34-2",
+      "mode": "D",
+      "name": "Interview logistics resource kit",
+      "buyer": "Small hiring teams",
+      "deliverable": "Editable scheduling messages and interviewer coordination checklists",
+      "price_hypothesis_cad": [
+        19,
+        79
+      ],
+      "main_barrier": "Consent and unnecessary data",
+      "first_paid_test": "Sell original resources with no candidate-scoring automation",
+      "source_ids": [
+        "R-WORKABLE",
+        "R-PIPEDA",
+        "R-TEACHABLE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-34-06",
+      "category_id": "C34",
+      "subcategory_id": "C34-1",
+      "mode": "R",
+      "name": "Job posting expiry and consistency watch",
+      "buyer": "Recruiting agencies",
+      "deliverable": "Monitor owner-supplied listings/exports for expired dates and inconsistent stated terms",
+      "price_hypothesis_cad": [
+        39,
+        149
+      ],
+      "main_barrier": "Site terms and factual employment claims",
+      "first_paid_test": "Use approved data sources and obtain one paid recurring check",
+      "source_ids": [
+        "R-WORKABLE",
+        "R-PIPEDA",
+        "R-TEACHABLE"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-35-01",
+      "category_id": "C35",
+      "subcategory_id": "C35-1",
+      "mode": "D",
+      "name": "Farm input record workbook",
+      "buyer": "Small farms",
+      "deliverable": "Record non-advisory purchases, batches, costs and owner-entered usage dates",
+      "price_hypothesis_cad": [
+        39,
+        129
+      ],
+      "main_barrier": "Not pesticide or veterinary advice",
+      "first_paid_test": "Get an operator-reviewed paid template test using fictional records",
+      "source_ids": [
+        "R-FARMBRITE",
+        "R-STATCAN",
+        "R-SORTLY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-35-02",
+      "category_id": "C35",
+      "subcategory_id": "C35-2",
+      "mode": "M",
+      "name": "Waste invoice reconciliation tool",
+      "buyer": "Small facilities teams",
+      "deliverable": "Normalize licensed/authorized waste-service statements and flag unit or rate differences",
+      "price_hypothesis_cad": [
+        49,
+        199
+      ],
+      "main_barrier": "Incorrect environmental claims",
+      "first_paid_test": "Sell a read-only billing pilot and keep carbon claims out of scope",
+      "source_ids": [
+        "R-FARMBRITE",
+        "R-STATCAN",
+        "R-SORTLY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-35-03",
+      "category_id": "C35",
+      "subcategory_id": "C35-3",
+      "mode": "P",
+      "name": "Official energy-statistics digest",
+      "buyer": "Small energy analysts",
+      "deliverable": "Source-linked charts with units, vintages and limitations, not investment or safety advice",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Data licensing and weak subscriber demand",
+      "first_paid_test": "Test one sample report with paying analysts before recurring publication",
+      "source_ids": [
+        "R-FARMBRITE",
+        "R-STATCAN",
+        "R-SORTLY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-35-04",
+      "category_id": "C35",
+      "subcategory_id": "C35-4",
+      "mode": "D",
+      "name": "Irrigation scenario logging planner",
+      "buyer": "Small growers",
+      "deliverable": "A record-and-comparison workbook using operator-entered assumptions, not automated controls",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Agronomic and hardware risks",
+      "first_paid_test": "Require qualified operator review and avoid autonomous water recommendations",
+      "source_ids": [
+        "R-FARMBRITE",
+        "R-STATCAN",
+        "R-SORTLY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-35-05",
+      "category_id": "C35",
+      "subcategory_id": "C35-1",
+      "mode": "D",
+      "name": "Farm equipment service-cost ledger",
+      "buyer": "Small farms",
+      "deliverable": "Track costs and owner-specified dates without machine diagnosis",
+      "price_hypothesis_cad": [
+        29,
+        99
+      ],
+      "main_barrier": "Offline access and maintenance responsibility",
+      "first_paid_test": "Sell after an operator checks an entire sample cycle",
+      "source_ids": [
+        "R-FARMBRITE",
+        "R-STATCAN",
+        "R-SORTLY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-35-06",
+      "category_id": "C35",
+      "subcategory_id": "C35-2",
+      "mode": "D",
+      "name": "Environmental evidence source register",
+      "buyer": "Small sustainability teams",
+      "deliverable": "Track approved source files, methods and review status without generating certificates",
+      "price_hypothesis_cad": [
+        49,
+        149
+      ],
+      "main_barrier": "Greenwashing and missing evidence",
+      "first_paid_test": "Have a qualified reviewer test the template and sell a limited team licence",
+      "source_ids": [
+        "R-FARMBRITE",
+        "R-STATCAN",
+        "R-SORTLY"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-36-01",
+      "category_id": "C36",
+      "subcategory_id": "C36-1",
+      "mode": "D",
+      "name": "Grant reporting evidence workbook",
+      "buyer": "Small nonprofits",
+      "deliverable": "Organize authorized milestones, expenses and evidence links without deciding eligibility",
+      "price_hypothesis_cad": [
+        39,
+        149
+      ],
+      "main_barrier": "Funder rules and private records",
+      "first_paid_test": "Sell a reviewed administrative template for one reporting format",
+      "source_ids": [
+        "R-DONORBOX",
+        "R-CANADABUYS",
+        "R-NOTION"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-36-02",
+      "category_id": "C36",
+      "subcategory_id": "C36-2",
+      "mode": "A",
+      "name": "Original community event resource bundle",
+      "buyer": "Volunteer organizers",
+      "deliverable": "Editable signage, schedules and checklists with fictional examples",
+      "price_hypothesis_cad": [
+        19,
+        79
+      ],
+      "main_barrier": "Safety and accessibility responsibilities",
+      "first_paid_test": "Test one event kit with organizers and sell original source files",
+      "source_ids": [
+        "R-DONORBOX",
+        "R-CANADABUYS",
+        "R-NOTION"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-36-03",
+      "category_id": "C36",
+      "subcategory_id": "C36-3",
+      "mode": "M",
+      "name": "Club membership renewal register",
+      "buyer": "Small associations",
+      "deliverable": "Track consented member status and renewal acknowledgments without uncontrolled messaging",
+      "price_hypothesis_cad": [
+        19,
+        99
+      ],
+      "main_barrier": "Personal data and marketing consent",
+      "first_paid_test": "Get a privacy-reviewed paid pilot with minimal fields",
+      "source_ids": [
+        "R-DONORBOX",
+        "R-CANADABUYS",
+        "R-NOTION"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-36-04",
+      "category_id": "C36",
+      "subcategory_id": "C36-4",
+      "mode": "P",
+      "name": "Official public-service deadline digest",
+      "buyer": "Small community organizations",
+      "deliverable": "Source-linked administrative dates with verification notes and no official affiliation claim",
+      "price_hypothesis_cad": [
+        19,
+        79
+      ],
+      "main_barrier": "Missed dates and stale government guidance",
+      "first_paid_test": "Sell a narrowly scoped sample after independently checking sources",
+      "source_ids": [
+        "R-DONORBOX",
+        "R-CANADABUYS",
+        "R-NOTION"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-36-05",
+      "category_id": "C36",
+      "subcategory_id": "C36-1",
+      "mode": "I",
+      "name": "Donation-export reconciliation adapter",
+      "buyer": "Nonprofit administrators",
+      "deliverable": "Match authorized donation/refund/payout exports without issuing tax receipts",
+      "price_hypothesis_cad": [
+        79,
+        299
+      ],
+      "main_barrier": "Charity tax receipting and donor privacy",
+      "first_paid_test": "Require responsible finance review of a fictional then approved pilot",
+      "source_ids": [
+        "R-DONORBOX",
+        "R-CANADABUYS",
+        "R-NOTION"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    },
+    {
+      "id": "CUR-36-06",
+      "category_id": "C36",
+      "subcategory_id": "C36-2",
+      "mode": "D",
+      "name": "Volunteer capacity scenario planner",
+      "buyer": "Event coordinators",
+      "deliverable": "A workbook separating committed volunteers, shifts and unfilled requirements",
+      "price_hypothesis_cad": [
+        19,
+        79
+      ],
+      "main_barrier": "Safety staffing and personal information",
+      "first_paid_test": "Test with organizers and state that minimum staffing decisions remain theirs",
+      "source_ids": [
+        "R-DONORBOX",
+        "R-CANADABUYS",
+        "R-NOTION"
+      ],
+      "origin": "Curated cross-category expansion, 14 October 2026",
+      "status": "unvalidated concept",
+      "exact_offer_paid_demand_verified": false,
+      "related_source_ids": []
+    }
+  ]
+}

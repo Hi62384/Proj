@@ -1,3 +1,13 @@
+## Organized research library — new primary research view
+
+Open `Opportunity_Library.html` in the project root, or use **Open the organized Opportunity Library** in the local workbench. The installed factory now prefers `opportunity_library/data/factory_catalog.csv`: 1,512 research records (1,296 preserved + 216 new hypotheses), 36 categories and 144 subcategories. Two personal-capital research notes are excluded from normal launch selection. None represents verified paid demand.
+
+The existing sales pack, original IDs, research files and runtime data remain intact. Category, public-privacy and whole-business workload lenses help discovery; they do not create accounts or remove legal obligations. An explicit custom catalogue path still works, and without the optional library the factory falls back to the old atlas. The original Phase-0 CLI continues to use its original atlas by default.
+
+Read `opportunity_library/README.md` and its methodology before treating score differences as evidence. Rebuilding this library is offline and is not fresh market research.
+
+---
+
 # Portfolio Autopilot — Phase 0 (safe, local-first)
 
 This code turns the repository's 1,296-record research index into a **review-only shortlist and AI task-packet generator**. It is not a live business, customer acquisition bot, autonomous executor, SaaS, merchant account or payment integration.

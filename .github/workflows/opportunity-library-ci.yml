@@ -1,0 +1,34 @@
+name: Opportunity library - offline integrity
+on:
+  push:
+    paths:
+      - 'opportunity_library/**'
+      - 'Opportunity_Library.html'
+      - 'research_merge/opportunity_atlas_expanded.json'
+      - 'portfolio_autopilot/factory/catalog.py'
+      - 'portfolio_autopilot/factory/portal.py'
+      - '.github/workflows/opportunity-library-ci.yml'
+  pull_request:
+    paths:
+      - 'opportunity_library/**'
+      - 'Opportunity_Library.html'
+      - 'research_merge/opportunity_atlas_expanded.json'
+      - 'portfolio_autopilot/factory/catalog.py'
+      - 'portfolio_autopilot/factory/portal.py'
+      - '.github/workflows/opportunity-library-ci.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  integrity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m opportunity_library.build --check
+      - run: python -m unittest discover -s opportunity_library/tests -v
+      - run: python -m unittest discover -s portfolio_autopilot/factory/tests -v
+# Offline CI only. No live market research, publication, credentials or spending adapters.

@@ -1,0 +1,1384 @@
+{
+  "note": "197 inherited sector slices are tags, not a claim to cover every industry. Each is assigned a primary home while cross-category mechanisms remain searchable.",
+  "industries": [
+    {
+      "id": "IND-001",
+      "name": "HVAC service firms",
+      "buyer": "Owner-operated HVAC contractors",
+      "category_id": "C30",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-002",
+      "name": "Plumbing contractors",
+      "buyer": "Small plumbing teams",
+      "category_id": "C30",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-003",
+      "name": "Electrical contractors",
+      "buyer": "Local electrical installers",
+      "category_id": "C30",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-004",
+      "name": "Roofing installers",
+      "buyer": "Small roofing businesses",
+      "category_id": "C30",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-005",
+      "name": "Lawn care companies",
+      "buyer": "Groundskeeping crews",
+      "category_id": "C30",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-006",
+      "name": "Commercial cleaning",
+      "buyer": "Office and industrial cleaning teams",
+      "category_id": "C30",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-007",
+      "name": "Pest control operators",
+      "buyer": "Authorized pest management companies",
+      "category_id": "C30",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-008",
+      "name": "Painting contractors",
+      "buyer": "Residential and commercial painting firms",
+      "category_id": "C30",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-009",
+      "name": "General renovation",
+      "buyer": "Renovation and remodeling contractors",
+      "category_id": "C30",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-010",
+      "name": "Locksmith shops",
+      "buyer": "Licensed locksmith businesses",
+      "category_id": "C30",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-011",
+      "name": "Appliance repair",
+      "buyer": "Appliance repair operators",
+      "category_id": "C30",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-012",
+      "name": "Pool and spa service",
+      "buyer": "Pool service companies",
+      "category_id": "C30",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-013",
+      "name": "Solar installers",
+      "buyer": "Solar contractors",
+      "category_id": "C30",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-014",
+      "name": "Facilities management",
+      "buyer": "Facilities maintenance providers",
+      "category_id": "C30",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-015",
+      "name": "Auto detailing",
+      "buyer": "Mobile and studio car detailers",
+      "category_id": "C31",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-016",
+      "name": "Independent auto repair",
+      "buyer": "Small mechanic shops",
+      "category_id": "C31",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-017",
+      "name": "Auto parts distributors",
+      "buyer": "Parts retailers and wholesalers",
+      "category_id": "C31",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-018",
+      "name": "Auto dealerships",
+      "buyer": "Independent used-car dealers",
+      "category_id": "C31",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-019",
+      "name": "Truck fleets",
+      "buyer": "Owner-operator and small freight fleets",
+      "category_id": "C31",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-020",
+      "name": "Freight brokers",
+      "buyer": "Licensed freight brokerage teams",
+      "category_id": "C31",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-021",
+      "name": "Courier companies",
+      "buyer": "Local and regional courier dispatchers",
+      "category_id": "C31",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-022",
+      "name": "Warehouse operators",
+      "buyer": "3PL and small warehouse managers",
+      "category_id": "C31",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-023",
+      "name": "Machine shops",
+      "buyer": "CNC machining job shops",
+      "category_id": "C31",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-024",
+      "name": "Small manufacturers",
+      "buyer": "Light manufacturing operators",
+      "category_id": "C31",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-025",
+      "name": "Wholesale distributors",
+      "buyer": "Regional B2B wholesalers",
+      "category_id": "C31",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-026",
+      "name": "Food manufacturers",
+      "buyer": "Small packaged food producers",
+      "category_id": "C32",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-027",
+      "name": "Independent bakeries",
+      "buyer": "Bakeries with wholesale orders",
+      "category_id": "C32",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-028",
+      "name": "Restaurants",
+      "buyer": "Independent restaurant operators",
+      "category_id": "C32",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-029",
+      "name": "Cafes and coffee shops",
+      "buyer": "Cafe owners and roasters",
+      "category_id": "C32",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-030",
+      "name": "Food trucks",
+      "buyer": "Mobile food vendors",
+      "category_id": "C32",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-031",
+      "name": "Catering firms",
+      "buyer": "Catering kitchens and planners",
+      "category_id": "C32",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-032",
+      "name": "Event venues",
+      "buyer": "Conference rooms and wedding venues",
+      "category_id": "C36",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-033",
+      "name": "Wedding planners",
+      "buyer": "Wedding coordinators",
+      "category_id": "C36",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-034",
+      "name": "Photographers",
+      "buyer": "Commercial portrait and event photographers",
+      "category_id": "C10",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-035",
+      "name": "Real estate agents",
+      "buyer": "Licensed realtors and brokerages",
+      "category_id": "C30",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-036",
+      "name": "Property managers",
+      "buyer": "Residential property management operators",
+      "category_id": "C30",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-037",
+      "name": "Short-term rental hosts",
+      "buyer": "Hosts and cohost agencies",
+      "category_id": "C32",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-038",
+      "name": "Self-storage facilities",
+      "buyer": "Self-storage site managers",
+      "category_id": "C30",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-039",
+      "name": "Coworking spaces",
+      "buyer": "Shared-office operators",
+      "category_id": "C30",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-040",
+      "name": "Architecture studios",
+      "buyer": "Architectural design offices",
+      "category_id": "C30",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-041",
+      "name": "Engineering consultants",
+      "buyer": "Licensed engineering design teams",
+      "category_id": "C30",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-042",
+      "name": "Construction subcontractors",
+      "buyer": "Independent trades subcontractors",
+      "category_id": "C30",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-043",
+      "name": "Home inspectors",
+      "buyer": "Licensed home inspection companies",
+      "category_id": "C30",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-044",
+      "name": "Insurance brokerages",
+      "buyer": "Licensed insurance distribution offices",
+      "category_id": "C26",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-045",
+      "name": "Law firms admin",
+      "buyer": "Small law firms and legal operations teams",
+      "category_id": "C28",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-046",
+      "name": "Bookkeeping practices",
+      "buyer": "Bookkeepers and accounting service firms",
+      "category_id": "C26",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-047",
+      "name": "Tax preparation offices",
+      "buyer": "Authorized tax preparation businesses",
+      "category_id": "C26",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-048",
+      "name": "Wealth advisory admin",
+      "buyer": "Registered investment advisers administrative teams",
+      "category_id": "C26",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-049",
+      "name": "Dental practices admin",
+      "buyer": "Dental office administrators",
+      "category_id": "C33",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-050",
+      "name": "Optometry clinics admin",
+      "buyer": "Optometrist office managers",
+      "category_id": "C33",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-051",
+      "name": "Physio practices admin",
+      "buyer": "Physiotherapy studio managers",
+      "category_id": "C33",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-052",
+      "name": "Veterinary clinic admin",
+      "buyer": "Veterinary clinic managers",
+      "category_id": "C33",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-053",
+      "name": "Childcare centers",
+      "buyer": "Licensed daycare operators",
+      "category_id": "C33",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-054",
+      "name": "Home-care agencies admin",
+      "buyer": "Licensed care service schedulers",
+      "category_id": "C33",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-055",
+      "name": "Hair salons",
+      "buyer": "Salon owners and stylists",
+      "category_id": "C33",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-056",
+      "name": "Spas and massage studios",
+      "buyer": "Wellness business managers",
+      "category_id": "C33",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-057",
+      "name": "Independent gyms",
+      "buyer": "Gym owners",
+      "category_id": "C33",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-058",
+      "name": "Yoga studios",
+      "buyer": "Yoga and pilates studio operators",
+      "category_id": "C33",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-059",
+      "name": "Sports clubs",
+      "buyer": "Community league admins",
+      "category_id": "C33",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-060",
+      "name": "Music educators",
+      "buyer": "Music lesson studios",
+      "category_id": "C13",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-061",
+      "name": "Private tutoring",
+      "buyer": "Independent tutors and tutoring centers",
+      "category_id": "C13",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-062",
+      "name": "K-12 educational resources",
+      "buyer": "Classroom teachers and resource sellers",
+      "category_id": "C13",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-063",
+      "name": "University labs",
+      "buyer": "Academic lab administrators",
+      "category_id": "C13",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-064",
+      "name": "Online course creators",
+      "buyer": "Independent instructors and course operators",
+      "category_id": "C13",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-065",
+      "name": "Nonprofit operations",
+      "buyer": "Registered nonprofit administrators",
+      "category_id": "C36",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-066",
+      "name": "Fundraising campaigns",
+      "buyer": "Charity fundraising teams",
+      "category_id": "C36",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-067",
+      "name": "Condo and community associations",
+      "buyer": "Volunteer board and association managers",
+      "category_id": "C30",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-068",
+      "name": "Municipal departments",
+      "buyer": "City procurement and administrative units",
+      "category_id": "C36",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-069",
+      "name": "Small farms",
+      "buyer": "Independent farms and producer groups",
+      "category_id": "C35",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-070",
+      "name": "Farm equipment sellers",
+      "buyer": "Farm equipment dealers and service shops",
+      "category_id": "C35",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-071",
+      "name": "Garden supply stores",
+      "buyer": "Nurseries and garden retailers",
+      "category_id": "C35",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-072",
+      "name": "Environmental consultancies",
+      "buyer": "Environmental service firm administrators",
+      "category_id": "C35",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-073",
+      "name": "Energy auditing businesses",
+      "buyer": "Qualified energy audit providers",
+      "category_id": "C35",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-074",
+      "name": "Recycling and waste operators",
+      "buyer": "Commercial recycling logistics businesses",
+      "category_id": "C35",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-075",
+      "name": "Tour and travel agencies",
+      "buyer": "Travel agent operations teams",
+      "category_id": "C32",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-076",
+      "name": "Tour operators",
+      "buyer": "Local guided tour businesses",
+      "category_id": "C32",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-077",
+      "name": "Hotels and motels",
+      "buyer": "Independent accommodation operators",
+      "category_id": "C32",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-078",
+      "name": "Museums and galleries",
+      "buyer": "Museums and gallery administrators",
+      "category_id": "C36",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-079",
+      "name": "Fine art creators",
+      "buyer": "Independent artists and illustrators",
+      "category_id": "C10",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-080",
+      "name": "Independent authors",
+      "buyer": "Self-published writers and editors",
+      "category_id": "C04",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-081",
+      "name": "Podcasters",
+      "buyer": "Independent podcast producers",
+      "category_id": "C03",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-082",
+      "name": "Video agencies",
+      "buyer": "Freelance videographers and editing teams",
+      "category_id": "C02",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-083",
+      "name": "YouTube creators",
+      "buyer": "Small to medium video channels",
+      "category_id": "C02",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-084",
+      "name": "Streamers and live creators",
+      "buyer": "Independent streamers and production teams",
+      "category_id": "C08",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-085",
+      "name": "Ecommerce direct brands",
+      "buyer": "Small direct-to-consumer merchants",
+      "category_id": "C22",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-086",
+      "name": "Amazon marketplace sellers",
+      "buyer": "Authorized Amazon third-party sellers",
+      "category_id": "C22",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-087",
+      "name": "Shopify merchants",
+      "buyer": "Owners and agencies using Shopify",
+      "category_id": "C22",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-088",
+      "name": "Etsy digital creators",
+      "buyer": "Original product designers on Etsy",
+      "category_id": "C09",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-089",
+      "name": "B2B SaaS startups",
+      "buyer": "Small software-as-a-service companies",
+      "category_id": "C15",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-090",
+      "name": "Managed IT providers",
+      "buyer": "Managed service providers and IT shops",
+      "category_id": "C28",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-091",
+      "name": "Security consultancies",
+      "buyer": "Authorized security service firms",
+      "category_id": "C28",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-092",
+      "name": "DevOps platform teams",
+      "buyer": "Developers and platform engineering groups",
+      "category_id": "C18",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-093",
+      "name": "Open-source maintainers",
+      "buyer": "Maintainers and companies sponsoring projects",
+      "category_id": "C18",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-094",
+      "name": "Design and UX studios",
+      "buyer": "Product design freelancers and agencies",
+      "category_id": "C10",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-095",
+      "name": "No-code automation agencies",
+      "buyer": "Make n8n Zapier consultants",
+      "category_id": "C21",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-096",
+      "name": "Localization agencies",
+      "buyer": "Translation vendors and game localization teams",
+      "category_id": "C29",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-097",
+      "name": "Recruitment agencies",
+      "buyer": "Independent recruiters and search firms",
+      "category_id": "C34",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-098",
+      "name": "Staffing firms",
+      "buyer": "Temporary and contract staffing agencies",
+      "category_id": "C34",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-099",
+      "name": "Job seekers",
+      "buyer": "Individual professionals seeking work",
+      "category_id": "C34",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-100",
+      "name": "Remote team operations",
+      "buyer": "Distributed teams and small businesses",
+      "category_id": "C34",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-101",
+      "name": "Customer support centers",
+      "buyer": "B2B support team leads",
+      "category_id": "C15",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-102",
+      "name": "Customer success groups",
+      "buyer": "SaaS customer success managers",
+      "category_id": "C15",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-103",
+      "name": "Public data publishers",
+      "buyer": "Researchers and public data reuse firms",
+      "category_id": "C25",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-104",
+      "name": "Academic researchers",
+      "buyer": "Research teams and independent analysts",
+      "category_id": "C25",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-105",
+      "name": "Sporting goods retailers",
+      "buyer": "Specialist sports equipment stores",
+      "category_id": "C31",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-106",
+      "name": "Pet groomers",
+      "buyer": "Pet grooming salons",
+      "category_id": "C33",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-107",
+      "name": "Dog walking services",
+      "buyer": "Independent pet walkers and walk companies",
+      "category_id": "C33",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-108",
+      "name": "Pet boarding and daycare",
+      "buyer": "Pet lodging operators",
+      "category_id": "C33",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-109",
+      "name": "Dental laboratories",
+      "buyer": "Dental device labs administrative managers",
+      "category_id": "C33",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-110",
+      "name": "Gift boutiques and specialty shops",
+      "buyer": "Independent retail store managers",
+      "category_id": "C22",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-111",
+      "name": "Libraries",
+      "buyer": "Public and membership library administrators",
+      "category_id": "C36",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-112",
+      "name": "Esports event operators",
+      "buyer": "Tournament admins and event organizers",
+      "category_id": "C08",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-113",
+      "name": "Indie game studios",
+      "buyer": "Independent original-game developers",
+      "category_id": "C12",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-114",
+      "name": "3D print studios",
+      "buyer": "Small additive-manufacturing sellers",
+      "category_id": "C11",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-115",
+      "name": "B2B consulting boutiques",
+      "buyer": "Small management and operations consultancies",
+      "category_id": "C20",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-116",
+      "name": "Subscription box merchants",
+      "buyer": "Subscription ecommerce operators",
+      "category_id": "C22",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-117",
+      "name": "Craft and handmade sellers",
+      "buyer": "Independent artisans and makers",
+      "category_id": "C22",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-118",
+      "name": "Equipment rental firms",
+      "buyer": "Event tool and heavy equipment rental offices",
+      "category_id": "C30",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-119",
+      "name": "Marine charter operations",
+      "buyer": "Charter and sailing business managers",
+      "category_id": "C32",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-120",
+      "name": "Telecom field installers",
+      "buyer": "Telecom cabling and service companies",
+      "category_id": "C31",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-121",
+      "name": "Print shops and sign makers",
+      "buyer": "Commercial print and signage shops",
+      "category_id": "C10",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-122",
+      "name": "Wedding invitation designers",
+      "buyer": "Stationery studios and digital invitation sellers",
+      "category_id": "C10",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-123",
+      "name": "Church and community events",
+      "buyer": "Local community event administrative teams",
+      "category_id": "C36",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-124",
+      "name": "Restaurants with multiple outlets",
+      "buyer": "Small multi-location hospitality groups",
+      "category_id": "C32",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-125",
+      "name": "Franchise operators",
+      "buyer": "Small non-regulated franchise group owners",
+      "category_id": "C22",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-126",
+      "name": "Independent hotels' vendors",
+      "buyer": "Hotel laundry and amenity suppliers",
+      "category_id": "C32",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-127",
+      "name": "B2B training companies",
+      "buyer": "Corporate trainers and L&D consultants",
+      "category_id": "C13",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-128",
+      "name": "Digital marketing agencies",
+      "buyer": "Small performance marketing firms",
+      "category_id": "C06",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-129",
+      "name": "SEO consultants",
+      "buyer": "Search agencies and independent consultants",
+      "category_id": "C05",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-130",
+      "name": "Influencer marketing agencies",
+      "buyer": "Brand creator partnerships operators",
+      "category_id": "C06",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-131",
+      "name": "Podcast advertising agencies",
+      "buyer": "Podcast ad buyers and small audio networks",
+      "category_id": "C06",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-132",
+      "name": "Event ticket sellers",
+      "buyer": "Small original events with paid tickets",
+      "category_id": "C36",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-133",
+      "name": "Specialty food subscriptions",
+      "buyer": "Coffee tea and snack subscription startups",
+      "category_id": "C32",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-134",
+      "name": "Niche e-learning communities",
+      "buyer": "Paid membership site operators",
+      "category_id": "C13",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-135",
+      "name": "B2B newsletters",
+      "buyer": "Small expert newsletter publishers",
+      "category_id": "C04",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-136",
+      "name": "Language learning creators",
+      "buyer": "Language tutors and educators",
+      "category_id": "C13",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-137",
+      "name": "Board-game designers",
+      "buyer": "Creators of tabletop games and party games",
+      "category_id": "C12",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-138",
+      "name": "Indie music producers",
+      "buyer": "Independent composers and session producers",
+      "category_id": "C03",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-139",
+      "name": "Local newspapers",
+      "buyer": "Independent local news and media groups",
+      "category_id": "C04",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-140",
+      "name": "Specialist blogs",
+      "buyer": "Small authoritative niche site owners",
+      "category_id": "C05",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-141",
+      "name": "B2B procurement teams",
+      "buyer": "Small private purchasing departments",
+      "category_id": "C31",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-142",
+      "name": "Commercial insurance claims admin",
+      "buyer": "Claims support offices and adjuster administrators",
+      "category_id": "C26",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-143",
+      "name": "Corporate finance operations",
+      "buyer": "Finance operations analysts at SMBs",
+      "category_id": "C26",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-144",
+      "name": "Niche SaaS resellers",
+      "buyer": "Authorized software resellers and implementation partners",
+      "category_id": "C15",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-145",
+      "name": "Conference organizers",
+      "buyer": "B2B conference producers",
+      "category_id": "C36",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-146",
+      "name": "Trade associations",
+      "buyer": "Membership trade associations",
+      "category_id": "C36",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-147",
+      "name": "Foreign-language localization sellers",
+      "buyer": "Bilingual content studios",
+      "category_id": "C29",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-148",
+      "name": "Home organization specialists",
+      "buyer": "Home organizers and interior consultants",
+      "category_id": "C30",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-149",
+      "name": "Home decor e-tailers",
+      "buyer": "Small online home decor businesses",
+      "category_id": "C22",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-150",
+      "name": "Local plant shops",
+      "buyer": "Independent florists and flower shops",
+      "category_id": "C35",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-151",
+      "name": "Flower farms",
+      "buyer": "Local cut-flower growers",
+      "category_id": "C35",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-152",
+      "name": "Commercial sign installers",
+      "buyer": "Sign manufacturing and installation companies",
+      "category_id": "C30",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-153",
+      "name": "Security alarm installers",
+      "buyer": "Licensed electronic security installers",
+      "category_id": "C30",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-154",
+      "name": "Telehealth platform administrators",
+      "buyer": "Technology staff at healthcare providers",
+      "category_id": "C33",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-155",
+      "name": "Rehabilitation equipment suppliers",
+      "buyer": "Licensed mobility equipment retailers",
+      "category_id": "C31",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-156",
+      "name": "Personal trainers online",
+      "buyer": "Independent trainers with virtual memberships",
+      "category_id": "C33",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-157",
+      "name": "Nutrition educators",
+      "buyer": "General nutrition educators (not clinical advice)",
+      "category_id": "C33",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-158",
+      "name": "Consumer household budgeting",
+      "buyer": "People organizing non-advisory household finances",
+      "category_id": "C26",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-159",
+      "name": "Career portfolio designers",
+      "buyer": "Resume and portfolio creatives",
+      "category_id": "C10",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-160",
+      "name": "Creator merchandise teams",
+      "buyer": "Authorized fan community merch managers",
+      "category_id": "C23",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-161",
+      "name": "Small manufacturers' quality teams",
+      "buyer": "Production quality admins",
+      "category_id": "C31",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-162",
+      "name": "Local microbreweries admin",
+      "buyer": "Licensed brewery operational staff",
+      "category_id": "C32",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-163",
+      "name": "Independent publishers",
+      "buyer": "Small publishing companies and magazines",
+      "category_id": "C04",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-164",
+      "name": "YouTube education channels",
+      "buyer": "Educational video producers",
+      "category_id": "C02",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-165",
+      "name": "Travel bloggers",
+      "buyer": "Content creators with original travel reporting",
+      "category_id": "C32",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-166",
+      "name": "Local historical researchers",
+      "buyer": "Genealogy and local-history educators",
+      "category_id": "C36",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-167",
+      "name": "Independent data journalists",
+      "buyer": "Small editorial data teams",
+      "category_id": "C25",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-168",
+      "name": "Museum gift shops",
+      "buyer": "Small museum retail departments",
+      "category_id": "C22",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-169",
+      "name": "Local B2B software directories",
+      "buyer": "Researchers compiling supplier comparisons",
+      "category_id": "C24",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-170",
+      "name": "Language translation services",
+      "buyer": "Qualified translators and subtitlers",
+      "category_id": "C29",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-171",
+      "name": "YouTube music libraries",
+      "buyer": "Licensed stock soundtrack producers",
+      "category_id": "C03",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-172",
+      "name": "CNC/laser craft sellers",
+      "buyer": "Makers operating lasers CNC and vinyl plotters",
+      "category_id": "C11",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-173",
+      "name": "Sustainable consumer shops",
+      "buyer": "Low-waste refill retail operators",
+      "category_id": "C35",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-174",
+      "name": "Local crafts marketplaces",
+      "buyer": "Curated regional artisan organizations",
+      "category_id": "C24",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-175",
+      "name": "Remote executive assistants",
+      "buyer": "Online administrative service entrepreneurs",
+      "category_id": "C21",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-176",
+      "name": "Community sports coaches",
+      "buyer": "Volunteer coaches and youth sport administrators",
+      "category_id": "C33",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-177",
+      "name": "Music venues",
+      "buyer": "Small concert halls and clubs",
+      "category_id": "C03",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-178",
+      "name": "Agricultural cooperatives",
+      "buyer": "Producer-owned agricultural co-ops",
+      "category_id": "C35",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-179",
+      "name": "Specialty vehicle fleets",
+      "buyer": "Delivery van and municipal utility fleet offices",
+      "category_id": "C31",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-180",
+      "name": "Commercial real estate analysts",
+      "buyer": "Non-appraising brokerage research teams",
+      "category_id": "C30",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-181",
+      "name": "Campus student organizations",
+      "buyer": "Student society and campus clubs",
+      "category_id": "C36",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-182",
+      "name": "Event photographers",
+      "buyer": "Wedding and sports event photo businesses",
+      "category_id": "C10",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-183",
+      "name": "Microbusiness online teachers",
+      "buyer": "Small live cohort educators",
+      "category_id": "C13",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-184",
+      "name": "Regional business chambers",
+      "buyer": "Local business associations",
+      "category_id": "C36",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-185",
+      "name": "Property inspection services",
+      "buyer": "Commercial property inspectors",
+      "category_id": "C30",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-186",
+      "name": "Music instrument retailers",
+      "buyer": "Independent music shop operators",
+      "category_id": "C03",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-187",
+      "name": "Outdoor guides",
+      "buyer": "Hiking climbing and paddling guide administrators",
+      "category_id": "C32",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-188",
+      "name": "Digital designers selling assets",
+      "buyer": "Original design resource creators",
+      "category_id": "C10",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-189",
+      "name": "Data annotation vendors",
+      "buyer": "Human annotation teams serving ML companies",
+      "category_id": "C25",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-190",
+      "name": "Accessibility consultants",
+      "buyer": "Qualified accessibility auditors",
+      "category_id": "C29",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-191",
+      "name": "Industrial maintenance firms",
+      "buyer": "Industrial repair service managers",
+      "category_id": "C30",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-192",
+      "name": "Custom furniture makers",
+      "buyer": "Artisan woodworking shops",
+      "category_id": "C31",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-193",
+      "name": "Building material suppliers",
+      "buyer": "Construction retail and wholesalers",
+      "category_id": "C30",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-194",
+      "name": "University clubs and alumni groups",
+      "buyer": "Alumni associations and college club managers",
+      "category_id": "C36",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-195",
+      "name": "Online microcommerce marketplaces",
+      "buyer": "Small communities running vendor sales",
+      "category_id": "C24",
+      "source_risk_flag": "regulated"
+    },
+    {
+      "id": "IND-196",
+      "name": "Mobile app publishers",
+      "buyer": "Independent mobile app developers",
+      "category_id": "C16",
+      "source_risk_flag": "standard"
+    },
+    {
+      "id": "IND-197",
+      "name": "Micro SaaS API developers",
+      "buyer": "Small API companies and integration providers",
+      "category_id": "C19",
+      "source_risk_flag": "standard"
+    }
+  ]
+}

@@ -41,7 +41,9 @@ class CatalogTests(FactoryTestCase):
     def test_real_atlas_researched_count_not_validated(self):
         rows=catalog()
         s=catalog_summary(rows)
-        self.assertEqual(s['records'],1296)
+        self.assertEqual(s['records'],1512)
+        self.assertEqual(s['curated_library_hypotheses'],216)
+        self.assertEqual(s['capital_research_only'],2)
         self.assertEqual(s['expanded_hypotheses'],1182)
         self.assertEqual(s['original_research_records'],114)
         self.assertEqual(s['expanded_niches'],197)
@@ -255,7 +257,7 @@ class PortalTests(FactoryTestCase):
 class SmokeTests(FactoryTestCase):
     def test_local_doctor(self):
         result=doctor(catalog())
-        self.assertEqual(result['research']['records'],1296)
+        self.assertEqual(result['research']['records'],1512)
         self.assertEqual(result['extra_packages_required'],0)
         self.assertFalse(result['external_actions_enabled'])
     def test_cli_kit_and_report(self):

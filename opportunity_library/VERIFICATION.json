@@ -1,0 +1,71 @@
+{
+  "status": "PASS",
+  "as_of": "2026-10-14",
+  "baseline_commit": "57168d5d717a5d93a1c187738c9f0b5d3749c9d3",
+  "counts": {
+    "records": 1512,
+    "legacy_records": 1296,
+    "curated_records": 216,
+    "business_offer_records": 1510,
+    "capital_research_records": 2,
+    "categories": 36,
+    "subcategories": 144,
+    "inherited_industry_slices": 197,
+    "fresh_primary_references": 69,
+    "verified_paid_offers": 0
+  },
+  "automated_python_tests": {
+    "new_library": 49,
+    "existing_phase0": 10,
+    "existing_factory": 40,
+    "original_report": 14,
+    "total": 113
+  },
+  "browser_dom_checks": {
+    "status": "PASS",
+    "method": "Real headless Chromium rendered via Playwright set_content (in-memory document). No browser security policy was modified.",
+    "checks": [
+      "All research loaded into real browser DOM",
+      "Capital excluded by default",
+      "Pagination limits rendered cards",
+      "AI content category filter",
+      "Subcategory filter",
+      "Finance tools exclude capital",
+      "Capital research explicitly included",
+      "Immutable-ID search",
+      "Detail opens",
+      "Detail separates profit uncertainty",
+      "Draft task contents and safe filename",
+      "Saved shortlist works without persistent storage",
+      "Compare two records across 13 tradeoffs",
+      "Combined privacy/passivity filters",
+      "Filtered CSV contents",
+      "Source facts and limitations all displayed",
+      "No desktop JavaScript errors",
+      "No mobile horizontal overflow",
+      "Mobile detail opens",
+      "Escape closes modal",
+      "Pagination next",
+      "Pagination previous",
+      "Alphabetic sort renders",
+      "Risk filter removes review records",
+      "Factory has 36 category options",
+      "Factory category filtering",
+      "Factory navigation link",
+      "No browser script exceptions"
+    ],
+    "count": 28,
+    "limitations": [
+      "Browser administration blocks file:// and loopback navigation in this sandbox. Direct local-file opening and browser HTTP navigation were not end-to-end tested.",
+      "Loopback HTTP endpoints and security were exercised separately by Python integration tests.",
+      "Native download transport and persistent localStorage were not tested; generated export contents and session shortlist were tested."
+    ]
+  },
+  "local_markdown_links_checked": 195,
+  "all_changed_originals_match_git_blobs": true,
+  "native_windows_execution": "not run",
+  "paid_demand": "not verified",
+  "platform_accounts_or_public_launches": "none created",
+  "statistical_or_financial_forecasts": "none newly asserted",
+  "classification_caveat": "331 records use domain-based subcategories and are flagged for precise-subcategory review. All 1512 records have a primary category and subcategory; assignments and scores are editorial, not demand evidence."
+}

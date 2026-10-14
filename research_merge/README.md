@@ -1,3 +1,5 @@
+**ORGANIZED RESEARCH ENTRY:** Open `../Opportunity_Library.html` for the new 36-category / 144-subcategory library with 1,512 records. This folder remains preserved source research. Its old rankings, dates, overlap assumptions and recommendations are not automatically current or validated. See `../opportunity_library/docs/METHODOLOGY.md` for the distinction.
+
 **NEW PRIMARY ENTRY POINT:** `../Opportunity_Atlas.html` indexes 197 niche slices, 1,182 new offers plus the earlier 114 research records. This 60-record fast-cash study remains a source, not a sector-exclusive strategic directive. Do not default to game development or reporting without paid buyer evidence.
 
 # Integrated research — start here

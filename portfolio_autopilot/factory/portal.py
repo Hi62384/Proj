@@ -13,7 +13,7 @@ from urllib.parse import urlsplit, unquote
 import webbrowser
 
 from .catalog import catalog, select
-from .config import PRIVATE, SetupError, bootstrap, load_profile, safe_id
+from .config import PRIVATE, ROOT, SetupError, bootstrap, load_profile, safe_id
 from .kits import make_kit
 from .first_business import first_business, FILES as FIRST_FILES
 from .storefront import create_preview
@@ -29,6 +29,8 @@ def load_view(root: Path = PRIVATE, rows: list[dict]|None=None) -> dict:
     def compact(r):
         return {'id':r['id'],'name':r.get('name',''),'niche':r.get('niche',''),
                 'mode':r.get('revenue_mode',''),'score':r.get('cross_niche_score',''),
+                'category':r.get('library_category',''), 'category_id':r.get('library_category_id',''),
+                'passivity':r.get('library_passivity',''), 'privacy':r.get('library_privacy',''),
                 'evidence':r.get('evidence_grade',''),
                 'price':r.get('illustrative_price_cad',''),
                 'risk':r.get('legal_class',''),'kit_exists':r['id'] in generated}
@@ -51,7 +53,7 @@ def render_page(state: dict, csrf_token: str) -> str:
 <header><div><div class="label">OFFLINE BUSINESS FACTORY · NO LIVE ACCOUNTS</div><h1>Portfolio Autopilot</h1><p>Prepare, validate and review business launch kits across every niche. Your private files stay on this computer.</p></div></header>
 <main><p class="note"><strong>Draft mode:</strong> No external API calls, storefront publication, email, payment processing, paid ads or customer data access. Prices, scores and buyer demand are not verified.</p>
 <div class="stats" id="stats"></div><div class="layout"><section>
-<div class="panel"><h2>Explore opportunities across industries</h2><div class="filters"><select id="scope" aria-label="Which opportunities"><option value="shortlist">Top cross-industry shortlist</option><option value="all">Entire 1,296-record atlas</option></select><select id="model" aria-label="Income model"><option value="">Any income model</option><option value="F">Fixed-scope services</option><option value="R">Recurring monitoring</option><option value="D">Digital downloads</option><option value="I">Integrations</option><option value="M">Micro SaaS</option><option value="P">Paid data</option><option value="A">Original assets</option><option value="L">Courses</option><option value="C">Affiliate/content</option><option value="X">Marketplaces</option><option value="ORIGINAL">Original studies</option></select></div><input id="search" type="search" placeholder="Search all industries, IDs, offers or models" aria-label="Filter opportunity list"/><p id="matches" class="small"></p><div id="ideas"></div></div>
+<div class="panel"><h2>Explore opportunities across industries</h2><p><a href="/opportunity-library" target="_blank" rel="noopener">Open the organized Opportunity Library →</a></p><div class="filters"><select id="scope" aria-label="Which opportunities"><option value="shortlist">Top cross-industry shortlist</option><option value="all">All installed research records</option></select><select id="model" aria-label="Income model"><option value="">Any income model</option><option value="F">Fixed-scope services</option><option value="R">Recurring monitoring</option><option value="D">Digital downloads</option><option value="I">Integrations</option><option value="M">Micro SaaS</option><option value="P">Paid data</option><option value="A">Original assets</option><option value="L">Courses</option><option value="C">Affiliate/content</option><option value="X">Marketplaces</option><option value="ORIGINAL">Original studies</option></select><select id="category-filter" aria-label="Category"><option value="">All research categories</option></select></div><input id="search" type="search" placeholder="Search all industries, IDs, offers or models" aria-label="Filter opportunity list"/><p id="matches" class="small"></p><div id="ideas"></div></div>
 <div class="panel"><h2>Draft storefront generator</h2><p class="small">Preview every prepared offer in one local showcase. This does not publish a website or create checkout.</p><button id="catalogue">Create offline catalogue preview</button><p id="catalogue-status" class="small"></p></div><div class="panel"><h2>Review queue</h2><p class="small">These are local reminders, not tasks an AI is secretly doing.</p><div class="actions"><button id="refresh">Prepare review queue</button></div><div id="tasks"></div></div>
 </section><aside><div class="panel"><h2>First business — CSV reports</h2><p class="small">A fully synthetic, runnable report demo and draft Upwork listing. No real account is connected.</p><button id="first">Prepare first sales pack</button><p id="first-status" class="small"></p><hr><h2>First steps</h2><ol><li>Choose a real buyer problem.</li><li>Prepare its draft kit.</li><li>Validate against actual buying intent.</li><li>Review the synthetic prototype.</li><li>Connect accounts only when you approve a launch.</li></ol><p class="small">A sales profile, a Stripe account and remote deployment are NOT included or connected here.</p></div>
 <div class="panel"><h2>Approval requests</h2><p class="small">Reviewing here only marks a note locally. It cannot authorize an external action.</p><div id="approvals"></div></div>
@@ -67,11 +69,11 @@ function notify(s,isBad=false){const n=$('#notice');n.textContent=s;n.style.colo
 function render(){
  const s=$('#stats');clear(s);const stats=[['Research records',data.catalog_records],['Shortlisted',data.shortlist.length],['Pending reviews',data.summary.pending_tasks],['Manual operating profit',formatCAD(data.summary.operating_profit_cad)]];
  stats.forEach(([a,b])=>{let v=elem('div','','stat');v.append(elem('b',b),elem('span',a));s.append(v)});
- const root=$('#ideas');clear(root);const term=$('#search').value.toLowerCase();const src=$('#scope').value==='all'?data.all_offers:data.shortlist;const mode=$('#model').value;
- const matching=src.filter(r=>(!mode||r.mode===mode)&&[r.id,r.name,r.niche,r.mode].join(' ').toLowerCase().includes(term));
+ const root=$('#ideas');clear(root);const term=$('#search').value.toLowerCase();const src=$('#scope').value==='all'?data.all_offers:data.shortlist;const mode=$('#model').value;const category=$('#category-filter').value;
+ const matching=src.filter(r=>(!mode||r.mode===mode)&&(!category||r.category_id===category)&&[r.id,r.name,r.niche,r.mode,r.category].join(' ').toLowerCase().includes(term));
  $('#matches').textContent='Showing '+Math.min(60,matching.length)+' of '+matching.length+' matches. This is unvalidated research, not a list of buyers.';
  matching.slice(0,60).forEach(r=>{
-   let card=elem('div','','idea'),copy=elem('div');copy.append(elem('h3',r.name),elem('div',r.id+' · '+r.niche+' · '+r.mode+' · score '+r.score,'meta'),elem('div',r.evidence+' · CAD '+r.price+' hypothesis','meta'));
+   let card=elem('div','','idea'),copy=elem('div');copy.append(elem('h3',r.name),elem('div',r.id+' · '+(r.category?r.category+' · ':'')+r.niche+' · '+r.mode+' · score '+r.score,'meta'),elem('div',r.evidence+' · CAD '+r.price+' hypothesis','meta'));
    let act=elem('div','','actions'),blocked=r.risk!=='standard'&&r.risk!=='refer to original';let button=elem('button',blocked?'Needs risk review':r.kit_exists?'Kit created':'Prepare kit');button.disabled=r.kit_exists||blocked;
    button.onclick=async()=>{try{let out=await post('/api/kit',{id:r.id});notify('Prepared local draft for '+r.id+'. Open preview from the new link below.');await reload()}catch(e){notify(e.message,true)}};act.append(button);
    if(r.kit_exists){let l=elem('a','Preview');l.href='/preview/'+encodeURIComponent(r.id);l.target='_blank';l.rel='noopener';act.append(l)}card.append(copy,act);root.append(card)});
@@ -83,9 +85,22 @@ function render(){
 }
 $('#first').onclick=async()=>{try{await post('/api/first-business',{});notify('Synthetic sales pack prepared. See .local/factory/first_reporting_business.');await reload()}catch(e){notify(e.message,true)}};
 $('#catalogue').onclick=async()=>{try{await post('/api/catalogue-preview',{});notify('Generated local catalogue preview: .local/factory/previews/catalogue.html');await reload()}catch(e){notify(e.message,true)}};
+for(const r of data.all_offers){if(!r.category_id||[...$('#category-filter').options].some(o=>o.value===r.category_id))continue;const o=elem('option',r.category);o.value=r.category_id;$('#category-filter').append(o)}
+$('#category-filter').addEventListener('change',render);
 $('#search').addEventListener('input',render);$('#scope').addEventListener('change',render);$('#model').addEventListener('change',render);$('#refresh').onclick=async()=>{try{let out=await post('/api/queue',{});notify('Created '+out.created+' local review tasks.');await reload()}catch(e){notify(e.message,true)}};
 render();
 </script></body></html>'''
+
+
+# Whitelisted research documents only; no credentials, vault, private state or arbitrary paths.
+LIBRARY_PUBLIC_FILES = {
+    '/opportunity_library/docs/METHODOLOGY.md': 'opportunity_library/docs/METHODOLOGY.md',
+    '/opportunity_library/docs/PRIVACY_AND_PLATFORMS.md': 'opportunity_library/docs/PRIVACY_AND_PLATFORMS.md',
+    '/opportunity_library/docs/OPERATING_WORKFLOW.md': 'opportunity_library/docs/OPERATING_WORKFLOW.md',
+    '/opportunity_library/docs/SOURCES.md': 'opportunity_library/docs/SOURCES.md',
+    '/opportunity_library/data/catalog.csv': 'opportunity_library/data/catalog.csv',
+    '/opportunity_library/data/catalog.json': 'opportunity_library/data/catalog.json',
+}
 
 
 class FactoryServer(ThreadingHTTPServer):
@@ -130,6 +145,13 @@ class FactoryHandler(BaseHTTPRequestHandler):
         if path=='/':
             self._reply(200,render_page(load_view(self.server.root,self.server.rows),self.server.token),
                         'text/html; charset=utf-8')
+        elif path=='/opportunity-library' or path in LIBRARY_PUBLIC_FILES:
+            relative = 'Opportunity_Library.html' if path=='/opportunity-library' else LIBRARY_PUBLIC_FILES[path]
+            target = ROOT / relative
+            if target.is_symlink() or not target.is_file() or not target.resolve().is_relative_to(ROOT.resolve()):
+                self._json(404,{'error':'Organized library unavailable. Apply the library patch or rebuild it.'});return
+            ctype = 'text/html; charset=utf-8' if target.suffix=='.html' else 'application/json; charset=utf-8' if target.suffix=='.json' else 'text/csv; charset=utf-8' if target.suffix=='.csv' else 'text/plain; charset=utf-8'
+            self._reply(200,target.read_text(encoding='utf-8'),ctype)
         elif path=='/api/state':
             self._json(200,load_view(self.server.root,self.server.rows))
         elif path=='/health':

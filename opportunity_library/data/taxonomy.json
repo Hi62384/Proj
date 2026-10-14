@@ -1,0 +1,1125 @@
+{
+  "version": "1.0.0",
+  "categories": [
+    {
+      "id": "C01",
+      "slug": "ai-content-systems",
+      "name": "AI Content Systems",
+      "group": "Content & media",
+      "subcategories": [
+        {
+          "id": "C01-1",
+          "name": "Grounded drafting"
+        },
+        {
+          "id": "C01-2",
+          "name": "Content quality tools"
+        },
+        {
+          "id": "C01-3",
+          "name": "Synthetic visual workflows"
+        },
+        {
+          "id": "C01-4",
+          "name": "Content repurposing"
+        }
+      ],
+      "source_ids": [
+        "R-DESCRIPT",
+        "R-ADOBE",
+        "R-YOUTUBE",
+        "R-ETSY",
+        "R-ENVATO"
+      ],
+      "strategy": "Sell a constrained production or quality workflow rather than a promise to flood platforms with AI output. Reuse schemas and test fixtures, retain source provenance, and price human review explicitly.",
+      "main_obstacle": "The tool can produce quickly while fact-checking, rights clearance and distribution remain labor-intensive. Platform AI rules are not interchangeable."
+    },
+    {
+      "id": "C02",
+      "slug": "video-and-creator-media",
+      "name": "Video & Creator Media",
+      "group": "Content & media",
+      "subcategories": [
+        {
+          "id": "C02-1",
+          "name": "Educational channels"
+        },
+        {
+          "id": "C02-2",
+          "name": "Editing workflows"
+        },
+        {
+          "id": "C02-3",
+          "name": "Motion assets"
+        },
+        {
+          "id": "C02-4",
+          "name": "Publishing analytics"
+        }
+      ],
+      "source_ids": [
+        "R-DESCRIPT",
+        "R-YOUTUBE",
+        "R-YT_DISCLOSE"
+      ],
+      "strategy": "Original evergreen tutorials and reusable editing assets can support branded publishing. Compare a licensed asset product with an editing service before committing to an audience-only model.",
+      "main_obstacle": "Ad monetization has audience gates; repetitive mass production, reused footage and unapproved likenesses undermine eligibility and privacy."
+    },
+    {
+      "id": "C03",
+      "slug": "audio-music-and-voice",
+      "name": "Audio, Music & Voice",
+      "group": "Content & media",
+      "subcategories": [
+        {
+          "id": "C03-1",
+          "name": "Sound libraries"
+        },
+        {
+          "id": "C03-2",
+          "name": "Podcast production"
+        },
+        {
+          "id": "C03-3",
+          "name": "Audio utilities"
+        },
+        {
+          "id": "C03-4",
+          "name": "Licensed narration"
+        }
+      ],
+      "source_ids": [
+        "R-DESCRIPT",
+        "R-ITCH",
+        "R-ENVATO"
+      ],
+      "strategy": "Favor original reusable sound packs and bounded batch-processing utilities. A reference-quality preview and rights manifest matter more than a large file count.",
+      "main_obstacle": "Voice consent, music/sample licences, loudness QA and ongoing editorial work can dominate costs. Do not promise imitation of unlicensed voices."
+    },
+    {
+      "id": "C04",
+      "slug": "writing-publishing-and-newsletters",
+      "name": "Writing, Publishing & Newsletters",
+      "group": "Content & media",
+      "subcategories": [
+        {
+          "id": "C04-1",
+          "name": "Practical guides"
+        },
+        {
+          "id": "C04-2",
+          "name": "Paid newsletters"
+        },
+        {
+          "id": "C04-3",
+          "name": "Editorial tools"
+        },
+        {
+          "id": "C04-4",
+          "name": "Book-production resources"
+        }
+      ],
+      "source_ids": [
+        "R-KDP",
+        "R-BEEHIIV",
+        "R-GHOST"
+      ],
+      "strategy": "Differentiate through useful information, tested examples and editorial credibility. A reusable guide can be low-touch; a frequently updated newsletter is a publishing job until retention supports delegation.",
+      "main_obstacle": "Generic generated books and recurring low-value summaries compete with free substitutes. Pen names do not eliminate tax, KYC or defamation exposure."
+    },
+    {
+      "id": "C05",
+      "slug": "seo-and-search-led-websites",
+      "name": "SEO & Search-led Websites",
+      "group": "Growth & commerce",
+      "subcategories": [
+        {
+          "id": "C05-1",
+          "name": "Technical SEO tools"
+        },
+        {
+          "id": "C05-2",
+          "name": "Original research sites"
+        },
+        {
+          "id": "C05-3",
+          "name": "Search utilities"
+        },
+        {
+          "id": "C05-4",
+          "name": "Content maintenance"
+        }
+      ],
+      "source_ids": [
+        "R-AHREFS",
+        "R-GOOGLE_SPAM"
+      ],
+      "strategy": "Sell a concrete diagnostic or decision utility first; build search traffic as an additional channel. Use original datasets or calculations rather than mass near-duplicate pages.",
+      "main_obstacle": "Ranking and traffic are uncertain and can change. Scaled-content or doorway abuse is not a scalable business advantage."
+    },
+    {
+      "id": "C06",
+      "slug": "advertising-and-marketing-analytics",
+      "name": "Advertising & Marketing Analytics",
+      "group": "Growth & commerce",
+      "subcategories": [
+        {
+          "id": "C06-1",
+          "name": "Campaign quality checks"
+        },
+        {
+          "id": "C06-2",
+          "name": "Attribution reporting"
+        },
+        {
+          "id": "C06-3",
+          "name": "Creative testing"
+        },
+        {
+          "id": "C06-4",
+          "name": "Conversion tools"
+        }
+      ],
+      "source_ids": [
+        "R-AGENCY",
+        "R-METABASE",
+        "R-UPWORK_DEMAND"
+      ],
+      "strategy": "Read-only analysis and QA can begin as a paid diagnostic and evolve into recurring monitoring. Define attribution limits and one measurable problem per product.",
+      "main_obstacle": "Never equate correlated performance with guaranteed ad uplift. Managing live spend requires separate customer approval, costs and rollback."
+    },
+    {
+      "id": "C07",
+      "slug": "email-crm-and-sales-enablement",
+      "name": "Email, CRM & Sales Enablement",
+      "group": "Growth & commerce",
+      "subcategories": [
+        {
+          "id": "C07-1",
+          "name": "Permissioned email operations"
+        },
+        {
+          "id": "C07-2",
+          "name": "CRM quality"
+        },
+        {
+          "id": "C07-3",
+          "name": "Proposal tools"
+        },
+        {
+          "id": "C07-4",
+          "name": "Sales handoffs"
+        }
+      ],
+      "source_ids": [
+        "R-MAILERLITE",
+        "R-CASL",
+        "R-N8N"
+      ],
+      "strategy": "Build reusable checks, consent-aware workflows and document generators. Sell reduced administrative friction, not lists of unwilling recipients.",
+      "main_obstacle": "Consent, deliverability and private CRM data constrain automation. Purchasing a tool does not confer permission to send commercial messages."
+    },
+    {
+      "id": "C08",
+      "slug": "social-community-and-memberships",
+      "name": "Social, Community & Memberships",
+      "group": "Growth & commerce",
+      "subcategories": [
+        {
+          "id": "C08-1",
+          "name": "Social publishing tools"
+        },
+        {
+          "id": "C08-2",
+          "name": "Community resources"
+        },
+        {
+          "id": "C08-3",
+          "name": "Member operations"
+        },
+        {
+          "id": "C08-4",
+          "name": "Creator monetization"
+        }
+      ],
+      "source_ids": [
+        "R-BUFFER",
+        "R-PATREON",
+        "R-BEEHIIV"
+      ],
+      "strategy": "Use official integrations for bounded publishing workflows and sell operational resources or member utilities. Treat community moderation as a real recurring labor cost.",
+      "main_obstacle": "Audience acquisition, moderation and platform restrictions prevent fully passive operation. No fake engagement, reviews or impersonation."
+    },
+    {
+      "id": "C09",
+      "slug": "digital-templates-and-printables",
+      "name": "Digital Templates & Printables",
+      "group": "Products & software",
+      "subcategories": [
+        {
+          "id": "C09-1",
+          "name": "Operations templates"
+        },
+        {
+          "id": "C09-2",
+          "name": "Personal organization"
+        },
+        {
+          "id": "C09-3",
+          "name": "Event printables"
+        },
+        {
+          "id": "C09-4",
+          "name": "Calculator workbooks"
+        }
+      ],
+      "source_ids": [
+        "R-NOTION",
+        "R-ETSY",
+        "R-ITCH"
+      ],
+      "strategy": "A specific repeatable task, an editable example and clear compatibility can justify a download price. Bundle coherent outputs instead of hundreds of interchangeable pages.",
+      "main_obstacle": "Delivery is easy to automate; copying, support and low discovery are not. Native marketplace acceptance can take time."
+    },
+    {
+      "id": "C10",
+      "slug": "graphic-design-and-brand-assets",
+      "name": "Graphic Design & Brand Assets",
+      "group": "Products & software",
+      "subcategories": [
+        {
+          "id": "C10-1",
+          "name": "Brand systems"
+        },
+        {
+          "id": "C10-2",
+          "name": "Icons and illustrations"
+        },
+        {
+          "id": "C10-3",
+          "name": "Presentation assets"
+        },
+        {
+          "id": "C10-4",
+          "name": "Production design tools"
+        }
+      ],
+      "source_ids": [
+        "R-CANVA",
+        "R-ADOBE",
+        "R-ETSY",
+        "R-ENVATO"
+      ],
+      "strategy": "Sell original coherent systems with practical formats, accessible variants and licence clarity. A usable sample helps test whether buyers prefer the product to free assets.",
+      "main_obstacle": "Fonts, trademarks, stock restrictions and inconsistent AI acceptance matter. A reusable style system still needs art direction and QA."
+    },
+    {
+      "id": "C11",
+      "slug": "3d-cad-and-digital-fabrication",
+      "name": "3D, CAD & Digital Fabrication",
+      "group": "Products & software",
+      "subcategories": [
+        {
+          "id": "C11-1",
+          "name": "3D asset libraries"
+        },
+        {
+          "id": "C11-2",
+          "name": "CAD templates"
+        },
+        {
+          "id": "C11-3",
+          "name": "Fabrication patterns"
+        },
+        {
+          "id": "C11-4",
+          "name": "Production add-ons"
+        }
+      ],
+      "source_ids": [
+        "R-FAB",
+        "R-ITCH",
+        "R-ETSY"
+      ],
+      "strategy": "Prefer original non-safety-critical resources with tested dimensions, assembly or import instructions and source files. Paid maker tests should precede large packs.",
+      "main_obstacle": "Physical fit, material tolerances, machine safety and third-party design rights require human checks. Software familiarity is not a ranking bonus."
+    },
+    {
+      "id": "C12",
+      "slug": "games-and-interactive-entertainment",
+      "name": "Games & Interactive Entertainment",
+      "group": "Products & software",
+      "subcategories": [
+        {
+          "id": "C12-1",
+          "name": "Small original games"
+        },
+        {
+          "id": "C12-2",
+          "name": "Game production tools"
+        },
+        {
+          "id": "C12-3",
+          "name": "Gameplay resources"
+        },
+        {
+          "id": "C12-4",
+          "name": "Interactive learning"
+        }
+      ],
+      "source_ids": [
+        "R-ITCH",
+        "R-FAB"
+      ],
+      "strategy": "Small finished experiences and production aids provide bounded tests. Reuse packaging and licensing while treating each audience as a separate acquisition problem.",
+      "main_obstacle": "Hit-driven demand, engine updates, refunds and substantial production effort make games weaker immediate cash-flow assumptions than their upside suggests."
+    },
+    {
+      "id": "C13",
+      "slug": "education-and-training",
+      "name": "Education & Training",
+      "group": "Content & media",
+      "subcategories": [
+        {
+          "id": "C13-1",
+          "name": "Self-paced lessons"
+        },
+        {
+          "id": "C13-2",
+          "name": "Practice resources"
+        },
+        {
+          "id": "C13-3",
+          "name": "Instructor tools"
+        },
+        {
+          "id": "C13-4",
+          "name": "Workplace training"
+        }
+      ],
+      "source_ids": [
+        "R-TEACHABLE",
+        "R-KDP",
+        "R-NOTION"
+      ],
+      "strategy": "Prefer an original, assessable learning outcome with worked solutions and a small paid test. License to organizations when the material truly solves a recurring training need.",
+      "main_obstacle": "Teaching expertise and accuracy cannot be outsourced blindly. No copyrighted test banks, academic cheating services or unsupported certification claims."
+    },
+    {
+      "id": "C14",
+      "slug": "websites-and-storefront-design",
+      "name": "Websites & Storefront Design",
+      "group": "Products & software",
+      "subcategories": [
+        {
+          "id": "C14-1",
+          "name": "Website templates"
+        },
+        {
+          "id": "C14-2",
+          "name": "Storefront components"
+        },
+        {
+          "id": "C14-3",
+          "name": "Landing-page systems"
+        },
+        {
+          "id": "C14-4",
+          "name": "Site utilities"
+        }
+      ],
+      "source_ids": [
+        "R-WEBFLOW",
+        "R-FRAMER",
+        "R-SHOPIFY"
+      ],
+      "strategy": "Reusable tested components can be sold independently of bespoke site-building. Target one concrete integration or design gap and ship setup documentation.",
+      "main_obstacle": "A template marketplace is supply evidence, not buyers for your item. Security, accessibility, licensing and platform version support add work."
+    },
+    {
+      "id": "C15",
+      "slug": "saas-and-business-applications",
+      "name": "SaaS & Business Applications",
+      "group": "Products & software",
+      "subcategories": [
+        {
+          "id": "C15-1",
+          "name": "Workflow applications"
+        },
+        {
+          "id": "C15-2",
+          "name": "Client portals"
+        },
+        {
+          "id": "C15-3",
+          "name": "Scheduling tools"
+        },
+        {
+          "id": "C15-4",
+          "name": "Knowledge applications"
+        }
+      ],
+      "source_ids": [
+        "R-INTERCOM",
+        "R-N8N",
+        "R-JOBBER"
+      ],
+      "strategy": "Start with an accepted workflow and paid design partners, then build only the recurring part. Quotas, cancellation, tenant isolation and support need to exist before scale.",
+      "main_obstacle": "A recurring charge is not recurring value. Customer acquisition, churn, uptime and support can outweigh attractive software margins."
+    },
+    {
+      "id": "C16",
+      "slug": "desktop-and-mobile-utilities",
+      "name": "Desktop & Mobile Utilities",
+      "group": "Products & software",
+      "subcategories": [
+        {
+          "id": "C16-1",
+          "name": "Local desktop tools"
+        },
+        {
+          "id": "C16-2",
+          "name": "Mobile productivity"
+        },
+        {
+          "id": "C16-3",
+          "name": "Offline-first applications"
+        },
+        {
+          "id": "C16-4",
+          "name": "Device utilities"
+        }
+      ],
+      "source_ids": [
+        "R-APPLE_FEES",
+        "R-APPLE_ID",
+        "R-PLAY_FEES",
+        "R-PLAY_ID"
+      ],
+      "strategy": "Local-first tools can reduce data exposure and server cost. Choose a narrow repeat-use problem, trial activation and a bounded compatibility promise.",
+      "main_obstacle": "Store identity disclosure, review, signing, device fragmentation and update obligations complicate apparent passivity."
+    },
+    {
+      "id": "C17",
+      "slug": "plugins-extensions-and-connectors",
+      "name": "Plugins, Extensions & Connectors",
+      "group": "Products & software",
+      "subcategories": [
+        {
+          "id": "C17-1",
+          "name": "Browser extensions"
+        },
+        {
+          "id": "C17-2",
+          "name": "Commerce plugins"
+        },
+        {
+          "id": "C17-3",
+          "name": "Editor extensions"
+        },
+        {
+          "id": "C17-4",
+          "name": "Authorized connectors"
+        }
+      ],
+      "source_ids": [
+        "R-CHROME",
+        "R-SHOPIFY",
+        "R-N8N_LICENSE"
+      ],
+      "strategy": "Build the smallest missing step in an existing workflow. Permission minimization and documented export paths create trust; read-only adapters reduce initial risk.",
+      "main_obstacle": "Platform changes and rejected permissions can break distribution. A source licence may permit internal use but not paid embedding or resale."
+    },
+    {
+      "id": "C18",
+      "slug": "developer-devops-and-testing",
+      "name": "Developer, DevOps & Testing",
+      "group": "Products & software",
+      "subcategories": [
+        {
+          "id": "C18-1",
+          "name": "Release tooling"
+        },
+        {
+          "id": "C18-2",
+          "name": "Test and QA products"
+        },
+        {
+          "id": "C18-3",
+          "name": "Dependency workflows"
+        },
+        {
+          "id": "C18-4",
+          "name": "Documentation tooling"
+        }
+      ],
+      "source_ids": [
+        "R-CHECKLY",
+        "R-CHROME",
+        "R-N8N_LICENSE"
+      ],
+      "strategy": "Package a painful reproducible engineering task with fixtures, CLI outputs and regression tests. Sell a measurable saved step rather than a generic boilerplate dump.",
+      "main_obstacle": "Strong free alternatives and support across toolchains impose maintenance. Do not ship secrets or unsafe automatic production changes."
+    },
+    {
+      "id": "C19",
+      "slug": "apis-and-data-infrastructure",
+      "name": "APIs & Data Infrastructure",
+      "group": "Data & money",
+      "subcategories": [
+        {
+          "id": "C19-1",
+          "name": "Document APIs"
+        },
+        {
+          "id": "C19-2",
+          "name": "Media APIs"
+        },
+        {
+          "id": "C19-3",
+          "name": "Data-validation APIs"
+        },
+        {
+          "id": "C19-4",
+          "name": "Usage infrastructure"
+        }
+      ],
+      "source_ids": [
+        "R-PDFMONKEY",
+        "R-SCREENSHOT",
+        "R-STATCAN",
+        "R-ALPHAVANTAGE"
+      ],
+      "strategy": "Charge for reliability, normalization and bounded usage where free upstream data is inconvenient. Establish commercial data rights and an explicit unit-cost ceiling.",
+      "main_obstacle": "Abuse, hostile inputs, availability, exchange licences and API costs can erase margin. Usage revenue is not automatically high profit."
+    },
+    {
+      "id": "C20",
+      "slug": "analytics-reporting-and-spreadsheets",
+      "name": "Analytics, Reporting & Spreadsheets",
+      "group": "Data & money",
+      "subcategories": [
+        {
+          "id": "C20-1",
+          "name": "Business reporting"
+        },
+        {
+          "id": "C20-2",
+          "name": "Spreadsheet quality"
+        },
+        {
+          "id": "C20-3",
+          "name": "Data reconciliation"
+        },
+        {
+          "id": "C20-4",
+          "name": "Planning analytics"
+        }
+      ],
+      "source_ids": [
+        "R-METABASE",
+        "R-AGENCY",
+        "R-UPWORK_DEMAND"
+      ],
+      "strategy": "Reuse deterministic calculations and source reconciliation, first in a scoped paid job and later as a download or recurring report. Preserve the existing CSV service as one option.",
+      "main_obstacle": "Numbers need accepted definitions; sensitive data and custom exceptions limit passivity. The current prototype does not validate demand."
+    },
+    {
+      "id": "C21",
+      "slug": "documents-extraction-and-workflow-automation",
+      "name": "Documents, Extraction & Workflow Automation",
+      "group": "Data & money",
+      "subcategories": [
+        {
+          "id": "C21-1",
+          "name": "Document extraction"
+        },
+        {
+          "id": "C21-2",
+          "name": "Document generation"
+        },
+        {
+          "id": "C21-3",
+          "name": "Workflow orchestration"
+        },
+        {
+          "id": "C21-4",
+          "name": "Records quality"
+        }
+      ],
+      "source_ids": [
+        "R-PARSEUR",
+        "R-PDFMONKEY",
+        "R-N8N",
+        "R-N8N_LICENSE"
+      ],
+      "strategy": "A narrow known input family can support repeatable extraction, checking and document output. Add a human exception queue instead of promising universal automation.",
+      "main_obstacle": "OCR errors, ambiguous source documents, client confidentiality and orchestration licensing must be costed before selling a recurring plan."
+    },
+    {
+      "id": "C22",
+      "slug": "ecommerce-product-operations",
+      "name": "Ecommerce Product Operations",
+      "group": "Growth & commerce",
+      "subcategories": [
+        {
+          "id": "C22-1",
+          "name": "Catalog quality"
+        },
+        {
+          "id": "C22-2",
+          "name": "Merchandising tools"
+        },
+        {
+          "id": "C22-3",
+          "name": "Inventory exports"
+        },
+        {
+          "id": "C22-4",
+          "name": "Customer-experience utilities"
+        }
+      ],
+      "source_ids": [
+        "R-MATRIXIFY",
+        "R-ZOHO_INVENTORY",
+        "R-GORGIAS",
+        "R-SHOPIFY"
+      ],
+      "strategy": "Read-only preflight, reconciliation and specialized merchant utilities can be tested without editing a live store. Partner with agencies after repeated merchant demand.",
+      "main_obstacle": "Existing inexpensive apps cover generic tasks. Production catalog writes, returns and private customer data require strong controls."
+    },
+    {
+      "id": "C23",
+      "slug": "print-on-demand-and-physical-fulfillment",
+      "name": "Print-on-demand & Physical Fulfillment",
+      "group": "Growth & commerce",
+      "subcategories": [
+        {
+          "id": "C23-1",
+          "name": "Original merchandise"
+        },
+        {
+          "id": "C23-2",
+          "name": "Personalized print products"
+        },
+        {
+          "id": "C23-3",
+          "name": "Production workflows"
+        },
+        {
+          "id": "C23-4",
+          "name": "Fulfillment analytics"
+        }
+      ],
+      "source_ids": [
+        "R-PRINTFUL",
+        "R-ETSY"
+      ],
+      "strategy": "Use original designs, order samples and test preorders before adding variants. Measure net margin after production, shipping, taxes, returns and acquisition.",
+      "main_obstacle": "Automated manufacturing does not remove working capital, quality defects or customer support. Avoid counterfeit or unlicensed fan merchandise."
+    },
+    {
+      "id": "C24",
+      "slug": "directories-jobs-and-marketplaces",
+      "name": "Directories, Jobs & Marketplaces",
+      "group": "Growth & commerce",
+      "subcategories": [
+        {
+          "id": "C24-1",
+          "name": "Verified directories"
+        },
+        {
+          "id": "C24-2",
+          "name": "Specialist job boards"
+        },
+        {
+          "id": "C24-3",
+          "name": "Qualified-introduction tools"
+        },
+        {
+          "id": "C24-4",
+          "name": "Marketplace operations"
+        }
+      ],
+      "source_ids": [
+        "R-CANADABUYS",
+        "R-WORKABLE",
+        "R-CASL"
+      ],
+      "strategy": "Start with a tightly defined information or matching utility and manual verification. Monetize only when one side receives demonstrated value.",
+      "main_obstacle": "Two-sided cold starts, stale entries, privacy and scams make a generic directory or job board slow to monetize; never fabricate listings or demand."
+    },
+    {
+      "id": "C25",
+      "slug": "research-datasets-and-information-products",
+      "name": "Research, Datasets & Information Products",
+      "group": "Data & money",
+      "subcategories": [
+        {
+          "id": "C25-1",
+          "name": "Licensed datasets"
+        },
+        {
+          "id": "C25-2",
+          "name": "Tender and grant research"
+        },
+        {
+          "id": "C25-3",
+          "name": "Benchmark products"
+        },
+        {
+          "id": "C25-4",
+          "name": "Change intelligence"
+        }
+      ],
+      "source_ids": [
+        "R-STATCAN",
+        "R-CANADABUYS",
+        "R-SEC"
+      ],
+      "strategy": "Sell a meaningful filter, quality check, normalized export or original analysis with provenance. Prefer lawful bulk/API sources over uncontrolled scraping.",
+      "main_obstacle": "Open access is not unlimited redistribution. False negatives, stale data and ongoing analyst time can be expensive."
+    },
+    {
+      "id": "C26",
+      "slug": "finance-and-bookkeeping-operations",
+      "name": "Finance & Bookkeeping Operations",
+      "group": "Data & money",
+      "subcategories": [
+        {
+          "id": "C26-1",
+          "name": "Invoice and expense tools"
+        },
+        {
+          "id": "C26-2",
+          "name": "Cash-flow planning"
+        },
+        {
+          "id": "C26-3",
+          "name": "Reconciliation utilities"
+        },
+        {
+          "id": "C26-4",
+          "name": "Finance education tools"
+        }
+      ],
+      "source_ids": [
+        "R-WAVE",
+        "R-ZOHO_BOOKS",
+        "R-CRA"
+      ],
+      "strategy": "Keep initial products administrative: reconcile agreed exports, organize records and calculate explicitly defined scenarios. Leave filing, advice and regulated conclusions to qualified people.",
+      "main_obstacle": "Financial errors cause harm. Private banking records, tax scope and jurisdiction-specific rules make expert review and accurate disclaimers necessary."
+    },
+    {
+      "id": "C27",
+      "slug": "stocks-investing-and-market-tools",
+      "name": "Stocks, Investing & Market Tools",
+      "group": "Data & money",
+      "subcategories": [
+        {
+          "id": "C27-1",
+          "name": "Market research tools"
+        },
+        {
+          "id": "C27-2",
+          "name": "Portfolio recordkeeping"
+        },
+        {
+          "id": "C27-3",
+          "name": "Simulation tools"
+        },
+        {
+          "id": "C27-4",
+          "name": "Personal capital strategies"
+        }
+      ],
+      "source_ids": [
+        "R-SEC",
+        "R-ALPHAVANTAGE",
+        "R-OSC"
+      ],
+      "strategy": "Separate selling a useful research tool from investing your own capital. Research aids need licensed data and non-misleading outputs; capital returns are not startup-business sales.",
+      "main_obstacle": "No promised returns or automated client-money execution. Advice, trade signals, data redistribution and capital loss require a separate review and no automatic launch."
+    },
+    {
+      "id": "C28",
+      "slug": "privacy-security-and-compliance-tools",
+      "name": "Privacy, Security & Compliance Tools",
+      "group": "Trust & people",
+      "subcategories": [
+        {
+          "id": "C28-1",
+          "name": "Privacy documentation"
+        },
+        {
+          "id": "C28-2",
+          "name": "Authorized security checks"
+        },
+        {
+          "id": "C28-3",
+          "name": "Credential hygiene tools"
+        },
+        {
+          "id": "C28-4",
+          "name": "Compliance evidence"
+        }
+      ],
+      "source_ids": [
+        "R-PIPEDA",
+        "R-CHECKLY",
+        "R-CHROME"
+      ],
+      "strategy": "Favor local inventory tools, evidence organization and permissioned read-only checks. Minimize what is collected and publish exact coverage instead of broad protection claims.",
+      "main_obstacle": "Never claim a tool guarantees security or legal compliance. Credentials, scan permission and professional responsibility make unsupervised operation inappropriate."
+    },
+    {
+      "id": "C29",
+      "slug": "localization-and-accessibility",
+      "name": "Localization & Accessibility",
+      "group": "Trust & people",
+      "subcategories": [
+        {
+          "id": "C29-1",
+          "name": "Localization quality"
+        },
+        {
+          "id": "C29-2",
+          "name": "Caption and transcript QA"
+        },
+        {
+          "id": "C29-3",
+          "name": "Accessible content tools"
+        },
+        {
+          "id": "C29-4",
+          "name": "Multilingual operations"
+        }
+      ],
+      "source_ids": [
+        "R-WEBLATE",
+        "R-W3C",
+        "R-DESCRIPT"
+      ],
+      "strategy": "Deterministic technical checks, editorial QA and accessible production helpers can be reused across industries. State what the tests do and do not establish.",
+      "main_obstacle": "Technical checks do not certify linguistic accuracy or accessibility conformance. Disability-related claims and user data require care."
+    },
+    {
+      "id": "C30",
+      "slug": "property-construction-and-home-services",
+      "name": "Property, Construction & Home Services",
+      "group": "Industry operations",
+      "subcategories": [
+        {
+          "id": "C30-1",
+          "name": "Property administration"
+        },
+        {
+          "id": "C30-2",
+          "name": "Trade business tools"
+        },
+        {
+          "id": "C30-3",
+          "name": "Project coordination"
+        },
+        {
+          "id": "C30-4",
+          "name": "Maintenance operations"
+        }
+      ],
+      "source_ids": [
+        "R-BUILDIUM",
+        "R-JOBBER",
+        "R-SORTLY"
+      ],
+      "strategy": "Administrative products can address repetitive work without making engineering, inspection or licensing decisions. One contractor or property-manager pilot should anchor a specific use case.",
+      "main_obstacle": "Safety-critical calculations, tenant privacy, local law and existing suites can block a generic quick-launch plan."
+    },
+    {
+      "id": "C31",
+      "slug": "logistics-manufacturing-and-supply-chains",
+      "name": "Logistics, Manufacturing & Supply Chains",
+      "group": "Industry operations",
+      "subcategories": [
+        {
+          "id": "C31-1",
+          "name": "Inventory workflows"
+        },
+        {
+          "id": "C31-2",
+          "name": "Supplier coordination"
+        },
+        {
+          "id": "C31-3",
+          "name": "Production planning"
+        },
+        {
+          "id": "C31-4",
+          "name": "Fleet and shipping administration"
+        }
+      ],
+      "source_ids": [
+        "R-ZOHO_INVENTORY",
+        "R-SORTLY",
+        "R-JOBBER"
+      ],
+      "strategy": "Use bounded exports and exceptions to solve unit mismatches, fulfillment delays or inventory visibility. Read-only pilots avoid operational disruption.",
+      "main_obstacle": "Bad quantities, units or lead times can halt operations. Avoid automated machine control and safety-critical guidance without qualified oversight."
+    },
+    {
+      "id": "C32",
+      "slug": "food-hospitality-and-travel",
+      "name": "Food, Hospitality & Travel",
+      "group": "Industry operations",
+      "subcategories": [
+        {
+          "id": "C32-1",
+          "name": "Food business administration"
+        },
+        {
+          "id": "C32-2",
+          "name": "Hospitality operations"
+        },
+        {
+          "id": "C32-3",
+          "name": "Travel information"
+        },
+        {
+          "id": "C32-4",
+          "name": "Booking resources"
+        }
+      ],
+      "source_ids": [
+        "R-SQUARE",
+        "R-JOBBER",
+        "R-ETSY"
+      ],
+      "strategy": "Sell administrative workbooks, verified information or customer-owned content resources. Begin with one business workflow and an honest time-saved comparison.",
+      "main_obstacle": "Food safety, allergens, real-time travel data and venue policies are not safe to guess. Repeated local updates reduce passivity."
+    },
+    {
+      "id": "C33",
+      "slug": "health-and-wellness-administration",
+      "name": "Health & Wellness Administration",
+      "group": "Trust & people",
+      "subcategories": [
+        {
+          "id": "C33-1",
+          "name": "Clinic administration"
+        },
+        {
+          "id": "C33-2",
+          "name": "Non-clinical wellness tools"
+        },
+        {
+          "id": "C33-3",
+          "name": "Practice resource templates"
+        },
+        {
+          "id": "C33-4",
+          "name": "Service scheduling"
+        }
+      ],
+      "source_ids": [
+        "R-JANE",
+        "R-PIPEDA"
+      ],
+      "strategy": "Use fictional data and non-clinical administrative products first. Qualified privacy and domain review must precede handling patient information or affecting care.",
+      "main_obstacle": "A practice-operations market does not validate medical advice or diagnostic products. Do not automate treatment, triage or health outcome claims."
+    },
+    {
+      "id": "C34",
+      "slug": "people-hr-and-recruitment",
+      "name": "People, HR & Recruitment",
+      "group": "Trust & people",
+      "subcategories": [
+        {
+          "id": "C34-1",
+          "name": "Recruiting administration"
+        },
+        {
+          "id": "C34-2",
+          "name": "Employee operations"
+        },
+        {
+          "id": "C34-3",
+          "name": "Training logistics"
+        },
+        {
+          "id": "C34-4",
+          "name": "Career resources"
+        }
+      ],
+      "source_ids": [
+        "R-WORKABLE",
+        "R-PIPEDA",
+        "R-TEACHABLE"
+      ],
+      "strategy": "Administrative automation and candidate-controlled resources can be bounded. Test an actual recruiter or HR workflow while retaining human hiring decisions.",
+      "main_obstacle": "Protected traits, fairness, applicant data, surveillance and employment law make autonomous selection and intrusive monitoring unsuitable."
+    },
+    {
+      "id": "C35",
+      "slug": "agriculture-environment-and-energy",
+      "name": "Agriculture, Environment & Energy",
+      "group": "Industry operations",
+      "subcategories": [
+        {
+          "id": "C35-1",
+          "name": "Farm administration"
+        },
+        {
+          "id": "C35-2",
+          "name": "Environmental recordkeeping"
+        },
+        {
+          "id": "C35-3",
+          "name": "Energy information"
+        },
+        {
+          "id": "C35-4",
+          "name": "Resource planning"
+        }
+      ],
+      "source_ids": [
+        "R-FARMBRITE",
+        "R-STATCAN",
+        "R-SORTLY"
+      ],
+      "strategy": "Focus on records, educational planning and licensed-data summaries. Validate with operators before building integrations or extrapolating precision from uncertain inputs.",
+      "main_obstacle": "No pesticide, veterinary, electrical safety or unsupported carbon-credit advice. Hardware dependence and seasonal demand complicate automation."
+    },
+    {
+      "id": "C36",
+      "slug": "nonprofits-events-and-public-services",
+      "name": "Nonprofits, Events & Public Services",
+      "group": "Industry operations",
+      "subcategories": [
+        {
+          "id": "C36-1",
+          "name": "Nonprofit operations"
+        },
+        {
+          "id": "C36-2",
+          "name": "Event resources"
+        },
+        {
+          "id": "C36-3",
+          "name": "Club administration"
+        },
+        {
+          "id": "C36-4",
+          "name": "Public-service information"
+        }
+      ],
+      "source_ids": [
+        "R-DONORBOX",
+        "R-CANADABUYS",
+        "R-NOTION"
+      ],
+      "strategy": "Reusable coordination, reporting and information tools can be brand-led. Sell to an authorized buyer and keep permissions, accessibility and records clear.",
+      "main_obstacle": "Charitable receipting, public procurement, children\u2019s data, election operations and funding eligibility need specific review; no automated official decisions."
+    }
+  ],
+  "scope": "Broad but finite; not every possible niche. One primary category plus industry and secondary-category facets. No preference for the owner's existing projects."
+}

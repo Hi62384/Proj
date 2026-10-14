@@ -1,6 +1,16 @@
+## Organized research library — new primary research view
+
+Open `Opportunity_Library.html` in the project root, or use **Open the organized Opportunity Library** in the local workbench. The installed factory now prefers `opportunity_library/data/factory_catalog.csv`: 1,512 research records (1,296 preserved + 216 new hypotheses), 36 categories and 144 subcategories. Two personal-capital research notes are excluded from normal launch selection. None represents verified paid demand.
+
+The existing sales pack, original IDs, research files and runtime data remain intact. Category, public-privacy and whole-business workload lenses help discovery; they do not create accounts or remove legal obligations. An explicit custom catalogue path still works, and without the optional library the factory falls back to the old atlas. The original Phase-0 CLI continues to use its original atlas by default.
+
+Read `opportunity_library/README.md` and its methodology before treating score differences as evidence. Rebuilding this library is offline and is not fresh market research.
+
+---
+
 # Portfolio Autopilot Business Factory — working local-first toolkit
 
-**What it actually does today:** turns the repository's **1,296 unvalidated opportunity records** into cross-industry draft launch packages; gives you a local control panel; creates the first reporting business's synthetic sales pack; maps and validates approved CSV exports; packages a reusable report runner and delivery ZIP; stores pseudonymous review tasks and manually-entered financial events; produces one offline multi-product storefront preview; and adds two GitHub Actions workflows for tests and synthetic drafts.
+**What it actually does today:** turns the repository's **1,512 unvalidated research records (including two separate capital-research notes)** into cross-industry draft launch packages; gives you a local control panel; creates the first reporting business's synthetic sales pack; maps and validates approved CSV exports; packages a reusable report runner and delivery ZIP; stores pseudonymous review tasks and manually-entered financial events; produces one offline multi-product storefront preview; and adds two GitHub Actions workflows for tests and synthetic drafts.
 
 **What it does NOT do:** set up Stripe, Upwork or other seller accounts; run paid AI; publish anything publicly; send proposals; scrape job sites; process live payments; verify buyer demand; upload customer data; or automatically manage taxes and refunds. **The factory has no external API/network client code.** GitHub Actions may consume platform compute quota but not ChatGPT Work or OpenAI API allowance.
 

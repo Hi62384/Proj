@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "opportunities": 54,
+  "ranking_scores_and_simplified_unit_models": "recomputed",
+  "top15_automation_entries": 105,
+  "blueprint_points": 60,
+  "portfolio_milestones": 60,
+  "primary_sources": 89,
+  "internal_links_checked": 394,
+  "duplicate_ids": 0,
+  "dashboard_logic": {
+    "status": "PASS",
+    "checks": 131,
+    "method": "Node vm with minimal simulated DOM; actual browser layout not verified",
+    "scenario_milestones": 60,
+    "source_requests": 0
+  },
+  "financial_audit": {
+    "status": "PASS",
+    "independent_runtime": "Python standard library; JavaScript not imported",
+    "assertions_passed": 39109,
+    "paths_audited": 24,
+    "rows_audited": 576,
+    "notes": [
+      "Recomputed every product fee/refund, profit, expense sum, labour value, cash bridge, receivable bridge, balance-sheet identity and subscriber roll-forward.",
+      "Summary rows independently reconciled to original monthly rows.",
+      "Arithmetic correctness does not validate assumed demand, platform eligibility, jurisdictional costs or commercial viability."
+    ]
+  },
+  "browser_rendering": "Not verified: installed Chromium cannot create required sockets in this cloud sandbox."
+}

@@ -1,0 +1,212 @@
+{
+  "O01": {
+    "analysis": "The buyer is purchasing reduced art-integration time as much as meshes. Existing paid low-poly packs and Kenney's free catalogue establish both a market and a severe substitute. A generic room pack has little advantage. Test one original workshop/interior style, consistent one-metre scale, pivots, collisions and a Godot sample. Do not claim professional art ability or an underserved theme until prospective buyers compare it against their actual alternatives.",
+    "validation": "Show five finished pieces and a runnable small scene to five relevant developers. Ask which project they would use it in and what prevents adopting it. Continue to a small paid pack only if at least three prefer it for a real project and two pay the intended entry price. Ten complimentary downloads or likes are not that result. The main low-cost failure is discovering that polished asset production takes too long.",
+    "economics": "At CAD29, a blended 16% allowance and CAD1 variable cost leave about CAD23.36 before fixed costs and owner labour. Twenty orders generate about CAD462 operating net with CAD5 fixed cost. That requires real distribution; it is a conditional run rate. A modest pack is more plausible than a huge subscription library requiring new monthly content.",
+    "ag": [
+      "Create an original 12–20-piece pack, source files, import settings, licence and demo. AI may help with scripts/checklists, but provenance and craft decisions stay human.",
+      "On approved release tags, verify file structure, render previews, test imports, hash the archive and produce a version manifest. Store immutable versions.",
+      "Start with itch.io collected payments where eligible, plus its digital delivery; add direct MoR checkout after demand. Keep original sales and refunds in the ledger.",
+      "A free useful sample links to the paid whole. Use permitted marketplace tags, a clear demo and two evergreen integration guides. No fake ratings or automatic forum posting.",
+      "Budget 0.25–1 hour weekly after stabilization, plus quarterly 2–4-hour import QA. A major engine change is extra work, not included in passive claims.",
+      "Keep a known-good archive and sample. If an import fails, stop promoting that version, publish a visible compatibility note and restore the prior file. Manually review refunds.",
+      "Planning fixed cost CAD0–15/month plus channel deductions, FX and optional approved promotion. Never pay for a marketplace subscription until its commission savings exceed its fee."
+    ]
+  },
+  "O02": {
+    "analysis": "Technical localization defects are real: placeholder mismatches, missing keys and malformed markup already appear in Weblate's checks. This is also the principal competition. The hypothesis is that some small game teams want those checks without adopting a full localization platform or uploading unreleased strings. A convenience layer must earn its price through a fast workflow, game-specific fixtures, readable reports and a reliable local CLI.",
+    "validation": "Before a full UI, test the rule runner on synthetic and explicitly permissioned files. Recruit five voluntary design partners through permitted community spaces. Have them run their own files locally. Seek three paid CAD49 licences after the demo, with at least two repeat uses within a month. A team already satisfied with Weblate is not the target. If nobody pays after ten qualified demos and two offer revisions, stop or make the checker a free lead magnet.",
+    "economics": "The database's 15-order case gives about CAD629 monthly operating net using a simplified 11% blended allowance, CAD1 variable/order and CAD10 fixed cost. The detailed model uses explicit checkout and payout mechanics. A lifetime executable can include 12 months of updates, but not a promise of unlimited future work; renewal revenue is zero in forecasts until observed.",
+    "ag": [
+      "Build CSV/JSON checking first, fixtures, a read-only local UI, CLI and report export. Add PO and ICU only after users request them. Test deterministic rules independently from AI suggestions.",
+      "Local execution requires no daily server jobs. CI runs parser/security tests on changes; a weekly compatibility check produces a digest. Optional update lookup sends no customer content.",
+      "MoR checkout issues a receipt and download. Paid files keep working offline. Do not implement intrusive DRM or put a secret API token in the app; managed licence keys can support upgrades.",
+      "Publish a genuinely useful free checker and three precise tutorials for actual defects. Community posts remain human-approved and relevant. Email follow-up only to people who opted in.",
+      "Plan 0.5–2 hours weekly once stable, plus periodic release blocks. Review false positives, parser failures and compatibility requests. Decline translation editing and one-off custom rules unless separately priced.",
+      "Fail closed on malformed files with an actionable error; never rewrite source files. Preserve original bytes. Roll back bad releases; replay failed entitlement jobs and reconcile checkout daily.",
+      "CAD0–30/month for early hosting, domain allowance and optional CI; fees/refunds per sale. Production AI cost can be zero because validation is deterministic. Owner testing is the main cost."
+    ]
+  },
+  "O06": {
+    "analysis": "A production calculator has attractive maintenance economics and can validate a business pain faster than SaaS. It needs a specific calculation people already perform, such as localization word counts, revision budgets and voice-over session estimates. Generic productivity spreadsheets are weak. The creator must verify formulas and assumptions rather than selling an attractive file that makes incorrect business decisions.",
+    "validation": "Build a free one-input example and a paid editable version. Observe three real users complete a representative task without help. Seek two paid purchases before adding scenario selectors or many tabs. If customers only want custom consulting, decide whether an active service is acceptable; do not classify it as passive.",
+    "economics": "CAD29 with a 15% fee/refund/acquisition allowance and CAD1 variable expense leaves CAD23.65 per order. Fifteen orders less CAD5 fixed cost yields about CAD350. A task-specific calculator can accompany localization software, but count bundles only once.",
+    "ag": [
+      "Create one model with inputs, formulas, examples, a changelog and test cases. Use sample data, never customer secrets. Avoid regulated tax/investment advice.",
+      "Automate formula test cases, export packaging, download delivery and version checks. Do not auto-change customer assumptions.",
+      "Use an approved MoR download storefront. Notion is optional only for a genuine native workspace, not as a substitute for a spreadsheet.",
+      "Demonstrate one real calculation in a useful article and video. A free small version should solve a complete smaller problem.",
+      "Budget 0.25–1 hour weekly and an annual assumptions review. Fix errors and publish version notes.",
+      "Keep reproducible tests and old versions. When a material formula bug appears, notify affected purchasers through appropriate service communications and provide a correction.",
+      "CAD0–15 fixed/month plus storefront fees; no recurring AI service required. Include document software compatibility testing in setup time."
+    ]
+  },
+  "O08": {
+    "analysis": "A shader pack can share game-developer distribution and demos with the core products. Free shader libraries make reselling common effects unconvincing. The paid proposition must be a coherent effect set that imports correctly, performs predictably and works across explicitly listed renderers. Original implementation and licensing of preview scenes matter separately.",
+    "validation": "Create three effects and compare output and frame cost against free alternatives on supported hardware. Ask five developers to integrate the sample. Continue if two pay for the full documented set and integration takes under 15 minutes without help.",
+    "economics": "CAD29 and 15 monthly orders yield approximately CAD345 under the catalogue assumptions. Renderer changes can create batch maintenance spikes; reserve time even if average weekly support is low.",
+    "ag": [
+      "Author original effects, presets, demo scenes and performance notes. Use AI to generate test harnesses, not unverifiable performance claims.",
+      "CI compiles supported renderer variants and produces image diffs for human review before releases. Automate packaging and version manifests.",
+      "Sell licences and source through eligible asset storefronts; state supported renderer/engine versions before purchase.",
+      "Use live side-by-side demos and a useful free effect. Do not publish repetitive near-duplicate packs.",
+      "Plan 0.5–1.5 hours weekly and release-cycle testing. Human judgment approves visual regressions.",
+      "If a renderer breaks, disable that compatibility claim, keep prior package downloadable and release a fix after tests.",
+      "CAD0–20/month plus storefront deductions. GPU testing may require existing hardware or separately budgeted testing, not assumed free cloud rendering."
+    ]
+  },
+  "O09": {
+    "analysis": "Original interface sound effects can remain useful for years and have low marginal delivery cost. Current listings also show very inexpensive competition. A cohesive set with precise names, dry/wet variants, consistent levels and clear commercial rights is more defensible than hundreds of random generated clips. Recording, synthesis and sample rights are not assumed.",
+    "validation": "Publish a short honest preview and a small free sample. Have developers import sounds into a real UI. Seek two paid pack purchases and ask which free library it replaces. Do not interpret streaming plays as a purchase signal.",
+    "economics": "At CAD19 with a conservative 18% variable allowance and CAD1/order, 20 orders imply around CAD287 monthly operating net. The greatest cost is original creation time; paid ads are usually hard to justify at this order value.",
+    "ag": [
+      "Create a small coherent original library, document synthesis/recording provenance, normalize conservatively and label formats.",
+      "Batch-export variants, verify clipping/duration/sample-rate rules, generate preview and package delivery.",
+      "Use digital asset storefront checkout and an explicit use licence. Avoid ambiguous Content ID restrictions for customer projects.",
+      "Offer a searchable audio sampler and one demo implementation. Marketplace metadata must accurately describe the sounds.",
+      "Budget 0.25–1 hour weekly; periodically check archive integrity and handle rights/format questions.",
+      "Retain masters and provenance. Replace corrupted files, remove any disputed material from sale pending review and notify affected buyers if needed.",
+      "CAD0–15/month plus selling fees; production software/hardware optional costs belong in setup. Do not buy sample libraries without checking resale rights."
+    ]
+  },
+  "O04": {
+    "analysis": "Dromo and CSVbox demonstrate that customers pay for reliable data import, but also make a generic CSV uploader a weak entry. The narrow opportunity is a repeated supplier-catalogue workflow with messy SKUs, units and retailer-specific formats. The buyer should already spend measurable time correcting files. A local-processing design reduces the initial privacy burden; it does not remove all business obligations.",
+    "validation": "Pick one vertical only after five interviews. Ask about the last failed import, frequency, time spent and existing tools. Use sanitized files that the owner has permission to provide. Require three paid pilots and two repeat cycles before a recurring launch. If use is quarterly or yearly, sell credits or an offline licence instead of forcing monthly billing.",
+    "economics": "The illustrative CAD59 monthly price supports approximately CAD49 contribution before fixed costs using a 10% fee/refund allowance and CAD4 delivery cost. Fifteen active accounts imply about CAD707 operating net before acquisition labour. Support at 30 minutes/account/month would consume 7.5 hours, so a true low-maintenance offer must standardize onboarding.",
+    "ag": [
+      "Create a single catalogue schema, sample files, browser-local validation, saved mappings and a before/after error report. Start without automatic storefront writes.",
+      "Validate files in browser workers; store only account/schema metadata. Schedule optional permissioned imports only after successful manual cycles.",
+      "Use an approved subscription checkout with usage limits and cancellation portal. Support service pilots need an eligible service-payment route rather than assuming every MoR accepts them.",
+      "Sell a concrete result through a sample importer and an association or integration partner. Use a small human-led pilot, then self-serve onboarding and case studies with permission.",
+      "Plan 2–5 hours weekly for early accounts. Review schema drift, support patterns, churn and whether customers need continuing service.",
+      "Block invalid transformations, preserve the original file and produce a reviewable export. Never overwrite a merchant catalogue automatically. Queue retries with limits and disable failing profiles.",
+      "Early CAD20–80/month infrastructure plus transaction fees and CAD1–5/account variable allowance; more if AI is enabled. Hard-limit file size, rows, jobs and third-party usage."
+    ]
+  },
+  "O12": {
+    "analysis": "A public-data API has scalable delivery, but the raw data and official APIs are often free. A paid product must offer stable schemas, revision history, joins, cleaned identifiers or a workflow customers demonstrably need. The Canada open-data licence is not permission to redistribute every government document or personal data field. Each dataset needs provenance and licence review.",
+    "validation": "Create one reproducible sample combining two permitted tables for a single customer task. Seek five developers who currently maintain this transformation and three paid trials. If prospects can get the same result from the official API in an hour, differentiation is insufficient.",
+    "economics": "A CAD49 account with CAD3 variable cost and 10% fee/refund allowance contributes CAD41.10 before fixed costs. Fifteen accounts less CAD30 fixed yields about CAD587. Reliability commitments and data corrections can cost much more than hosting.",
+    "ag": [
+      "Select precisely licensed tables, document fields/units/vintages, create transformation tests and versioned API contracts.",
+      "Fetch official deltas on the documented cadence, validate row counts/schema, stage changes and atomically publish a new version.",
+      "Meter API use with conservative quotas; bill through eligible SaaS checkout. Offer exports so customers are not trapped.",
+      "Provide a useful sample endpoint and reproducible integration examples. No claims that the source is exclusive.",
+      "Plan 1.5–4 hours weekly and release-day review for changes. Investigate unexpected revisions before publication.",
+      "Keep the last valid snapshot with an explicit stale timestamp. Stop publishing when schema checks fail; never quietly substitute old data as current.",
+      "CAD20–100/month early hosting/cache/storage plus fees and support. Quotas must prevent an abusive client from consuming unbounded compute or source requests."
+    ]
+  },
+  "O07": {
+    "analysis": "Blender artists already purchase workflow add-ons, so a concrete time-saving utility has a credible category. Free extensions and the platform's GPL environment constrain simplistic proprietary-lock-in ideas. The commercial value is maintenance, documentation, tested convenience and supplementary original assets. Choose one repeat task such as naming/export consistency rather than a giant procedural world generator.",
+    "validation": "Record a manual workflow taking 15 minutes, then show the proposed automation doing it accurately in two. Get five users to try different scenes. Continue with two paid sales and no destructive changes. If every scene needs hand tuning, the product is an active support service.",
+    "economics": "At CAD49, the database uses a 40% blended marketplace/fee/refund allowance rather than misleadingly treating a 70% commission headline as final take-home. Fifteen orders imply about CAD416 before owner time and CAD10 fixed cost.",
+    "ag": [
+      "Build one reversible batch tool with preview mode, undo and a small supported-version matrix. Review GPL and dependency terms.",
+      "Run tests on fixture scenes, generate packages and create preview videos from deterministic demo scenes.",
+      "Choose eligible storefront delivery and price for support. State licence/redistribution rights honestly.",
+      "Use workflow demonstration and marketplace search; provide a limited sample where storefront rules permit.",
+      "Plan 1–3 hours weekly and larger work after Blender releases. Reject unsupported custom pipelines.",
+      "Default to dry-run, back up working data and make changes reversible. Retain the prior supported release.",
+      "CAD0–30/month plus storefront deductions and testing time. Paid creator plans only when measured commission savings exceed subscription cost."
+    ]
+  },
+  "O10": {
+    "analysis": "A tested starter kit can create immediate practical value for a developer who dislikes configuring builds and tests. Free templates are abundant, and AI can now generate plausible boilerplate. The product must therefore demonstrate a running, supported setup with meaningful failure handling. A sprawling “everything included” template multiplies maintenance and reduces trust.",
+    "validation": "Choose one stack/version and give three target users a clean machine/repo exercise. Measure time to a successful release. Seek two paid users whose task is repeatable and whose alternative is meaningful setup work. Do not count downloads from people collecting free repositories.",
+    "economics": "At CAD49, 12 orders under the simplified assumptions produce about CAD495 monthly net. A security incident or frequent dependency churn can erase those economics, so keep the supported surface narrow and include a defined update period.",
+    "ag": [
+      "Create minimal tested repo, sample app, licence notices, setup guide and compatibility manifest; scrub all secrets.",
+      "Run lint, tests, dependency scanning and sample builds; package releases only after checks pass.",
+      "Digital checkout issues downloads or repository access when authorized. Do not give perpetual support promises.",
+      "Offer a small free scaffold and an honest setup comparison. Educational content should solve a real error.",
+      "Plan 1–3 hours weekly plus scheduled dependency batches. Support only the documented stack.",
+      "Freeze the last stable dependency set, publish advisories and rollback faulty examples. Never silently auto-upgrade customer production.",
+      "CAD0–30/month plus payment and private-CI costs. Pin action versions and configure CI spending limits."
+    ]
+  },
+  "O11": {
+    "analysis": "Canadian suppliers already pay for procurement tools, while CanadaBuys provides federal notices free. An opportunity exists only if better filtering and amendment tracking save a particular supplier group time. Federal-only coverage must be prominent: it cannot be marketed as all Canadian contracts. The user would be selling convenience and interpretation, not guaranteed access or bid success.",
+    "validation": "Produce a manually checked two-week sample for one category using licensed notice metadata. Compare against the official service and MERX. Ask five suppliers to rate relevance and identify missed notices. Seek three paid subscribers and at least 80% of reviewed alerts judged relevant before automating distribution.",
+    "economics": "CAD39 and 20 subscribers produce around CAD637 monthly operating net in the catalogue case, but editorial review is 2–4 hours/week. Misleading deadlines are a serious reputational risk. Do not automate legal or procurement advice.",
+    "ag": [
+      "Define category filters and source licence/attribution; build fixtures for amended, expired and cancelled notices.",
+      "Download official CSV feeds, normalize IDs/dates, compare revisions, deduplicate and stage the digest.",
+      "Use an eligible information-product subscription platform; avoid selling contact lists or implying endorsement.",
+      "A public sample and opt-in association referrals can attract subscribers. Do not email harvested business addresses.",
+      "Review edge classifications and urgent date changes, and audit a sample of alerts every week. Budget 2–4 hours.",
+      "On stale/missing feeds, send a service-health notice rather than an empty all-clear. Link to official pages and preserve last-known timestamps.",
+      "CAD15–60/month early data/email hosting plus checkout fees. Extra publisher licences or review labour are separate; no assumption of rights to tender attachments."
+    ]
+  },
+  "O05": {
+    "analysis": "PDF generation is already inexpensive, so a bare AI PDF wrapper has little value. A useful product captures one specific non-regulated service workflow and outputs a report the buyer would otherwise assemble manually. It must use customer-entered observations and photos; it should never invent inspection findings or imply safety certification.",
+    "validation": "Build one realistic sample report from synthetic data. Have five businesses compare it with their present process. Seek three paid pilots, a repeat job and measured time saved. If every customer demands a different layout, either charge for custom setup as active work or stop.",
+    "economics": "At CAD69/month and 12 accounts, the illustrative case yields about CAD655 net before owner labour. Off-the-shelf rendering makes hosting cheap, but photos, retention, complex layouts and support can dominate. A setup fee is optional and not assumed in the portfolio forecast.",
+    "ag": [
+      "Build one data-entry form, validated fields, template and sample output; define retention and customer approval step.",
+      "Generate PDF from validated input, store temporarily, deliver securely and delete under the stated policy.",
+      "Eligible SaaS checkout handles recurring access. A service-heavy custom-report operation may require a different payment route.",
+      "Show one precise before/after workflow and seek permitted industry referrals; no exaggerated savings claims.",
+      "Budget 2–5 hours weekly for layouts, input edge cases and customer questions.",
+      "Queue rendering, retry transient failures, retain job state and alert after repeated errors. Never send a blank or fabricated report as successful.",
+      "CAD20–80/month early infrastructure plus fees and per-document rendering/storage. Bound image sizes and document counts."
+    ]
+  },
+  "O15": {
+    "analysis": "Focused education can share the existing product audience and requires little daily fulfilment, but it is not automatically evergreen. GDQuest and free tutorials are substantial competition. Teach one tested outcome, such as preparing a multilingual Godot release, and include practice files and self-checks. Do not promise unlimited future courses for one low lifetime price.",
+    "validation": "Publish one complete free lesson and observe five learners doing the exercise. Seek three paid buyers for a short finished course, not a vague future curriculum. Continue if most can finish without individualized tutoring and refunds remain low.",
+    "economics": "The illustrative direct-sale CAD59 case with 12 sales yields around CAD532 after a 20% blended allowance and small fixed/variable costs. Udemy's marketplace and subscription models have different economics, so the direct-sale case must not be applied to them.",
+    "ag": [
+      "Write, record and test a small complete course with a version-pinned project and answer key. AI can help drafts, captions and practice ideas after human verification.",
+      "Checkout grants access; exercise checks provide bounded feedback; completion messages follow consent and service scope.",
+      "Use direct digital checkout initially. Udemy is optional distribution with its own revenue share and content rules.",
+      "One strong lesson and a worked project drive product-led acquisition; paid testimonials must be disclosed.",
+      "Plan 1–3 hours weekly for questions and periodic course updates. Batch improvements instead of promising live coaching.",
+      "Keep accessible downloads and a known-good project. Correct lessons visibly and notify affected buyers where appropriate.",
+      "CAD0–40/month for hosting/video delivery plus checkout fees; use existing recording tools where adequate. Retain a correction budget."
+    ]
+  },
+  "O40": {
+    "analysis": "Email-domain drift can cause real delivery problems, but free DNS checks and mature DMARC vendors exist. A small product could serve agencies that want quiet multi-domain change alerts and a simple client report. Monitoring is read-only; it must not imply comprehensive security protection or automatically change customer DNS.",
+    "validation": "Run a consented pilot on five agency-controlled domains and introduce synthetic changes in a test domain. Measure false-alert rate and time to explanation. Seek two paying agencies only after proving the alerts are useful; the initial value is less manual checking, not fear-based selling.",
+    "economics": "At CAD19/month and 25 customers, the database gives about CAD378 monthly operating net. The buyer count may instead be agencies paying more per portfolio; validate packaging before assuming those counts. Human support and incident interpretation set the workload.",
+    "ag": [
+      "Verify domain ownership/authorization, implement known DNS checks and a historical diff store. Define exactly what is and is not tested.",
+      "Schedule bounded DNS queries, debounce transient changes, group alerts and maintain a heartbeat.",
+      "Use recurring SaaS checkout, self-serve cancellation and clear domain limits.",
+      "Free single-domain report and agency examples can attract relevant users without mass scanning unsolicited targets.",
+      "Plan 1.5–4 hours weekly for record interpretation, false positives and vendor changes.",
+      "Require repeat failed checks before an alarm; label DNS lookup outages distinctly from misconfiguration. Never auto-edit records.",
+      "CAD10–40/month early hosting and notification spend plus fees. Query quotas, caching and rate limits bound abuse."
+    ]
+  },
+  "O03": {
+    "analysis": "The technical export problem exists, but Greenlight now covers common web-export issues for free. This materially weakens a generic paid preflight pitch. A narrower paid opportunity might be multi-target release manifests, case-sensitive resource checks and team-configured rules. Treat it as an adjacent experiment after the localization checker, not a first unvalidated standalone SaaS.",
+    "validation": "Benchmark ten real non-sensitive fixture projects against Godot built-ins and Greenlight. Document which important defects the paid candidate catches beyond them. Seek three paying teams for those extra checks. If the difference is marginal, contribute a free helper and use it for acquisition rather than selling another commodity tool.",
+    "economics": "The CAD59 ten-order case produces about CAD499 monthly operating net, but this is a weaker demand hypothesis than that number suggests. Cross-platform compatibility creates continuing costs. Never justify the build solely with the higher price assumption.",
+    "ag": [
+      "Write read-only checks and fixtures for missing files, case mismatch, size budgets and release metadata. Keep auto-fix out of version one.",
+      "Run local scans and optional customer-owned CI; produce reproducible reports and version manifests.",
+      "Digital licence checkout; separate paid team rules only if validation supports them.",
+      "Useful open checker and specific CI tutorial; explicitly acknowledge free alternatives.",
+      "Plan 1–3 hours weekly, with engine-release testing blocks. Support only documented targets.",
+      "No destructive fixes. Show unrecognized engine versions as unsupported, preserve sources and rollback releases.",
+      "CAD0–30/month plus selling fees and CI. Native packaging/signing or multi-OS test hardware is an extra launch constraint."
+    ]
+  },
+  "O19": {
+    "analysis": "An original technical reference can be a low-maintenance companion to software, but broad AI-written books are not a credible advantage. The value must come from tested examples, a narrow reader problem and effective instruction. KDP is a distribution option; direct sale permits bundling. KDP Select exclusivity, if chosen, must be reviewed before distributing the same ebook elsewhere.",
+    "validation": "Publish a tested chapter and collect five reader task-completion observations. Seek three paid purchases at the intended price. If readers mostly want a live lesson or custom help, an ebook may be the wrong product.",
+    "economics": "The illustrative CAD15 price, 40% blended deductions and CAD1 variable/order gives about CAD235 monthly net at 30 copies. Actual KDP rates depend on price, territory and delivery costs. Use it as a helpful product extension, not the main profit engine.",
+    "ag": [
+      "Write original examples, verify all commands, clear image/code rights and specify version coverage.",
+      "Build EPUB/PDF from versioned source, validate links and package approved releases.",
+      "Direct MoR or KDP royalties; respect each channel's pricing and exclusivity conditions.",
+      "Useful excerpts and problem-specific search content; no fake reviews or purchased ratings.",
+      "Budget 0.5–2 hours weekly averaged over updates and corrections.",
+      "Maintain errata, version history and corrected files; discontinue unsupported editions rather than silently selling stale advice.",
+      "CAD0–20/month plus channel deductions, formatting and optional editing. AI drafting saves time only if technical verification remains thorough."
+    ]
+  }
+}

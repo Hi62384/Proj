@@ -1,0 +1,33 @@
+<section id="I"><h2>I Unified management system</h2>
+<p>The first dashboard should answer three questions: Is money actually arriving? Are customers getting the promised result? Is the return worth the owner's time? A beautiful dashboard cannot compensate for missing reconciliation or fabricated analytics. The supplied local dashboard is a planning/inspection prototype, with no live accounts connected.</p>
+<h3>Minimal implementation</h3>
+<p>Start with one append-only transaction ledger and a weekly summary. For the first few sales, export native provider reports and import them deliberately; an unavailable marketplace API is not permission to scrape a private dashboard. Once imports take more than one hour per month, add read-only provider APIs/webhooks to a small database and authenticated dashboard. A static local file remains a zero-cost way to inspect the opportunity database and modeled scenarios.</p>
+<table><thead><tr><th>Record</th><th>Minimum fields</th><th>Purpose</th></tr></thead><tbody>
+<tr><td>Product</td><td>product_id, version, channel, status, support promise, licence version</td><td>Keep one product identity across storefronts</td></tr>
+<tr><td>Transaction</td><td>provider_id, event_id, order_id, product_id, currency, gross, tax, fee, refund, chargeback, settlement date</td><td>Reconcile gross sales to net receipts without double counting</td></tr>
+<tr><td>Subscription cohort</td><td>account_id, start/cancel dates, plan, billed amount, active status, channel</td><td>MRR, retention and churn using consistent cohorts</td></tr>
+<tr><td>Expense</td><td>supplier, category, currency, date, product allocation, recurring commitment</td><td>True product and portfolio cash costs</td></tr>
+<tr><td>Acquisition</td><td>campaign/source, consent status where applicable, qualified visits, trials, paid orders, cash spend</td><td>Conversion and CAC; distinguish trial from paying customer</td></tr>
+<tr><td>Job</td><td>job_id, product_id, start/end, result, retry count, source freshness, cost</td><td>Automation health and incident diagnosis</td></tr>
+<tr><td>Time</td><td>date, product_id, setup/growth/marketing/maintenance, minutes, reason</td><td>Profit per owner hour and growing support burden</td></tr>
+</tbody></table>
+<h3>Dashboard views</h3>
+<ul>
+<li><strong>Monthly money:</strong> gross sales, refunds, channel fees, variable costs, fixed costs, acquisition spend, experiment costs, pretax net, tax reserve, settled cash and receivables. Show currency and month clearly.</li>
+<li><strong>Per-product economics:</strong> contribution/order, realized average price, active subscribers, 30/90-day retention, support minutes/order, net per maintenance hour and fully loaded profit per total owner hour.</li>
+<li><strong>Acquisition:</strong> qualified traffic → activation → trial → paid conversion by source. Show “unavailable” when no reliable traffic denominator exists. Marketplace views and website sessions are different denominators.</li>
+<li><strong>Health:</strong> paid customers awaiting access, failed jobs, stale source data, high costs, unresolved serious support and backup restore status. Empty data must never render as “all healthy.”</li>
+<li><strong>Decisions:</strong> scale, maintain, repair, test again or retire, with the exact criterion and observation window. These should be suggestions for review, not an automated deletion workflow.</li>
+</ul>
+<h3>Calculations and checks</h3>
+<p>Net revenue excludes sales taxes collected for a tax authority. MRR includes active recurring subscriptions only; one-time download sales and annual cash receipts are not MRR. Churn = customers lost from the opening cohort ÷ opening active customers. CAC = attributable acquisition cash ÷ new paying customers; separately show fully loaded CAC including acquisition labour. LTV is not reliable with tiny cohorts: initially use realized 90-day contribution rather than price divided by a guessed churn rate.</p>
+<p>Reconcile provider gross less refunds/tax/fees against payout movements and outstanding receivables. Maintain original currency plus actual CAD settlement conversion; do not convert historical cash using today's rate. A bundle gets one order and an explicit allocation, not a sale of every included item. Refunds link to the original order. Platform payouts are transfers, not new revenue. A tax reserve is restricted cash, not an operating expense or calculated tax liability.</p>
+<h3>Review rhythm and action rules</h3>
+<p>Daily automation checks should take no human attention when healthy. Spend 20–30 minutes weekly on exceptions, support patterns and acquisition evidence. Spend 45–60 minutes monthly reconciling cash, exporting backups, reviewing per-product hours and checking whether continuing each product still makes sense. Review fees/licences/platform policies quarterly and before any major expansion.</p>
+<ul>
+<li><strong>Scale candidate:</strong> two consecutive profitable months, repeatable acquisition, documented customer value, refund rate below 5% on a meaningful sample and owner-time return improving. Small samples need judgment.</li>
+<li><strong>Repair candidate:</strong> over 10% activation failure, any repeated paid-access failure, or support above 20 minutes/order. Diagnose before buying more traffic.</li>
+<li><strong>Retire candidate:</strong> no purchases after ten qualified demonstrations and two meaningful offer changes, or three months of negative contribution without a specific inexpensive fix. Insufficient exposure means “not tested,” not “failed.”</li>
+<li><strong>Do not automate:</strong> public statements, new spending commitments, significant refunds outside a preapproved policy, permanent customer-data deletion, security changes and legal judgments.</li>
+</ul>
+</section>

@@ -1,0 +1,98 @@
+{
+  "Automated_Online_Income_Portfolio.html": {
+    "bytes": 324669,
+    "sha256": "b0d3ca3c69df44e09206395846fe89d51323c6975613cfaa73c9721c15f74c38"
+  },
+  "Portfolio_Dashboard.html": {
+    "bytes": 82992,
+    "sha256": "b96b93f7c9aaf968749a87ba89574e962ef0546130bab1538a10014f59782ad1"
+  },
+  "README.txt": {
+    "bytes": 5705,
+    "sha256": "92ca0328d79fd824628563c46e5bae6e7c91a354d9c067217bdde7d1b7b3b219"
+  },
+  "architecture.html": {
+    "bytes": 8511,
+    "sha256": "0b1ce1c99369d10f59253e7a01e84e2b42f8fc759959112e483dc6a842cd90d5"
+  },
+  "assumptions.json": {
+    "bytes": 13264,
+    "sha256": "205c2d2a8c622098526695244d9d73ff881850b6dfd36ef81101e821419bb416"
+  },
+  "audit_financial_model.py": {
+    "bytes": 6642,
+    "sha256": "69851f9c27ce8f2db99db415182d145d21fcc928f69576e4ac07ba20628f7546"
+  },
+  "build_deliverables.py": {
+    "bytes": 26718,
+    "sha256": "816f9ce5ac75520f18a201f99bbfb904eb38d4ded78477be688193066fbde1b1"
+  },
+  "content_qa.json": {
+    "bytes": 1206,
+    "sha256": "5a8264bf0c4aeafcfa919f9e8a72f5ff18b40419045236d87f39b31d8ae68289"
+  },
+  "dashboard_plan.html": {
+    "bytes": 5815,
+    "sha256": "64fd6c3b9cb946a1ae0860dabdc7e9fcabc8e42e53bf5a602e038e00bc8c8f4e"
+  },
+  "financial_audit.json": {
+    "bytes": 559,
+    "sha256": "454daa9be039a9e0629470add5d831c3393a7a6a677501a3d44e1dbac19f182d"
+  },
+  "financial_model.mjs": {
+    "bytes": 22091,
+    "sha256": "e37b073d11443bde8166e4bb45682ffbae44eb33135fe3e81e04f767d260c604"
+  },
+  "financial_results.json": {
+    "bytes": 3244552,
+    "sha256": "1dc58678d504b6ae9bd9f69a918afd9c5151a68a830baa880416dd73c4f7067c"
+  },
+  "financial_summary.json": {
+    "bytes": 54027,
+    "sha256": "210216c6bec18e3784f23cb602fbc54d1bf776bfdcafeb8ea718b983fb2f65bd"
+  },
+  "immediate.html": {
+    "bytes": 4092,
+    "sha256": "f431bf4f193e7efa4d52b6aeca7d31cc157ee07c73fb257995250d8de7faece1"
+  },
+  "intro.html": {
+    "bytes": 7492,
+    "sha256": "c3e12965ad73efa96bca05de3956bba11bc1a2f86779f4acf6bec9dce0fd97ea"
+  },
+  "launch_blueprints.json": {
+    "bytes": 29507,
+    "sha256": "d5d3ea0e2fd5f884b99b59895334b84ab6030f66303870e3dcd5fe26f9315c1b"
+  },
+  "legal.html": {
+    "bytes": 5739,
+    "sha256": "143d39a9e1554eac689ce914fd1526c8e73f693a18ef1ce41c2238c855a29482"
+  },
+  "method.html": {
+    "bytes": 2877,
+    "sha256": "ce33194179dd13148e45ed3900fdc36b86469a23ff3c1cf4c08e2c1af1458b4f"
+  },
+  "model_notes.txt": {
+    "bytes": 14367,
+    "sha256": "59df0fd722f234a8cb91c35de89804bcfea0cf76de313c7b7c7ed2bec1803553"
+  },
+  "opportunities.json": {
+    "bytes": 113105,
+    "sha256": "af7f361f86646eaa7de46d4dd0d07965771d9da1a33f9973b25442fbfabd6695"
+  },
+  "portfolio.html": {
+    "bytes": 8732,
+    "sha256": "99391bc3659143ef84ecb61c256717ce8dcafeefbb5093c23a189e38ea793371"
+  },
+  "roadmap.html": {
+    "bytes": 7842,
+    "sha256": "4491e3ecfd1ad6bc364076fc9167f1226c4f60515cd9e56556fbf75061779957"
+  },
+  "sources.json": {
+    "bytes": 32704,
+    "sha256": "09e565869c0e8c39710fbca041b4dadad0f43f9b8e7f9e65ca7335b68817d9c0"
+  },
+  "top15_analysis.json": {
+    "bytes": 30527,
+    "sha256": "39fe03cc099fdb51c1c0e618c46767abaf86b5ce6b7bdf317c25bce197e9cf8e"
+  }
+}

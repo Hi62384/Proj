@@ -1,0 +1,282 @@
+{
+  "model_version": "1.0.0",
+  "as_of": "2026-10-13",
+  "currency": "CAD",
+  "horizon_months": 24,
+  "milestone_months": [
+    1,
+    3,
+    6,
+    12,
+    24
+  ],
+  "initial_capital_cases": [
+    0,
+    100,
+    500,
+    2000
+  ],
+  "status": "Illustrative deterministic planning scenarios, not forecasts, probabilities, typical earnings or investment advice. No external actions authorized by this model.",
+  "fx_cad_per_usd": 1.4,
+  "fx_note": "Editable planning assumption, not a current or predicted exchange-rate quote. Realized CAD prices are held flat; fees translate USD fixed charges at this planning rate.",
+  "owner_hourly_value": 25,
+  "income_tax_reserve_rate": 0.3,
+  "annual_cost_inflation": 0.03,
+  "prices": {
+    "assets": 29,
+    "localization": 49,
+    "csv_subscription": 59,
+    "csv_paid_pilot": 59
+  },
+  "prices_note": "Realized average pre-sales-tax order values, after discounts. Localization is a one-time offline licence with 12 months of updates; no renewals assumed. B2B pilot is a separate one-off paid trial, never counted as a subscriber.",
+  "fees": {
+    "assumed_average_checkout_sales_tax_rate": 0.1,
+    "assumed_non_us_buyer_share": 0.6,
+    "assumed_paypal_buyer_share": 0.2,
+    "itch": {
+      "revenue_share": 0.1,
+      "processor_rate": 0.029,
+      "fixed_usd": 0.3,
+      "fx_payout_contingency_rate": 0.02,
+      "withholding_rate": 0,
+      "payout_minimum_usd": 5,
+      "source_ids": [
+        "S07"
+      ]
+    },
+    "lemon": {
+      "base_rate": 0.05,
+      "fixed_usd": 0.5,
+      "non_us_surcharge": 0.015,
+      "paypal_surcharge": 0.015,
+      "subscription_surcharge": 0.005,
+      "non_us_bank_payout_rate": 0.01,
+      "extra_fx_contingency_rate": 0.005,
+      "dispute_fee_usd": 15,
+      "payout_minimum_usd": 50,
+      "source_ids": [
+        "S03",
+        "S04",
+        "F01",
+        "F02"
+      ]
+    },
+    "note": "Fee model is a conservative blended planning allowance, not a universal platform quote. Platform and processor fees are charged on all orders including later-refunded orders; refunds reverse revenue once. Additional FX allowance is a contingency, not an asserted mandatory extra fee. No affiliate/abandoned-cart fees assumed because these paid features are not enabled. Sales taxes collected by the merchant of record are excluded from revenue but included in estimated fee bases. itch uses collected-payout mode; disputed-sale loss allowance is conservative and no separate itch dispute fee is charged."
+  },
+  "settlement": {
+    "lag_months": 1,
+    "note": "One full model-month lag plus each platform's payout minimum. A conservative monthly approximation, not an exact calendar schedule. Platform-level balances pool the localization and CSV products. Longer first-payout, verification or reserve delays remain possible. Withholding default 0 is conditional on actual validated seller tax treatment; a 30% itch withholding cash stress is also run."
+  },
+  "cash_policy": {
+    "min_discretionary_cash_buffer": 50,
+    "refund_buffer_previous_gross_rate": 0.15,
+    "csv_launch_buffer": 225,
+    "csv_hosting_monthly": 15,
+    "csv_hosting_per_subscriber": 0.75,
+    "reinvestment_settled_receipts_rate": 0.2,
+    "ad_scale_monthly_cap": 750,
+    "domain_annual": 22,
+    "optional_software_monthly": 20,
+    "note": "All discretionary costs must be covered by settled, unreserved cash at the start of the month. Initial capital is injected once only. Current-month orders never fund that month's spending. Tax cash is ring-fenced; unpaid target reserves reduce discretionary spending. No owner drawings, wages, debt, new injections, equipment purchases or investment return on cash. Existing computer/internet and free/open-source tools assumed."
+  },
+  "budgets": {
+    "0": {
+      "asset_qa": 0,
+      "localization_qa": 0,
+      "failed_extension_test": 0,
+      "ad_test": 20
+    },
+    "100": {
+      "asset_qa": 25,
+      "localization_qa": 25,
+      "failed_extension_test": 15,
+      "ad_test": 25
+    },
+    "500": {
+      "asset_qa": 75,
+      "localization_qa": 75,
+      "failed_extension_test": 50,
+      "ad_test": 60
+    },
+    "2000": {
+      "asset_qa": 150,
+      "localization_qa": 150,
+      "failed_extension_test": 100,
+      "ad_test": 120
+    }
+  },
+  "validation": {
+    "asset_retire_review_month": 6,
+    "asset_min_cumulative_orders": 3,
+    "localization_launch_month": 3,
+    "localization_retire_review_month": 8,
+    "localization_min_cumulative_orders": 3,
+    "paid_ad_min_previous_localization_orders": 2,
+    "max_initial_ad_tests": 2,
+    "ad_target": "localization",
+    "csv_pilot_months": [
+      6,
+      7,
+      8
+    ],
+    "csv_launch_earliest_month": 9,
+    "csv_required_distinct_paid_pilots": 3,
+    "csv_required_repeat_use_signals": 2,
+    "note": "These scenario inputs stand in for actual observed paid behaviour. At launch, replace them with evidence; do not treat modelled pilot counts or assumed repeat-use signals as customer validation. No product automatically succeeds because more money is available. Unsuccessful asset extension at month 7 contributes no traffic or orders.",
+    "paid_ad_min_test_orders": 10
+  },
+  "scenarios": {
+    "pessimistic": {
+      "interpretation": "Almost no demand: only two asset purchases, no localization sales, no paid CSV pilot. Stop acquisition after failed reviews, retain limited support for past buyers.",
+      "asset_visits": [
+        50,
+        200,
+        50,
+        50,
+        200,
+        50
+      ],
+      "asset_conversion": 0.006,
+      "asset_initial_visits": 50,
+      "asset_monthly_visit_gain": 0,
+      "asset_traffic_cap": 200,
+      "localization_initial_visits": 40,
+      "localization_monthly_visit_gain": 5,
+      "localization_traffic_cap": 100,
+      "localization_conversion": 0,
+      "post_year_one_monthly_traffic_decay": 0.02,
+      "asset_refund_rate": 0.08,
+      "localization_refund_rate": 0.1,
+      "subscription_refund_rate": 0.06,
+      "chargeback_rate": 0.004,
+      "ad_cpc": 1.25,
+      "ad_conversion": 0.01,
+      "monthly_paid_channel_cpc_growth": 0.015,
+      "csv_paid_pilots": [
+        0,
+        0,
+        0
+      ],
+      "csv_repeat_use_signals": 0,
+      "csv_new_subscribers_initial": 0,
+      "csv_new_subscribers_growth": 0,
+      "csv_customer_cap": 5,
+      "csv_monthly_churn": 0.12,
+      "organic_hours_assets": 4,
+      "organic_hours_localization": 5,
+      "organic_hours_csv_pilots": 4,
+      "organic_hours_csv_live": 0,
+      "growth_hours": 2
+    },
+    "base": {
+      "interpretation": "Slow traction from zero audience in the asset pack and offline tool; paid advertising fails unit economics; one CSV pilot is insufficient and the subscription is not launched.",
+      "asset_visits": [],
+      "asset_conversion": 0.0125,
+      "asset_initial_visits": 80,
+      "asset_monthly_visit_gain": 35,
+      "asset_traffic_cap": 1000,
+      "localization_initial_visits": 60,
+      "localization_monthly_visit_gain": 25,
+      "localization_traffic_cap": 700,
+      "localization_conversion": 0.02,
+      "post_year_one_monthly_traffic_decay": 0.012,
+      "asset_refund_rate": 0.04,
+      "localization_refund_rate": 0.05,
+      "subscription_refund_rate": 0.03,
+      "chargeback_rate": 0.002,
+      "ad_cpc": 1,
+      "ad_conversion": 0.02,
+      "monthly_paid_channel_cpc_growth": 0.01,
+      "csv_paid_pilots": [
+        1,
+        0,
+        0
+      ],
+      "csv_repeat_use_signals": 1,
+      "csv_new_subscribers_initial": 1,
+      "csv_new_subscribers_growth": 0.04,
+      "csv_customer_cap": 20,
+      "csv_monthly_churn": 0.07,
+      "organic_hours_assets": 4,
+      "organic_hours_localization": 5,
+      "organic_hours_csv_pilots": 5,
+      "organic_hours_csv_live": 4,
+      "growth_hours": 4
+    },
+    "optimistic": {
+      "interpretation": "Conditional upside: relevant traffic and conversion are much better, paid channel validates, three paid CSV pilots show repeat use and support a later small subscription. Requires continuing acquisition and product work.",
+      "asset_visits": [],
+      "asset_conversion": 0.025,
+      "asset_initial_visits": 160,
+      "asset_monthly_visit_gain": 90,
+      "asset_traffic_cap": 2400,
+      "localization_initial_visits": 100,
+      "localization_monthly_visit_gain": 70,
+      "localization_traffic_cap": 1750,
+      "localization_conversion": 0.03,
+      "post_year_one_monthly_traffic_decay": 0.006,
+      "asset_refund_rate": 0.025,
+      "localization_refund_rate": 0.03,
+      "subscription_refund_rate": 0.02,
+      "chargeback_rate": 0.001,
+      "ad_cpc": 0.75,
+      "ad_conversion": 0.035,
+      "monthly_paid_channel_cpc_growth": 0.008,
+      "csv_paid_pilots": [
+        1,
+        1,
+        1
+      ],
+      "csv_repeat_use_signals": 3,
+      "csv_new_subscribers_initial": 1.4,
+      "csv_new_subscribers_growth": 0.1,
+      "csv_customer_cap": 45,
+      "csv_monthly_churn": 0.04,
+      "organic_hours_assets": 6,
+      "organic_hours_localization": 7,
+      "organic_hours_csv_pilots": 7,
+      "organic_hours_csv_live": 6,
+      "growth_hours": 8
+    }
+  },
+  "assumption_notes": [
+    "All demand, conversion, hours, refunds, cancellations, CAC and operating-cost values are unverified planning assumptions. The fee schedule sources verify fees, not demand or profitability.",
+    "Organic traffic comes from ongoing permitted community participation, useful examples, documentation, marketplace discovery and accumulating search visibility; hours are explicitly costed. No spam, free instant audience or automatic marketplace ranking is assumed. Increasing traffic despite declining late-stage labour is a conditional evergreen-content hypothesis to test.",
+    "The model uses whole orders and subscribers with deterministic fractional acquisition/churn carry-forward; refunds and disputes are expected-value allowances. Low volume results will be lumpier, and every path could perform worse than the pessimistic example.",
+    "CAD0 means no incremental launch cash with existing equipment, time and connectivity. It does not guarantee that every jurisdiction permits zero-cost setup. If mandatory registration, insurance, accessibility work or account approval costs arise, do not borrow or silently add capital: stop and re-budget.",
+    "Income-tax reserve is a liquidity planning placeholder, not a tax calculation. Actual Canadian income tax, CPP, sales-tax obligations and foreign withholding depend on taxpayer facts and valid platform/tax setup. Reserve targets 30% of positive cumulative pretax model profit, with no fiscal-year loss rules or tax payments simulated.",
+    "No paid ad scale-up unless completed tests recover acquisition spend through realized first-order product contribution. SaaS advertising is not modelled. Optional software creates no automatic sales uplift.",
+    "Flat nominal prices, 3% annual cost inflation, traffic caps, increasing paid CAC, conversion floors, a failed extension and subscription churn constrain growth. There is no perpetual exponential growth.",
+    "Net pretax operating profit excludes imputed owner wages. Economic profit subtracts all setup, growth, organic acquisition and maintenance hours at CAD25/hour. Organic economic CAC allocates marketing hours only; fixed product development is separate.",
+    "Monthly accounting profit differs from cash received because of settlement delays and thresholds. Reinvestment costs are already expenses and must not be deducted again. An income-tax reserve transfer is not an operating expense. No payout to the owner is assumed.",
+    "Setup hours assume an owner who can already learn and use basic asset-creation and programming workflows; a novice may need substantially more time. Paid campaign management adds 1.5 hours plus ad spend/500 each active advertising month. No contractors or hidden paid labour are supplied free.",
+    "Paid scale requires two completed tests, at least ten paid test orders and first-order contribution covering all test ad spend. Ten conversions are still weak evidence, not statistical proof; require stable cohort economics before real scaling. Tests with fewer orders remain inconclusive and are not scaled."
+  ],
+  "sources": [
+    {
+      "id": "S03",
+      "url": "https://www.lemonsqueezy.com/pricing",
+      "claim": "5% plus US$0.50 base transaction fee; official pricing"
+    },
+    {
+      "id": "S04",
+      "url": "https://docs.lemonsqueezy.com/help/getting-started/fees",
+      "claim": "International, PayPal, subscription and non-US bank payout additions; fee base includes sales tax"
+    },
+    {
+      "id": "S07",
+      "url": "https://itch.io/docs/creators/payments",
+      "claim": "Default 10% revenue share, typical processor 2.9% plus US$0.30; payout mode, threshold, timing and withholding requirements"
+    },
+    {
+      "id": "F01",
+      "url": "https://docs.lemonsqueezy.com/help/getting-started/getting-paid",
+      "claim": "US$50 payout threshold, 13-day hold, twice monthly schedules and 1\u20135-day bank transit"
+    },
+    {
+      "id": "F02",
+      "url": "https://docs.lemonsqueezy.com/help/payments/refunds-chargebacks",
+      "claim": "Refunds and dispute deductions; generally US$15 chargeback fee; verify exact deductions"
+    }
+  ]
+}

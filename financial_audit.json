@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "independent_runtime": "Python standard library; JavaScript not imported",
+  "assertions_passed": 39109,
+  "paths_audited": 24,
+  "rows_audited": 576,
+  "notes": [
+    "Recomputed every product fee/refund, profit, expense sum, labour value, cash bridge, receivable bridge, balance-sheet identity and subscriber roll-forward.",
+    "Summary rows independently reconciled to original monthly rows.",
+    "Arithmetic correctness does not validate assumed demand, platform eligibility, jurisdictional costs or commercial viability."
+  ]
+}

@@ -1,0 +1,91 @@
+AUTOMATED ONLINE INCOME PORTFOLIO — FINANCIAL MODEL NOTES
+As of 13 October 2026. All model amounts CAD. Illustrative scenarios, not forecasts or expected earnings.
+
+BOTTOM LINE
+The restrained base case reaches about $303/month pretax operating profit at month 12 and $604/month at month 24. Those months require 17.4 and 13.5 owner hours respectively. After valuing all time at $25/hour, their monthly economic profit is approximately -$132 and +$266. Across the full two years, base-case cumulative pretax profit is $7,152–$7,650, but cumulative economic profit remains approximately -$4,793 to -$4,272. A modest positive cash business has not necessarily repaid its setup and acquisition effort.
+
+The optimistic month-24 outcome is about $4,024/month pretax profit for initial budgets $0/$100/$500 and $4,470 for $2,000. It requires conditional product traction, 20 active CSV subscribers and 35.3–41.8 owner hours/month. Maintenance alone is 16.2–19.6 hours/month; acquisition and growth account for the remainder. Total work is 8.1–9.7 hours/week, not passive income. At month 9, launch work can produce a much larger temporary workload.
+
+Pessimistic demand produces just two $29 asset orders, no offline-tool customers and no CSV pilots. Acquisition is stopped at the validation reviews. Cumulative two-year pretax results range from +$44 with no cash outlay to -$257 with the $2,000 plan; all incur about 186 hours, so economic results are losses of roughly $4,606–$4,907. Unspent capital is kept, not automatically consumed or treated as a return.
+
+READING AND REPRODUCING THE FILES
+1. assumptions.json: editable commercial assumptions, 3 demand cases, 4 initial-capital policies, fee evidence and source links.
+2. financial_model.mjs: dependency-free Node.js source; run "node financial_model.mjs" from this folder, or use its complete path. It writes financial_results.json.
+3. financial_results.json: 12 scenario/budget paths with all 24 monthly rows (288 rows), 60 required milestone rows, per-unit fee math, plus 12 stress paths (288 more rows).
+4. audit_financial_model.py: separate Python standard-library audit; run "python audit_financial_model.py" after the model. It writes financial_audit.json.
+5. financial_audit.json: PASS, 39,109 independent assertions across all 576 monthly rows and milestone reconciliation.
+6. financial_summary.json: the 60 milestone rows alone, convenient for a presentation or dashboard.
+No workbook, accounts, payments, publication, data collection or external service calls are performed by these files. Editing assumptions changes deterministic arithmetic, not commercial evidence. Inputs are local and no dependencies need installation when Node/Python are already present.
+
+CASE STRUCTURE AND VALIDATION
+- Asset pack: one original modular pack, $29 realized pretax average order; first free-storefront launch in month 1. Stop acquisition after month 6 if fewer than three purchases.
+- Offline localization QA: $49 one-time licence and 12 months of updates; staged launch in month 3, following month-2 preparation. No repeat subscriptions or automatic licence-renewal revenue. Stop acquisition after month 8 if fewer than three purchases. Update/support obligations remain if there were customers.
+- CSV preflight: $59 one-off niche pilot, separate from the later $59/month subscription. Pilot research in months 6–8 only after three prior tool purchases. Subscription launch no earlier than month 9 and only after three distinct paid pilots, two repeat-use signals and $225 of settled unreserved cash. Base has one pilot and never launches the subscription. Optimistic has three. Pilot counts are assumptions to replace with actual evidence, not validation already obtained.
+- A failed asset-extension experiment consumes 12 hours and budget-dependent cash in month 7 after an existing product has traction. It produces no sales. If both early concepts fail, no extension is funded.
+- Paid tool acquisition needs two prior tool sales. At most two initial tests are allowed; scale requires at least 10 paid test orders and total first-order contribution covering both test spends. Lower-budget optimistic tests are too small to pass this gate; only the $2,000 optimistic path scales. Even 10 conversions are weak evidence, not proof of stable CAC. No SaaS paid acquisition is modelled.
+
+DEMAND AND HUMAN WORK
+The base asset funnel starts at 80 qualified visits/month and gains 35/month, subject to a 1,000-visit cap. Conversion is 1.25%. The tool starts at 60 visits in month 3 and gains 25/month to a 700 cap, at 2% conversion. After month 12 a 1.2% monthly traffic erosion is applied. Whole purchases are floored, which makes tiny campaigns lumpy. None of these values is verified demand.
+
+Organic discovery assumes original examples, permitted community participation, marketplace listings and search visibility. It requires explicit labour: base 4 hours/month for assets and 5 for the tool before year two, reduced to 70% in year two as an explicitly conditional evergreen-content hypothesis. Pilot work adds time. Growing traffic with less later effort is something to validate, not a law of business.
+
+Initial work totals 36 asset setup hours, 24 shared/tool-preparation hours and 32 tool-build hours before later experiments. CSV launch adds 44 hours. These presume the owner can already learn and use basic creative and coding tools; a novice may require much longer. Paid campaign management adds 1.5 hours plus spend/500 in each active ad month. Maintenance includes customer support, updates, monitoring and bookkeeping and is always separate from setup, growth and acquisition.
+
+Prices are held flat. Operating costs inflate at 3%/year. Traffic caps, traffic erosion, rising paid CPC, failed experiments and 4% optimistic monthly CSV churn limit growth. Subscribers are whole customers with deterministic fractional carry-forward for acquisition and churn. This is transparent arithmetic, not a probabilistic estimate or confidence interval. No probability weighting is assigned to the scenarios.
+
+AUDITABLE BASE MONTH-12 EXAMPLE (ANY INITIAL BUDGET)
+5 asset orders x $29 + 5 tool orders x $49 = $390 gross pretax sales.
+Less $18.05 expected refunds, $0.78 disputed-sale allowance, $47.1652 platform/processor/payout/FX/dispute fees and $20.5493 optional software = $303.4555 pretax operating profit, shown as approximately $303.
+4 growth + 9 organic acquisition + 4.4 maintenance hours = 17.4 owner hours.
+17.4 x $25 = $435 imputed labour; economic profit = -$131.5445.
+For the $0 path, reserve transfer is $91.0366 that month and ending ordinary cash is $1,052.4507, tax-reserve cash $589.9095, and unsettled receivables $324.0048. These are different measures, not amounts to add to profit.
+
+AUDITABLE BASE MONTH-24 EXAMPLE
+9 asset orders x $29 + 10 tool orders x $49 = $751 revenue.
+The sum of product contribution is $624.9434; optional software is $21.1658; pretax operating profit is $603.7776, shown as approximately $604.
+Growth 2 + organic acquisition 6.3 + maintenance 5.2 = 13.5 hours.
+Economic profit is about $266. The subscription remains unlaunched.
+
+UNIT ECONOMICS AND FEES
+Planning FX is explicitly CAD1.40/USD, not a spot quote. In the base case, before fixed overhead or owner labour, the expected contribution per order is $23.07 for the $29 asset pack, $41.73 for the $49 tool and $51.24 per $59 subscriber-month. Those are upper limits for first-order cash acquisition cost, not target CAC. Subscriptions must also cover hosting and support.
+
+itch.io collected-payout mode: model default 10% platform share, typical 2.9% processor charge on tax-inclusive checkout and US$0.30 fixed charge, plus a 2% net-proceeds FX/payout contingency. Source S07 verifies the fee structure and mode; the contingency and buyer mix are model assumptions. Modelled disputed-sale loss is conservative; no separate itch dispute fee is imposed because collected mode handles chargebacks differently from direct mode.
+
+Lemon Squeezy: model 5% + US$0.50, +1.5% for the assumed 60% non-US buyer share, +1.5% for the assumed 20% PayPal share, and +0.5% for subscription billing. The percentage fee base includes an assumed 10% average sales tax. Bank payouts outside the US use 1%; an extra 0.5% FX contingency is deliberately conservative, not a quoted additional required charge. Expected $15 USD chargeback fees are included. Fee calculation retains original transaction fees on refunded orders as a conservative allowance; verify the platform's actual reversal treatment before launch. No affiliate or abandoned-cart marketing features are assumed.
+
+Fee sources verify fees, not earning potential. Exact fees depend on buyer country, taxes, payout choice, currency and account terms. Verify current Canadian eligibility, product approval, payout method, refund rules and seller tax setup before accepting payments. The model assumes successful approval; it does not obtain it.
+
+CASH TIMING, TAXES AND REINVESTMENT
+Sales accrue as net receivables after refund and fee allowances. They cannot be spent in the sale month. The model pays them one model-month later only once each platform's threshold is met: itch US$5, Lemon Squeezy US$50. Localization and CSV share the Lemon Squeezy balance. Actual first payouts can take longer; a two-month-lag stress is supplied.
+
+A one-time initial contribution is the only capital injection. Costs are paid from settled unreserved cash. If unavailable, optional tests/software/domain are skipped, rather than creating debt or secretly adding funding. The $0 plan uses a free storefront, existing equipment/connectivity and open-source tools; upgrades are contingent on received money. The $100 zero-sales stress skips localization QA because the inflation-adjusted charge exceeds cash available above its buffer. Skipped costs are enumerated in every path.
+
+Tax reserve target is 30% of positive cumulative pretax profit, funded only as cash is available. It is shown separately from operating costs, with any unfunded target disclosed. It is not an estimate of the user's actual Canadian tax liability; no fiscal-year tax payments or loss-carryover rules are simulated. No owner drawings are modelled. For cautious planning, foreign withholding stress does not reduce this reserve as a tax credit; the withheld amount is separately tracked as an asset/prepayment pending actual tax advice.
+
+The ordinary discretionary buffer is at least $50 or 15% of the prior month's gross sales, whichever is larger. It is an unspent cash target, not another expense or guaranteed protection. Expected fractional refunds/disputes smooth low-volume risk. A single full refund plus dispute fee after payout, frozen account or unexpected mandatory compliance cost can exceed a tiny seller's buffer. CAD0 incremental startup cost is not zero financial liability. Stop and re-budget if mandatory costs cannot be covered; never borrow based on this model.
+
+Growth/reinvestment expense is QA + failed experiments + advertising, already included once in the P&L. It is not subtracted a second time. Scaled advertising is capped at 20% of prior settled receipts and $750/month before inflation, with available-cash constraints. Optional software has no automatic demand uplift. Larger budgets mainly buy tests and a buffer, so base-case month-12/24 revenue is identical across budgets while larger budgets have lower cumulative profit from higher tests.
+
+STRESS RESULTS AND LIMITS
+- Zero sales everywhere: final cash balances are $0, $75, $349.63 and $1,699.26 for initial budgets $0/$100/$500/$2,000. Cumulative cash operating losses are $0/$25/$150.37/$300.74. Failed acquisition is stopped; owner time is still lost. No loan or hidden top-up is used.
+- 30% itch withholding: money withheld is not spendable and does not reduce pretax profit. At month 24 approximately $802.70 is withheld in each base path. Timing constraints may also skip optional software, slightly increasing accounting profit while reducing accessible cash. Zero withholding in the main model is conditional on the actual validated tax profile, not a legal conclusion that a Canadian automatically owes none.
+- Two-month payout lag: cash arrives later and more sits in receivables ($1,208.15 at base month 24 versus $624.94 in the standard lag). Optional spending can be postponed. This can increase reported profit by avoiding spending, even though it worsens liquidity.
+- Twelve of the 288 main monthly rows have negative pretax profit; 176 have negative economic profit. A positive monthly result does not mean accumulated setup effort has been recovered.
+- There is no guarantee of reaching even the pessimistic outcome. Missing skills, weak differentiation, copyright problems, vendor rejection, bad reviews, churn spikes, security incidents or continued support obligations can materially worsen results. No valuation or sale of the business is assumed.
+
+ACCOUNTING IDENTITIES AND INDEPENDENT TESTS
+Gross revenue - refunds - disputed revenue - fees - cash operating expenses = pretax profit.
+Opening ordinary cash + settled receipts - cash operating expenses - tax-reserve transfer = closing ordinary cash.
+Opening net receivables + current product contribution - settled receipts - withholding = closing net receivables.
+Ordinary cash + tax-reserve cash + receivables + withholding = initial capital + cumulative pretax profit.
+Economic profit = pretax profit - all owner hours x $25.
+
+The JavaScript model fails on any violated identity, negative ordinary cash, non-whole orders or bypassed validation gate. A separate Python implementation recomputes all fee components and financial identities from the saved inputs and outputs, checks subscriber roll-forwards, labour sums and the 60 summary rows. Correct arithmetic does not establish that the input assumptions are commercially likely.
+
+SOURCE LINKS (RECHECKED 13 OCTOBER 2026)
+S03: https://www.lemonsqueezy.com/pricing
+S04: https://docs.lemonsqueezy.com/help/getting-started/fees
+S07: https://itch.io/docs/creators/payments
+F01: https://docs.lemonsqueezy.com/help/getting-started/getting-paid
+F02: https://docs.lemonsqueezy.com/help/payments/refunds-chargebacks
+The main research sources.json uses S03/S04/S07. F01/F02 are model-specific additions included directly in assumptions.json; global source files were not altered concurrently.

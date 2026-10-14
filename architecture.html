@@ -1,0 +1,49 @@
+<section id="E"><h2>E Automation architecture</h2>
+<p>The individual A–G operating designs for all 15 priority candidates follow the shared system below. The initial implementation should be small enough to understand and restore. Do not build a complicated orchestration platform before the first customer.</p>
+<h3>Three levels of infrastructure</h3>
+<table><thead><tr><th>Level</th><th>Components</th><th>When justified</th></tr></thead><tbody>
+<tr><td>Download-only launch</td><td>Versioned product archive, marketplace/MoR checkout and delivery, static documentation, support form, manual monthly reconciliation</td><td>Zero to roughly 20 orders/month. Lowest cost and fewest failure modes.</td></tr>
+<tr><td>Shared product operations</td><td>Commercial-compatible static host, signed webhook receiver, product ledger, scheduled reconciliation, licence adapter and private dashboard</td><td>Multiple products or enough orders that manual imports exceed one hour/month.</td></tr>
+<tr><td>Bounded recurring application</td><td>Authenticated account layer, browser-local processing, schema store, quotas, queue, billing entitlements and cancellation portal</td><td>Repeated paid business use, standardized onboarding and cash to support reliability.</td></tr>
+</tbody></table>
+<p>Suggested stack: TypeScript/JavaScript for reusable parsing and rule execution; Papa Parse for CSV and Ajv for schemas after version/licence review; FormatJS only when ICU parsing is actually required. Keep the core usable without network access. Use Godot headless tests for engine integration, Playwright for web flows, and GitHub Actions for CI within configured quotas. Cloudflare Workers/static assets and D1 are an inexpensive possible hosted stack, not a reason to centralize sensitive data. Plain cron/functions often suffice; n8n or Make are optional when they reduce real maintenance. <a href="#S18">S18</a> <a href="#S63">S63</a> <a href="#S81">S81</a> <a href="#S82">S82</a> <a href="#S83">S83</a> <a href="#S86">S86</a> <a href="#S87">S87</a></p>
+<h3>Commerce and delivery event flow</h3>
+<ol>
+<li>Customer chooses a product and sees price, currency, licence, compatibility, refund terms and whether billing recurs.</li>
+<li>Hosted checkout collects payment and, where its contract applies, handles transaction sales tax. The business never stores card details.</li>
+<li>A signed event reaches the webhook receiver. Verify the raw-body signature. Persist a provider/event ID and receipt timestamp before acknowledging.</li>
+<li>A queue maps the event to an order, product and entitlement. Use a unique event key so retries cannot double-count revenue or send duplicate licences.</li>
+<li>Downloads come from immutable versioned storage or native platform delivery. Subscription entitlements have explicit active, grace, cancelled and expired states.</li>
+<li>Refunds and chargebacks are recorded as linked adjustments, not by deleting the original sale. Different provider events are not all new revenue.</li>
+<li>A daily read-only reconciliation compares orders, invoices, refunds and payouts to the provider. Payouts settle receivables; they are not additional sales.</li>
+<li>A weekly digest reports exceptions and useful decisions. No message is sent merely to announce that a routine job succeeded.</li>
+</ol>
+<p>Lemon Squeezy supplies order and subscription webhooks, signature guidance, test events and managed licence features. Its retry window is finite. Your application still needs idempotency, persistent job state and a reconciliation path. An existing paid offline product should remain usable during a payment-provider outage. <a href="#S84">S84</a> <a href="#S85">S85</a></p>
+<h3>AI use with bounded failure</h3>
+<p>Use AI to draft code, documentation, test cases, metadata and support replies. Run deterministic tests, review licences and verify the final output. Production validation should prefer rules over an LLM: placeholder parity, duplicate SKU checks and decimal parsing do not need probabilistic answers. Optional AI explanations must show the rule and evidence, abstain on uncertainty and stay within a per-job token budget.</p>
+<p>Never silently transmit unreleased game strings, supplier customer data or private files to an AI service. Use synthetic fixtures, local processing or explicitly approved data flows. Treat imported content as data, not instructions. Do not let a support agent alter prices, issue refunds, promise legal compliance, delete accounts or message third parties beyond a specifically approved policy. A human should review reputational, legal and financial exceptions.</p>
+<h3>Failure recovery and alert rules</h3>
+<table><thead><tr><th>Failure</th><th>Automatic response</th><th>Human alert</th></tr></thead><tbody>
+<tr><td>Transient network or rate limit</td><td>Retry after backoff with jitter; honour Retry-After; at most three bounded attempts, then dead-letter queue</td><td>Only after retries fail or delivery exceeds the published window</td></tr>
+<tr><td>Checkout event missing</td><td>Reconciliation finds paid order without entitlement and queues one idempotent repair</td><td>Any paid customer still blocked after the repair window</td></tr>
+<tr><td>Invalid file or schema</td><td>Reject with line/rule error; leave source unchanged; no fabricated output</td><td>Only recurring unknown parser failures or high error-rate trend</td></tr>
+<tr><td>Upstream data stale</td><td>Keep last validated version with stale timestamp; stop claims of freshness</td><td>Source late beyond its expected publication window</td></tr>
+<tr><td>Usage cost spike</td><td>Rate-limit jobs, stop optional AI, enforce account quota and request-size limits</td><td>At 50%, 80% and 100% of the approved monthly budget, consolidated where possible</td></tr>
+<tr><td>Bad product release</td><td>Canary checks fail; pause release and restore previous downloadable build</td><td>Immediately if customers received a defective or security-relevant version</td></tr>
+<tr><td>Suspected credential/data incident</td><td>Disable affected integration, preserve logs and isolate access</td><td>Immediate human response and applicable breach assessment; do not auto-publish speculation</td></tr>
+<tr><td>Customer cancellation</td><td>Confirm through billing service; preserve access through paid period; stop next renewal</td><td>Only an exception, dispute or unusual cancellation trend</td></tr>
+</tbody></table>
+<h3>Security, backups and operating discipline</h3>
+<ul>
+<li>Use separate development and production configurations, least-privilege credentials and a secret manager. Credentials never belong in downloaded products, public repositories, browser JavaScript or support logs.</li>
+<li>Authenticate dashboard and support administration. Use MFA where available. Keep payment identity verification and tax forms with the official provider.</li>
+<li>Validate upload size/type, prohibit executable uploads where unnecessary, protect any URL fetcher from SSRF, escape rendered reports and guard spreadsheet exports against formula injection.</li>
+<li>Keep a dependency inventory and notices. Pin versions and review security updates in a weekly batch, faster for serious vulnerabilities. Do not label software “secure” because an AI generated it.</li>
+<li>Back up product sources and ledger daily when active; retain an off-provider export. Test restoration monthly. Store customer content only as long as actually needed and disclosed.</li>
+<li>Define support boundaries: two business days for ordinary download-product replies, no 24/7 promise; hosted-service incident coverage must match what a solo operator can really provide.</li>
+<li>Track hours, not just tickets. Three minor support threads can consume more time than a hundred automated downloads. Add documentation only when it eliminates repeated work.</li>
+</ul>
+<h3>Early recurring cost envelope</h3>
+<p>Download-only operations can begin around CAD0–20/month plus transaction fees. A small shared backend may be CAD15–60/month. A modest recurring app may need CAD30–100/month before usage growth, with separate monitoring, email, storage and AI limits. These are planning allowances, not vendor quotes. The Workers paid base is US$5/month, but CPU/storage/other products may add charges. Use a planning CAD/USD exchange rate only for budgets and actual settlement rates for bookkeeping. Avoid annual plans until a product survives two profitable months.</p>
+<div id="individual-automation"></div>
+</section>

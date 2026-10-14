@@ -1,0 +1,44 @@
+# Portfolio Autopilot — Phase 0 (safe, local-first)
+
+This code turns the repository's 1,296-record research index into a **review-only shortlist and AI task-packet generator**. It is not a live business, customer acquisition bot, autonomous executor, SaaS, merchant account or payment integration.
+
+## Start in 2 minutes
+
+Use Python 3.11+ from the repository root; no third-party packages:
+
+```bash
+python -m unittest discover -s portfolio_autopilot/tests -v
+python -m portfolio_autopilot.cli scan --limit 12 --max-per-mode 3 --html portfolio_autopilot/.local/shortlist.html
+python -m portfolio_autopilot.cli prepare EXP-001-01
+```
+
+Open `portfolio_autopilot/.local/shortlist.html` locally. Run `prepare` with **any actual atlas ID**, not only the example.
+
+```bash
+# Human review only; this never publishes or contacts anyone
+python -m portfolio_autopilot.cli review EXP-001-01 --status researching --note "Verify actual buyer requests"
+
+# Mark genuine buyer evidence (human-entered reference, not automatically verified)
+python -m portfolio_autopilot.cli review EXP-001-01 --status buyer_signal --evidence-ref "interview_001"
+
+# Manually enter ACTUAL financials only after verified activity. Local unreconciled ledger.
+python -m portfolio_autopilot.cli record --event-id invoice_001 --business-id EXP-001-01 --type revenue --amount 299.00
+python -m portfolio_autopilot.cli record --event-id owner_001 --business-id EXP-001-01 --type owner_time --minutes 75
+python -m portfolio_autopilot.cli summary
+```
+
+Generated data is under `.local/` and ignored by Git. **It is not encrypted.** Do not use this local store for passwords, personal data, customer documents, tax IDs or private financial statements. It is for opportunity IDs and non-sensitive planning metadata only. Use a private, access-controlled accounting system for real records later.
+
+## Scheduled review queue
+
+The optional GitHub Action `Portfolio Autopilot — draft-only weekly queue` runs tests and generates a ranked *static* queue from the existing CSV every Monday. This is **not live market research**. It uploads the report as a GitHub Actions artifact; it never sends messages, pays for anything, opens public stores, or writes to `main`. Schedule may be delayed or skipped on GitHub's infrastructure. For current demand, use your ChatGPT dot/Work with explicit instructions and date/source checks.
+
+## Automation boundaries
+
+- Safe today: explore all niches, rank hypotheses without skill-based bias, create packets, generate reports, test software, recommend go/no-go.
+- Not implemented or authorized: scrape sites, send messages, access seller accounts, publish products, take payment, install software, charge APIs, buy ads, issue refunds, change customer data, or create a deployed business.
+- A `live` status is intentionally blocked in phase 0. Real integration requires independent approval and tests.
+- Financial entries are user-entered and **unreconciled**. Operating profit excludes owner remuneration and personal income taxes; economic profit charges an illustrative CAD 30/hour to owner time.
+- `--include-regulated` changes *display only*. It does not approve any regulated activity.
+
+Read `USER_SETUP_CHECKLIST.md` for your minimal-intervention setup, and `AUTOMATION_POLICIES.md` before connecting accounts.

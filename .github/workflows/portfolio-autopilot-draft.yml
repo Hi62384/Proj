@@ -1,0 +1,29 @@
+name: Portfolio Autopilot — draft-only weekly queue
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '37 13 * * 1'
+permissions:
+  contents: read
+jobs:
+  draft-queue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run standard-library tests
+        run: python -m unittest discover -s portfolio_autopilot/tests -v
+      - name: Generate research-only review queue
+        run: |
+          python -m portfolio_autopilot.cli scan --limit 15 --max-per-mode 3 --export "$RUNNER_TEMP/shortlist.json" --html "$RUNNER_TEMP/shortlist.html"
+      - name: Upload review-only artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: draft-opportunity-review-queue
+          path: |
+            ${{ runner.temp }}/shortlist.json
+            ${{ runner.temp }}/shortlist.html
+          retention-days: 14

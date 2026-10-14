@@ -1,0 +1,13 @@
+# Portfolio Automation Safety, Permissions & Go-Live Policy
+
+- **No real-world writes without explicit authorization.** AI can research, implement local prototypes, run tests, generate drafts, compare pricing and queue work. It must obtain explicit permission for purchases, bank access, account creation requiring identity, paid APIs, posting externally, contacting customers, deploying live code, signing binding agreements or modifying production customer records.
+- **Never infer revenue.** Market listings, AI scores, traffic estimates and scenario forecasts are not verified sales. Use payment-provider IDs and reconciliation for actual revenue once integrated. No fabricated feedback, fake users or fake case studies.
+- **Data privacy:** keep business credentials and personally identifiable data out of public GitHub, chat transcripts when avoidable, console logs and unencrypted local previews. For customer-data services, require purpose, permission, retention, vendor disclosure and tenant separation before launch. Personal data access is role limited.
+- **Marketing:** no high-volume unsolicited commercial messages, bought contact lists, manufactured comments or evasions of platform rules. Canada CASL consent/identification/unsubscribe requirements must be checked for actual use. Human approves initial external-facing communications and campaigns.
+- **Payments:** connect provider via supported OAuth or official dashboard; do not paste secret keys in chat. First test in sandbox. Test webhook signatures, duplicate events, cancellation, refunds, payouts, and account access isolation. Human approves live price, taxable treatment and refund policy.
+- **Budget:** zero API or ad spend until owner sets a limit. Budget alerts and hard stop required before usage-based deployment. Keep a reserve for fees, refunds and support; distinguish authorized spend from hypothetical profit.
+- **Releases:** build/test can be automated. Approval required for first public launch, commercial promise, change to billing, major user-data migrations or a high-risk production release. Keep rollback and a kill switch.
+- **Audit:** log external writes by provider event ID, time, caller, affected business/customer pseudonym and approval reference. Do not include passwords or raw documents.
+- **Stop:** suspend a flow on detected data leakage, repeated wrong financial outputs, billing duplication, unexplained bills or prohibited outreach. Do not auto-cancel customer contracts without reviewing obligations.
+
+These are recommended project policies, not a substitute for current platform terms or Canadian professional advice.

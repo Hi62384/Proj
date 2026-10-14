@@ -1,0 +1,13 @@
+{
+  "purpose": "Example only: replace with a specific agreed customer task",
+  "input_authority_confirmed": false,
+  "customer_ref": "synthetic_customer_001",
+  "sensitive_or_regulated_data": false,
+  "input_format": "UTF-8 CSV, up to 10000 rows",
+  "required_output": "HTML report plus CSV and JSON summaries",
+  "accepted_schema": "See report_mapping.sample.json",
+  "currency": "CAD, label only",
+  "quality_criteria": ["Reconcile record counts", "Reconcile totals", "Reject duplicates and malformed rows", "Re-run to identical output"],
+  "delivery_method": "To be agreed through an approved seller channel",
+  "retention_and_deletion": "To be agreed before processing real data"
+}

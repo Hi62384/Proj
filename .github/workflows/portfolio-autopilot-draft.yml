@@ -19,6 +19,11 @@ jobs:
       - name: Generate research-only review queue
         run: |
           python -m portfolio_autopilot.cli scan --limit 15 --max-per-mode 3 --export "$RUNNER_TEMP/shortlist.json" --html "$RUNNER_TEMP/shortlist.html"
+      - name: Produce rotating cross-industry draft tasks (still NOT live market research)
+        run: |
+          python -m portfolio_autopilot.factory.cli --workspace "$RUNNER_TEMP/rotating_kits" init
+          python -m portfolio_autopilot.factory.cli --workspace "$RUNNER_TEMP/rotating_kits" rotate --count 6
+          python -m portfolio_autopilot.factory.cli --workspace "$RUNNER_TEMP/rotating_kits" storefront-preview
       - name: Upload review-only artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -26,4 +31,5 @@ jobs:
           path: |
             ${{ runner.temp }}/shortlist.json
             ${{ runner.temp }}/shortlist.html
+            ${{ runner.temp }}/rotating_kits/
           retention-days: 14

@@ -1,0 +1,3 @@
+event_id,business_id,date,kind,amount_cad,minutes,source_ref
+synthetic001,FAST-O01,2026-10-14,revenue,0.00,0,synthetic_not_a_real_sale
+synthetic002,FAST-O01,2026-10-14,owner_minutes,0.00,30,synthetic_example_only

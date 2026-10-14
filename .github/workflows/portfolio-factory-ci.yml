@@ -1,0 +1,41 @@
+name: Portfolio factory - offline regression tests
+on:
+  push:
+    paths:
+      - 'portfolio_autopilot/**'
+      - 'research_merge/reporting_demo/**'
+      - '.github/workflows/portfolio-factory-ci.yml'
+  pull_request:
+    paths:
+      - 'portfolio_autopilot/**'
+      - 'research_merge/reporting_demo/**'
+      - '.github/workflows/portfolio-factory-ci.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Existing opportunity shortlist tests
+        run: python -m unittest discover -s portfolio_autopilot/tests -v
+      - name: Factory tests, reporting ZIP round-trip and safety tests
+        run: python -m unittest discover -s portfolio_autopilot/factory/tests -v
+      - name: Original reporting program tests
+        working-directory: research_merge/reporting_demo
+        run: python -m unittest discover -s tests -v
+      - name: Repository doctor
+        run: python -m portfolio_autopilot.factory.cli doctor
+      - name: Smoke build; all private and synthetic
+        env:
+          FACTORY_ROOT: ${{ runner.temp }}/factory-smoke
+        run: |
+          python -m portfolio_autopilot.factory.cli --workspace "$FACTORY_ROOT" init
+          python -m portfolio_autopilot.factory.cli --workspace "$FACTORY_ROOT" first-business
+          python -m portfolio_autopilot.factory.cli --workspace "$FACTORY_ROOT" batch --limit 6 --per-mode 2
+          python -m portfolio_autopilot.factory.cli --workspace "$FACTORY_ROOT" storefront-preview

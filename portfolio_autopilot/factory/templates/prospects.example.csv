@@ -1,0 +1,2 @@
+opportunity_id,source_url,observed_date,buyer_problem,channel,permission_basis,evidence_notes
+EXP-001-01,https://example.invalid/example,2026-10-14,Example only not a real prospect,approved_marketplace_request,unverified_sample,DO_NOT_SUBMIT this is a synthetic example

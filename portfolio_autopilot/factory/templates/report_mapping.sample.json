@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "label": "Synthetic sales reporting demonstration",
+  "currency": "CAD",
+  "mapping": {
+    "date": "date",
+    "order_id": "order_id",
+    "channel": "channel",
+    "revenue": "revenue",
+    "cost": "cost"
+  }
+}

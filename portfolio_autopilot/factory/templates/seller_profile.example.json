@@ -1,0 +1,9 @@
+{
+  "business_name": "[Your business name]",
+  "support_email": "[Your business email]",
+  "country": "CA",
+  "currency": "CAD",
+  "contact_url": "",
+  "monthly_external_spend_cap_cad": "0",
+  "approved_channels": []
+}

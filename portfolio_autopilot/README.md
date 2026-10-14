@@ -42,3 +42,22 @@ The optional GitHub Action `Portfolio Autopilot — draft-only weekly queue` run
 - `--include-regulated` changes *display only*. It does not approve any regulated activity.
 
 Read `USER_SETUP_CHECKLIST.md` for your minimal-intervention setup, and `AUTOMATION_POLICIES.md` before connecting accounts.
+
+---
+
+## NEW: Working business launch factory (offline automation)
+
+The original Phase 0 shortlist CLI remains available and unchanged. For a more automated, one-click workflow, use the **local-first launch factory** now located in `portfolio_autopilot/factory/`.
+
+**On Windows:** double-click `portfolio_autopilot/Start_Autopilot.cmd`. It launches a private local browser dashboard with buttons for generating cross-industry launch kits, creating a standardized first reporting-business sales pack and packaging tested reports. It has no paid dependencies or live account integrations.
+
+**From repository root:**
+
+```powershell
+python -m portfolio_autopilot.factory.cli doctor
+python -m portfolio_autopilot.factory.cli init
+python -m portfolio_autopilot.factory.cli first-business
+python -m portfolio_autopilot.factory.cli serve
+```
+
+Full instructions and integration boundaries: **[`factory/README.md`](factory/README.md)**. Weekly GitHub Actions now also generates *rotated draft opportunity packets* from existing research; that is **not fresh market research or actual business operation**. The toolkit cannot create seller accounts, send messages, process payments, publish listings or access private customer information. Required account setup, approvals and live integrations remain separate until specifically authorized.

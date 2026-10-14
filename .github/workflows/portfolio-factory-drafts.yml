@@ -1,0 +1,62 @@
+name: Portfolio factory - generate offline launch drafts
+on:
+  workflow_dispatch:
+    inputs:
+      count:
+        description: Number of niche-neutral draft packs (max 12)
+        required: true
+        default: '6'
+        type: choice
+        options:
+          - '3'
+          - '6'
+          - '12'
+      mode:
+        description: Income model focus, or diversify across all
+        required: true
+        default: all
+        type: choice
+        options:
+          - all
+          - F
+          - R
+          - D
+          - I
+          - P
+          - A
+          - M
+          - L
+permissions:
+  contents: read
+jobs:
+  offline-drafts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      FACTORY_WORKSPACE: ${{ runner.temp }}/portfolio-factory-artifacts
+      SELECT_COUNT: ${{ inputs.count }}
+      SELECT_MODE: ${{ inputs.mode }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate the factory before producing anything
+        run: python -m unittest discover -s portfolio_autopilot/factory/tests -q
+      - name: Build synthetic first-business pack and optional kits
+        run: |
+          python -m portfolio_autopilot.factory.cli --workspace "$FACTORY_WORKSPACE" init
+          python -m portfolio_autopilot.factory.cli --workspace "$FACTORY_WORKSPACE" first-business
+          if [ "$SELECT_MODE" = all ]; then
+            python -m portfolio_autopilot.factory.cli --workspace "$FACTORY_WORKSPACE" batch --limit "$SELECT_COUNT" --per-mode 3
+          else
+            python -m portfolio_autopilot.factory.cli --workspace "$FACTORY_WORKSPACE" batch --limit "$SELECT_COUNT" --per-mode 12 --modes "$SELECT_MODE"
+          fi
+          python -m portfolio_autopilot.factory.cli --workspace "$FACTORY_WORKSPACE" storefront-preview
+      - name: Upload LOCAL DRAFTS ONLY - no credentials or customer data
+        uses: actions/upload-artifact@v4
+        with:
+          name: synthetic-launch-drafts
+          path: ${{ runner.temp }}/portfolio-factory-artifacts/
+          retention-days: 7
+          if-no-files-found: error

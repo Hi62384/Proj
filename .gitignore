@@ -1,0 +1,10 @@
+# Codex Relay runtime belongs in %%LOCALAPPDATA%%/CodexRelay, never in Git.
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.env
+.env.*
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+codex-relay.local/

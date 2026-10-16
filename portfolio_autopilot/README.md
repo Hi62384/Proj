@@ -10,6 +10,8 @@ Read `opportunity_library/README.md` and its methodology before treating score d
 
 # Portfolio Autopilot — Phase 0 (safe, local-first)
 
+Optional owner-controlled coding inbox: double-click **`Start_Codex_Relay.cmd`** for the separate local **Codex Relay** dashboard. It uses this repository's GitHub Issues and isolated Codex app-server threads, with per-task local approval and explicit file scopes. Setup, public-repository protections, limitations, and live-test instructions: **[codex_relay/README.md](codex_relay/README.md)**. Existing shortlist/factory commands remain available.
+
 This code turns the repository's 1,296-record research index into a **review-only shortlist and AI task-packet generator**. It is not a live business, customer acquisition bot, autonomous executor, SaaS, merchant account or payment integration.
 
 ## Start in 2 minutes

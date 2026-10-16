@@ -1,0 +1,34 @@
+{
+  "version": "1.0.0",
+  "status": "READY FOR SELLER QA, NOT PUBLISHED OR PAYMENT CONNECTED",
+  "license_type": "single-business use, no redistribution",
+  "currency": "CAD",
+  "demo_data": "entirely fictional",
+  "files": {
+    "Cleaning_Pricing_Calculator.xlsx": {
+      "bytes": 25490,
+      "sha256": "7eb595bc7b411e7894ed879a094cc6038f11661f4be64b4c2a4bcf3342c65522"
+    },
+    "Cleaning_Pricing_Calculator_FICTIONAL_DEMO.xlsx": {
+      "bytes": 26618,
+      "sha256": "c8c0cbc697843d48c79ea7533a32db248ab4bc4a0d3717f7e106665414ea9beb"
+    },
+    "LICENSE_AND_DISCLAIMER.txt": {
+      "bytes": 1358,
+      "sha256": "8d7d4a711a590bea3c0563dbc6192e9625eb3163177ad9d698d60a81458d60e7"
+    },
+    "Quick_Start_Guide.pdf": {
+      "bytes": 11930,
+      "sha256": "b8f10f4173cbcd4195544a643f88ee0e713a388437efaaca00724e91cf101931"
+    },
+    "START_HERE.txt": {
+      "bytes": 761,
+      "sha256": "fd330d1c4f9c4de7462d0122dfc085029f743bde6a1cc61afa53cfa454d6a189"
+    }
+  },
+  "release": {
+    "file": "Cleaning_Pricing_Toolkit_v1.0_CUSTOMER.zip",
+    "sha256": "9835184cb1e37a4ca7f4d379d0a234fee3b769fa22a0af0a3ca356a500c0d215",
+    "bytes": 56040
+  }
+}

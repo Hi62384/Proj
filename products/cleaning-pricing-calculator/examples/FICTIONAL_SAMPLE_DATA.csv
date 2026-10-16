@@ -1,0 +1,7 @@
+job_id,service,crew,on_site_hours_per_employee,paid_travel_hours_per_employee,roundtrip_km,extra_supplies_cad,extra_overhead_cad,discount_cad,synthetic_note
+EX-001,Standard home cleaning,2,3,0.25,12,4,0,10,FICTIONAL example - not a real customer
+EX-002,Deep home cleaning,2,4.5,0.40,20,6,0,0,FICTIONAL example - not a real customer
+EX-003,Apartment turnover,1,3,0.25,8,3,4,0,FICTIONAL example - not a real customer
+EX-004,Small office cleaning,3,2,0.5,24,7,0,15,FICTIONAL example - not a real customer
+EX-005,Recurring maintenance,2,,0.15,5,0,0,0,FICTIONAL example - not a real customer
+EX-006,Move-in / move-out,2,6,0.4,15,8,10,0,FICTIONAL example - not a real customer

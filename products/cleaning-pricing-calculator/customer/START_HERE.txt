@@ -1,0 +1,13 @@
+CLEANING BUSINESS PRICING & PROFIT CALCULATOR — CUSTOMER EDITION 1.0
+
+1. Open Cleaning_Pricing_Calculator.xlsx with Microsoft Excel.
+2. Read Quick_Start_Guide.pdf (or the full markdown guide if preferred).
+3. Edit blue settings in SETTINGS, then replace service defaults with your real costs.
+4. Build a quote in QUICK QUOTE and inspect CLIENT QUOTE before sending.
+5. The FICTIONAL_DEMO workbook is a worked example; its people, prices and jobs are invented.
+
+THIS PRODUCT DOES NOT INCLUDE CLOUD ACCESS, AI CREDITS, AUTOMATIC INVOICING,
+BANK INTEGRATION OR TAX/LEGAL/ACCOUNTING ADVICE.
+
+No macros, no internet requirement, no program installation (aside from your spreadsheet app).
+Do NOT redistribute or resell the workbook. See LICENSE_AND_DISCLAIMER.txt.

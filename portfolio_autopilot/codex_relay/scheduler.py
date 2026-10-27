@@ -10,6 +10,7 @@ import uuid
 from . import messages
 from .config import safe_path
 from .workspace import Workspace
+from .diagnostics import RelayError, latest, record
 
 
 class Relay:
@@ -22,9 +23,10 @@ class Relay:
         self.cancelled = threading.Event()
         self.worker = None
         self.active_id = None
-        self.connections = {"github": "Not tested", "codex": "Not tested", "public": True}
+        self.connections = {"github": "Not tested", "codex": "Not tested", "codex_authentication": 'Not tested', "public": True}
         self.last_error = ""
         self.next_poll = 0
+        self.execution_block = store.meta('execution_block') or {}
         # Never replay an execution after ambiguous process termination.
         for t in store.all():
             if t["status"] == "Running":
@@ -39,7 +41,7 @@ class Relay:
                     "repository": self.config.repository, "data_dir": str(self.config.data_dir),
                     "configured": bool(self.config.owner_id), "owner_id": self.config.owner_id,
                     "trusted_ids": self.config.trusted_ids,
-                    "delivery": self.store.delivery()}
+                    "delivery": self.store.delivery(), 'execution_block': self.execution_block}
 
     def test_connection(self):
         try:
@@ -49,11 +51,23 @@ class Relay:
             self.connections["github"] = str(exc)
             connection = {}
         try:
-            self.codex.doctor()
-            self.connections["codex"] = "Available · ChatGPT login · no inference test"
+            status = self.codex.doctor()
+            self.connections['codex_authentication'] = 'ChatGPT sign-in verified'
+            self.execution_block = {}
+            self.store.meta('execution_block', {})
+            self.connections['codex'] = 'ChatGPT login · sandbox verified · no inference test' + (' · ' + status['version'] if status.get('version') else '')
         except Exception as exc:
             self.connections["codex"] = str(exc)
+            self.connections['codex_authentication'] = 'ChatGPT sign-in verified' if getattr(exc, 'authentication_verified', False) else 'Not verified'
+            if isinstance(exc, RelayError):
+                self.block_execution(exc)
         return connection
+
+    def block_execution(self, error):
+        self.execution_block = error.as_dict()
+        self.store.meta('execution_block', self.execution_block)
+        self.connections['codex'] = str(error)
+        record(self.config.data_dir, error)
 
     def poll(self):
         if not self.config.owner_id:
@@ -305,7 +319,7 @@ class Relay:
 
     def launch_ready(self):
         with self.lock:
-            if not self.running or self.worker and self.worker.is_alive():
+            if not self.running or self.execution_block or self.worker and self.worker.is_alive():
                 return
             for task in sorted(self.store.all(), key=lambda t: ({"high": 0, "normal": 1, "low": 2}[t["payload"]["priority"]], t["created"])):
                 if task["status"] != "Approved" or not task["approved"] or task["paused"]:
@@ -316,7 +330,7 @@ class Relay:
                 self.cancelled = threading.Event()
                 self.active_id = task["id"]
                 prompt = json.dumps({"approved_task": task["payload"], "follow_up": task.get("pending_reply")}, ensure_ascii=False)
-                task.update(status="Running", pending_reply=None, started_at=time.time())
+                task.update(status="Running", active_instruction=task.get('pending_reply'), pending_reply=None, started_at=time.time())
                 with self.store.transaction():
                     self.store.save(task)  # Claim durably before spawning: ambiguous starts are never replayed.
                     self.announce(task, "CODEX_PROGRESS")
@@ -360,12 +374,21 @@ class Relay:
                     self.store.log(task_id, "CODEX_RESULT", json.dumps(value))
                     self.announce(current, "CODEX_QUESTION" if value["kind"] != "result" else "CODEX_RESULT")
         except InterruptedError:
-            pass
-        except Exception as exc:
             with self.lock:
                 current = self.store.get(task_id)
+                if current['status'] == 'Running':
+                    current.update(status='Needs Owner', paused=True, blocked='Codex interrupted. Review files, then Resume explicitly.',
+                                   pending_reply=current.get('active_instruction'))
+                    self.store.save(current)
+                    self.store.log(task_id, 'INTERRUPTED', current['blocked'])
+                    self.announce(current, 'CODEX_PROGRESS')
+        except Exception as exc:
+            with self.lock:
+                if isinstance(exc, RelayError) and (exc.category.startswith(('sandbox', 'permissions', 'environment', 'protocol.compatibility')) or exc.category == 'authentication'):
+                    self.block_execution(exc)
+                current = self.store.get(task_id)
                 if current["status"] == "Running":
-                    current.update(status="Failed", paused=True, blocked=str(exc)[:2000])
+                    current.update(status="Failed", paused=True, blocked=str(exc)[:2000], pending_reply=current.get('active_instruction'))
                     self.store.save(current)
                     self.store.log(task_id, "CODEX_ERROR", str(exc))
                     self.announce(current, "CODEX_ERROR")

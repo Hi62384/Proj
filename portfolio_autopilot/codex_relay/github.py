@@ -39,6 +39,8 @@ class GitHub:
         token = self.token_provider()
         headers = {"Authorization": "Bearer " + token, "Accept": "application/vnd.github+json",
                    "X-GitHub-Api-Version": "2022-11-28", "User-Agent": "CodexRelay/1.0"}
+        if body is not None:
+            headers['Content-Type'] = 'application/json'
         cache_key = "etag:" + path
         cached = self.store.meta(cache_key)
         if body is None and cached:

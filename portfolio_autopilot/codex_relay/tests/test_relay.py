@@ -471,10 +471,12 @@ class NetworkTests(unittest.TestCase):
 
 
 class MockRpc:
-    def __init__(self,config):
+    def __init__(self,config,**kwargs):
         self.calls=[];self.sent=[];self.events=queue.Queue();self.closed=False
     def request(self,method,params,**kwargs):
         self.calls.append((method,params))
+        if method=='permissionProfile/list':return {'data':[{'id':'relay-locked','allowed':True}]}
+        if method=='command/exec':return {'exitCode':0,'stdout':'CODEX_RELAY_SANDBOX_OK\n','stderr':''}
         if method=='mcpServerStatus/list':return {'data':[]}
         if method.startswith('thread/'):
             return {'thread':{'id':params.get('threadId','thread-001')}}
@@ -490,21 +492,31 @@ class MockRpc:
 
 
 class CodexTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory(prefix='relay-codex-tests-')
+        self.addCleanup(self.temp.cleanup)
+        self.config = Config(data_dir=Path(self.temp.name))
+
     def test_app_server_start_resume_events_denials_and_schema(self):
-        config=Config();rpc=MockRpc(config);client=Codex(config,lambda c:rpc)
+        config=self.config;rpc=MockRpc(config);client=Codex(config,lambda c,**kw:rpc)
         class Files:
             def call(self,args):return {'paths':[]}
         seen=[];events=[]
         result=client.run({},'Task',Files(),threading.Event(),lambda *x:events.append(x),seen.append)
         self.assertEqual(result['summary'],'Done');self.assertEqual(seen,['thread-001'])
-        self.assertEqual(rpc.calls[0][0],'thread/start')
-        self.assertEqual(rpc.calls[0][1]['sandbox'],'read-only')
-        self.assertEqual(next(p for m,p in rpc.calls if m=='turn/start')['outputSchema'],OUTPUT_SCHEMA)
+        self.assertEqual([m for m,p in rpc.calls][:3],['permissionProfile/list','command/exec','thread/start'])
+        thread_params = next(p for m,p in rpc.calls if m=='thread/start')
+        self.assertEqual(thread_params['permissions'], 'relay-locked')
+        self.assertNotIn('sandbox', thread_params)
+        turn_params = next(p for m,p in rpc.calls if m == 'turn/start')
+        self.assertEqual(turn_params['permissions'], 'relay-locked')
+        self.assertNotIn('sandboxPolicy', turn_params)
+        self.assertEqual(turn_params['outputSchema'], OUTPUT_SCHEMA)
         self.assertTrue(rpc.sent[0]['result']['success']);self.assertIn('error',rpc.sent[1])
         self.assertTrue(rpc.closed)
-        rpc=MockRpc(config);client.rpc_factory=lambda c:rpc
+        rpc=MockRpc(config);client.rpc_factory=lambda c,**kw:rpc
         client.run({'thread_id':'thread-001'},'Follow-up',Files(),threading.Event(),lambda *x:None,lambda x:None)
-        self.assertEqual(rpc.calls[0][0],'thread/resume')
+        self.assertIn('thread/resume',[m for m,p in rpc.calls])
 
     def test_failed_and_disconnected_events(self):
         for method in ('relay/disconnected','turn/completed'):
@@ -515,7 +527,7 @@ class CodexTests(unittest.TestCase):
                         while not inner.events.empty():inner.events.get()
                         inner.events.put({'method':method,'params':{'threadId':'thread-001','turn':{'id':'turn-001','status':'failed'}}})
                     return result
-            client=Codex(Config(),FailingRpc)
+            client=Codex(self.config,FailingRpc)
             with self.assertRaises(RuntimeError):client.run({},'Task',None,threading.Event(),lambda *x:None,lambda x:None)
 
     def test_api_key_auth_is_not_imported(self):
@@ -532,7 +544,7 @@ class CodexTests(unittest.TestCase):
             def request(inner,method,params,**kwargs):
                 if method=='mcpServerStatus/list':return {'data':[{'name':'unsafe'}]}
                 return super().request(method,params,**kwargs)
-        rpc=ExternalRpc(Config());client=Codex(Config(),lambda c:rpc)
+        rpc=ExternalRpc(self.config);client=Codex(self.config,lambda c,**kw:rpc)
         with self.assertRaises(RuntimeError):client.run({},'Task',None,threading.Event(),lambda *x:None,lambda x:None)
         self.assertFalse(any(m=='turn/start' for m,_ in rpc.calls))
         self.assertTrue(rpc.closed)

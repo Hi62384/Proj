@@ -10,6 +10,7 @@ from .dashboard import make_server
 from .github import GitHub
 from .scheduler import Relay
 from .store import Store
+from .diagnostics import latest
 
 
 class InstanceLock:
@@ -43,19 +44,24 @@ class InstanceLock:
 
 def main():
     parser = argparse.ArgumentParser(description="Codex Relay — local owner-approved GitHub inbox")
-    parser.add_argument("command", choices=("serve", "doctor"), nargs="?", default="serve")
+    parser.add_argument("command", choices=("serve", "doctor", "diagnostics"), nargs="?", default="serve")
     parser.add_argument("--data-dir", help="Runtime directory outside the repository")
     parser.add_argument("--no-browser", action="store_true")
     args = parser.parse_args()
     config = Config.load(args.data_dir)
-    config.save()
+    if args.command == 'diagnostics':
+        print(json.dumps(latest(config.data_dir), indent=2))
+        return
     with InstanceLock(config.data_dir):
+        config.save()
         store = Store(config.data_dir)
         relay = Relay(config, store, GitHub(config, store), Codex(config))
         if args.command == "doctor":
             try:
                 relay.test_connection()
                 print(json.dumps(relay.connections, indent=2))
+                if relay.execution_block or not str(relay.connections['github']).startswith('Connected:'):
+                    raise SystemExit(1)
             finally:
                 store.close()
             return

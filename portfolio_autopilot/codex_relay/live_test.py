@@ -29,14 +29,23 @@ def main():
             task["thread_id"] = thread_id
             (config.data_dir / "live-test-session.json").write_text(json.dumps(task), encoding="utf-8")
         workspace = Workspace(config.workspace, [name], lambda: True, lambda *x: events.append(x), config.data_dir / "live-test-backup")
-        for content in ("Hello from Codex Relay.\n", "Hello again from the same Codex Relay thread.\n"):
+        original_thread = None
+        for content in ("Hello from Codex Relay\n", "Hello again from Codex Relay\n"):
             result = client.run(task, f"Owner-approved harmless test. Use relay_workspace to write exactly {content!r} to {name}. Read existing file before changing it. Finish with kind=result.",
                                 workspace, threading.Event(), lambda *x: events.append(x), save)
             if result["kind"] != "result" or not path.exists() or path.read_text(encoding="utf-8") != content:
                 raise SystemExit("Live check did not pass; inspect local files and live-test-session.json")
+            if original_thread is None:
+                original_thread = task['thread_id']
+            elif original_thread != task['thread_id']:
+                raise SystemExit('Live check failed: follow-up did not retain the original thread')
         print("PASS: real Codex wrote and corrected one test file using the same saved thread.")
         print("GitHub/ChatGPT end-to-end communication was NOT tested by this command.")
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except RuntimeError as exc:
+        print('Live test BLOCKED or FAILED; no success is claimed: ' + str(exc))
+        raise SystemExit(1)

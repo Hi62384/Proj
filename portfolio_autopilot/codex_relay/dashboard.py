@@ -8,6 +8,7 @@ from urllib.parse import urlsplit
 
 from .credentials import save_token
 from .github import GitHub
+from .diagnostics import latest
 
 
 class Server(ThreadingHTTPServer):
@@ -56,6 +57,8 @@ def make_server(relay, port=None):
                 return self.send(401, {"error": "Open the dashboard using the Windows launcher"})
             if path == "/api/state":
                 return self.send(200, relay.snapshot())
+            if path == '/api/diagnostics':
+                return self.send(200, latest(relay.config.data_dir))
             if path.startswith("/api/history/"):
                 return self.send(200, relay.store.history(path.rsplit("/", 1)[-1]))
             return self.send(404, {"error": "Not found"})

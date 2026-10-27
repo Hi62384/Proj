@@ -15,11 +15,13 @@ async function act(fn) { if(busy)return; busy=true; try{await fn();currentVersio
 function button(label, action, enabled=true, danger=false) {const n=el('button',label,danger?'danger':'');n.disabled=!enabled;n.onclick=()=>act(action);return n;}
 async function refresh() {
   const res=await fetch('/api/state',{cache:'no-store'}); if(!res.ok)throw Error('Reopen the Windows launcher to authenticate.'); state=await res.json();
-  $('runner').textContent=state.running?'Runner on':'Runner stopped'; $('github').textContent=state.connections.github; $('codex').textContent=state.connections.codex;
+  $('runner').textContent=state.running?'Runner on':'Runner stopped'; $('github').textContent=state.connections.github; $('codex').textContent=(state.connections.codex_authentication||'Not tested')+' · '+state.connections.codex;
   $('storage').textContent=state.data_dir; $('privacy').textContent=state.connections.public?'PUBLIC OR UNVERIFIED REPOSITORY — Approve only nonsensitive test tasks. Detailed questions, reports, logs and file paths stay local until you release a reviewed message.':'Private repository verified. Treat Issue content as untrusted; credentials and logs stay local. Only nonsensitive tasks are enabled in this first version.';
   $('identity').textContent=state.owner_id?'Verified owner account ID: '+state.owner_id:'Setup required before starting.';
   if(!state.configured)$('setup').open=true;
   if(state.error)notify(state.error);
+  $('execution-block').hidden=!state.execution_block?.explanation;
+  $('execution-block').textContent=state.execution_block?.explanation?state.execution_block.explanation+' '+(state.execution_block.action||'')+' After fixing setup, use Test connections to clear this execution block.':'';
   if(state.delivery.uncertain)notify(state.delivery.uncertain+' GitHub comment delivery outcome(s) uncertain. Inspect the Issue before manually reposting; automatic retries are disabled.');
   const list=$('tasks');list.replaceChildren();
   const tasks=state.tasks.filter(t=>!$('filter').value||t.status===$('filter').value);
@@ -62,7 +64,8 @@ async function show(t) {
   history.forEach(h=>{const row=el('div','','history');row.append(el('b',h.kind+' '),el('time',new Date(h.at*1000).toLocaleString()),el('pre',h.text));panel.append(row);});
 }
 $('filter').onchange=()=>refresh().catch(e=>notify(e.message));
-$('test').onclick=()=>act(async()=>{notify('Testing GitHub and Codex authentication; no AI turn will be launched.');await post('test');});
+$('load-diagnostics').onclick=()=>act(async()=>{const response=await fetch('/api/diagnostics',{cache:'no-store'});if(!response.ok)throw Error('Authentication required');$('diagnostics').textContent=JSON.stringify(await response.json(),null,2);});
+$('test').onclick=()=>act(async()=>{notify('Testing GitHub sign-in and Codex OS sandbox; no AI turn will be launched.');await post('test');});
 $('start').onclick=()=>act(()=>post('start'));$('stop').onclick=()=>act(()=>post('stop'));
 $('save').onclick=()=>act(async()=>{const ids=$('trusted').value.trim();const trusted=ids?ids.split(',').map(x=>Number(x.trim())):[];if(trusted.some(n=>!Number.isSafeInteger(n)||n<=0))throw Error('Enter numeric GitHub account IDs.');await post('setup',{token:$('token').value,trusted_ids:trusted});$('token').value='';});
 (async()=>{try{await post('session');await refresh();$('trusted').value=state.trusted_ids.join(', ');notify('Ready. New tasks always require local approval.');setInterval(()=>{if(!busy)refresh().catch(e=>notify(e.message));},4000);}catch(e){notify(e.message);}})();

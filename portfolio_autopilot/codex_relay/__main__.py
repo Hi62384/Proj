@@ -72,6 +72,9 @@ def main():
             raise RuntimeError("Dashboard port is busy. Check for another relay or change port in config.json") from None
         loop = threading.Thread(target=relay.loop, daemon=True)
         loop.start()
+        # An unconfigured test/starter dashboard must not access real credentials.
+        health = threading.Thread(target=relay.test_connection if config.owner_id else lambda: None, daemon=True)
+        health.start()
         url = f"http://127.0.0.1:{server.server_port}/#{server.relay_token}"
         print("Codex Relay is running locally. The runner starts only when you click Start runner.")
         print("Close this window or press Ctrl+C to stop. Runtime data: " + str(config.data_dir))
@@ -87,7 +90,8 @@ def main():
             relay.close()
             server.server_close()
             loop.join(timeout=25)
-            if not (relay.worker and relay.worker.is_alive()):
+            health.join(timeout=35)
+            if not health.is_alive() and not (relay.worker and relay.worker.is_alive()):
                 store.close()
 
 

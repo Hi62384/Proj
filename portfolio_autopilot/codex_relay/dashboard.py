@@ -112,6 +112,7 @@ def make_server(relay, port=None):
                     relay.config.trusted_ids = trusted
                     relay.config.save()
                     relay.store.log("system", "SETUP", "Owner and trusted numeric account IDs configured locally")
+                    threading.Thread(target=relay.test_connection, daemon=True).start()
                     return self.send(200, {"owner_id": identity["id"], "login": identity["login"]})
                 elif self.path == "/api/approve":
                     # Re-fetch immediately before creating a new execution grant.
@@ -119,6 +120,8 @@ def make_server(relay, port=None):
                     relay.approve(body["task_id"], body.get("public_test") is True)
                 elif self.path == "/api/control":
                     relay.control(body["task_id"], body["action"])
+                elif self.path == '/api/reply':
+                    relay.owner_reply(body['task_id'], body['text'], body.get('scope_reviewed') is True)
                 elif self.path == "/api/publish":
                     relay.publish(body["task_id"], body["text"], body.get("reviewed") is True)
                 else:

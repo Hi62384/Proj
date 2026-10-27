@@ -9,7 +9,7 @@ from .config import safe_path
 
 
 TOOL = {"type": "function", "name": "relay_workspace",
-        "description": "Read/write approved UTF-8 project files, list approved paths, or check Python/JSON syntax. No shell execution. Use sha256 from read for existing-file writes; use 'new' for creation.",
+        "description": "Owner-approved host capability: read/write exact approved UTF-8 files, list paths, or check Python/JSON syntax. The Windows relay performs these operations outside your intentionally read-only command sandbox. Writes through this capability are already authorized; do not request broader OS permissions. A read of an absent approved file returns exists=false, sha256='new'. Use that hash for creation or the current read hash for an overwrite. No shell execution.",
         "inputSchema": {"type": "object", "properties": {
             "operation": {"type": "string", "enum": ["list", "read", "write", "check"]},
             "path": {"type": "string"}, "content": {"type": "string"},
@@ -42,8 +42,10 @@ class Workspace:
             if path.exists() and path.stat().st_size > 500_000:
                 raise ValueError("File exceeds 500 KB tool limit")
             if op == "read":
-                content = path.read_text(encoding="utf-8")
-                return {"content": content, "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
+                if not path.exists():
+                    return {'exists': False, 'content': '', 'sha256': 'new'}
+                raw = path.read_bytes()
+                return {"exists": True, "content": raw.decode('utf-8'), "sha256": hashlib.sha256(raw).hexdigest()}
             if op == "write":
                 if len(args["content"].encode()) > 500_000:
                     raise ValueError("File exceeds 500 KB tool limit")

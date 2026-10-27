@@ -69,7 +69,7 @@ class Relay:
         self.connections['codex'] = str(error)
         record(self.config.data_dir, error)
 
-    def poll(self):
+    def poll(self, publish=True):
         if not self.config.owner_id:
             raise ValueError("Configure and verify the owner account before starting")
         connection = self.github.connect()  # Privacy checked every cycle; unknown is public.
@@ -126,7 +126,8 @@ class Relay:
                 with self.lock:
                     self._revoke(t, "Issue no longer accessible; approval revoked")
         self.process_inbox()
-        self.flush()
+        if publish:
+            self.flush()
 
     def trusted(self):
         return {self.config.owner_id, *self.config.trusted_ids} - {0}
@@ -142,6 +143,7 @@ class Relay:
         self.store.log(task["id"], "APPROVAL_REVOKED", reason)
 
     def receive(self, task, comment):
+        task = self.store.get(task['id'])
         if comment.get("user", {}).get("id") not in self.trusted():
             return False
         # Edited comments cannot acquire new execution authority.
@@ -153,7 +155,8 @@ class Relay:
             return False
         if value["type"] not in ("CHATGPT_REPLY", "OWNER_DECISION") or value["task_id"] != task["id"]:
             return False
-        if value["scope"] != task["scope"] or value["reply_to"] != task["anchor"] or not task["approved"]:
+        anchor = task.get('published_anchor') or self.store.published_anchor(task)
+        if value["scope"] != task["scope"] or value["reply_to"] != anchor or not task["approved"]:
             return False
         # Comments predating approval cannot be replayed into a new approval.
         from datetime import datetime
@@ -173,7 +176,8 @@ class Relay:
         with self.lock:
             for comment_id, value in self.store.pending():
                 task = self.store.get(value["task_id"])
-                if not task["approved"] or value["scope"] != task["scope"] or value["reply_to"] != task["anchor"]:
+                anchor = task.get('published_anchor') or self.store.published_anchor(task)
+                if not task["approved"] or value["scope"] != task["scope"] or value["reply_to"] != anchor:
                     self.store.consume(comment_id, "rejected")
                     continue
                 if task["status"] == "Running":
@@ -204,7 +208,7 @@ class Relay:
                     raise ValueError("Project instruction files cannot be edited by the relay")
                 safe_path(self.config.workspace, path)
             task.update(approved=True, scope=secrets.token_hex(16), approved_at=time.time(),
-                        status="Approved", paused=False, public_test=True, blocked="")
+                        status="Approved", paused=False, public_test=True, blocked="", published_anchor='')
             self.store.save(task)
             self.store.log(task_id, "LOCAL_APPROVAL", json.dumps({"revision": task["revision"], "paths": task["payload"]["paths"]}))
             self.announce(task, "CODEX_PROGRESS")
@@ -240,6 +244,12 @@ class Relay:
 
     def flush(self):
         for row in self.store.outgoing():
+            message = messages.message(row['body'])
+            if message['reply_to'] == 'status':
+                current = self.store.get(message['task_id'])
+                if message['message_id'] != current['anchor'] or message['scope'] != current['scope']:
+                    self.store.supersede(row['id'])
+                    continue  # Never send obsolete queued Running/Approved notices after a newer reviewed result.
             # Reconcile ambiguous POST outcomes by durable message ID before trying again.
             comments = self.github.comments(row["issue"])
             found = False
@@ -252,15 +262,24 @@ class Relay:
                     pass
             if found:
                 self.store.sent(row["id"], "sent")
+                self.confirm_publication(message)
                 continue
             try:
                 self.github.comment(row["issue"], row["body"])
                 self.store.sent(row["id"], "sent")
+                self.confirm_publication(message)
             except Exception:
                 # POST may have succeeded even if its response was lost. Never retry automatically.
                 self.store.sent(row["id"], "uncertain")
                 self.last_error = "Comment delivery uncertain. Review the Issue; automatic repost is disabled to prevent duplicates."
                 raise
+
+    def confirm_publication(self, message):
+        with self.lock:
+            task = self.store.get(message['task_id'])
+            if task['scope'] == message['scope']:
+                task['published_anchor'] = message['message_id']
+                self.store.save(task)
 
     def control(self, task_id, action):
         with self.lock:
@@ -294,7 +313,21 @@ class Relay:
             if task["approved"]:
                 self.announce(task, "CODEX_PROGRESS")
 
+    def owner_reply(self, task_id, text, scope_reviewed=False):
+        """Local answers/corrections retain the approved files and saved conversation."""
+        with self.lock, self.store.transaction():
+            task = self.store.get(task_id)
+            if not scope_reviewed or not task['approved'] or task['status'] not in ('Needs Owner', 'Needs ChatGPT', 'Awaiting Review', 'Failed'):
+                raise ValueError('Review the existing approved scope before sending a local reply to a paused/finished task')
+            messages.text(text, 8000)
+            task.update(pending_reply=text, status='Approved', paused=False, blocked='')
+            self.store.save(task)
+            self.store.log(task_id, 'LOCAL_OWNER_REPLY', text)
+            self.announce(task, 'CODEX_PROGRESS')
+
     def _stop_task(self, task, action):
+        if action == 'pause' and task['status'] == 'Running' and not task.get('pending_reply'):
+            task['pending_reply'] = task.get('active_instruction')
         if self.active_id == task["id"]:
             self.cancelled.set()
             getattr(self.codex, "cancel", lambda: None)()

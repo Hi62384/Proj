@@ -103,6 +103,7 @@ class RelayCase(unittest.TestCase):
         return self.store.get("demo-001")
 
     def reply(self, **changes):
+        self.relay.flush()  # Remote replies bind to a message actually published by the relay.
         task = self.store.get("demo-001")
         value = {"type": "CHATGPT_REPLY", "task_id": task["id"], "message_id": "reply-001",
                  "reply_to": task["anchor"], "scope": task["scope"], "action": "continue", "text": "Correct the spelling within the approved file"}

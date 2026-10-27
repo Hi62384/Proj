@@ -104,5 +104,19 @@ class Store:
         with self.transaction():
             self.db.execute("UPDATE outbox SET state=?,attempts=attempts+1 WHERE id=?", (state, event_id))
 
+    def supersede(self, event_id):
+        with self.transaction():
+            self.db.execute("UPDATE outbox SET state='superseded' WHERE id=? AND state='pending'", (event_id,))
+
+    def published_anchor(self, task):
+        from .messages import message
+        with self.lock:
+            rows = self.db.execute("SELECT body FROM outbox WHERE issue=? AND state='sent' ORDER BY rowid DESC", (task['issue'],))
+            for row in rows:
+                value = message(row[0])
+                if value['task_id'] == task['id'] and value['scope'] == task['scope']:
+                    return value['message_id']
+        return ''
+
     def close(self):
         self.db.close()

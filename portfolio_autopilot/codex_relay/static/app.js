@@ -52,6 +52,13 @@ async function show(t) {
   if(t.report)panel.append(el('h3','Completion report (local)'),el('pre',t.report));
   panel.append(el('h3','Files changed'),el('pre',t.files_changed.join('\n')||'None recorded'),el('h3','Verified relay checks'),el('pre',t.test_results.join('\n')||'No checks recorded'));
   if(t.model_test_claims)panel.append(el('h3','Model-reported tests (verify before accepting)'),el('pre',t.model_test_claims.join('\n')||'None'));
+  if(t.approved&&['Needs Owner','Needs ChatGPT','Awaiting Review','Failed'].includes(t.status)){
+    const local=el('details');local.append(el('summary','Answer or correct this task locally'));
+    local.append(el('p','This stays local and resumes the saved thread within its existing approved file scope. External actions and expanded permissions remain unavailable.'));
+    const answer=el('textarea');answer.maxLength=8000;answer.placeholder='Technical answer or correction within the approved scope';answer.setAttribute('aria-label','Local owner reply');local.append(answer);
+    const label=el('label'),review=el('input');review.type='checkbox';label.append(review,document.createTextNode('I reviewed this reply and it stays within the approved scope.'));local.append(label);
+    local.append(button('Send local reply / resume',()=>post('reply',{task_id:t.id,text:answer.value,scope_reviewed:review.checked})));panel.append(local);
+  }
   if(t.approved){
     const details=el('details');details.append(el('summary','Release a reviewed question or report to GitHub'));
     details.append(el('p','This text will be posted as an Issue comment. Write a concise, nonsensitive message. Remove code, logs, local paths, credentials and business details. Publication requires this separate local review.'));

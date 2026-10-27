@@ -53,7 +53,8 @@ print(json.dumps({'workspace':mapped(p['workspace']),'paths':{x:mapped(x) for x 
 p=json.load(sys.stdin);h=pathlib.Path(p['home']).resolve();base=pathlib.Path.home().resolve()
 if not h.is_relative_to(base) or h==base: raise ValueError('Private relay home required')
 h.mkdir(parents=True,exist_ok=True);h.chmod(0o700)
-(h/'config.toml').write_text(p['config'],encoding='utf-8')
+temporary=h/'config.pending'
+temporary.write_text(p['config'],encoding='utf-8');temporary.replace(h/'config.toml')
 a=h/'auth.json'
 if a.exists():
  v=json.loads(a.read_text());valid=v.get('auth_mode')=='chatgpt' and bool(v.get('tokens'))
@@ -79,15 +80,19 @@ import os
 env={'HOME':str(pathlib.Path.home()),'PATH':'/usr/bin:/bin','CODEX_HOME':str(h),'LANG':'C.UTF-8'}
 version=subprocess.check_output([str(exe),'--version'],text=True,env=env).strip()
 fingerprint=str(exe.stat().st_size)+':'+str(exe.stat().st_mtime_ns)
-cache=folder/'verified.json'
-if cache.exists() and json.loads(cache.read_text()).get('fingerprint')==fingerprint:
- print(cache.read_text());sys.exit()
+cache=folder/'verified.json';cached={}
+if cache.exists():
+ try:cached=json.loads(cache.read_text())
+ except (ValueError,OSError):pass
+if cached.get('fingerprint')==fingerprint and cached.get('contract')==2 and cached.get('compatible') is True:
+ print(json.dumps(cached));sys.exit()
 subprocess.run([str(exe),'app-server','generate-json-schema','--experimental','--out',str(folder)],check=True,env=env,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
-required={'ThreadStartParams':['permissions','dynamicTools'],'ThreadResumeParams':['permissions'],'TurnStartParams':['permissions','outputSchema'],'CommandExecParams':['permissionProfile']}
+required={'ThreadStartParams':['permissions','dynamicTools'],'ThreadResumeParams':['permissions','excludeTurns'],'TurnStartParams':['permissions','outputSchema'],'CommandExecParams':['permissionProfile'],'PermissionProfileListResponse':['data']}
 for name,fields in required.items():
  v=json.loads((folder/'v2'/(name+'.json')).read_text())
  if any(x not in v.get('properties',{}) for x in fields):raise ValueError('Unsupported Codex protocol: '+name)
-value={'version':version,'compatible':True,'fingerprint':fingerprint};cache.write_text(json.dumps(value));print(json.dumps(value))
+value={'version':version,'compatible':True,'fingerprint':fingerprint,'contract':2}
+temporary=folder/'verified.pending';temporary.write_text(json.dumps(value));temporary.replace(cache);print(json.dumps(value))
 ''', {'binary': config.wsl_binary, 'home': config.wsl_home}, timeout=60)
     linux_user_home = config.wsl_home.split('/.local/', 1)[0]
     command = ['wsl.exe', '-d', config.wsl_distribution, '--exec', '/usr/bin/env', '-i',

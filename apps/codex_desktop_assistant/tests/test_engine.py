@@ -32,7 +32,7 @@ class Protocol:
             if not self.hold:self.finish('Actual protocol fixture text')
             return {'turn':{'id':str(self.turns)}}
         if method=='turn/steer':self.finish('Correction incorporated');return {}
-        if method=='turn/interrupt':return {}
+        if method=='turn/interrupt':self.events.put({'method':'turn/completed','params':{'threadId':'thread-one','turn':{'id':str(self.turns),'status':'interrupted'}}});return {}
         return {}
     def finish(self,text):
         params={'threadId':'thread-one','turnId':str(self.turns)}
@@ -78,6 +78,21 @@ class EngineTests(unittest.TestCase):
         for m,p in self.protocol.calls:
             if m in ('thread/start','thread/resume','turn/start'):
                 self.assertEqual(p['permissions'],'relay-locked');self.assertEqual(p['approvalPolicy'],'never')
+
+    def test_model_effort_snapshot_changes_only_next_turn(self):
+        self.engine.rpc=self.protocol
+        self.engine.models=[{'id':'test','model':'test','supportedReasoningEfforts':[{'reasoningEffort':'low'},{'reasoningEffort':'high'}]}]
+        self.store.selection('test','low');self.protocol.hold=True
+        self.engine.submit(self.conversation,'First turn')
+        self.wait(lambda:self.engine.turn is not None)
+        self.store.selection('test','high')
+        turn=next(p for m,p in self.protocol.calls if m=='turn/start')
+        self.assertEqual((turn['model'],turn['effort']),('test','low'))
+        self.protocol.finish('Done');self.wait(lambda:self.engine.active is None)
+        self.events.clear();self.protocol.hold=False;self.engine.submit(self.conversation,'Next turn')
+        self.wait(lambda:any(x[0]=='idle' for x in self.events))
+        turn=[p for m,p in self.protocol.calls if m=='turn/start'][-1]
+        self.assertEqual((turn['model'],turn['effort']),('test','high'))
 
     def test_correction_uses_actual_turn_steer_and_is_durable(self):
         self.protocol.hold=True

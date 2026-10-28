@@ -113,6 +113,8 @@ class Browser:
                 'tabs':tabs,'downloads':self.downloads[-10:]}
 
     def call(self, args, approved=False):
+        if self.permissions.desktop_suspended and args.get('operation') not in ('inspect','screenshot'):
+            raise Denied('Chat is open; resume before browser interaction')
         if self.permissions.halted.is_set():raise Denied('Browser automation is paused; manual browsing remains separate')
         if args.get('operation')=='check' and type(args.get('checked')) is not bool:raise ValueError('checked must be a JSON boolean')
         self.start();op=args['operation']

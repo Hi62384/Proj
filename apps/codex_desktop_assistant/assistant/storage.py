@@ -19,6 +19,14 @@ class Store:
         self.lock = threading.RLock()
         self.db = sqlite3.connect(self.directory / 'assistant.sqlite3', check_same_thread=False)
         self.db.row_factory = sqlite3.Row
+        # One consistent pre-upgrade backup; includes WAL through SQLite backup.
+        if self.db.execute("SELECT name FROM sqlite_master WHERE name='settings'").fetchone() and not self.db.execute("SELECT value FROM settings WHERE key='overhaul_backup'").fetchone():
+            backups=self.directory/'state-backups';backups.mkdir(exist_ok=True)
+            target=backups/('before-overhaul-'+time.strftime('%Y%m%d-%H%M%S')+'.sqlite3')
+            backup=sqlite3.connect(target)
+            try:self.db.backup(backup)
+            finally:backup.close()
+            self.db.execute("INSERT INTO settings(key,value) VALUES('overhaul_backup',?)",(json.dumps(str(target)),));self.db.commit()
         self.db.executescript('''PRAGMA journal_mode=WAL;
         PRAGMA foreign_keys=ON;
         CREATE TABLE IF NOT EXISTS conversations(id TEXT PRIMARY KEY,title TEXT,thread TEXT,status TEXT,pinned INTEGER DEFAULT 0,archived INTEGER DEFAULT 0,updated REAL);
@@ -76,6 +84,11 @@ class Store:
 
     def setting(self, key, value):
         self.execute('INSERT OR REPLACE INTO settings VALUES(?,?)', (key,json.dumps(value)))
+
+    def selection(self,model,effort):
+        with self.lock:
+            self.db.executemany('INSERT OR REPLACE INTO settings(key,value) VALUES(?,?)',[(key,json.dumps(value)) for key,value in [('model',model),('effort',effort)]])
+            self.db.commit()
 
     def close(self):
         with self.lock:

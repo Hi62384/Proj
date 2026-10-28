@@ -103,6 +103,12 @@ class CoreTests(unittest.TestCase):
         self.assertTrue(self.permissions.halted.is_set())
         self.assertEqual(self.store.messages(self.conversation)[0]['role'],'assistant')
 
+    def test_generic_owner_decision_does_not_grant_permissions(self):
+        self.permissions.resume(self.conversation)
+        result=json.loads(self.call('human.request_approval',{'question':'Choose the first draft layout?'})[0]['text'])
+        self.assertTrue(result['owner_decision']);self.assertFalse(result['permissions_granted'])
+        self.assertFalse(self.permissions.desktop);self.assertEqual(self.permissions.files,{})
+
     def test_images_are_real_tool_image_content(self):
         from PIL import Image
         import io

@@ -57,7 +57,9 @@ class Desktop:
     def identity(self, hwnd):
         import win32api
         import win32process
-        w=self._api().window(handle=int(hwnd)).wrapper_object()
+        if not ctypes.windll.user32.IsWindow(int(hwnd)):raise Denied('Window no longer exists; refresh the window picker')
+        try:w=self._api().window(handle=int(hwnd)).wrapper_object()
+        except Exception as error:raise Denied('Window is no longer available to accessibility; inspect again') from error
         process=win32api.OpenProcess(0x1000,False,w.process_id())
         try:created=str(win32process.GetProcessTimes(process)['CreationTime'])
         finally:process.Close()
@@ -66,6 +68,15 @@ class Desktop:
     def window(self, hwnd):
         hwnd=int(hwnd)
         grant=self.permissions.windows.get(hwnd);identity=self.identity(hwnd)
+        monitor=self.permissions.desktop_mode=='Entire Monitor' and self.permissions.capture_bounds is not None
+        if monitor:
+            layout=tuple(self.monitors())
+            if self.permissions.monitor_layout is None or layout!=tuple(self.permissions.monitor_layout):
+                self.permissions.halt();raise Denied('Display configuration changed; authorize the monitor again')
+            candidate=self._api().window(handle=hwnd).wrapper_object();r=candidate.rectangle()
+            left,top,right,bottom=self.permissions.capture_bounds
+            if r.left<left or r.top<top or r.right>right or r.bottom>bottom:raise Denied('Window leaves the authorized monitor; move it fully inside manually')
+            grant=identity
         if not grant:
             owner=ctypes.windll.user32.GetAncestor(hwnd,3)
             parent_grant=self.permissions.windows.get(owner)
@@ -78,6 +89,13 @@ class Desktop:
         if FORBIDDEN.search(title) or any(x.lower() in title.lower() for x in self.exclusions if x):
             raise Denied('Sensitive window: take over manually')
         return w
+
+    def has_password(self,window):
+        for control in window.descendants()[:180]:
+            try:
+                if control.is_visible() and self.password(control):return True
+            except Exception:continue
+        return False
 
     def inspect(self, hwnd):
         w=self.window(hwnd);result=[];elements={}
@@ -115,7 +133,7 @@ class Desktop:
             for window in self._api().windows():
                 try:
                     title=window.window_text()
-                    if window.is_visible() and (window.process_id()==os.getpid() or window.class_name().lower() in TERMINAL_CLASSES or FORBIDDEN.search(title) or any(x.lower() in title.lower() for x in self.exclusions if x)):
+                    if window.is_visible() and (window.process_id()==os.getpid() or window.class_name().lower() in TERMINAL_CLASSES or FORBIDDEN.search(title) or any(x.lower() in title.lower() for x in self.exclusions if x) or self.has_password(window)):
                         r=window.rectangle();painter.rectangle((r.left-bounds[0],r.top-bounds[1],r.right-bounds[0],r.bottom-bounds[1]),fill='black')
                 except Exception:
                     raise Denied('Could not verify sensitive-window masking; use exact-window observation')
@@ -123,12 +141,14 @@ class Desktop:
             if hwnd=='active':hwnd=ctypes.windll.user32.GetForegroundWindow()
             w=self.window(hwnd)
             if not w.is_visible():raise Denied('Selected window is not visible')
+            if self.has_password(w):raise Denied('Visible password field; complete authentication manually before observation')
             image=ImageGrab.grab(window=int(hwnd))
         out=io.BytesIO();image.save(out,format='PNG')
         return out.getvalue()
 
     def control(self, args):
-        if self.permissions.halted.is_set():raise Denied('Desktop input is paused')
+        if self.permissions.halted.is_set() or self.permissions.desktop_suspended:raise Denied('Desktop input is paused')
+        if self.permissions.input_check and not self.permissions.input_check():raise Denied('Human input takes priority; resume after finishing')
         if args.get('operation')=='check' and type(args.get('checked')) is not bool:raise ValueError('checked must be a JSON boolean')
         if not self.permissions.desktop:raise Denied('Desktop input is off')
         hwnd=int(args['window']);w=self.window(hwnd)
@@ -136,8 +156,13 @@ class Desktop:
         if op=='focus':w.set_focus();return self.inspect(hwnd)
         if op=='move_window':
             values=args['bounds']
+            if self.permissions.desktop_mode=='Entire Monitor':
+                l,t,r,b=self.permissions.capture_bounds
+                if len(values)!=4 or values[0]<l or values[1]<t or values[0]+values[2]>r or values[1]+values[3]>b:raise Denied('Move would leave the monitor scope')
             if len(values)!=4 or not all(type(v) is int and abs(v)<20000 for v in values):raise ValueError('Invalid window bounds')
-            w.move_window(*values);return self.inspect(hwnd)
+            import win32gui,win32con
+            win32gui.SetWindowPos(hwnd,0,*values,win32con.SWP_NOACTIVATE|win32con.SWP_NOZORDER)
+            return self.inspect(hwnd)
         token,at,elements=self.observations.get(hwnd,('',0,{}))
         if args.get('observation')!=token or time.monotonic()-at>45:raise Denied('Inspect this window again before acting')
         control=elements.get(int(args.get('element',-1)))
@@ -220,13 +245,15 @@ class Desktop:
         self.image_geometry.pop(hwnd,None)
         return self.inspect(hwnd)
 
-    @staticmethod
-    def type_focused(window,control,text):
+    def type_focused(self,window,control,text):
         # Unicode text only, never a model-authored SendKeys program or clipboard paste.
         window.set_focus();control.set_focus()
         if ctypes.windll.user32.GetForegroundWindow()!=window.handle:raise Denied('The approved text target lost focus')
         escaped=''.join('{'+c+'}' if c in '+^%{}~()' else c for c in text)
-        control.type_keys(escaped,set_foreground=False,with_spaces=True,with_newlines=True,with_tabs=True,vk_packet=True)
+        for character in text:
+            if self.permissions.halted.is_set():raise Denied('Typing interrupted; inspect partial text before resuming')
+            escaped='{'+character+'}' if character in '+^%{}~()' else character
+            control.type_keys(escaped,set_foreground=False,with_spaces=True,with_newlines=True,with_tabs=True,vk_packet=True)
 
     def register_image(self,hwnd,image_size):
         w=self.window(hwnd);r=w.rectangle()
@@ -234,16 +261,21 @@ class Desktop:
         self.image_geometry[int(hwnd)]=value
         return {key:v for key,v in value.items() if key!='at'}
 
+    @staticmethod
+    def installed_apps():
+        from .applications import catalog
+        return catalog()
+
     def open_application(self,name):
         import subprocess
         from pathlib import Path
-        if self.permissions.halted.is_set():raise Denied('Desktop input is paused')
-        executable=self.permissions.applications.get(name)
+        if self.permissions.halted.is_set() or self.permissions.desktop_suspended:raise Denied('Desktop input is paused')
+        executable=(self.installed_apps().get(name) if self.permissions.allow_launches else None) or self.permissions.applications.get(name)
         if not executable or Path(executable).suffix.lower()!='.exe':raise Denied('Application executable was not approved locally')
         if FORBIDDEN.search(Path(executable).stem):raise Denied('Terminal and sensitive applications are unsupported')
         # One owner-selected existing executable; no arguments, shell or command string.
         process=subprocess.Popen([executable],cwd=str(Path(executable).parent))
-        return {'started':name,'process':process.pid,'next':'Select the new window in Settings before controlling it.'}
+        return {'started':name,'process':process.pid,'next':'New window must stay inside the approved monitor, or be selected in Desktop Access.'}
 
 
 class EmergencyStop:

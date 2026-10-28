@@ -35,6 +35,14 @@ class Permissions:
         self.capture_bounds = None
         self.applications = {}
         self.safety_check=None
+        from .file_policy import FilePolicy
+        self.file_policy=FilePolicy()
+        self.desktop_mode='Selected Window'
+        self.desktop_target_name=''
+        self.monitor_layout=None
+        self.allow_launches=False
+        self.input_check=None
+        self.desktop_suspended=False
 
     def halt(self):
         # Immediate signal is independent of AI/Qt/Playwright and any pending approval.
@@ -48,11 +56,16 @@ class Permissions:
             self.routine_labels.clear()
             self.capture_bounds=None
             self.applications.clear()
+            self.file_policy.session.clear()
+            self.allow_launches=False
+            self.monitor_layout=None
+            self.desktop_target_name=''
             self.observe = self.desktop = self.browser = False
 
     def resume(self, conversation):
         with self.lock:
             self.owner = conversation
+            self.desktop_suspended=False
             self.generation += 1
             self.halted.clear()
 
@@ -71,4 +84,5 @@ class Permissions:
 
     def snapshot(self):
         return {'paused':self.halted.is_set(),'observation':self.observe,'desktop':self.desktop,
-                'browser':self.browser,'windows':list(self.windows),'origins':sorted(self.origins)}
+                'browser':self.browser,'windows':list(self.windows),'origins':sorted(self.origins),
+                'mode':self.desktop_mode,'launches':self.allow_launches}

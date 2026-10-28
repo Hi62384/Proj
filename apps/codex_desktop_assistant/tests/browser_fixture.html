@@ -1,0 +1,12 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Assistant Browser Lab</title>
+<style>body{font:20px system-ui;background:#e2e8f0;color:#10223b;padding:32px}main{max-width:650px;background:white;padding:25px;border-radius:16px}label{display:block;margin:18px 0}input,select,button{font:inherit;padding:9px}#result{padding:20px;background:#ccfbf1}</style>
+<main><h1>Local draft editor</h1><p>Synthetic local data only. Nothing publishes.</p>
+<form id="draft" method="post" enctype="multipart/form-data" action="/upload">
+<label>Name <input name="name" aria-label="Name"></label>
+<label>Style <select name="style" aria-label="Style"><option value="navy">Navy</option><option value="teal">Teal</option></select></label>
+<label><input type="checkbox" name="reviewed" aria-label="Reviewed">Reviewed</label>
+<label>Fixture file <input type="file" name="fixture" aria-label="Fixture file"></label>
+<button type="button" id="apply">Apply draft</button><button type="submit">Upload fixture</button>
+</form><pre id="result">Waiting for draft</pre></main>
+<script>document.querySelector('#apply').onclick=()=>{document.querySelector('#result').textContent=JSON.stringify({name:document.querySelector('[name=name]').value,style:document.querySelector('[name=style]').value,reviewed:document.querySelector('[name=reviewed]').checked,file:document.querySelector('[name=fixture]').files[0]?.name||null})};</script>
+</html>

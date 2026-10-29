@@ -75,6 +75,15 @@ class MainWindow(BaseWindow):
         self.activity_summary=QLabel('No computer task running');self.activity_summary.setWordWrap(True);right.addWidget(self.activity_summary)
         self.active_application=QLabel('Application: —');self.active_application.setWordWrap(True);right.addWidget(self.active_application)
         self.browser_toggle=QCheckBox('Dedicated browser');self.browser_toggle.toggled.connect(self.toggle_browser);right.addWidget(self.browser_toggle)
+        for label,operation in [('Open Browser','open'),('Show Browser','show'),('Browser Tabs','tabs')]:
+            right.addWidget(button(label,lambda checked=False,op=operation:self.browser_control(op)))
+        self.background_browser=QCheckBox('Work in Background');self.background_browser.setChecked(True)
+        self.background_browser.toggled.connect(lambda on:self.browser_control('background',enabled=on));right.addWidget(self.background_browser)
+        self.manual_browser=QCheckBox('Manual Control');self.manual_browser.toggled.connect(self.browser_manual);right.addWidget(self.manual_browser)
+        self.public_browser=QCheckBox('Public browsing for this session')
+        self.public_browser.setToolTip('Public websites may load without a separate site request. Account pages and consequential changes still require authorization.')
+        self.public_browser.toggled.connect(lambda on:self.browser_control('public',enabled=on));right.addWidget(self.public_browser)
+        self.browser_tabs_state=[];self.browser_tabs_dialog=None
         self.preview=QLabel('Screen preview');self.preview.setMinimumSize(200,160);self.preview.setAlignment(Qt.AlignCenter);right.addWidget(self.preview)
         right.addWidget(button('Preview approved screen',self.capture_preview))
         self.grants=QLabel();self.grants.setWordWrap(True);right.addWidget(self.grants)
@@ -129,10 +138,45 @@ class MainWindow(BaseWindow):
         self.launch_toggle.setChecked(False);self.notice.setText('Desktop access revoked.');self.refresh_status()
 
     def toggle_browser(self,on):
-        if on and not self.permissions.origins:
-            self.browser_toggle.blockSignals(True);self.browser_toggle.setChecked(False);self.browser_toggle.blockSignals(False)
-            self.settings();return
         self.permissions.generation+=1;self.permissions.browser=bool(on)
+
+    def browser_manual(self,on):
+        # Immediate hold: queued model calls cannot race the owner taking over.
+        self.permissions.browser_manual=bool(on)
+        self.broker.browser.observation=None
+        if not on:self.broker.browser.edit_until=time.monotonic()+30
+        self.browser_control('manual',enabled=on)
+        self.notice.setText('Manual Control: use the browser yourself. Turn this off when finished; Codex must inspect again.' if on else 'Browser control returned. Codex will inspect before continuing.')
+
+    def browser_control(self,operation,**args):
+        if self.engine.active and self.engine.active!=self.selected:
+            self.notice.setText('Open the active chat before changing its browser controls.');return
+        if operation in ('open','show','new_tab'):
+            if self.permissions.halted.is_set():self.permissions.resume(self.selected)
+            self.permissions.browser=True
+            self.browser_toggle.blockSignals(True);self.browser_toggle.setChecked(True);self.browser_toggle.blockSignals(False)
+        if operation=='public':self.permissions.public_browsing=bool(args['enabled'])
+        self.engine.queue.put(('browser_ui',self.selected,{'operation':operation,**args}))
+
+    def show_browser_tabs(self):
+        dialog=QDialog(self);dialog.setWindowTitle('Browser Tabs');dialog.resize(650,380);layout=QVBoxLayout(dialog)
+        listing=QListWidget();layout.addWidget(listing);self.browser_tabs_dialog=(dialog,listing)
+        url=QLineEdit();url.setPlaceholderText('https://website.example — opens with your authorization');layout.addWidget(url)
+        row=QHBoxLayout()
+        def chosen(op):
+            item=listing.currentItem()
+            if item:self.browser_control(op,tab=item.data(Qt.UserRole))
+        row.addWidget(button('Switch',lambda:chosen('tab')));row.addWidget(button('Close tab',lambda:chosen('close_tab')))
+        row.addWidget(button('New tab',lambda:self.browser_control('new_tab',url=url.text().strip())))
+        row.addWidget(button('Refresh',lambda:self.browser_control('tabs')));layout.addLayout(row)
+        self.update_browser_tabs();dialog.finished.connect(lambda _:setattr(self,'browser_tabs_dialog',None));dialog.show()
+
+    def update_browser_tabs(self):
+        if not self.browser_tabs_dialog:return
+        listing=self.browser_tabs_dialog[1];listing.clear()
+        from PySide6.QtWidgets import QListWidgetItem
+        for tab in self.browser_tabs_state:
+            item=QListWidgetItem(('● ' if tab['active'] else '')+tab['title']+'\n'+tab['url']);item.setData(Qt.UserRole,tab['tab']);listing.addItem(item)
 
     def toggle_launches(self,on):
         self.permissions.generation+=1;self.permissions.allow_launches=bool(on)
@@ -201,6 +245,11 @@ class MainWindow(BaseWindow):
 
     def on_event(self,kind,conversation,data):
         if self.closing:return
+        if kind=='browser_state':
+            self.browser_tabs_state=data['tabs'];self.update_browser_tabs()
+            if data.get('show_tabs') and not self.browser_tabs_dialog:self.show_browser_tabs()
+            self.refresh_status();return
+        if kind=='browser_error':self.notice.setText('Browser: '+str(data));return
         if kind=='connection':
             self.connection.setToolTip(str(data));self.connection.setText('Connected · ChatGPT' if str(data).startswith('Connected') else 'Connecting…' if str(data).startswith(('Connecting','Windows Linux startup retry')) else 'Connection needs attention');return
         if kind=='models':
@@ -235,6 +284,9 @@ class MainWindow(BaseWindow):
         title=QLabel(request['label']);title.setTextFormat(Qt.PlainText);title.setWordWrap(True);form.addWidget(title)
         if args.get('manual_step'):
             details=QLabel(args['reason']);details.setTextFormat(Qt.PlainText);details.setWordWrap(True);form.addWidget(details)
+        elif args.get('website_access'):
+            description=('Website: '+args['origin']+'\n'+('From: '+args['source_origin']+'\n' if args.get('source_origin') else '')+'\n'+args.get('reason','')+'\n\n'+args.get('approval_reason',args.get('note',''))+'\n\nPage content and authorized screenshots may be sent to your Codex account. Allow Once lasts for this visit. Session expires on Stop or app close.')
+            details=QLabel(description);details.setTextFormat(Qt.PlainText);details.setWordWrap(True);form.addWidget(details)
         elif args.get('file_permission'):
             details=QLabel('File: '+args['path']+'\n\nReason: '+args['reason']+'\n\n'+('A private recovery copy will be kept.' if args['reversible'] else 'No existing content will be changed.')+'\nAllow Once expires with this exact operation. Session applies only to this action and target.')
             details.setTextFormat(Qt.PlainText);details.setWordWrap(True);details.setTextInteractionFlags(Qt.TextSelectableByMouse);form.addWidget(details)
@@ -255,13 +307,18 @@ class MainWindow(BaseWindow):
             valid=not self.permissions.halted.is_set() and request['generation']==self.permissions.generation and time.monotonic()<=request['deadline'] and request['conversation']==self.permissions.owner
             if allowed and valid and args.get('operation')=='delete':
                 if QMessageBox.warning(self,'Confirm recoverable deletion','Delete the exact target shown above? A private recovery copy will be kept; recovery cannot be guaranteed.',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
-            if session and allowed and valid:
+            if allowed and valid and args.get('website_access'):
+                self.permissions.browser=True;self.permissions.observe=True
+                if session:
+                    if args.get('permission_kind')=='data_connection':self.permissions.browser_data_pairs.add((args['source_origin'],args['origin']))
+                    else:self.permissions.origins.add(args['origin'])
+            elif session and allowed and valid:
                 with self.permissions.lock:self.permissions.file_policy.session.append(FilePolicy.rule(args['path'],'file',{args['operation']:'allow'}))
             request['allowed']=allowed and valid;request['event'].set();card.hide();self.refresh_requests()
             self.notice.setText('Decision received. Codex will verify the current state and continue.' if request['allowed'] else 'Denied. Codex will receive your decision.')
             self.render()
         row.addWidget(button('Done — Continue' if args.get('manual_step') else 'Allow Once',lambda:decide(True)))
-        if args.get('file_permission'):row.addWidget(button('Allow for This Session',lambda:decide(True,True)))
+        if args.get('file_permission') or args.get('website_access'):row.addWidget(button('Allow for This Session',lambda:decide(True,True)))
         row.addWidget(button('Cannot complete' if args.get('manual_step') else 'Deny',lambda:decide(False)));form.addLayout(row)
         self.approvals_layout.addWidget(card);self.request_cards.append((request,card));self.refresh_requests()
         request['message_id']=self.store.add(request['conversation'],'system',request['label']+'\n'+str(args.get('path',''))+'\n'+str(args.get('reason',args.get('approval_reason',''))),'Waiting for local approval');self.render()
@@ -286,6 +343,8 @@ class MainWindow(BaseWindow):
             state=task['status'];legacy={'Thinking':'Working','Acting':'Working','Waiting for approval':'Waiting for User','Review after interruption':'Error'}
             self.status.setText(legacy.get(state,'Stopped' if state.startswith('Paused') else 'Error' if state.startswith('Review') else state))
         p=self.permissions
+        for widget,value in ((self.public_browser,p.public_browsing),(self.manual_browser,p.browser_manual)):
+            widget.blockSignals(True);widget.setChecked(bool(value));widget.blockSignals(False)
         self.grants.setText(('Access off' if not p.desktop and not p.browser else 'Stopped' if p.halted.is_set() else 'Access enabled')+'\n'+p.desktop_mode+'\n'+p.desktop_target_name+'\n'+('Program launches allowed' if p.allow_launches else 'Program launches off')+f'\nWebsites: {len(p.origins)}')
 
     def file_permissions(self):

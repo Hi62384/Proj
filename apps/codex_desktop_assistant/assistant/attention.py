@@ -134,6 +134,12 @@ class InputGuard:
         from .permissions import Denied
         state=getattr(self.local,'state',None)
         if not self.check():raise Denied('Stopped during input; inspect partial state before continuing')
+        target=window or (state.get('window') if state else None)
+        if target and self.permissions.browser_manual:
+            pid=wintypes.DWORD();ctypes.windll.user32.GetWindowThreadProcessId(int(target),ctypes.byref(pid))
+            name=ctypes.create_unicode_buffer(256);ctypes.windll.user32.GetClassNameW(int(target),name,256)
+            if pid.value in self.permissions.browser_pids or (not self.permissions.browser_pids and name.value.lower().startswith('chrome_widget')):
+                raise Denied('Manual Control took priority; no further browser input was sent')
         if state:
             if self.clock()-state['started']>2:raise Denied('Input transaction time limit; inspect partial state before continuing')
             with self.lock:

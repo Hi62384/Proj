@@ -135,9 +135,10 @@ def main():
         assert Site.posts.count('/purchase')==1 and Site.posts.count('/publish')==1
         assert [a['category'] for a in approved[-2:]]==['payment','publication'];record('purchase_and_publication_each_require_review')
         count=len(approved)
+        answer='Deny'
         try:run(lambda:action('Continue background','click'))
         except Denied:pass
-        assert Site.posts.count('/publish')==1 and len(approved)==count;record('hidden_publish_request_blocked_before_forwarding')
+        assert Site.posts.count('/publish')==1 and len(approved)==count+1;record('hidden_publish_request_explained_and_denied_before_forwarding')
         record('ordinary_notepad_approval_requests',unexpected);record('reviewed_browser_actions',approved);record('complete')
     except Exception as error:record('complete',False);record('error',type(error).__name__+': '+str(error));raise
     finally:

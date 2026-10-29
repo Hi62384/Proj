@@ -46,6 +46,10 @@ class Permissions:
         self.input_coordinator=None
         self.manual_requests=set()
         self.execution_context=threading.local()
+        self.public_browsing=False
+        self.browser_manual=False
+        self.browser_pids=set()
+        self.browser_data_pairs=set()
 
     def cancelled(self):
         event=getattr(self.execution_context,'cancel',None)
@@ -63,6 +67,8 @@ class Permissions:
         self.windows={};self.origins=set();self.files={};self.routine_labels=set()
         self.capture_bounds=None;self.applications={};self.file_policy.session=[]
         self.allow_launches=False;self.monitor_layout=None;self.desktop_target_name=''
+        self.public_browsing=False;self.browser_manual=False
+        self.browser_data_pairs=set()
         self.observe = self.desktop = self.browser = False
 
     def resume(self, conversation):

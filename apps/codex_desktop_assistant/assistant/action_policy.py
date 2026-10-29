@@ -59,7 +59,7 @@ def classify(operation,context):
     # A field named "Send message" or text mentioning a purchase is still data.
     if operation=='type' and source=='desktop' and role not in ('edit','document','combobox','textbox'):
         return Review('The target is not a verified text-editing control. Keyboard characters could activate this control instead of entering text.','unverified_target')
-    if operation in ('type','fill','select','check','focus','move_window','move_mouse','scroll','navigate','new_tab','switch_tab'):
+    if operation in ('type','fill','select','check','focus','move_window','move_mouse','scroll','navigate','new_tab','switch_tab') or (source=='browser' and operation in ('tabs','close_tab','back','forward','reload','wait')):
         return Review()
     if operation=='upload':return Review('This transfers the attached file to the approved website.','submission')
     if operation in ('coordinate_click','drag'):

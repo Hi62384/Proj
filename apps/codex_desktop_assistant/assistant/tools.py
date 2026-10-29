@@ -16,7 +16,7 @@ desktop.list_windows: {}. desktop.inspect/observe: {window: numeric hwnd}. Obser
 desktop.open_app: {name: installed ordinary application label}; desktop.list_apps: {} discovers safe launch targets. New windows are controllable only within the active desktop scope.
 desktop.action: {window, observation, element, operation, ...}; operations click/right_click/double_click/type(text)/select(text)/check(checked)/keypress(key)/focus/move_window(bounds)/move_mouse(point)/coordinate_click(point)/scroll(point,amount)/drag(point,end).
 Pixel operations require the capture token from desktop.observe; point/end use pixels of the transmitted image. The host maps them to the window's current physical pixels and rejects moved/resized/stale captures.
-browser.navigate: {url}. browser.inspect/observe: {}. browser.action: {operation,observation,element,...}; operations click/fill(text)/select(text)/check(checked)/upload(attachment_id)/press(key)/scroll(amount)/new_tab(url)/switch_tab(tab).
+browser.navigate: {url}. browser.inspect/observe: {}. browser.action: {operation,observation,element,...}; operations click/fill(text)/select(text)/check(checked)/upload(attachment_id)/press(key)/scroll(amount)/new_tab(url)/switch_tab(tab)/close_tab(tab)/back/forward/reload/wait(milliseconds)/tabs. Tab IDs and frame/element IDs come from inspection. Cross-origin websites are requested in chat automatically; Allow Once lasts for that visit, session grants last until Stop/close. browser.navigate supports authorize=true and reason to explicitly request signed-in/account access even in public research mode. Never access cookies, tokens, browser profile files or credentials; auth steps require Manual Control. After manual control returns, inspect again.
 attachments.read: {attachment_id}. files.read_approved: {path}. files.write_approved: {path,content,sha256}.
 files.read/write/create/delete: {path,reason,content?,sha256?,kind?}. Read returns content/hash. Write/delete require current sha256; empty-folder for empty directory deletion. Create makes a new text file or empty folder, never overwrites. Folder listing: files.list {path}; list requires read permission. Local policy asks owner in chat when needed; never self-approve.
 human.request_input: {question}, a specific actionable manual step; waits for Done — Continue on the same turn, then reinspect and verify. human.request_approval: {question}, an ambiguous decision only; it cannot grant tool permission. File/browser/desktop operations automatically request their own local approvals. Login, MFA, CAPTCHA, passwords and payment identity entry always require human takeover. Never request secrets in chat.
@@ -34,6 +34,7 @@ class Broker:
         self.permissions,self.desktop,self.browser=permissions,desktop,browser
         self.attachments,self.store,self.emit,self.approve=attachments,store,emit,approve
         self.attachment_map={}
+        self.browser.ask=lambda label,args:self.approve(self.permissions.owner,label,args)
         from .files import Files
         self.file_controller=Files(permissions,store,approve)
 
@@ -130,11 +131,10 @@ class Broker:
                     result=list(self.desktop.installed_apps())
                 else:result=self.desktop.open_application(args['name'])
             elif cap=='browser.navigate':
-                self.permissions.check_origin(args['url'])
                 decision=request_review('GET',args['url'])
                 # Normal approved-origin navigation does not commit a submission.
                 if decision.required:raise Denied(decision.reason+' Use an exact owner-reviewed action.')
-                result=self.browser.call({'operation':'navigate','url':args['url']})
+                result=self.browser.call({'operation':'navigate',**args})
             elif cap in ('browser.inspect','browser.observe'):
                 result=self.browser.call({'operation':'screenshot' if cap.endswith('observe') else 'inspect'})
             elif cap.startswith('files.'):
@@ -154,9 +154,11 @@ class Broker:
                 context=self.desktop.action_context(w,control,args)
             else:
                 if not self.permissions.browser:raise Denied('Browser control is off')
-                self.browser.start();self.permissions.check_origin(self.browser.page.url)
+                if self.permissions.browser_manual or self.permissions.manual_requests:raise Denied('Manual Control is active; wait for the owner to return control')
+                self.browser.start()
                 op=args['operation']
                 if op in ('click','fill','select','check','upload','press'):
+                    self.browser.authorize(self.browser.effective_url(),'Interact with this website.')
                     locator=self.browser.target(args)
                     context=self.browser.action_context(args)
                     label=context.get('label') or op
@@ -165,7 +167,7 @@ class Broker:
                     attachment=self.attachment_map.get(args['attachment_id'])
                     if not attachment:raise Denied('Upload file is not an approved attachment')
                     args={**args,'approved_path':str(self.attachments.path(attachment))}
-                    label='Upload '+attachment['name']+' to '+self.browser.page.url
+                    label='Upload '+attachment['name']+' to '+(context.get('form_action') or self.browser.page.url)
             approved=self._review(conversation,label,args,generation,context)
             if cap=='desktop.action':result=self.desktop.control(args,conversation=conversation,generation=generation)
             else:

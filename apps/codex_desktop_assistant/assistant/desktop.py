@@ -118,7 +118,8 @@ class Desktop:
                 elements[index]=control
             except Exception:continue
         token=uuid.uuid4().hex
-        self.observations[int(hwnd)]=(token,time.monotonic(),elements)
+        signatures={i:self.signature(c) for i,c in elements.items() if c.element_info.control_type in ('Edit','ComboBox','CheckBox')}
+        self.observations[int(hwnd)]=(token,time.monotonic(),elements,signatures)
         r=w.rectangle()
         return {'window':int(hwnd),'title':w.window_text(),'observation':token,'bounds':[r.left,r.top,r.width(),r.height()],'controls':result}
 
@@ -146,13 +147,36 @@ class Desktop:
         out=io.BytesIO();image.save(out,format='PNG')
         return out.getvalue()
 
-    def control(self, args):
+    @staticmethod
+    def signature(control):
+        role=control.element_info.control_type
+        try:
+            if role=='CheckBox':return control.get_toggle_state()
+            if role=='ComboBox':return str(control.selected_text())
+            return str(control.get_value())
+        except Exception:return None
+
+    def control(self,args,conversation=None,generation=None):
+        coordinator=self.permissions.input_coordinator
+        from contextlib import nullcontext
+        shared=args.get('operation') in ('focus','move_window','keypress','right_click','double_click','move_mouse','coordinate_click','scroll','drag')
+        scope=coordinator.transaction(args['window'],shared) if coordinator else nullcontext()
+        with scope:
+            with self.permissions.action(conversation or self.permissions.owner,generation):
+                if self.permissions.manual_requests:raise Denied('Waiting for the owner to complete the requested manual step')
+                result=self._control(args)
+                self.window(args['window'])
+                return result
+
+    def _control(self, args):
         if self.permissions.halted.is_set() or self.permissions.desktop_suspended:raise Denied('Desktop input is paused')
-        if self.permissions.input_check and not self.permissions.input_check():raise Denied('Human input takes priority; resume after finishing')
+        if self.permissions.cancelled():raise Denied('Originating turn ended; action cancelled')
         if args.get('operation')=='check' and type(args.get('checked')) is not bool:raise ValueError('checked must be a JSON boolean')
         if not self.permissions.desktop:raise Denied('Desktop input is off')
         hwnd=int(args['window']);w=self.window(hwnd)
         op=args['operation']
+        guard=self.permissions.input_coordinator
+        if guard:guard.checkpoint()
         if op=='focus':w.set_focus();return self.inspect(hwnd)
         if op=='move_window':
             values=args['bounds']
@@ -163,7 +187,10 @@ class Desktop:
             import win32gui,win32con
             win32gui.SetWindowPos(hwnd,0,*values,win32con.SWP_NOACTIVATE|win32con.SWP_NOZORDER)
             return self.inspect(hwnd)
-        token,at,elements=self.observations.get(hwnd,('',0,{}))
+        observation=self.observations.get(hwnd,('',0,{},{}))
+        token,at,elements=observation[:3]
+        for index,signature in (observation[3] if len(observation)>3 else {}).items():
+            if self.signature(elements[index])!=signature:raise Denied('The owner or application changed a field after inspection. Nothing was dispatched; inspect again and preserve those edits.')
         if args.get('observation')!=token or time.monotonic()-at>45:raise Denied('Inspect this window again before acting')
         control=elements.get(int(args.get('element',-1)))
         if op not in ('move_mouse','coordinate_click','drag','scroll') and control is None:raise Denied('Select an accessible element from the latest observation')
@@ -175,7 +202,12 @@ class Desktop:
         self.observations.pop(hwnd,None)
         if op=='click':
             try:control.invoke()
-            except (AttributeError,NotImplementedError):control.click_input()
+            except (AttributeError,NotImplementedError):
+                from contextlib import nullcontext
+                guard=self.permissions.input_coordinator
+                with guard.transaction(hwnd,True) if guard else nullcontext():
+                    if guard:guard.checkpoint()
+                    control.click_input()
         elif op=='right_click':control.click_input(button='right')
         elif op=='double_click':control.double_click_input()
         elif op=='type':
@@ -194,11 +226,15 @@ class Desktop:
             if control.selected_text()!=text:
                 # Qt exposes some popup options outside the combo's UIA subtree.
                 # Use focused text search, with every SendKeys metacharacter escaped.
-                w.set_focus();control.set_focus();control.click_input()
-                foreground=ctypes.windll.user32.GetForegroundWindow()
-                if foreground!=hwnd and ctypes.windll.user32.GetAncestor(foreground,3)!=hwnd:raise Denied('Could not focus dropdown')
-                escaped=''.join('{'+c+'}' if c in '+^%{}~()' else c for c in text)
-                control.type_keys('{HOME}'+escaped+'{ENTER}',set_foreground=False,with_spaces=True,vk_packet=False)
+                guard=self.permissions.input_coordinator
+                from contextlib import nullcontext
+                with guard.transaction(hwnd,True) if guard else nullcontext():
+                    w.set_focus();control.set_focus();control.click_input()
+                    foreground=ctypes.windll.user32.GetForegroundWindow()
+                    if foreground!=hwnd and ctypes.windll.user32.GetAncestor(foreground,3)!=hwnd:raise Denied('Could not focus dropdown')
+                    escaped=''.join('{'+c+'}' if c in '+^%{}~()' else c for c in text)
+                    if guard:guard.checkpoint(hwnd)
+                    control.type_keys('{HOME}'+escaped+'{ENTER}',set_foreground=False,with_spaces=True,vk_packet=False)
             deadline=time.monotonic()+1
             while control.selected_text()!=text and time.monotonic()<deadline:time.sleep(.03)
             if control.selected_text()!=text:raise RuntimeError('Dropdown selection was not verified')
@@ -209,7 +245,9 @@ class Desktop:
             key=args['key'].upper()
             if key=='CTRL+V':raise Denied('Pasting private clipboard content requires manual takeover')
             if key not in KEYS:raise Denied('Shortcut is not in the bounded key list')
+            if guard:guard.checkpoint()
             control.set_focus()
+            if guard:guard.checkpoint(hwnd)
             if ctypes.windll.user32.GetForegroundWindow()!=hwnd:raise Denied('Focus was not acquired')
             control.type_keys(KEYS[key],set_foreground=False)
         elif op in ('move_mouse','coordinate_click','drag','scroll'):
@@ -230,6 +268,7 @@ class Desktop:
                 if root!=hwnd:raise Denied('Another window occludes the approved input target')
                 return p
             p=point('point')
+            if guard:guard.checkpoint()
             if op=='move_mouse':mouse.move(coords=p)
             elif op=='coordinate_click':mouse.click(coords=p,button=args.get('button','left'))
             elif op=='scroll':mouse.scroll(coords=p,wheel_dist=max(-10,min(10,int(args['amount']))))
@@ -238,6 +277,7 @@ class Desktop:
                 try:
                     for step in range(1,11):
                         if self.permissions.halted.is_set() or epoch!=self.permissions.generation:break
+                        if guard:guard.checkpoint()
                         position=(round(p[0]+(end[0]-p[0])*step/10),round(p[1]+(end[1]-p[1])*step/10))
                         mouse.move(coords=position);time.sleep(.015)
                 finally:mouse.release(coords=position)
@@ -246,14 +286,18 @@ class Desktop:
         return self.inspect(hwnd)
 
     def type_focused(self,window,control,text):
-        # Unicode text only, never a model-authored SendKeys program or clipboard paste.
-        window.set_focus();control.set_focus()
-        if ctypes.windll.user32.GetForegroundWindow()!=window.handle:raise Denied('The approved text target lost focus')
-        escaped=''.join('{'+c+'}' if c in '+^%{}~()' else c for c in text)
-        for character in text:
-            if self.permissions.halted.is_set():raise Denied('Typing interrupted; inspect partial text before resuming')
-            escaped='{'+character+'}' if character in '+^%{}~()' else character
-            control.type_keys(escaped,set_foreground=False,with_spaces=True,with_newlines=True,with_tabs=True,vk_packet=True)
+        from contextlib import nullcontext
+        guard=self.permissions.input_coordinator
+        if len(text)>256:raise Denied('Shared keyboard fallback is limited to 256 characters per inspected action; use semantic accessibility or dedicated browser input for longer text')
+        with guard.transaction(window.handle,True) if guard else nullcontext():
+            if guard:guard.checkpoint()
+            window.set_focus();control.set_focus()
+            for character in text:
+                if self.permissions.halted.is_set() or self.permissions.cancelled():raise Denied('Typing stopped; inspect partial text before continuing')
+                if guard:guard.checkpoint(window.handle)
+                elif ctypes.windll.user32.GetForegroundWindow()!=window.handle:raise Denied('The approved text target lost focus')
+                escaped='{'+character+'}' if character in '+^%{}~()' else character
+                control.type_keys(escaped,set_foreground=False,with_spaces=True,with_newlines=True,with_tabs=True,vk_packet=True)
 
     def register_image(self,hwnd,image_size):
         w=self.window(hwnd);r=w.rectangle()
@@ -270,9 +314,13 @@ class Desktop:
         import subprocess
         from pathlib import Path
         if self.permissions.halted.is_set() or self.permissions.desktop_suspended:raise Denied('Desktop input is paused')
+        epoch=self.permissions.generation
         executable=(self.installed_apps().get(name) if self.permissions.allow_launches else None) or self.permissions.applications.get(name)
         if not executable or Path(executable).suffix.lower()!='.exe':raise Denied('Application executable was not approved locally')
         if FORBIDDEN.search(Path(executable).stem):raise Denied('Terminal and sensitive applications are unsupported')
+        guard=self.permissions.input_coordinator
+        if guard:guard.wait(0,True)
+        if self.permissions.cancelled() or self.permissions.halted.is_set() or epoch!=self.permissions.generation or self.permissions.manual_requests:raise Denied('Launch cancelled or waiting for the owner')
         # One owner-selected existing executable; no arguments, shell or command string.
         process=subprocess.Popen([executable],cwd=str(Path(executable).parent))
         return {'started':name,'process':process.pid,'next':'New window must stay inside the approved monitor, or be selected in Desktop Access.'}

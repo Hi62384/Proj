@@ -23,6 +23,7 @@ class Browser:
         self.manual_mode=False
         self.uploads={}
         self.redirect_target=None
+        self.value_signatures={}
 
     def start(self):
         if not self.permissions.browser:raise Denied('Browser control is off')
@@ -103,6 +104,7 @@ class Browser:
         self.observed_at=time.monotonic()
         self.elements=self.page.locator(CONTROLS).element_handles()[:160]
         controls=[element.evaluate('''(e,i)=>({element:i,tag:e.tagName,role:e.getAttribute('role'),type:e.type||'',label:e.getAttribute('aria-label')||e.labels?.[0]?.innerText||e.innerText||e.placeholder||e.name||'',value:e.type==='password'?'[private]':(e.value||'').slice(0,1000),checked:e.checked,disabled:e.disabled,options:e.tagName==='SELECT'?[...e.options].map(x=>({value:x.value,label:x.label})):undefined})''',i) for i,element in enumerate(self.elements)]
+        self.value_signatures={c['element']:(c['value'],c.get('checked')) for c in controls if c.get('type') in ('text','email','number','search','tel','url','textarea','select-one','select-multiple','checkbox','radio') or c['tag'] in ('TEXTAREA','SELECT')}
         tabs=[]
         for index,page in enumerate(self.context.pages):
             try:self.permissions.check_origin(page.url)
@@ -113,8 +115,8 @@ class Browser:
                 'tabs':tabs,'downloads':self.downloads[-10:]}
 
     def call(self, args, approved=False):
-        if self.permissions.desktop_suspended and args.get('operation') not in ('inspect','screenshot'):
-            raise Denied('Chat is open; resume before browser interaction')
+        if self.permissions.cancelled():raise Denied('Originating turn ended; action cancelled')
+        if self.permissions.manual_requests and args.get('operation') not in ('inspect','screenshot'):raise Denied('Waiting for the owner to finish the requested manual step')
         if self.permissions.halted.is_set():raise Denied('Browser automation is paused; manual browsing remains separate')
         if args.get('operation')=='check' and type(args.get('checked')) is not bool:raise ValueError('checked must be a JSON boolean')
         self.start();op=args['operation']
@@ -180,6 +182,10 @@ class Browser:
             raise Denied('Inspect this page again before acting')
         index=int(args.get('element',0))
         if index<0 or index>=len(self.elements):raise Denied('Unknown browser element')
+        for observed,signature in self.value_signatures.items():
+            element=self.elements[observed]
+            current=element.evaluate("e=>[(e.value||'').slice(0,1000),e.checked===undefined?null:e.checked]")
+            if tuple(current)!=signature:raise Denied('A form field changed after inspection. Nothing was dispatched; inspect again and preserve owner edits.')
         target=self.elements[index]
         if not target.is_visible() or not target.evaluate('e=>e.isConnected'):raise Denied('Element changed; inspect again')
         return target

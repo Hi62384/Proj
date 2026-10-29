@@ -36,6 +36,8 @@ class MainWindow(BaseWindow):
         self.attention=Attention(self)
         self.input_guard=InputGuard(self.permissions,lambda:bool(self.engine.active and self.engine.turn),self.focus_pause)
         self.permissions.input_check=self.input_guard.check;self.broker.input_guard=self.input_guard
+        self.permissions.input_coordinator=self.input_guard
+        self.input_guard.waiting=lambda message:self.emit('input_access',getattr(self.permissions.execution_context,'conversation',self.engine.active),message)
 
     def build(self):
         root=QWidget();self.setCentralWidget(root);layout=QVBoxLayout(root);layout.setContentsMargins(14,12,14,12);layout.setSpacing(10)
@@ -43,10 +45,10 @@ class MainWindow(BaseWindow):
         self.connection=QLabel('Connecting…');self.connection.setToolTip('Uses your existing ChatGPT account')
         self.model=QComboBox();self.model.setMinimumWidth(150);self.model.currentIndexChanged.connect(self.model_changed);top.addWidget(self.model)
         top.addWidget(QLabel('Reasoning'));self.effort=QComboBox();self.effort.setMinimumWidth(105);self.effort.currentIndexChanged.connect(self.effort_changed);top.addWidget(self.effort)
-        top.addStretch();self.status=QLabel('Ready');top.addWidget(self.status)
+        top.addStretch();self.status=QLabel('Ready');self.status.setMinimumWidth(140);top.addWidget(self.status)
         self.task_controls=QWidget();task_row=QHBoxLayout(self.task_controls);task_row.setContentsMargins(0,0,0,0)
-        for label,slot in [('Pause',self.pause),('Resume',self.resume),('Take Over',self.takeover),('Stop',self.stop)]:task_row.addWidget(button(label,slot))
-        self.attention_button=button('Requests',lambda:self.attention.open());top.addWidget(self.attention_button)
+        for label,slot in [('Continue',self.resume),('Stop',self.stop)]:task_row.addWidget(button(label,slot))
+        self.attention_button=button('Requests',lambda:self.attention.open());self.attention_button.setMinimumWidth(125);top.addWidget(self.attention_button)
         top.addWidget(button('Permissions',self.file_permissions));top.addWidget(button('Settings',self.settings));layout.addLayout(top)
         controls=QHBoxLayout();controls.addWidget(QLabel('Desktop Access'))
         self.access_mode=QComboBox();self.access_mode.addItems(['Selected Window','Entire Monitor']);self.access_mode.currentIndexChanged.connect(self.refresh_targets);controls.addWidget(self.access_mode)
@@ -121,10 +123,16 @@ class MainWindow(BaseWindow):
         except Exception as error:self.notice.setText(str(error))
 
     def revoke_desktop(self):
-        self.permissions.halt()
+        self.permissions.generation+=1
         with self.permissions.lock:
             self.permissions.windows.clear();self.permissions.capture_bounds=None;self.permissions.desktop=self.permissions.observe=False;self.permissions.allow_launches=False
         self.launch_toggle.setChecked(False);self.notice.setText('Desktop access revoked.');self.refresh_status()
+
+    def toggle_browser(self,on):
+        if on and not self.permissions.origins:
+            self.browser_toggle.blockSignals(True);self.browser_toggle.setChecked(False);self.browser_toggle.blockSignals(False)
+            self.settings();return
+        self.permissions.generation+=1;self.permissions.browser=bool(on)
 
     def toggle_launches(self,on):
         self.permissions.generation+=1;self.permissions.allow_launches=bool(on)
@@ -147,38 +155,49 @@ class MainWindow(BaseWindow):
         if self.effort.currentData() is not None:self.store.setting('effort',self.effort.currentData());self.notice.setText('Reasoning saved for the next turn.')
 
     def focus_pause(self,reason):
-        # Called from watchdog, never mutate Qt widgets here. Pending file approval
-        # remains on the same tool call; only desktop authority is suspended.
-        if any(not r['event'].is_set() for r in self.requests):
-            self.permissions.desktop_suspended=True
-            self.emit('focus_paused',self.engine.active,reason)
-        else:
-            self.engine.pause();self.emit('focus_paused',self.engine.active,reason)
+        # Compatibility callback only. Ordinary focus/input never changes authority
+        # or interrupts a model turn; InputGuard coordinates individual actions.
+        return
+
+    def stop(self):
+        super().stop();self.pause_reason='';self.engine.state(self.selected,'Stopped');self.status.setText('Stopped')
+
+    def emergency(self,reason='Emergency stop. New input is disabled; review before continuing.'):
+        self.permissions.halt();self.engine.interrupt.set()
+        if self.engine.turn_cancel:self.engine.turn_cancel.set()
+        for request in self.requests:request['event'].set()
+        self.engine.state(self.engine.active or self.selected,'Stopped')
+        self.emit('paused',self.engine.active,reason)
 
     def resume(self):
-        desktop_wait=self.permissions.desktop_suspended and not self.permissions.halted.is_set()
-        self.permissions.desktop_suspended=False;self.pause_reason=''
-        if hasattr(self,'input_guard'):self.input_guard.last=self.input_guard.tick()
-        if self.engine.active and desktop_wait:
-            self.notice.setText('Resuming the current task.');return
+        self.pause_reason=''
+        if self.engine.active:
+            self.notice.setText('Complete the requested step and choose Done — Continue above.' if any(r['args'].get('manual_step') and not r['event'].is_set() and r['conversation']==self.selected for r in self.requests) else 'The current task is still running.');return
         super().resume()
 
     def send(self):
-        if self.input.toPlainText().strip().lower().rstrip('.!') in ('continue','resume') and self.permissions.desktop_suspended and not self.permissions.halted.is_set():self.resume()
+        text=self.input.toPlainText().strip().lower().rstrip('.!')
+        manual=next((r for r in self.requests if r['conversation']==self.selected and r['args'].get('manual_step') and not r['event'].is_set()),None)
+        if manual and text in ('done','continue','resume'):
+            valid=manual['generation']==self.permissions.generation and not self.permissions.halted.is_set() and time.monotonic()<=manual['deadline']
+            if not valid:self.notice.setText('That request expired or was stopped. Review the task before continuing.');return
+            self.store.add(self.selected,'user',self.input.toPlainText(),'sent')
+            manual['allowed']=True;manual['event'].set();self.input.clear();self.refresh_requests();self.render();return
         super().send()
 
     def approve(self,conversation,label,args):
+        generation=getattr(self.permissions.execution_context,'generation',self.permissions.generation)
+        if generation!=self.permissions.generation or self.permissions.cancelled():return False
         request={'conversation':conversation,'label':label,'args':dict(args),'event':threading.Event(),
-                 'allowed':False,'generation':self.permissions.generation,'deadline':time.monotonic()+300}
-        self.requests.append(request);self.emit('request_approval',conversation,request)
-        self.store.update(conversation,status='Waiting for approval')
-        while not request['event'].wait(.1):
-            if self.permissions.halted.is_set() or self.engine.stop_event.is_set() or time.monotonic()>request['deadline']:
-                request['event'].set();self.emit('request_expired',conversation,None);return False
-        while request['allowed'] and not args.get('file_permission') and self.permissions.desktop_suspended:
-            if self.permissions.halted.is_set() or self.engine.stop_event.is_set() or time.monotonic()>request['deadline'] or request['generation']!=self.permissions.generation:return False
-            self.engine.stop_event.wait(.05)
-        return request['allowed'] and request['generation']==self.permissions.generation and time.monotonic()<=request['deadline']
+                 'allowed':False,'generation':generation,'deadline':time.monotonic()+300}
+        self.requests.append(request);self.engine.waiting(conversation,1);self.emit('request_approval',conversation,request)
+        try:
+            while not request['event'].wait(.1):
+                self.engine.pump_steering(conversation)
+                if request['generation']!=self.permissions.generation or self.permissions.halted.is_set() or self.permissions.cancelled() or self.engine.stop_event.is_set() or time.monotonic()>request['deadline']:
+                    request['event'].set();self.emit('request_expired',conversation,None);return False
+            return request['allowed'] and not self.permissions.cancelled() and request['generation']==self.permissions.generation and time.monotonic()<=request['deadline']
+        finally:self.engine.waiting(conversation,-1)
 
     def on_event(self,kind,conversation,data):
         if self.closing:return
@@ -191,16 +210,20 @@ class MainWindow(BaseWindow):
             if index<0:index=next((i for i,x in enumerate(data) if x.get('isDefault')),0)
             self.model.setCurrentIndex(index);self.model.blockSignals(False);self.model_changed();return
         if kind=='request_approval':
-            if not data['event'].is_set() and not self.permissions.halted.is_set():
-                self.show_request(data);self.attention.notify('input',id(data))
+            if not data['event'].is_set() and data['generation']==self.permissions.generation and not self.permissions.halted.is_set():
+                self.show_request(data);self.attention.notify('input',id(data),data['args'].get('notification_kind',data['args'].get('operation')))
             return
         if kind=='request_expired':self.refresh_requests();return
         if kind=='started' and not self.permissions.halted.is_set() and not self.permissions.desktop_suspended:self.pause_reason=''
         if kind=='computer_target':self.active_application.setText('Application: '+str(data));return
-        if kind=='focus_paused':self.pause_reason=str(data);self.notice.setText(str(data));return
+        if kind=='focus_paused':return
+        if kind=='task_state' and conversation==self.selected:self.status.setText(str(data));return
+        if kind=='input_access':
+            if conversation==self.selected:self.activity_summary.setText(str(data) or 'Working on your task')
+            return
         if hasattr(self,'attention'):
             if kind in ('handoff','error'):self.attention.notify('input' if kind=='handoff' else 'error',(kind,conversation,str(data)))
-            elif kind=='idle' and conversation and not self.permissions.halted.is_set():self.attention.notify('info',('idle',conversation,len(self.store.messages(conversation))))
+            elif kind=='idle' and conversation and self.store.conversation(conversation)['status']=='Completed':self.attention.notify('info',('idle',conversation,len(self.store.messages(conversation))))
         if kind=='action':
             summaries={'desktop.inspect':'Inspecting application controls','desktop.observe':'Viewing the approved screen','desktop.action':'Working in the approved application','desktop.open_app':'Opening an approved program','desktop.list_windows':'Finding authorized windows','browser.inspect':'Inspecting the page','browser.action':'Working on the page','browser.navigate':'Opening an approved website','files.read':'Reading a file','files.write':'Updating a file','files.create':'Creating a file','files.delete':'Deleting an approved file','files.list':'Inspecting a folder','attachments.read':'Reading an attachment'}
             self.activity_summary.setText(summaries.get(str(data),'Working on your task'))
@@ -208,9 +231,11 @@ class MainWindow(BaseWindow):
         if kind in ('paused','idle'):self.refresh_requests()
 
     def show_request(self,request):
-        args=request['args'];card=QGroupBox('Your permission is needed');card.setProperty('conversation',request['conversation']);form=QVBoxLayout(card)
+        args=request['args'];card=QGroupBox('Waiting for User — Complete this step' if args.get('manual_step') else 'Waiting for User — Your permission is needed');card.setProperty('conversation',request['conversation']);form=QVBoxLayout(card)
         title=QLabel(request['label']);title.setTextFormat(Qt.PlainText);title.setWordWrap(True);form.addWidget(title)
-        if args.get('file_permission'):
+        if args.get('manual_step'):
+            details=QLabel(args['reason']);details.setTextFormat(Qt.PlainText);details.setWordWrap(True);form.addWidget(details)
+        elif args.get('file_permission'):
             details=QLabel('File: '+args['path']+'\n\nReason: '+args['reason']+'\n\n'+('A private recovery copy will be kept.' if args['reversible'] else 'No existing content will be changed.')+'\nAllow Once expires with this exact operation. Session applies only to this action and target.')
             details.setTextFormat(Qt.PlainText);details.setWordWrap(True);details.setTextInteractionFlags(Qt.TextSelectableByMouse);form.addWidget(details)
             if args.get('preview'):
@@ -227,10 +252,11 @@ class MainWindow(BaseWindow):
             if session and allowed and valid:
                 with self.permissions.lock:self.permissions.file_policy.session.append(FilePolicy.rule(args['path'],'file',{args['operation']:'allow'}))
             request['allowed']=allowed and valid;request['event'].set();card.hide();self.refresh_requests()
-            if request['allowed'] and not args.get('file_permission') and self.permissions.desktop_suspended:self.notice.setText('Approved once. Press Resume to continue this exact pending action.')
-        row.addWidget(button('Allow Once',lambda:decide(True)))
+            self.notice.setText('Decision received. Codex will verify the current state and continue.' if request['allowed'] else 'Denied. Codex will receive your decision.')
+            self.render()
+        row.addWidget(button('Done — Continue' if args.get('manual_step') else 'Allow Once',lambda:decide(True)))
         if args.get('file_permission'):row.addWidget(button('Allow for This Session',lambda:decide(True,True)))
-        row.addWidget(button('Deny',lambda:decide(False)));form.addLayout(row)
+        row.addWidget(button('Cannot complete' if args.get('manual_step') else 'Deny',lambda:decide(False)));form.addLayout(row)
         self.approvals_layout.addWidget(card);self.request_cards.append((request,card));self.refresh_requests()
         request['message_id']=self.store.add(request['conversation'],'system',request['label']+'\n'+str(args.get('path',''))+'\n'+str(args.get('reason','')),'Waiting for local approval');self.render()
 
@@ -249,10 +275,12 @@ class MainWindow(BaseWindow):
 
     def refresh_status(self):
         super().refresh_status()
-        if self.pause_reason:self.status.setText(self.pause_reason)
-        if not self.engine.active and not self.pause_reason:self.status.setText('Ready')
+        task=self.store.conversation(self.selected) if self.selected else None
+        if task:
+            state=task['status'];legacy={'Thinking':'Working','Acting':'Working','Waiting for approval':'Waiting for User','Review after interruption':'Error'}
+            self.status.setText(legacy.get(state,'Stopped' if state.startswith('Paused') else 'Error' if state.startswith('Review') else state))
         p=self.permissions
-        self.grants.setText(('Access off' if not p.desktop and not p.browser else 'Paused' if p.halted.is_set() or p.desktop_suspended else 'Access enabled')+'\n'+p.desktop_mode+'\n'+p.desktop_target_name+'\n'+('Program launches allowed' if p.allow_launches else 'Program launches off')+f'\nWebsites: {len(p.origins)}')
+        self.grants.setText(('Access off' if not p.desktop and not p.browser else 'Stopped' if p.halted.is_set() else 'Access enabled')+'\n'+p.desktop_mode+'\n'+p.desktop_target_name+'\n'+('Program launches allowed' if p.allow_launches else 'Program launches off')+f'\nWebsites: {len(p.origins)}')
 
     def file_permissions(self):
         dialog=QDialog(self);dialog.setWindowTitle('File permissions');dialog.resize(1000,520);layout=QVBoxLayout(dialog)
@@ -276,7 +304,7 @@ class MainWindow(BaseWindow):
             if index>=0:table.removeRow(index);rows.pop(index)
         row.addWidget(button('Remove selected rule',remove))
         def clear_session():
-            self.permissions.halt();self.permissions.file_policy.session.clear();self.notice.setText('Session file permissions revoked. Resume when ready.')
+            self.permissions.generation+=1;self.permissions.file_policy.session=[];self.notice.setText('Session file permissions revoked. Other authorized work can continue.')
         row.addWidget(button('Revoke session grants',clear_session));layout.addLayout(row)
         session=QPlainTextEdit(json.dumps(self.permissions.file_policy.session,indent=2));session.setReadOnly(True);session.setMaximumHeight(90);layout.addWidget(session)
         buttons=QDialogButtonBox(QDialogButtonBox.Save|QDialogButtonBox.Cancel);buttons.accepted.connect(dialog.accept);buttons.rejected.connect(dialog.reject);layout.addWidget(buttons)
@@ -288,9 +316,9 @@ class MainWindow(BaseWindow):
                 if scope.currentText()!='file' and (root==root.parent or root==Path.home() or len(root.parts)<=2):
                     if QMessageBox.warning(self,'Broad file permission','This rule covers a broad location. It may expose personal files. Protected locations remain denied. Authorize this scope?',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
                 rules.append(FilePolicy.rule(root,scope.currentText(),dict(zip(ACTIONS,[c.currentText() for c in choices]))))
-            self.permissions.halt()
+            self.permissions.generation+=1
             with self.permissions.lock:self.permissions.file_policy.rules=rules;self.permissions.file_policy.session.clear()
-            self.store.setting('file_rules',rules);self.notice.setText('File rules saved. Resume when ready.')
+            self.store.setting('file_rules',rules);self.notice.setText('File rules saved. The task can continue within the current policy.')
         except Exception as error:self.notice.setText(str(error))
 
     def settings(self):
@@ -311,12 +339,14 @@ class MainWindow(BaseWindow):
         if dialog.exec()!=QDialog.Accepted:return
         try:
             approved={origin(x.strip()) for x in origins.toPlainText().splitlines() if x.strip()}
-            self.permissions.halt()
-            with self.permissions.lock:
-                self.permissions.origins=approved;self.permissions.routine_labels={x.strip().lower() for x in labels.toPlainText().splitlines() if x.strip()}
-                self.desktop.exclusions=[x.strip() for x in exclusions.text().split(',') if x.strip()]
+            routine={x.strip().lower() for x in labels.toPlainText().splitlines() if x.strip()}
+            excluded=[x.strip() for x in exclusions.text().split(',') if x.strip()]
+            if approved!=self.permissions.origins or routine!=self.permissions.routine_labels or excluded!=self.desktop.exclusions:
+                self.permissions.generation+=1
+                with self.permissions.lock:
+                    self.permissions.origins=approved;self.permissions.routine_labels=routine;self.desktop.exclusions=excluded
             for key,value in [('theme',theme.currentText()),('font_size',font.value()),('exclusions',self.desktop.exclusions),('history_days',retention.currentData())]+[('notify_'+key,c.isChecked()) for key,c in notifications.items()]:self.store.setting(key,value)
-            self.apply_settings();self.notice.setText('Preferences saved. Resume when ready.')
+            self.apply_settings();self.notice.setText('Preferences saved. Your current task continues.')
         except Exception as error:self.notice.setText(str(error))
 
     def apply_settings(self):
@@ -358,6 +388,7 @@ class MainWindow(BaseWindow):
         self.attachment_list.setVisible(bool(self.pending))
 
     def closeEvent(self,event):
+        self.permissions.halt()
         if hasattr(self,'input_guard'):self.input_guard.close()
         if hasattr(self,'attention'):self.attention.tray.hide()
         super().closeEvent(event)

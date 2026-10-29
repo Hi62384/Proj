@@ -1,5 +1,7 @@
 # Desktop Assistant overhaul — October 28, 2026
 
+Historical report: automatic input/focus pauses described here have been superseded by [continuous execution](CONTINUOUS_EXECUTION_REPORT.md). The current app keeps working during ordinary human activity.
+
 Implemented directly in the existing application. No Relay source, GitHub issue, storefront, payment account or public listing was changed. No commit or push was made. No dependencies were added.
 
 ## Delivered

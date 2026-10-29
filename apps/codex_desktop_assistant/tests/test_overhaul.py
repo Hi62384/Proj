@@ -161,14 +161,15 @@ class FileTests(unittest.TestCase):
 
 
 class DesktopTests(unittest.TestCase):
-    def test_physical_input_signal_closes_gate_even_before_focus_poll(self):
+    def test_physical_input_records_conflict_without_halting_turn(self):
         import threading
         from assistant.attention import InputGuard
         p=Permissions();p.desktop=True;p.resume('owner');event=threading.Event()
         guard=InputGuard(p,lambda:True,lambda reason:event.set())
         try:
             guard.armed=False;guard.automation=True;guard.physical()
-            self.assertTrue(p.desktop_suspended);self.assertTrue(event.wait(1))
+            self.assertFalse(p.desktop_suspended);self.assertFalse(p.halted.is_set());self.assertFalse(event.is_set())
+            self.assertTrue(guard.busy(123,shared=True))
         finally:guard.close()
 
     def test_monitor_scope_dynamically_accepts_ordinary_windows_only_inside(self):

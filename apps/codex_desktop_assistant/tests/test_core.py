@@ -97,10 +97,11 @@ class CoreTests(unittest.TestCase):
         self.broker.approve=stop
         with self.assertRaises(Denied):self.broker._review(self.conversation,'Save',{},self.permissions.generation)
 
-    def test_human_question_pauses_without_secret_request(self):
+    def test_human_question_waits_without_interrupting_or_granting_access(self):
         self.permissions.resume(self.conversation)
-        with self.assertRaises(Handoff):self.call('human.request_input',{'question':'Complete sign-in manually, then Resume.'})
-        self.assertTrue(self.permissions.halted.is_set())
+        result=json.loads(self.call('human.request_input',{'question':'Finish the synthetic verification, then choose Done.'})[0]['text'])
+        self.assertTrue(result['owner_completed_step']);self.assertFalse(self.permissions.halted.is_set())
+        self.assertEqual(self.permissions.manual_requests,set())
         self.assertEqual(self.store.messages(self.conversation)[0]['role'],'assistant')
 
     def test_generic_owner_decision_does_not_grant_permissions(self):

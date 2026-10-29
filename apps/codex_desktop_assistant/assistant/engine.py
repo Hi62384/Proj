@@ -3,6 +3,7 @@ import json
 import queue
 import threading
 import time
+from concurrent.futures import ThreadPoolExecutor,wait
 
 from portfolio_autopilot.codex_relay.codex import Rpc
 from portfolio_autopilot.codex_relay.permissions import preflight, overrides, PROFILE
@@ -17,6 +18,7 @@ Never enter passwords, OTP, CAPTCHA, payment identity or security settings: ask 
 Attempt the specific desktop/file/browser operation when requested: its host controller automatically asks the owner in chat if needed. Do not substitute human.request_approval for an operation's built-in approval. human.request_approval is only for a genuine ambiguous decision and cannot grant any operation permissions. human.request_input is for steps the owner must perform personally.
 Use desktop.inspect/browser.inspect before every action; use observation and element IDs from that result. Verify resulting state, do not infer success from a click. For browser control use a separate persistent browser; for an existing desktop browser use approved window capabilities. Call desktop.observe/browser.observe when pixels are needed; returned inputImage is actual screenshot content. Use attachments.read on an attachment ID for retained content. When an image is provided, describe only what you actually see.
 If the owner sends corrections during work, acknowledge and incorporate them. On resumption inspect the current interface again: the owner may have changed it. Explain any incomplete or blocked part honestly. Do not publish, buy, send customer communications or change payment details without explicit owner action-time approval.'''
+POLICY+=''' Ordinary mouse, keyboard and assistant-window activity does not pause this task. Prefer independent semantic browser operations. Continue the assigned workflow until it is complete or a specific blocker needs owner help. A shared-input action may wait briefly without interrupting inference. If a tool reports changed fields or partial input, inspect and preserve owner edits; never blindly replay an uncertain action. Use human.request_input with a specific actionable question when the owner must perform a manual step. The pending call waits for Done — Continue on this same turn; afterwards verify the condition in the current interface before continuing. Do not repeat completed submissions or ask the same unresolved question repeatedly.'''
 
 
 class Engine:
@@ -26,8 +28,63 @@ class Engine:
         self.queue=queue.Queue();self.stop_event=threading.Event();self.interrupt=threading.Event()
         self.active=None;self.turn=None;self.thread=None
         self.manual_requested=False
+        self.state_lock=threading.RLock();self.waiting_counts={};self.host_futures=set();self.turn_cancel=None
+        self.next_turn_corrections=set()
+        self.host_pool=ThreadPoolExecutor(max_workers=3,thread_name_prefix='assistant-host',initializer=self.init_host)
+        self.desktop_pool=ThreadPoolExecutor(max_workers=1,thread_name_prefix='assistant-desktop',initializer=self.init_host)
         self.worker=threading.Thread(target=self.run,daemon=True)
         self.worker.start()
+
+    @staticmethod
+    def init_host():
+        try:
+            import pythoncom
+            pythoncom.CoInitialize()
+        except ImportError:pass
+
+    def state(self,conversation,value):
+        if not conversation:return
+        with self.state_lock:
+            if value in ('Working','Completed','Waiting for User') and self.interrupt.is_set() and conversation==self.active:value='Stopped'
+            if value=='Working' and self.waiting_counts.get(conversation,0):value='Waiting for User'
+            self.store.update(conversation,status=value)
+        self.emit('task_state',conversation,value)
+
+    def waiting(self,conversation,change):
+        with self.state_lock:self.waiting_counts[conversation]=max(0,self.waiting_counts.get(conversation,0)+change)
+        if not self.interrupt.is_set():self.state(conversation,'Working')
+
+    def steer_message(self,conversation,ident):
+        self.store.message(ident,state='sending')
+        try:
+            self.rpc.request('turn/steer',{'threadId':self.thread,'expectedTurnId':self.turn,'input':self.inputs(conversation,ident)})
+            self.store.message(ident,state='sent');self.emit('steered',conversation,ident)
+        except Exception as error:
+            detail=getattr(error,'detail','').lower()
+            if isinstance(error,RelayError) and any(text in detail for text in ('no active turn','turn is not active','turn is not in progress','no turn is in progress')):
+                # A definitive rejection cannot have applied the correction. Keep
+                # it queued for the next turn of this same saved conversation.
+                self.next_turn_corrections.add(ident);self.store.message(ident,state='queued');self.emit('queued',conversation,ident);return False
+            self.store.message(ident,state='Review: steering not confirmed')
+            self.emit('error',conversation,'Correction retained, but delivery was not confirmed. It will not be resent automatically. '+sanitize(error))
+        return True
+
+    def pump_steering(self,conversation):
+        # Used only by the engine thread while waiting for a browser approval.
+        # Playwright stays on its owning thread; owner messages need not wait.
+        if threading.current_thread() is not self.worker or not self.turn:return
+        parked=[]
+        try:
+            for _ in range(20):
+                try:job=self.queue.get_nowait()
+                except queue.Empty:break
+                kind,target,ident=job
+                if kind!='message' or ident in self.next_turn_corrections or target!=conversation or not self.contract.get('steer') or self.interrupt.is_set():parked.append(job);continue
+                row=next((x for x in self.store.messages(conversation) if x['id']==ident),None)
+                if not row or row['state']!='queued':continue
+                if not self.steer_message(conversation,ident):parked.append(job)
+        finally:
+            for job in parked:self.queue.put(job)
 
     def connect(self):self.queue.put(('connect',None,None))
 
@@ -42,7 +99,9 @@ class Engine:
         self.manual_requested=manual
         self.permissions.halt();self.interrupt.set()
         self.store.execute("UPDATE messages SET state='held after pause' WHERE state='queued'")
-        self.emit('paused',self.active,'Input disabled; stopping the active turn')
+        if self.turn_cancel:self.turn_cancel.set()
+        self.state(self.active,'Stopped')
+        self.emit('paused',self.active,'Stopped. New input is disabled; choose Continue explicitly when ready.')
 
     def resume(self,conversation):
         if self.active:raise RuntimeError('Wait for the interrupted turn to stop before resuming')
@@ -112,7 +171,7 @@ class Engine:
                     self.emit('connection',None,'Disconnected · review local diagnostic')
                     if ident:self.store.message(ident,state='Review after error')
                     if conversation:
-                        self.store.update(conversation,status='Review after error')
+                        self.state(conversation,'Error')
                         self.store.add(conversation,'system',detail)
                     self.permissions.halt()
                     self.store.execute("UPDATE messages SET state='held after error' WHERE state='queued'")
@@ -168,7 +227,7 @@ class Engine:
         else:
             params['dynamicTools']=[TOOL]
             response=self.rpc.request('thread/start',params)
-        self.thread=response['thread']['id'];self.store.update(conversation,thread=self.thread,status='Thinking')
+        self.thread=response['thread']['id'];self.store.update(conversation,thread=self.thread);self.state(conversation,'Working')
         servers=self.rpc.request('mcpServerStatus/list',{'threadId':self.thread})
         if servers.get('data')!=[] or servers.get('nextCursor'):raise RuntimeError('External tool server detected; execution refused')
         self.store.message(ident,state='sending')
@@ -182,48 +241,60 @@ class Engine:
         response=self.rpc.request('turn/start',turn_params)
         self.turn=response['turn']['id'];self.store.message(ident,state='sent')
         self.emit('started',conversation,{'thread':self.thread,'turn':self.turn})
-        items={};deferred=[];deadline=time.monotonic()+1800;interrupt_sent=False;interrupt_deadline=None;interrupt_error=None
+        items={};deferred=[];pending={};cancel=threading.Event();self.turn_cancel=cancel
+        deadline=time.monotonic()+1800;interrupt_sent=False;interrupt_deadline=None;interrupt_error=None
         try:
             while not self.stop_event.is_set() and time.monotonic()<deadline:
+                for request_id,future in list(pending.items()):
+                    if not future.done():continue
+                    pending.pop(request_id);self.host_futures.discard(future)
+                    try:
+                        content=future.result();answer={'success':not cancel.is_set(),'contentItems':content}
+                    except Exception as error:
+                        answer={'success':False,'contentItems':[{'type':'inputText','text':sanitize(error)[:1500]}]}
+                        self.store.action(conversation,'assistant_control','denied or failed')
+                    self.rpc.send({'id':request_id,'result':answer})
+                    if not self.interrupt.is_set():self.state(conversation,'Working')
+                self.broker.browser.pump_manual()
                 if self.interrupt.is_set() and not interrupt_sent:
                     interrupt_sent=True;interrupt_deadline=time.monotonic()+10
                     try:self.rpc.request('turn/interrupt',{'threadId':self.thread,'turnId':self.turn},timeout=5)
                     except Exception as error:interrupt_error=error
-                    self.store.update(conversation,status='Paused · review before resuming')
+                    self.state(conversation,'Stopped')
                     for message_id,text in items.values():self.store.message(message_id,text=text,state='interrupted')
                 if interrupt_deadline and time.monotonic()>interrupt_deadline:
-                    raise RuntimeError('Pause disabled input, but turn completion was not confirmed. Review before resuming.') from interrupt_error
+                    raise RuntimeError('Stop disabled input, but turn completion was not confirmed. Review before resuming.') from interrupt_error
                 # Corrections are durable before acknowledgement and use actual turn/steer.
                 try:
                     kind,target,message_id=self.queue.get_nowait()
-                    if kind=='message' and target==conversation and self.contract.get('steer') and not self.interrupt.is_set():
-                        self.store.message(message_id,state='sending')
-                        try:
-                            self.rpc.request('turn/steer',{'threadId':self.thread,'expectedTurnId':self.turn,'input':self.inputs(target,message_id)})
-                            self.store.message(message_id,state='sent');self.emit('steered',conversation,message_id)
-                        except Exception as error:
-                            self.store.message(message_id,state='Review: steering not confirmed')
-                            self.emit('error',conversation,'Correction retained, but steering was not confirmed. '+sanitize(error))
+                    if kind=='message' and message_id not in self.next_turn_corrections and target==conversation and self.contract.get('steer') and not self.interrupt.is_set():
+                        if not self.steer_message(conversation,message_id):deferred.append((kind,target,message_id))
                     else:deferred.append((kind,target,message_id))
                 except queue.Empty:pass
                 try:event=self.rpc.events.get(timeout=.08)
                 except queue.Empty:continue
+                deadline=time.monotonic()+1800  # inactivity watchdog, not a total task-duration limit
                 method=event.get('method');p=event.get('params',{})
                 if method=='relay/disconnected':raise RuntimeError('Codex disconnected. Review before retrying; actions were not replayed.')
                 if 'id' in event and method:
                     if not self.interrupt.is_set() and method=='item/tool/call' and p.get('tool')=='assistant_control' and p.get('threadId')==self.thread and p.get('turnId')==self.turn:
                         try:
-                            self.store.update(conversation,status='Acting')
+                            self.state(conversation,'Working')
                             args=p['arguments'];args=json.loads(args) if isinstance(args,str) else args
-                            content=self.broker.call(conversation,args)
+                            cap=args.get('capability','')
+                            if not cap.startswith('browser.'):
+                                if len(pending)>=8:raise RuntimeError('Too many pending host operations; wait for existing requests')
+                                executor=self.desktop_pool if cap.startswith('desktop.') else self.host_pool
+                                future=executor.submit(self.broker.call,conversation,args,cancel_event=cancel,authority_generation=self.permissions.generation)
+                                pending[event['id']]=future;self.host_futures.add(future)
+                                continue
+                            content=self.broker.call(conversation,args,cancel_event=cancel,authority_generation=self.permissions.generation)
                             answer={'success':True,'contentItems':content}
-                        except Handoff:
-                            self.manual_requested=True;self.interrupt.set();answer={'success':False,'contentItems':[{'type':'inputText','text':'Owner takeover requested; task paused. Resume after owner input.'}]}
                         except Exception as error:
                             answer={'success':False,'contentItems':[{'type':'inputText','text':sanitize(error)[:1500]}]}
                             self.store.action(conversation,'assistant_control','denied or failed')
                         self.rpc.send({'id':event['id'],'result':answer})
-                        self.store.update(conversation,status='Thinking')
+                        self.state(conversation,'Working')
                     else:self.rpc.send({'id':event['id'],'error':{'code':-32601,'message':'Denied by desktop capability policy'}})
                     continue
                 if p.get('threadId')!=self.thread:continue
@@ -242,12 +313,14 @@ class Engine:
                 elif method=='error' and not p.get('willRetry'):raise RuntimeError(str(p.get('error',{})))
                 elif method=='turn/completed' and p.get('turn',{}).get('id')==self.turn:
                     status=p['turn']['status']
-                    self.store.update(conversation,status='Paused · review before resuming' if self.interrupt.is_set() else 'Ready' if status=='completed' else 'Review after '+status)
+                    self.state(conversation,'Stopped' if self.interrupt.is_set() else 'Completed' if status=='completed' else 'Error')
                     if status=='failed':raise RuntimeError(str(p['turn'].get('error')))
                     return
             raise RuntimeError('Task deadline reached; review before retrying')
         finally:
-            for job in deferred:self.queue.put(job)
+            cancel.set();self.turn_cancel=None
+            for future in pending.values():future.cancel()
+            for job in deferred:self.next_turn_corrections.discard(job[2]);self.queue.put(job)
 
     def close(self):
         self.pause();self.stop_event.set();self.queue.put(('close',None,None))
@@ -255,4 +328,7 @@ class Engine:
         if self.worker.is_alive() and self.rpc:
             self.rpc.close()
             self.worker.join(timeout=8)
-        return not self.worker.is_alive()
+        self.host_pool.shutdown(wait=False,cancel_futures=True)
+        self.desktop_pool.shutdown(wait=False,cancel_futures=True)
+        _,unfinished=wait(list(self.host_futures),timeout=5)
+        return not self.worker.is_alive() and not unfinished

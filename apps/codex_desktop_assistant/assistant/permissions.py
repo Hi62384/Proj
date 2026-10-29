@@ -43,6 +43,13 @@ class Permissions:
         self.allow_launches=False
         self.input_check=None
         self.desktop_suspended=False
+        self.input_coordinator=None
+        self.manual_requests=set()
+        self.execution_context=threading.local()
+
+    def cancelled(self):
+        event=getattr(self.execution_context,'cancel',None)
+        return bool(event is not None and event.is_set())
 
     def halt(self):
         # Immediate signal is independent of AI/Qt/Playwright and any pending approval.
@@ -51,16 +58,12 @@ class Permissions:
 
     def revoke(self):
         self.halt()
-        with self.lock:
-            self.windows.clear(); self.origins.clear(); self.files.clear()
-            self.routine_labels.clear()
-            self.capture_bounds=None
-            self.applications.clear()
-            self.file_policy.session.clear()
-            self.allow_launches=False
-            self.monitor_layout=None
-            self.desktop_target_name=''
-            self.observe = self.desktop = self.browser = False
+        # Stop must not wait behind an in-flight browser/network call's lock.
+        # The halt/epoch closes dispatch first; replace grant collections atomically.
+        self.windows={};self.origins=set();self.files={};self.routine_labels=set()
+        self.capture_bounds=None;self.applications={};self.file_policy.session=[]
+        self.allow_launches=False;self.monitor_layout=None;self.desktop_target_name=''
+        self.observe = self.desktop = self.browser = False
 
     def resume(self, conversation):
         with self.lock:
@@ -72,7 +75,7 @@ class Permissions:
     @contextmanager
     def action(self, conversation, generation=None):
         with self.lock:
-            if self.halted.is_set() or self.owner != conversation or (generation is not None and generation != self.generation):
+            if self.cancelled() or self.halted.is_set() or self.owner != conversation or (generation is not None and generation != self.generation):
                 raise Denied('Control is paused, revoked, or belongs to another conversation')
             if self.safety_check and not self.safety_check():
                 self.halt();raise Denied('Desktop locked or resumed from sleep; review before resuming input')

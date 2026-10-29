@@ -40,9 +40,8 @@ def main():
             args=request['args']
             if not args.get('file_permission'):
                 if int(args.get('window',0)) not in fixture_handles:continue
-                if not window.permissions.desktop_suspended:window.attention.open();continue
+                window.attention.open()
                 approved.append((args['operation'],'synthetic-window',answer))
-                QTimer.singleShot(200,window.resume)
             else:
                 if not Path(args['path']).is_relative_to(directory/'synthetic'):continue
                 approved.append((args['operation'],Path(args['path']).name,answer))
@@ -140,7 +139,7 @@ def main():
         observed=window.desktop.inspect(first['hwnd']);assert any(c['value']=='MONITOR-572' for c in observed['controls']);record('real_codex_monitor_window_control')
         send(f'In synthetic window {first["hwnd"]}, inspect and click Submit synthetic draft. This only saves disposable fixture JSON. Attempt desktop.action click directly; the host automatically requests exact permission. Do not call human.request_approval or human.request_input. Then verify the saved status. Do not use browser tools.')
         assert any(json.loads(path.read_text())['greeting']=='MONITOR-572' for path in directory.glob('fixture-*.json'))
-        record('real_sensitive_action_chat_approval_then_resume')
+        record('real_sensitive_action_chat_approval_continues_automatically')
         # Guarded ordinary installed program launch through the actual model tool.
         apps=window.desktop.installed_apps();notepad=next((name for name,path in apps.items() if Path(path).stem.lower()=='notepad'),None)
         assert notepad,apps
@@ -149,21 +148,18 @@ def main():
         send(f'Use desktop.open_app with name {notepad!r} to open Notepad. Do not inspect, capture, type into or close any Notepad window. Report only the launch result.')
         wait(lambda:any('notepad' in w['title'].lower() and w['hwnd'] not in before for w in window.desktop.windows()),20)
         record('real_codex_installed_notepad_launch')
-        # Keep the real coordinator active while the fixture owns foreground, then
-        # focus the actual assistant window. No mocked engine or foreground API.
+        # Opening chat is ordinary activity and must not interrupt inference.
         window.permissions.resume(window.selected);offset=len(events)
         window.input.setPlainText('Explain a careful ten-step plan for organizing synthetic project files. Do not use any tools.');window.send()
         wait(lambda:window.engine.turn is not None,40)
         window.desktop._api().window(handle=first['hwnd']).wrapper_object().set_focus()
-        wait(lambda:window.input_guard.armed,5)
-        window.showNormal();window.raise_();window.activateWindow()
-        wait(lambda:window.pause_reason=='Paused — Chat Open',10)
-        assert window.permissions.halted.is_set();record('real_foreground_chat_auto_pause')
-        window.desktop._api().window(handle=first['hwnd']).wrapper_object().set_focus();QTest.qWait(250)
-        assert window.permissions.halted.is_set();record('switch_away_does_not_auto_resume')
-        wait(lambda:window.engine.active is None,20);thread=window.store.conversation(window.selected)['thread']
-        offset=len(events);window.resume();wait(lambda:window.engine.active is None and any(k=='idle' for k,c,d in events[offset:]),120)
-        assert window.store.conversation(window.selected)['thread']==thread;record('explicit_resume_preserves_thread')
+        window.showNormal();window.raise_();window.activateWindow();QTest.qWait(200)
+        assert not window.permissions.halted.is_set() and not window.engine.interrupt.is_set()
+        record('real_foreground_chat_does_not_pause')
+        window.input.setPlainText('Correction: end with exactly FOCUS-CONTINUES-783.');window.send()
+        wait(lambda:any(k=='steered' for k,c,d in events[offset:]),30)
+        wait(lambda:window.engine.active is None and any(k=='idle' for k,c,d in events[offset:]),120)
+        record('focus_and_correction_preserve_current_thread')
         record('physical_input_hooks_registered',getattr(window.input_guard,'hooks_ready',False))
         window.stop();assert window.permissions.halted.is_set();record('stop_revokes_authority')
         record('approval_controls_used',approved);record('complete')

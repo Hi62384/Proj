@@ -16,7 +16,7 @@ class Visual(QWidget):
 
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--state',required=True);parser.add_argument('--code',default='LIME-742');parser.add_argument('--manual-file');parser.add_argument('--title',default='Assistant Control Lab');parser.add_argument('--action-label',default='Apply draft');args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('--state',required=True);parser.add_argument('--code',default='LIME-742');parser.add_argument('--manual-file');parser.add_argument('--title',default='Assistant Control Lab');parser.add_argument('--action-label',default='Apply draft');parser.add_argument('--events');args=parser.parse_args()
     app=QApplication([]);window=QWidget();window.setWindowTitle(args.title);window.resize(640,500)
     layout=QVBoxLayout(window);layout.addWidget(QLabel('Disposable desktop verification'))
     layout.addWidget(Visual(args.code))
@@ -27,6 +27,9 @@ def main():
     def save():
         value={'greeting':name.text(),'theme':theme.currentText(),'ready':check.isChecked()}
         Path(args.state).write_text(json.dumps(value));status.setText('Saved draft: '+name.text())
+        if args.events:
+            events=Path(args.events);previous=json.loads(events.read_text()) if events.exists() else []
+            events.write_text(json.dumps(previous+[value]))
     action=QPushButton(args.action_label);action.clicked.connect(save);layout.addWidget(action)
     name.textChanged.connect(lambda text:None)
     # An owner-only test harness can simulate a manual edit while model control

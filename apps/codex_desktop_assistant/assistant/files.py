@@ -66,7 +66,7 @@ class Files:
 
     def call(self,conversation,args,action):
         path=self.validate(args['path']);listing=action=='list';action='read' if listing else action
-        epoch=self.permissions.generation
+        epoch=getattr(self.permissions.execution_context,'generation',self.permissions.generation)
         with self.permissions.lock:
             decision=self.permissions.file_policy.decision(path,action)
             legacy=self.permissions.files.get(str(path))

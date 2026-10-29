@@ -19,6 +19,13 @@ class Store:
         self.lock = threading.RLock()
         self.db = sqlite3.connect(self.directory / 'assistant.sqlite3', check_same_thread=False)
         self.db.row_factory = sqlite3.Row
+        if self.db.execute("SELECT name FROM sqlite_master WHERE name='settings'").fetchone() and not self.db.execute("SELECT value FROM settings WHERE key='continuous_execution_backup'").fetchone():
+            backups=self.directory/'state-backups';backups.mkdir(exist_ok=True)
+            target=backups/('before-continuous-execution-'+time.strftime('%Y%m%d-%H%M%S')+'.sqlite3')
+            backup=sqlite3.connect(target)
+            try:self.db.backup(backup)
+            finally:backup.close()
+            self.db.execute("INSERT INTO settings(key,value) VALUES('continuous_execution_backup',?)",(json.dumps(str(target)),));self.db.commit()
         # One consistent pre-upgrade backup; includes WAL through SQLite backup.
         if self.db.execute("SELECT name FROM sqlite_master WHERE name='settings'").fetchone() and not self.db.execute("SELECT value FROM settings WHERE key='overhaul_backup'").fetchone():
             backups=self.directory/'state-backups';backups.mkdir(exist_ok=True)
@@ -35,7 +42,9 @@ class Store:
         CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY,value TEXT);
         ''')
         self.db.execute("UPDATE conversations SET status='Review after interruption' WHERE status IN ('Thinking','Acting','Waiting for approval')")
+        self.db.execute("UPDATE conversations SET status='Error' WHERE status IN ('Working','Waiting for User')")
         self.db.execute("UPDATE messages SET state='Review after interruption' WHERE state IN ('queued','sending','streaming')")
+        self.db.execute("UPDATE messages SET state='Expired after restart; review before continuing' WHERE state='Waiting for local approval'")
         self.db.commit()
 
     def execute(self, sql, args=(), one=False):

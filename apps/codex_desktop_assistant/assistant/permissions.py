@@ -50,6 +50,7 @@ class Permissions:
         self.browser_manual=False
         self.browser_pids=set()
         self.browser_data_pairs=set()
+        self.chrome_mode=False;self.chrome_protected=False
 
     def cancelled(self):
         event=getattr(self.execution_context,'cancel',None)

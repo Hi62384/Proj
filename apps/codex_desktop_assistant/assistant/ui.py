@@ -11,7 +11,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QPixmap,QTextDocument
 from PySide6.QtWidgets import (QWidget,QVBoxLayout,QHBoxLayout,QSplitter,QLabel,
     QPushButton,QListWidget,QLineEdit,QPlainTextEdit,QCheckBox,QFileDialog,QMessageBox,
-    QDialog,QDialogButtonBox,QFormLayout,QComboBox,QSpinBox,QStyle)
+    QDialog,QDialogButtonBox,QFormLayout,QComboBox,QSpinBox,QStyle,QScrollArea)
 from .ui_base import ChatWindowBase as BaseWindow,ChatView,Composer,button as base_button
 from .attention import Attention,InputGuard
 from .file_policy import FilePolicy,ACTIONS,DECISIONS
@@ -38,6 +38,10 @@ class MainWindow(BaseWindow):
         self.permissions.input_check=self.input_guard.check;self.broker.input_guard=self.input_guard
         self.permissions.input_coordinator=self.input_guard
         self.input_guard.waiting=lambda message:self.emit('input_access',getattr(self.permissions.execution_context,'conversation',self.engine.active),message)
+        from .storage import private_directory
+        if self.store.directory.resolve()==private_directory().resolve() and (private_directory()/'chrome-host/settings.json').is_file():
+            try:self.broker.chrome.bridge.start()
+            except Exception as error:self.notice.setText('Chrome bridge needs attention: '+str(error))
 
     def build(self):
         root=QWidget();self.setCentralWidget(root);layout=QVBoxLayout(root);layout.setContentsMargins(14,12,14,12);layout.setSpacing(10)
@@ -75,8 +79,16 @@ class MainWindow(BaseWindow):
         self.activity_summary=QLabel('No computer task running');self.activity_summary.setWordWrap(True);right.addWidget(self.activity_summary)
         self.active_application=QLabel('Application: —');self.active_application.setWordWrap(True);right.addWidget(self.active_application)
         self.browser_toggle=QCheckBox('Dedicated browser');self.browser_toggle.toggled.connect(self.toggle_browser);right.addWidget(self.browser_toggle)
+        self.dedicated_widgets=[self.browser_toggle]
+        self.browser_mode=QComboBox();self.browser_mode.addItems(['Dedicated Browser','Existing Chrome']);self.browser_mode.currentIndexChanged.connect(self.select_browser_mode);right.addWidget(self.browser_mode)
+        self.chrome_panel=QGroupBox('Chrome Connection');chrome_layout=QVBoxLayout(self.chrome_panel)
+        self.chrome_connection=QLabel('Extension disconnected');self.chrome_connection.setWordWrap(True);chrome_layout.addWidget(self.chrome_connection)
+        for label,slot in [('Connect Chrome',self.connect_chrome),('Chrome Tabs / Select Window',self.chrome_tabs),('Attach Tab',self.chrome_attach),('Release Tab',self.chrome_release),('Show Tab',self.chrome_show),('Check Connection',self.chrome_health)]:chrome_layout.addWidget(button(label,slot))
+        self.chrome_manual=QCheckBox('Manual Control for Chrome Tab');self.chrome_manual.toggled.connect(self.chrome_manual_control);chrome_layout.addWidget(self.chrome_manual)
+        self.chrome_panel.hide();right.addWidget(self.chrome_panel)
+        self.chrome_dialog=None;self.chrome_selected_tab=None
         for label,operation in [('Open Browser','open'),('Show Browser','show'),('Browser Tabs','tabs')]:
-            right.addWidget(button(label,lambda checked=False,op=operation:self.browser_control(op)))
+            control=button(label,lambda checked=False,op=operation:self.browser_control(op));right.addWidget(control);self.dedicated_widgets.append(control)
         self.background_browser=QCheckBox('Work in Background');self.background_browser.setChecked(True)
         self.background_browser.toggled.connect(lambda on:self.browser_control('background',enabled=on));right.addWidget(self.background_browser)
         self.manual_browser=QCheckBox('Manual Control');self.manual_browser.toggled.connect(self.browser_manual);right.addWidget(self.manual_browser)
@@ -84,12 +96,14 @@ class MainWindow(BaseWindow):
         self.public_browser.setToolTip('Public websites may load without a separate site request. Account pages and consequential changes still require authorization.')
         self.public_browser.toggled.connect(lambda on:self.browser_control('public',enabled=on));right.addWidget(self.public_browser)
         self.browser_tabs_state=[];self.browser_tabs_dialog=None
+        self.dedicated_widgets.extend([self.manual_browser,self.public_browser])
         self.preview=QLabel('Screen preview');self.preview.setMinimumSize(200,160);self.preview.setAlignment(Qt.AlignCenter);right.addWidget(self.preview)
         right.addWidget(button('Preview approved screen',self.capture_preview))
         self.grants=QLabel();self.grants.setWordWrap(True);right.addWidget(self.grants)
         history=QGroupBox('Activity History');history.setCheckable(True);history.setChecked(False);history_layout=QVBoxLayout(history)
         self.activity_text=QPlainTextEdit();self.activity_text.setReadOnly(True);self.activity_text.hide();history_layout.addWidget(self.activity_text);history.toggled.connect(self.activity_text.setVisible);right.addWidget(history);right.addStretch()
-        right.addWidget(QLabel('Emergency stop · Ctrl+Alt+F12'));split.addWidget(self.activity);split.setSizes([210,850,260])
+        right.addWidget(QLabel('Emergency stop · Ctrl+Alt+F12'))
+        activity_content=self.activity;self.activity=QScrollArea();self.activity.setWidgetResizable(True);self.activity.setWidget(activity_content);split.addWidget(self.activity);split.setSizes([210,850,290])
         footer=QHBoxLayout();footer.addWidget(button('Chats',lambda:self.sidebar.setVisible(not self.sidebar.isVisible())));footer.addWidget(self.connection);footer.addStretch();footer.addWidget(self.task_controls);footer.addWidget(button('Activity',lambda:self.activity.setVisible(not self.activity.isVisible())));layout.addLayout(footer)
         # Retain internal compatibility while removing redundant visible toggles.
         for name in ('observation','desktop_toggle','top_desktop','top_browser'):
@@ -149,10 +163,15 @@ class MainWindow(BaseWindow):
         self.notice.setText('Manual Control: use the browser yourself. Turn this off when finished; Codex must inspect again.' if on else 'Browser control returned. Codex will inspect before continuing.')
 
     def browser_control(self,operation,**args):
+        if self.broker.chrome.mode:
+            if operation in ('open','show'):self.chrome_show()
+            elif operation=='tabs':self.chrome_tabs()
+            elif operation=='background' and not args.get('enabled'):self.chrome_show()
+            return
         if self.engine.active and self.engine.active!=self.selected:
             self.notice.setText('Open the active chat before changing its browser controls.');return
         if operation in ('open','show','new_tab'):
-            if self.permissions.halted.is_set():self.permissions.resume(self.selected)
+            if self.permissions.halted.is_set() or self.permissions.owner!=self.selected:self.permissions.resume(self.selected)
             self.permissions.browser=True
             self.browser_toggle.blockSignals(True);self.browser_toggle.setChecked(True);self.browser_toggle.blockSignals(False)
         if operation=='public':self.permissions.public_browsing=bool(args['enabled'])
@@ -182,6 +201,81 @@ class MainWindow(BaseWindow):
         self.permissions.generation+=1;self.permissions.allow_launches=bool(on)
         self.notice.setText('Ordinary installed programs may be launched within this session.' if on else 'Program launching disabled.')
 
+    def select_browser_mode(self):
+        existing=self.browser_mode.currentText()=='Existing Chrome';self.broker.chrome.mode=existing;self.permissions.chrome_mode=existing;self.chrome_panel.setVisible(existing)
+        for widget in self.dedicated_widgets:widget.setVisible(not existing)
+        self.notice.setText('Existing Chrome uses only extension-authorized tabs attached to this chat. DOM operations leave your active tab and physical input alone.' if existing else 'Dedicated Browser selected.')
+
+    def connect_chrome(self):
+        try:
+            import subprocess,sys
+            from PySide6.QtCore import QUrl
+            from PySide6.QtGui import QDesktopServices
+            setup=Path(__file__).resolve().parents[1]/'tools/setup_chrome.py'
+            result=subprocess.run([sys.executable,str(setup),'install'],capture_output=True,text=True,timeout=20,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+            if result.returncode:raise ValueError('Chrome setup failed. Run Setup_Chrome.cmd for diagnostics.')
+            self.broker.chrome.bridge.start()
+            self.notice.setText('Native host is registered for this Windows user. In Chrome, open chrome://extensions, enable Developer mode, choose Load unpacked, and select '+str(setup.parent.parent/'chrome_extension')+'. Then open the extension popup and Connect. Installation is verified only after a real connection.')
+            QDesktopServices.openUrl(QUrl('chrome://extensions/'))
+        except Exception as error:self.notice.setText(str(error))
+
+    def chrome_tabs(self):
+        if self.chrome_dialog:self.chrome_dialog.close()
+        state=self.broker.chrome.status()
+        dialog=QDialog(self);dialog.setWindowTitle('Chrome Tabs');dialog.resize(660,440);layout=QVBoxLayout(dialog)
+        note=QLabel('Only extension-authorized tabs show a site. Use the extension popup on each website to authorize it. Attach binds a tab to this chat; a window selection does not grant unrelated tabs.');note.setWordWrap(True);layout.addWidget(note)
+        listing=QListWidget();layout.addWidget(listing)
+        from PySide6.QtWidgets import QListWidgetItem
+        for tab in state['tabs']:
+            item=QListWidgetItem('Window '+str(tab.get('window','?'))+' · Tab '+str(tab['tab'])+' · '+tab['origin']+(' · Manual' if tab.get('manual') else ''));item.setData(Qt.UserRole,tab['tab']);listing.addItem(item)
+        def selected():
+            items=listing.selectedItems()
+            if items:self.chrome_selected_tab=items[0].data(Qt.UserRole)
+            elif listing.currentItem():self.chrome_selected_tab=listing.currentItem().data(Qt.UserRole)
+        listing.currentItemChanged.connect(lambda *_:selected())
+        listing.itemSelectionChanged.connect(selected)
+        row=QHBoxLayout()
+        for label,slot in [('Attach Tab',self.chrome_attach),('Release Tab',self.chrome_release),('Show Tab',self.chrome_show)]:row.addWidget(button(label,slot))
+        layout.addLayout(row);self.chrome_dialog=dialog;dialog.show()
+
+    def chrome_attach(self):
+        try:
+            tab=self.chrome_selected_tab
+            if tab is None:raise ValueError('Choose an authorized tab in Chrome Tabs first.')
+            if self.engine.active and self.engine.active!=self.selected:raise ValueError('Select the active chat before attaching its Chrome tab.')
+            if self.permissions.halted.is_set() or self.permissions.owner!=self.selected:self.permissions.resume(self.selected)
+            self.broker.chrome.attach(self.selected,tab,ask=False);self.chrome_connection.setText('Attached Chrome tab '+str(tab)+' to this chat.');self.notice.setText('Authorized page content may be sent to your Codex account. Purchases, publication, sensitive actions and file transfers remain separately reviewed.')
+        except Exception as error:self.notice.setText(str(error))
+
+    def chrome_release(self):
+        tab=self.chrome_selected_tab or self.broker.chrome.selected
+        if tab is None:return
+        self.broker.chrome.grants.pop(tab,None)
+        self.chrome_job('release',{'tab':tab})
+
+    def chrome_job(self,operation,args):
+        # Transport work stays off Qt and off the Playwright owning thread.
+        def work():
+            try:
+                result=self.broker.chrome.bridge.request(operation,args);self.emit('chrome_status',None,self.broker.chrome.status())
+                if operation=='list_windows':self.emit('chrome_health',None,'Chrome connection verified by a real round trip · '+str(len(result.get('windows',[])))+' window(s).')
+            except Exception as error:self.emit('chrome_error',None,str(error))
+        self.engine.host_pool.submit(work)
+
+    def chrome_show(self):
+        tab=self.chrome_selected_tab or self.broker.chrome.selected
+        if tab is not None:self.chrome_job('show',{'tab':tab})
+
+    def chrome_manual_control(self,on):
+        tab=self.chrome_selected_tab or self.broker.chrome.selected
+        if tab is None:return
+        with self.broker.chrome.bridge.lock:
+            if tab in self.broker.chrome.bridge.offers:self.broker.chrome.bridge.offers[tab]['manual']=bool(on)
+        self.broker.chrome.observations.clear();self.chrome_job('manual',{'tab':tab,'enabled':bool(on)})
+        self.notice.setText('Chrome tab is yours. Return control when finished; Codex must inspect again.' if on else 'Chrome control returned. Inspect the current page before continuing.')
+
+    def chrome_health(self):self.chrome_job('list_windows',{})
+
     def model_changed(self):
         model=self.model.currentData()
         if model is None:return
@@ -204,9 +298,13 @@ class MainWindow(BaseWindow):
         return
 
     def stop(self):
+        self.permissions.halt()
+        self.broker.chrome.stop()
         super().stop();self.pause_reason='';self.engine.state(self.selected,'Stopped');self.status.setText('Stopped')
 
     def emergency(self,reason='Emergency stop. New input is disabled; review before continuing.'):
+        self.permissions.halt()
+        self.broker.chrome.stop()
         self.permissions.halt();self.engine.interrupt.set()
         if self.engine.turn_cancel:self.engine.turn_cancel.set()
         for request in self.requests:request['event'].set()
@@ -245,6 +343,11 @@ class MainWindow(BaseWindow):
 
     def on_event(self,kind,conversation,data):
         if self.closing:return
+        if kind=='chrome_status':
+            self.chrome_connection.setText(('Extension connected · '+str(len(data.get('tabs',[])))+' authorized tab(s)') if data.get('connected') else 'Extension disconnected. Reconnect and reauthorize tabs. '+data.get('error',''))
+            return
+        if kind=='chrome_error':self.notice.setText('Chrome: '+str(data));return
+        if kind=='chrome_health':self.notice.setText(str(data));return
         if kind=='browser_state':
             self.browser_tabs_state=data['tabs'];self.update_browser_tabs()
             if data.get('show_tabs') and not self.browser_tabs_dialog:self.show_browser_tabs()
@@ -299,6 +402,8 @@ class MainWindow(BaseWindow):
                 destination=context.get('form_action') or context.get('page_url') or context.get('application')
                 if destination:
                     target=QLabel('Target: '+destination);target.setTextFormat(Qt.PlainText);target.setWordWrap(True);form.addWidget(target)
+            if args.get('file'):
+                transfer=args['file'];file_label=QLabel('File: '+transfer['name']+' · '+str(transfer['bytes'])+' bytes\nSHA-256: '+transfer['sha256']);file_label.setTextFormat(Qt.PlainText);file_label.setWordWrap(True);form.addWidget(file_label)
             group=QGroupBox('Action details');group.setCheckable(True);group.setChecked(False);group_layout=QVBoxLayout(group)
             details=QPlainTextEdit(json.dumps(args,ensure_ascii=False,indent=2));details.setReadOnly(True);details.setMaximumHeight(140);details.hide();group_layout.addWidget(details);group.toggled.connect(details.setVisible);form.addWidget(group)
         row=QHBoxLayout()
@@ -308,8 +413,8 @@ class MainWindow(BaseWindow):
             if allowed and valid and args.get('operation')=='delete':
                 if QMessageBox.warning(self,'Confirm recoverable deletion','Delete the exact target shown above? A private recovery copy will be kept; recovery cannot be guaranteed.',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
             if allowed and valid and args.get('website_access'):
-                self.permissions.browser=True;self.permissions.observe=True
-                if session:
+                if not args.get('chrome_tab'):self.permissions.browser=True;self.permissions.observe=True
+                if session and not args.get('chrome_tab'):
                     if args.get('permission_kind')=='data_connection':self.permissions.browser_data_pairs.add((args['source_origin'],args['origin']))
                     else:self.permissions.origins.add(args['origin'])
             elif session and allowed and valid:

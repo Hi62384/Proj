@@ -315,6 +315,7 @@ class ChatWindowBase(QMainWindow):
     def closeEvent(self,event):
         self.closing=True;self.timer.stop();self.render_timer.stop()
         self.permissions.revoke()
+        self.broker.chrome.stop();self.broker.chrome.bridge.close()
         for request in self.requests:request['event'].set()
         clean=self.engine.close();self.hotkey.close();self.session_guard.close()
         if clean:self.store.close()

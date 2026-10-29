@@ -135,6 +135,9 @@ class InputGuard:
         state=getattr(self.local,'state',None)
         if not self.check():raise Denied('Stopped during input; inspect partial state before continuing')
         target=window or (state.get('window') if state else None)
+        if target and (self.permissions.chrome_mode or self.permissions.chrome_protected):
+            name=ctypes.create_unicode_buffer(256);ctypes.windll.user32.GetClassNameW(int(target),name,256)
+            if name.value.lower().startswith('chrome_widget'):raise Denied('Chrome tab permissions cannot be bypassed using native input')
         if target and self.permissions.browser_manual:
             pid=wintypes.DWORD();ctypes.windll.user32.GetWindowThreadProcessId(int(target),ctypes.byref(pid))
             name=ctypes.create_unicode_buffer(256);ctypes.windll.user32.GetClassNameW(int(target),name,256)

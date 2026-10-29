@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "Codex Desktop Assistant — Authorized Tabs",
+  "version": "1.0.0",
+  "minimum_chrome_version": "120",
+  "description": "Connect selected Chrome tabs to your local Codex Desktop Assistant. No browser credentials are exported.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "nativeMessaging",
+    "storage",
+    "webNavigation",
+    "alarms",
+    "declarativeNetRequest"
+  ],
+  "optional_permissions": [
+    "downloads"
+  ],
+  "optional_host_permissions": [
+    "https://*/*",
+    "http://*/*"
+  ],
+  "background": {
+    "service_worker": "worker.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Codex Desktop Assistant",
+    "default_icon": {
+      "16": "icon16.png",
+      "32": "icon32.png",
+      "128": "icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "128": "icon128.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'"
+  },
+  "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC8JKUT4YZZS7XCNJPc+eHgfCGjju+REftoAVRE+PtpbL/F64EO2+zjlYyHMo7ZmN1lLL9egs1tICokoA3ehWl7L8bI+xp/1yOVbosszyxGCRvHFckhAdAQMAegtFpoUytxpddinMqqGfIZVcd7x3sI3QuSDQbp+KKhi701vVnz9QIDAQAB"
+}

@@ -36,6 +36,23 @@ The controller refuses authentication/password controls, terminal/security windo
 
 ## Browser modes
 
+**Existing Chrome extension:** choose **Existing Chrome** in the browser selector
+to use the installed extension and your normal signed-in browser. The extension
+controls approved tabs through bundled DOM operations without using your physical
+mouse or keyboard. It does not copy cookies, passwords or browser profiles.
+**Connect Chrome** prepares the current-user native host; Chrome requires you to
+load the unpacked extension and approve its permissions personally. See
+[CHROME_SETUP.md](CHROME_SETUP.md) for installation, updates, troubleshooting,
+revocation and removal, and [CHROME_INTEGRATION_REPORT.md](CHROME_INTEGRATION_REPORT.md)
+for the verified results and remaining acceptance blockers.
+
+Codex can create background tabs without a selected tab. New tabs on a site where
+you used **Allow Site Access** can be controlled and attached to the current chat
+automatically. Opening a different site does not grant access to its contents.
+Clean attached tabs close without another approval. Possible editor/form contents
+require review before closing. Website grants, file rights and consequential
+action approvals remain separate.
+
 **Dedicated browser:** approve exact HTTP(S) origins in **Settings → Browser website origins** and enable it. Codex opens a separate persistent Chromium profile. Your normal browser stays separate. Additional login/CDN origins must be reviewed explicitly. No ordinary-browser password/cookie import occurs.
 
 **Your existing browser:** select its exact window in the main Desktop Access picker. Codex operates it through the native controller; it does not attach to a debugging port or extract its session. This mode has the same window and human-review boundaries as other Windows applications.

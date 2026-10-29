@@ -83,6 +83,8 @@ class Desktop:
             if parent_grant and tuple(parent_grant)==self.identity(owner) and identity[0]==parent_grant[0] and identity[2]==parent_grant[2]:grant=identity
         if not grant or tuple(grant)!=identity:raise Denied('Window is not approved or its identity changed')
         w=self._api().window(handle=hwnd).wrapper_object()
+        if (self.permissions.chrome_mode or self.permissions.chrome_protected) and w.class_name().lower().startswith('chrome_widget'):
+            raise Denied('Use the authorized Chrome extension; native desktop control cannot bypass Chrome tab grants or Manual Control')
         if self.permissions.browser_manual and (w.process_id() in self.permissions.browser_pids or (not self.permissions.browser_pids and w.class_name().lower().startswith('chrome_widget'))):
             raise Denied('The dedicated browser is under Manual Control')
         if w.process_id()==os.getpid():raise Denied('The assistant cannot operate its own permission or approval UI')
@@ -168,7 +170,7 @@ class Desktop:
             for window in self._api().windows():
                 try:
                     title=window.window_text()
-                    if window.is_visible() and (window.process_id()==os.getpid() or (self.permissions.browser_manual and (window.process_id() in self.permissions.browser_pids or (not self.permissions.browser_pids and window.class_name().lower().startswith('chrome_widget')))) or window.class_name().lower() in TERMINAL_CLASSES or FORBIDDEN.search(title) or any(x.lower() in title.lower() for x in self.exclusions if x) or self.has_password(window)):
+                    if window.is_visible() and (window.process_id()==os.getpid() or ((self.permissions.chrome_mode or self.permissions.chrome_protected) and window.class_name().lower().startswith('chrome_widget')) or (self.permissions.browser_manual and (window.process_id() in self.permissions.browser_pids or (not self.permissions.browser_pids and window.class_name().lower().startswith('chrome_widget')))) or window.class_name().lower() in TERMINAL_CLASSES or FORBIDDEN.search(title) or any(x.lower() in title.lower() for x in self.exclusions if x) or self.has_password(window)):
                         r=window.rectangle();painter.rectangle((r.left-bounds[0],r.top-bounds[1],r.right-bounds[0],r.bottom-bounds[1]),fill='black')
                 except Exception:
                     raise Denied('Could not verify sensitive-window masking; use exact-window observation')
@@ -429,3 +431,4 @@ class SessionGuard:
 
     def close(self):
         self.stopped.set();self.thread.join(timeout=2)
+

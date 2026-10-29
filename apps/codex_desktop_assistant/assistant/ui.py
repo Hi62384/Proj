@@ -241,6 +241,12 @@ class MainWindow(BaseWindow):
             if args.get('preview'):
                 diff=QPlainTextEdit(args['preview']);diff.setReadOnly(True);diff.setMaximumHeight(120);form.addWidget(diff)
         else:
+            if args.get('approval_reason'):
+                reason=QLabel('Why approval is needed: '+args['approval_reason']);reason.setTextFormat(Qt.PlainText);reason.setWordWrap(True);form.addWidget(reason)
+                context=args.get('target_context',{})
+                destination=context.get('form_action') or context.get('page_url') or context.get('application')
+                if destination:
+                    target=QLabel('Target: '+destination);target.setTextFormat(Qt.PlainText);target.setWordWrap(True);form.addWidget(target)
             group=QGroupBox('Action details');group.setCheckable(True);group.setChecked(False);group_layout=QVBoxLayout(group)
             details=QPlainTextEdit(json.dumps(args,ensure_ascii=False,indent=2));details.setReadOnly(True);details.setMaximumHeight(140);details.hide();group_layout.addWidget(details);group.toggled.connect(details.setVisible);form.addWidget(group)
         row=QHBoxLayout()
@@ -258,7 +264,7 @@ class MainWindow(BaseWindow):
         if args.get('file_permission'):row.addWidget(button('Allow for This Session',lambda:decide(True,True)))
         row.addWidget(button('Cannot complete' if args.get('manual_step') else 'Deny',lambda:decide(False)));form.addLayout(row)
         self.approvals_layout.addWidget(card);self.request_cards.append((request,card));self.refresh_requests()
-        request['message_id']=self.store.add(request['conversation'],'system',request['label']+'\n'+str(args.get('path',''))+'\n'+str(args.get('reason','')),'Waiting for local approval');self.render()
+        request['message_id']=self.store.add(request['conversation'],'system',request['label']+'\n'+str(args.get('path',''))+'\n'+str(args.get('reason',args.get('approval_reason',''))),'Waiting for local approval');self.render()
 
     def refresh_requests(self):
         visible=False
@@ -327,7 +333,7 @@ class MainWindow(BaseWindow):
         font=QSpinBox();font.setRange(10,24);font.setValue(saved.get('font_size',11));form.addRow('Text size',font)
         origins=QPlainTextEdit('\n'.join(sorted(self.permissions.origins)));origins.setMaximumHeight(90);form.addRow('Browser website origins',origins)
         exclusions=QLineEdit(', '.join(self.desktop.exclusions));form.addRow('Excluded window title words',exclusions)
-        labels=QPlainTextEdit('\n'.join(sorted(self.permissions.routine_labels)));labels.setMaximumHeight(80);form.addRow('Routine control labels (session)',labels)
+        routine_note=QLabel('Routine controls are allowed within your current desktop/browser scopes. Only consequential or unverified activations need review.');routine_note.setWordWrap(True);form.addRow(routine_note)
         notifications={}
         for key,label in [('input','Requests needing you'),('error','Errors'),('info','Task completed')]:
             check=QCheckBox();check.setChecked(saved.get('notify_'+key,key!='info'));form.addRow('Notify: '+label,check);notifications[key]=check
@@ -339,12 +345,11 @@ class MainWindow(BaseWindow):
         if dialog.exec()!=QDialog.Accepted:return
         try:
             approved={origin(x.strip()) for x in origins.toPlainText().splitlines() if x.strip()}
-            routine={x.strip().lower() for x in labels.toPlainText().splitlines() if x.strip()}
             excluded=[x.strip() for x in exclusions.text().split(',') if x.strip()]
-            if approved!=self.permissions.origins or routine!=self.permissions.routine_labels or excluded!=self.desktop.exclusions:
+            if approved!=self.permissions.origins or excluded!=self.desktop.exclusions:
                 self.permissions.generation+=1
                 with self.permissions.lock:
-                    self.permissions.origins=approved;self.permissions.routine_labels=routine;self.desktop.exclusions=excluded
+                    self.permissions.origins=approved;self.desktop.exclusions=excluded
             for key,value in [('theme',theme.currentText()),('font_size',font.value()),('exclusions',self.desktop.exclusions),('history_days',retention.currentData())]+[('notify_'+key,c.isChecked()) for key,c in notifications.items()]:self.store.setting(key,value)
             self.apply_settings();self.notice.setText('Preferences saved. Your current task continues.')
         except Exception as error:self.notice.setText(str(error))

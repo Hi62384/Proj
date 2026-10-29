@@ -97,6 +97,38 @@ class Desktop:
             except Exception:continue
         return False
 
+    def action_context(self,window,control,args):
+        """Local process/UIA evidence. Never accept an editor hint from the model."""
+        from pathlib import Path
+        role=control.element_info.control_type if control is not None else ''
+        label=(control.element_info.name or control.window_text()) if control is not None else ''
+        result={'source':'desktop','role':role,'label':label,'key':args.get('key',''),
+                'window':int(window.handle),'application':window.window_text()[:150],
+                'file_dialog':window.class_name().lower()=='#32770' or label.strip().lower() in ('file name','file name:','filename'),
+                'filesystem_activation':window.class_name().lower() in ('cabinetwclass','explorewclass','shell_traywnd','workerw','progman') and role in ('ListItem','DataItem','TreeItem','MenuItem')}
+        try:
+            import win32api
+            handle=win32api.OpenProcess(0x1000,False,window.process_id())
+            try:
+                query=ctypes.windll.kernel32.QueryFullProcessImageNameW
+                query.argtypes=[wintypes.HANDLE,wintypes.DWORD,wintypes.LPWSTR,ctypes.POINTER(wintypes.DWORD)];query.restype=wintypes.BOOL
+                buffer=ctypes.create_unicode_buffer(32768);length=wintypes.DWORD(len(buffer))
+                if not query(int(handle),0,buffer,ctypes.byref(length)):raise OSError('Process identity unavailable')
+                path=Path(buffer.value).resolve()
+                roots=[Path(os.environ.get('SystemRoot','C:/Windows')).resolve(),Path(os.environ.get('ProgramFiles','C:/Program Files')).resolve(),Path(os.environ.get('ProgramFiles(x86)','C:/Program Files (x86)')).resolve()]
+                result['local_editor']=path.name.lower() in ('notepad.exe','wordpad.exe','notepad++.exe') and any(path.is_relative_to(root) for root in roots)
+                result['process_name']=path.name
+            finally:handle.Close()
+        except (OSError,AttributeError,TypeError):result['local_editor']=False
+        if control is not None:
+            try:result['expands_menu']=role in ('MenuItem','ComboBox') and not control.element_info.element.CurrentIsInvokePatternAvailable and control.iface_expand_collapse.CurrentExpandCollapseState in (0,1,2)
+            except Exception:pass
+            try:
+                import win32gui,win32con
+                result['multiline']=role in ('Edit','Document') and 'edit' in control.class_name().lower() and bool(win32gui.GetWindowLong(control.handle,win32con.GWL_STYLE)&4)
+            except Exception:pass
+        return result
+
     def inspect(self, hwnd):
         w=self.window(hwnd);result=[];elements={}
         for index,control in enumerate([w]+w.descendants()[:180]):
@@ -108,8 +140,8 @@ class Desktop:
                 if password:name='[Password field: owner takeover required]'
                 value=''
                 checked=None
-                if not password and info.control_type in ('Edit','ComboBox'):
-                    try:value=str(control.selected_text() if info.control_type=='ComboBox' else control.get_value())[:1000]
+                if not password and info.control_type in ('Edit','Document','ComboBox'):
+                    try:value=str(self.signature(control))[:20000 if info.control_type=='Document' else 1000]
                     except Exception:pass
                 if info.control_type=='CheckBox':
                     try:checked=control.get_toggle_state()
@@ -118,7 +150,7 @@ class Desktop:
                 elements[index]=control
             except Exception:continue
         token=uuid.uuid4().hex
-        signatures={i:self.signature(c) for i,c in elements.items() if c.element_info.control_type in ('Edit','ComboBox','CheckBox')}
+        signatures={i:self.signature(c) for i,c in elements.items() if c.element_info.control_type in ('Edit','Document','ComboBox','CheckBox')}
         self.observations[int(hwnd)]=(token,time.monotonic(),elements,signatures)
         r=w.rectangle()
         return {'window':int(hwnd),'title':w.window_text(),'observation':token,'bounds':[r.left,r.top,r.width(),r.height()],'controls':result}
@@ -153,7 +185,8 @@ class Desktop:
         try:
             if role=='CheckBox':return control.get_toggle_state()
             if role=='ComboBox':return str(control.selected_text())
-            return str(control.get_value())
+            try:return str(control.get_value())
+            except Exception:return str(control.iface_text.DocumentRange.GetText(20001))
         except Exception:return None
 
     def control(self,args,conversation=None,generation=None):
@@ -195,9 +228,12 @@ class Desktop:
         control=elements.get(int(args.get('element',-1)))
         if op not in ('move_mouse','coordinate_click','drag','scroll') and control is None:raise Denied('Select an accessible element from the latest observation')
         if control is not None:
-            if self.password(control) or FORBIDDEN.search(control.element_info.name or control.window_text()):raise Denied('Authentication or sensitive control: take over')
+            text_surface=control.element_info.control_type in ('Edit','Document') and self.action_context(w,control,args).get('local_editor',False)
+            # A verified plain editor's content is data, not the name of an auth
+            # control or a command runner. Real password flags/windows stay denied.
+            if self.password(control) or (not text_surface and FORBIDDEN.search(control.element_info.name or control.window_text())):raise Denied('Authentication or sensitive control: take over')
             if not control.is_visible() or not control.is_enabled():raise Denied('Control is no longer available')
-            if re.search(r'address|command|terminal|run dialog',control.window_text(),re.I):raise Denied('Command/address controls require manual operation')
+            if not text_surface and re.search(r'address|command|terminal|run dialog',control.window_text(),re.I):raise Denied('Command/address controls require manual operation')
         # Every action invalidates its observation; subsequent actions must inspect again.
         self.observations.pop(hwnd,None)
         if op=='click':
@@ -211,10 +247,12 @@ class Desktop:
         elif op=='right_click':control.click_input(button='right')
         elif op=='double_click':control.double_click_input()
         elif op=='type':
+            from pywinauto.uia_defines import NoPatternInterfaceError
+            if control.element_info.control_type not in ('Edit','Document','ComboBox'):raise Denied('Text entry requires an editable target; typing into an activation control is unsupported')
             text=str(args['text'])[:20000]
             if control.element_info.control_type in ('Edit','Document'):
                 try:control.set_edit_text(text)
-                except (AttributeError,NotImplementedError):self.type_focused(w,control,text)
+                except (AttributeError,NotImplementedError,NoPatternInterfaceError):self.type_focused(w,control,text)
             else:self.type_focused(w,control,text)
         elif op=='select':
             text=str(args['text'])[:200]
@@ -288,6 +326,11 @@ class Desktop:
     def type_focused(self,window,control,text):
         from contextlib import nullcontext
         guard=self.permissions.input_coordinator
+        text=text.replace('\r\n','\n').replace('\r','\n')
+        if '\n' in text or '\r' in text or '\t' in text:
+            context=self.action_context(window,control,{'operation':'type'})
+            if not (context.get('local_editor') or context.get('multiline')):
+                raise Denied('This target lacks semantic text entry and verified multiline editing. Keyboard Enter could send a form/message; use a semantic field or the dedicated browser instead.')
         if len(text)>256:raise Denied('Shared keyboard fallback is limited to 256 characters per inspected action; use semantic accessibility or dedicated browser input for longer text')
         with guard.transaction(window.handle,True) if guard else nullcontext():
             if guard:guard.checkpoint()
@@ -297,7 +340,7 @@ class Desktop:
                 if guard:guard.checkpoint(window.handle)
                 elif ctypes.windll.user32.GetForegroundWindow()!=window.handle:raise Denied('The approved text target lost focus')
                 escaped='{'+character+'}' if character in '+^%{}~()' else character
-                control.type_keys(escaped,set_foreground=False,with_spaces=True,with_newlines=True,with_tabs=True,vk_packet=True)
+                control.type_keys(escaped,pause=.001,set_foreground=False,with_spaces=True,with_newlines=True,with_tabs=True,vk_packet=True)
 
     def register_image(self,hwnd,image_size):
         w=self.window(hwnd);r=w.rectangle()

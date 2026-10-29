@@ -171,10 +171,10 @@ def main():
             return fixture_approval(target,label,action)
         window.permissions.routine_labels.discard('apply draft');window.broker.approve=pause_at_click
         original_review=window.broker._review
-        def test_boundary(target,label,action,generation):
+        def test_boundary(target,label,action,generation,context=None):
             if action.get('operation')=='click' and 'apply draft' in label.lower():
                 if not pause_at_click(target,label,action):raise Denied('Synthetic takeover boundary')
-            return original_review(target,label,action,generation)
+            return original_review(target,label,action,generation,context)
         window.broker._review=test_boundary
         offset=len(events)
         window.input.setPlainText(f'In Control Lab window {hwnd}, inspect and set Greeting to Before takeover, then click Apply draft. If interrupted by the owner, inspect on resume, preserve any manual changes to Greeting, and report its exact current value.');window.send()

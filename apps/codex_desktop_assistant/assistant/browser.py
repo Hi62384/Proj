@@ -5,6 +5,7 @@ import re
 from urllib.parse import urljoin,urlsplit,urlunsplit
 from pathlib import Path
 from .permissions import Denied, origin
+from .action_policy import classify,request_review
 
 CONTROLS='button:visible,input:not([type=hidden]):visible,textarea:visible,select:visible,a:visible,[role=button]:visible,[role=checkbox]:visible'
 
@@ -47,6 +48,11 @@ class Browser:
         try:
             self.permissions.check_origin(route.request.url)
             if not self.permissions.browser or (self.permissions.halted.is_set() and not self.manual_mode):raise Denied('Paused')
+            decision=request_review(route.request.method,route.request.url)
+            navigation_submit=route.request.is_navigation_request() and route.request.method not in ('GET','HEAD','OPTIONS')
+            if (decision.required or navigation_submit) and not (self.manual_mode or getattr(self,'owner_reviewed',False)):
+                self.review_blocked=decision.reason or 'The website is submitting a document/form request.'
+                raise Denied(self.review_blocked)
             # Unreviewed mutation requests are denied at network dispatch too.
             if route.request.method not in ('GET','HEAD','OPTIONS') and not (self.manual_mode or getattr(self,'submission_allowed',False)):
                 raise Denied('Submission needs owner approval')
@@ -114,13 +120,39 @@ class Browser:
                 'text':self.page.locator('body').inner_text()[:20000],'controls':controls,'error':self.last_error,
                 'tabs':tabs,'downloads':self.downloads[-10:]}
 
+    def action_context(self,args):
+        element=self.target(args)
+        context=element.evaluate('''(e,op)=>{
+            const label=x=>(x.getAttribute('aria-label')||x.labels?.[0]?.innerText||x.innerText||x.placeholder||x.name||'').slice(0,300);
+            const f=e.form||e.closest('form'),tag=e.tagName,type=(e.type||'').toLowerCase();
+            const submit=(tag==='BUTTON'&&type==='submit')||(tag==='INPUT'&&['submit','image'].includes(type));
+            const textInput=tag==='INPUT'&&!['button','submit','image','checkbox','radio','file','reset'].includes(type);
+            const submitting=!!f&&((op==='click'&&submit)||(op==='press'&&(submit||textInput)));
+            return {source:'browser',label:label(e),tag,type,editable:tag==='TEXTAREA'||textInput||e.isContentEditable,
+                role:tag==='BUTTON'||tag==='INPUT'&&['submit','image','button'].includes(type)?'Button':(['INPUT','TEXTAREA'].includes(tag)?'Edit':tag==='A'?'Hyperlink':tag==='SELECT'?'ComboBox':e.getAttribute('role')||''),
+                form_submission:submitting,form_method:f?(f.method||'get').toUpperCase():'',form_action:f?f.action:'',
+                form_submit_labels:f?[...f.querySelectorAll('button,input[type=submit],input[type=image]')].slice(0,160).filter(x=>x.type==='submit'||x.type==='image').map(label):[],
+                enter_submits:e.enterKeyHint==='send',credential_form:!!f&&!!f.querySelector('input[type=password],input[autocomplete="new-password"],input[autocomplete="current-password"]'),href:e.href||''};
+        }''',args['operation'])
+        context['key']=args.get('key','');context['page_url']=display_url(self.page.url)
+        # A known send/publish submit control is stronger evidence than newline
+        # characters or the name of the editable field.
+        from .action_policy import commit_label
+        if args['operation']=='press' and args.get('key')=='Enter':
+            context['enter_submits']=context['enter_submits'] or any(commit_label(label).required for label in context.get('form_submit_labels',[]))
+        if context.get('form_action'):context['form_action']=display_url(context['form_action'])
+        return context
+
     def call(self, args, approved=False):
         if self.permissions.cancelled():raise Denied('Originating turn ended; action cancelled')
         if self.permissions.manual_requests and args.get('operation') not in ('inspect','screenshot'):raise Denied('Waiting for the owner to finish the requested manual step')
         if self.permissions.halted.is_set():raise Denied('Browser automation is paused; manual browsing remains separate')
         if args.get('operation')=='check' and type(args.get('checked')) is not bool:raise ValueError('checked must be a JSON boolean')
         self.start();op=args['operation']
-        self.submission_allowed=approved
+        # Routine edits can produce draft/autosave requests during this action.
+        # Actual form submits and explicit commit endpoints still need the
+        # separate, genuine owner-review proof checked in route().
+        self.submission_allowed=op not in ('inspect','screenshot','switch_tab');self.owner_reviewed=approved;self.review_blocked=''
         try:
             if op=='navigate':
                 self.uploads.clear()
@@ -143,6 +175,11 @@ class Browser:
                     if locator.get_attribute('type')=='password':raise Denied('Password entry requires human takeover')
                     label=locator.evaluate("e=>e.getAttribute('aria-label')||e.labels?.[0]?.innerText||e.innerText||e.placeholder||e.name||''")
                     if re.search(r'\b(password|captcha|otp|verification|credit.?card|card.?number|cvv|cvc|iban|mfa|two.factor|security code|one.time|log[ -]?in|sign[ -]?in)\b',label,re.I):raise Denied('Authentication or payment field requires takeover')
+                if op in ('click','fill','select','check','upload','press'):
+                    context=self.action_context(args)
+                    if context.get('credential_form') and op in ('click','press'):raise Denied('Credential form activation requires human takeover, even with an action approval')
+                    decision=classify(op,context)
+                    if decision.required and not approved:raise Denied('Owner approval is required: '+decision.reason)
                 self.observation=None
                 if op=='click':
                     try:locator.click(no_wait_after=False,timeout=1500)
@@ -161,8 +198,9 @@ class Browser:
                     locator.press(args['key'])
                 elif op=='scroll':self.page.mouse.wheel(0,max(-2000,min(2000,int(args['amount']))))
                 else:raise ValueError('Unsupported browser operation')
+            if self.review_blocked:raise Denied('The consequential request was blocked before forwarding. Owner review is required: '+self.review_blocked)
             return self.inspect()
-        finally:self.submission_allowed=False
+        finally:self.submission_allowed=False;self.owner_reviewed=False
 
     def goto(self,url):
         for _ in range(8):

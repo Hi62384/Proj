@@ -59,13 +59,16 @@ def classify(operation,context):
     # A field named "Send message" or text mentioning a purchase is still data.
     if operation=='type' and source=='desktop' and role not in ('edit','document','combobox','textbox'):
         return Review('The target is not a verified text-editing control. Keyboard characters could activate this control instead of entering text.','unverified_target')
-    if operation in ('type','fill','select','check','focus','move_window','move_mouse','scroll','navigate','new_tab','switch_tab') or (source=='browser' and operation in ('tabs','close_tab','back','forward','reload','wait')):
+    if operation in ('type','fill','select','check','hover','focus','move_window','move_mouse','scroll','navigate','new_tab','switch_tab') or (source=='browser' and operation in ('tabs','close_tab','back','forward','reload','wait')):
         return Review()
     if operation=='upload':return Review('This transfers the attached file to the approved website.','submission')
     if operation in ('coordinate_click','drag'):
         return Review('The pixel target has no verified semantic action; review this exact pointer operation.','unverified_target')
     if operation=='right_click':return Review()  # Opens a menu; later activation is classified separately.
-    if context.get('expands_menu') and (operation in ('click','double_click') or key in ('ENTER','RETURN')):return Review()
+    if context.get('explicit_action'):
+        action=commit_label(context['explicit_action'].replace('_',' '))
+        if action.required:return action
+    if context.get('expands_menu') and (operation in ('click','double_click') or key in ('ENTER','RETURN')):return Review() if role in ('menuitem','menu item') else commit_label(label)
     if context.get('filesystem_activation') and (operation in ('click','double_click') or key in ('ENTER','RETURN')):
         return Review('This activates a filesystem or shell item and may open a file, execute a program, or change files. Desktop scope does not grant file-operation or code-execution permission.','filesystem')
     if operation in ('keypress','press'):
@@ -88,6 +91,8 @@ def classify(operation,context):
         if re.fullmatch(r'save(?: as)?(?:\.\.\.|…)?',label.strip(),re.I):return Review('This native editor action saves a file; desktop editing does not grant direct file-write permission.','filesystem')
     result=commit_label(label)
     if result.required:return result
+    if source=='browser' and re.fullmatch(r'save(?: changes| draft| product| listing)?',label.strip(),re.I) and not context.get('local_editor'):
+        return Review('This save can persist account or website content. Its unpublished destination must be verified by an approved draft workflow.','submission')
     if context.get('form_submission'):
         if context.get('form_method')=='GET' and not context.get('enter_submits'):return Review()
         return Review('The target is an actual form submission control (method '+context.get('form_method','unknown')+'), rather than a text-editing operation.','submission')

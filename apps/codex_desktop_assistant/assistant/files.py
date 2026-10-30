@@ -82,7 +82,7 @@ class Files:
         if action in ('write','delete') and args.get('sha256')!=before.get('sha256', 'empty-folder'):
             raise Denied('Inspect first and provide the exact current sha256 (empty-folder for an empty folder)')
         if decision=='ask':
-            preview=''
+            preview=content[:12000] if action=='create' and args.get('kind')!='folder' else ''
             if action=='write':
                 import difflib
                 preview=''.join(difflib.unified_diff(path.read_text(encoding='utf-8').splitlines(True),content.splitlines(True),fromfile='existing',tofile='proposed'))[:12000]

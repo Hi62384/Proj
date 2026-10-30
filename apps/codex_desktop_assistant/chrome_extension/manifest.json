@@ -14,7 +14,8 @@
     "declarativeNetRequest"
   ],
   "optional_permissions": [
-    "downloads"
+    "downloads",
+    "debugger"
   ],
   "optional_host_permissions": [
     "https://*/*",

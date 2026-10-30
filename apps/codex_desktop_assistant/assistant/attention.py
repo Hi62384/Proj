@@ -19,17 +19,15 @@ class Attention(QObject):
         if QSystemTrayIcon.isSystemTrayAvailable():self.tray.show()
 
     def open(self):
-        self.window.showNormal();self.window.raise_();self.window.activateWindow()
-        self.unread=0;self.window.attention_button.setText('Requests')
-        if self.window.requests:
-            request=next((r for r in reversed(self.window.requests) if not r['event'].is_set()),None)
-            if request:self.window.choose(request['conversation'])
+        if not self.window.isVisible():self.window.show()
+        self.window.raise_();self.window.activateWindow()
+        if hasattr(self.window,'show_requests'):self.window.show_requests()
 
     def notify(self,category,key,operation=None):
         if key in self.seen:return
         self.seen.add(key)
         if not self.window.store.settings().get('notify_'+category,category!='info'):return
-        self.unread+=1;self.window.attention_button.setText(f'Requests · {self.unread}')
+        if hasattr(self.window,'refresh_requests'):self.window.refresh_requests()
         # Never expose model text, filenames, website/account details or document content.
         safe_reason={'manual_step':'A manual step needs your attention. Open the assistant for the specific instructions.',
                      'manual_captcha':'A website needs you to complete a CAPTCHA. Open the assistant for instructions.',

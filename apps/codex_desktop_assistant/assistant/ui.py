@@ -44,74 +44,31 @@ class MainWindow(BaseWindow):
             except Exception as error:self.notice.setText('Chrome bridge needs attention: '+str(error))
 
     def build(self):
-        root=QWidget();self.setCentralWidget(root);layout=QVBoxLayout(root);layout.setContentsMargins(14,12,14,12);layout.setSpacing(10)
-        top=QHBoxLayout();top.addWidget(QLabel('Model'))
-        self.connection=QLabel('Connecting…');self.connection.setToolTip('Uses your existing ChatGPT account')
-        self.model=QComboBox();self.model.setMinimumWidth(150);self.model.currentIndexChanged.connect(self.model_changed);top.addWidget(self.model)
-        top.addWidget(QLabel('Reasoning'));self.effort=QComboBox();self.effort.setMinimumWidth(105);self.effort.currentIndexChanged.connect(self.effort_changed);top.addWidget(self.effort)
-        top.addStretch();self.status=QLabel('Ready');self.status.setMinimumWidth(140);top.addWidget(self.status)
-        self.task_controls=QWidget();task_row=QHBoxLayout(self.task_controls);task_row.setContentsMargins(0,0,0,0)
-        for label,slot in [('Continue',self.resume),('Stop',self.stop)]:task_row.addWidget(button(label,slot))
-        self.attention_button=button('Requests',lambda:self.attention.open());self.attention_button.setMinimumWidth(125);top.addWidget(self.attention_button)
-        top.addWidget(button('Projects',self.show_projects));top.addWidget(button('Permissions',self.file_permissions));top.addWidget(button('Settings',self.settings));layout.addLayout(top)
-        advanced=QGroupBox('Computer access and advanced controls');advanced.setCheckable(True);advanced.setChecked(False);advanced_layout=QVBoxLayout(advanced);layout.addWidget(advanced)
-        controls_widget=QWidget();controls=QHBoxLayout(controls_widget);controls.addWidget(QLabel('Desktop Access'))
-        self.access_mode=QComboBox();self.access_mode.addItems(['Selected Window','Entire Monitor']);self.access_mode.currentIndexChanged.connect(self.refresh_targets);controls.addWidget(self.access_mode)
-        self.access_target=QComboBox();self.access_target.setMinimumWidth(180);self.access_target.setMaximumWidth(330);controls.addWidget(self.access_target,1)
-        controls.addWidget(button('Refresh',self.refresh_targets));controls.addWidget(button('Enable Access',self.enable_access));controls.addWidget(button('Revoke',self.revoke_desktop))
-        self.launch_toggle=QCheckBox('Allow Program Launches');self.launch_toggle.toggled.connect(self.toggle_launches);controls.addWidget(self.launch_toggle)
-        self.observation_indicator=QLabel('Observation OFF');controls.addWidget(self.observation_indicator);advanced_layout.addWidget(controls_widget);controls_widget.hide();advanced.toggled.connect(controls_widget.setVisible)
-        split=QSplitter(Qt.Horizontal);layout.addWidget(split,1)
-        self.sidebar=QWidget();side=QVBoxLayout(self.sidebar);side.setContentsMargins(0,0,8,0)
-        side.addWidget(button('+ New Chat',self.new_chat));self.search=QLineEdit();self.search.setPlaceholderText('Search chats');self.search.textChanged.connect(self.load_list);side.addWidget(self.search)
-        self.archived=QCheckBox('Archived chats');self.archived.toggled.connect(self.load_list);side.addWidget(self.archived)
-        self.list=QListWidget();self.list.currentItemChanged.connect(self.select);side.addWidget(self.list,1)
-        for label,slot in [('Rename',self.rename),('Pin / unpin',self.pin),('Archive / restore',self.archive),('Delete history',self.delete_history)]:side.addWidget(button(label,slot))
-        split.addWidget(self.sidebar)
-        center=QWidget();chat=QVBoxLayout(center);chat.setContentsMargins(12,0,12,0)
-        self.title=QLabel('New conversation');self.title.setObjectName('conversationTitle');chat.addWidget(self.title)
-        self.chat=ChatView();self.chat.setOpenLinks(False);self.chat.anchorClicked.connect(self.open_link);chat.addWidget(self.chat,1)
-        self.approvals_widget=QWidget();self.approvals_layout=QVBoxLayout(self.approvals_widget);self.approvals_layout.setContentsMargins(0,0,0,0);chat.addWidget(self.approvals_widget);self.approvals_widget.hide()
-        self.notice=QLabel('Choose a window or monitor above when your task needs computer access.');self.notice.setWordWrap(True);chat.addWidget(self.notice)
-        self.attachment_list=QListWidget();self.attachment_list.setMaximumHeight(65);self.attachment_list.itemDoubleClicked.connect(self.preview_attachment);chat.addWidget(self.attachment_list)
-        self.input=Composer();self.input.setMaximumHeight(125);self.input.setPlaceholderText('Message Codex…  Ctrl+Enter to send');self.input.send.connect(self.send);chat.addWidget(self.input)
-        row=QHBoxLayout();row.addWidget(button('Attach',self.pick_files));row.addWidget(button('Remove attachment',self.remove_attachment));row.addStretch();send=button('Send',self.send);send.setObjectName('send');row.addWidget(send);chat.addLayout(row);split.addWidget(center)
-        self.activity=QWidget();right=QVBoxLayout(self.activity);right.setContentsMargins(8,0,0,0);right.addWidget(QLabel('COMPUTER ACTIVITY'))
-        self.activity_summary=QLabel('No computer task running');self.activity_summary.setWordWrap(True);right.addWidget(self.activity_summary)
-        self.active_application=QLabel('Application: —');self.active_application.setWordWrap(True);right.addWidget(self.active_application)
-        self.browser_toggle=QCheckBox('Dedicated browser');self.browser_toggle.toggled.connect(self.toggle_browser);right.addWidget(self.browser_toggle)
-        self.dedicated_widgets=[self.browser_toggle]
-        self.browser_mode=QComboBox();self.browser_mode.addItems(['Dedicated Browser','Existing Chrome']);self.browser_mode.currentIndexChanged.connect(self.select_browser_mode);right.addWidget(self.browser_mode)
-        self.chrome_panel=QGroupBox('Chrome Connection');chrome_layout=QVBoxLayout(self.chrome_panel)
-        self.chrome_connection=QLabel('Extension disconnected');self.chrome_connection.setWordWrap(True);chrome_layout.addWidget(self.chrome_connection)
-        for label,slot in [('Connect Chrome',self.connect_chrome),('Chrome Tabs / Select Window',self.chrome_tabs),('Attach Tab',self.chrome_attach),('Release Tab',self.chrome_release),('Show Tab',self.chrome_show),('Check Connection',self.chrome_health)]:chrome_layout.addWidget(button(label,slot))
-        self.chrome_manual=QCheckBox('Manual Control for Chrome Tab');self.chrome_manual.toggled.connect(self.chrome_manual_control);chrome_layout.addWidget(self.chrome_manual)
-        self.chrome_panel.hide();right.addWidget(self.chrome_panel)
-        self.chrome_dialog=None;self.chrome_selected_tab=None
-        for label,operation in [('Open Browser','open'),('Show Browser','show'),('Browser Tabs','tabs')]:
-            control=button(label,lambda checked=False,op=operation:self.browser_control(op));right.addWidget(control);self.dedicated_widgets.append(control)
-        self.background_browser=QCheckBox('Work in Background');self.background_browser.setChecked(True)
-        self.background_browser.toggled.connect(lambda on:self.browser_control('background',enabled=on));right.addWidget(self.background_browser)
-        self.manual_browser=QCheckBox('Manual Control');self.manual_browser.toggled.connect(self.browser_manual);right.addWidget(self.manual_browser)
-        self.public_browser=QCheckBox('Public browsing for this session')
-        self.public_browser.setToolTip('Public websites may load without a separate site request. Account pages and consequential changes still require authorization.')
-        self.public_browser.toggled.connect(lambda on:self.browser_control('public',enabled=on));right.addWidget(self.public_browser)
-        self.browser_tabs_state=[];self.browser_tabs_dialog=None
-        self.dedicated_widgets.extend([self.manual_browser,self.public_browser])
-        self.preview=QLabel('Screen preview');self.preview.setMinimumSize(200,160);self.preview.setAlignment(Qt.AlignCenter);right.addWidget(self.preview)
-        right.addWidget(button('Preview approved screen',self.capture_preview))
-        self.grants=QLabel();self.grants.setWordWrap(True);right.addWidget(self.grants)
-        history=QGroupBox('Activity History');history.setCheckable(True);history.setChecked(False);history_layout=QVBoxLayout(history)
-        self.activity_text=QPlainTextEdit();self.activity_text.setReadOnly(True);self.activity_text.hide();history_layout.addWidget(self.activity_text);history.toggled.connect(self.activity_text.setVisible);right.addWidget(history);right.addStretch()
-        right.addWidget(QLabel('Emergency stop · Ctrl+Alt+F12'))
-        activity_content=self.activity;self.activity=QScrollArea();self.activity.setWidgetResizable(True);self.activity.setWidget(activity_content);split.addWidget(self.activity);split.setSizes([210,850,290])
-        footer=QHBoxLayout();footer.addWidget(button('Chats',lambda:self.sidebar.setVisible(not self.sidebar.isVisible())));footer.addWidget(self.connection);footer.addStretch();footer.addWidget(self.task_controls);footer.addWidget(button('Activity',lambda:self.activity.setVisible(not self.activity.isVisible())));layout.addLayout(footer)
-        # Retain internal compatibility while removing redundant visible toggles.
-        for name in ('observation','desktop_toggle','top_desktop','top_browser'):
-            widget=QCheckBox(self);widget.hide();setattr(self,name,widget)
-        workflow=self.menuBar().addMenu('Workflows');workflow.addAction('Prepare Cedargrid draft',self.cedargrid_workflow);workflow.addAction('Projects and completed work',self.show_projects);workflow.addAction('Run authorized local five-product test',self.synthetic_workflow)
-        self.menuBar().addAction('Quit application',self.quit_application)
-        self.refresh_targets()
+        from .ui_layout import build
+        build(self)
+
+    def show_control_center(self):
+        self.control_center.show();self.control_center.raise_()
+
+    def add_files(self,files):
+        super().add_files(files);self.attachment_list.setVisible(bool(self.pending));self.remove_attachment_button.setVisible(bool(self.pending))
+
+    def remove_attachment(self):
+        super().remove_attachment();self.attachment_list.setVisible(bool(self.pending));self.remove_attachment_button.setVisible(bool(self.pending))
+
+    def open_browser_access(self):
+        from PySide6.QtCore import QUrl
+        from PySide6.QtGui import QDesktopServices
+        settings=self.store.directory/'chrome-host/settings.json'
+        if not settings.is_file():self.connect_chrome();return
+        extension=json.loads(settings.read_text())['extension_id']
+        QDesktopServices.openUrl(QUrl('chrome-extension://'+extension+'/popup.html'))
+
+    def show_requests(self):
+        from .requests_ui import RequestsPanel
+        self.refresh_requests()
+        if getattr(self,'requests_panel',None):self.requests_panel.close()
+        self.requests_panel=RequestsPanel(self);self.requests_panel.show()
 
     def show_projects(self):
         from .project_ui import ProjectDashboard
@@ -123,6 +80,18 @@ class MainWindow(BaseWindow):
         self.new_chat();scope=self.broker.projects.prepare_synthetic(self.selected)
         prompt='''Create five distinct spreadsheet products for small businesses, generate all required files and preview images, build a test store, create the listings, and publish them to the explicitly authorized local test storefront. This is the owner-invoked synthetic acceptance workflow, not real business publication. Use projects.* to plan and run the complete durable workflow. The host has created a real disposable authenticated local adapter with store ID '''+scope['store']+''' and preauthorized ONLY these five generated products at the following exact synthetic prices (zero spending). Product specifications: '''+json.dumps(scope['products'])+'''. Create the project and full product pipeline using projects.products with store set to the configured synthetic store ID, so publication and verification tasks are included from the start. Start local generation/QA/packaging first, and use projects.wait {project,seconds:20} between status checks while independent work runs. Inspect rendered previews. After all five packages pass QA, call projects.authorize_launch once for these exact products/store; the local host recognizes the explicit synthetic workflow authorization without interrupting the owner. Then add publish and verify tasks with dependencies on the existing package tasks, and continue until every listing and delivered file is verified. Do not repeat completed work. Retrieve final results and deliver each generated package into this chat using projects.deliver. Do not access any real account, payment, other browser tab, desktop, shell or unrelated files. If a built-in tool enum lacks projects.*, use its files.read_approved projects.* compatibility alias. A plan is not completion; report actual milestones and blockers.'''
         self.engine.submit(self.selected,prompt);self.notice.setText('Authorized local test started. Five synthetic products only; no real store or spending.');self.render()
+
+    def synthetic_builder_workflow(self):
+        if self.engine.active:self.notice.setText('Finish or Stop the active turn before the local builder test.');return
+        if not self.broker.chrome.bridge.status().get('full_browser'):self.notice.setText('Enable Full Browser Access in the extension for the cross-site synthetic browser test.');self.open_browser_access();return
+        from .builder_fixture import BuilderFixture
+        self.new_chat();fixture=BuilderFixture()
+        if not hasattr(self,'builder_fixtures'):self.builder_fixtures=[]
+        self.builder_fixtures.append(fixture);self.broker.chrome.register_draft_fixture(self.selected,fixture.url)
+        from .chrome_bridge import private_json
+        path=self.store.directory/'verification/current-builder-fixture.json';path.parent.mkdir(parents=True,exist_ok=True);private_json(path,{'conversation':self.selected,'url':fixture.url})
+        self.engine.submit(self.selected,'Run the fully authorized disposable browser-design test at '+fixture.url+'. Use only chrome.* and no desktop, shell, files, screenshots or other accounts. Start with no attached tab: create your own background tab, inspect it, open About Me, fill About text with exactly Practical business tools\nCreated for small teams (a real newline), open Colors, click Violet swatch, then fill Brand color with #125e77. Open Layout controls, Choose layout, select Editorial layout. Hover Show spacing menu and click Comfortable spacing. Inspect after each action and verify the result. Save draft once; the host already authorized this exact local unpublished-draft endpoint. Verify Unpublished draft saved in the page, and final color/layout/about values. Do not click Publish or Pay now. No manual clicks or approvals should be requested for these already authorized routine controls. Do not Show Tab or change the physical active tab. Keep the new tab for independent verification and report its ID only in technical details.')
+        self.notice.setText('Local browser-design test started. No real account or public publication.')
 
     def quit_application(self):
         self.explicit_quit=True;self.broker.projects.stop();self.close()
@@ -218,7 +187,7 @@ class MainWindow(BaseWindow):
         self.notice.setText('Ordinary installed programs may be launched within this session.' if on else 'Program launching disabled.')
 
     def select_browser_mode(self):
-        existing=self.browser_mode.currentText()=='Existing Chrome';self.broker.chrome.mode=existing;self.permissions.chrome_mode=existing;self.chrome_panel.setVisible(existing)
+        self.store.setting('browser_mode',self.browser_mode.currentText());existing=self.browser_mode.currentText()=='Existing Chrome';self.broker.chrome.mode=existing;self.permissions.chrome_mode=existing;self.chrome_panel.setVisible(existing)
         for widget in self.dedicated_widgets:widget.setVisible(not existing)
         self.notice.setText('Existing Chrome uses only extension-authorized tabs attached to this chat. DOM operations leave your active tab and physical input alone.' if existing else 'Dedicated Browser selected.')
 
@@ -350,14 +319,14 @@ class MainWindow(BaseWindow):
         if generation!=self.permissions.generation or self.permissions.cancelled():return False
         request={'conversation':conversation,'label':label,'args':dict(args),'event':threading.Event(),
                  'allowed':False,'generation':generation,'deadline':time.monotonic()+300}
-        self.requests.append(request);self.engine.waiting(conversation,1);self.emit('request_approval',conversation,request)
+        self.requests.append(request);self.engine.waiting(conversation,1,'manual' if args.get('manual_step') else 'approval');self.emit('request_approval',conversation,request)
         try:
             while not request['event'].wait(.1):
                 self.engine.pump_steering(conversation)
                 if request['generation']!=self.permissions.generation or self.permissions.halted.is_set() or self.permissions.cancelled() or self.engine.stop_event.is_set() or time.monotonic()>request['deadline']:
                     request['event'].set();self.emit('request_expired',conversation,None);return False
             return request['allowed'] and not self.permissions.cancelled() and request['generation']==self.permissions.generation and time.monotonic()<=request['deadline']
-        finally:self.engine.waiting(conversation,-1)
+        finally:self.engine.waiting(conversation,-1,'manual' if args.get('manual_step') else 'approval')
 
     def on_event(self,kind,conversation,data):
         if kind=='project_completed' and hasattr(self,'attention'):self.attention.notify('info','project-'+data['project'])
@@ -388,21 +357,23 @@ class MainWindow(BaseWindow):
         if kind=='started' and not self.permissions.halted.is_set() and not self.permissions.desktop_suspended:self.pause_reason=''
         if kind=='computer_target':self.active_application.setText('Application: '+str(data));return
         if kind=='focus_paused':return
-        if kind=='task_state' and conversation==self.selected:self.status.setText(str(data));return
+        if kind=='task_state':self.refresh_status();return
         if kind=='input_access':
             if conversation==self.selected:self.activity_summary.setText(str(data) or 'Working on your task')
             return
         if hasattr(self,'attention'):
             if kind in ('handoff','error'):self.attention.notify('input' if kind=='handoff' else 'error',(kind,conversation,str(data)))
-            elif kind=='idle' and conversation and self.store.conversation(conversation)['status']=='Completed':self.attention.notify('info',('idle',conversation,len(self.store.messages(conversation))))
+            elif kind=='idle' and conversation and self.effective_status(conversation)=='Completed':self.attention.notify('info',('idle',conversation,len(self.store.messages(conversation))))
         if kind=='action':
             summaries={'desktop.inspect':'Inspecting application controls','desktop.observe':'Viewing the approved screen','desktop.action':'Working in the approved application','desktop.open_app':'Opening an approved program','desktop.list_windows':'Finding authorized windows','browser.inspect':'Inspecting the page','browser.action':'Working on the page','browser.navigate':'Opening an approved website','files.read':'Reading a file','files.write':'Updating a file','files.create':'Creating a file','files.delete':'Deleting an approved file','files.list':'Inspecting a folder','attachments.read':'Reading an attachment'}
             self.activity_summary.setText(summaries.get(str(data),'Working on your task'))
+        if kind=='action':
+            self.activity_text.appendPlainText(str(data));self.refresh_status();return
         super().on_event(kind,conversation,data)
         if kind in ('paused','idle'):self.refresh_requests()
 
     def show_request(self,request):
-        args=request['args'];card=QGroupBox('Waiting for User — Complete this step' if args.get('manual_step') else 'Waiting for User — Your permission is needed');card.setProperty('conversation',request['conversation']);form=QVBoxLayout(card)
+        args=request['args'];card=QGroupBox('Waiting for User — Complete this step' if args.get('manual_step') else 'Waiting for Approval — Your permission is needed');card.setProperty('conversation',request['conversation']);form=QVBoxLayout(card)
         title=QLabel(request['label']);title.setTextFormat(Qt.PlainText);title.setWordWrap(True);form.addWidget(title)
         if args.get('manual_step'):
             details=QLabel(args['reason']);details.setTextFormat(Qt.PlainText);details.setWordWrap(True);form.addWidget(details)
@@ -448,33 +419,48 @@ class MainWindow(BaseWindow):
         request['message_id']=self.store.add(request['conversation'],'system',request['label']+'\n'+str(args.get('path',''))+'\n'+str(args.get('reason',args.get('approval_reason',''))),'Waiting for local approval');self.render()
 
     def refresh_requests(self):
+        from .status import pending
+        live=pending(self.requests,self.permissions)
+        for request in self.requests:
+            if request not in live and not request['event'].is_set():request['allowed']=False;request['event'].set()
+        count=len(live);self.attention_button.setText('Requests'+(' · '+str(count) if count else ''))
+        if hasattr(self,'attention'):self.attention.unread=count
         visible=False
         for request,card in self.request_cards:
             if request['event'].is_set() and request.get('message_id') and not request.get('resolved_recorded'):
                 state='Approved for this exact request' if request['allowed'] else 'Denied, expired or revoked'
                 self.store.message(request['message_id'],state=state);request['resolved_recorded']=True
-            show=not request['event'].is_set() and request['conversation']==self.selected
+            show=request in live and request['conversation']==self.selected
             card.setVisible(show);visible|=show
         self.approvals_widget.setVisible(visible)
 
     def select(self,item,previous):
         super().select(item,previous);self.refresh_requests()
 
+    def effective_status(self,conversation):
+        from .status import resolve,pending
+        projects=self.broker.projects.queue.rows('SELECT id FROM projects WHERE conversation=? ORDER BY updated DESC LIMIT 1',(conversation,))
+        project=self.broker.projects.queue.summary(projects[0]['id'],conversation,limit=1) if projects else None
+        requests=[r for r in pending(self.requests,self.permissions) if r['conversation']==conversation]
+        return resolve(self.store.conversation(conversation),project,requests,self.engine.active==conversation)
+
     def refresh_status(self):
-        super().refresh_status()
-        task=self.store.conversation(self.selected) if self.selected else None
-        if task:
-            state=task['status'];legacy={'Thinking':'Working','Acting':'Working','Waiting for approval':'Waiting for User','Review after interruption':'Error'}
-            self.status.setText(legacy.get(state,'Stopped' if state.startswith('Paused') else 'Error' if state.startswith('Review') else state))
-        projects=self.broker.projects.queue.rows('SELECT id,state,conversation FROM projects WHERE conversation=? ORDER BY updated DESC LIMIT 1',(self.selected,))
+        if self.closing:return
+        BaseWindow.refresh_status(self)
+        self.refresh_requests()
+        conversation=self.selected
+        if conversation:self.status.setText(self.effective_status(conversation))
+        projects=self.broker.projects.queue.rows('SELECT id FROM projects WHERE conversation=? ORDER BY updated DESC LIMIT 1',(conversation,))
         if projects:
-            progress=self.broker.projects.queue.summary(projects[0]['id'],self.selected,limit=1)
-            counts=progress['counts'];self.activity_summary.setText(f"Project {progress['state']} · {counts.get('completed',0)}/{progress['total']} tasks complete · {counts.get('blocked',0)+counts.get('review',0)} need attention")
-            if progress['state']=='running':self.status.setText('Project running')
+            progress=self.broker.projects.queue.summary(projects[0]['id'],conversation,limit=1);counts=progress['counts']
+            self.activity_summary.setText(f"{counts.get('completed',0)} of {progress['total']} tasks complete · {counts.get('blocked',0)+counts.get('review',0)} blocked")
+            self.project_progress.setValue(round(100*counts.get('completed',0)/max(1,progress['total'])))
         p=self.permissions
         for widget,value in ((self.public_browser,p.public_browsing),(self.manual_browser,p.browser_manual)):
             widget.blockSignals(True);widget.setChecked(bool(value));widget.blockSignals(False)
-        self.grants.setText(('Access off' if not p.desktop and not p.browser else 'Stopped' if p.halted.is_set() else 'Access enabled')+'\n'+p.desktop_mode+'\n'+p.desktop_target_name+'\n'+('Program launches allowed' if p.allow_launches else 'Program launches off')+f'\nWebsites: {len(p.origins)}')
+        self.grants.setText(('Stopped' if p.halted.is_set() else 'Session enabled')+'\n'+p.desktop_mode+'\n'+p.desktop_target_name)
+        chrome=self.broker.chrome.status()
+        self.browser_activity.setText(('Chrome · '+str(len(chrome.get('tabs',[])))+' authorized pages · '+('Full access' if chrome.get('full_browser') else 'Restricted')) if chrome.get('connected') else 'Browser not connected')
 
     def file_permissions(self):
         dialog=QDialog(self);dialog.setWindowTitle('File permissions');dialog.resize(1000,520);layout=QVBoxLayout(dialog)
@@ -544,14 +530,31 @@ class MainWindow(BaseWindow):
 
     def apply_settings(self):
         super().apply_settings();settings=self.store.settings();dark=settings.get('theme','Dark')=='Dark'
-        bg='#191b1f' if dark else '#f7f7f8';surface='#23262b' if dark else '#ffffff';text='#e8e9eb' if dark else '#23262b';border='#34373d' if dark else '#dfe1e5'
+        self.activity.setVisible(settings.get('show_activity',False));bg='#191b1f' if dark else '#f7f7f8';surface='#23262b' if dark else '#ffffff';text='#e8e9eb' if dark else '#23262b';border='#34373d' if dark else '#dfe1e5'
         self.setStyleSheet(f'''QWidget{{background:{bg};color:{text};font-family:Segoe UI;font-size:{settings.get('font_size',11)}pt;}}
             QTextBrowser,QPlainTextEdit,QListWidget,QLineEdit,QComboBox{{background:{surface};border:1px solid {border};border-radius:9px;padding:8px;selection-background-color:#4a5362;}}
             QTextBrowser{{border:0;padding:16px;}} QPushButton{{background:{surface};border:1px solid {border};border-radius:7px;padding:7px 10px;}}
             QPushButton:hover{{background:{border};}} QPushButton#send{{background:#dde5ee;color:#18212b;font-weight:600;}}
-            QListWidget::item{{padding:8px;}} QListWidget::item:selected{{background:#414954;color:white;border-radius:6px;}}
+            QTreeWidget,QTableWidget{{background:{bg};border:1px solid {border};border-radius:8px;}} QHeaderView::section{{background:{surface};color:{text};border:0;border-bottom:1px solid {border};padding:8px;text-align:left;}} QListWidget::item{{padding:8px;}} QListWidget::item:selected{{background:#414954;color:white;border-radius:6px;}}
             QLabel#conversationTitle{{font-size:18pt;font-weight:600;padding:8px;}} QGroupBox{{border:1px solid {border};border-radius:9px;margin-top:14px;padding:10px;}}
             QSplitter::handle{{background:{border};width:1px;}}''')
+        self.setStyleSheet(self.styleSheet()+f'''
+            QWidget#sidebar{{background:{'#121820' if dark else '#eef1f5'};border-right:1px solid {border};}}
+            QWidget#toolbar{{background:{bg};border-bottom:1px solid {border};}}
+            QWidget#chatCenter,QTextBrowser{{background:{bg};}}
+            QFrame#composerFrame{{background:{surface};border:1px solid {border};border-radius:16px;}}
+            QPlainTextEdit#Composer{{background:transparent;border:0;padding:4px;}}
+            QListWidget#conversationList{{background:transparent;border:0;padding:0;}}
+            QLabel#sectionLabel,QLabel#muted,QLabel#notice{{color:{'#99a5b5' if dark else '#596678'};font-size:10pt;}}
+            QLabel#conversationTitle{{font-size:17pt;padding:0;}} QLabel#panelTitle{{font-size:19pt;font-weight:600;}}
+            QLabel#statusPill{{background:{surface};border-radius:12px;padding:5px 10px;font-size:10pt;}}
+            QLabel#connectionIndicator{{color:{'#a9b5c4' if dark else '#576577'};font-size:10pt;}}
+            QComboBox{{padding:5px 8px;min-height:22px;}} QPushButton{{padding:7px 10px;min-height:19px;}}
+            QProgressBar{{border:0;border-radius:5px;background:{surface};height:9px;text-align:center;}}
+            QProgressBar::chunk{{background:#32b8a0;border-radius:5px;}}
+            QScrollBar:vertical{{background:transparent;width:9px;margin:0;}} QScrollBar::handle:vertical{{background:{border};border-radius:4px;min-height:28px;}}
+            QScrollBar::add-line:vertical,QScrollBar::sub-line:vertical{{height:0;}}
+        ''')
         self.chat.document().setDefaultStyleSheet('pre {background:#30343b;color:#eef0f4;padding:14px;} code {font-family:Consolas;} h3 {font-size:13pt;} table {border-collapse:collapse;} td,th {padding:6px;border:1px solid #777;}')
 
     def render(self):
@@ -563,7 +566,7 @@ class MainWindow(BaseWindow):
         for message in self.store.messages(self.selected):
             role=message['role'];name={'user':'You','assistant':'Codex','system':'Status'}.get(role,role)
             document=SafeDocument();document.setMarkdown(message['text'])
-            body=re.search(r'<body[^>]*>(.*)</body>',document.toHtml(),re.S).group(1)
+            body=re.search(r'<body[^>]*>(.*)</body>',document.toHtml(),re.S).group(1);body=body.replace('margin-top:12px;','margin-top:4px;')
             attachments=[]
             for record in json.loads(message['attachments']):
                 attachments.append('<p><a href="attachment:'+html.escape(record['id'],quote=True)+'">'+html.escape(record['name'])+'</a></p>')
@@ -574,7 +577,7 @@ class MainWindow(BaseWindow):
                     attachments.append('<p><img src="'+url+'"></p>')
             color=('#30363e' if dark else '#e9eef4') if role=='user' else ('#23262b' if dark else '#ffffff')
             state='' if message['state'] in ('saved','sent') else '<p><small>'+html.escape(message['state'])+'</small></p>'
-            parts.append(f'<table width="100%" cellspacing="0" cellpadding="12" bgcolor="{color}" style="border:0;"><tr><td style="border:0;background-color:{color};"><b>{name}</b><br>{body}{"".join(attachments)}{state}</td></tr></table><br>')
+            parts.append(f'<table width="100%" cellspacing="0" cellpadding="12" bgcolor="{color}" style="border:0;"><tr><td style="border:0;background-color:{color};"><b>{name}</b>{body}{"".join(attachments)}{state}</td></tr></table><br>')
         bar=self.chat.verticalScrollBar();bottom=bar.value()>=bar.maximum()-40;position=bar.value()
         self.chat.setHtml(''.join(parts))
         bar.setValue(bar.maximum() if bottom else position)
@@ -585,8 +588,11 @@ class MainWindow(BaseWindow):
             self.hide();self.attention.tray.setToolTip('Codex Desktop Assistant — project work continues; open to Stop or Quit');event.ignore();return
         self.permissions.halt();self.engine.interrupt.set()
         if self.engine.turn_cancel:self.engine.turn_cancel.set()
+        for request in self.requests:request['event'].set()
+        for dialog in self.findChildren(QDialog):dialog.close()
         self.broker.projects.stop()
         self.broker.projects.close()
+        for fixture in getattr(self,'builder_fixtures',[]):fixture.close()
         if getattr(self,'project_dashboard',None):self.project_dashboard.timer.stop();self.project_dashboard.close()
         if hasattr(self,'input_guard'):self.input_guard.close()
         if hasattr(self,'attention'):self.attention.tray.hide()

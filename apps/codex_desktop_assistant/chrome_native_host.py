@@ -28,7 +28,7 @@ def main():
         first=read_message(sys.stdin.buffer)
         if first=={'type':'open_assistant','version':VERSION}:
             app=Path(__file__).resolve().parent
-            subprocess.Popen([str(app/'.venv/Scripts/pythonw.exe'),str(app/'run.py')],cwd=app,creationflags=subprocess.CREATE_NO_WINDOW)
+            subprocess.Popen([str(app/'.venv/Scripts/pythonw.exe'),str(app/'tools/show_bridge.py')],cwd=app,creationflags=subprocess.CREATE_NO_WINDOW)
             output({'type':'opened','version':VERSION});return 0
         if first!={'type':'hello','version':VERSION}:return 1
         rendezvous=json.loads((private_directory()/'chrome-bridge.json').read_text())

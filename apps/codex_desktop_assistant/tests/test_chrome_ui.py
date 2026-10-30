@@ -21,7 +21,7 @@ class ChromeUiTests(unittest.TestCase):
     def tearDown(self):
         self.window.close();self.app.processEvents();self.patch.stop();self.tmp.cleanup()
     def test_mode_switch_preserves_dedicated_browser_and_scopes(self):
-        window=self.window;dedicated=window.broker.browser
+        window=self.window;window.show_control_center();dedicated=window.broker.browser
         window.browser_mode.setCurrentText('Existing Chrome');self.app.processEvents()
         self.assertTrue(window.broker.chrome.mode);self.assertTrue(window.permissions.chrome_mode);self.assertTrue(window.chrome_panel.isVisible())
         self.assertTrue(all(not widget.isVisible() for widget in window.dedicated_widgets));self.assertIsInstance(window.activity,QScrollArea)

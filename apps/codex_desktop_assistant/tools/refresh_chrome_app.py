@@ -21,7 +21,7 @@ def main():
     if dbpath.is_file():
         db=sqlite3.connect(dbpath.as_uri()+'?mode=ro',uri=True)
         try:
-            if db.execute("SELECT COUNT(*) FROM conversations WHERE status IN ('Working','Waiting for User','Thinking','Acting')").fetchone()[0]:raise RuntimeError('Finish the active task before updating the app')
+            if db.execute("SELECT COUNT(*) FROM conversations WHERE status IN ('Working','Waiting for User','Waiting for Approval','Thinking','Acting')").fetchone()[0]:raise RuntimeError('Finish the active task before updating the app')
         finally:db.close()
     from pywinauto import Desktop
     candidates=Desktop(backend='uia').windows(title='Codex Desktop Assistant')

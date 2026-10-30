@@ -24,7 +24,8 @@ class FakeBridge:
         self.on_request(operation,args);self.calls.append((operation,copy.deepcopy(args)))
         if operation=='context':return dict(self.context)
         if operation=='inspect':return {'url':'https://example.org/editor','observation':'obs','controls':[]}
-        if operation=='list_tabs':return {'tabs':self.state['tabs']}
+        if operation in ('list_tabs','find_tabs'):return {'tabs':self.state['tabs']}
+        if operation=='open_tab':return {'tab':43,'authorized':False}
         return {'dispatched':True}
     def stop_tabs(self):self.state['tabs']=[]
 
@@ -52,6 +53,19 @@ class ChromeControlTests(unittest.TestCase):
         self.approve.assert_not_called()
         with self.assertRaises(Denied):self.control.call(self.conversation,'inspect',{'tab':99})
 
+    def test_unavailable_background_capture_never_requests_consent(self):
+        self.attach()
+        def reject(operation,args):
+            if operation=='observe_check':raise Denied('Background screenshots are unavailable. Use DOM inspection.')
+        self.bridge.on_request=reject
+        with self.assertRaisesRegex(Denied,'Background screenshots'):self.control.call(self.conversation,'observe',{'tab':42})
+        self.approve.assert_not_called()
+
+    def test_show_is_available_to_local_ui_without_becoming_a_model_capability(self):
+        from assistant.tools import CAPABILITIES
+        self.attach();self.control.call(self.conversation,'show',{'tab':42})
+        self.assertEqual(self.bridge.calls[-1][0],'show');self.assertNotIn('chrome.show',CAPABILITIES)
+
     def test_new_site_permitted_tab_attaches_without_repeated_review(self):
         original=self.bridge.request
         def request(operation,args,**kwargs):
@@ -74,9 +88,10 @@ class ChromeControlTests(unittest.TestCase):
             self.assertEqual(self.bridge.calls[-1][1]['close_token'],'checked')
         self.assertEqual(self.approve.call_count,1)
 
-    def test_extension_grant_does_not_implicitly_attach_a_chat(self):
-        with self.assertRaises(Denied):self.inspect()
-        self.assertFalse(self.bridge.calls)
+    def test_explicit_popup_grant_attaches_on_requested_use_without_another_prompt(self):
+        self.inspect();self.approve.assert_not_called()
+        self.assertEqual(self.control.grants[42]['conversation'],self.conversation)
+        with self.assertRaises(Denied):self.control.call(self.conversation,'inspect',{'tab':999})
 
     def test_model_attachment_requests_real_local_approval(self):
         self.control.attach(self.conversation,42);self.approve.assert_called_once()
@@ -102,13 +117,30 @@ class ChromeControlTests(unittest.TestCase):
         with self.assertRaises(Denied):self.action('click',approved=True,routine=True)
         self.assertFalse(any(op=='action' for op,_ in self.bridge.calls))
 
-    def test_unclassified_scripted_button_gets_specific_review(self):
+    def test_ordinary_scripted_controls_run_without_blanket_review(self):
         self.attach();self.inspect();self.bridge.context.update(label='Continue',role='Button',scripted_button=True)
-        self.action('click');self.assertIn('scripted button',self.approve.call_args.args[2]['approval_reason'])
+        self.action('click');self.approve.assert_not_called()
+        self.inspect();self.bridge.context.update(label='Publish',expands_menu=True)
+        self.action('click');self.assertEqual(self.approve.call_count,1)
 
     def test_other_conversation_cannot_use_attached_tab(self):
         self.attach();self.p.resume('another')
         with self.assertRaises(Denied):self.control.call('another','inspect',{'tab':42})
+
+    def test_full_scope_uses_a_fresh_tab_for_cross_domain_navigation(self):
+        self.attach();self.bridge.state['full_browser']=True
+        result=self.control.call(self.conversation,'navigate',{'tab':42,'url':'https://other.example/page'})
+        self.assertEqual(result['tab'],43);self.assertEqual(self.bridge.calls[-1][0],'open_tab');self.approve.assert_not_called()
+
+    def test_existing_tab_search_needs_full_scope_and_real_owner_reference(self):
+        self.bridge.state['full_browser']=True;self.store.add(self.conversation,'system','Use example tab')
+        with self.assertRaises(Denied):self.control.call(self.conversation,'find_tabs',{'query':'example'})
+        self.store.add(self.conversation,'user','Use my example tab')
+        self.control.call(self.conversation,'adopt_tab',{'tab':42,'query':'example'})
+        self.approve.assert_not_called();self.assertEqual(self.control.selected,42)
+        with self.assertRaises(Denied):self.control.call(self.conversation,'adopt_tab',{'tab':999,'query':'example'})
+        self.bridge.state['full_browser']=False
+        with self.assertRaises(Denied):self.control.call(self.conversation,'find_tabs',{'query':'example','approved':True})
 
     def test_navigation_cannot_expand_site_scope(self):
         self.attach()

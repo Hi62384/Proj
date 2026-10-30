@@ -12,7 +12,7 @@ from PIL import ImageGrab,ImageDraw
 from .attachments import image_url
 from .permissions import Denied
 
-FORBIDDEN = re.compile(r'password|sign.in|log.in|verification|captcha|authenticator|windows security|credential|powershell|command prompt|windows terminal|task manager|registry editor|codex desktop assistant|chatgpt|security challenge|one.time code',re.I)
+FORBIDDEN = re.compile(r'password|sign.in|log.in|verification|captcha|authenticator|windows security|credential|powershell|command prompt|windows terminal|task manager|registry editor|codex desktop assistant|codex computer bridge|chatgpt|security challenge|one.time code',re.I)
 KEYS = {'ENTER':'{ENTER}','TAB':'{TAB}','ESC':'{ESC}','BACKSPACE':'{BACKSPACE}',
         'UP':'{UP}','DOWN':'{DOWN}','LEFT':'{LEFT}','RIGHT':'{RIGHT}',
         'CTRL+A':'^a','CTRL+C':'^c','CTRL+V':'^v','CTRL+S':'^s','HOME':'{HOME}','END':'{END}','PAGEUP':'{PGUP}','PAGEDOWN':'{PGDN}'}

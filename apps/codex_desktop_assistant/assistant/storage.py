@@ -41,7 +41,7 @@ class Store:
         CREATE TABLE IF NOT EXISTS actions(id TEXT PRIMARY KEY,conversation TEXT,operation TEXT,state TEXT,at REAL);
         CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY,value TEXT);
         ''')
-        self.db.execute("UPDATE conversations SET status='Review after interruption' WHERE status IN ('Thinking','Acting','Waiting for approval')")
+        self.db.execute("UPDATE conversations SET status='Review after interruption' WHERE status IN ('Thinking','Acting','Waiting for approval','Waiting for Approval')")
         self.db.execute("UPDATE conversations SET status='Error' WHERE status IN ('Working','Waiting for User')")
         self.db.execute("UPDATE messages SET state='Review after interruption' WHERE state IN ('queued','sending','streaming')")
         self.db.execute("UPDATE messages SET state='Expired after restart; review before continuing' WHERE state='Waiting for local approval'")

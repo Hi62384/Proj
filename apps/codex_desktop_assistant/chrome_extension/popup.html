@@ -1,11 +1,11 @@
-<!doctype html><html><head><meta charset="utf-8"><title>Codex Desktop Assistant</title><link rel="stylesheet" href="popup.css"></head>
-<body><h1>Codex Desktop Assistant</h1><p id="status" role="status">Checking connection…</p><p id="error" role="alert"></p><p id="target"></p><p id="authorized_count"></p>
+<!doctype html><html><head><meta charset="utf-8"><title>Codex Computer Bridge</title><link rel="stylesheet" href="popup.css"></head>
+<body><h1>Codex Computer Bridge</h1><p id="status" role="status">Checking connection…</p><p id="error" role="alert"></p><p id="target"></p><p id="authorized_count"></p>
 <div class="connection-row"><button id="connect">Connect</button><button id="disconnect">Disconnect</button></div>
-<button id="authorize">Allow Codex to Control This Tab</button><button id="site">Allow Site Access</button>
+<p id="scope" role="status"></p><button id="full">Enable Full Browser Access</button><button id="restricted">Use Restricted Browser</button><button id="authorize">Allow Codex to Control This Tab</button><button id="site">Allow Site Access</button>
 <label><input id="manual" type="checkbox"> Manual Control for This Tab</label>
-<button id="stop">Stop Automation for This Tab</button><button id="open">Open Codex Desktop Assistant</button>
-<details><summary>Frames and downloads</summary>
+<button id="stop">Stop Automation for This Tab</button><button id="open">Open Codex Computer Bridge</button>
+<details><summary>Advanced browser capabilities</summary><p>Optional trusted input uses Chrome debugger only for an approved tab and only during a bounded click/hover. It does not grant shell access or arbitrary commands.</p><button id="trusted">Enable optional trusted browser input</button>
 <button id="frames">Authorize an Embedded Frame</button><select id="frame" aria-label="Embedded frame"></select><button id="frame_allow">Allow Selected Frame Site</button>
 <button id="downloads">Enable Download Save Dialogs</button></details>
-<p class="note">Only tabs you authorize are exposed to the assistant. Navigation to another site revokes tab access. Publication, purchases and sensitive submissions need separate approval. Passwords and verification stay manual.</p>
+<p class="note">Restricted mode uses selected tabs/sites. Full Browser Access permits new agent tabs across websites; unrelated existing tabs are not automatically inspected. Publication, purchases and sensitive submissions need separate approval. Passwords and verification stay manual.</p>
 <script src="popup.js"></script></body></html>

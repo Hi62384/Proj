@@ -7,9 +7,9 @@ if not exist ".venv\Scripts\python.exe" (
 )
 ".venv\Scripts\python.exe" -m pip install -r requirements.lock.txt
 if errorlevel 1 goto failed
-".venv\Scripts\python.exe" -m playwright install chromium
+".venv\Scripts\python.exe" tools\setup_computer_bridge.py install
 if errorlevel 1 goto failed
-echo Desktop Assistant is ready. Open Start_Desktop_Assistant.cmd.
+echo Computer Bridge is ready. Give tasks in official Codex.
 exit /b 0
 :failed
 echo Setup failed. Review the error above; existing chats and Relay were not changed.

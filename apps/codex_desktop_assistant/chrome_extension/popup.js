@@ -6,7 +6,8 @@ async function send(operation,extra={}){
 async function refresh(){
   const state=await send('status');$('status').textContent=state.connected?'Connected to Desktop Assistant':'Disconnected — open Desktop Assistant, then Connect';
   const [tab]=await chrome.tabs.query({active:true,currentWindow:true});const grant=state.tabs.find(x=>x.tab===tab?.id);
-  $('target').textContent=grant?`Authorized tab ${grant.tab} · ${grant.origin}`:'This tab is not authorized';
+  $('scope').textContent=state.full_browser?'Full Browser Access — new agent tabs across websites':'Restricted Browser — selected tabs/sites';
+  $('target').textContent=grant?`This page is authorized · ${new URL(grant.origin).hostname}`:'This tab is not authorized';
   $('manual').checked=Boolean(grant?.manual);
   $('authorized_count').textContent=`Authorized tabs in this session: ${state.tabs.length}`;
   if(state.error&&!state.connected)$('error').textContent=state.error;
@@ -19,7 +20,7 @@ $('site').onclick=()=>guarded(async()=>{
   const [tab]=await chrome.tabs.query({active:true,currentWindow:true});const url=new URL(tab.url);
   if(!['http:','https:'].includes(url.protocol))throw Error('Choose an ordinary HTTP or HTTPS website.');
   const granted=await chrome.permissions.request({origins:[`${url.protocol}//${url.hostname}/*`]});
-  if(!granted)throw Error('Chrome site permission was denied.');await send('authorize');
+  if(!granted)throw Error('Chrome site permission was denied.');await send('authorize_site');
 });
 $('downloads').onclick=()=>guarded(async()=>{if(!await chrome.permissions.request({permissions:['downloads']}))throw Error('Download permission was denied.');});
 $('frames').onclick=()=>guarded(async()=>{
@@ -34,3 +35,7 @@ $('frame_allow').onclick=()=>guarded(async()=>{
 });
 refresh().catch(error=>$('error').textContent=error.message);
 setInterval(()=>refresh().catch(()=>{}),1000);
+
+$('full').onclick=()=>guarded(async()=>{if(!await chrome.permissions.request({origins:['http://*/*','https://*/*']}))throw Error('Chrome website permission was denied.');await send('full_access',{enabled:true});});
+$('restricted').onclick=()=>guarded(()=>send('full_access',{enabled:false}));
+$('trusted').onclick=()=>guarded(async()=>{if(!await chrome.permissions.request({permissions:['debugger']}))throw Error('Optional debugger permission was denied.');await send('trusted_input');});

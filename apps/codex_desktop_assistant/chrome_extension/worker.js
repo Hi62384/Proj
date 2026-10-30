@@ -3,10 +3,18 @@
 const HOST='com.codex.desktop_assistant';const VERSION=1;
 let port=null,session=null,connected=false,connectionError='';const grants=new Map(),cancelled=new Set(),running=new Set();
 let autoConnect=false,grantAckSupported=false,lastAuthorizationError='';const grantWaiters=new Map();
+let fullBrowser=false,trustedInput=false;
+const approvedSites=new Set();
+const wideOrigins=['http://*/*','https://*/*'];
+async function browserScope(){fullBrowser=fullBrowser&&await chrome.permissions.contains({origins:wideOrigins});return fullBrowser;}
+function scopeEvent(){if(connected)post({type:'event',event:'scope',full_browser:fullBrowser,trusted_input:trustedInput});}
+const patternFor=url=>{const p=new URL(url);return `${p.protocol}//${p.hostname}/*`;};
+async function siteAllowed(url){return await browserScope()||(approvedSites.has(exact(url))&&await chrome.permissions.contains({origins:[patternFor(url)]}));}
 let nextRule=1;const tabRules=new Map();
 // Session-local provenance, never supplied by a model or webpage. Only tabs
 // actually created here and never activated/edited qualify for clean close.
 const createdTabs=new Map();
+const openingUrls=new Map();
 const activationEpoch=new Map(),navigationEpoch=new Map();
 const networkAvailable=Boolean(chrome.declarativeNetRequest?.getSessionRules);
 const startupReady=networkAvailable?chrome.declarativeNetRequest.getSessionRules().then(rules=>chrome.declarativeNetRequest.updateSessionRules({removeRuleIds:rules.map(r=>r.id)})):Promise.resolve();
@@ -23,6 +31,7 @@ async function networkGuard(grant){
       rules.push({id:nextRule++,priority:1,action:{type:'block'},condition:{tabIds:[grant.tab]}});
       const receiver=new URL(grant.origin),base=receiver.origin;
       rules.push({id:nextRule++,priority:10,action:{type:'allow'},condition:{tabIds:[grant.tab],urlFilter:'|'+base+'/'}});
+      for(const receiver of grant.uploadReceivers||[])rules.push({id:nextRule++,priority:10,action:{type:'allow'},condition:{tabIds:[grant.tab],urlFilter:'|'+receiver+'|',requestMethods:['post']}});
     }
   }
   await chrome.declarativeNetRequest.updateSessionRules({removeRuleIds:previous,addRules:rules});tabRules.set(grant.tab,rules.map(r=>r.id));
@@ -51,7 +60,7 @@ function connect(){
   if(port)return;port=chrome.runtime.connectNative(HOST);
   port.onMessage.addListener(message=>{
     if(message.type==='hello'&&message.version===VERSION&&typeof message.session==='string'){
-      session=message.session;connected=true;connectionError='';grantAckSupported=message.features?.includes('grant_ack')===true;grants.clear();return;
+      session=message.session;connected=true;connectionError='';grantAckSupported=message.features?.includes('grant_ack')===true;grants.clear();browserScope().then(scopeEvent);return;
     }
     if(message.type==='error'){disconnect();return;}
     if(!connected||message.session!==session)return;
@@ -64,10 +73,11 @@ function connect(){
   port.postMessage({type:'hello',version:VERSION});
 }
 async function active(){const [tab]=await chrome.tabs.query({active:true,currentWindow:true});if(!tab)throw Error('No active Chrome tab');return tab;}
-async function authorize(target=null){
+async function authorize(target=null,sourceScope='auto'){
   if(!connected)throw Error('Connect to the open Desktop Assistant first.');
   const tab=target||await active(),origin=exact(tab.url);await chrome.scripting.executeScript({target:{tabId:tab.id},files:['content.js']});
-  const grant={tab:tab.id,window:tab.windowId,origin,manual:false,frames:{'0':origin}};
+  const previous=grants.get(tab.id);
+  const grant={tab:tab.id,window:tab.windowId,origin,manual:false,scope:sourceScope==='auto'?(await browserScope()?'full':'site'):sourceScope,assistant_created:createdTabs.get(tab.id)?.session===session,frames:{'0':origin},uploadLocked:Boolean(previous?.origin===origin&&previous.uploadLocked),uploadReceivers:previous?.origin===origin?(previous.uploadReceivers||[]):[]};
   try{
     await networkGuard(grant);
     const response=await chrome.tabs.sendMessage(tab.id,{channel:'codex-content',operation:'grant',origin,session});
@@ -97,7 +107,16 @@ async function content(args,operation){
 async function execute(operation,args,check){
   check();
   if(operation==='list_tabs'){
-    const tabs=await chrome.tabs.query({});return {tabs:tabs.map(t=>{const g=grants.get(t.id);return g?{tab:t.id,window:t.windowId,active:t.active,authorized:true,origin:g.origin,manual:g.manual,title:'Authorized tab',url:publicUrl(t.url)}:{tab:t.id,window:t.windowId,active:t.active,authorized:false};})};
+    const tabs=await chrome.tabs.query({});return {full_browser:await browserScope(),tabs:tabs.map(t=>{const g=grants.get(t.id);return g?{tab:t.id,window:t.windowId,active:t.active,authorized:true,origin:g.origin,manual:g.manual,assistant_created:g.assistant_created,title:String(t.title||'Authorized page').slice(0,200),url:publicUrl(t.url)}:{tab:t.id,window:t.windowId,active:t.active,authorized:false};})};
+  }
+  if(operation==='find_tabs'){
+    if(!await browserScope())throw Error('Full Browser Access is required for existing-tab title/URL matching. Restricted mode exposes authorized tabs only.');
+    const query=String(args.query||'').toLowerCase();if(query.length<3||query.length>100)throw Error('Use a specific tab reference.');
+    const tabs=await chrome.tabs.query({});return {tabs:tabs.filter(t=>/^https?:/.test(t.url||'')&&((t.title||'')+' '+publicUrl(t.url)).toLowerCase().includes(query)).slice(0,10).map(t=>({tab:t.id,title:String(t.title||'').slice(0,200),url:publicUrl(t.url),window:t.windowId}))};
+  }
+  if(operation==='adopt_tab'){
+    if(!await browserScope())throw Error('Existing tabs require a popup tab grant in Restricted mode.');
+    const target=await chrome.tabs.get(args.tab);exact(target.url);await authorize(target);return {tab:target.id,authorized:true};
   }
   if(operation==='list_windows'){const windows=await chrome.windows.getAll();return {windows:windows.map(w=>({window:w.id,focused:w.focused,type:w.type}))};}
   if(operation==='manual'){
@@ -109,19 +128,34 @@ async function execute(operation,args,check){
   }
   if(operation==='release'){await revoke(args.tab);return {released:true};}
   if(operation==='open_tab'){
-    const site=exact(args.url),url=new URL(args.url);
+    const site=exact(args.url),url=new URL(args.url),key=url.href;
+    // An exact requested URL is a bounded target reference, not permission to
+    // enumerate or inspect unrelated personal tabs. Preserve its live document,
+    // unsaved edits, foreground state and original creation provenance.
+    if(openingUrls.has(key))return await openingUrls.get(key);
+    const opening=(async()=>{
+    const matches=(await chrome.tabs.query({})).filter(t=>{
+      try{return new URL(t.url).href===key;}catch{return false;}
+    }).sort((a,b)=>Number(Boolean(grants.get(b.id)))-Number(Boolean(grants.get(a.id)))||Number(a.active)-Number(b.active)||a.id-b.id);
+    if(matches.length){
+      const existing=matches[0],grant=grants.get(existing.id);
+      if(grant?.manual)throw Error('This existing tab is under manual control. Release manual control before automating it.');
+      const permitted=Boolean(grant)||await siteAllowed(args.url);
+      if(permitted){check();if(!grant)await authorize(existing);return {tab:existing.id,authorized:true,reused:true,created:false,foreground_changed:false};}
+      return {tab:existing.id,authorized:false,reused:true,created:false,authorization_required:true,foreground_changed:false};
+    }
     const created=await chrome.tabs.create({url:'about:blank',active:false});
     createdTabs.set(created.id,{session,visited:false,edited:false});
     try{
       await networkGuard({tab:created.id,origin:site,manual:false});check();
       await chrome.tabs.update(created.id,{url:args.url});
-      const permitted=await chrome.permissions.contains({origins:[`${url.protocol}//${url.hostname}/*`]});
+      const permitted=await siteAllowed(args.url);
       if(permitted){
         for(let n=0;n<80;n++){
           check();const current=await chrome.tabs.get(created.id);
           if(current.status==='complete'){
-            if(exact(current.url)!==site)break;
-            await authorize(current);return {tab:created.id,authorized:true,foreground_changed:false};
+            if(exact(current.url)!==site&&!await browserScope())break;
+            await authorize(current);return {tab:created.id,authorized:true,reused:false,created:true,foreground_changed:false};
           }
           await new Promise(resolve=>setTimeout(resolve,100));
         }
@@ -129,14 +163,17 @@ async function execute(operation,args,check){
       // No automation controller exists on this tab. Do not leave network
       // restrictions behind when handing the newly opened page to its owner.
       await revoke(created.id,false);
-      return {tab:created.id,authorized:false,authorization_required:true,foreground_changed:false};
+      return {tab:created.id,authorized:false,reused:false,created:true,authorization_required:true,foreground_changed:false};
     }catch(error){await revoke(created.id);throw error;}
+    })();
+    openingUrls.set(key,opening);
+    try{return await opening;}finally{if(openingUrls.get(key)===opening)openingUrls.delete(key);}
   }
   const {tab,grant}=await requireTab(args,operation==='show');check();
   if(operation==='show'){await chrome.tabs.update(tab.id,{active:true});await chrome.windows.update(tab.windowId,{focused:true});return {shown:true};}
   if(operation==='frames'){
     const frames=await chrome.webNavigation.getAllFrames({tabId:tab.id});
-    for(const frame of frames)if(frameOrigin(frame,frames)===grant.origin)grant.frames[String(frame.frameId)]=grant.origin;
+    for(const frame of frames){const site=frameOrigin(frame,frames);if(site&&(site===grant.origin||(grant.assistant_created&&await browserScope())))grant.frames[String(frame.frameId)]=site;}
     post({type:'event',event:'grant',tab:grant});
     return {frames:frames.map(f=>{const same=frameOrigin(f,frames)===(f.frameId===0?grant.origin:grant.frames?.[String(f.frameId)]);return {frame:f.frameId,parent:f.parentFrameId,authorized:same,url:same?(/^https?:/.test(f.url)?publicUrl(f.url):'about:blank'): 'Another site — authorization required'};})};
   }
@@ -163,6 +200,11 @@ async function execute(operation,args,check){
   if(operation==='back'){await chrome.tabs.goBack(tab.id);return {navigation_started:true};}
   if(operation==='forward'){await chrome.tabs.goForward(tab.id);return {navigation_started:true};}
   if(operation==='reload'){await chrome.tabs.reload(tab.id);return {navigation_started:true};}
+  if(operation==='observe_check'){
+    if(!tab.active)throw Error('Background screenshots are unavailable. Use DOM inspection.');
+    const window=await chrome.windows.get(tab.windowId);if(!window.focused)throw Error('Chrome is not foregrounded. Use background DOM inspection.');
+    return {available:true,pixels_returned:false};
+  }
   if(operation==='observe'){
     if(!tab.active)throw Error('Background screenshots are unavailable. Use DOM inspection, or explicitly Show Tab first.');
     const frames=await chrome.webNavigation.getAllFrames({tabId:tab.id});
@@ -189,18 +231,82 @@ async function execute(operation,args,check){
     if(exact(args.url)!==grant.origin)throw Error('Download destination site is not authorized.');
     const id=await chrome.downloads.download({url:args.url,saveAs:true});return {download:id,owner_save_dialog:true};
   }
-  const supported=['inspect','context','action','upload_begin','upload_chunk','upload_finish'];
+  if(operation==='asset_digest'){
+    const response=await content(args,'asset_context');if(!response?.ok)throw Error(response?.error||'Saved asset unavailable');
+    const source=response.result,sourceUrl=new URL(source.url);
+    // Only the observed Payhip owner-download route may redirect to its exact
+    // known storage origin. Signed locations remain inside Chrome, never logs.
+    const ownerDownload=source.kind==='delivery'&&sourceUrl.origin==='https://payhip.com'&&/^\/product\/download\/[A-Za-z0-9]+$/.test(sourceUrl.pathname)&&!sourceUrl.search;
+    let res=await fetch(source.url,{credentials:'include',redirect:ownerDownload?'follow':'error',signal:AbortSignal.timeout(10000)});
+    if(ownerDownload&&!['https://payhip.com','https://pe56d.s3.amazonaws.com'].includes(new URL(res.url).origin)){await res.body?.cancel();throw Error('Owner download redirected outside the supported storage scope.');}
+    if(!res.ok)throw Error('Saved asset could not be read.');
+    if(ownerDownload&&res.headers.get('content-type')?.includes('json')){
+      const info=await res.json();
+      // Owner downloads can return a JSON storage link instead of redirecting.
+      // Consume only one observed exact-bucket link; keep signed URLs private.
+      const links=Object.values(info||{}).filter(value=>{
+        if(typeof value!=='string')return false;
+        try{const u=new URL(value);return u.origin==='https://pe56d.s3.amazonaws.com'&&!u.username&&!u.password;}catch{return false;}
+      });
+      if(links.length!==1)throw Error('Owner download JSON has no unique supported storage link; fields: '+Object.keys(info||{}).join(',').slice(0,200));
+      res=await fetch(links[0],{credentials:'omit',redirect:'error',signal:AbortSignal.timeout(10000)});
+      if(!res.ok)throw Error('Observed owner storage download failed with HTTP '+res.status);
+    }
+    const reader=res.body.getReader(),chunks=[];let length=0;
+    while(true){const part=await reader.read();if(part.done)break;length+=part.value.length;if(length>25*1024*1024){await reader.cancel();throw Error('Saved asset exceeds verification limit.');}chunks.push(part.value);}
+    let blob=new Blob(chunks,{type:res.headers.get('content-type')||'application/octet-stream'}),bytes=await blob.arrayBuffer();
+    if(ownerDownload&&length<8192&&!(new Uint8Array(bytes)[0]===80&&new Uint8Array(bytes)[1]===75)){
+      const text=new TextDecoder().decode(bytes).trim();let info;try{info=JSON.parse(text);}catch{info=text;}
+      const values=typeof info==='string'?[info]:Object.values(info||{});
+      const links=values.filter(value=>{try{const u=new URL(value);return typeof value==='string'&&u.origin==='https://pe56d.s3.amazonaws.com'&&!u.username&&!u.password;}catch{return false;}});
+      if(links.length===1){
+        const file=await fetch(links[0],{credentials:'omit',redirect:'error',signal:AbortSignal.timeout(10000)});
+        if(!file.ok)throw Error('Observed storage download failed with HTTP '+file.status);
+        const stream=file.body.getReader(),parts=[];length=0;
+        while(true){const part=await stream.read();if(part.done)break;length+=part.value.length;if(length>25*1024*1024){await stream.cancel();throw Error('Saved asset exceeds verification limit.');}parts.push(part.value);}
+        blob=new Blob(parts);bytes=await blob.arrayBuffer();
+      }else{throw Error('Owner download is not ZIP bytes or a unique supported storage link; response type '+(res.headers.get('content-type')||'unknown')+', bytes '+length+', format '+(typeof info==='object'?'JSON fields '+Object.keys(info||{}).join(',').slice(0,100):text.startsWith('<')?'HTML':'text'));}
+    }
+    const sha256=[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(x=>x.toString(16).padStart(2,'0')).join('');
+    let image;
+    if(source.kind==='image'){
+      const bitmap=await createImageBitmap(blob),canvas=new OffscreenCanvas(8,8),ctx=canvas.getContext('2d');ctx.drawImage(bitmap,0,0,8,8);
+      const pixels=ctx.getImageData(0,0,8,8).data,gray=[];for(let i=0;i<pixels.length;i+=4)gray.push(Math.round((pixels[i]+pixels[i+1]+pixels[i+2])/3));
+      image={width:bitmap.width,height:bitmap.height,gray};bitmap.close();
+    }
+    check();await requireTab(args);return {bytes:length,sha256,image};
+  }
+  const supported=['inspect','context','action','trusted_action','upload_begin','upload_chunk','upload_finish'];
   if(!supported.includes(operation))throw Error('Unsupported bounded Chrome operation');
-  if(createdTabs.has(tab.id)&&((operation==='action'&&args.action!=='scroll')||operation==='upload_begin'))createdTabs.get(tab.id).edited=true;
-  if(operation==='upload_begin'){grant.uploadLocked=true;await networkGuard(grant);}
+  if(createdTabs.has(tab.id)&&((['action','trusted_action'].includes(operation)&&!['scroll','hover'].includes(args.action))||operation==='upload_begin'))createdTabs.get(tab.id).edited=true;
+  if(operation==='upload_begin'){
+    const receivers=args.allowed_upload_receivers||[];
+    if(!Array.isArray(receivers)||receivers.some(url=>grant.origin!=='https://payhip.com:443'||url!=='https://pe56d.s3.amazonaws.com/'))throw Error('Upload receiver is outside the bounded supported Payhip storage scope.');
+    grant.uploadLocked=true;grant.uploadReceivers=receivers;await networkGuard(grant);
+  }
   let temporaryRule=null;
-  if(operation==='action'&&args.owner_reviewed===true&&args.reviewed_form_url){
+  if(['action','trusted_action'].includes(operation)&&args.owner_reviewed===true&&args.reviewed_form_url){
     if(exact(args.reviewed_form_url)!==grant.origin)throw Error('Reviewed form destination is not this authorized site.');
     temporaryRule=nextRule++;
     await chrome.declarativeNetRequest.updateSessionRules({addRules:[{id:temporaryRule,priority:200,action:{type:'allow'},condition:{tabIds:[tab.id],urlFilter:'|'+args.reviewed_form_url+'|',requestMethods:[String(args.reviewed_form_method||'POST').toLowerCase()]}}]});
     // A bounded allowance for the explicitly reviewed form, never a blanket
     // permission for opaque JavaScript endpoints or another website.
     setTimeout(()=>chrome.declarativeNetRequest.updateSessionRules({removeRuleIds:[temporaryRule]}).catch(()=>{}),2000);
+  }
+  if(operation==='trusted_action'){
+    if(!trustedInput||!await chrome.permissions.contains({permissions:['debugger']}))throw Error('Trusted browser input is optional. Enable it explicitly in the extension popup after DOM/pointer methods fail.');
+    if(args.frame||!['click','hover'].includes(args.action))throw Error('Trusted input is bounded to root-frame click/hover targets.');
+    const point=await content(args,'point');if(!point?.ok)throw Error(point?.error||'Target point unavailable');
+    const target={tabId:tab.id};await chrome.debugger.attach(target,'1.3');
+    try{
+      check();await requireTab(args);const refreshed=await content(args,'point');if(!refreshed?.ok||JSON.stringify(refreshed.result)!==JSON.stringify(point.result))throw Error('Target moved before trusted input. Inspect again.');
+      const {x,y}=point.result;await chrome.debugger.sendCommand(target,'Input.dispatchMouseEvent',{type:'mouseMoved',x,y});
+      if(args.action==='click'){
+        await chrome.debugger.sendCommand(target,'Input.dispatchMouseEvent',{type:'mousePressed',x,y,button:'left',clickCount:1});
+        await chrome.debugger.sendCommand(target,'Input.dispatchMouseEvent',{type:'mouseReleased',x,y,button:'left',clickCount:1});
+      }
+      return {dispatched:true,method:'trusted-browser-input',next:'Inspect and verify. No physical Windows input was used.'};
+    }finally{await chrome.debugger.detach(target).catch(()=>{});}
   }
   const result=await content(args,operation);if(!result?.ok)throw Error(result?.error||'Content operation failed');return result.result;
 }
@@ -219,10 +325,21 @@ chrome.runtime.onMessage.addListener((message,sender,reply)=>{
   if(sender.id!==chrome.runtime.id||!sender.url?.startsWith(chrome.runtime.getURL('popup.html'))||message?.popup!==true)return false;
   (async()=>{
     switch(message.operation){
-      case 'status':return {connected,tabs:[...grants.values()],error:connectionError,authorization_error:lastAuthorizationError};
+      case 'status':return {connected,full_browser:await browserScope(),trusted_input:trustedInput,tabs:[...grants.values()],error:connectionError,authorization_error:lastAuthorizationError};
+      case 'full_access':{
+        if(message.enabled&&!await chrome.permissions.contains({origins:wideOrigins}))throw Error('Approve broad HTTP/HTTPS website access in Chrome first.');
+        fullBrowser=message.enabled===true;await chrome.storage.local.set({fullBrowser});if(!fullBrowser)for(const [tab,g]of [...grants])if(g.scope==='full')await revoke(tab);scopeEvent();return {};
+      }
+      case 'trusted_input':{
+        if(!await chrome.permissions.contains({permissions:['debugger']}))throw Error('Chrome debugger permission was not granted.');trustedInput=true;await chrome.storage.local.set({trustedInput});scopeEvent();return {};
+      }
       case 'connect':autoConnect=true;await chrome.storage.local.set({autoConnect:true});connect();return {};
       case 'disconnect':autoConnect=false;await chrome.storage.local.set({autoConnect:false});disconnect();return {};
-      case 'authorize':return authorize();
+      case 'authorize':return authorize(null,'tab');
+      case 'authorize_site':{
+        const tab=await active();if(!await chrome.permissions.contains({origins:[patternFor(tab.url)]}))throw Error('Chrome site permission was not granted.');
+        approvedSites.add(exact(tab.url));await chrome.storage.local.set({approvedSites:[...approvedSites]});return authorize(tab,'site');
+      }
       case 'frame_choices':{
         const tab=await active();await requireTab({tab:tab.id},true);const frames=await chrome.webNavigation.getAllFrames({tabId:tab.id});
         return {frames:frames.filter(f=>f.frameId!==0&&/^https?:\/\//.test(f.url)).map(f=>({frame:f.frameId,origin:exact(f.url),url:publicUrl(f.url)}))};
@@ -255,4 +372,21 @@ chrome.webNavigation.onCommitted.addListener(details=>{
 });
 chrome.alarms.create('connection-check',{periodInMinutes:.5});
 chrome.alarms.onAlarm.addListener(()=>{if(connected)try{post({type:'event',event:'heartbeat'});}catch{disconnect();}else if(autoConnect&&!port)connect();});
-chrome.storage.local.get('autoConnect').then(settings=>{autoConnect=settings.autoConnect===true;if(autoConnect)connect();});
+chrome.permissions.onRemoved?.addListener(async()=>{
+  await browserScope();
+  for(const site of [...approvedSites])if(!await chrome.permissions.contains({origins:[patternFor(site)]}))approvedSites.delete(site);
+  for(const [tab,g]of [...grants])if((g.scope==='full'&&!fullBrowser)||(g.scope==='site'&&!await siteAllowed(g.origin)))await revoke(tab);
+  await chrome.storage.local.set({approvedSites:[...approvedSites]});scopeEvent();
+});
+chrome.storage.local.get(['autoConnect','fullBrowser','trustedInput','approvedSites']).then(async settings=>{
+  autoConnect=settings.autoConnect===true;fullBrowser=settings.fullBrowser===true;trustedInput=settings.trustedInput===true;
+  for(const site of settings.approvedSites||[])try{approvedSites.add(exact(site));}catch{}
+  if(settings.approvedSites===undefined&&chrome.permissions.getAll){
+    // Migrate only individually granted hosts; broad Chrome permission is never
+    // mistaken for a Restricted-mode site grant.
+    const existing=await chrome.permissions.getAll();
+    for(const p of existing.origins||[])if(/^https?:\/\/[^*]+\/\*$/.test(p))try{approvedSites.add(exact(p.slice(0,-1)));}catch{}
+    await chrome.storage.local.set({approvedSites:[...approvedSites]});
+  }
+  if(autoConnect)connect();
+});

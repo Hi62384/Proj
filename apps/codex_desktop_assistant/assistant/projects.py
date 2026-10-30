@@ -19,7 +19,7 @@ from .permissions import Denied
 from .products import ProductFactory,RECIPES,DOCUMENT_RECIPES,CUSTOM_RECIPES,digest
 
 SAFE={'generate','validate','package'}
-KINDS=SAFE|{'publish','verify','reason'}
+KINDS=SAFE|{'publish','verify','reason','prepare_hidden','verify_hidden'}
 MAX_JOBS=20000
 
 
@@ -78,7 +78,7 @@ class ProjectQueue:
             for job in jobs:
                 key=job.get('key');kind=job.get('kind');payload=job.get('payload',{});needs=job.get('needs',[])
                 if not isinstance(key,str) or not key or len(key)>160 or kind not in KINDS or len(encoded(payload))>20000 or not isinstance(needs,list) or len(needs)>200:raise ValueError('Invalid bounded task')
-                if kind in SAFE|{'publish','verify'}:
+                if kind in SAFE|{'publish','verify','prepare_hidden','verify_hidden'}:
                     product=payload.get('product',{})
                     key_id=product.get('id','')
                     if not key_id or len(key_id)>80 or any(c not in 'abcdefghijklmnopqrstuvwxyz0123456789-_' for c in key_id) or product.get('recipe') not in (set(RECIPES)|DOCUMENT_RECIPES|CUSTOM_RECIPES):raise ValueError('Invalid recipe product identity')
@@ -256,7 +256,9 @@ class ProjectQueue:
 
     def authorization(self,project,store,package):
         for scope in self.rows('SELECT * FROM scopes WHERE project=? AND store=? AND revoked=0 AND expires>?',(project,store,time.time())):
-            manifest=json.loads(scope['manifest']);approved=manifest['products'].get(package['product']);listing=package['listing']
+            manifest=json.loads(scope['manifest'])
+            if manifest.get('mode')=='prepare_hidden':continue
+            approved=manifest['products'].get(package['product']);listing=package['listing']
             if approved=={'sha256':package['sha256'],'price_cents':listing['price_cents'],'currency':listing['currency'],'title':listing['title'],'files':package['files']}:return scope['id']
         raise Denied('This product, file hash, price or storefront is outside the approved launch batch')
 
@@ -285,6 +287,9 @@ class ProjectQueue:
         if adapter is None:raise Denied('Configure a supported store adapter before this task can run')
         package=result('package');archive=factory.path(package['archive'])
         if digest(archive)!=package['sha256']:raise Denied('Delivery file changed after QA/launch approval')
+        if job['kind'] in ('prepare_hidden','verify_hidden'):
+            if not hasattr(adapter,'prepare_hidden'):raise Denied('Store does not support verified Invisible preparation')
+            return adapter.prepare_hidden(package,archive,factory,cancel,verify_only=job['kind']=='verify_hidden')
         effect_key=hashlib.sha256((project+':'+key+':'+payload['store']).encode()).hexdigest();fingerprint=hashlib.sha256(encoded(package).encode()).hexdigest()
         if job['kind']=='verify':
             actual=adapter.lookup(effect_key);adapter.verify(actual,package)

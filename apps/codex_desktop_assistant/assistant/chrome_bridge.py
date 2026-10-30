@@ -76,12 +76,12 @@ class ChromeBridge:
     def __init__(self,directory,emit=lambda *args:None):
         self.directory=directory;self.emit=emit;self.lock=threading.RLock();self.connection=None
         self.pending={};self.offers={};self.session=None;self.closed=threading.Event();self.listener=None;self.write_lock=threading.Lock()
-        self.started=False;self.error='Not connected';self.thread=None;self.verified_roundtrip_at=None
+        self.full_browser=False;self.trusted_input=False;self.started=False;self.error='Not connected';self.thread=None;self.verified_roundtrip_at=None
 
     def health(self,roundtrip=False):
         if not self.started:return
         state=self.status()
-        value={'version':VERSION,'pid':os.getpid(),'updated':time.time(),'connected':state['connected'],'authorized_tab_count':len(state['tabs']),'error':state['error']}
+        value={'version':VERSION,'pid':os.getpid(),'updated':time.time(),'connected':state['connected'],'authorized_tab_count':len(state['tabs']),'error':state['error'],'full_browser':state.get('full_browser',False),'trusted_input':state.get('trusted_input',False)}
         if roundtrip:self.verified_roundtrip_at=time.time()
         if self.verified_roundtrip_at:value['verified_roundtrip_at']=self.verified_roundtrip_at
         try:private_json(self.directory/'chrome-health.json',value)
@@ -124,7 +124,7 @@ class ChromeBridge:
                 self.error=('Chrome disconnected: '+str(error))[:400] if isinstance(error,Denied) else 'Chrome disconnected ('+type(error).__name__+'). Pending actions were not replayed.'
             finally:
                 with self.lock:
-                    self.connection=None;self.session=None;self.offers={}
+                    self.connection=None;self.session=None;self.offers={};self.full_browser=False;self.trusted_input=False
                     for pending in self.pending.values():pending.put({'ok':False,'error':'Chrome disconnected; completion may be uncertain. Inspect before continuing.'})
                     self.pending.clear()
                 if connection:
@@ -141,8 +141,11 @@ class ChromeBridge:
             if origin(tab['origin'])!=tab['origin']:raise Denied('Invalid tab origin')
             frames=tab.get('frames',{'0':tab['origin']})
             if not isinstance(frames,dict) or len(frames)>32 or any(not str(k).isdigit() or not isinstance(v,str) or origin(v)!=v for k,v in frames.items()):raise Denied('Invalid Chrome frame authority')
-            with self.lock:self.offers[tab['tab']]={**{k:tab[k] for k in ('tab','window','origin','manual') if k in tab},'frames':frames}
+            with self.lock:self.offers[tab['tab']]={**{k:tab[k] for k in ('tab','window','origin','manual','assistant_created') if k in tab},'frames':frames}
             self.send({'type':'grant_ack','session':self.session,'tab':tab['tab'],'origin':tab['origin']})
+        elif kind=='scope':
+            if type(message.get('full_browser')) is not bool or type(message.get('trusted_input')) is not bool:raise Denied('Invalid browser scope event')
+            with self.lock:self.full_browser=message['full_browser'];self.trusted_input=message['trusted_input']
         elif kind in ('revoke','manual'):
             if type(tab) is not int:raise Denied('Invalid tab identity')
             with self.lock:
@@ -153,7 +156,7 @@ class ChromeBridge:
         self.health()
 
     def status(self):
-        with self.lock:return {'connected':self.connection is not None,'session':self.session,'tabs':list(self.offers.values()),'error':self.error,'version':VERSION}
+        with self.lock:return {'connected':self.connection is not None,'session':self.session,'tabs':list(self.offers.values()),'error':self.error,'version':VERSION,'full_browser':self.full_browser,'trusted_input':self.trusted_input}
 
     def send(self,value):
         raw=json.dumps(value,ensure_ascii=False,allow_nan=False).encode('utf-8')
@@ -165,6 +168,12 @@ class ChromeBridge:
 
     def request(self,operation,args=None,timeout=15,cancel=None,guard=None):
         ident=uuid.uuid4().hex;pending=queue.Queue(maxsize=1)
+        # A newly started app/worker may still be completing its authenticated
+        # handshake. Waiting before dispatch is safe; replaying an action is not.
+        connecting=time.monotonic()+min(5,timeout)
+        while self.started and self.session is None and time.monotonic()<connecting:
+            if self.closed.is_set() or (cancel and cancel()):raise Denied('Chrome connection wait cancelled')
+            time.sleep(.1)
         with self.lock:
             if not self.session:raise Denied('Connect the Chrome extension first')
             session=self.session;self.pending[ident]=pending

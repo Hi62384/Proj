@@ -23,7 +23,7 @@ class ProjectUiTests(unittest.TestCase):
     def test_task_dashboard_reports_real_durable_counts(self):
         queue=self.window.broker.projects.queue;project=queue.create(self.window.selected,'Create a project')['project']
         queue.products(project,self.window.selected,[{'id':'cash','recipe':'cashflow'}]);self.window.show_projects();self.app.processEvents()
-        self.assertIn('3 tasks',self.window.project_dashboard.summary.text());self.assertEqual(self.window.project_dashboard.table.rowCount(),3)
+        self.assertIn('3 tasks',self.window.project_dashboard.summary.text());self.assertEqual(self.window.project_dashboard.products.topLevelItemCount(),1);self.assertEqual(self.window.project_dashboard.products.topLevelItem(0).childCount(),3)
         self.window.stop();self.assertTrue(self.window.permissions.halted.is_set())
     def test_close_keeps_active_work_visible_in_tray_but_explicit_quit_is_available(self):
         with patch.object(self.window.broker.projects.queue,'active',return_value=True),patch.object(self.window.attention.tray,'isVisible',return_value=True):

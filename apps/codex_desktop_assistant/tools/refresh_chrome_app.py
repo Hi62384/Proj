@@ -12,6 +12,12 @@ from assistant.storage import private_directory
 
 def main():
     directory=private_directory();dbpath=directory/'assistant.sqlite3'
+    project_path=directory/'projects/queue.sqlite3'
+    if project_path.is_file():
+        projects=sqlite3.connect(project_path.as_uri()+'?mode=ro',uri=True)
+        try:
+            if projects.execute("SELECT 1 FROM projects WHERE state='running' AND EXISTS(SELECT 1 FROM jobs WHERE project=projects.id AND state IN ('pending','running','waiting_ai'))").fetchone():raise RuntimeError('Pause or finish the active project before updating the app')
+        finally:projects.close()
     if dbpath.is_file():
         db=sqlite3.connect(dbpath.as_uri()+'?mode=ro',uri=True)
         try:

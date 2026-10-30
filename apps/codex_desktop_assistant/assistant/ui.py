@@ -53,13 +53,14 @@ class MainWindow(BaseWindow):
         self.task_controls=QWidget();task_row=QHBoxLayout(self.task_controls);task_row.setContentsMargins(0,0,0,0)
         for label,slot in [('Continue',self.resume),('Stop',self.stop)]:task_row.addWidget(button(label,slot))
         self.attention_button=button('Requests',lambda:self.attention.open());self.attention_button.setMinimumWidth(125);top.addWidget(self.attention_button)
-        top.addWidget(button('Permissions',self.file_permissions));top.addWidget(button('Settings',self.settings));layout.addLayout(top)
-        controls=QHBoxLayout();controls.addWidget(QLabel('Desktop Access'))
+        top.addWidget(button('Projects',self.show_projects));top.addWidget(button('Permissions',self.file_permissions));top.addWidget(button('Settings',self.settings));layout.addLayout(top)
+        advanced=QGroupBox('Computer access and advanced controls');advanced.setCheckable(True);advanced.setChecked(False);advanced_layout=QVBoxLayout(advanced);layout.addWidget(advanced)
+        controls_widget=QWidget();controls=QHBoxLayout(controls_widget);controls.addWidget(QLabel('Desktop Access'))
         self.access_mode=QComboBox();self.access_mode.addItems(['Selected Window','Entire Monitor']);self.access_mode.currentIndexChanged.connect(self.refresh_targets);controls.addWidget(self.access_mode)
         self.access_target=QComboBox();self.access_target.setMinimumWidth(180);self.access_target.setMaximumWidth(330);controls.addWidget(self.access_target,1)
         controls.addWidget(button('Refresh',self.refresh_targets));controls.addWidget(button('Enable Access',self.enable_access));controls.addWidget(button('Revoke',self.revoke_desktop))
         self.launch_toggle=QCheckBox('Allow Program Launches');self.launch_toggle.toggled.connect(self.toggle_launches);controls.addWidget(self.launch_toggle)
-        self.observation_indicator=QLabel('Observation OFF');controls.addWidget(self.observation_indicator);layout.addLayout(controls)
+        self.observation_indicator=QLabel('Observation OFF');controls.addWidget(self.observation_indicator);advanced_layout.addWidget(controls_widget);controls_widget.hide();advanced.toggled.connect(controls_widget.setVisible)
         split=QSplitter(Qt.Horizontal);layout.addWidget(split,1)
         self.sidebar=QWidget();side=QVBoxLayout(self.sidebar);side.setContentsMargins(0,0,8,0)
         side.addWidget(button('+ New Chat',self.new_chat));self.search=QLineEdit();self.search.setPlaceholderText('Search chats');self.search.textChanged.connect(self.load_list);side.addWidget(self.search)
@@ -108,8 +109,23 @@ class MainWindow(BaseWindow):
         # Retain internal compatibility while removing redundant visible toggles.
         for name in ('observation','desktop_toggle','top_desktop','top_browser'):
             widget=QCheckBox(self);widget.hide();setattr(self,name,widget)
-        workflow=self.menuBar().addMenu('Workflows');workflow.addAction('Prepare Cedargrid draft',self.cedargrid_workflow)
+        workflow=self.menuBar().addMenu('Workflows');workflow.addAction('Prepare Cedargrid draft',self.cedargrid_workflow);workflow.addAction('Projects and completed work',self.show_projects);workflow.addAction('Run authorized local five-product test',self.synthetic_workflow)
+        self.menuBar().addAction('Quit application',self.quit_application)
         self.refresh_targets()
+
+    def show_projects(self):
+        from .project_ui import ProjectDashboard
+        if getattr(self,'project_dashboard',None):self.project_dashboard.close()
+        self.project_dashboard=ProjectDashboard(self);self.project_dashboard.show()
+
+    def synthetic_workflow(self):
+        if self.engine.active:self.notice.setText('Finish or Stop the active chat turn before starting the local test.');return
+        self.new_chat();scope=self.broker.projects.prepare_synthetic(self.selected)
+        prompt='''Create five distinct spreadsheet products for small businesses, generate all required files and preview images, build a test store, create the listings, and publish them to the explicitly authorized local test storefront. This is the owner-invoked synthetic acceptance workflow, not real business publication. Use projects.* to plan and run the complete durable workflow. The host has created a real disposable authenticated local adapter with store ID '''+scope['store']+''' and preauthorized ONLY these five generated products at the following exact synthetic prices (zero spending). Product specifications: '''+json.dumps(scope['products'])+'''. Create the project and full product pipeline using projects.products with store set to the configured synthetic store ID, so publication and verification tasks are included from the start. Start local generation/QA/packaging first, and use projects.wait {project,seconds:20} between status checks while independent work runs. Inspect rendered previews. After all five packages pass QA, call projects.authorize_launch once for these exact products/store; the local host recognizes the explicit synthetic workflow authorization without interrupting the owner. Then add publish and verify tasks with dependencies on the existing package tasks, and continue until every listing and delivered file is verified. Do not repeat completed work. Retrieve final results and deliver each generated package into this chat using projects.deliver. Do not access any real account, payment, other browser tab, desktop, shell or unrelated files. If a built-in tool enum lacks projects.*, use its files.read_approved projects.* compatibility alias. A plan is not completion; report actual milestones and blockers.'''
+        self.engine.submit(self.selected,prompt);self.notice.setText('Authorized local test started. Five synthetic products only; no real store or spending.');self.render()
+
+    def quit_application(self):
+        self.explicit_quit=True;self.broker.projects.stop();self.close()
 
     def refresh_targets(self):
         self.access_target.clear()
@@ -298,11 +314,13 @@ class MainWindow(BaseWindow):
         return
 
     def stop(self):
+        self.broker.projects.stop()
         self.permissions.halt()
         self.broker.chrome.stop()
         super().stop();self.pause_reason='';self.engine.state(self.selected,'Stopped');self.status.setText('Stopped')
 
     def emergency(self,reason='Emergency stop. New input is disabled; review before continuing.'):
+        self.broker.projects.stop()
         self.permissions.halt()
         self.broker.chrome.stop()
         self.permissions.halt();self.engine.interrupt.set()
@@ -342,6 +360,7 @@ class MainWindow(BaseWindow):
         finally:self.engine.waiting(conversation,-1)
 
     def on_event(self,kind,conversation,data):
+        if kind=='project_completed' and hasattr(self,'attention'):self.attention.notify('info','project-'+data['project'])
         if self.closing:return
         if kind=='chrome_status':
             self.chrome_connection.setText(('Extension connected · '+str(len(data.get('tabs',[])))+' authorized tab(s)') if data.get('connected') else 'Extension disconnected. Reconnect and reauthorize tabs. '+data.get('error',''))
@@ -447,6 +466,11 @@ class MainWindow(BaseWindow):
         if task:
             state=task['status'];legacy={'Thinking':'Working','Acting':'Working','Waiting for approval':'Waiting for User','Review after interruption':'Error'}
             self.status.setText(legacy.get(state,'Stopped' if state.startswith('Paused') else 'Error' if state.startswith('Review') else state))
+        projects=self.broker.projects.queue.rows('SELECT id,state,conversation FROM projects WHERE conversation=? ORDER BY updated DESC LIMIT 1',(self.selected,))
+        if projects:
+            progress=self.broker.projects.queue.summary(projects[0]['id'],self.selected,limit=1)
+            counts=progress['counts'];self.activity_summary.setText(f"Project {progress['state']} · {counts.get('completed',0)}/{progress['total']} tasks complete · {counts.get('blocked',0)+counts.get('review',0)} need attention")
+            if progress['state']=='running':self.status.setText('Project running')
         p=self.permissions
         for widget,value in ((self.public_browser,p.public_browsing),(self.manual_browser,p.browser_manual)):
             widget.blockSignals(True);widget.setChecked(bool(value));widget.blockSignals(False)
@@ -557,7 +581,13 @@ class MainWindow(BaseWindow):
         self.attachment_list.setVisible(bool(self.pending))
 
     def closeEvent(self,event):
-        self.permissions.halt()
+        if not getattr(self,'explicit_quit',False) and self.broker.projects.queue.active() and hasattr(self,'attention') and self.attention.tray.isVisible():
+            self.hide();self.attention.tray.setToolTip('Codex Desktop Assistant — project work continues; open to Stop or Quit');event.ignore();return
+        self.permissions.halt();self.engine.interrupt.set()
+        if self.engine.turn_cancel:self.engine.turn_cancel.set()
+        self.broker.projects.stop()
+        self.broker.projects.close()
+        if getattr(self,'project_dashboard',None):self.project_dashboard.timer.stop();self.project_dashboard.close()
         if hasattr(self,'input_guard'):self.input_guard.close()
         if hasattr(self,'attention'):self.attention.tray.hide()
         super().closeEvent(event)

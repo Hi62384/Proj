@@ -34,6 +34,16 @@ The sidebar and activity panel collapse independently. Activity History hides ra
 
 The controller refuses authentication/password controls, terminal/security windows, the assistant's own permission UI, and private clipboard paste. Use **Take Over** for those steps. App-specific automation for Excel, Godot, Blender and other applications uses this common accessibility/visual layer; specialist APIs for every application are not included or claimed tested.
 
+## Persistent business projects
+
+The assistant now includes a durable project queue above the browser controllers:
+dependencies, bounded local workers, task-specific saved reasoning, checkpoints,
+artifact generation/QA/packaging, supported-adapter batch launch authorization and
+verified effect records. Use **Projects** for progress or describe a goal in chat.
+See [BUSINESS_OPERATOR.md](BUSINESS_OPERATOR.md) for supported workflows, safety
+boundaries and operation, and [BUSINESS_OPERATOR_REPORT.md](BUSINESS_OPERATOR_REPORT.md)
+for actual acceptance results and the remaining production-store limitations.
+
 ## Browser modes
 
 **Existing Chrome extension:** choose **Existing Chrome** in the browser selector

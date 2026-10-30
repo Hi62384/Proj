@@ -42,7 +42,7 @@ site-permission boundary. No commit or push was made.
 | Physical foreground during latest real creation test | **Not passed:** the test sampled a foreground change. It did not identify its cause. A model report of unchanged active Chrome tabs does not prove unchanged Windows foreground. This still needs a controlled live check after genuine setup/approval phases. |
 | Recovery/manual/conflict through the entire installed path | Native transport/session tests and separate actual-Chrome controller checks passed; the complete installed-extension restart/disconnect/conflict sequence is still pending. No successful end-to-end claim is made. |
 | Installed-extension upload/download acceptance | The separate actual Chrome controller proved multipart bytes, and host/control regressions cover attachment boundaries. The full saved-chat/installed-extension upload and human Save As sequence remains pending. |
-| Payhip | Not inspected in this queue. No current exact Payhip tab grant exists. Read-only acceptance requires the owner to authorize the signed-in Store Builder tab; unpublished draft changes require separate explicit permission afterward. |
+| Payhip | Subsequently inspected read-only after the owner authorized the exact Store Builder tab. Visible sections and controls were identified; no editing or navigation occurred. A second inspection preserved foreground after Send setup. The Store Builder collection showed no products. Subsequently the owner granted Payhip site access: an automatically created background Products tab confirmed the calculator listing as HIDDEN and closed without approval after the untouched-tab provenance fix. See BUSINESS_OPERATOR_REPORT.md for evidence. |
 | Historical interactive desktop/dedicated-browser acceptance scripts | Existing unit/regression suites passed. Every historical interactive launcher/UI/desktop acceptance script was not rerun as part of this queue; those are not represented as new Chrome live acceptance. |
 
 Local evidence under `%LOCALAPPDATA%\CodexDesktopAssistant\verification`:
@@ -73,8 +73,9 @@ Once those grants exist, resume the real saved-chat tests for automatic control,
 clean close, foreground/input preservation, same-tab conflict, revocation/recovery,
 and reviewed synthetic upload/download behavior. The localhost fixture daemon has
 a bounded one-hour lifetime and can be restarted by the test tools at the same
-origins without changing browser identity. For Payhip, request exact-tab read-only
-scope only after synthetic acceptance passes.
+origins without changing browser identity. Payhip exact-tab read-only scope was subsequently granted and inspected after the
+synthetic business workflow passed. Production publication and draft changes remain
+outside that read-only authorization.
 
 ## Supported limits
 
@@ -90,3 +91,15 @@ the website does not expose a reliable dirty flag.
 Installation, troubleshooting, updating, revocation and removal are documented in
 [CHROME_SETUP.md](CHROME_SETUP.md). Completion should not be reported until the
 remaining live checks pass or their exact human/website blockers are resolved.
+
+## Subsequent live tab-management result
+
+After the business-operator synthetic test and owner-granted Payhip site access,
+the real saved assistant chat automatically opened a Products tab, attached and
+inspected it, confirmed the calculator listing was HIDDEN, closed that new untouched
+tab without approval and verified its removal. Original active tabs and Store
+Builder were preserved. The prior denied-close run left one older test tab open.
+Worker provenance/race regressions and nine actual Chrome DOM/input/upload checks
+passed. Broad foreground samples still changed; a separate read-only observation
+measured after Send setup preserved foreground. This does not complete every
+remaining installed-path editing/restart/conflict test. See BUSINESS_OPERATOR_REPORT.md.

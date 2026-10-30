@@ -4,6 +4,9 @@ const HOST='com.codex.desktop_assistant';const VERSION=1;
 let port=null,session=null,connected=false,connectionError='';const grants=new Map(),cancelled=new Set(),running=new Set();
 let autoConnect=false,grantAckSupported=false,lastAuthorizationError='';const grantWaiters=new Map();
 let nextRule=1;const tabRules=new Map();
+// Session-local provenance, never supplied by a model or webpage. Only tabs
+// actually created here and never activated/edited qualify for clean close.
+const createdTabs=new Map();
 const activationEpoch=new Map(),navigationEpoch=new Map();
 const networkAvailable=Boolean(chrome.declarativeNetRequest?.getSessionRules);
 const startupReady=networkAvailable?chrome.declarativeNetRequest.getSessionRules().then(rules=>chrome.declarativeNetRequest.updateSessionRules({removeRuleIds:rules.map(r=>r.id)})):Promise.resolve();
@@ -34,7 +37,7 @@ function frameOrigin(frame,frames,depth=0){
 }
 function post(value){if(!port||!session)throw Error('Assistant is disconnected');port.postMessage({...value,session});}
 async function badge(tabId,text){try{await chrome.action.setBadgeText({tabId,text});await chrome.action.setBadgeBackgroundColor({tabId,color:text==='STOP'?'#b91c1c':'#0f766e'});}catch{}}
-async function revoke(tab,notify=true){grants.delete(tab);const rules=tabRules.get(tab)||[];tabRules.delete(tab);try{await chrome.declarativeNetRequest.updateSessionRules({removeRuleIds:rules});}catch{}await badge(tab,'');try{await chrome.tabs.sendMessage(tab,{channel:'codex-content',operation:'revoke'});}catch{}if(notify&&connected)post({type:'event',event:'revoke',tab});}
+async function revoke(tab,notify=true){grants.delete(tab);createdTabs.delete(tab);const rules=tabRules.get(tab)||[];tabRules.delete(tab);try{await chrome.declarativeNetRequest.updateSessionRules({removeRuleIds:rules});}catch{}await badge(tab,'');try{await chrome.tabs.sendMessage(tab,{channel:'codex-content',operation:'revoke'});}catch{}if(notify&&connected)post({type:'event',event:'revoke',tab});}
 function disconnect(){const old=port;port=null;session=null;connected=false;grantAckSupported=false;for(const waiter of grantWaiters.values())waiter.reject(Error('Assistant disconnected before confirming tab access.'));grantWaiters.clear();for(const tab of [...grants.keys()])revoke(tab,false);try{old?.disconnect();}catch{} }
 async function confirmGrant(grant){
   if(!grantAckSupported)throw Error('Restart the updated Desktop Assistant, then reconnect. It must confirm tab access before automation is authorized.');
@@ -99,6 +102,7 @@ async function execute(operation,args,check){
   if(operation==='list_windows'){const windows=await chrome.windows.getAll();return {windows:windows.map(w=>({window:w.id,focused:w.focused,type:w.type}))};}
   if(operation==='manual'){
     const {grant}=await requireTab(args,true);grant.manual=Boolean(args.enabled);
+    if(createdTabs.has(args.tab))createdTabs.get(args.tab).visited=true;
     await networkGuard(grant);
     await chrome.tabs.sendMessage(args.tab,{channel:'codex-content',operation:'manual',enabled:grant.manual});
     await badge(args.tab,grant.manual?'HUMAN':'ON');post({type:'event',event:'manual',tab:args.tab,enabled:grant.manual});return {manual:grant.manual};
@@ -107,6 +111,7 @@ async function execute(operation,args,check){
   if(operation==='open_tab'){
     const site=exact(args.url),url=new URL(args.url);
     const created=await chrome.tabs.create({url:'about:blank',active:false});
+    createdTabs.set(created.id,{session,visited:false,edited:false});
     try{
       await networkGuard({tab:created.id,origin:site,manual:false});check();
       await chrome.tabs.update(created.id,{url:args.url});
@@ -141,15 +146,18 @@ async function execute(operation,args,check){
   }
   if(operation==='close_check'){
     const frames=await chrome.webNavigation.getAllFrames({tabId:tab.id});
-    let may_lose_edits=frames.some(f=>f.frameId!==0);
+    const own=createdTabs.get(tab.id),untouched=Boolean(own&&own.session===session&&!own.visited&&!own.edited&&!tab.active);
+    let may_lose_edits=!untouched&&frames.some(f=>f.frameId!==0);
     const response=await content(args,'close_check');
     if(!response?.ok)throw Error(response?.error||'Could not check unsaved edits');
-    grant.closeToken=crypto.randomUUID();grant.closeState=JSON.stringify(response.result);
-    return {may_lose_edits:may_lose_edits||response.result.may_lose_edits,close_token:grant.closeToken};
+    grant.closeToken=crypto.randomUUID();grant.closeState=JSON.stringify({page:response.result,untouched,navigation:navigationEpoch.get(tab.id)||0});
+    return {may_lose_edits:may_lose_edits||(!untouched&&response.result.may_lose_edits),close_token:grant.closeToken};
   }
   if(operation==='close_tab'){
     const response=await content(args,'close_check');
-    if(!response?.ok||!args.close_token||args.close_token!==grant.closeToken||JSON.stringify(response.result)!==grant.closeState)throw Error('Tab changed before closing. Check it again.');
+    const own=createdTabs.get(tab.id),current=await chrome.tabs.get(tab.id),untouched=Boolean(own&&own.session===session&&!own.visited&&!own.edited&&!current.active);
+    const proof=JSON.stringify({page:response?.result,untouched,navigation:navigationEpoch.get(tab.id)||0});
+    if(!response?.ok||!args.close_token||args.close_token!==grant.closeToken||proof!==grant.closeState)throw Error('Tab changed before closing. Check it again.');
     delete grant.closeToken;await chrome.tabs.remove(tab.id);return {closed:true};
   }
   if(operation==='back'){await chrome.tabs.goBack(tab.id);return {navigation_started:true};}
@@ -183,6 +191,7 @@ async function execute(operation,args,check){
   }
   const supported=['inspect','context','action','upload_begin','upload_chunk','upload_finish'];
   if(!supported.includes(operation))throw Error('Unsupported bounded Chrome operation');
+  if(createdTabs.has(tab.id)&&((operation==='action'&&args.action!=='scroll')||operation==='upload_begin'))createdTabs.get(tab.id).edited=true;
   if(operation==='upload_begin'){grant.uploadLocked=true;await networkGuard(grant);}
   let temporaryRule=null;
   if(operation==='action'&&args.owner_reviewed===true&&args.reviewed_form_url){
@@ -233,7 +242,7 @@ chrome.runtime.onMessage.addListener((message,sender,reply)=>{
   })().then(result=>reply({ok:true,result}),error=>reply({ok:false,error:error.message}));return true;
 });
 chrome.tabs.onRemoved.addListener(tab=>revoke(tab));
-chrome.tabs.onActivated.addListener(info=>activationEpoch.set(info.windowId,(activationEpoch.get(info.windowId)||0)+1));
+chrome.tabs.onActivated.addListener(info=>{activationEpoch.set(info.windowId,(activationEpoch.get(info.windowId)||0)+1);if(createdTabs.has(info.tabId))createdTabs.get(info.tabId).visited=true;});
 chrome.tabs.onUpdated.addListener((tab,change)=>{if(change.url&&grants.has(tab)){try{if(exact(change.url)!==grants.get(tab).origin)revoke(tab);}catch{revoke(tab);}}});
 chrome.webNavigation.onCommitted.addListener(details=>{
   navigationEpoch.set(details.tabId,(navigationEpoch.get(details.tabId)||0)+1);

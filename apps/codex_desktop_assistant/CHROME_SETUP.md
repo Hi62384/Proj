@@ -31,7 +31,9 @@ Node server, debugging port or paid service is required for Chrome integration.
 Existing Chrome host permission enables automatic control and chat attachment on
 that site; otherwise the tab opens but cannot be inspected until you grant access.
 Redirects to unrelated sites do not inherit the original tab grant. Clean attached
-tabs close automatically. Possible unsaved editor/form contents require a review;
+tabs close automatically. Tabs created by the extension also close without review
+when they were never activated or edited; that exception is session-local and cannot
+be asserted by the model. Other possible unsaved editor/form contents require a review;
 the worker checks again before closing and refuses a changed tab.
 
 Only authorized tab contents are returned. Discovery of other tabs reveals their

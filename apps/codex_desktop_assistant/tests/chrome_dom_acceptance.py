@@ -21,7 +21,8 @@ class Site(BaseHTTPRequestHandler):
     uploaded=b''
     def log_message(self,*args):pass
     def do_GET(self):
-        if self.path=='/frame':body='<label>Frame notes<textarea></textarea></label>'
+        if self.path=='/clean':body='<title>Clean close fixture</title><input type=checkbox><input type=checkbox checked><textarea></textarea><select><option>First</option><option>Second</option></select>'
+        elif self.path=='/frame':body='<label>Frame notes<textarea></textarea></label>'
         else:body='''<!doctype html><meta charset=utf-8><title>Disposable Chrome DOM Lab</title>
 <label>Notes<textarea></textarea></label><label>Human input<input autofocus></label>
 <div contenteditable=true aria-label="Rich editor">Initial rich text</div>
@@ -64,6 +65,11 @@ def main():
             browser=runtime.chromium.launch(channel='chrome',headless=False,chromium_sandbox=True)
             try:
                 context=browser.new_context();page=context.new_page();page.goto(url)
+                clean=context.new_page();clean.goto(url+'/clean');clean_controller=Adapter(clean,source);assert clean_controller.call('grant',origin=url)['ok']
+                assert clean_controller.call('close_check')['result']['may_lose_edits'] is False
+                clean.locator('input').first.check();assert clean_controller.call('close_check')['result']['may_lose_edits'] is True
+                clean.locator('input').first.uncheck();clean.locator('select').select_option(label='Second');assert clean_controller.call('close_check')['result']['may_lose_edits'] is True
+                clean.close();record('ordinary_default_checkboxes_allow_clean_close_but_changes_require_review')
                 controller=Adapter(page,source);assert controller.call('grant',origin=url)['ok'];snapshot=controller.call('inspect')['result']
                 assert snapshot['tables'][0][1]==['Maple','42'];assert 'PRIVATE-SYNTHETIC' not in json.dumps(snapshot);record('real_google_chrome_bounded_dom_and_private_field_redaction')
                 def action(label,operation,**args):

@@ -88,7 +88,15 @@
         case 'context':result=context(args);break;
         case 'action':result=action(args);break;
         case 'close_check':
-          result={may_lose_edits:roots().some(r=>[...r.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]),textarea,[contenteditable=true]')].some(e=>Boolean(value(e))||e.checked)),revision};break;
+          result={may_lose_edits:roots().some(r=>[...r.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),textarea,select,[contenteditable=true]')].some(e=>{
+            if(e.type==='checkbox'||e.type==='radio')return e.checked!==e.defaultChecked;
+            if(e.type==='file')return Boolean(e.files?.length);
+            if(e.tagName==='SELECT'){
+              if(e.multiple)return [...e.options].some(o=>o.selected!==o.defaultSelected);
+              const initial=[...e.options].findIndex(o=>o.defaultSelected);return e.selectedIndex!==(initial<0?0:initial);
+            }
+            return Boolean(String(value(e)||'').trim());
+          })),revision};break;
         case 'screenshot_check':if(sensitivePage()||roots().some(r=>[...r.querySelectorAll('input,textarea,[contenteditable=true]')].filter(visible).some(privateField)))throw Error('Sensitive page cannot be captured.');result={};break;
         case 'upload_begin':{
           const e=target(args);if(e.type!=='file'||!Number.isInteger(args.size)||args.size<0||args.size>25*1024*1024)throw Error('Unsupported file upload.');

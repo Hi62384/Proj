@@ -62,6 +62,8 @@ def classify(operation,context):
     if operation in ('type','fill','select','check','hover','focus','move_window','move_mouse','scroll','navigate','new_tab','switch_tab') or (source=='browser' and operation in ('tabs','close_tab','back','forward','reload','wait')):
         return Review()
     if operation=='upload':return Review('This transfers the attached file to the approved website.','submission')
+    if operation=='drag' and source=='browser' and context.get('section_reorder') is True:
+        return Review()  # Host-observed same-list draft editor sections only.
     if operation in ('coordinate_click','drag'):
         return Review('The pixel target has no verified semantic action; review this exact pointer operation.','unverified_target')
     if operation=='right_click':return Review()  # Opens a menu; later activation is classified separately.

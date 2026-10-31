@@ -7,6 +7,7 @@ const event=()=>({listeners:[],addListener(fn){this.listeners.push(fn);}});
 const tabs=new Map([[1,{id:1,windowId:7,url:'https://example.org/editor',status:'complete',active:false}]]);
 let next=10;
 let assetContext=null;
+const reloaded=[];
 const chrome={
   declarativeNetRequest:{getSessionRules:async()=>[],updateSessionRules:async()=>{}},
   action:{setBadgeText:async()=>{},setBadgeBackgroundColor:async()=>{}},
@@ -15,6 +16,7 @@ const chrome={
   permissions:{contains:async()=>true},scripting:{executeScript:async()=>{}},
   webNavigation:{getAllFrames:async({tabId})=>[{frameId:0,url:tabs.get(tabId).url,parentFrameId:-1},{frameId:2,url:'https://unapproved.example/frame',parentFrameId:0}],onCommitted:event()},
   tabs:{
+    reload:async id=>{reloaded.push(id);Object.assign(tabs.get(id),{discarded:false,status:'complete'});},
     create:async(args)=>{const tab={id:next++,windowId:7,url:args.url,active:args.active,status:'complete'};tabs.set(tab.id,tab);return {...tab};},
     update:async(id,args)=>{Object.assign(tabs.get(id),args);return {...tabs.get(id)};},
     get:async id=>({...tabs.get(id)}),query:async()=>[...tabs.values()],
@@ -55,6 +57,10 @@ const restricted=await run('open_tab',{url:'https://different.example/page'});as
 const restrictedCount=tabs.size;
 assert.equal((await run('open_tab',{url:'https://different.example/page'})).tab,restricted.tab);
 assert.equal(tabs.size,restrictedCount,'An existing unapproved tab requires authorization, not a duplicate');
+tabs.set(222,{id:222,windowId:7,url:'https://example.org/restored',active:false,discarded:true,status:'unloaded'});
+const restoredCount=tabs.size;
+const restored=await run('open_tab',{url:'https://example.org/restored'});
+assert.equal(restored.tab,222);assert.equal(restored.reused,true);assert.deepEqual(reloaded,[222]);assert.equal(tabs.size,restoredCount);assert.equal(tabs.get(222).active,false,'Waking a discarded tab never activates it');
 const [concurrentA,concurrentB]=await Promise.all([run('open_tab',{url:'https://example.org/concurrent'}),run('open_tab',{url:'https://example.org/concurrent'})]);
 assert.equal(concurrentA.tab,concurrentB.tab,'Concurrent same-URL requests share one creation');
 const humanBefore={...tabs.get(1)},humanCount=tabs.size;

@@ -4,7 +4,7 @@
 <p id="scope" role="status"></p><button id="full">Enable Full Browser Access</button><button id="restricted">Use Restricted Browser</button><button id="authorize">Allow Codex to Control This Tab</button><button id="site">Allow Site Access</button>
 <label><input id="manual" type="checkbox"> Manual Control for This Tab</label>
 <button id="stop">Stop Automation for This Tab</button><button id="open">Open Codex Computer Bridge</button>
-<details><summary>Advanced browser capabilities</summary><p>Optional trusted input uses Chrome debugger only for an approved tab and only during a bounded click/hover. It does not grant shell access or arbitrary commands.</p><button id="trusted">Enable optional trusted browser input</button>
+<details><summary>Advanced browser capabilities</summary><p>Trusted input stays off until enabled here. Chrome requires its debugger permission when loading the extension; it cannot be requested as an optional permission. The bridge uses it only for bounded input on an approved tab. It does not grant shell access or arbitrary commands.</p><button id="trusted">Enable optional trusted browser input</button>
 <button id="frames">Authorize an Embedded Frame</button><select id="frame" aria-label="Embedded frame"></select><button id="frame_allow">Allow Selected Frame Site</button>
 <button id="downloads">Enable Download Save Dialogs</button></details>
 <p class="note">Restricted mode uses selected tabs/sites. Full Browser Access permits new agent tabs across websites; unrelated existing tabs are not automatically inspected. Publication, purchases and sensitive submissions need separate approval. Passwords and verification stay manual.</p>

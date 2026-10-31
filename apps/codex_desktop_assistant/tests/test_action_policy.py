@@ -83,6 +83,11 @@ class ClassificationTests(unittest.TestCase):
         self.assertTrue(classify('coordinate_click',self.context()).required)
         self.assertTrue(classify('keypress',self.context(local_editor=True,key='CTRL+S')).required)
 
+    def test_only_host_observed_browser_section_reordering_is_routine(self):
+        self.assertFalse(classify('drag',self.context(source='browser',section_reorder=True)).required)
+        self.assertTrue(classify('drag',self.context(source='browser')).required)
+        self.assertTrue(classify('drag',self.context(section_reorder=True)).required)
+
     def test_shell_navigation_is_separate_from_file_activation(self):
         context=self.context(filesystem_activation=True,role='ListItem',label='example.exe')
         self.assertFalse(classify('right_click',context).required)

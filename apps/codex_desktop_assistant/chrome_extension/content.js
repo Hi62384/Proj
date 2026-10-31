@@ -24,6 +24,13 @@
   function check(){if(!grant||manual||effectiveOrigin()!==grant.origin)throw Error('Tab access is revoked, changed or under Manual Control.');}
   function roots(root=document,output=[]){output.push(root);for(const e of root.querySelectorAll('*'))if(e.shadowRoot)roots(e.shadowRoot,output);return output;}
   function visible(e){const r=e.getBoundingClientRect(),s=getComputedStyle(e);return r.width>0&&r.height>0&&s.visibility!=='hidden'&&s.display!=='none'&&!e.closest('[hidden],[inert],[aria-hidden="true"]');}
+  function presentation(e){
+    const r=e.getBoundingClientRect(),s=getComputedStyle(e);let background='transparent';
+    for(let p=e,n=0;p&&n<12;n++,p=p.parentElement){const color=getComputedStyle(p).backgroundColor;if(color&&color!=='transparent'&&!/^rgba\([^)]*,\s*0\s*\)$/.test(color)){background=color;break;}}
+    // This is ancestor paint only. Sibling/pseudo-element layers still need
+    // the bounded surface metadata or an authorized visual screenshot.
+    return {color:s.color,background:s.backgroundColor,ancestor_background:background,font:s.fontFamily,font_size:s.fontSize,line_height:s.lineHeight,bounds:{x:r.x,y:r.y,width:r.width,height:r.height}};
+  }
   function interactive(e){return e.matches('a,button,input,textarea,select,summary,[role=button],[role=tab],[role=option],[role=checkbox],[role=radio],[role=menuitem],[role=textbox],[role=combobox],[role=switch],[role=slider],[onclick],[tabindex],[contenteditable]')||getComputedStyle(e).cursor==='pointer';}
   function elementRole(e){return e.getAttribute('role')||({'A':'Hyperlink','BUTTON':'Button','INPUT':'Edit','TEXTAREA':'Edit','SELECT':'ComboBox','SUMMARY':'Button','LABEL':'Button'}[e.tagName]||(getComputedStyle(e).cursor==='pointer'?'Button':''));}
   function nearby(e){let node=e.parentElement,best='';for(let i=0;i<4&&node;i++,node=node.parentElement){const text=safe(node.innerText).trim();if(text.length>1600)break;if(text.length>best.length)best=text;}return best.slice(0,500);}
@@ -40,16 +47,22 @@
   }
   function inspect(args={}){
     check();if(sensitivePage())throw Error('Authentication/payment screen: use Manual Control. No page content was returned.');
-    const selector='a,button,input:not([type=hidden]),textarea,select,summary,[role=button],[role=tab],[role=option],[role=checkbox],[role=radio],[role=menuitem],[role=textbox],[role=combobox],[role=switch],[role=slider],[onclick],[tabindex],[contenteditable]:not([contenteditable=false])';
+    const selector='.js-section,.js-draggable,a,button,input:not([type=hidden]),textarea,select,summary,[role=button],[role=tab],[role=option],[role=checkbox],[role=radio],[role=menuitem],[role=textbox],[role=combobox],[role=switch],[role=slider],[onclick],[tabindex],[contenteditable]:not([contenteditable=false])';
     const all=roots(),semantic=all.flatMap(root=>[...root.querySelectorAll(selector)]);
-    const custom=all.flatMap(root=>[...root.querySelectorAll('div,span,svg')].slice(0,6000).filter(e=>getComputedStyle(e).cursor==='pointer'&&!e.closest('button,a,[role=button]')));
-    const candidates=[...new Set([...semantic,...custom])].filter(visible).filter(e=>!args.query||label(e).toLowerCase().includes(String(args.query).slice(0,120).toLowerCase()));const offset=Math.max(0,Math.min(6000,Number(args.offset)||0));elements=candidates.slice(offset,offset+120);
+    const custom=all.flatMap(root=>[...root.querySelectorAll('div,span,svg,li,label,p,h2,h3')].slice(0,6000).filter(e=>(getComputedStyle(e).cursor==='pointer'||(e.tagName==='LI'&&String(e.innerText||'').trim().length<=120))&&!e.closest('button,a,[role=button]')));
+    // Delegated sidebars can have plain text leaves without pointer styling or
+    // button roles. An explicit literal label query may expose that visible leaf.
+    const requested=String(args.query||'').slice(0,120).trim().toLowerCase();
+    const leaves=requested?all.flatMap(root=>[...root.querySelectorAll('div,span,li,p,h1,h2,h3,label')].slice(0,6000).filter(e=>!e.children.length&&String(e.innerText||'').trim().toLowerCase()===requested)):[];
+    const labelRows=leaves.flatMap(e=>{const rows=[];for(let p=e.parentElement,n=0;p&&n<3;n++,p=p.parentElement)if(String(p.innerText||'').trim().toLowerCase()===requested)rows.push(p);return rows;});
+    const candidates=[...new Set([...semantic,...custom,...leaves,...labelRows])].filter(visible).filter(e=>!args.query||[label(e),e.getAttribute('data-property')||'',e.getAttribute('class')||''].some(value=>value.toLowerCase().includes(requested)));const offset=Math.max(0,Math.min(6000,Number(args.offset)||0));elements=candidates.slice(offset,offset+120);
     observation=crypto.randomUUID();observedRevision=revision;observedAt=Date.now();signatures=elements.map(signature);
-    const controls=elements.map((e,i)=>{const r=e.getBoundingClientRect(),isPrivate=privateField(e);return {element:i,tag:e.tagName,role:elementRole(e),type:e.type||'',accept:e.accept||'',multiple:Boolean(e.multiple),files:e.type==='file'?[...e.files].map(f=>({name:safe(f.name),bytes:f.size,type:f.type})):undefined,label:label(e),nearby:nearby(e),href:e.href?cleanUrl(e.href):'',name:privateField(e)?'[private]':safe(e.name||''),id:safe(e.id||''),value:isPrivate?'[private]':safe(value(e)).slice(0,1200),private:isPrivate,editable:e.isContentEditable,disabled:Boolean(e.disabled),checked:Boolean(e.checked),expanded:e.getAttribute('aria-expanded'),controls:e.getAttribute('aria-controls')||e.getAttribute('data-target')||e.getAttribute('data-bs-target')||e.hash||'',fragment:e.hash||'',popup:e.getAttribute('aria-haspopup'),background:getComputedStyle(e).backgroundColor,interactive:interactive(e),in_viewport:r.x+r.width>0&&r.y+r.height>0&&r.x<innerWidth&&r.y<innerHeight,bounds:{x:r.x,y:r.y,width:r.width,height:r.height},options:e.tagName==='SELECT'?[...e.options].slice(0,80).map(o=>({value:safe(o.value),label:safe(o.label)})):undefined};});
-    const pageText=safe(document.body?.innerText),textOffset=Math.max(0,Math.min(1000000,Number(args.text_offset)||0));const tables=[...document.querySelectorAll('table')].slice(0,4).map(t=>[...t.rows].slice(0,30).map(r=>[...r.cells].slice(0,12).map(c=>safe(c.innerText).slice(0,180))));
+    const controls=elements.map((e,i)=>{const r=e.getBoundingClientRect(),isPrivate=privateField(e);return {element:i,tag:e.tagName,class_name:safe(e.getAttribute('class')||''),property:safe(e.getAttribute('data-property')||''),role:elementRole(e),type:e.type||'',accept:e.accept||'',multiple:Boolean(e.multiple),files:e.type==='file'?[...e.files].map(f=>({name:safe(f.name),bytes:f.size,type:f.type})):undefined,label:label(e),nearby:nearby(e),href:e.href?cleanUrl(e.href):'',name:privateField(e)?'[private]':safe(e.name||''),id:safe(e.id||''),value:isPrivate?'[private]':safe(value(e)).slice(0,1200),private:isPrivate,editable:e.isContentEditable,disabled:Boolean(e.disabled),checked:Boolean(e.checked),expanded:e.getAttribute('aria-expanded'),controls:e.getAttribute('aria-controls')||e.getAttribute('data-target')||e.getAttribute('data-bs-target')||e.hash||'',fragment:e.hash||'',popup:e.getAttribute('aria-haspopup'),...presentation(e),interactive:interactive(e),in_viewport:r.x+r.width>0&&r.y+r.height>0&&r.x<innerWidth&&r.y<innerHeight,bounds:{x:r.x,y:r.y,width:r.width,height:r.height},options:e.tagName==='SELECT'?[...e.options].slice(0,80).map(o=>({value:safe(o.value),label:safe(o.label)})):undefined};});
+    const pageText=safe(document.body?.innerText),textOffset=args.text_query?Math.max(0,pageText.indexOf(String(args.text_query).slice(0,120),Math.max(0,Number(args.text_offset)||0))-250):Math.max(0,Math.min(1000000,Number(args.text_offset)||0));const tables=[...document.querySelectorAll('table')].slice(0,4).map(t=>[...t.rows].slice(0,30).map(r=>[...r.cells].slice(0,12).map(c=>safe(c.innerText).slice(0,180))));
     media=all.flatMap(root=>[...root.querySelectorAll('img')]).filter(visible).slice(0,50);
     const images=media.map((e,i)=>({asset:i,label:safe(e.alt),url:cleanUrl(e.currentSrc||e.src),width:e.naturalWidth,height:e.naturalHeight}));
-    return {script_sources:[...document.scripts].map(e=>cleanUrl(e.src)).filter(Boolean).slice(0,60).map(url=>url.slice(0,500)),resource_origins:[...new Set(performance.getEntriesByType('resource').filter(e=>['fetch','xmlhttprequest'].includes(e.initiatorType)).map(e=>{try{return new URL(e.name).origin;}catch{return '';}}))].filter(Boolean).slice(-30),headings:[...document.querySelectorAll('h1,h2,h3,h4,h5,h6')].filter(visible).slice(0,40).map(e=>({level:Number(e.tagName.slice(1)),text:safe(e.innerText).slice(0,500)})),commerce:commerce(),images,url:pageUrl(),origin:effectiveOrigin(),title:safe(document.title).slice(0,250),observation,offset,total_controls:candidates.length,next_offset:offset+elements.length<candidates.length?offset+elements.length:null,revision,active_element:elements.indexOf(document.activeElement),text:pageText.slice(textOffset,textOffset+10000),text_offset:textOffset,next_text_offset:textOffset+10000<pageText.length?textOffset+10000:null,text_tail:pageText.length>10000?pageText.slice(-10000):undefined,total_text:pageText.length,controls,tables};
+    const surfaces=[...document.querySelectorAll('header,footer,main,section,[class*="background"]')].slice(0,1000).filter(visible).slice(0,40).map(e=>({tag:e.tagName,class_name:safe(e.className||'').slice(0,200),...presentation(e),has_background_image:getComputedStyle(e).backgroundImage!=='none'}));
+    return {surfaces,layout:{viewport_width:innerWidth,viewport_height:innerHeight,document_width:document.documentElement.scrollWidth,horizontal_overflow:document.documentElement.scrollWidth>innerWidth+1},resource_failures:performance.getEntriesByType('resource').filter(e=>e.responseStatus>=400).slice(-15).map(e=>({url:cleanUrl(e.name),status:e.responseStatus,type:e.initiatorType})),visibility:document.visibilityState,script_sources:[...document.scripts].map(e=>cleanUrl(e.src)).filter(Boolean).slice(0,60).map(url=>url.slice(0,500)),resource_origins:[...new Set(performance.getEntriesByType('resource').filter(e=>['fetch','xmlhttprequest'].includes(e.initiatorType)).map(e=>{try{return new URL(e.name).origin;}catch{return '';}}))].filter(Boolean).slice(-30),headings:[...document.querySelectorAll('h1,h2,h3,h4,h5,h6')].filter(visible).slice(0,40).map(e=>({level:Number(e.tagName.slice(1)),text:safe(e.innerText).slice(0,500),...presentation(e)})),commerce:commerce(),images,url:pageUrl(),origin:effectiveOrigin(),title:safe(document.title).slice(0,250),observation,offset,total_controls:candidates.length,next_offset:offset+elements.length<candidates.length?offset+elements.length:null,revision,active_element:elements.indexOf(document.activeElement),text:pageText.slice(textOffset,textOffset+10000),text_offset:textOffset,next_text_offset:textOffset+10000<pageText.length?textOffset+10000:null,text_tail:pageText.length>10000?pageText.slice(-10000):undefined,total_text:pageText.length,controls,tables};
   }
   function target(args){
     check();if(args.observation!==observation||Date.now()-observedAt>60000||observedRevision!==revision)throw Error('Observation changed. Inspect again and preserve human edits.');
@@ -62,12 +75,34 @@
   function context(args){
     if(args.action==='scroll'&&args.element===undefined){target(args);return {source:'browser',role:'Document',label:'Page scroll',page_url:pageUrl()};}
     const e=target(args),f=e.form||e.closest('form'),type=e.type||'',tag=e.tagName;
+    if(args.action==='drag'){const pair=sectionPair(args,e);return {source:'browser',role:'Editor section',label:label(pair.source),destination_label:label(pair.destination),page_url:pageUrl(),section_reorder:true};}
     const editable=e.isContentEditable||['INPUT','TEXTAREA','SELECT'].includes(tag);
     const submitting=Boolean(f&&((args.action==='click'&&['submit','image'].includes(type))||(args.action==='press'&&args.key==='Enter'&&tag!=='TEXTAREA')));
     return {source:'browser',tag,type,editable,label:label(e),role:editable?'Edit':elementRole(e),
       form_submission:submitting,form_method:f?((e.hasAttribute('formmethod')?e.formMethod:f.method)||'get').toUpperCase():'',form_action:f?cleanUrl(e.hasAttribute('formaction')?e.formAction:f.action):'',href:e.href?cleanUrl(e.href):'',
       credential_form:Boolean(f?.querySelector('input[type=password]')),expands_menu:Boolean(e.getAttribute('aria-haspopup'))||e.hasAttribute('aria-expanded')||tag==='SUMMARY'||((e.getAttribute('aria-controls')||e.getAttribute('data-target')||e.getAttribute('data-bs-target')||e.hash)&&document.getElementById((e.getAttribute('aria-controls')||e.getAttribute('data-target')||e.getAttribute('data-bs-target')||e.hash).replace(/^#/,''))),control_kind:type==='color'?'color':editable?'editor':elementRole(e),form_visibility:f?.querySelector('[name=product_status]:checked,[name=visibility]')?.value||'',form_currency:commerce().currency,form_id:f?.id||'',explicit_action:e.getAttribute('data-action')||'',
       scripted_button:((tag==='BUTTON'||e.getAttribute('role')==='button'||(tag==='INPUT'&&type==='button'))&&!submitting&&!e.hasAttribute('aria-expanded'))||(tag==='A'&&!/^https?:/i.test(e.getAttribute('href')||'')),key:args.key||'',page_url:cleanUrl(location.href)};
+  }
+  function sectionPair(args,e){
+    const end=elements[args.end_element],source=e.closest('.js-section'),destination=end?.closest('.js-section');
+    const list=source?.closest('.js-draggable-sections-wrapper');
+    if(location.origin!=='https://payhip.com'||location.pathname!=='/builder/public'||!Number.isInteger(args.end_element)||!source||!destination||source===destination||!list||destination.closest('.js-draggable-sections-wrapper')!==list||!visible(source)||!visible(destination)||source.closest('form')||destination.closest('form'))throw Error('Reorder requires two observed sections in the same Payhip draft list.');
+    const handle=source.querySelector('.js-draggable');if(!handle||!visible(handle))throw Error('Section drag handle unavailable.');
+    return {source,destination,handle};
+  }
+  async function dragSection(args){
+    const pair=sectionPair(args,target(args)),a=pair.handle.getBoundingClientRect(),b=pair.destination.getBoundingClientRect();
+    const start={x:a.x+a.width/2,y:a.y+a.height/2},end={x:b.x+b.width/2,y:b.y+Math.min(8,b.height/4)};
+    const fire=(node,type,x,y,buttons)=>{const init={bubbles:true,cancelable:true,view:window,clientX:x,clientY:y,button:0,buttons};node.dispatchEvent(type.startsWith('pointer')?new PointerEvent(type,{...init,pointerType:'mouse',pointerId:1,isPrimary:true}):new MouseEvent(type,init));};
+    observation=null;automating++;
+    try{
+      fire(pair.handle,'pointerdown',start.x,start.y,1);fire(pair.handle,'mousedown',start.x,start.y,1);
+      // Background tabs throttle timers to roughly one second. Yield in four
+      // batches so a short drag stays within the bridge's dispatch deadline.
+      for(let i=1;i<=16;i++){check();const x=start.x+(end.x-start.x)*i/16,y=start.y+(end.y-start.y)*i/16,node=document.elementFromPoint(x,y)||document;fire(node,'pointermove',x,y,1);fire(node,'mousemove',x,y,1);if(i%4===0)await new Promise(resolve=>setTimeout(resolve,25));}
+      const node=document.elementFromPoint(end.x,end.y)||document;fire(node,'pointerup',end.x,end.y,0);fire(node,'mouseup',end.x,end.y,0);
+      return {dispatched:true,next:'Inspect section order and saved draft; drag dispatch is not proof of persistence.'};
+    }finally{automating--;}
   }
   function action(args){
     const e=target(args);observation=null;
@@ -76,14 +111,25 @@
     switch(args.action){
       case 'click':
         if(e.matches('input:not([type=file]),textarea,[contenteditable=true]'))e.focus({preventScroll:true});
-        if(args.method==='pointer')for(const type of ['pointerover','pointerdown','mousedown','pointerup','mouseup'])e.dispatchEvent(type.startsWith('pointer')?new PointerEvent(type,{bubbles:true,pointerType:'mouse',button:0}):new MouseEvent(type,{bubbles:true,button:0}));
-        if(typeof e.click==='function')e.click();else e.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true,view:window}));break;
+        if(args.method==='pointer'){
+          const r=e.getBoundingClientRect(),position={bubbles:true,cancelable:true,view:window,clientX:r.x+r.width/2,clientY:r.y+r.height/2,button:0};
+          for(const type of ['pointerover','pointerdown','mousedown','pointerup','mouseup'])e.dispatchEvent(type.startsWith('pointer')?new PointerEvent(type,{...position,pointerType:'mouse',pointerId:1,isPrimary:true,buttons:type==='pointerdown'?1:0}):new MouseEvent(type,{...position,buttons:type==='mousedown'?1:0}));
+          e.dispatchEvent(new MouseEvent('click',position));
+        }else if(typeof e.click==='function')e.click();else e.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true,view:window}));break;
       case 'hover':for(const type of ['pointerover','pointerenter','mouseover','mouseenter'])e.dispatchEvent(type.startsWith('pointer')?new PointerEvent(type,{bubbles:true,pointerType:'mouse'}):new MouseEvent(type,{bubbles:true,view:window}));break;
       case 'fill':{
         const text=String(args.text??'');if(e.type==='color'&&!/^#[0-9a-f]{6}$/i.test(text))throw Error('Use a six-digit hex color.');if(text.length>20000)throw Error('Text exceeds the editing bound.');
+        // Initialize focus-dependent widgets inside this document, without
+        // activating its Chrome tab/window or scrolling away from human work.
+        e.focus({preventScroll:true});
         if(e.isContentEditable){const lines=text.split('\n');e.replaceChildren();for(let i=0;i<lines.length;i++){if(i)e.appendChild(document.createElement('br'));e.appendChild(document.createTextNode(lines[i]));}}
         else{const proto=e.tagName==='TEXTAREA'?HTMLTextAreaElement.prototype:e.tagName==='INPUT'?HTMLInputElement.prototype:null;if(!proto||['file','button','submit','image','checkbox','radio','reset'].includes(e.type))throw Error('Choose an editable text field.');Object.getOwnPropertyDescriptor(proto,'value').set.call(e,text);}
-        e.dispatchEvent(new InputEvent('input',{bubbles:true,inputType:'insertText',data:text}));e.dispatchEvent(new Event('change',{bubbles:true}));break;
+        e.dispatchEvent(new InputEvent('input',{bubbles:true,inputType:'insertText',data:text}));e.dispatchEvent(new Event('change',{bubbles:true}));
+        // Some ordinary widgets parse on keyup. This has no Enter/default
+        // action and cannot submit a form.
+        if(e.tagName==='INPUT'&&!['file','password'].includes(e.type)){
+          e.dispatchEvent(new KeyboardEvent('keyup',{bubbles:true,key:'Unidentified',code:''}));
+        }break;
       }
       case 'select':if(e.tagName!=='SELECT')throw Error('Choose a select control.');if(![...e.options].some(o=>o.value===String(args.text)&&!o.disabled))throw Error('Option does not exist or is disabled.');e.value=String(args.text);e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}));break;
       case 'check':if(!['checkbox','radio'].includes(e.type)||typeof args.checked!=='boolean')throw Error('Choose a checkbox/radio and a boolean.');if(e.type==='radio'&&!args.checked)throw Error('Select a different radio option to change this group.');if(e.checked!==args.checked)e.click();break;
@@ -127,7 +173,7 @@
           result={url,kind:args.kind};break;
         }
         case 'point':{const e=target(args),r=e.getBoundingClientRect();if(r.x<0||r.y<0||r.right>innerWidth||r.bottom>innerHeight)throw Error('Scroll this target into view before trusted input.');result={x:r.x+r.width/2,y:r.y+r.height/2};break;}
-        case 'action':result=action(args);break;
+        case 'action':if(args.action==='drag'){dragSection(args).then(result=>reply({ok:true,result})).catch(error=>reply({ok:false,error:safe(error.message)}));return true;}result=action(args);break;
         case 'close_check':
           result={may_lose_edits:roots().some(r=>[...r.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),textarea,select,[contenteditable=true]')].some(e=>{
             if(e.type==='checkbox'||e.type==='radio')return e.checked!==e.defaultChecked;

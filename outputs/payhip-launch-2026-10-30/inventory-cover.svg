@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+<rect width="1600" height="1000" fill="#102B3F"/>
+<path d="M80 88h1440" stroke="#354B5C" stroke-width="2"/>
+<text x="80" y="65" fill="#B7D2DA" font-family="Arial,sans-serif" font-size="23" letter-spacing="3">CEDARGRID DIGITAL</text>
+<text x="80" y="220" fill="white" font-family="Arial,sans-serif" font-size="76" font-weight="700">Inventory</text>
+<text x="80" y="312" fill="white" font-family="Arial,sans-serif" font-size="76" font-weight="700">Reorder Planner</text>
+<path d="M80 365h110" stroke="#4DCEBB" stroke-width="8"/>
+<text x="80" y="435" fill="#D5E2E8" font-family="Arial,sans-serif" font-size="29">Review demand, lead time</text>
+<text x="80" y="478" fill="#D5E2E8" font-family="Arial,sans-serif" font-size="29">and your stock buffer.</text>
+<text x="80" y="580" fill="#8FE1D3" font-family="Arial,sans-serif" font-size="25">4 editable inputs</text>
+<text x="80" y="625" fill="#8FE1D3" font-family="Arial,sans-serif" font-size="25">2 calculated outputs</text>
+<text x="80" y="670" fill="#8FE1D3" font-family="Arial,sans-serif" font-size="25">A simple .xlsx workbook</text>
+<rect x="760" y="175" width="760" height="620" rx="24" fill="#F5F7F9"/>
+<text x="805" y="240" fill="#102B3F" font-family="Arial,sans-serif" font-size="26" font-weight="700">ILLUSTRATIVE SCENARIO</text>
+<g font-family="Arial,sans-serif" font-size="27" fill="#354B5C">
+<text x="805" y="315">Daily unit demand</text><text x="1465" y="315" text-anchor="end">12</text>
+<text x="805" y="375">Lead time in days</text><text x="1465" y="375" text-anchor="end">7</text>
+<text x="805" y="435">Safety stock</text><text x="1465" y="435" text-anchor="end">30</text>
+<text x="805" y="495">Units available</text><text x="1465" y="495" text-anchor="end">80</text>
+</g>
+<path d="M805 535h660" stroke="#D4DEE5" stroke-width="2"/>
+<g font-family="Arial,sans-serif" fill="#087F74" font-weight="700">
+<text x="805" y="610" font-size="29">Reorder point</text><text x="1465" y="610" text-anchor="end" font-size="42">114</text>
+<text x="805" y="685" font-size="29">Gap to threshold</text><text x="1465" y="685" text-anchor="end" font-size="42">34</text>
+</g>
+<text x="805" y="752" fill="#526777" font-family="Arial,sans-serif" font-size="20">12 × 7 + 30 = 114 · MAX(0, 114 − 80) = 34</text>
+<path d="M80 865h1440" stroke="#354B5C" stroke-width="2"/>
+<text x="80" y="925" fill="#B7D2DA" font-family="Arial,sans-serif" font-size="23">Single-item planning aid. No stock tracking or automatic ordering.</text>
+</svg>

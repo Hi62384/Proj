@@ -75,7 +75,20 @@ function connect(){
 async function active(){const [tab]=await chrome.tabs.query({active:true,currentWindow:true});if(!tab)throw Error('No active Chrome tab');return tab;}
 async function authorize(target=null,sourceScope='auto'){
   if(!connected)throw Error('Connect to the open Desktop Assistant first.');
-  const tab=target||await active(),origin=exact(tab.url);await chrome.scripting.executeScript({target:{tabId:tab.id},files:['content.js']});
+  let tab=target||await active();const origin=exact(tab.url);
+  // Restored/discarded tabs have no live document to inject into. Wake only
+  // that existing tab, without activation or creating a duplicate.
+  if(tab.discarded){
+    await chrome.tabs.reload(tab.id);
+    for(let n=0;n<100;n++){
+      tab=await chrome.tabs.get(tab.id);
+      if(!tab.discarded&&tab.status==='complete')break;
+      await new Promise(resolve=>setTimeout(resolve,100));
+    }
+    if(tab.discarded||tab.status!=='complete')throw Error('Existing discarded tab has not finished reloading.');
+    if(exact(tab.url)!==origin)throw Error('Existing tab changed site while waking; inspect its destination first.');
+  }
+  await chrome.scripting.executeScript({target:{tabId:tab.id},files:['content.js']});
   const previous=grants.get(tab.id);
   const grant={tab:tab.id,window:tab.windowId,origin,manual:false,scope:sourceScope==='auto'?(await browserScope()?'full':'site'):sourceScope,assistant_created:createdTabs.get(tab.id)?.session===session,frames:{'0':origin},uploadLocked:Boolean(previous?.origin===origin&&previous.uploadLocked),uploadReceivers:previous?.origin===origin?(previous.uploadReceivers||[]):[]};
   try{
@@ -112,7 +125,7 @@ async function execute(operation,args,check){
   if(operation==='find_tabs'){
     if(!await browserScope())throw Error('Full Browser Access is required for existing-tab title/URL matching. Restricted mode exposes authorized tabs only.');
     const query=String(args.query||'').toLowerCase();if(query.length<3||query.length>100)throw Error('Use a specific tab reference.');
-    const tabs=await chrome.tabs.query({});return {tabs:tabs.filter(t=>/^https?:/.test(t.url||'')&&((t.title||'')+' '+publicUrl(t.url)).toLowerCase().includes(query)).slice(0,10).map(t=>({tab:t.id,title:String(t.title||'').slice(0,200),url:publicUrl(t.url),window:t.windowId}))};
+    const tabs=await chrome.tabs.query({});return {tabs:tabs.filter(t=>/^https?:/.test(t.url||'')&&((t.title||'')+' '+publicUrl(t.url)).toLowerCase().includes(query)).slice(0,10).map(t=>({tab:t.id,title:String(t.title||'').slice(0,200),url:publicUrl(t.url),window:t.windowId,discarded:Boolean(t.discarded),status:t.status}))};
   }
   if(operation==='adopt_tab'){
     if(!await browserScope())throw Error('Existing tabs require a popup tab grant in Restricted mode.');

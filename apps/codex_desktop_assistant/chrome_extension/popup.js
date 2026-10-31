@@ -38,4 +38,8 @@ setInterval(()=>refresh().catch(()=>{}),1000);
 
 $('full').onclick=()=>guarded(async()=>{if(!await chrome.permissions.request({origins:['http://*/*','https://*/*']}))throw Error('Chrome website permission was denied.');await send('full_access',{enabled:true});});
 $('restricted').onclick=()=>guarded(()=>send('full_access',{enabled:false}));
-$('trusted').onclick=()=>guarded(async()=>{if(!await chrome.permissions.request({permissions:['debugger']}))throw Error('Optional debugger permission was denied.');await send('trusted_input');});
+$('trusted').onclick=()=>guarded(async()=>{
+  if(!chrome.runtime.getManifest().permissions?.includes('debugger'))throw Error('Chrome requires trusted-input permission at extension load time. Reload this extension at chrome://extensions and approve its changed permissions, then enable trusted browser input here.');
+  if(!await chrome.permissions.contains({permissions:['debugger']}))throw Error('Chrome has not approved the extension’s trusted-input permission. Review its permissions at chrome://extensions.');
+  await send('trusted_input');
+});

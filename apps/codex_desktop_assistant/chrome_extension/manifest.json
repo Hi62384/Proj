@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Codex Desktop Assistant — Authorized Tabs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "minimum_chrome_version": "120",
   "description": "Connect selected Chrome tabs to your local Codex Desktop Assistant. No browser credentials are exported.",
   "permissions": [
@@ -11,11 +11,11 @@
     "storage",
     "webNavigation",
     "alarms",
-    "declarativeNetRequest"
+    "declarativeNetRequest",
+    "debugger"
   ],
   "optional_permissions": [
-    "downloads",
-    "debugger"
+    "downloads"
   ],
   "optional_host_permissions": [
     "https://*/*",

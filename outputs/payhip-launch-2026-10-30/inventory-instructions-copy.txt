@@ -1,0 +1,31 @@
+Inventory Reorder Planner
+Corrected instruction copy for review. The saved customer package is unchanged.
+
+1. Keep the downloaded original and save a separate working copy of product.xlsx.
+2. Open the working copy in a spreadsheet application that supports .xlsx. LibreOffice Calc formula checks have passed. Microsoft Excel-specific verification remains pending.
+3. On Calculator, replace all four blue sample inputs:
+   Daily unit demand: expected average units used or sold per day.
+   Lead time in days: days between ordering and expected receipt.
+   Safety stock units: the extra buffer you choose to hold.
+   Units available: units available for this simplified scenario.
+4. Read the two calculated outputs:
+   Reorder point = daily demand x lead time + safety stock.
+   Suggested reorder units = MAX(0, reorder point - units available).
+   Treat the second result as a gap to threshold, not an optimized order quantity.
+5. Review the result against actual supply conditions before ordering. The model does not include stock on order, minimum order quantities, pack sizes, changing demand or supplier reliability.
+6. Use separate copies to compare items or assumptions. This workbook does not keep a multi-item stock ledger or order history.
+
+Input rules
+Use nonnegative numeric inputs. Use daily demand with lead time in days. Blank inputs are interpreted as zero and can give an incomplete result. Decimal inputs are accepted and outputs are not rounded to whole units automatically. Negative inputs are unsupported and must not be used.
+
+Worked example
+Daily demand 12, lead time 7, safety stock 30, available units 80.
+Reorder point: 12 x 7 + 30 = 114.
+Gap to threshold: MAX(0, 114 - 80) = 34.
+All numbers are illustrative.
+
+Scope
+No macros or external data connections are included. The workbook does not upload your data or place orders. It is a planning aid, not a demand forecast or an economic-order-quantity model.
+
+Before packaging
+Remove Private Integration Test from workbook titles, README, instructions and cover. Remove the unrelated contribution-margin and break-even sentence from Read me. Replace clipped previews with legible exports. Carry over only the licence the owner has expressly approved; do not treat the current proposed licence as final. Do not include this internal preparation note in the customer download.

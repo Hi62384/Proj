@@ -102,7 +102,7 @@ class ChromeControl:
         if operation in ('list_tabs','list_windows'):
             return self.request(conversation,operation,{},epoch)
         # Do not forward model-supplied proof/privilege fields to the worker.
-        allowed={'tab','frame','observation','element','operation','text','checked','amount','key','attachment_id','url','milliseconds','method','query','offset','text_offset'}
+        allowed={'tab','frame','observation','element','end_element','operation','text','checked','amount','key','attachment_id','url','milliseconds','method','query','offset','text_offset','text_query'}
         args={key:value for key,value in args.items() if key in allowed};tab=args.get('tab',self.selected)
         if operation=='open_tab':
             origin(args['url']);decision=request_review('GET',args['url'])
@@ -159,7 +159,7 @@ class ChromeControl:
             while time.monotonic()<deadline:self.tab_guard(conversation,tab,epoch);time.sleep(.05)
             return self.call(conversation,'inspect',{'tab':tab,'frame':args.get('frame',0)})
         if operation=='action':
-            if args.get('operation') not in ('click','hover','fill','select','check','scroll','upload'):raise Denied('Unsupported Chrome action. Use semantic click/fill; real keyboard defaults need Manual Control.')
+            if args.get('operation') not in ('click','hover','fill','select','check','scroll','upload','drag'):raise Denied('Unsupported Chrome action. Use semantic click/fill; real keyboard defaults need Manual Control.')
             if not (args.get('operation')=='scroll' and 'element' not in args) and (type(args.get('element')) is not int or args['element']<0):raise Denied('Choose a numeric element from the latest inspection')
             if args.get('observation')!=self.observations.get((tab,args.get('frame',0))):raise Denied('Inspect this tab/frame before acting')
             args['action']=args.pop('operation')

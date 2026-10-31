@@ -1,0 +1,37 @@
+INVENTORY REORDER PLANNER
+Prepared sales copy for owner review. Not uploaded or saved to Payhip.
+
+Title
+Inventory Reorder Planner
+
+Short description
+Calculate a stock reorder threshold and the gap between that threshold and the units you have available. A simple, editable spreadsheet for reviewing one item or scenario at a time.
+
+Description
+Review your stock assumptions in one place. Enter average daily unit demand, supplier lead time in days, safety stock and available units. The workbook calculates a reorder point and the quantity needed to reach that threshold.
+
+What it does
+- Four editable numeric inputs.
+- Reorder point = daily unit demand x lead time in days + safety stock.
+- Gap to threshold = the larger of zero or reorder point minus available units.
+- A Calculator worksheet and a Read me worksheet.
+- Written instructions and example worksheet previews.
+- No macros, external data links or automatic uploads.
+
+Example
+With demand of 12 units per day, a 7-day lead time and 30 safety-stock units, the reorder point is 114 units. If 80 units are available, the gap is 34 units. These are illustrative inputs, not industry benchmarks.
+
+Requirements and scope
+An application that supports .xlsx workbooks. Formula behaviour has been checked in LibreOffice Calc. Microsoft Excel-specific compatibility still needs verification before claiming it as tested.
+
+This is a single-item threshold calculator. It does not maintain a stock ledger, forecast demand, track purchase orders, account for stock already on order, place orders or calculate an economic order quantity. The gap is not an optimized purchase quantity. Compare scenarios in separate working copies.
+
+Use nonnegative inputs and consistent units: demand per day, lead time in days, and stock in units. Blank numeric inputs are treated as zero, so enter each value deliberately. Decimal inputs can produce fractional quantities; review whole-unit requirements yourself. The included example must be replaced with your own assumptions.
+
+The workbook is a planning aid and does not guarantee stock availability or business results.
+
+Files currently in the saved package
+product.xlsx, Instructions.docx, README.txt, Cover.png, Preview-1.png and Preview-2.png.
+
+Owner decisions before use
+The existing price is CAD19.00 and has not been changed. Confirm the commercial value and price. Approve final usage licence and refund/support terms separately. Replace test-labelled package content and artwork before publishing this listing. This copy does not authorize an upload, save or publication.

@@ -8,3 +8,14 @@ __pycache__/
 *.sqlite3-wal
 *.sqlite3-shm
 codex-relay.local/
+
+# Installed dependencies and local artifact-tool junctions are not source.
+node_modules/
+.venv/
+
+# Disposable native-review inputs, recalculation caches and application profiles.
+outputs/**/qa/lo-profile/
+outputs/**/qa/cases/
+outputs/**/qa/case-results*/
+outputs/**/qa/recalculated/
+outputs/**/qa/*.xlsx

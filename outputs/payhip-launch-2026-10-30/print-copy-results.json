@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Cleaning_Pricing_Calculator.xlsx",
+    "source_sha256": "7eb595bc7b411e7894ed879a094cc6038f11661f4be64b4c2a4bcf3342c65522",
+    "review_sha256": "ac347c507280241723493c9aa042e36b5af8344b24599be3f26c05ae1d73fd98",
+    "cells_unchanged": true,
+    "changed_members": [
+      "xl/workbook.xml",
+      "xl/worksheets/sheet4.xml"
+    ]
+  },
+  {
+    "name": "Cleaning_Pricing_Calculator_FICTIONAL_DEMO.xlsx",
+    "source_sha256": "c8c0cbc697843d48c79ea7533a32db248ab4bc4a0d3717f7e106665414ea9beb",
+    "review_sha256": "e4efa837f9c9039ca764c7bef1c875a761d0e000cadeb7208384e9be578e8236",
+    "cells_unchanged": true,
+    "changed_members": [
+      "xl/workbook.xml",
+      "xl/worksheets/sheet4.xml"
+    ]
+  }
+]

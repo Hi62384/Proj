@@ -1,0 +1,50 @@
+{
+  "audit_date": "2026-10-31",
+  "original_entries_reviewed": 96,
+  "source_records": 39,
+  "decision_counts": {
+    "BUNDLE / INTERNAL": 37,
+    "DEFER UNTIL BUYER": 35,
+    "REJECT AS STANDALONE": 20,
+    "PAID TEST ONLY": 4
+  },
+  "high_probability_claims_verified": 0,
+  "note": "Classification is judgment-based; source review is not customer validation. Original package unchanged.",
+  "files": [
+    {
+      "name": "Opportunity_Reality_Check.xlsx",
+      "bytes": 48535,
+      "sha256": "dfa6b34ef50cf31765f2a5fa9ed44886ec49079e1b70592e85fe2e231fe0d27a"
+    },
+    {
+      "name": "Opportunity_Audit.html",
+      "bytes": 174208,
+      "sha256": "4040dc9f735b2eb801732bc1eed9f22d6526fc5f20dd590a70b16c6e27fa2c2a"
+    },
+    {
+      "name": "READ_THIS_FIRST.md",
+      "bytes": 7075,
+      "sha256": "ff5334105169ce90181e5d155f96185b4c6115c642731c5f75e1aa837515ac63"
+    },
+    {
+      "name": "Opportunity_Audit_96.csv",
+      "bytes": 81056,
+      "sha256": "1adfc3fa9d83a1a3cdad142a32bbf64068e13792797c41b86ba9e5d8fd95e444"
+    },
+    {
+      "name": "Opportunity_Audit_96.json",
+      "bytes": 118753,
+      "sha256": "b6cb6b84554dcb7dc27153489e40575b0559316d906bbb65c24a1411267e9fd3"
+    },
+    {
+      "name": "Reviewed_Sources.csv",
+      "bytes": 13261,
+      "sha256": "388ac3aefe0ad80098cef5b180f41610a8155db382cf2d4787bdd073cc188a92"
+    },
+    {
+      "name": "Reviewed_Sources.json",
+      "bytes": 18382,
+      "sha256": "2e2b46949ed9aae997510785c8431a9a3e44e492de99d97c262bc2546c93ccda"
+    }
+  ]
+}

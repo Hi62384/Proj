@@ -1,0 +1,189 @@
+{
+  "checked_date": "2026-10-30",
+  "products": {
+    "calculator": {
+      "url": "https://payhip.com/b/bP6YN",
+      "price_cad": 29,
+      "visibility": "Invisible",
+      "saved_file_bytes": 56040,
+      "images": 4
+    },
+    "inventory": {
+      "url": "https://payhip.com/b/dotFZ",
+      "price_cad": 19,
+      "visibility": "Invisible",
+      "saved_file_bytes": 143072,
+      "images": 3
+    }
+  },
+  "payments": {
+    "currency": "CAD",
+    "paypal_connected": false,
+    "stripe_connected": false,
+    "source": "Payment Details and both owner product pages"
+  },
+  "contact": {
+    "url": "https://payhip.com/CedargridDigital/contact",
+    "form_loaded": true,
+    "submitted": false
+  },
+  "storefront": {
+    "desktop": {
+      "layout": {
+        "viewport_width": 1357,
+        "viewport_height": 744,
+        "document_width": 1342,
+        "horizontal_overflow": false
+      },
+      "headings": [
+        {
+          "level": 1,
+          "text": "Practical Digital Tools. Better Decisions.",
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "effective_background": "rgb(255, 255, 255)",
+          "font": "proxima-nova, sans-serif",
+          "font_size": "41.6px",
+          "line_height": "58.24px",
+          "bounds": {
+            "x": 239.21875,
+            "y": 235.6875,
+            "width": 863.5625,
+            "height": 58.239585876464844
+          }
+        },
+        {
+          "level": 2,
+          "text": "About Cedargrid Digital",
+          "color": "rgb(16, 43, 63)",
+          "background": "rgba(0, 0, 0, 0)",
+          "effective_background": "rgb(255, 255, 255)",
+          "font": "proxima-nova, sans-serif",
+          "font_size": "25.6px",
+          "line_height": "35.84px",
+          "bounds": {
+            "x": 95.29167175292969,
+            "y": 791.1354370117188,
+            "width": 1151.416748046875,
+            "height": 35.84375
+          }
+        }
+      ],
+      "surfaces": [
+        {
+          "tag": "HEADER",
+          "class_name": "js-section-wrapper js-builder-section-wrapper\n\n\theader-layout-nav-right\n\t\tlive-search-layout-minimal\n\n\n\nheader-actions-right\n\n\n\n\ttransparent\n\n\thas-navigation-menu\n\n\tshow-login-icon\n",
+          "color": "rgb(33, 37, 41)",
+          "background": "rgba(0, 0, 0, 0)",
+          "effective_background": "rgb(255, 255, 255)",
+          "font": "proxima-nova, sans-serif",
+          "font_size": "16px",
+          "line_height": "16px",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 1342,
+            "height": 110.90625
+          },
+          "has_background_image": false
+        },
+        {
+          "tag": "DIV",
+          "class_name": "header-background",
+          "color": "rgb(33, 37, 41)",
+          "background": "rgba(0, 0, 0, 0)",
+          "effective_background": "rgb(255, 255, 255)",
+          "font": "proxima-nova, sans-serif",
+          "font_size": "16px",
+          "line_height": "16px",
+          "bounds": {
+            "x": 54.29166793823242,
+            "y": 40.71875,
+            "width": 1233.416748046875,
+            "height": 28.80208396911621
+          },
+          "has_background_image": false
+        },
+        {
+          "tag": "DIV",
+          "class_name": "section-background js-section-background",
+          "color": "rgb(255, 255, 255)",
+          "background": "rgb(16, 43, 63)",
+          "effective_background": "rgb(16, 43, 63)",
+          "font": "proxima-nova, sans-serif",
+          "font_size": "16px",
+          "line_height": "24px",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 1342,
+            "height": 491.03125
+          },
+          "has_background_image": false
+        },
+        {
+          "tag": "DIV",
+          "class_name": "section-background js-section-background",
+          "color": "rgb(53, 75, 92)",
+          "background": "rgb(255, 255, 255)",
+          "effective_background": "rgb(255, 255, 255)",
+          "font": "proxima-nova, sans-serif",
+          "font_size": "16px",
+          "line_height": "24px",
+          "bounds": {
+            "x": 0,
+            "y": 491.03125,
+            "width": 1342,
+            "height": 245.5104217529297
+          },
+          "has_background_image": false
+        },
+        {
+          "tag": "DIV",
+          "class_name": "section-background js-section-background",
+          "color": "rgb(53, 75, 92)",
+          "background": "rgb(245, 247, 249)",
+          "effective_background": "rgb(245, 247, 249)",
+          "font": "proxima-nova, sans-serif",
+          "font_size": "16px",
+          "line_height": "24px",
+          "bounds": {
+            "x": 0,
+            "y": 736.5416870117188,
+            "width": 1342,
+            "height": 245.5104217529297
+          },
+          "has_background_image": false
+        },
+        {
+          "tag": "DIV",
+          "class_name": "section-background js-section-background",
+          "color": "rgb(53, 75, 92)",
+          "background": "rgb(255, 255, 255)",
+          "effective_background": "rgb(255, 255, 255)",
+          "font": "proxima-nova, sans-serif",
+          "font_size": "16px",
+          "line_height": "24px",
+          "bounds": {
+            "x": 0,
+            "y": 982.0521240234375,
+            "width": 1342,
+            "height": 148.7916717529297
+          },
+          "has_background_image": false
+        }
+      ],
+      "text": "Cedargrid Digital\nShop\nContact\nPractical Digital Tools. Better Decisions.\n\nStraightforward calculators, templates and planning tools to simplify everyday tasks, organize information and make complex work easier to manage.\n\nNo products found\nAbout Cedargrid Digital\n\nCedargrid Digital creates practical downloadable tools for individuals and small businesses. We focus on clear design, useful functionality and straightforward products without unnecessary complexity. Our aim is simple: make information easier to organize and decisions easier to work through.\n\nShop Contact\nPowered by Payhip "
+    },
+    "mobile_attempt": {
+      "layout": {
+        "viewport_width": 1357,
+        "viewport_height": 667,
+        "document_width": 1342,
+        "horizontal_overflow": false
+      }
+    },
+    "screenshot_result": "Denied: Background screenshots are unavailable. Use DOM inspection.",
+    "mobile_verification": "Not passed: selecting Mobile did not produce a narrow iframe viewport; observed width stayed 1357px."
+  }
+}

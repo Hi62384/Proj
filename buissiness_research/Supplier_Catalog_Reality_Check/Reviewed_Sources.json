@@ -1,0 +1,392 @@
+[
+  {
+    "id": "V01",
+    "title": "Shopify: importing products",
+    "url": "https://help.shopify.com/en/manual/products/import-export/import-products",
+    "type": "Official documentation",
+    "checked": "2026-10-31",
+    "finding": "Documents blank-versus-omitted overwrite behavior, variant-ID hazards, backups and development-store subset testing.",
+    "limits": "Technical consequences, not incidence, buyer willingness or profit evidence.",
+    "access": "Full page"
+  },
+  {
+    "id": "V02",
+    "title": "Shopify: product CSV specification",
+    "url": "https://help.shopify.com/en/manual/products/import-export/using-csv",
+    "type": "Official documentation",
+    "checked": "2026-10-31",
+    "finding": "Documents fields, dependencies, image grouping and product versus variant metafield boundaries.",
+    "limits": "A supported format is not an unmet market.",
+    "access": "Full page"
+  },
+  {
+    "id": "V03",
+    "title": "Shopify: common CSV import issues",
+    "url": "https://help.shopify.com/en/manual/products/import-export/common-import-issues",
+    "type": "Official documentation",
+    "checked": "2026-10-31",
+    "finding": "Lists import errors and explicitly points merchants to hiring a Shopify Partner.",
+    "limits": "Does not establish how often errors occur or the earnings of specialists.",
+    "access": "Full page"
+  },
+  {
+    "id": "V04",
+    "title": "Matrixify pricing",
+    "url": "https://matrixify.app/pricing/",
+    "type": "Vendor pricing",
+    "checked": "2026-10-31",
+    "finding": "Advertises paid plans and existing per-job import/export capabilities.",
+    "limits": "Prices are asking prices for software, not a comparable managed-service quote.",
+    "access": "Full page"
+  },
+  {
+    "id": "V05",
+    "title": "Matrixify job options",
+    "url": "https://matrixify.app/documentation/matrixify-import-export-job-options/",
+    "type": "Official product documentation",
+    "checked": "2026-10-31",
+    "finding": "Scheduling, recurring runs, result files and dry runs already exist; the vendor explains dry-run limitations.",
+    "limits": "Documented functionality was not independently benchmarked in this audit.",
+    "access": "Full page"
+  },
+  {
+    "id": "V06",
+    "title": "Matrixify MCP",
+    "url": "https://matrixify.app/documentation/matrixify-mcp-server/",
+    "type": "Official product documentation",
+    "checked": "2026-10-31",
+    "finding": "Describes AI-agent supplier-file conversion, import/export execution and job monitoring.",
+    "limits": "Advertised integration, not independent proof of accuracy on a customer's files.",
+    "access": "Full page"
+  },
+  {
+    "id": "V07",
+    "title": "Trusted Matrixify experts",
+    "url": "https://matrixify.app/trusted-matrixify-experts/",
+    "type": "Vendor referral directory",
+    "checked": "2026-10-31",
+    "finding": "Names specialists in migrations, custom conversion templates and recurring imports.",
+    "limits": "Supplier/referral evidence; no transaction amounts, margins or win rates.",
+    "access": "Full page"
+  },
+  {
+    "id": "V08",
+    "title": "Stock Sync app listing",
+    "url": "https://apps.shopify.com/stock-sync",
+    "type": "Platform listing and user reviews",
+    "checked": "2026-10-31",
+    "finding": "Offers scheduled supplier feeds, mapping, pricing and other catalog operations; established review base.",
+    "limits": "Reviews do not prove every user is paying. Do not use the inconsistent Scale monthly/annual display as a reliable quotation.",
+    "access": "Full page"
+  },
+  {
+    "id": "V09",
+    "title": "Ablestar Bulk Product Edit",
+    "url": "https://apps.shopify.com/bulk-product-editor",
+    "type": "Platform listing and user reviews",
+    "checked": "2026-10-31",
+    "finding": "Advertises bulk edits, change preview, undo, scheduled sales, supplier feeds and Sidekick integration.",
+    "limits": "Existing feature coverage; not an independently measured product comparison.",
+    "access": "Full page"
+  },
+  {
+    "id": "V10",
+    "title": "Shelvio CSV and Excel importer",
+    "url": "https://apps.shopify.com/shelvio",
+    "type": "Vendor listing on Shopify",
+    "checked": "2026-10-31",
+    "finding": "Advertises AI mapping, saved supplier mappings and cleaning at US$9.99 and US$19.99 monthly; zero reviews shown.",
+    "limits": "Competition/supply evidence only. Zero reviews does not prove zero users; performance was not tested.",
+    "access": "Full page"
+  },
+  {
+    "id": "V11",
+    "title": "ShopSheets free tools",
+    "url": "https://shopsheets.co/tools",
+    "type": "Vendor free-tool catalogue",
+    "checked": "2026-10-31",
+    "finding": "Offers free validators, converters, diff, encoding, image, barcode and inventory utilities.",
+    "limits": "Advertised free coverage, not benchmarked equivalence to complex customer requirements.",
+    "access": "Full page"
+  },
+  {
+    "id": "V12",
+    "title": "CatalogWash",
+    "url": "https://www.catalogwash.com/",
+    "type": "Vendor offer",
+    "checked": "2026-10-31",
+    "finding": "Advertises a free report/preview and $9 cleanup sessions; public beta.",
+    "limits": "Currency is not explicit in the observed page; paid adoption and results unverified.",
+    "access": "Full page"
+  },
+  {
+    "id": "V13",
+    "title": "Microsoft: Power Query combine files",
+    "url": "https://support.microsoft.com/en-us/excel/import-data-from-a-folder-with-multiple-files-power-query",
+    "type": "Official documentation",
+    "checked": "2026-10-31",
+    "finding": "Explains combining same-schema files and refreshing reusable transformations.",
+    "limits": "Existing Excel users may already have a solution; not free for everyone and not universal cleanup.",
+    "access": "Full page"
+  },
+  {
+    "id": "V14",
+    "title": "Akeneo Supplier Data Manager",
+    "url": "https://help.akeneo.com/supplier-data-manager-what-do-i-need-to-get-started/what-is-supplier-data-manager",
+    "type": "Official product documentation",
+    "checked": "2026-10-31",
+    "finding": "Describes supplier portals, normalization, matching, classification and AI mapping.",
+    "limits": "Confirms mature competition, not suitability or affordability for every small agency.",
+    "access": "Full page"
+  },
+  {
+    "id": "V15",
+    "title": "Plytix product modules",
+    "url": "https://www.plytix.com/pricing/",
+    "type": "Vendor product/pricing page",
+    "checked": "2026-10-31",
+    "finding": "Shows PIM, digital assets, portals, feeds, data sheets and Shopify modules.",
+    "limits": "Dynamic price fields were incomplete; no base-plan price is relied on. Some features are marked coming soon.",
+    "access": "Full page"
+  },
+  {
+    "id": "V16",
+    "title": "Channable feed management",
+    "url": "https://www.channable.com/products/product-feed-management-tool",
+    "type": "Vendor product page",
+    "checked": "2026-10-31",
+    "finding": "Advertises multi-channel feeds, rules and AI-assisted product-data processing.",
+    "limits": "Vendor capability claims, not independent earnings evidence.",
+    "access": "Full page"
+  },
+  {
+    "id": "V17",
+    "title": "DataFeedWatch app",
+    "url": "https://apps.shopify.com/datafeedwatch",
+    "type": "Platform listing and user reviews",
+    "checked": "2026-10-31",
+    "finding": "Advertises channel feeds, AI enrichment, mapping, rules and agency support.",
+    "limits": "Paid category/use signal; not proof a new competitor or separate quality checker will sell.",
+    "access": "Full page"
+  },
+  {
+    "id": "V18",
+    "title": "Shopify inventory states",
+    "url": "https://help.shopify.com/en/manual/inventory-and-locations/fundamentals/inventory-states",
+    "type": "Official documentation",
+    "checked": "2026-10-31",
+    "finding": "Distinguishes available, on-hand, committed, unavailable and incoming quantities.",
+    "limits": "Business semantics require correct customer interpretation; no revenue evidence.",
+    "access": "Full page"
+  },
+  {
+    "id": "V19",
+    "title": "Shopify B2B quantities and pricing",
+    "url": "https://help.shopify.com/en/manual/b2b/catalogs/quantity-pricing",
+    "type": "Official documentation",
+    "checked": "2026-10-31",
+    "finding": "Quantity breaks and volume-pricing rules can be managed natively or via CSV.",
+    "limits": "Availability and correctness do not establish demand for a standalone formatting service.",
+    "access": "Full page"
+  },
+  {
+    "id": "V20",
+    "title": "Shopify Markets catalogs",
+    "url": "https://help.shopify.com/en/manual/markets/customizations/catalogs",
+    "type": "Official documentation",
+    "checked": "2026-10-31",
+    "finding": "Explains native catalog, currency, pricing and availability management.",
+    "limits": "Do not turn a documented platform feature into an unsupported separate market claim.",
+    "access": "Full page"
+  },
+  {
+    "id": "V21",
+    "title": "Google GTIN requirements",
+    "url": "https://support.google.com/merchants/answer/6324461",
+    "type": "Official documentation",
+    "checked": "2026-10-31",
+    "finding": "Requires accurate applicable identifiers and explicitly warns against guessing GTINs.",
+    "limits": "A checksum cannot establish genuine product identity or sourcing rights.",
+    "access": "Full page"
+  },
+  {
+    "id": "V22",
+    "title": "Google product-data specification",
+    "url": "https://support.google.com/merchants/answer/7052112?hl=en",
+    "type": "Official documentation",
+    "checked": "2026-10-31",
+    "finding": "Specifies channel attributes, product data and image requirements; includes native issue diagnostics.",
+    "limits": "Compliance checks do not guarantee approval, reinstatement or sales uplift.",
+    "access": "Full page"
+  },
+  {
+    "id": "V23",
+    "title": "WooCommerce CSV importer",
+    "url": "https://woocommerce.com/document/product-csv-importer-exporter/",
+    "type": "Official documentation",
+    "checked": "2026-10-31",
+    "finding": "Built-in importer/exporter supports bulk products and column mapping.",
+    "limits": "Shows a native alternative, not that every difficult migration is solved.",
+    "access": "Full page"
+  },
+  {
+    "id": "V24",
+    "title": "Shopify standard taxonomy",
+    "url": "https://help.shopify.com/en/manual/products/details/product-category",
+    "type": "Official documentation",
+    "checked": "2026-10-31",
+    "finding": "Native categories, attribute links and automatic category suggestions exist.",
+    "limits": "Customer context still matters; no standalone paid-demand proof.",
+    "access": "Full page"
+  },
+  {
+    "id": "V25",
+    "title": "Shopify redirects",
+    "url": "https://help.shopify.com/en/manual/online-store/menus-and-links/url-redirect",
+    "type": "Official documentation",
+    "checked": "2026-10-31",
+    "finding": "Native redirect handling and limitations are documented.",
+    "limits": "Migration correctness is not an SEO performance guarantee.",
+    "access": "Full page"
+  },
+  {
+    "id": "V26",
+    "title": "Agency request: 3,000 products / eight catalogs",
+    "url": "https://www.upwork.com/freelance-jobs/apply/Shopify-Bulk-Product-Import-000-Products-from-Supplier-Catalogs_~022107832914102288729/",
+    "type": "Buyer request, indexed",
+    "checked": "2026-10-31",
+    "finding": "Agency requests preparation/import and a paid small sample; 20–50 proposals shown.",
+    "limits": "Direct page returned 403. Index only; no completed payment proof. Body says fixed price while metadata says hourly; not a reliable price benchmark.",
+    "access": "Search excerpt; direct page 403"
+  },
+  {
+    "id": "V27",
+    "title": "Completed bulk-import work-history signal",
+    "url": "https://www.upwork.com/freelancers/sominparate",
+    "type": "Marketplace work history, indexed",
+    "checked": "2026-10-31",
+    "finding": "An indexed completed bulk-product-import entry spans Aug 6–Oct 17, 2026 with a rating.",
+    "limits": "Direct page returned 403. Earnings private; no receipt, profitability, scope equivalence or recurring-income proof.",
+    "access": "Search excerpt; direct page 403"
+  },
+  {
+    "id": "V28",
+    "title": "Ongoing catalog operations buyer request",
+    "url": "https://www.upwork.com/freelance-jobs/apply/Shopify-Downloads-Product-Specialist_~022097885419796050519/",
+    "type": "Buyer request, indexed",
+    "checked": "2026-10-31",
+    "finding": "Body asks for 5–10 hours weekly across supplier feeds and several apps; advertised US$7–12/hour.",
+    "limits": "Scope is broader than our offer. Metadata conflicts on weekly hours. Buyer request, not paid rate or a representative market average.",
+    "access": "Search excerpt only"
+  },
+  {
+    "id": "V29",
+    "title": "Small product-import buyer request",
+    "url": "https://www.upwork.com/freelance-jobs/apply/Shopify-Product-Import-Specialist_~022107941391163521562/",
+    "type": "Buyer request, indexed",
+    "checked": "2026-10-31",
+    "finding": "One small import job advertises US$5–15/hour and 5–10 proposals.",
+    "limits": "Index only. Not a paid outcome or estimate of usual market wages.",
+    "access": "Search excerpt only"
+  },
+  {
+    "id": "V30",
+    "title": "Multi-vendor variants and pricing buyer request",
+    "url": "https://www.upwork.com/freelance-jobs/apply/Shopify-Product-Import-Specialist_~022108284478441393532/",
+    "type": "Buyer request, indexed",
+    "checked": "2026-10-31",
+    "finding": "Requests vendor import, variant grouping and pricing-update assistance; US$12–27/hour advertised.",
+    "limits": "Request, not confirmed payment; no evidence of low maintenance.",
+    "access": "Search excerpt only"
+  },
+  {
+    "id": "V31",
+    "title": "Completed Matrixify work-history signal",
+    "url": "https://www.upwork.com/freelancers/fasihafarooqi",
+    "type": "Marketplace work history, indexed",
+    "checked": "2026-10-31",
+    "finding": "Indexed Matrixify developer contract shows a rating and Feb 23–Mar 25, 2026 dates.",
+    "limits": "Earnings private and direct history not independently opened; related service signal only.",
+    "access": "Search excerpt only"
+  },
+  {
+    "id": "V32",
+    "title": "Bulk import job with hires",
+    "url": "https://www.upwork.com/freelance-jobs/apply/Shopify-Bulk-Product-Import-Specialist_~022085094478123173945/",
+    "type": "Buyer request with hiring signal, indexed",
+    "checked": "2026-10-31",
+    "finding": "Indexed request shows two hires for a supplier-product import project.",
+    "limits": "Two hires are not evidence of completed payment, profit or successful delivery.",
+    "access": "Search excerpt only"
+  },
+  {
+    "id": "V33",
+    "title": "Stock Sync critical reviews",
+    "url": "https://apps.shopify.com/stock-sync/reviews?ratings%5B%5D=1",
+    "type": "User complaints and vendor responses",
+    "checked": "2026-10-31",
+    "finding": "Historical complaints describe setup/support difficulties; vendor responses offer assistance.",
+    "limits": "Selected negative-review sample is not representative and is older than 2026; overall listing is strongly positive.",
+    "access": "Full page"
+  },
+  {
+    "id": "V34",
+    "title": "Shopify API versioning",
+    "url": "https://shopify.dev/docs/api/usage/versioning",
+    "type": "Official developer documentation",
+    "checked": "2026-10-31",
+    "finding": "Regular API releases and deprecations create continuing maintenance work.",
+    "limits": "No estimate of maintenance hours follows from this source.",
+    "access": "Full page"
+  },
+  {
+    "id": "V35",
+    "title": "Upwork automation policy",
+    "url": "https://support.upwork.com/hc/en-us/articles/43342677368467-Use-bots-and-other-automation-properly",
+    "type": "Official platform policy",
+    "checked": "2026-10-31",
+    "finding": "Unapproved automated platform access is restricted; API access remains use-case bounded.",
+    "limits": "Does not authorize prospect scraping or auto-proposals. Customer acquisition cannot be assumed fully automated.",
+    "access": "Full page"
+  },
+  {
+    "id": "V36",
+    "title": "Shopify inventory CSV",
+    "url": "https://help.shopify.com/en/manual/inventory-and-locations/setup/inventory-csv",
+    "type": "Official documentation",
+    "checked": "2026-10-31",
+    "finding": "Documents native location inventory files and current-versus-new safety validation.",
+    "limits": "Native protection narrows the gap for an independent overwrite-checking product.",
+    "access": "Full page"
+  },
+  {
+    "id": "V37",
+    "title": "Source-backed specialist enrichment request",
+    "url": "https://www.upwork.com/freelance-jobs/apply/Automotive-Key-Data-Researcher-Shopify-SEO-Product-Specialist_~022099227150392307352/",
+    "type": "Buyer request, indexed",
+    "checked": "2026-10-31",
+    "finding": "Requests verified specifications, provenance and compatibility information, starting with a small paid sample.",
+    "limits": "Direct page returned 403. Specialized domain research is labor-intensive; not proof of low-touch enrichment.",
+    "access": "Search excerpt; direct page 403"
+  },
+  {
+    "id": "V38",
+    "title": "Broad catalog-data specialist request",
+    "url": "https://www.upwork.com/freelance-jobs/apply/Ecommerce-Catalogue-Product-Data-Specialist_~022093811234641623639/",
+    "type": "Buyer request, indexed",
+    "checked": "2026-10-31",
+    "finding": "Seeks specification research, categorization, images, replacements and ongoing catalog improvement.",
+    "limits": "Direct page returned 403. Broad service request does not validate separate products for each subtask.",
+    "access": "Search excerpt; direct page 403"
+  },
+  {
+    "id": "V39",
+    "title": "Upwork buyer request: Shopify catalog organization and UX improvement",
+    "url": "https://www.upwork.com/freelance-jobs/apply/Shopify-Catalog-Organization-and-Improvement_~022100272430680028042/",
+    "type": "Buyer request / indexed platform listing",
+    "checked": "2026-10-31",
+    "finding": "Advertises US$25–50/hour, one hire and 50+ proposals for a broad technical catalog/UX role. The listing is restricted to U.S.-located freelancers.",
+    "limits": "Not accessible to the Canadian user as advertised; broader than file preparation. Advertised budget and hire count do not establish final price, payment, margin or typical market rates.",
+    "access": "Search-index extract; direct page not independently verified"
+  }
+]

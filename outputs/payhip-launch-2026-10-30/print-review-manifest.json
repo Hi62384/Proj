@@ -1,0 +1,34 @@
+{
+  "status": "Review only. Not uploaded or published.",
+  "original_zip_unchanged": true,
+  "source_sha256": "9835184cb1e37a4ca7f4d379d0a234fee3b769fa22a0af0a3ca356a500c0d215",
+  "candidate_sha256": "2af4110f4ec81af469793d819675a95189276fccad706aaa9d61b9a2e67dd074",
+  "candidate_bytes": 56233,
+  "files": [
+    {
+      "name": "Cleaning_Pricing_Calculator.xlsx",
+      "sha256": "ac347c507280241723493c9aa042e36b5af8344b24599be3f26c05ae1d73fd98",
+      "print_fix": true
+    },
+    {
+      "name": "Cleaning_Pricing_Calculator_FICTIONAL_DEMO.xlsx",
+      "sha256": "e4efa837f9c9039ca764c7bef1c875a761d0e000cadeb7208384e9be578e8236",
+      "print_fix": true
+    },
+    {
+      "name": "LICENSE_AND_DISCLAIMER.txt",
+      "sha256": "8d7d4a711a590bea3c0563dbc6192e9625eb3163177ad9d698d60a81458d60e7",
+      "print_fix": false
+    },
+    {
+      "name": "Quick_Start_Guide.pdf",
+      "sha256": "b8f10f4173cbcd4195544a643f88ee0e713a388437efaaca00724e91cf101931",
+      "print_fix": false
+    },
+    {
+      "name": "START_HERE.txt",
+      "sha256": "fd330d1c4f9c4de7462d0122dfc085029f743bde6a1cc61afa53cfa454d6a189",
+      "print_fix": false
+    }
+  ]
+}

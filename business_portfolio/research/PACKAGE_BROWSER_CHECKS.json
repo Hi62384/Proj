@@ -1,0 +1,32 @@
+{
+  "scope": "Historical v1 browser results, not v2 testing",
+  "results": {
+    "checks_passed": [
+      "Initial 133-record view",
+      "Recommended AWA-001 opens by default",
+      "Search by stable ID",
+      "Existing-work filter",
+      "Separate publication and commercial states",
+      "Parent includes grandchildren",
+      "Deep niche filter",
+      "Bundle count",
+      "First-tier count",
+      "Commercial-state filter",
+      "Empty-results state",
+      "Pagination advances",
+      "Pagination returns",
+      "Embedded research opens",
+      "Research-to-project link resolves in browser",
+      "Markdown tables render",
+      "Unsafe URL scheme rejected",
+      "Markup remains inert text",
+      "Mobile layout no page-width overflow",
+      "No JavaScript runtime errors",
+      "No network calls"
+    ],
+    "count": 21,
+    "environment": "Headless Chromium in the artifact container, in-memory document. file:// navigation was blocked by administrator policy; user Windows local-file acceptance remains pending",
+    "errors": [],
+    "network_requests": []
+  }
+}

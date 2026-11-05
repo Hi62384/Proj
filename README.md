@@ -17,6 +17,8 @@ See the [current Cleaning product status](products/cleaning-pricing-calculator/R
 
 ## Find the right part of the project
 
+For resumable business plans and existing-work checkpoints, open the offline [Business Portfolio](business_portfolio/PROJECT_BROWSER.html). Its [canonical records and rebuild guide](business_portfolio/README.md) separate implementation progress, commercial evidence and spending permission. Current portfolio spending authorization is CAD0; importing a plan does not activate it.
+
 | Area | Use | Start |
 |---|---|---|
 | Organized research | Categories, subcategories, buyer/industry tags, filters, comparison, privacy and passive-workload analysis | [Opportunity Library](Opportunity_Library.html) / [category index](opportunity_library/README.md) |

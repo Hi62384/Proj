@@ -94,6 +94,10 @@ def classify(operation,context):
     result=commit_label(label)
     if result.required:return result
     if source=='browser' and re.fullmatch(r'save(?: changes| draft| product| listing)?',label.strip(),re.I) and not context.get('local_editor'):
+        page=urlsplit(context.get('page_url',''))
+        if page.scheme=='https' and page.netloc=='payhip.com' and re.fullmatch(r'/product/edit/[A-Za-z0-9]+',page.path) and context.get('form_id')=='addproduct' and context.get('form_visibility') in ('visible','unlisted'):
+            access='publicly visible' if context['form_visibility']=='visible' else 'accessible to anyone with its link'
+            return Review('Saving this product makes its content '+access+'. Review this public listing change before saving.','publication')
         return Review('This save can persist account or website content. Its unpublished destination must be verified by an approved draft workflow.','submission')
     if context.get('form_submission'):
         if context.get('form_method')=='GET' and not context.get('enter_submits'):return Review()

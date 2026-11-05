@@ -19,3 +19,9 @@ outputs/**/qa/cases/
 outputs/**/qa/case-results*/
 outputs/**/qa/recalculated/
 outputs/**/qa/*.xlsx
+
+# Isolated publication checkout and nested disposable review state.
+.tmp/
+outputs/**/lo-profile/
+outputs/**/qa/**/cases/
+outputs/**/qa/**/recalculated/

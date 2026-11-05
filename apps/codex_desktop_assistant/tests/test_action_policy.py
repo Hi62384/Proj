@@ -15,6 +15,13 @@ from assistant.storage import Store
 class ClassificationTests(unittest.TestCase):
     def context(self,**kwargs):return {'source':'desktop','role':'Button','label':'Continue',**kwargs}
 
+    def test_product_save_explains_public_access_from_structured_visibility(self):
+        base=self.context(source='browser',label='Save Changes',page_url='https://payhip.com/product/edit/Existing123',form_id='addproduct',form_submission=True,form_method='POST')
+        for state,phrase in [('visible','publicly visible'),('unlisted','anyone with its link')]:
+            result=classify('click',{**base,'form_visibility':state})
+            self.assertEqual(result.category,'publication');self.assertIn(phrase,result.reason)
+        self.assertEqual(classify('click',{**base,'form_visibility':'invisible'}).category,'submission')
+
     def test_multiline_notepad_text_is_data_even_with_commit_words(self):
         for role in ('Edit','Document'):
             for label in ('Text Editor','Send\nPublish\nBuy now','Submission notes'):

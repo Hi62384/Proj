@@ -46,7 +46,7 @@ function frameOrigin(frame,frames,depth=0){
 }
 function post(value){if(!port||!session)throw Error('Assistant is disconnected');port.postMessage({...value,session});}
 async function badge(tabId,text){try{await chrome.action.setBadgeText({tabId,text});await chrome.action.setBadgeBackgroundColor({tabId,color:text==='STOP'?'#b91c1c':'#0f766e'});}catch{}}
-async function revoke(tab,notify=true){grants.delete(tab);createdTabs.delete(tab);const rules=tabRules.get(tab)||[];tabRules.delete(tab);try{await chrome.declarativeNetRequest.updateSessionRules({removeRuleIds:rules});}catch{}await badge(tab,'');try{await chrome.tabs.sendMessage(tab,{channel:'codex-content',operation:'revoke'});}catch{}if(notify&&connected)post({type:'event',event:'revoke',tab});}
+async function revoke(tab,notify=true){const grant=grants.get(tab);grants.delete(tab);createdTabs.delete(tab);const rules=tabRules.get(tab)||[];tabRules.delete(tab);try{await chrome.declarativeNetRequest.updateSessionRules({removeRuleIds:rules});}catch{}if(typeof grant?.originalAutoDiscardable==='boolean')try{await chrome.tabs.update(tab,{autoDiscardable:grant.originalAutoDiscardable});}catch{}await badge(tab,'');try{await chrome.tabs.sendMessage(tab,{channel:'codex-content',operation:'revoke'});}catch{}if(notify&&connected)post({type:'event',event:'revoke',tab});}
 function disconnect(){const old=port;port=null;session=null;connected=false;grantAckSupported=false;for(const waiter of grantWaiters.values())waiter.reject(Error('Assistant disconnected before confirming tab access.'));grantWaiters.clear();for(const tab of [...grants.keys()])revoke(tab,false);try{old?.disconnect();}catch{} }
 async function confirmGrant(grant){
   if(!grantAckSupported)throw Error('Restart the updated Desktop Assistant, then reconnect. It must confirm tab access before automation is authorized.');
@@ -95,7 +95,12 @@ async function authorize(target=null,sourceScope='auto'){
     await networkGuard(grant);
     const response=await chrome.tabs.sendMessage(tab.id,{channel:'codex-content',operation:'grant',origin,session});
     if(!response?.ok)throw Error(response?.error||'The page did not confirm its content controller.');
-    await confirmGrant(grant);grants.set(tab.id,grant);lastAuthorizationError='';await badge(tab.id,'ON');return grant;
+    await confirmGrant(grant);
+    // Keep only authorized work tabs out of Chrome's automatic discard cycle.
+    // Discarding destroys unsaved editor state and changes IDs during review.
+    grant.originalAutoDiscardable=previous?.originalAutoDiscardable??(tab.autoDiscardable!==false);
+    await chrome.tabs.update(tab.id,{autoDiscardable:false});
+    grants.set(tab.id,grant);lastAuthorizationError='';await badge(tab.id,'ON');return grant;
   }catch(error){lastAuthorizationError=error.message;await revoke(tab.id);throw error;}
 }
 async function requireTab(args,allowManual=false){

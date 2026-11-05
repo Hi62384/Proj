@@ -7,13 +7,71 @@ import unittest
 from pathlib import Path
 from unittest.mock import Mock,patch
 sys.path[:0]=[str(Path(__file__).resolve().parents[1]),str(Path(__file__).resolve().parents[3])]
-from PySide6.QtWidgets import QApplication,QPushButton,QComboBox,QPlainTextEdit,QSystemTrayIcon
+from PySide6.QtWidgets import QApplication,QPushButton,QComboBox,QPlainTextEdit,QSystemTrayIcon,QCheckBox
+from PySide6.QtCore import QTimer
 from assistant.permissions import Permissions
 from assistant.storage import Store
 from bridge.dashboard import Dashboard
 
 
 class BridgeDashboardTests(unittest.TestCase):
+    def wait_browser(self):
+        deadline=time.monotonic()+3
+        while self.window.browser_showing and time.monotonic()<deadline:
+            self.app.processEvents();time.sleep(.01)
+        self.app.processEvents();self.assertFalse(self.window.browser_showing)
+
+    def test_show_browser_closed_tab_error_survives_refresh(self):
+        self.runtime.broker.chrome.selected=42
+        self.runtime.broker.chrome.opened_urls={}
+        self.runtime.broker.chrome.call.return_value={'tabs':[{'tab':43}]}
+        self.window.show_browser();self.wait_browser();self.window.refresh()
+        self.assertIn('tab was closed',self.window.notice.text())
+        self.assertEqual(self.runtime.broker.chrome.call.call_count,1)
+
+    def test_show_browser_restores_only_previous_exact_url(self):
+        self.runtime.broker.chrome.selected=42
+        self.runtime.broker.chrome.opened_urls={42:'https://example.test/work'}
+        self.runtime.broker.chrome.call.side_effect=[{'tabs':[{'tab':43}]},{'tab':43,'authorized':True,'reused':True},{'shown':True}]
+        with patch('bridge.windows.allow_chrome_foreground'):
+            self.window.show_browser();self.wait_browser()
+        calls=self.runtime.broker.chrome.call.call_args_list
+        self.assertEqual(calls[1].args,(self.runtime.owner,'open_tab',{'url':'https://example.test/work'}))
+        self.assertEqual(calls[2].args,(self.runtime.owner,'show',{'tab':43}))
+
+    def test_show_browser_does_not_bypass_restored_page_authorization(self):
+        self.runtime.broker.chrome.selected=42
+        self.runtime.broker.chrome.opened_urls={42:'https://example.test/work'}
+        self.runtime.broker.chrome.call.side_effect=[{'tabs':[]},{'tab':43,'authorized':False}]
+        self.window.show_browser();self.wait_browser()
+        self.assertIn('needs authorization',self.window.notice.text())
+        self.assertEqual(self.runtime.broker.chrome.call.call_count,2)
+
+    def test_show_browser_failure_is_visible_and_not_replayed(self):
+        self.runtime.broker.chrome.selected=42
+        self.runtime.broker.chrome.call.side_effect=[{'tabs':[{'tab':42}]},RuntimeError('Chrome is disconnected')]
+        with patch('bridge.windows.allow_chrome_foreground'):
+            self.window.show_browser();self.wait_browser()
+        self.window.refresh();self.assertIn('Chrome is disconnected',self.window.notice.text())
+        self.assertEqual(self.runtime.broker.chrome.call.call_count,2)
+
+    def test_show_browser_uses_exact_selected_tab(self):
+        self.runtime.broker.chrome.selected=42
+        self.runtime.broker.chrome.call.side_effect=[{'tabs':[{'tab':42}]},{'shown':True}]
+        with patch('bridge.windows.allow_chrome_foreground') as handoff:
+            self.window.show_browser();self.wait_browser();handoff.assert_called_once()
+        self.runtime.broker.chrome.call.assert_called_with(self.runtime.owner,'show',{'tab':42})
+        self.assertIn('Chrome was asked',self.window.notice.text())
+
+    def test_owner_routine_toggle_persists_without_modifying_file_rules(self):
+        rules=[{'path':str(Path(self.tmp.name)),'scope':'recursive','decisions':{'read':'deny'}}]
+        self.store.setting('file_rules',rules);observed={}
+        def enable():
+            dialog=self.app.activeModalWidget();toggle=dialog.findChild(QCheckBox,'routine_approvals')
+            observed['initial']=toggle.isChecked();toggle.setChecked(True);dialog.accept()
+        QTimer.singleShot(0,enable);self.window.settings()
+        self.assertFalse(observed['initial']);self.assertTrue(self.store.settings()['routine_approvals'])
+        self.assertEqual(self.store.settings()['file_rules'],rules)
     @classmethod
     def setUpClass(cls):cls.app=QApplication.instance() or QApplication([])
     def setUp(self):

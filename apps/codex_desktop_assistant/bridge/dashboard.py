@@ -17,7 +17,7 @@ def button(text,slot):
 class Dashboard(QMainWindow):
     def __init__(self,directory):
         super().__init__();self.setWindowTitle('Codex Computer Bridge');self.resize(860,650);self.explicit_quit=False;self.cards={}
-        self.events=Events();self.events.event.connect(self.on_event)
+        self.events=Events();self.events.event.connect(self.on_event);self.browser_message='';self.browser_showing=False
         self.runtime=Runtime(directory,self.events.event.emit);self.store=self.runtime.store;self.permissions=self.runtime.permissions;self.desktop=self.runtime.desktop;self.broker=self.runtime.broker;self.attachments=self.runtime.attachments
         root=QWidget();self.setCentralWidget(root);layout=QVBoxLayout(root);layout.setContentsMargins(28,24,28,24);layout.setSpacing(16)
         title=QLabel('Codex Computer Bridge');title.setStyleSheet('font-size:25px;font-weight:600');layout.addWidget(title)
@@ -40,6 +40,8 @@ class Dashboard(QMainWindow):
 
     def on_event(self,kind,conversation,data):
         if kind=='show_dashboard':self.show_dashboard()
+        if kind=='browser_show_result':
+            self.browser_showing=False;self.browser_message=str(data)
         if kind=='request':
             self.tray.showMessage('Codex needs your input','Open Codex Computer Bridge to review the required action.',QSystemTrayIcon.Warning,10000)
         self.refresh()
@@ -53,7 +55,8 @@ class Dashboard(QMainWindow):
         lines.extend(['Stopped — resume in Settings.' if state['stopped'] else 'Current activity: '+(state['active_tool'] or state['latest_action']),state['reasoning_state']])
         if state.get('current_website'):lines.append('Website: '+state['current_website'])
         self.work.setTextFormat(Qt.PlainText);self.work.setText('\n'.join(lines))
-        self.notice.setText('Pending human requests: '+str(state['pending_requests']));self.tray.setToolTip('Codex Computer Bridge — '+('Stopped' if state['stopped'] else state['active_tool'] or 'Ready'))
+        self.notice.setTextFormat(Qt.PlainText)
+        self.notice.setText('Pending human requests: '+str(state['pending_requests'])+ ('\n'+self.browser_message if self.browser_message else ''));self.tray.setToolTip('Codex Computer Bridge — '+('Stopped' if state['stopped'] else state['active_tool'] or 'Ready'))
         pending={r['id']:r for r in self.runtime.requests if not r['event'].is_set() and r['deadline']>time.monotonic() and r['generation']==self.permissions.generation}
         for key in set(self.cards)-set(pending):self.cards.pop(key).deleteLater()
         for key,request in pending.items():
@@ -88,19 +91,39 @@ class Dashboard(QMainWindow):
         QDesktopServices.openUrl(QUrl.fromLocalFile(str(path)))
 
     def show_browser(self):
+        if self.browser_showing:return
         selected=self.broker.chrome.selected
-        if selected is None:self.notice.setText('No task browser tab selected. Ask Codex to open one.');return
-        from .windows import allow_chrome_foreground
-        allow_chrome_foreground()  # explicit local owner action, limited to installed Chrome
+        if selected is None:
+            self.browser_message='No task browser tab selected. Ask Codex to open or reuse the page you need.';self.refresh();return
+        self.browser_showing=True;self.browser_message='Bringing the selected task tab forward…';self.refresh()
         def show():
-            try:self.broker.chrome.call(self.runtime.owner,'show',{'tab':selected})
-            except Exception as error:self.events.event.emit('error',None,str(error))
+            try:
+                tabs=self.broker.chrome.call(self.runtime.owner,'list_tabs',{})['tabs']
+                target=selected
+                if not any(tab['tab']==target for tab in tabs):
+                    url=self.broker.chrome.opened_urls.get(target)
+                    if not url:raise RuntimeError('The selected task tab was closed. Ask Codex to restore that page; existing matching tabs will be reused.')
+                    restored=self.broker.chrome.call(self.runtime.owner,'open_tab',{'url':url})
+                    if not restored.get('authorized'):raise RuntimeError('The restored page needs authorization in the Chrome extension.')
+                    target=restored['tab']
+                from .windows import allow_chrome_foreground
+                allow_chrome_foreground()  # explicit local owner action, limited to installed Chrome
+                self.broker.chrome.call(self.runtime.owner,'show',{'tab':target})
+                message='Chrome was asked to show the selected task tab. If it stays behind another window, select Chrome on the Windows taskbar.'
+            except Exception as error:message='Could not show browser: '+str(error)
+            self.events.event.emit('browser_show_result',None,message)
         import threading
         threading.Thread(target=show,daemon=True).start()
 
     def settings(self):
         dialog=QDialog(self);dialog.setWindowTitle('Computer Bridge Settings');layout=QVBoxLayout(dialog)
         layout.addWidget(QLabel('Desktop control stays off until enabled here. Chrome uses its existing permissions.'))
+        routine=QCheckBox('Automatically allow routine work');routine.setObjectName('routine_approvals')
+        routine.setChecked(self.store.settings().get('routine_approvals') is True)
+        routine.toggled.connect(lambda enabled:self.store.setting('routine_approvals',bool(enabled)))
+        layout.addWidget(routine)
+        from .routine_policy import PROJECT_ROOT
+        note=QLabel('Allows default Read requests inside '+str(PROJECT_ROOT)+', reuse/screenshots of already authorized Chrome sites, and saves to existing Invisible Payhip products. Explicit file Ask/Deny rules, Stop and access scopes stay in force. Uploads, publication, purchases, credentials, destructive actions and unknown requests still require review.');note.setWordWrap(True);layout.addWidget(note)
         layout.addWidget(button('Desktop access…',self.desktop_settings))
         def files():
             from assistant.ui import MainWindow

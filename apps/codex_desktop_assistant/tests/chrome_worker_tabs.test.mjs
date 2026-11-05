@@ -33,6 +33,14 @@ port={postMessage(message){if(message.event==='grant')grantWaiters.get(message.t
 globalThis.test={execute,authorize};`,context);
 const run=(operation,args)=>context.test.execute(operation,args,()=>{});
 await context.test.authorize(tabs.get(1));
+assert.equal(tabs.get(1).autoDiscardable,false,'Only an authorized work tab is protected from automatic discarding');
+tabs.set(333,{id:333,windowId:7,url:'https://example.org/private-work',status:'complete',active:false,autoDiscardable:true});
+await context.test.authorize(tabs.get(333));await context.test.authorize(tabs.get(333));
+assert.equal(tabs.get(333).autoDiscardable,false);
+await run('release',{tab:333});assert.equal(tabs.get(333).autoDiscardable,true,'Reauthorization preserves the original setting for release');
+tabs.set(334,{id:334,windowId:7,url:'https://example.org/already-protected',status:'complete',active:false,autoDiscardable:false});
+await context.test.authorize(tabs.get(334));await run('release',{tab:334});
+assert.equal(tabs.get(334).autoDiscardable,false,'An owner-protected tab remains protected after release');
 const human=await run('close_check',{tab:1,assistant_created:true,untouched:true});
 assert.equal(human.may_lose_edits,true,'Model fields cannot forge creation provenance');
 const own=await run('open_tab',{url:'https://example.org/products'});

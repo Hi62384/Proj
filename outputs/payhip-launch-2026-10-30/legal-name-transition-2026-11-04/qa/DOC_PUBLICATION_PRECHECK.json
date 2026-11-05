@@ -1,0 +1,17 @@
+{
+  "original_head": "720fcc2c5619e31947fe8775d47f629cc49e8661",
+  "original_branch": "main",
+  "index_entries_sha256": "8f4e0e6f99a7e0dfa64ffcbe7ca2d7a903cba51a945776513c4af682aa14a0dd",
+  "staged_names": [],
+  "verified_remote_before": "720fcc2c5619e31947fe8775d47f629cc49e8661",
+  "allowed_files": [
+    "products/cleaning-pricing-calculator/README.md",
+    "products/cleaning-pricing-calculator/marketing/PAYHIP_LISTING_DRAFT.md",
+    "products/cleaning-pricing-calculator/marketing/PAYHIP_LAUNCH_CHECKLIST.md"
+  ],
+  "prepared_sha256": {
+    "products/cleaning-pricing-calculator/README.md": "3d3ec9115901eef335b68c247ffebfe1ffb365f016889b043ac5ba7b5e056f4a",
+    "products/cleaning-pricing-calculator/marketing/PAYHIP_LISTING_DRAFT.md": "b749cc7eb6a9a8f46c0212ec7e291aba8d0f145b6616585cd2c492bba1f7aa13",
+    "products/cleaning-pricing-calculator/marketing/PAYHIP_LAUNCH_CHECKLIST.md": "89e098b8d937b11856055b9284abf3304a64a4970b881d72185a6f2b843458b4"
+  }
+}

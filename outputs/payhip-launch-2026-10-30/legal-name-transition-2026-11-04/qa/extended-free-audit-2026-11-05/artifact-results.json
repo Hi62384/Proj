@@ -1,0 +1,608 @@
+{
+  "engine": "Bundled @oai/artifact-tool",
+  "total": 84,
+  "passed": 74,
+  "assertions": 562,
+  "native_excel_tested": false,
+  "exported_or_modified_release": false,
+  "results": [
+    {
+      "case": "cleaning_combined_01",
+      "pass": false,
+      "issues": [
+        {
+          "sheet": "QUICK QUOTE",
+          "cell": "F22",
+          "expected": 0,
+          "actual": 39.5
+        },
+        {
+          "sheet": "QUICK QUOTE",
+          "cell": "F23",
+          "expected": 790,
+          "actual": 829.5
+        },
+        {
+          "sheet": "CLIENT QUOTE",
+          "cell": "E22",
+          "expected": 790,
+          "actual": 829.5
+        }
+      ]
+    },
+    {
+      "case": "cleaning_combined_03",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_05",
+      "pass": false,
+      "issues": [
+        {
+          "sheet": "QUICK QUOTE",
+          "cell": "F22",
+          "expected": 0,
+          "actual": 8.65
+        },
+        {
+          "sheet": "QUICK QUOTE",
+          "cell": "F23",
+          "expected": 173,
+          "actual": 181.65
+        },
+        {
+          "sheet": "CLIENT QUOTE",
+          "cell": "E22",
+          "expected": 173,
+          "actual": 181.65
+        }
+      ]
+    },
+    {
+      "case": "cleaning_combined_07",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_09",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_11",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_13",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_15",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_17",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_19",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_21",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_23",
+      "pass": false,
+      "issues": [
+        {
+          "sheet": "QUICK QUOTE",
+          "cell": "F22",
+          "expected": 0,
+          "actual": 49.73
+        },
+        {
+          "sheet": "QUICK QUOTE",
+          "cell": "F23",
+          "expected": 382.5,
+          "actual": 432.23
+        },
+        {
+          "sheet": "CLIENT QUOTE",
+          "cell": "E22",
+          "expected": 382.5,
+          "actual": 432.23
+        }
+      ]
+    },
+    {
+      "case": "cleaning_combined_00",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_02",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_04",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_06",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_08",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_10",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_12",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_14",
+      "pass": false,
+      "issues": [
+        {
+          "sheet": "QUICK QUOTE",
+          "cell": "F22",
+          "expected": 0,
+          "actual": 719.23
+        },
+        {
+          "sheet": "QUICK QUOTE",
+          "cell": "F23",
+          "expected": 5532.5,
+          "actual": 6251.73
+        },
+        {
+          "sheet": "CLIENT QUOTE",
+          "cell": "E22",
+          "expected": 5532.5,
+          "actual": 6251.73
+        }
+      ]
+    },
+    {
+      "case": "cleaning_combined_16",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_18",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_20",
+      "pass": false,
+      "issues": [
+        {
+          "sheet": "QUICK QUOTE",
+          "cell": "F22",
+          "expected": 0,
+          "actual": 168.35
+        },
+        {
+          "sheet": "QUICK QUOTE",
+          "cell": "F23",
+          "expected": 1295,
+          "actual": 1463.35
+        },
+        {
+          "sheet": "CLIENT QUOTE",
+          "cell": "E22",
+          "expected": 1295,
+          "actual": 1463.35
+        }
+      ]
+    },
+    {
+      "case": "cleaning_combined_22",
+      "pass": false,
+      "issues": [
+        {
+          "sheet": "QUICK QUOTE",
+          "cell": "F22",
+          "expected": 0,
+          "actual": 9.15
+        },
+        {
+          "sheet": "QUICK QUOTE",
+          "cell": "F23",
+          "expected": 183,
+          "actual": 192.15
+        },
+        {
+          "sheet": "CLIENT QUOTE",
+          "cell": "E22",
+          "expected": 183,
+          "actual": 192.15
+        }
+      ]
+    },
+    {
+      "case": "cleaning_scenario_10",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_scenario_11",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_scenario_22",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_scenario_33",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_scenario_34",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_log_10",
+      "pass": false,
+      "issues": [
+        {
+          "sheet": "JOB LOG",
+          "cell": "J10",
+          "expected": 149.03,
+          "actual": 149.02
+        },
+        {
+          "sheet": "JOB LOG",
+          "cell": "K10",
+          "expected": 240.97,
+          "actual": 240.98
+        },
+        {
+          "sheet": "JOB LOG",
+          "cell": "L10",
+          "expected": 0.6178717948717949,
+          "actual": 0.6178974358974358
+        }
+      ]
+    },
+    {
+      "case": "cleaning_log_11",
+      "pass": false,
+      "issues": [
+        {
+          "sheet": "JOB LOG",
+          "cell": "J11",
+          "expected": 140.33,
+          "actual": 140.32
+        },
+        {
+          "sheet": "JOB LOG",
+          "cell": "K11",
+          "expected": -40.33,
+          "actual": -40.31999999999999
+        },
+        {
+          "sheet": "JOB LOG",
+          "cell": "L11",
+          "expected": -0.4033,
+          "actual": -0.40319999999999995
+        }
+      ]
+    },
+    {
+      "case": "cleaning_log_22",
+      "pass": false,
+      "issues": [
+        {
+          "sheet": "JOB LOG",
+          "cell": "J22",
+          "expected": 137.33,
+          "actual": 137.32
+        },
+        {
+          "sheet": "JOB LOG",
+          "cell": "K22",
+          "expected": -137.33,
+          "actual": -137.32
+        }
+      ]
+    },
+    {
+      "case": "cleaning_log_33",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_log_34",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_invalid_0",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_invalid_1",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_invalid_2",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_invalid_3",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_invalid_4",
+      "pass": false,
+      "issues": [
+        {
+          "sheet": "QUICK QUOTE",
+          "cell": "F27",
+          "expected": "CHECK INPUTS",
+          "actual": "READY TO REVIEW"
+        },
+        {
+          "sheet": "CLIENT QUOTE",
+          "cell": "E22",
+          "expected": null,
+          "actual": 280
+        }
+      ]
+    },
+    {
+      "case": "cleaning_invalid_5",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_invalid_6",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_invalid_7",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_00",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_01",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_02",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_03",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_04",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_05",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_06",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_07",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_08",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_09",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_10",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_11",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_12",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_13",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_14",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_15",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_16",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_17",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_18",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_19",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_20",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_21",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_22",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_23",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_24",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_25",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_26",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_27",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_28",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_29",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_negative_0",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_blank_0",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_text_0",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_negative_1",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_blank_1",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_text_1",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_negative_2",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_blank_2",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_text_2",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_negative_3",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_blank_3",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_text_3",
+      "pass": true,
+      "issues": []
+    }
+  ]
+}

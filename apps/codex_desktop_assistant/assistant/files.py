@@ -64,7 +64,9 @@ class Files:
         if read:result['sha256']=digest(path.read_bytes())
         return result
 
-    def call(self,conversation,args,action):
+    def call(self,conversation,args,action,attach=None):
+        importing=action=='read' and args.get('kind')=='attachment'
+        if importing and (not attach or not isinstance(args.get('sha256'),str) or len(args['sha256'])!=64):raise Denied('Attachment import requires the expected SHA-256')
         path=self.validate(args['path']);listing=action=='list';action='read' if listing else action
         epoch=getattr(self.permissions.execution_context,'generation',self.permissions.generation)
         with self.permissions.lock:
@@ -109,6 +111,9 @@ class Files:
                     raw=win32file.ReadFile(h,500001)[1]
                     if digest(raw)!=expected_hash:raise Denied('Target changed before exclusive access')
                 if action=='read':
+                    if importing:
+                        if digest(raw)!=args['sha256']:raise Denied('File differs from the expected attachment hash')
+                        return attach(path.name,raw)
                     try:
                         text=raw.decode('utf-8')
                         if '\0' in text:raise UnicodeError('Binary file')

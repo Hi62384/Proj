@@ -1,0 +1,36 @@
+{
+  "spreadsheet_regression_checks_passed": 9,
+  "archive_hash_verified": true,
+  "workbooks": [
+    {
+      "workbook": "Cleaning_Pricing_Calculator.xlsx",
+      "named_service_range": "'SERVICES'!$A$9:$A$15",
+      "dropdowns": [
+        {
+          "sheet": "xl/worksheets/sheet3.xml",
+          "range": "B11"
+        },
+        {
+          "sheet": "xl/worksheets/sheet5.xml",
+          "range": "B10:B34"
+        }
+      ],
+      "no_macros_external_links": true
+    },
+    {
+      "workbook": "Cleaning_Pricing_Calculator_FICTIONAL_DEMO.xlsx",
+      "named_service_range": "'SERVICES'!$A$9:$A$15",
+      "dropdowns": [
+        {
+          "sheet": "xl/worksheets/sheet3.xml",
+          "range": "B11"
+        },
+        {
+          "sheet": "xl/worksheets/sheet5.xml",
+          "range": "B10:B34"
+        }
+      ],
+      "no_macros_external_links": true
+    }
+  ]
+}

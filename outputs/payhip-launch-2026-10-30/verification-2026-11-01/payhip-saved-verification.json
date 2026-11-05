@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-01",
+  "product": "bP6YN",
+  "archive": "Cleaning_Pricing_Toolkit_v1.0.1_CUSTOMER.zip",
+  "saved_download": {
+    "bytes": 61130,
+    "sha256": "334518208388483457c8849cfdf9c73955c80e929d38c1afa6631e9459d990d5"
+  },
+  "single_saved_file": true,
+  "title_unchanged": true,
+  "price_unchanged": true,
+  "visibility": [
+    {
+      "value": "visible",
+      "checked": false
+    },
+    {
+      "value": "invisible",
+      "checked": true
+    },
+    {
+      "value": "unlisted",
+      "checked": false
+    }
+  ],
+  "description_unchanged": true,
+  "images_unchanged": true,
+  "saved_image_references_unchanged": true,
+  "mutation": "One completed exact ZIP transfer, obsolete file reference removed, one Save Changes submission, saved owner download hash matched. No publication."
+}

@@ -1,0 +1,97 @@
+{
+  "date": "2026-11-04",
+  "method": "Fresh isolated in-app browser, public rendered pages and DOM checks",
+  "signed_out_evidence": "Navigating Payhip /dashboard redirected to the Payhip login page before final public checks; no login performed",
+  "desktop_css_width": 1280,
+  "mobile_viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "mobile_document_widths": {
+    "home": 375,
+    "inventory": 375,
+    "cleaning": 390,
+    "contact": 390,
+    "policy": 390
+  },
+  "mobile_menu_opened_and_verified": true,
+  "public_name": "Arshya Ghafaryan",
+  "prices_cad": {
+    "bP6YN": 15,
+    "dotFZ": 9
+  },
+  "old_brand_in_checked_visible_text_or_hrefs": false,
+  "old_store_contact_policy_urls": "404, no redirect observed",
+  "new_contact_footer_reload_verified": true,
+  "inventory_new_cover_first": true,
+  "physical_device_matrix_tested": false,
+  "screenshots": [
+    {
+      "file": "home-mobile.jpg",
+      "bytes": 87394,
+      "sha256": "921e8de6c79084e6b973239a921f73ea84168eb5ff0af516b73e694bc7f40f1d"
+    },
+    {
+      "file": "home-desktop.jpg",
+      "bytes": 78800,
+      "sha256": "e773fb765a553af230511041d219e18ecc69bd800bc7ef5cebd9b5955e68ae12"
+    },
+    {
+      "file": "inventory-mobile.jpg",
+      "bytes": 188698,
+      "sha256": "94663417d8e2fb0b4b9a8181f0704a4f4de00c15626184f2631d90013414b7d9"
+    },
+    {
+      "file": "inventory-desktop.jpg",
+      "bytes": 217246,
+      "sha256": "a81811d5a1c2c44363a5cd9aaf02ecd23994ac03513b26a33577095bc099dc9c"
+    },
+    {
+      "file": "cleaning-mobile.jpg",
+      "bytes": 203417,
+      "sha256": "cfb46a336d793596a520f4a06643cfcc560bce2c4ff8630dd0df9529834210bb"
+    },
+    {
+      "file": "cleaning-desktop.jpg",
+      "bytes": 245292,
+      "sha256": "5f15a865a6b4f3bb1f7642ac13ce32dffbb6659d9733bf7dd0773a6def36b1c7"
+    },
+    {
+      "file": "contact-mobile.jpg",
+      "bytes": 25950,
+      "sha256": "a7c2ec6c62b305695dfaa0484af61b45f27fc0a8c74d8d1d933eebe8e6fa371f"
+    },
+    {
+      "file": "contact-desktop.jpg",
+      "bytes": 34215,
+      "sha256": "69c567c284d0d63bd736c5bdfa527ad1d6e3d56c90eef251e25a5c8f1c866416"
+    },
+    {
+      "file": "policy-mobile.jpg",
+      "bytes": 93386,
+      "sha256": "ef9d5db96a546d64d17c213411ef588f21626468cc5aa95f4c963e33c90db7ef"
+    },
+    {
+      "file": "policy-desktop.jpg",
+      "bytes": 103299,
+      "sha256": "e51e8457f89a6564569f4476d14e3057cf853bae517d0dec0e083f521bc4bd71"
+    },
+    {
+      "file": "old-store-404.jpg",
+      "bytes": 15698,
+      "sha256": "6df8e0546ae1ce145204d220ca3fb0bd325f497e58eee24df667998b677a7a85"
+    },
+    {
+      "file": "home-desktop-ratio-fixed.jpg",
+      "bytes": 77915,
+      "sha256": "77160be0a0b8e759a969b9422c6f7c7670b5652d50ce4d438c97cd5eed50644b"
+    },
+    {
+      "file": "home-mobile-ratio-fixed.jpg",
+      "bytes": 85828,
+      "sha256": "8c7d34c5c928ed9ced9a4095611047d9df44d124b72bd16c9803a608ae67d869"
+    }
+  ],
+  "visual_limitation": "Resolved: collection Adapt ratio saved/published and verified on fresh public desktop/mobile reload; see THUMBNAIL_REPAIR_VERIFICATION.json",
+  "thumbnail_repair_verified": true
+}

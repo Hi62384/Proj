@@ -1,0 +1,28 @@
+{
+  "date": "2026-11-04",
+  "source": "Owner-supplied Business Profile screenshot and separate owner response; original screenshot not copied into repository",
+  "identity_verified_notification_visible": true,
+  "notification_text": "Thanks, we verified your identity.",
+  "profile_type_visible": "Individual",
+  "profile_name_matches_approved_name_case_insensitive": true,
+  "owner_reports_no_limitation_or_action_required": true,
+  "account_wide_restriction_audit_complete": false,
+  "bank_name_compatibility_verified": false,
+  "buyer_contact_disclosure_verified": false,
+  "charged_transaction_tested": false,
+  "payout_tested": false,
+  "account_changes_made": false,
+  "private_identifiers_retained": false,
+  "subsequent_live_read": {
+    "date": "2026-11-04",
+    "existing_profile_session_readable": true,
+    "individual_type_observed": true,
+    "customer_service_email_blank": true,
+    "customer_service_number_profile_text": "Not provided",
+    "contact_panel_opened_read_only_and_cancelled": true,
+    "cancel_verified": true,
+    "account_settings_saved": false,
+    "bank_information_accessed": false,
+    "private_values_retained": false
+  }
+}

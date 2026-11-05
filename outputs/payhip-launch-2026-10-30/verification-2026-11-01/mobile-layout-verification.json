@@ -1,0 +1,158 @@
+{
+  "date": "2026-11-01",
+  "builder_preview": [
+    {
+      "tag": "DIV",
+      "device_type": "mobile",
+      "color": "rgb(68, 68, 68)",
+      "background": "rgba(0, 0, 0, 0)",
+      "ancestor_background": "rgb(245, 245, 245)",
+      "font": "proxima-nova, Arial, Helvetica, sans-serif",
+      "font_size": "14px",
+      "line_height": "20px",
+      "bounds": {
+        "x": 841.1666870117188,
+        "y": 93.61458587646484,
+        "width": 375,
+        "height": 667
+      }
+    },
+    {
+      "tag": "IFRAME",
+      "device_type": "",
+      "color": "rgb(68, 68, 68)",
+      "background": "rgba(0, 0, 0, 0)",
+      "ancestor_background": "rgb(245, 245, 245)",
+      "font": "proxima-nova, Arial, Helvetica, sans-serif",
+      "font_size": "14px",
+      "line_height": "20px",
+      "bounds": {
+        "x": 841.1666870117188,
+        "y": 93.61458587646484,
+        "width": 375,
+        "height": 667
+      }
+    },
+    {
+      "tag": "IFRAME",
+      "device_type": "",
+      "color": "rgb(68, 68, 68)",
+      "background": "rgba(0, 0, 0, 0)",
+      "ancestor_background": "rgb(245, 245, 245)",
+      "font": "proxima-nova, Arial, Helvetica, sans-serif",
+      "font_size": "14px",
+      "line_height": "20px",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    }
+  ],
+  "storefront_viewport": {
+    "preview_devices": [],
+    "viewport_width": 375,
+    "viewport_height": 667,
+    "document_width": 375,
+    "horizontal_overflow": false
+  },
+  "navigation_open": [
+    {
+      "label": "Shop",
+      "bounds": {
+        "x": 45,
+        "y": 77,
+        "width": 260,
+        "height": 35
+      }
+    },
+    {
+      "label": "Contact",
+      "bounds": {
+        "x": 45,
+        "y": 136,
+        "width": 260,
+        "height": 35
+      }
+    },
+    {
+      "label": "Login",
+      "bounds": {
+        "x": 45,
+        "y": 195,
+        "width": 260,
+        "height": 35
+      }
+    }
+  ],
+  "surfaces": [
+    {
+      "class_name": "js-section-wrapper js-builder-section-wrapper\n\n\theader-layout-nav-right\n\t\tlive-search-layout-minimal\n\n\n\nheader-actions-right\n\n\n\n\ttransparent\n\n\thas-navigation-menu\n\n\tshow-login-icon\n",
+      "background": "rgba(0, 0, 0, 0)",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 375.3333435058594,
+        "height": 51.96875
+      },
+      "has_background_image": false
+    },
+    {
+      "class_name": "header-background",
+      "background": "rgba(0, 0, 0, 0)",
+      "bounds": {
+        "x": 22.510417938232422,
+        "y": 11.25,
+        "width": 330.3125,
+        "height": 28.80208396911621
+      },
+      "has_background_image": false
+    },
+    {
+      "class_name": "section-background js-section-background",
+      "background": "rgb(16, 43, 63)",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 375.3333435058594,
+        "height": 443.3958435058594
+      },
+      "has_background_image": false
+    },
+    {
+      "class_name": "section-background js-section-background",
+      "background": "rgb(255, 255, 255)",
+      "bounds": {
+        "x": 0,
+        "y": 443.3958435058594,
+        "width": 375.3333435058594,
+        "height": 220.21875
+      },
+      "has_background_image": false
+    },
+    {
+      "class_name": "section-background js-section-background",
+      "background": "rgb(245, 247, 249)",
+      "bounds": {
+        "x": 0,
+        "y": 663.6146240234375,
+        "width": 375.3333435058594,
+        "height": 292.97918701171875
+      },
+      "has_background_image": false
+    },
+    {
+      "class_name": "section-background js-section-background",
+      "background": "rgb(255, 255, 255)",
+      "bounds": {
+        "x": 0,
+        "y": 956.59375,
+        "width": 375.3333435058594,
+        "height": 133.45834350585938
+      },
+      "has_background_image": false
+    }
+  ],
+  "pixel_review": "Pending active builder tab and Chrome activeTab screenshot permission; do not claim visual acceptance."
+}

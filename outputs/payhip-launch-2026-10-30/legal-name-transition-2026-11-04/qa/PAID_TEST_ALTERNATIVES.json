@@ -1,0 +1,67 @@
+{
+  "date": "2026-11-04",
+  "owner_fact": {
+    "merchant_paypal_is_only_paypal_account": true,
+    "separate_buyer_paypal_account_exists": false,
+    "source": "Direct owner confirmation supplied by coordinating thread",
+    "no_extra_debit_card": true
+  },
+  "method": "Official documentation/read-only file review only; no live payment or browser action in this follow-up",
+  "paypal_test_status": "Blocked: no eligible separate buyer PayPal account. Do not use the connected merchant account to pay itself.",
+  "authorization_boundary": {
+    "existing_authorization": "One Inventory test via PayPal, max CA$10.17 inclusive",
+    "guest_card_authorized": false,
+    "method_switch_authorized": false,
+    "new_account_creation_or_signin_authorized": false
+  },
+  "alternatives": [
+    {
+      "option": "Guest debit/credit card",
+      "status": "Conditional, not verified or activated",
+      "conditions": [
+        "Card must be owned by the user and eligible under processor rules",
+        "Payment method must not be connected to the seller payment processor under Payhip real-test guidance",
+        "Different buyer email/browser session required",
+        "Separate explicit card-test authorization with total cap and required local controls",
+        "Private card entry/sign-in/verification by owner if required; stop at protected/manual-control boundary",
+        "Stop if final fees/FX/total or material terms differ from separately approved scope"
+      ],
+      "unknowns": [
+        "Whether user has an eligible card",
+        "Whether guest checkout will be offered for this buyer",
+        "PayPal Account Optional/current cart configuration",
+        "Final card/funding eligibility and fees"
+      ],
+      "observed_card_button_proves_only": "Option was rendered previously, not eligibility or successful processing",
+      "settings_changed": false,
+      "sources": [
+        "https://help.payhip.com/article/107-testing-checkout-flow",
+        "https://www.paypal.com/ca/cshelp/article/how-do-i-accept-cards-with-checkout-using-the-guest-checkout-option--help307"
+      ]
+    },
+    {
+      "option": "Existing zero-charge tests",
+      "status": "Already completed; do not repeat",
+      "establishes": "Order/download/receipt fulfillment for those test flows",
+      "does_not_establish": "Charged payment capture, processor deductions, withdrawal/payout or actual demand"
+    },
+    {
+      "option": "Legitimate independent customer ordinary purchase",
+      "status": "May provide live processing evidence when an ordinary purchase occurs",
+      "limits": "No solicitation/contact, use of another person\u2019s account, or promise of a sale. Actual capture, order, receipt/download and seller funds would need read-only verification afterward."
+    },
+    {
+      "option": "PayPal sandbox",
+      "status": "Not a substitute for this live Payhip check",
+      "reason": "Separate simulated API environment for custom integration tests; cannot certify live store account/bank/payout readiness",
+      "accounts_created": false,
+      "source": "https://developer.paypal.com/sandbox-testing/overview"
+    }
+  ],
+  "guest_doc_notes": "Guest checkout is conditional on risk factors including buyer history/cookies/location/credit assessment and relevant account/cart settings. Do not change Account Optional or evade a refusal.",
+  "actual_payment_or_method_activation": false,
+  "charges_orders_transfers_refunds_payouts": 0,
+  "account_or_personal_disclosure_changes": false,
+  "external_messages_commits_pushes": false,
+  "current_direction": "Stop seeking alternate payment routes; leave paid processing UNVERIFIED. Previously researched alternatives are conditional documentation, not a request or authorization to act."
+}

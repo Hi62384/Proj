@@ -1,0 +1,22 @@
+Inventory Reorder Planner
+
+Review a stock reorder threshold and the gap between that threshold and the units you have available. A focused, editable spreadsheet for one item or scenario at a time.
+
+FOUR INPUTS, TWO OUTPUTS
+Enter daily unit demand, supplier lead time in days, safety stock and units available. Reorder point = demand x lead time + safety stock. Gap to threshold = MAX(0, reorder point - units available). This gap is not an optimized order quantity.
+
+The fictional example uses 12 units/day, 7 days, 30 safety-stock units and 80 units available. It produces a threshold of 114 and a gap of 34. Replace these illustrative inputs with your own assumptions.
+
+WHAT YOU RECEIVE
+One ZIP containing Inventory_Reorder_Planner.xlsx, Instructions.txt, README.txt, the single-business licence, a cover and two worksheet previews. The workbook has Calculator and Read me worksheets, with no macros or external data connections.
+
+INPUT RULES AND LIMITATIONS
+Enter all four nonnegative numbers. Zero is valid; missing, text or negative inputs display CHECK INPUTS. Decimals are allowed and quantities are not rounded to whole units automatically. Check pack sizes and supplier minimums yourself.
+
+This is a single-item planning aid. It does not maintain a stock ledger, forecast demand, track purchase orders or stock already on order, account for supplier reliability, or place orders. Use separate copies to compare scenarios.
+
+COMPATIBILITY
+Provided in .xlsx format. Eleven recalculation cases passed in LibreOffice Calc, with both worksheets and printouts visually reviewed. Native Microsoft Excel was unavailable and remains unverified. Google Sheets, Apple Numbers and mobile spreadsheet compatibility are not promised.
+
+LICENCE AND SUPPORT
+Internal use and modification within one business; no resale or redistribution. Statutory rights are preserved. Contact the seller through the store Contact page or seller details on your Payhip receipt. See the store support/refund policy for the approved 14-day voluntary refund window and two-business-day response target.

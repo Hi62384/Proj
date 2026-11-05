@@ -104,3 +104,41 @@ existing Chrome setup tool. Do not restore an entire old Codex config over later
 unrelated changes; restore only the named bridge section if recovering manually.
 
 See `COMPUTER_BRIDGE_REPORT.md` for executed tests and outstanding acceptance.
+
+## Importing a verified existing file
+
+`files.read` with `kind: "attachment"`, an absolute local `path`, and the expected
+`sha256` imports a regular file up to 500 KB into the bridge chat. Existing file
+Read rules, protected locations, link rejection, exclusive handles and Stop
+remain enforced. The copied private attachment survives an ordinary controller
+restart only if its hash is intact; this does not renew source-file permissions.
+
+Use the returned attachment ID with `chrome.action` upload. A Payhip upload may
+request `upload_receivers: ["https://pe56d.s3.amazonaws.com/"]`; the exact bucket
+and file hash are shown in the genuine local upload approval. Arbitrary buckets
+and cross-site upload forms remain denied. This does not authorize saving,
+publication or deletion.
+
+After an approval, Chrome control acquires a fresh observation and verifies the
+reviewed control and full action context again. The old observation's lifetime
+is not extended; changed targets are rejected. `chrome.action` with
+`operation: "verify_download"` hashes an observed saved Payhip owner-download
+link without exposing its signed storage URL or saving a local file. It does
+not test a buyer checkout or grant access to arbitrary URLs.
+
+
+## Owner-enabled routine approvals
+
+Settings → **Automatically allow routine work** is an owner-only local toggle.
+It automatically allows default Read requests inside the current project folder,
+exact-URL reuse and screenshots within already authorized Chrome origins, and
+verified Save Changes submissions to existing Invisible Payhip product editors.
+The automatic decision and reason are recorded in the action history.
+
+Explicit file Ask and Deny rules remain in force. Write, Create and Delete rules
+are unchanged. Protected file validation, Stop, manual control, screenshot
+foreground/frame checks and authentication-screen restrictions still apply.
+Uploads, public publication, purchases/payments, credential changes, destructive
+operations, unknown requests, new website grants and reads outside the project
+still require their original review. Model arguments cannot enable this setting
+or supply an approval override. Turning it off affects subsequent requests.

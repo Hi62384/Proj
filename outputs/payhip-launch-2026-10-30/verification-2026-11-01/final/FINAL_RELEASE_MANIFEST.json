@@ -1,0 +1,37 @@
+{
+  "version": "1.0.1",
+  "status": "Exact owner-approved replacement saved to existing Invisible CAD29 Payhip listing bP6YN; saved owner-download bytes and SHA-256 independently matched on 2026-11-01. No public launch; checkout and seller readiness remain separate.",
+  "native_excel_verified": false,
+  "native_calc_cases_passed": 59,
+  "archive": {
+    "name": "Cleaning_Pricing_Toolkit_v1.0.1_CUSTOMER.zip",
+    "bytes": 61130,
+    "sha256": "334518208388483457c8849cfdf9c73955c80e929d38c1afa6631e9459d990d5"
+  },
+  "original_release_preserved": {
+    "name": "Cleaning_Pricing_Toolkit_v1.0_CUSTOMER.zip",
+    "sha256": "9835184cb1e37a4ca7f4d379d0a234fee3b769fa22a0af0a3ca356a500c0d215"
+  },
+  "files": {
+    "Cleaning_Pricing_Calculator.xlsx": {
+      "bytes": 27931,
+      "sha256": "bf302673b16db441b96ad191fb084fcda868e2d11aaea6638876956643ffe644"
+    },
+    "Cleaning_Pricing_Calculator_FICTIONAL_DEMO.xlsx": {
+      "bytes": 29084,
+      "sha256": "d0dc6d97ec703eaa06927631ecd3011e92cad6f70a67de3caf807eb712e7af30"
+    },
+    "Quick_Start_Guide.pdf": {
+      "bytes": 11930,
+      "sha256": "b8f10f4173cbcd4195544a643f88ee0e713a388437efaaca00724e91cf101931"
+    },
+    "LICENSE_AND_DISCLAIMER.txt": {
+      "bytes": 1358,
+      "sha256": "8d7d4a711a590bea3c0563dbc6192e9625eb3163177ad9d698d60a81458d60e7"
+    },
+    "START_HERE.txt": {
+      "bytes": 3673,
+      "sha256": "2c1cdaa8e9a5d156264e290ea8ab8e1b90b5fdb081e06899349e4e06542baa8c"
+    }
+  }
+}

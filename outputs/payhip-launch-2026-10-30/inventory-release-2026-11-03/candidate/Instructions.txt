@@ -1,0 +1,19 @@
+INVENTORY REORDER PLANNER — VERSION 1.0.1
+
+1. Keep an original backup. Open a separate working copy of Inventory_Reorder_Planner.xlsx.
+2. On Calculator, replace all four blue example inputs. They are fictional illustrations:
+   Daily unit demand: expected average units used or sold per day.
+   Lead time in days: expected days from ordering to receipt.
+   Safety stock units: your chosen buffer.
+   Units available: units available for this simplified scenario.
+3. Read the two outputs:
+   Reorder point = daily demand x lead time + safety stock.
+   Gap to reorder threshold = MAX(0, reorder point - units available).
+   The gap is not an optimized purchase quantity or a recommendation to order automatically.
+4. Enter all four nonnegative numeric inputs. Zero is valid. Missing, text or negative inputs show CHECK INPUTS in both outputs. Decimal inputs are allowed; outputs are not rounded to whole units. Review units, pack sizes and minimum orders yourself.
+5. The example 12 units/day x 7 days + 30 buffer gives a reorder point of 114. With 80 available, the gap is 34. These are examples, not industry assumptions.
+6. Compare different items or scenarios in separate copies. There is no multi-item stock ledger, stock-on-order tracking, order history, seasonal-demand model or supplier-reliability model. No orders are placed.
+
+Compatibility: ordinary .xlsx formulas. Eleven recalculation cases passed in LibreOffice Calc. Native Microsoft Excel was unavailable and remains unverified. Google Sheets, Numbers and mobile spreadsheet compatibility are not promised.
+
+No macros or external data links. Keep confidential business data in your own working copies. Contact the seller through the verified support route on your purchase receipt or store Contact page. The supplied tool is a planning aid; check its inputs/results against actual supply conditions.

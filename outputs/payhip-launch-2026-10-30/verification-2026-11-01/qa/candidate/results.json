@@ -1,0 +1,307 @@
+{
+  "engine": "LibreOffice Calc",
+  "sources": {
+    "demo": "d0dc6d97ec703eaa06927631ecd3011e92cad6f70a67de3caf807eb712e7af30",
+    "blank": "bf302673b16db441b96ad191fb084fcda868e2d11aaea6638876956643ffe644"
+  },
+  "originals_unchanged": true,
+  "passed": 59,
+  "total": 59,
+  "results": [
+    {
+      "case": "labor",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "mileage",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "base_overhead",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "contingency",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "margin",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "fees",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "minimum",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "rounding",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "default_tax",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "crew",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "hours",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "travel",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "distance",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "extra_supplies",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "extra_overhead",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "discount",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "override_tax",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "service_hours",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "service_supplies",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "default_service_hours",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "zero_tax_override",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "zero_optional_costs",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "blank_optional_costs",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "high_valid_margin",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "blank_template_start",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "blank_template_configured",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "invalid_crew",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "zero_crew",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "zero_hours",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "negative_supplies",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "tax_out_of_range",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "negative_hourly",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "negative_fee",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "negative_margin",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "negative_default_tax",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "blank_hourly",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "text_hourly",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "unsupported_currency",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "margin_fee_denominator",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "unknown_service",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "unreviewed_settings",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "text_and_date",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "renamed_service",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "scenario_10",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "job_log_10",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "scenario_22",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "job_log_22",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "scenario_34",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "job_log_34",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "zero_revenue_log",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "negative_log_expense",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "duplicate_service",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "negative_service_supply",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "text_optional_cost",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "blank_rounding",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "scenario_settings_guard",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "log_summary_guard",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "blank_log_expense",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "blank_selected_service_hours",
+      "pass": true,
+      "issues": []
+    }
+  ]
+}

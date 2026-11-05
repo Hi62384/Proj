@@ -1,0 +1,66 @@
+{
+  "date": "2026-11-04",
+  "product": "Cleaning Business Pricing & Profit Calculator",
+  "public_url": "https://payhip.com/b/bP6YN",
+  "editor_url": "https://payhip.com/product/edit/bP6YN",
+  "before": {
+    "heading": "Requirements",
+    "paragraph": "Microsoft Excel with support for modern .xlsx workbooks. Compatibility with Google Sheets, Apple Numbers, and older Excel versions is not guaranteed.",
+    "assessment": "No explicit tested-in-Excel claim, but missing disclosure of absent native Excel testing while presenting Excel as the required application."
+  },
+  "staged_after": {
+    "heading": "Requirements \u2014 LibreOffice Calc checks passed; Microsoft Excel untested",
+    "paragraph_unchanged": true,
+    "only_heading_changed_in_full_editor_text": true,
+    "rich_text_scope": "Only the observed editable H3 heading was filled; surrounding editor text and formatting were not replaced."
+  },
+  "preservation_verified_in_draft": {
+    "price_cad": 15,
+    "visibility": "visible",
+    "zip_name": "Cleaning_Pricing_Toolkit_v1.0.1_CUSTOMER.zip",
+    "zip_bytes": 61130,
+    "four_existing_images_preserved": true,
+    "commerce_metadata_identical_to_baseline": true,
+    "uploads": 0
+  },
+  "save_attempt": {
+    "protected_action": "Save Changes",
+    "approval_category": "publication",
+    "exact_reason": "Saving this product makes its content publicly visible. Review this public listing change before saving.",
+    "fresh_request_presented_once": true,
+    "real_local_approval_granted": true,
+    "dispatched_after_local_approval": true,
+    "save_confirmation": "Your product changes have been saved.",
+    "live_save_performed": true,
+    "pending_requests_after_completion": 0,
+    "prior_cancelled_request_replayed": false
+  },
+  "fresh_public_reload": {
+    "completed": true,
+    "exact_heading_live": true,
+    "full_visible_text_equals_before_with_only_heading_replaced": true,
+    "price_cad": 15
+  },
+  "status": "Saved and independently verified live after actual local owner publication approval. Only the Requirements heading changed.",
+  "required_next_authorization": null,
+  "prohibited_actions_taken": false,
+  "prior_cancelled_save_attempt": {
+    "protected_action": "Save Changes",
+    "approval_category": "publication",
+    "exact_reason": "Saving this product makes its content publicly visible. Review this public listing change before saving.",
+    "stopped_at_approval": true,
+    "request_cancelled_before_dispatch": true,
+    "pending_requests_after_cancellation": 0,
+    "live_save_performed": false,
+    "retry_performed": false
+  },
+  "saved_editor_reload": {
+    "heading_persisted": true,
+    "price_cad": 15,
+    "visibility": "visible",
+    "commerce_metadata_identical_to_original": true,
+    "zip_name": "Cleaning_Pricing_Toolkit_v1.0.1_CUSTOMER.zip",
+    "zip_bytes": 61130,
+    "four_original_images_preserved": true
+  }
+}

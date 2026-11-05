@@ -18,7 +18,7 @@ class ChromeControl:
         def event(kind,conversation,data):
             if kind=='chrome_status':permissions.chrome_protected=bool(data.get('tabs'))
             emit(kind,conversation,data)
-        self.bridge=ChromeBridge(store.directory,event);self.grants={};self.selected=None;self.observations={};self.frames={};self.image_consent=set();self.draft_scopes={};self.adapter_context=threading.local();self.mode=False
+        self.bridge=ChromeBridge(store.directory,event);self.grants={};self.selected=None;self.opened_urls={};self.observations={};self.snapshots={};self.frames={};self.image_consent=set();self.draft_scopes={};self.adapter_context=threading.local();self.mode=False
 
     @contextmanager
     def adapter_review(self,authorizer):
@@ -102,7 +102,7 @@ class ChromeControl:
         if operation in ('list_tabs','list_windows'):
             return self.request(conversation,operation,{},epoch)
         # Do not forward model-supplied proof/privilege fields to the worker.
-        allowed={'tab','frame','observation','element','end_element','operation','text','checked','amount','key','attachment_id','url','milliseconds','method','query','offset','text_offset','text_query'}
+        allowed={'tab','frame','observation','element','end_element','operation','text','checked','amount','key','attachment_id','url','milliseconds','method','query','offset','text_offset','text_query','upload_receivers'}
         args={key:value for key,value in args.items() if key in allowed};tab=args.get('tab',self.selected)
         if operation=='open_tab':
             origin(args['url']);decision=request_review('GET',args['url'])
@@ -110,6 +110,7 @@ class ChromeControl:
             result=self.request(conversation,'open_tab',{'url':args['url']},epoch)
             self.check(conversation,epoch)
             created=result['tab']
+            self.opened_urls[created]=args['url']
             if result.get('authorized'):self.attach(conversation,created,ask=False)
             return result
         if type(tab) is not int:raise Denied('Select an extension-authorized Chrome tab first')
@@ -125,7 +126,7 @@ class ChromeControl:
             result=self.request(conversation,'inspect',args,epoch)
             if origin(result.get('origin',result['url']))!=frame_origin:raise Denied('Chrome page origin changed before observation delivery')
             result={**result,'tab':tab,'frame':args.get('frame',0)}
-            self.observations[(tab,args.get('frame',0))]=result['observation'];return result
+            self.observations[(tab,args.get('frame',0))]=result['observation'];self.snapshots[(tab,args.get('frame',0))]={**result,'_query':args.get('query','')};return result
         if operation=='observe':
             # Availability is checked without pixels before requesting consent.
             # A background tab cannot be captured even if consent were granted.
@@ -159,6 +160,16 @@ class ChromeControl:
             while time.monotonic()<deadline:self.tab_guard(conversation,tab,epoch);time.sleep(.05)
             return self.call(conversation,'inspect',{'tab':tab,'frame':args.get('frame',0)})
         if operation=='action':
+            if args.get('operation')=='verify_download':
+                if type(args.get('element')) is not int or args['element']<0 or args.get('observation')!=self.observations.get((tab,args.get('frame',0))):raise Denied('Inspect the saved owner download first')
+                from urllib.parse import urlsplit
+                import re
+                context=self.request(conversation,'context',{**args,'action':'read'},epoch)
+                source=urlsplit(context.get('href',''))
+                if self.grants[tab]['origin']!=origin('https://payhip.com') or source.scheme!='https' or source.netloc!='payhip.com' or not re.fullmatch(r'/product/download/[A-Za-z0-9]+',source.path) or source.query:raise Denied('Only an observed saved Payhip owner-download link can be verified')
+                # The worker resolves only the observed saved Payhip download.
+                # No caller-supplied URL, redirect scope or executable code.
+                return self.request(conversation,'asset_digest',{'tab':tab,'frame':args.get('frame',0),'observation':args['observation'],'element':args['element'],'kind':'delivery'},epoch)
             if args.get('operation') not in ('click','hover','fill','select','check','scroll','upload','drag'):raise Denied('Unsupported Chrome action. Use semantic click/fill; real keyboard defaults need Manual Control.')
             if not (args.get('operation')=='scroll' and 'element' not in args) and (type(args.get('element')) is not int or args['element']<0):raise Denied('Choose a numeric element from the latest inspection')
             if args.get('observation')!=self.observations.get((tab,args.get('frame',0))):raise Denied('Inspect this tab/frame before acting')
@@ -174,6 +185,10 @@ class ChromeControl:
             if args['action']=='upload':
                 upload_record=(attachment_map or {}).get(args.get('attachment_id'))
                 if not upload_record:raise Denied('Upload requires an existing attachment from this chat; arbitrary paths are not accepted')
+                receivers=args.pop('upload_receivers',[])
+                if receivers:
+                    if receivers!=['https://pe56d.s3.amazonaws.com/'] or self.grants[tab]['origin']!=origin('https://payhip.com'):raise Denied('Unsupported upload storage receiver')
+                    upload_record={**upload_record,'_upload_receivers':receivers}
                 path=self.attachments.path(upload_record)
                 if path.stat().st_size>25*1024*1024:raise Denied('Chrome upload limit is 25 MB')
                 receiver=context.get('form_action') or context['page_url']
@@ -184,16 +199,26 @@ class ChromeControl:
             authorizer=getattr(self.adapter_context,'authorizer',None)
             scoped=decision.category=='submission' and (self.approved_draft(conversation,context) or (authorizer and authorizer(conversation,args,context,upload_record,decision)))
             if decision.required and not scoped:
+                previous=self.snapshots.get((tab,args.get('frame',0)),{})
+                reviewed_control=next((c for c in previous.get('controls',[]) if c['element']==args['element']),None)
+                if reviewed_control is None:raise Denied('Inspect this exact control before approval')
                 details={'operation':args['action'],'approval_reason':decision.reason,'approval_category':decision.category,'target_context':context,'tab':tab}
                 if upload_record:details['file']={'name':upload_record['name'],'bytes':path.stat().st_size,'sha256':upload_record['sha256']}
+                if upload_record and upload_record.get('_upload_receivers'):details['storage_receivers']=upload_record['_upload_receivers']
                 if not self.approve(conversation,context.get('label') or args['action'],details):raise Denied('Owner denied this exact Chrome action')
+                # Human review may exceed a DOM observation's 60-second lifetime.
+                # Acquire a NEW observation; do not extend or ignore the old TTL.
+                fresh=self.call(conversation,'inspect',{'tab':tab,'frame':args.get('frame',0),'offset':previous.get('offset',0),'query':previous.get('_query','')})
+                live=next((c for c in fresh.get('controls',[]) if c['element']==args['element']),None)
+                if live!=reviewed_control:raise Denied('Reviewed control changed; inspect again before requesting a new approval')
+                args['observation']=fresh['observation']
             self.tab_guard(conversation,tab,epoch)
             current=self.request(conversation,'context',args,epoch)
             if context!=current:raise Denied('Control changed while awaiting approval; inspect again')
             if decision.required and context.get('form_submission'):
                 args['owner_reviewed']=True;args['reviewed_form_url']=context.get('form_action');args['reviewed_form_method']=context.get('form_method')
             self.observations.pop((tab,args.get('frame',0)),None)
-            if args['action']=='upload':return self.upload(conversation,args,attachment_map or {},epoch,context)
+            if args['action']=='upload':return self.upload(conversation,args,{args['attachment_id']:upload_record},epoch,context)
             result=self.request(conversation,'trusted_action' if args.get('method')=='trusted' else 'action',args,epoch)
             return {'dispatch':result,'next':'Inspect and verify the current page. Do not infer a saved change from event dispatch.'}
         allowed=('navigate','open_tab','close_tab','back','forward','reload','frames','download')

@@ -1,0 +1,431 @@
+{
+  "engine": "LibreOffice Calc",
+  "total": 84,
+  "assertions": 562,
+  "passed": 84,
+  "source_archives_unchanged": true,
+  "seed": 20261105,
+  "results": [
+    {
+      "case": "cleaning_combined_00",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_01",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_02",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_03",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_04",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_05",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_06",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_07",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_08",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_09",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_10",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_11",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_12",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_13",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_14",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_15",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_16",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_17",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_18",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_19",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_20",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_21",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_22",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_combined_23",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_scenario_10",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_scenario_11",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_scenario_22",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_scenario_33",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_scenario_34",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_log_10",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_log_11",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_log_22",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_log_33",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_log_34",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_invalid_0",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_invalid_1",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_invalid_2",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_invalid_3",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_invalid_4",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_invalid_5",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_invalid_6",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "cleaning_invalid_7",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_00",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_01",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_02",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_03",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_04",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_05",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_06",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_07",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_08",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_09",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_10",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_11",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_12",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_13",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_14",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_15",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_16",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_17",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_18",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_19",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_20",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_21",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_22",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_23",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_24",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_25",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_26",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_27",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_28",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_combined_29",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_negative_0",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_blank_0",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_text_0",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_negative_1",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_blank_1",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_text_1",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_negative_2",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_blank_2",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_text_2",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_negative_3",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_blank_3",
+      "pass": true,
+      "issues": []
+    },
+    {
+      "case": "inventory_text_3",
+      "pass": true,
+      "issues": []
+    }
+  ],
+  "native_excel_tested": false
+}

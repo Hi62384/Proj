@@ -1,0 +1,95 @@
+{
+  "date": "2026-11-04",
+  "authorization": {
+    "scope": "ONE real Inventory paid test via PayPal",
+    "maximum_buyer_total_cad": 10.17,
+    "cap_includes_tax_buyer_fees_and_fx": true,
+    "stop_if_amount_or_material_terms_differ": true,
+    "refund_withdrawal_payout_transfer_authorized": false
+  },
+  "source": "https://help.payhip.com/article/107-testing-checkout-flow",
+  "preflight_live": {
+    "checkout_url": "https://payhip.com/buy",
+    "title": "Checkout - Arshya Ghafaryan",
+    "subtotal_cad": 9,
+    "displayed_tax_cad": 1.17,
+    "displayed_total_cad": 10.17,
+    "country": "CA",
+    "province_blank": true,
+    "buyer_session_uses_known_store_support_email": true,
+    "separate_buyer_paypal_account_or_funding_eligibility_verified": false,
+    "paypal_activated": false,
+    "new_buyer_data_entered": false
+  },
+  "displayed_fees": {
+    "checkout_lines_observed": [
+      "Subtotal 9.00",
+      "Taxes 1.17",
+      "Total CAD10.17"
+    ],
+    "paypal_buyer_or_fx_fee_observed": false,
+    "interpretation": "No separate buyer-fee line observed in Payhip; PayPal final amount/FX/fees not verified because PayPal was not activated. Do not assume absence of fees."
+  },
+  "refund_policy_live": {
+    "url": "https://payhip.com/ArshyaGhafaryan/support-and-refunds",
+    "request_window_calendar_days": 14,
+    "downloaded_files_included": true,
+    "response_target_business_days": 2,
+    "excludes_weekends_ontario_public_holidays": true,
+    "refund_original_provider_method_where_supported": true,
+    "provider_processing_time_not_guaranteed": true,
+    "statutory_rights_preserved": true
+  },
+  "blocker": "Owner confirms merchant PayPal is their only PayPal account; no separate buyer PayPal exists. Original PayPal-only test cannot proceed as scoped.",
+  "smallest_owner_action": "No further payment-route confirmation requested. Leave paid processing unverified; no self-payment, new account, third-party payer, method switch or charge.",
+  "stopped_before_paypal_activation": true,
+  "actual_charge_or_order_submitted": false,
+  "capture_receipt_or_seller_funds_observed": false,
+  "paid_processing_verified": false,
+  "refund_or_payout_initiated": false,
+  "local_pending_requests": 0,
+  "uncertain_payment_retried": false,
+  "account_or_store_changes": false,
+  "commits_or_pushes": false,
+  "official_policy_and_fee_context": {
+    "checked_local_date": "2026-11-04",
+    "same_account_payment_block": {
+      "url": "https://developer.paypal.com/api/rest/troubleshooting/rest_cannot_pay_self",
+      "finding": "PayPal documents CANNOT_PAY_SELF for a payment whose initiating and receiving account are the same. Different checkout email alone does not prove separate PayPal payer identity."
+    },
+    "account_types": {
+      "url": "https://www.paypal.com/ca/cshelp/article/how-do-i-upgrade-or-downgrade-my-paypal-account-help339",
+      "finding": "PayPal permits one personal plus one business account generally; this is not proof that an eligible separate payer/funding method exists here. No account creation/switch requested."
+    },
+    "buyer_fee": {
+      "url": "https://www.paypal.com/ca/digital-wallet/paypal-consumer-fees",
+      "published_rule": "No purchase fee when currency conversion is not involved.",
+      "actual_buyer_fx_or_final_paypal_total_verified": false
+    },
+    "seller_processor_fee": {
+      "url": "https://www.paypal.com/ca/business/paypal-business-fees",
+      "published_standard_domestic_commercial_rate": "2.90% + CA$0.30 fixed fee for CAD received",
+      "actual_merchant_rate_fee_or_net_observed": false
+    },
+    "platform_fee": {
+      "url": "https://payhip.com/pricing",
+      "published_plan_transaction_percent": {
+        "Free Forever": 5,
+        "Plus": 2,
+        "Pro": 0
+      },
+      "paypal_fees_separate": true,
+      "owner_plan_verified": false,
+      "actual_seller_net_calculated": false
+    },
+    "refund": {
+      "url": "https://www.paypal.com/ca/cshelp/article/how-do-i-issue-a-refund-help101",
+      "finding": "Sent refunds cannot be cancelled; original receiving fees are not returned. No refund is authorized or initiated."
+    }
+  },
+  "owner_later_confirms_only_merchant_paypal_account": true,
+  "guest_card_not_authorized": true,
+  "alternatives_evidence": "qa/PAID_TEST_ALTERNATIVES.json",
+  "owner_confirms_no_extra_debit_card": true,
+  "alternate_payment_route_search_stopped": true
+}

@@ -1,0 +1,270 @@
+{
+  "original_head": "720fcc2c5619e31947fe8775d47f629cc49e8661",
+  "original_index_sha256": "8f4e0e6f99a7e0dfa64ffcbe7ca2d7a903cba51a945776513c4af682aa14a0dd",
+  "original_staged_names": [],
+  "manifest_sha256": "8b52817e717e63f51fc18f6e346c18973c2a622be14785daa2c118a5425d18d9",
+  "remote_base": "b831f7fe24c98d8c6f6862ab11bb731575df5d8a",
+  "files": [
+    {
+      "path": "apps/codex_desktop_assistant/COMPUTER_BRIDGE.md",
+      "category": "source_tests_docs_candidate",
+      "original_sha256": "02d089ed0f7ecab600c4aa368df3a193dadf646f75f34e424b5d8925056f069f",
+      "publish_sha256": "782d0f8a820514fcfc9669a6623fb3d44e63ae84f70e10aa31f8f0a67a8d64fb",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\apps\\codex_desktop_assistant\\COMPUTER_BRIDGE.md",
+      "git_blob": "33a33e9320ef6d49a1596d3b2ef15fe7f6196570",
+      "bytes": 8527
+    },
+    {
+      "path": "apps/codex_desktop_assistant/assistant/action_policy.py",
+      "category": "source_tests_docs_candidate",
+      "original_sha256": "f3e93100bb54b00da2036cd87d35a699da353405b6a7396a3b984041c420768d",
+      "publish_sha256": "064637295621b6135156e001ed1b72250123839849f323f0f60bff7c62a50edb",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\apps\\codex_desktop_assistant\\assistant\\action_policy.py",
+      "git_blob": "3c008078ac906f3e7d0274190eceb88dffaff440",
+      "bytes": 8863
+    },
+    {
+      "path": "apps/codex_desktop_assistant/assistant/attachments.py",
+      "category": "source_tests_docs_candidate",
+      "original_sha256": "c07b070de31f1226e4cbaad8ea943254618de178078bcbcce954007931ff2b8d",
+      "publish_sha256": "c07b070de31f1226e4cbaad8ea943254618de178078bcbcce954007931ff2b8d",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\apps\\codex_desktop_assistant\\assistant\\attachments.py",
+      "git_blob": "343f2d5d1dbe25202d0e571708cb9350e1f4c4cd",
+      "bytes": 5228
+    },
+    {
+      "path": "apps/codex_desktop_assistant/assistant/chrome_control.py",
+      "category": "source_tests_docs_candidate",
+      "original_sha256": "06a6b2dcdae596fbab231d430bb5dcdf5530fe6fc12d92dfa72cd262d1fdaab3",
+      "publish_sha256": "819647af2e9c2b718b8fab6adc9b273ef5f2441bfe70ff68551fa79498bfab18",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\apps\\codex_desktop_assistant\\assistant\\chrome_control.py",
+      "git_blob": "31c28d235688bc9da3eec7f19f22b3e30ad0cfa7",
+      "bytes": 22523
+    },
+    {
+      "path": "apps/codex_desktop_assistant/assistant/files.py",
+      "category": "source_tests_docs_candidate",
+      "original_sha256": "9beabc6741aa35a885ae1a276cc26844f49929f8f8737db38660c6e4029ec979",
+      "publish_sha256": "7b14824ab1f9adcbacca5168edba7f54ae4c28b220b528e6f7991a3a50adb26a",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\apps\\codex_desktop_assistant\\assistant\\files.py",
+      "git_blob": "db1aa9585ed256eb0cac38dfaceb6f8576d9d61e",
+      "bytes": 10945
+    },
+    {
+      "path": "apps/codex_desktop_assistant/assistant/tools.py",
+      "category": "source_tests_docs_candidate",
+      "original_sha256": "2e8b4dd3ba45e1232cc504d08e4297becb3c7c95ca3f85fe35ad377d9503a50e",
+      "publish_sha256": "4b7129dd00f4b8cdacca057a377ba790705052b77b6fadac7d14000cf874c0e1",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\apps\\codex_desktop_assistant\\assistant\\tools.py",
+      "git_blob": "60d3950546f96794dddb82df47abe5386000867e",
+      "bytes": 24550
+    },
+    {
+      "path": "apps/codex_desktop_assistant/bridge/dashboard.py",
+      "category": "source_tests_docs_candidate",
+      "original_sha256": "320da9ac537a531d05ab9b49361de2013c09adf68084530ece3219ede24d97f1",
+      "publish_sha256": "320da9ac537a531d05ab9b49361de2013c09adf68084530ece3219ede24d97f1",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\apps\\codex_desktop_assistant\\bridge\\dashboard.py",
+      "git_blob": "b26f956689f6368d383fe29332bf42b33348f8eb",
+      "bytes": 15440
+    },
+    {
+      "path": "apps/codex_desktop_assistant/bridge/runtime.py",
+      "category": "source_tests_docs_candidate",
+      "original_sha256": "450577a0f7edd947d8f17688a44a75e32578c13fef48e135bf29a91e1afbe891",
+      "publish_sha256": "450577a0f7edd947d8f17688a44a75e32578c13fef48e135bf29a91e1afbe891",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\apps\\codex_desktop_assistant\\bridge\\runtime.py",
+      "git_blob": "66b41272d4aaba077205ce1ff8d6cd0b1079c7bd",
+      "bytes": 19756
+    },
+    {
+      "path": "apps/codex_desktop_assistant/chrome_extension/content.js",
+      "category": "source_tests_docs_candidate",
+      "original_sha256": "cc939e5e69315c0b0cbc6107cb81b29ff8137c6bc5475285b153dd17233093da",
+      "publish_sha256": "a85de4baa30d2df1a784fb6f7c816b6a14d81c1360d8803be5fb179966f66346",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\apps\\codex_desktop_assistant\\chrome_extension\\content.js",
+      "git_blob": "ee50ce8b34a9a847386768e114e5161e1341bfd2",
+      "bytes": 30411
+    },
+    {
+      "path": "apps/codex_desktop_assistant/chrome_extension/worker.js",
+      "category": "source_tests_docs_candidate",
+      "original_sha256": "1caecd5c55b39e5117f14b12940860ade7c94ecd4f048514219345b618c81218",
+      "publish_sha256": "3213fe549d7cec4fefe904aa33c15f3aec18abfd8e5c5c5d756621674401c75d",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\apps\\codex_desktop_assistant\\chrome_extension\\worker.js",
+      "git_blob": "fe4bc31df2731526c5db9bf6b5a65c22dfc20742",
+      "bytes": 35531
+    },
+    {
+      "path": "apps/codex_desktop_assistant/tests/chrome_input_widgets.test.mjs",
+      "category": "source_tests_docs_candidate",
+      "original_sha256": "ec0cc05ba529f6f4d84e14a9d58fc1a5b738723c108c86a4d85d60058bc3211f",
+      "publish_sha256": "f0785c6364b02590007da4afd904dd7dcd2988e620090f0fddd85070eff96528",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\apps\\codex_desktop_assistant\\tests\\chrome_input_widgets.test.mjs",
+      "git_blob": "21189aae2dc433befe9c3b630fe51482d034ebad",
+      "bytes": 7591
+    },
+    {
+      "path": "apps/codex_desktop_assistant/tests/chrome_worker_tabs.test.mjs",
+      "category": "source_tests_docs_candidate",
+      "original_sha256": "1dced80105f0804862ef9b4f5dd087f04acaceb2fec193e88a7bc9b25feb06ff",
+      "publish_sha256": "33b4c73260570c245d642a331098c46085b35d28f78de3205a202df559de49ef",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\apps\\codex_desktop_assistant\\tests\\chrome_worker_tabs.test.mjs",
+      "git_blob": "aec3cc00e7fdcb19393cd11648d858b53758162d",
+      "bytes": 9436
+    },
+    {
+      "path": "apps/codex_desktop_assistant/tests/test_action_policy.py",
+      "category": "source_tests_docs_candidate",
+      "original_sha256": "acd823e8d88536b0ec933ab86b929f944c29338cab5ce6a1a490c194a787240f",
+      "publish_sha256": "951cc465768cbe1959c429973b5ffb9a36a4e5fbb2f739a43ea4f9d9e7d45574",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\apps\\codex_desktop_assistant\\tests\\test_action_policy.py",
+      "git_blob": "e2db33d58c6af7e2574736fd28f7e6a5ff076b28",
+      "bytes": 10960
+    },
+    {
+      "path": "apps/codex_desktop_assistant/tests/test_bridge_dashboard.py",
+      "category": "source_tests_docs_candidate",
+      "original_sha256": "319a473d05fb540ee71ddbbd8e7d4599ffed2d839eb75bed075fd39233c07fbd",
+      "publish_sha256": "319a473d05fb540ee71ddbbd8e7d4599ffed2d839eb75bed075fd39233c07fbd",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\apps\\codex_desktop_assistant\\tests\\test_bridge_dashboard.py",
+      "git_blob": "470d50c4f9fcec856ea39054822b74b2387537d7",
+      "bytes": 7195
+    },
+    {
+      "path": "apps/codex_desktop_assistant/tests/test_chrome_control.py",
+      "category": "source_tests_docs_candidate",
+      "original_sha256": "ce1778704eacb6d9b1f50d38cfc6d35b80f1fbc169a3f135de5b996211e27ad7",
+      "publish_sha256": "ea699de7bc99fe95c688d6d46d68e103980882df26eba9cc5d21e136476e2baa",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\apps\\codex_desktop_assistant\\tests\\test_chrome_control.py",
+      "git_blob": "55b431ba1449d4f1bd99301b72bb967f649fded1",
+      "bytes": 15662
+    },
+    {
+      "path": "apps/codex_desktop_assistant/tests/test_computer_bridge.py",
+      "category": "source_tests_docs_candidate",
+      "original_sha256": "4616fb486fd729fb7bceeb828156d3765d8d0f71992a5bf80e0816bcd1dd0945",
+      "publish_sha256": "4616fb486fd729fb7bceeb828156d3765d8d0f71992a5bf80e0816bcd1dd0945",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\apps\\codex_desktop_assistant\\tests\\test_computer_bridge.py",
+      "git_blob": "bf1647f3775f4c926e2e2975fa69e18b1919fa5a",
+      "bytes": 7329
+    },
+    {
+      "path": "apps/codex_desktop_assistant/tests/test_overhaul.py",
+      "category": "source_tests_docs_candidate",
+      "original_sha256": "9485736fc70910a00bb9834a557ef7de45933f113a5bdf5bdb0c435f5388cabb",
+      "publish_sha256": "c58f03e4b91d35cca7808fa9e0d97f15090236408f5888c18e52cfe2050c2d33",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\apps\\codex_desktop_assistant\\tests\\test_overhaul.py",
+      "git_blob": "447d42489ac306ac5515db8e76ddc111df6528d3",
+      "bytes": 12498
+    },
+    {
+      "path": "apps/codex_desktop_assistant/bridge/routine_policy.py",
+      "category": "source_tests_docs_candidate",
+      "original_sha256": "b8eb51312fe93680ac473210aed796b69e73ce07cc0b34ed03346bf2e07210e4",
+      "publish_sha256": "b8eb51312fe93680ac473210aed796b69e73ce07cc0b34ed03346bf2e07210e4",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\apps\\codex_desktop_assistant\\bridge\\routine_policy.py",
+      "git_blob": "70651f522d2843ed9e5bb69f7c17e34dddc5e6fd",
+      "bytes": 3480
+    },
+    {
+      "path": "apps/codex_desktop_assistant/tests/test_routine_policy.py",
+      "category": "source_tests_docs_candidate",
+      "original_sha256": "1be6123ff3bd59f8f956ef1ab09d46e0d01e3c063102349f35aca8d1d8591b3e",
+      "publish_sha256": "1be6123ff3bd59f8f956ef1ab09d46e0d01e3c063102349f35aca8d1d8591b3e",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\apps\\codex_desktop_assistant\\tests\\test_routine_policy.py",
+      "git_blob": "f8b897ccefd88ff39ff1b432e2eb4fdb0cd0e845",
+      "bytes": 6724
+    },
+    {
+      "path": "outputs/payhip-launch-2026-10-30/finalize_cleaning_release.py",
+      "category": "release_builder_source_review",
+      "original_sha256": "043a0e86535cdcb348d045ee4c17278da452de0cb7d4740826fecc53260ad1fe",
+      "publish_sha256": "043a0e86535cdcb348d045ee4c17278da452de0cb7d4740826fecc53260ad1fe",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\outputs\\payhip-launch-2026-10-30\\finalize_cleaning_release.py",
+      "git_blob": "827fc618740af72b6569d6456efb1070f260ba99",
+      "bytes": 6164
+    },
+    {
+      "path": "outputs/payhip-launch-2026-10-30/inventory-release-2026-11-03/prepare.mjs",
+      "category": "release_builder_source_review",
+      "original_sha256": "17b56cc535bc7cdba77943b2353f6678df971d4c7fe81a9078947eafb9a0e575",
+      "publish_sha256": "17b56cc535bc7cdba77943b2353f6678df971d4c7fe81a9078947eafb9a0e575",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\outputs\\payhip-launch-2026-10-30\\inventory-release-2026-11-03\\prepare.mjs",
+      "git_blob": "bfec910fd8e531ed21988d938a0ac518782eaf88",
+      "bytes": 2249
+    },
+    {
+      "path": "outputs/payhip-launch-2026-10-30/inventory-release-2026-11-03/verify.py",
+      "category": "release_builder_source_review",
+      "original_sha256": "7a0141e42cca8abc591f2a8fd0eae391f8ca465349c8db43470df2e55f17769e",
+      "publish_sha256": "7a0141e42cca8abc591f2a8fd0eae391f8ca465349c8db43470df2e55f17769e",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\outputs\\payhip-launch-2026-10-30\\inventory-release-2026-11-03\\verify.py",
+      "git_blob": "848f562cda1f482acddf5f153adf73d8cba0965a",
+      "bytes": 4775
+    },
+    {
+      "path": "outputs/payhip-launch-2026-10-30/merge_release_candidate.py",
+      "category": "release_builder_source_review",
+      "original_sha256": "f90d099c0d5a8c41991d09abe49623d7f48c788273087d110392b514656d471c",
+      "publish_sha256": "f90d099c0d5a8c41991d09abe49623d7f48c788273087d110392b514656d471c",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\outputs\\payhip-launch-2026-10-30\\merge_release_candidate.py",
+      "git_blob": "c1b965334c544a8b104b4a57d531ffe34784e32a",
+      "bytes": 5345
+    },
+    {
+      "path": "outputs/payhip-launch-2026-10-30/prepare_release_candidate.mjs",
+      "category": "release_builder_source_review",
+      "original_sha256": "75a8d666c7ee87611e0f0dccc87de17536223693e5241a55e9f04476d333c83a",
+      "publish_sha256": "75a8d666c7ee87611e0f0dccc87de17536223693e5241a55e9f04476d333c83a",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\outputs\\payhip-launch-2026-10-30\\prepare_release_candidate.mjs",
+      "git_blob": "a8a0c39186f6a0b8b684703ce79782e4d3d15555",
+      "bytes": 4311
+    },
+    {
+      "path": "products/cleaning-pricing-calculator/tools/verify_launch.py",
+      "category": "release_validation_source_review",
+      "original_sha256": "71ff6d2f94bc33b9f0315a127b7d07701dab5348ad2b45bee0bea0997d550da2",
+      "publish_sha256": "71ff6d2f94bc33b9f0315a127b7d07701dab5348ad2b45bee0bea0997d550da2",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\products\\cleaning-pricing-calculator\\tools\\verify_launch.py",
+      "git_blob": "bac586fcaf85e33be87ce448533a1e6406cb0b68",
+      "bytes": 12519
+    },
+    {
+      "path": "README.md",
+      "category": "reviewed_public_metadata",
+      "original_sha256": "99d89e5ac9e7367a77b5bb3aea77c38553df2829d3d8eb2fa21ce60909f63e0c",
+      "publish_sha256": "7ac3cbdcce4d711d311c2fd989bb2568bb4cff7947827d4a143c5f219e9590d5",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\README.md",
+      "git_blob": "f77139581a4cd1029e5519fef1fbdd60c314a199",
+      "bytes": 5607
+    },
+    {
+      "path": "outputs/payhip-launch-2026-10-30/website-checks.json",
+      "category": "reviewed_public_metadata",
+      "original_sha256": "cc6d4eb5536670df62f7252303034bf628d4b04352084ca0313310dc24c45e5f",
+      "publish_sha256": "32a1802f95f86254b9d09693e81319f854253c47566e00abe84f2763f1c87734",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\outputs\\payhip-launch-2026-10-30\\website-checks.json",
+      "git_blob": "2df4e69f0f6fe09da698fece71a527c437cbbd8c",
+      "bytes": 6672
+    },
+    {
+      "path": "outputs/payhip-launch-2026-10-30/CURRENT_LINKS.json",
+      "category": "reviewed_public_metadata",
+      "original_sha256": "feb6500e181a95dc29b90d92d5e3713141738a5f17e64766edb79761f73621bb",
+      "publish_sha256": "4e494483bc7f6044c7ddf8a2888d3b8dd7ded36e4d80ca4d4e5d554d206ab7d6",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\outputs\\payhip-launch-2026-10-30\\CURRENT_LINKS.json",
+      "git_blob": "49cc3d957980d184c7d3e09a1750cab5913a2674",
+      "bytes": 604
+    },
+    {
+      "path": ".gitignore",
+      "category": "reviewed_public_metadata",
+      "original_sha256": "52aa7c21a09b766cb99454ce43665996e1b2ab9f3d60464b58cb97a94a24a2fc",
+      "publish_sha256": "a1deff0a3202d619ad4565790c53921b2b761640f99a382ac0e082e9bd1adc2a",
+      "candidate": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\reviewed-publication-candidate\\.gitignore",
+      "git_blob": "5d9eb82df2d1ff5cb4a5c99f6d8f9987c7a6eaf7",
+      "bytes": 641
+    }
+  ]
+}

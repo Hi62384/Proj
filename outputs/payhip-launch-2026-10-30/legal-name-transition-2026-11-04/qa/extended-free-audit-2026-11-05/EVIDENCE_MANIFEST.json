@@ -1,0 +1,45 @@
+{
+  "incorporated_local_date": "2026-11-04",
+  "source_utc_date_label": "2026-11-05",
+  "source": "Coordinating compatibility-audit-2026-11-05 workspace",
+  "copied_scope": "Six lightweight JSON records only; no workbooks, generated cases, SDK or binaries copied",
+  "files": [
+    {
+      "file": "SUMMARY.json",
+      "source_sha256": "24e004aa98bbdfb4f1f9032846bf71f924cc2a8bcfe6d245900bfc519977926f",
+      "copied_sha256": "3d1a82386b97994f6bbe2cdcb6c5f6c003ac6fb3701eda9b34e57edcbaaa1102",
+      "absolute_path_values_reduced_to_filenames": false
+    },
+    {
+      "file": "plan.json",
+      "source_sha256": "af8878fcfed4d244e7c031f426bee94aa9613b8dca0ff596560daeb2abd86553",
+      "copied_sha256": "c472565587554da0af9df406cb4b5b465dc1f885c15bae1b959ef7c614705fb0",
+      "absolute_path_values_reduced_to_filenames": true
+    },
+    {
+      "file": "calc-results.json",
+      "source_sha256": "6ae71b7a5a3a596efb75074127df99f1eb788f85638de7b343172080fbe27f0b",
+      "copied_sha256": "956aa1a6f592110d71638341676da3f285cd493b582a5d2786a347881488a6be",
+      "absolute_path_values_reduced_to_filenames": false
+    },
+    {
+      "file": "artifact-results.json",
+      "source_sha256": "a265f9b1aef1a2bce088404687b9f58eccc9d6b518954f15582423c9aea969a0",
+      "copied_sha256": "c77d48e667b495ffe6998d481ed332e8b0b37cae0c8170d085652aee7b682acc",
+      "absolute_path_values_reduced_to_filenames": false
+    },
+    {
+      "file": "artifact-diagnostics.json",
+      "source_sha256": "1b763bdcb509b82f1de2c6b302474ebd4997799a002774ab0afa01c72386005d",
+      "copied_sha256": "67798a7de095e0fe6ceaef2507bb47911ba814343c7f94cc32dc87b48b1e0592",
+      "absolute_path_values_reduced_to_filenames": false
+    },
+    {
+      "file": "schema-results.json",
+      "source_sha256": "908496d6e3cf9c2af0c115cf90101823142f35a03a4535f823868ba188a8d6cf",
+      "copied_sha256": "908496d6e3cf9c2af0c115cf90101823142f35a03a4535f823868ba188a8d6cf",
+      "absolute_path_values_reduced_to_filenames": false
+    }
+  ],
+  "hash_note": "Copied hashes cover actual on-disk bytes, including platform newline encoding; source hashes cover original coordinating files."
+}

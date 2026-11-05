@@ -40,6 +40,16 @@ class Runtime:
         if self.store.settings().get('bridge_stopped',False):self.permissions.halt()
         self.desktop=Desktop(self.permissions);self.browser=Browser(directory,self.permissions)
         self.broker=Broker(self.permissions,self.desktop,self.browser,self.attachments,self.store,self.event,self.approve)
+        # Imported copies are durable chat attachments, not renewed source-file
+        # permissions. Restore only intact private-vault copies in this chat.
+        for message in self.store.messages(self.owner):
+            if message['role']!='assistant' or not message['text'].startswith('Imported local file under file Read permission: '):continue
+            for record in json.loads(message['attachments']):
+                try:
+                    import hashlib
+                    path=self.attachments.path(record)
+                    if path.stat().st_size<=500000 and hashlib.sha256(path.read_bytes()).hexdigest()==record['sha256']:self.broker.register([record])
+                except (OSError,ValueError,KeyError):continue
         self.broker.chrome.mode=True;self.permissions.chrome_mode=True
         self.broker.chrome.reference_authorizer=self.authorize_reference;self.reference_queries=set()
         self.hotkey=EmergencyStop(self.stop);self.session_guard=SessionGuard(lambda:self.stop('Windows locked or resumed; review before resuming'))
@@ -75,6 +85,16 @@ class Runtime:
         return accepted
 
     def approve(self,conversation,label,args):
+        if self.permissions.halted.is_set() or self.permissions.cancelled() or conversation!=self.permissions.owner:return False
+        if self.store.settings().get('routine_approvals') is True:
+            from .routine_policy import routine_reason,PROJECT_ROOT
+            sites={row['origin'] for row in self.broker.chrome.status().get('attached',[]) if row['conversation']==conversation}
+            reason=routine_reason(args,file_policy=self.permissions.file_policy,roots=[PROJECT_ROOT],authorized_origins=sites)
+            if reason:
+                self.latest='Automatically allowed routine work: '+label
+                self.store.action(conversation,'routine approval: '+label,'allowed — '+reason)
+                self.emit('auto_approved',conversation,{'action':label,'reason':reason})
+                return True
         self.requests[:]=[r for r in self.requests if not r['event'].is_set() and r['deadline']>time.monotonic()]
         if len(self.requests)>=20:return False
         generation=self.permissions.generation
@@ -94,7 +114,7 @@ class Runtime:
         for project in work:
             counts={row['state']:row['n'] for row in queue.rows('SELECT state,COUNT(*) n FROM jobs WHERE project=? GROUP BY state',(project['id'],))};project['completed_tasks']=counts.get('completed',0);project['total_tasks']=sum(counts.values())
         waiting=queue.rows("SELECT j.id,j.project,j.key,j.payload FROM jobs j JOIN projects p ON p.id=j.project WHERE j.kind='reason' AND j.state='pending' AND p.state='running' AND p.conversation=? AND j.version=p.version AND NOT EXISTS(SELECT 1 FROM dependencies d JOIN jobs n ON n.id=d.needs WHERE d.job=j.id AND n.state!='completed') LIMIT 50",(self.owner,))
-        return {'name':'Codex Computer Bridge','pid':os.getpid(),'controller_ready':not self.closed.is_set(),'mcp_clients_connected':clients,'chrome_connected':chrome['connected'],'full_browser_access':chrome.get('full_browser',False),'trusted_input':chrome.get('trusted_input',False),'desktop_authorized':self.permissions.desktop,'stopped':self.permissions.halted.is_set(),'active_tool':self.active,'latest_action':self.latest,'current_website':self.broker.chrome.grants.get(self.broker.chrome.selected,{}).get('origin'),'pending_requests':len(self.pending()),'projects':work,'reasoning_state':'Waiting for Codex' if waiting else 'No reasoning jobs waiting','waiting_for_codex':waiting,'independent_ai_engine':False}
+        return {'name':'Codex Computer Bridge','pid':os.getpid(),'controller_ready':not self.closed.is_set(),'mcp_clients_connected':clients,'chrome_connected':chrome['connected'],'full_browser_access':chrome.get('full_browser',False),'trusted_input':chrome.get('trusted_input',False),'desktop_authorized':self.permissions.desktop,'routine_approvals':self.store.settings().get('routine_approvals') is True,'stopped':self.permissions.halted.is_set(),'active_tool':self.active,'latest_action':self.latest,'current_website':self.broker.chrome.grants.get(self.broker.chrome.selected,{}).get('origin'),'pending_requests':len(self.pending()),'projects':work,'reasoning_state':'Waiting for Codex' if waiting else 'No reasoning jobs waiting','waiting_for_codex':waiting,'independent_ai_engine':False}
 
     def stop(self,reason='Stopped by owner'):
         self.reference_queries.clear()

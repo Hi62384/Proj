@@ -1,0 +1,76 @@
+{
+  "date": "2026-11-03",
+  "payment_connection": "Payhip UI explicitly shows PayPal Connected; Stripe not connected",
+  "cleaning_zero_charge_test": {
+    "owner_confirmed_total_zero": true,
+    "download_page_observed": true,
+    "expected_archive_displayed": "Cleaning_Pricing_Toolkit_v1.0.1_CUSTOMER.zip",
+    "receipt_inbox_delivery_owner_confirmed": true,
+    "coupon": "CGVERIFY1103",
+    "discount_percent": 100,
+    "product_scope": "Cleaning only",
+    "usage_limit": 1,
+    "observed_uses": 1,
+    "buyer_file_bytes_not_rehashed_yet": false,
+    "receipt_inbox_independently_observed": "November 4: existing buyer and seller receipt messages present; no new order",
+    "current_release_buyer_hash_verification": {
+      "date": "2026-11-04",
+      "filename": "Cleaning_Pricing_Toolkit_v1.0.1_CUSTOMER.zip",
+      "bytes": 61130,
+      "sha256": "334518208388483457c8849cfdf9c73955c80e929d38c1afa6631e9459d990d5",
+      "method": "Downloaded through the existing buyer receipt link supplied by owner, then independently read and hashed through the bridge file Read policy",
+      "new_order_created": false,
+      "charges": 0,
+      "private_download_link_recorded": false
+    }
+  },
+  "real_payment_transaction_verified": false,
+  "approved_support_refund_policy": true,
+  "approved_inventory_single_business_licence": true,
+  "public_launch_authorized": true,
+  "public_visibility_changed_yet": true,
+  "updated": "2026-11-04",
+  "inventory_zero_charge_test": {
+    "date": "2026-11-04",
+    "evidence": "Owner supplied checkout, download-page, buyer receipt and seller notification screenshots; Products page independently shows one order and CAD0.00 sales",
+    "total_cad": 0,
+    "download_page_observed": true,
+    "buyer_receipt_delivery_screenshot_confirmed": true,
+    "seller_notification_delivery_screenshot_confirmed": true,
+    "displayed_zip_kib": 201,
+    "buyer_file_bytes_not_rehashed_yet": false,
+    "current_release_buyer_hash_verification": {
+      "date": "2026-11-04",
+      "release": "v1.0.2",
+      "bytes": 206757,
+      "sha256": "0ebab37edde6db94b5ea80bc761dc82133ec6c3637a72e4a8489ac3dda0f23c0",
+      "existing_order_used": true,
+      "evidence": "legal-name-transition-2026-11-04/qa/INVENTORY_BUYER_DOWNLOAD_VERIFICATION.json"
+    }
+  },
+  "publication_reconfirmed": "2026-11-04: Continue publishing both products",
+  "publication": {
+    "date": "2026-11-04",
+    "cleaning": {
+      "currency": "CAD",
+      "price": 15,
+      "visible": true
+    },
+    "inventory": {
+      "currency": "CAD",
+      "price": 9,
+      "visible": true
+    },
+    "verification": "Protected saves approved locally; Products page has no HIDDEN labels; storefront lists both at reduced prices"
+  },
+  "legal_name_transition": {
+    "date": "2026-11-04",
+    "store": "https://payhip.com/ArshyaGhafaryan",
+    "report": "legal-name-transition-2026-11-04/TRANSITION_REPORT.md",
+    "contact_delivery_independently_observed": true,
+    "public_desktop_mobile_checked": true,
+    "new_orders_created": 0,
+    "charges": 0,
+    "thumbnail_repair_verified": true
+  }
+}

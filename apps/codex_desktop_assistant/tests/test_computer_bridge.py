@@ -20,6 +20,7 @@ from assistant.storage import Store
 class ComputerBridgeTests(unittest.TestCase):
     def runtime(self):
         runtime=Runtime.__new__(Runtime);runtime.clients={};runtime.inflight={};runtime.lock=threading.RLock();runtime.permissions=Permissions();runtime.owner='host-owner';runtime.permissions.resume(runtime.owner);runtime.broker=Mock();runtime.active=None;runtime.closed=threading.Event();runtime.requests=[];runtime.latest='Ready'
+        runtime.store=Mock();runtime.store.settings.return_value={}
         return runtime
 
     def test_tool_metadata_is_valid_and_unique(self):

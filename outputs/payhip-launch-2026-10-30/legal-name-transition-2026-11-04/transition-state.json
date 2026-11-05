@@ -1,0 +1,172 @@
+{
+  "date": "2026-11-04",
+  "status": "Public legal-name transition and thumbnail repair verified; both actual buyer ZIP hashes pass; remaining protected/platform/municipal/payment limitations documented",
+  "private_identity": "Owner supplied exact name in unsaved Payhip field. Identity documents/address/DOB/bank details are not stored here.",
+  "products": {
+    "bP6YN": {
+      "currency": "CAD",
+      "price": 15
+    },
+    "dotFZ": {
+      "currency": "CAD",
+      "price": 9
+    }
+  },
+  "payment": {
+    "paypal_connected": true,
+    "account_type_observed": "Individual",
+    "business_name_matches_owner_entered_name_case_insensitive": true,
+    "customer_service_email_set": false,
+    "customer_service_number_set": false,
+    "business_address_stored": true,
+    "buyer_address_disclosure_verified": false,
+    "account_changes_made": false,
+    "identity_verification_screenshot_confirmed": true,
+    "owner_reports_no_limitation_or_action_required": true,
+    "account_wide_restriction_audit_complete": false,
+    "profile_rechecked_after_session_active": true,
+    "contact_inspection_cancelled_without_save": true
+  },
+  "privacy": {
+    "payhip_invoice_business_address_enabled": false,
+    "public_name_approval": "approved"
+  },
+  "branding_audit": {
+    "workbook_xml_and_text_members_old_brand_hits": 0,
+    "cleaning_pdf_old_brand_text_metadata_hits": 0,
+    "inventory_cover_old_brand": false,
+    "original_archives_preserved": true,
+    "excel_executable_found": false
+  },
+  "dependencies": [
+    "Completed: exact public identity approval and saved cutover",
+    "Completed: Inventory approved replacement and buyer byte verification",
+    "Completed: public desktop/mobile and old/new URL verification",
+    "Completed: Contact delivery independently observed",
+    "Open: native Excel unavailable",
+    "Open: PayPal buyer disclosures, restrictions and linked-bank compatibility",
+    "Open: property-specific municipal determination",
+    "No charged test/refund/payout without separate approval",
+    "Completed: Cleaning actual buyer archive hash",
+    "Completed: thumbnail ratio saved, published and desktop/mobile verified"
+  ],
+  "recovery": [
+    "Keep original packages and asset references",
+    "Do not delete old orders or alter historical receipts",
+    "Do not assume old store URL redirects",
+    "Do not restore unregistered trading identity as an automatic rollback; stop affected publication and ask owner if a critical cutover fails",
+    "Do not change product visibility without owner authorization"
+  ],
+  "sources": [
+    "https://www.ontario.ca/laws/statute/90b17",
+    "https://www.ontario.ca/page/business/start/decide-ownership-structure",
+    "https://www.canada.ca/en/services/business/start/choosing-a-business-name-3.html",
+    "https://www.canada.ca/en/services/business/start/register-with-gov/register-sole-prop-partner.html",
+    "https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/rc4022/general-information-gst-hst-registrants.html",
+    "https://www.paypal.com/ca/cshelp/article/how-do-i-change-my-business-name-help372",
+    "https://www.paypal.com/ca/legalhub/paypal/privacy-full",
+    "https://help.payhip.com/article/67-find-your-store-and-product-urls",
+    "https://www.richmondhill.ca/en/online-services/Register-Apply-or-Pay-Business-Licence.aspx",
+    "https://www.richmondhill.ca/en/zone-richmond-hill.aspx"
+  ],
+  "public_identity": {
+    "name": "Arshya Ghafaryan",
+    "username": "ArshyaGhafaryan",
+    "url": "https://payhip.com/ArshyaGhafaryan",
+    "owner_publication_approved": true,
+    "payhip_save_confirmation": "Your profile has been updated.",
+    "about_publication_confirmation": "The changes you have made to your store have been published now."
+  },
+  "contact_test": {
+    "reference": "CONTACT-20261104-01",
+    "submitted_once": true,
+    "site_acknowledged_success": true,
+    "inbox_delivery": "Independently observed in support Gmail: Payhip Form Submission On Your Store, exact CONTACT-20261104-01 reference, November 4 at 10:30 AM"
+  },
+  "inventory_staged_release": {
+    "file": "Inventory_Reorder_Planner_v1.0.2_CUSTOMER.zip",
+    "bytes": 206757,
+    "sha256": "0ebab37edde6db94b5ea80bc761dc82133ec6c3637a72e4a8489ac3dda0f23c0",
+    "workbook_byte_identical": true,
+    "native_calc_cases_rerun_passed": 11,
+    "live_replacement_approved": true,
+    "status": "saved on existing public CA$9 listing",
+    "buyer_download_hash_verified": true,
+    "cover_first_verified": true
+  },
+  "owner_business_facts": {
+    "source": "owner confirmation November 4, not independently audited",
+    "municipality": "Richmond Hill, Ontario",
+    "home_based": true,
+    "sole_owner": true,
+    "employees": false,
+    "gst_hst_registered": false,
+    "threshold_exceeded_owner_report": false
+  },
+  "latest_windows_automation_blocker": "Current-session native reads/keyboard recovered after supported session reset; root cause/durability unproven; capture deferred at owner request",
+  "financial_actions": {
+    "new_orders_created_this_transition": 0,
+    "charges": 0,
+    "refunds": 0,
+    "payouts": 0,
+    "fees": 0,
+    "registrations": 0
+  },
+  "cleaning_buyer_download_verified": {
+    "date": "2026-11-04",
+    "filename": "Cleaning_Pricing_Toolkit_v1.0.1_CUSTOMER.zip",
+    "bytes": 61130,
+    "sha256": "334518208388483457c8849cfdf9c73955c80e929d38c1afa6631e9459d990d5",
+    "method": "Downloaded through the existing buyer receipt link supplied by owner, then independently read and hashed through the bridge file Read policy",
+    "new_order_created": false,
+    "charges": 0,
+    "private_download_link_recorded": false
+  },
+  "thumbnail_repair_verified": true,
+  "store_browser_work_recovered": true,
+  "controlled_links_audit_passed": true,
+  "search_metadata_checked": true,
+  "execution_preference": "Use background browser controls and direct file tools; no native screen capture or foreground automation requested by owner",
+  "inventory_fresh_checkout_verified": {
+    "date": "2026-11-04",
+    "subtotal_cad": 9,
+    "tax_cad": 1.17,
+    "displayed_total_cad": 10.17,
+    "payment_methods": [
+      "PayPal",
+      "Debit or Credit Card"
+    ],
+    "order_created": false,
+    "charged": false
+  },
+  "excel_compatibility": {
+    "owner_has_desktop_license": false,
+    "desktop_installed": false,
+    "connected_session_available": false,
+    "authorized_web_tab_available": false,
+    "web_tested": false,
+    "native_tested": false,
+    "cleaning_live_disclaimer_needs_clarification": false,
+    "inventory_live_disclaimer_explicit": true,
+    "cleaning_correction_staged_not_saved": false,
+    "extended_free_calc_cases_passed": 84,
+    "extended_free_calc_assertions": 562,
+    "openxml_schema_errors": 0,
+    "artifact_evaluator_disagreements": 10,
+    "cleaning_correction_saved_verified_public": true
+  },
+  "paid_test": {
+    "authorized_one_inventory_paypal_test": true,
+    "maximum_total_cad": 10.17,
+    "eligibility_verified": false,
+    "paypal_activated": false,
+    "charged": false,
+    "blocker": "No separate buyer PayPal account exists; guest card not authorized or tested",
+    "owner_only_merchant_paypal_account": true,
+    "guest_card_authorized": false,
+    "owner_no_extra_debit_card": true,
+    "alternate_routes_search_stopped": true,
+    "status": "Unverified; no further payment-route question or action"
+  },
+  "tax_config_readonly_reviewed": true
+}

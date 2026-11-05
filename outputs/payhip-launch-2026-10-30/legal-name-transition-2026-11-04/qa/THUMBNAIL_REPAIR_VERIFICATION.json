@@ -1,0 +1,33 @@
+{
+  "date": "2026-11-04",
+  "cause": "Forced 3:2 collection aspect ratio cropped the Cleaning cover",
+  "change": "Existing collection Aspect ratio changed from standard (3:2) to adapt; no images or packages replaced",
+  "save_owner_approved": true,
+  "publish_owner_approved": true,
+  "payhip_confirmation": "The changes you have made to your store have been published now; Your changes have been saved",
+  "independent_public_reload_verified": true,
+  "desktop_cover_text_visible": true,
+  "mobile_cover_text_visible": true,
+  "mobile_viewport_width": 390,
+  "mobile_document_width": 375,
+  "viewport_override_reset": true,
+  "prices_cad": {
+    "Cleaning": 15,
+    "Inventory": 9
+  },
+  "uploads": 0,
+  "orders": 0,
+  "charges": 0,
+  "screenshots": [
+    {
+      "file": "home-desktop-ratio-fixed.jpg",
+      "bytes": 77915,
+      "sha256": "77160be0a0b8e759a969b9422c6f7c7670b5652d50ce4d438c97cd5eed50644b"
+    },
+    {
+      "file": "home-mobile-ratio-fixed.jpg",
+      "bytes": 85828,
+      "sha256": "8c7d34c5c928ed9ced9a4095611047d9df44d124b72bd16c9803a608ae67d869"
+    }
+  ]
+}

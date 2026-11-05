@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-04",
+  "native_windows_helper": "Recovered for current-session read and keyboard input after supported session reset; no URL-confidence error in those tests. Native screenshot capture not tested at owner request.",
+  "supported_recovery": "Existing Computer Bridge connected, full browser authorization, Stop false; reused builder tab 5199793 without creating a duplicate; completed save/publication/inspection through URL-bound bridge; public QA and existing-order downloads through isolated browser",
+  "original_native_helper_fixed": false,
+  "store_browser_work_recovered": true,
+  "paypal_live_read": "Subsequent active-session Business Profile inspection succeeded; customer-service email empty and profile number Not provided; contact panel cancelled and closure verified. No Save, bank action or funds movement.",
+  "native_excel": "Not found in standard Office16 executable locations; Excel.Application registry key unavailable",
+  "pending_owner_input": "Identity verification screenshot received; owner reports no limitation/action required. Linked-bank name and exact buyer contact disclosures remain unverified.",
+  "latest_recovery": {
+    "date": "2026-11-04",
+    "action": "Supported node_repl kernel reset, import @oai/sky, select current returned Payhip window",
+    "results": [
+      "list_windows succeeded",
+      "get_window_state read succeeded with address bar detected",
+      "Ctrl+L input succeeded and fresh state showed address focus",
+      "Escape input succeeded and fresh read still showed the expected Cleaning download page",
+      "Further fresh state after user-activity signal succeeded"
+    ],
+    "url_confidence_error_reproduced_after_reset": false,
+    "root_cause_proven": false,
+    "native_capture_tested": false,
+    "native_capture_deferred_reason": "Owner requested no native screen-capture/ChatGPT-is-using-your-computer flow",
+    "security_settings_changed": false,
+    "helper_binary_or_policy_modified": false,
+    "scope": "Current session native read and harmless keyboard input recovered; durability and screenshot capture not certified"
+  },
+  "native_read_input_recovered": true
+}

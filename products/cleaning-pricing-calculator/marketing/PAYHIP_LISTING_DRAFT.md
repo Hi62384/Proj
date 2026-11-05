@@ -1,4 +1,6 @@
-# Payhip listing draft — NOT PUBLISHED
+# Payhip listing draft — historical copy
+
+**Historical copy draft, superseded November 4, 2026.** The [existing product](https://payhip.com/b/bP6YN) is published at **CA$15**, sold by [Arshya Ghafaryan](https://payhip.com/ArshyaGhafaryan). The CA$29 hypothesis below is historical. Do not create another listing or overwrite the live release from this draft. See the [current product status](../README.md).
 
 **Product title (recommended):** Cleaning Business Pricing & Profit Calculator | Excel Job Quote Toolkit
 

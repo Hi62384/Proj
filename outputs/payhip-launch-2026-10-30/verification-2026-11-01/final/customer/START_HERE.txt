@@ -1,0 +1,23 @@
+CLEANING BUSINESS PRICING & PROFIT CALCULATOR
+Customer edition 1.0.1
+
+1. Keep the downloaded original and save a working copy of Cleaning_Pricing_Calculator.xlsx.
+2. Read the included Quick_Start_Guide.pdf. The guide's version 1.0 workflow still applies to this maintenance release.
+3. In SETTINGS, replace illustrative costs with your own. Rates must be nonnegative, margin plus fee must be below 100%, rounding must be positive, and tax rates must be between 0% and 100%. Mark assumptions READY only after reviewing them. This edition uses CAD labels and does not convert currencies.
+4. In SERVICES, edit the existing seven catalogue rows in place. Use unique service names, positive default hours and nonnegative supplies. The quote and scenario dropdowns use that catalogue. Adding or removing catalogue rows is not supported in this edition.
+5. In QUICK QUOTE, select a service and enter crew, hours and adjustments. Blank optional cost adjustments mean zero; blank optional hours use the selected service default. A blank tax override uses SETTINGS, while an explicit zero overrides it to 0%. Do not use the customer quote unless its status is READY TO REVIEW.
+6. Review CLIENT QUOTE. Enter your own business display details in SETTINGS and the customer's quote reference/date in QUICK QUOTE. Suggested quote validity in SETTINGS is manual guidance; it does not print an automatic expiry. Review all business identity, scope and terms before sharing a quote.
+7. To print a customer quote, select CLIENT QUOTE and export/print that sheet only. It is configured for one landscape Letter page. Preview the result in your spreadsheet application before sending. The other worksheets are working tables and are not a single-page customer document.
+8. JOB SCENARIOS supports 25 estimates. JOB LOG supports 25 manual actual-job entries. For a log row with a job ID, enter every numeric field D:I, using explicit zero where appropriate. Negative costs are unsupported. Negative contribution can be a legitimate loss and is not hidden.
+9. CHECK INPUTS means correct the affected numeric inputs or settings. INVALID SERVICE / CHECK SERVICE means choose a unique catalogue name. CHECK SCENARIOS or CHECK JOB LOG on OVERVIEW means fix those rows before relying on the summary. These warnings must not be treated as zero cost or profit.
+
+COMPATIBILITY
+The files use ordinary .xlsx formulas, dropdowns and no macros. This candidate passed 59 independent native recalculation/input checks in LibreOffice Calc. Microsoft Excel-specific opening, editing and PDF-export behaviour has not been tested in this preparation environment. Do not interpret that Calc result as native Excel certification. Google Sheets, Apple Numbers and mobile workbook editing are not claimed as supported.
+
+WHAT IS INCLUDED
+Blank workbook, separately named FICTIONAL_DEMO workbook, Quick_Start_Guide.pdf, this startup note, and LICENSE_AND_DISCLAIMER.txt. All demonstration people, dates, costs, jobs and outcomes are fictional illustrations.
+
+LIMITATIONS
+Outputs estimate contribution after modeled costs; they are not guaranteed net profit. Taxes, costs and service assumptions need your own review. No cloud access, AI credits, automatic invoicing, payment processing, bank integration or automatic accounting is included. No macros or internet access are needed to use the downloaded workbook.
+
+Keep backups. Do not redistribute or resell the template. Review LICENSE_AND_DISCLAIMER.txt. For a download or product defect, use the actual seller contact shown in the order confirmation; do not treat demonstration contact details inside a workbook as the seller's support address.

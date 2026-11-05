@@ -36,12 +36,17 @@ class Attachments:
         source = Path(source)
         if source.is_symlink() or not source.is_file() or source.stat().st_size > MAX_FILE:
             raise ValueError('Attach a regular file of at most 25 MB')
-        ident = uuid.uuid4().hex
-        destination = self.directory/(ident+source.suffix.lower())
         raw = source.read_bytes()
+        return self.add_bytes(source.name,raw)
+
+    def add_bytes(self,name,raw):
+        """Import bytes already read under the file controller's permission/lock."""
         if len(raw)>MAX_FILE:raise ValueError('File grew beyond attachment limit')
+        if not name or Path(name).name!=name:raise ValueError('Use a filename without directories')
+        ident=uuid.uuid4().hex
+        destination=self.directory/(ident+Path(name).suffix.lower())
         destination.write_bytes(raw)
-        return {'id':ident,'name':source.name,'path':str(destination),'sha256':hashlib.sha256(raw).hexdigest()}
+        return {'id':ident,'name':name,'path':str(destination),'sha256':hashlib.sha256(raw).hexdigest()}
 
     def path(self, attachment):
         p = Path(attachment['path'])

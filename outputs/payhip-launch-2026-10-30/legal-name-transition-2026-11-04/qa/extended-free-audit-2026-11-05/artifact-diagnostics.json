@@ -1,0 +1,26 @@
+{
+  "engine": "Bundled @oai/artifact-tool",
+  "inputA1": 0,
+  "probes": [
+    {
+      "formula": "=IF(A1=\"\",0.13,A1)",
+      "expected": 0,
+      "actual": 0.13
+    },
+    {
+      "formula": "=ROUND(149.025,2)",
+      "expected": 149.03,
+      "actual": 149.03
+    },
+    {
+      "formula": "=IF(OR(A1=\"\",AND(ISNUMBER(A1),A1>0)),\"VALID\",\"INVALID\")",
+      "expected": "INVALID",
+      "actual": "VALID"
+    },
+    {
+      "formula": "=ROUND(3.25*25+22.15+18.5*0.55+9.75+14+390*0.03,2)",
+      "expected": 149.03,
+      "actual": 149.02
+    }
+  ]
+}

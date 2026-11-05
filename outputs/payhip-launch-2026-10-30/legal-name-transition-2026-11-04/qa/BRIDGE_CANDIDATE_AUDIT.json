@@ -1,0 +1,246 @@
+{
+  "recorded_utc": "2026-11-05T01:47:20.026356+00:00",
+  "mode": "read-only source audit; candidate source files not edited/staged/committed/pushed",
+  "baseline": "720fcc2c5619e31947fe8775d47f629cc49e8661",
+  "candidate_count": 19,
+  "files": [
+    {
+      "path": "apps/codex_desktop_assistant/COMPUTER_BRIDGE.md",
+      "status": " M",
+      "bytes": 8671,
+      "sha256": "02d089ed0f7ecab600c4aa368df3a193dadf646f75f34e424b5d8925056f069f",
+      "baseline_blob_sha": "452b3f92637141258af5e4373293b7d6f9f7fbaf",
+      "matches_independent_pretest_manifest": true
+    },
+    {
+      "path": "apps/codex_desktop_assistant/assistant/action_policy.py",
+      "status": " M",
+      "bytes": 8968,
+      "sha256": "f3e93100bb54b00da2036cd87d35a699da353405b6a7396a3b984041c420768d",
+      "baseline_blob_sha": "330beaea21379845822d43e5511fa5dce0dc153b",
+      "matches_independent_pretest_manifest": true
+    },
+    {
+      "path": "apps/codex_desktop_assistant/assistant/attachments.py",
+      "status": " M",
+      "bytes": 5228,
+      "sha256": "c07b070de31f1226e4cbaad8ea943254618de178078bcbcce954007931ff2b8d",
+      "baseline_blob_sha": "551e3d9a48f8c9b6bb501a776066a76783ee0189",
+      "matches_independent_pretest_manifest": true
+    },
+    {
+      "path": "apps/codex_desktop_assistant/assistant/chrome_control.py",
+      "status": " M",
+      "bytes": 22770,
+      "sha256": "06a6b2dcdae596fbab231d430bb5dcdf5530fe6fc12d92dfa72cd262d1fdaab3",
+      "baseline_blob_sha": "d7189c937e519f274bca2981f748ec08a4ceec7b",
+      "matches_independent_pretest_manifest": true
+    },
+    {
+      "path": "apps/codex_desktop_assistant/assistant/files.py",
+      "status": " M",
+      "bytes": 11088,
+      "sha256": "9beabc6741aa35a885ae1a276cc26844f49929f8f8737db38660c6e4029ec979",
+      "baseline_blob_sha": "3a7a60e96838df60e3832635f58e3c9e59c00a6d",
+      "matches_independent_pretest_manifest": true
+    },
+    {
+      "path": "apps/codex_desktop_assistant/assistant/tools.py",
+      "status": " M",
+      "bytes": 24783,
+      "sha256": "2e8b4dd3ba45e1232cc504d08e4297becb3c7c95ca3f85fe35ad377d9503a50e",
+      "baseline_blob_sha": "7f79ee8641a50a4a3d77e8c469506a63df4f46fd",
+      "matches_independent_pretest_manifest": true
+    },
+    {
+      "path": "apps/codex_desktop_assistant/bridge/dashboard.py",
+      "status": " M",
+      "bytes": 15440,
+      "sha256": "320da9ac537a531d05ab9b49361de2013c09adf68084530ece3219ede24d97f1",
+      "baseline_blob_sha": "193a7748c73b1c8a67d0f3c755d984956b4dca12",
+      "matches_independent_pretest_manifest": true
+    },
+    {
+      "path": "apps/codex_desktop_assistant/bridge/runtime.py",
+      "status": " M",
+      "bytes": 19756,
+      "sha256": "450577a0f7edd947d8f17688a44a75e32578c13fef48e135bf29a91e1afbe891",
+      "baseline_blob_sha": "05ee19a9a2529bc3c531abb95b1b71d6f8719b40",
+      "matches_independent_pretest_manifest": true
+    },
+    {
+      "path": "apps/codex_desktop_assistant/chrome_extension/content.js",
+      "status": " M",
+      "bytes": 30645,
+      "sha256": "cc939e5e69315c0b0cbc6107cb81b29ff8137c6bc5475285b153dd17233093da",
+      "baseline_blob_sha": "2da70649140e32287aff612d2b7d45b982dca8f2",
+      "matches_independent_pretest_manifest": true
+    },
+    {
+      "path": "apps/codex_desktop_assistant/chrome_extension/worker.js",
+      "status": " M",
+      "bytes": 35941,
+      "sha256": "1caecd5c55b39e5117f14b12940860ade7c94ecd4f048514219345b618c81218",
+      "baseline_blob_sha": "77620d652380648bc1c5c4edd62e7dce28fced90",
+      "matches_independent_pretest_manifest": true
+    },
+    {
+      "path": "apps/codex_desktop_assistant/tests/chrome_input_widgets.test.mjs",
+      "status": " M",
+      "bytes": 7678,
+      "sha256": "ec0cc05ba529f6f4d84e14a9d58fc1a5b738723c108c86a4d85d60058bc3211f",
+      "baseline_blob_sha": "4f35ed6e149c3d8a466f6676425bf00454520aae",
+      "matches_independent_pretest_manifest": true
+    },
+    {
+      "path": "apps/codex_desktop_assistant/tests/chrome_worker_tabs.test.mjs",
+      "status": " M",
+      "bytes": 9538,
+      "sha256": "1dced80105f0804862ef9b4f5dd087f04acaceb2fec193e88a7bc9b25feb06ff",
+      "baseline_blob_sha": "69a3625f01bd9a2bb7a8d50522e186e37bf5de24",
+      "matches_independent_pretest_manifest": true
+    },
+    {
+      "path": "apps/codex_desktop_assistant/tests/test_action_policy.py",
+      "status": " M",
+      "bytes": 11114,
+      "sha256": "acd823e8d88536b0ec933ab86b929f944c29338cab5ce6a1a490c194a787240f",
+      "baseline_blob_sha": "a23837ed3338a6fd461bcf4d6fd3b4dd5906056d",
+      "matches_independent_pretest_manifest": true
+    },
+    {
+      "path": "apps/codex_desktop_assistant/tests/test_bridge_dashboard.py",
+      "status": " M",
+      "bytes": 7195,
+      "sha256": "319a473d05fb540ee71ddbbd8e7d4599ffed2d839eb75bed075fd39233c07fbd",
+      "baseline_blob_sha": "85aaa685141c262ea3b053e86dbfbba161d550bb",
+      "matches_independent_pretest_manifest": true
+    },
+    {
+      "path": "apps/codex_desktop_assistant/tests/test_chrome_control.py",
+      "status": " M",
+      "bytes": 15908,
+      "sha256": "ce1778704eacb6d9b1f50d38cfc6d35b80f1fbc169a3f135de5b996211e27ad7",
+      "baseline_blob_sha": "f1f8c5f46ec0bb439faed0f48c3c66eba134848a",
+      "matches_independent_pretest_manifest": true
+    },
+    {
+      "path": "apps/codex_desktop_assistant/tests/test_computer_bridge.py",
+      "status": " M",
+      "bytes": 7329,
+      "sha256": "4616fb486fd729fb7bceeb828156d3765d8d0f71992a5bf80e0816bcd1dd0945",
+      "baseline_blob_sha": "67c7cb799a869ff7e90623e2d62ad78e53ae516e",
+      "matches_independent_pretest_manifest": true
+    },
+    {
+      "path": "apps/codex_desktop_assistant/tests/test_overhaul.py",
+      "status": " M",
+      "bytes": 12712,
+      "sha256": "9485736fc70910a00bb9834a557ef7de45933f113a5bdf5bdb0c435f5388cabb",
+      "baseline_blob_sha": "de4e521064cdb921568df253fc3047134ebdcfe8",
+      "matches_independent_pretest_manifest": true
+    },
+    {
+      "path": "apps/codex_desktop_assistant/bridge/routine_policy.py",
+      "status": "??",
+      "bytes": 3480,
+      "sha256": "b8eb51312fe93680ac473210aed796b69e73ce07cc0b34ed03346bf2e07210e4",
+      "baseline_blob_sha": null,
+      "matches_independent_pretest_manifest": true
+    },
+    {
+      "path": "apps/codex_desktop_assistant/tests/test_routine_policy.py",
+      "status": "??",
+      "bytes": 6724,
+      "sha256": "1be6123ff3bd59f8f956ef1ab09d46e0d01e3c063102349f35aca8d1d8591b3e",
+      "baseline_blob_sha": null,
+      "matches_independent_pretest_manifest": true
+    }
+  ],
+  "independent_manifest_source": "C:\\Users\\User1\\Documents\\Codex\\2026-11-04\\task\\github-publication-audit-2026-11-05\\pending-manifest.json",
+  "conflicts": {
+    "merge_markers_found": false,
+    "candidate_hash_drift": false,
+    "merge_marker_matches": []
+  },
+  "privacy": {
+    "high_confidence_secret_found": false,
+    "flag_resolution": "test_routine_policy.py:41 user:password URL is a deliberate negative fixture, not an account credential. No private buyer receipt link found in the 19 candidates. This targeted text review does not clear binaries, images, reports or the whole repository for publication."
+  },
+  "tests": {
+    "python": {
+      "interpreter": "apps/codex_desktop_assistant/.venv/Scripts/python.exe",
+      "environment": {
+        "QT_QPA_PLATFORM": "offscreen",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "modules": {
+        "test_routine_policy.py": 10,
+        "test_bridge_dashboard.py": 9,
+        "test_computer_bridge.py": 11,
+        "test_chrome_control.py": 29,
+        "test_action_policy.py": 26,
+        "test_overhaul.py": 25
+      },
+      "total": 110,
+      "passed": 110,
+      "failures": 0,
+      "errors": 0,
+      "elapsed_seconds": 8.886
+    },
+    "node": {
+      "scripts": [
+        "tests/chrome_input_widgets.test.mjs",
+        "tests/chrome_worker_tabs.test.mjs"
+      ],
+      "both_exit_code": 0,
+      "scope": "Standalone mocked browser regression scripts; not live Chrome acceptance."
+    },
+    "initial_setup_attempts": [
+      "Default python could not import the tests namespace. Discovery then found missing PySide6, mcp and win32file dependencies in default Python; resolved by using the existing project venv, no install.",
+      "node --test could not spawn child workers (EPERM); both same standalone scripts subsequently passed directly, without child workers."
+    ]
+  },
+  "remaining_gaps": [
+    {
+      "path": "apps/codex_desktop_assistant/chrome_extension/worker.js",
+      "finding": "originalAutoDiscardable is in-memory only; original tab setting is not durably preserved through worker/extension crash or reload. Normal grant/regrant/revoke restoration is tested.",
+      "classification": "known reliability/state-restoration gap, no source fix made in audit"
+    },
+    {
+      "path": "apps/codex_desktop_assistant/bridge/runtime.py",
+      "finding": "Private attachment restore at real controller restart is hash-gated in source, but the targeted six-module run does not provide live restart acceptance for this added restore path.",
+      "classification": "live/regression coverage gap, not an observed failure"
+    },
+    {
+      "path": "apps/codex_desktop_assistant/bridge/dashboard.py",
+      "finding": "Show Browser recovery/error states pass mocked Qt offscreen tests. No live Windows foreground or capture test performed; owner requested no capture. Bundled OpenAI Windows helper is outside this repo.",
+      "classification": "live verification limit"
+    }
+  ],
+  "sensitive_controls_retained": [
+    "Owner-only routine toggle default off; no model approval override.",
+    "Explicit file Ask/Deny and independent Read/Write/Create/Delete; source protected paths, hashes, locks and Stop.",
+    "Uploads exact reviewed file/receiver, publication, purchases/payments, security/credential changes, destructive and unknown actions retain review.",
+    "Chrome session/origin/tab/manual controls and foreground screenshot restrictions; renewed observation and reviewed target/context comparison after approval."
+  ],
+  "proposed_metadata_review": {
+    "source": "C:/Users/User1/Documents/Codex/2026-11-04/task/github-publication-audit-2026-11-05/public-metadata-candidate/manifest.json",
+    "status": "review-only; not applied or published",
+    "scope": [
+      "README.md",
+      ".gitignore",
+      "outputs/payhip-launch-2026-10-30/website-checks.json",
+      "outputs/payhip-launch-2026-10-30/CURRENT_LINKS.json"
+    ],
+    "findings": [
+      "Root README requires CURRENT_LINKS.json in the same reviewed scope or replace that dependency before publication.",
+      "Historical snapshot observations preserved; only superseded_by pointer changes from local private report to the public Cleaning README.",
+      "CURRENT_LINKS removes private audit dependency and states charged processing/payout unverified.",
+      "Ignore proposal covers .tmp and nested disposable profiles; no ignore modification was applied.",
+      "These four paths are outside the authorized 3-doc publication. Outputs inclusion requires exact separately reviewed scope; broader outputs and binaries remain held."
+    ]
+  },
+  "broad_publication_rejection_verbatim": "This action was rejected due to unacceptable risk. Reason: The prompt could lead to broad public publication of many pending files, including potentially sensitive or unfinished artifacts; although the user requested pushing GitHub changes, exact contents are not yet identified, so this is not sufficiently narrow for an authorized high-risk push. Do not bypass this rejection through a workaround or indirect execution.",
+  "no_candidate_publication_authorized": true
+}

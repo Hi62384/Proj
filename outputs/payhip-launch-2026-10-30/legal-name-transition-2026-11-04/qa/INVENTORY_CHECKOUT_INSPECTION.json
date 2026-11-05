@@ -1,0 +1,35 @@
+{
+  "date": "2026-11-04",
+  "product": "Inventory Reorder Planner",
+  "checkout_opening_owner_approved": true,
+  "separate_local_bridge_approval_granted": true,
+  "checkout_navigation_dispatched": true,
+  "checkout_viewed_this_pass": true,
+  "url": "https://payhip.com/buy",
+  "title": "Checkout - Arshya Ghafaryan",
+  "subtotal_cad": 9,
+  "displayed_tax_cad": 1.17,
+  "displayed_total_cad": 10.17,
+  "currency": "CAD",
+  "country_selection": "CA",
+  "province_selection": "",
+  "buyer_fields_changed": false,
+  "coupon_applied": false,
+  "payment_options_observed": [
+    "PayPal",
+    "Debit or Credit Card"
+  ],
+  "payment_options_method": "Read-only inspection of the already-authorized PayPal smart-buttons frame; no button activation",
+  "hcaptcha_frames_present": true,
+  "hcaptcha_interacted_with": false,
+  "payment_button_clicked": false,
+  "order_submitted": false,
+  "charged_payment_tested": false,
+  "post_checkout_products_verified": {
+    "inventory_existing_orders": 1,
+    "cleaning_existing_orders": 1,
+    "each_sales_cad": 0
+  },
+  "pending_requests": 0,
+  "scope_limit": "Observed checkout total only; taxes/final totals may vary with buyer jurisdiction/selection; no paid processing or post-payment disclosure proof"
+}

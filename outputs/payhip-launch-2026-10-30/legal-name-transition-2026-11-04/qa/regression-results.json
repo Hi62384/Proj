@@ -1,0 +1,98 @@
+{
+  "engine": "LibreOffice Calc",
+  "passed": 11,
+  "total": 11,
+  "workbook_hash": "5da211442cbc871601ea8e29c769aba98d7067a6beb70587ddf032e023e3b3c1",
+  "basis": "Workbook byte-identical to v1.0.1; reran the existing 11 input-matrix case files without modifying the original release",
+  "results": [
+    {
+      "case": "default",
+      "pass": true,
+      "actual": [
+        "114",
+        "34"
+      ]
+    },
+    {
+      "case": "zero",
+      "pass": true,
+      "actual": [
+        "0",
+        "0"
+      ]
+    },
+    {
+      "case": "above_threshold",
+      "pass": true,
+      "actual": [
+        "114",
+        "0"
+      ]
+    },
+    {
+      "case": "fractional",
+      "pass": true,
+      "actual": [
+        "4",
+        "3"
+      ]
+    },
+    {
+      "case": "large",
+      "pass": true,
+      "actual": [
+        "365005000",
+        "365004877"
+      ]
+    },
+    {
+      "case": "missing",
+      "pass": true,
+      "actual": [
+        "CHECK INPUTS",
+        "CHECK INPUTS"
+      ]
+    },
+    {
+      "case": "text",
+      "pass": true,
+      "actual": [
+        "CHECK INPUTS",
+        "CHECK INPUTS"
+      ]
+    },
+    {
+      "case": "negative_0",
+      "pass": true,
+      "actual": [
+        "CHECK INPUTS",
+        "CHECK INPUTS"
+      ]
+    },
+    {
+      "case": "negative_1",
+      "pass": true,
+      "actual": [
+        "CHECK INPUTS",
+        "CHECK INPUTS"
+      ]
+    },
+    {
+      "case": "negative_2",
+      "pass": true,
+      "actual": [
+        "CHECK INPUTS",
+        "CHECK INPUTS"
+      ]
+    },
+    {
+      "case": "negative_3",
+      "pass": true,
+      "actual": [
+        "CHECK INPUTS",
+        "CHECK INPUTS"
+      ]
+    }
+  ],
+  "native_excel_verified": false
+}

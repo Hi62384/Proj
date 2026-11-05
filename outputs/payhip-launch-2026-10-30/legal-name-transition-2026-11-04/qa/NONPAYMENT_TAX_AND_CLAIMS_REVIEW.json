@@ -1,0 +1,79 @@
+{
+  "date": "2026-11-04",
+  "method": "Supported background Computer Bridge read-only inspection via observed Payhip navigation links; no capture/native control",
+  "owner_facts": {
+    "municipality": "Richmond Hill, Ontario",
+    "operating_identity": "Own full legal name",
+    "sole_owner": true,
+    "home_based": true,
+    "employees": false,
+    "gst_hst_registered_owner_report": false,
+    "below_gst_hst_threshold_owner_report": true,
+    "paypal_account_count_owner_report": 1,
+    "no_extra_debit_card_owner_report": true
+  },
+  "payment_configuration": {
+    "observed_url": "https://payhip.com/settings/payments",
+    "paypal_connected_explicit": true,
+    "default_currency": "CAD",
+    "settings_changed": false
+  },
+  "tax_configuration": {
+    "observed_link": "Taxes link from Payment Details",
+    "observed_url": "https://payhip.com/settings/taxes",
+    "sales_tax_price_flow": "Add sales tax on top of product price",
+    "select_value": "0",
+    "eu_digital_vat_auto_checkbox": true,
+    "uk_digital_vat_auto_checkbox": true,
+    "redeem_eu_vat_company_numbers_checkbox": false,
+    "custom_rate_rows_observed": false,
+    "store_address_ui": "Add Store Address offered; page says for US tax calculation only and not shown to customers",
+    "platform_ui_statement": "Payhip handles US/Canada marketplace sales taxes; Quebec caveat visible; registered GST/HST/QST sellers directed to contact Payhip",
+    "toggles_rates_address_registration_saved_or_changed": false
+  },
+  "source_qualification": {
+    "canada": "https://help.payhip.com/article/393-canada-sales-tax",
+    "canada_document_rule": "From July 1 2026 Payhip collects/pays GST/HST and PST; QST remains seller responsibility if applicable. GST-registered sellers have a separate documented election process.",
+    "eu_uk": "https://help.payhip.com/article/127-digital-eu-vat",
+    "eu_uk_document_rule": "Digital EU/UK VAT handling configurable via checkboxes and tax-inclusive/add-on selection.",
+    "limitations": [
+      "Observed platform configuration is not evidence of owner GST/HST registration",
+      "No owner income-tax/registration/municipal/QST clearance inferred",
+      "No actual paid tax remittance verified",
+      "Checkout tax may vary with buyer jurisdiction; earlier CA$1.17 observation is not a universal rate determination"
+    ]
+  },
+  "public_claims_review": {
+    "cleaning": {
+      "url": "https://payhip.com/b/bP6YN",
+      "price_cad": 15,
+      "heading": "Requirements \u2014 LibreOffice Calc checks passed; Microsoft Excel untested",
+      "standalone_subscription_claim": "No recurring seller subscription stated, not a promise that the buyer obtains Microsoft Excel free",
+      "paid_processing_success_claim_found": false,
+      "desktop_excel_certification_claim_found": false,
+      "proven_demand_or_profit_guarantee_found": false
+    },
+    "inventory": {
+      "url": "https://payhip.com/b/dotFZ",
+      "price_cad": 9,
+      "native_excel_disclaimer": "Native Microsoft Excel was unavailable and remains unverified.",
+      "historical_calc_claim": "Eleven recalculation cases passed; still historically accurate, not expanded to new claims",
+      "paid_processing_success_claim_found": false,
+      "desktop_excel_certification_claim_found": false,
+      "proven_demand_or_profit_guarantee_found": false
+    },
+    "live_changes_made": false
+  },
+  "paid_processing_status": "UNVERIFIED. Only merchant PayPal exists and no extra debit card is reported; no alternate eligible card established. Stop seeking alternate payment routes.",
+  "no_more_payment_method_question": true,
+  "pending_requests": 0,
+  "actions_not_taken": [
+    "No payment buttons selected",
+    "No charges/orders/transfers/refunds/payouts",
+    "No tax toggles/rates/registration/address changes or saves",
+    "No publication",
+    "No account or personal-disclosure changes",
+    "No external messages",
+    "No commits or pushes"
+  ]
+}

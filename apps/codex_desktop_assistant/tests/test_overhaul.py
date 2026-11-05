@@ -30,6 +30,22 @@ class FileTests(unittest.TestCase):
     def test_default_asks_each_action(self):
         for action in ACTIONS:self.assertEqual(self.permissions.file_policy.decision(self.path,action),'ask')
 
+    def test_attachment_import_keeps_read_policy_hash_and_stop(self):
+        writer=Mock(return_value={'attachment_id':'imported'})
+        args={'path':str(self.path),'kind':'attachment','sha256':hashlib.sha256(b'before').hexdigest()}
+        self.rule('read','deny')
+        with self.assertRaises(Denied):self.files.call('owner',args,'read',attach=writer)
+        writer.assert_not_called();self.approve.assert_not_called()
+        self.rule('read','ask')
+        self.assertEqual(self.files.call('owner',args,'read',attach=writer),{'attachment_id':'imported'})
+        writer.assert_called_once_with('sample.txt',b'before');self.approve.assert_called_once()
+        writer.reset_mock();self.rule('read','allow')
+        with self.assertRaises(Denied):self.files.call('owner',{**args,'sha256':'0'*64},'read',attach=writer)
+        writer.assert_not_called()
+        self.permissions.halt()
+        with self.assertRaises(Denied):self.files.call('owner',args,'read',attach=writer)
+        writer.assert_not_called()
+
     def test_allow_ask_deny_all_four_actions(self):
         for action in ACTIONS:
             for decision in ('allow','ask','deny'):

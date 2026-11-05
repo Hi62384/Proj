@@ -1,0 +1,42 @@
+{
+  "version": "1.0.1",
+  "status": "Saved to existing Invisible CAD19 Payhip listing dotFZ; saved owner-download bytes and SHA-256 matched on 2026-11-03. Public publication and Inventory buyer checkout remain pending.",
+  "native_cases_passed": 11,
+  "native_excel_verified": false,
+  "visual_review": "Both edited sheets and native PDF prints reviewed; no clipped title or instructions.",
+  "archive": {
+    "name": "Inventory_Reorder_Planner_v1.0.1_CUSTOMER.zip",
+    "bytes": 205675,
+    "sha256": "55246987e3395e1cd225f7143022285b1f87cab6ca315f415057389994ce06aa"
+  },
+  "files": {
+    "Cover.png": {
+      "bytes": 119209,
+      "sha256": "c9785f57b7cdf67f5f6fb47125d1aa73bfcdc2b38644419d876fdc0a806cbf26"
+    },
+    "Instructions.txt": {
+      "bytes": 1885,
+      "sha256": "c6bb1060730b6a62ff99b16282a611298a90e89080e845037a35aa584a943a7b"
+    },
+    "Inventory_Reorder_Planner.xlsx": {
+      "bytes": 7976,
+      "sha256": "5da211442cbc871601ea8e29c769aba98d7067a6beb70587ddf032e023e3b3c1"
+    },
+    "LICENSE_AND_DISCLAIMER.txt": {
+      "bytes": 1406,
+      "sha256": "0c816ba023d4624454a82d5fd2815b8531727d4abf524dd7100ad276b7f0866c"
+    },
+    "Preview-1.png": {
+      "bytes": 54773,
+      "sha256": "929545f713763b1c5755c2b680792aa6eab3ba5c4d268634feb4cb176fc989b1"
+    },
+    "Preview-2.png": {
+      "bytes": 62703,
+      "sha256": "ee88a4bc370df114b742869645d7773738d3cd13bc1a723d55d60b87b44fe44a"
+    },
+    "README.txt": {
+      "bytes": 315,
+      "sha256": "fa0bd2eb5848314f16dc77c7cd79df069e541d79d8891c733a1fa0a495eb128e"
+    }
+  }
+}

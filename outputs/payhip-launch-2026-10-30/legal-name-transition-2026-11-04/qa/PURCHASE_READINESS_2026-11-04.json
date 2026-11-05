@@ -1,0 +1,214 @@
+{
+  "date": "2026-11-04",
+  "method": "Authorized Codex Computer Bridge background structured browser tools only; no native Computer Use, CUA or screen capture",
+  "live_observations": {
+    "cleaning": {
+      "url": "https://payhip.com/b/bP6YN",
+      "title": "Cleaning Business Pricing & Profit Calculator",
+      "price_cad": 15,
+      "buy_now_enabled": true,
+      "add_to_cart_visible": true
+    },
+    "inventory": {
+      "url": "https://payhip.com/b/dotFZ",
+      "title": "Inventory Reorder Planner",
+      "price_cad": 9,
+      "buy_now_enabled": true,
+      "add_to_cart_visible": true,
+      "displayed_delivery": "ZIP (202KB)"
+    },
+    "products_dashboard": {
+      "url": "https://payhip.com/products",
+      "active_products": 2,
+      "archived_products": 0,
+      "each_existing_order_count": 1,
+      "each_sales_cad": 0,
+      "hidden_labels_observed": false
+    },
+    "payment_settings": {
+      "url": "https://payhip.com/settings/payments",
+      "paypal_connected_explicit": true,
+      "stripe_connected": false,
+      "default_currency": "CAD",
+      "settings_changed": false
+    }
+  },
+  "checkout_navigation": {
+    "date": "2026-11-04",
+    "product": "Inventory Reorder Planner",
+    "checkout_opening_owner_approved": true,
+    "separate_local_bridge_approval_granted": true,
+    "checkout_navigation_dispatched": true,
+    "checkout_viewed_this_pass": true,
+    "url": "https://payhip.com/buy",
+    "title": "Checkout - Arshya Ghafaryan",
+    "subtotal_cad": 9,
+    "displayed_tax_cad": 1.17,
+    "displayed_total_cad": 10.17,
+    "currency": "CAD",
+    "country_selection": "CA",
+    "province_selection": "",
+    "buyer_fields_changed": false,
+    "coupon_applied": false,
+    "payment_options_observed": [
+      "PayPal",
+      "Debit or Credit Card"
+    ],
+    "payment_options_method": "Read-only inspection of the already-authorized PayPal smart-buttons frame; no button activation",
+    "hcaptcha_frames_present": true,
+    "hcaptcha_interacted_with": false,
+    "payment_button_clicked": false,
+    "order_submitted": false,
+    "charged_payment_tested": false,
+    "post_checkout_products_verified": {
+      "inventory_existing_orders": 1,
+      "cleaning_existing_orders": 1,
+      "each_sales_cad": 0
+    },
+    "pending_requests": 0,
+    "scope_limit": "Observed checkout total only; taxes/final totals may vary with buyer jurisdiction/selection; no paid processing or post-payment disclosure proof"
+  },
+  "historical_proof_not_repeated": [
+    "Both existing CA$0 order/download-page flows and buyer/seller receipt evidence",
+    "Both actual delivered customer ZIP hashes matched approved releases",
+    "Public desktop/mobile checks and crop repair",
+    "Contact form delivered to monitored inbox"
+  ],
+  "owner_or_environment_limits": [
+    "Actual paid processing/refund/payout not tested or authorized",
+    "Native Excel unavailable; legitimate desktop license not confirmed through accessible session",
+    "Bank-name compatibility and actual post-payment buyer contact disclosures unverified",
+    "Property-specific Richmond Hill clearance unverified"
+  ],
+  "controlled_links": {
+    "live_five_page_audit": "qa/CONTROLLED_LINKS_AUDIT.json",
+    "repo_current_navigation_updated_locally": true,
+    "dated_evidence_preserved": true,
+    "github_main_cleanup_pending": [
+      "products/cleaning-pricing-calculator/README.md still says NOT PUBLISHED/NO PAYMENTS CONNECTED",
+      "products/cleaning-pricing-calculator/marketing/PAYHIP_LISTING_DRAFT.md still has historical CAD29 without current local notice",
+      "outputs/payhip-launch-2026-10-30/website-checks.json is October 30 evidence; publish current-status/link pointers rather than overwrite historical facts"
+    ],
+    "external_github_findings_source": "Independent check supplied by coordinating thread",
+    "commit_or_push_authorized": false
+  },
+  "smallest_owner_action": "No further action is needed to establish that Inventory checkout opens and offers payment methods. If desired, confirm the blank Province privately. Actual charged processing requires a separately authorized legitimate buyer payment; Microsoft desktop install requires a confirmed existing licence and manual sign-in if needed.",
+  "conclusion": "Current Inventory checkout opens, displays CAD9 subtotal/CAD1.17 tax/CAD10.17 total and offers PayPal plus Debit or Credit Card; both active products and connected PayPal configuration are verified. Real charged processing/payout remains untested.",
+  "changes_this_pass": {
+    "product_edits": 0,
+    "uploads": 0,
+    "orders": 0,
+    "charges": 0,
+    "refunds": 0,
+    "payouts": 0,
+    "account_changes": 0,
+    "messages_sent_externally": 0,
+    "commits": 0,
+    "pushes": 0
+  },
+  "cleanup": {
+    "tabs_retained": [
+      5199852,
+      5199853,
+      5199855
+    ],
+    "notes": [
+      "Inventory checkout left in existing agent-created tab, no order submitted",
+      "Product dashboard retained; closing form tabs previously required local review so no repeat close attempted",
+      "Microsoft tab left at attachment/authentication boundary; no further account inspection"
+    ]
+  },
+  "checkout_attempt_history": [
+    {
+      "product": "Inventory",
+      "attempted": "Open the observed Buy Now control only, not submit an order",
+      "bridge_result": "Separate local approval required before dispatch",
+      "exact_reason": "This activates a purchase, payment or checkout control.",
+      "approval_category": "payment",
+      "request_cancelled_before_dispatch": true,
+      "post_cancel_inspection": "Still at original product URL with Buy Now enabled",
+      "pending_requests_after_cancellation": 0,
+      "checkout_viewed_this_pass": false,
+      "order_submitted": false,
+      "charged_payment_tested": false
+    }
+  ],
+  "excel_license_session_check": {
+    "requested_url": "https://account.microsoft.com/services",
+    "result": "Denied: Attach this exact extension-authorized tab to the current chat",
+    "further_attachment_or_signin_attempted": false,
+    "license_verified": false,
+    "installation_or_trial_started": false,
+    "account_settings_or_terms_changed": false,
+    "desktop_installation_result_from_coordinating_check": "No Excel.exe, App Paths/CLSID or desktop Office install found; only OneNote/OfficeHub Store packages",
+    "owner_later_confirms_no_desktop_license": true
+  },
+  "free_excel_web_followup": {
+    "connected_excel_sessions": 0,
+    "already_authorized_excel_web_tabs": 0,
+    "tested": false,
+    "prior_denied_tab_retried": false,
+    "evidence": "qa/FREE_COMPATIBILITY_REVIEW.json"
+  },
+  "compatibility_copy_followup": {
+    "cleaning_clarification_recommended": false,
+    "inventory_explicit_native_limit_present": true,
+    "live_copy_changed": true,
+    "cleaning_correction_staged_not_saved": false,
+    "exact_save_blocker": null,
+    "evidence": "qa/CLEANING_COMPATIBILITY_CORRECTION.json",
+    "cleaning_correction_saved_verified_live": true,
+    "only_requirements_heading_changed": true,
+    "price_files_visibility_preserved": true
+  },
+  "extended_free_audit": {
+    "source_utc_date_label": "2026-11-05",
+    "libreoffice_passed": 84,
+    "libreoffice_total": 84,
+    "assertions": 562,
+    "schema_validator": "Microsoft DocumentFormat.OpenXml SDK 3.5.1; Office2019 target",
+    "schema_workbooks": 3,
+    "schema_errors": 0,
+    "artifact_evaluator_passed": 74,
+    "artifact_evaluator_total": 84,
+    "diagnosed_evaluator_disagreements": 10,
+    "native_excel_tested": false,
+    "excel_web_tested": false,
+    "new_visual_print_pdf_qa": false,
+    "release_archives_unchanged": true,
+    "evidence": "qa/extended-free-audit-2026-11-05/SUMMARY.json",
+    "staged_publication_status_unchanged_at_audit_incorporation": true,
+    "later_separately_approved_disclaimer_save": true
+  },
+  "later_disclaimer_publication": {
+    "locally_owner_approved": true,
+    "publication_saved": true,
+    "public_reload_verified": true,
+    "only_heading_changed": true,
+    "price_cad": 15,
+    "files_images_visibility_preserved": true,
+    "charges": 0,
+    "orders": 0
+  },
+  "one_paid_test_authorization_and_blocker": {
+    "authorized": true,
+    "maximum_total_cad": 10.17,
+    "method": "PayPal",
+    "performed": false,
+    "blocked_before_payment_activation": true,
+    "missing": "Owner has no separate PayPal buyer account; PayPal-only test blocked. Guest card would need eligible user-owned unlinked card and separate authorization.",
+    "evidence": "qa/PAID_TEST_PREFLIGHT.json",
+    "owner_only_paypal_account": true,
+    "no_extra_debit_card_reported": true,
+    "alternate_routes_search_stopped": true
+  },
+  "paid_test_alternatives": "qa/PAID_TEST_ALTERNATIVES.json",
+  "nonpayment_tax_and_claims_review": "qa/NONPAYMENT_TAX_AND_CLAIMS_REVIEW.json",
+  "tax_config_readonly_observed": {
+    "add_on_top": true,
+    "eu_uk_auto_vat": true,
+    "canada_gst_hst_pst_platform_guidance": true,
+    "qst_exception_recorded": true,
+    "tax_settings_changed": false
+  }
+}

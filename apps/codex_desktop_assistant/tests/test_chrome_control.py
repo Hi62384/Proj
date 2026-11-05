@@ -23,7 +23,7 @@ class FakeBridge:
         if guard:guard()
         self.on_request(operation,args);self.calls.append((operation,copy.deepcopy(args)))
         if operation=='context':return dict(self.context)
-        if operation=='inspect':return {'url':'https://example.org/editor','observation':'obs','controls':[]}
+        if operation=='inspect':return {'url':self.context['page_url'],'observation':'obs','controls':[{'element':0,'label':self.context['label']}]}
         if operation in ('list_tabs','find_tabs'):return {'tabs':self.state['tabs']}
         if operation=='open_tab':return {'tab':43,'authorized':False}
         return {'dispatched':True}
@@ -120,8 +120,26 @@ class ChromeControlTests(unittest.TestCase):
     def test_ordinary_scripted_controls_run_without_blanket_review(self):
         self.attach();self.inspect();self.bridge.context.update(label='Continue',role='Button',scripted_button=True)
         self.action('click');self.approve.assert_not_called()
-        self.inspect();self.bridge.context.update(label='Publish',expands_menu=True)
+        self.bridge.context.update(label='Publish',expands_menu=True);self.inspect()
         self.action('click');self.assertEqual(self.approve.call_count,1)
+
+    def test_slow_human_review_gets_new_observation_before_context_check(self):
+        self.attach();self.bridge.context.update(label='Submit',form_submission=True,form_method='POST');self.inspect()
+        expired=[False]
+        def approval(*args):expired[0]=True;return True
+        def request(operation,args):
+            if operation=='inspect':expired[0]=False
+            if operation=='context' and expired[0]:raise Denied('Old observation expired during human review')
+        self.approve.side_effect=approval;self.bridge.on_request=request
+        self.action('click');self.assertEqual(self.bridge.calls[-1][0],'action')
+        self.assertEqual([op for op,_ in self.bridge.calls][-3:],['inspect','context','action'])
+
+    def test_reinspection_does_not_authorize_a_changed_target(self):
+        self.attach();self.bridge.context.update(label='Submit',form_submission=True,form_method='POST');self.inspect()
+        def change(*args):self.bridge.context['label']='Buy now';return True
+        self.approve.side_effect=change
+        with self.assertRaisesRegex(Denied,'Reviewed control changed'):self.action('click')
+        self.assertFalse(any(op=='action' for op,_ in self.bridge.calls))
 
     def test_other_conversation_cannot_use_attached_tab(self):
         self.attach();self.p.resume('another')
@@ -179,6 +197,32 @@ class ChromeControlTests(unittest.TestCase):
         self.attach();self.inspect()
         with self.assertRaises(Denied):self.action('upload',path=str(self.root/'file.txt'),approved_path='C:/Windows/secret')
         self.approve.assert_not_called()
+
+    def test_saved_download_digest_requires_fresh_observation(self):
+        self.bridge.state['tabs'][0]['origin']=origin('https://payhip.com')
+        self.bridge.context.update(page_url='https://payhip.com/product/edit/test',href='https://payhip.com/product/download/Observed123')
+        self.attach()
+        with self.assertRaises(Denied):self.action('verify_download')
+        self.inspect();self.action('verify_download',url='https://evil.example/secret')
+        operation,args=self.bridge.calls[-1]
+        self.assertEqual(operation,'asset_digest');self.assertEqual(args['kind'],'delivery')
+        self.assertNotIn('url',args);self.approve.assert_not_called()
+        self.bridge.context['href']='https://bank.example/download/secret'
+        with self.assertRaisesRegex(Denied,'Only an observed'):self.action('verify_download')
+
+    def test_payhip_storage_receiver_is_explicit_reviewed_and_bounded(self):
+        self.bridge.state['tabs'][0]['origin']=origin('https://payhip.com')
+        self.bridge.context.update(page_url='https://payhip.com/product/edit/test',form_action='https://payhip.com/product/edit/test')
+        self.attach();self.inspect()
+        source=self.root/'package.zip';source.write_bytes(b'PK\x03\x04fixture');record=self.attachments.add(source)
+        args={'tab':42,'observation':'obs','element':0,'operation':'upload','attachment_id':record['id'],'upload_receivers':['https://other.s3.amazonaws.com/']}
+        with self.assertRaises(Denied):self.control.call(self.conversation,'action',args,{record['id']:record})
+        self.approve.assert_not_called()
+        args['upload_receivers']=['https://pe56d.s3.amazonaws.com/']
+        self.control.call(self.conversation,'action',args,{record['id']:record})
+        self.assertEqual(self.approve.call_args.args[2]['storage_receivers'],args['upload_receivers'])
+        self.assertEqual(next(a for op,a in self.bridge.calls if op=='upload_begin')['allowed_upload_receivers'],args['upload_receivers'])
+        self.assertNotIn('_upload_receivers',record)
 
     def test_upload_checks_file_hash_and_chunk_bytes(self):
         source=self.root/'synthetic.bin';raw=b'ordinary synthetic bytes'*15000;source.write_bytes(raw);record=self.attachments.add(source)

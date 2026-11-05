@@ -1,0 +1,90 @@
+{
+  "date_utc": "2026-11-05",
+  "scope": "Released customer ZIPs; three extracted workbooks; disposable input mutations only",
+  "native_excel_tested": false,
+  "excel_web_tested": false,
+  "purchase_or_signin_required": false,
+  "libreoffice": {
+    "cases": 84,
+    "passed": 84,
+    "assertions": 562,
+    "cleaning_cases": 42,
+    "inventory_cases": 42,
+    "seed": 20261105,
+    "source_archives_unchanged": true
+  },
+  "schema": {
+    "validator": "Microsoft DocumentFormat.OpenXml 3.5.1",
+    "target": "Office2019",
+    "workbooks": [
+      {
+        "File": "Cleaning_Pricing_Calculator.xlsx",
+        "ErrorCount": 0,
+        "Errors": []
+      },
+      {
+        "File": "Cleaning_Pricing_Calculator_FICTIONAL_DEMO.xlsx",
+        "ErrorCount": 0,
+        "Errors": []
+      },
+      {
+        "File": "Inventory_Reorder_Planner.xlsx",
+        "ErrorCount": 0,
+        "Errors": []
+      }
+    ],
+    "errors": 0
+  },
+  "second_evaluator": {
+    "engine": "Bundled @oai/artifact-tool",
+    "cases": 84,
+    "passed": 74,
+    "disagreements": 10,
+    "diagnostics": {
+      "engine": "Bundled @oai/artifact-tool",
+      "inputA1": 0,
+      "probes": [
+        {
+          "formula": "=IF(A1=\"\",0.13,A1)",
+          "expected": 0,
+          "actual": 0.13
+        },
+        {
+          "formula": "=ROUND(149.025,2)",
+          "expected": 149.03,
+          "actual": 149.03
+        },
+        {
+          "formula": "=IF(OR(A1=\"\",AND(ISNUMBER(A1),A1>0)),\"VALID\",\"INVALID\")",
+          "expected": "INVALID",
+          "actual": "VALID"
+        },
+        {
+          "formula": "=ROUND(3.25*25+22.15+18.5*0.55+9.75+14+390*0.03,2)",
+          "expected": 149.03,
+          "actual": 149.02
+        }
+      ]
+    },
+    "interpretation": "Six scenarios disagree because numeric 0 is treated as empty text; three because composed half-cent rounding differs by one cent; one because zero onsite hours is treated as a blank override. Minimal probes reproduce these evaluator differences. Original release formulas were not changed."
+  },
+  "coverage": [
+    "24 combined Cleaning quote mutations across all seven service categories, both blank and demo source workbooks",
+    "5 scenario rows and 5 job-log rows including first, adjacent, middle and last rows",
+    "8 invalid Cleaning inputs/status/quote-suppression cases",
+    "30 combined Inventory threshold/overstock/zero/fractional/large-number cases",
+    "12 Inventory invalid inputs: every input negative, blank or text",
+    "Schema validation of all three release XLSX files"
+  ],
+  "remaining_limits": [
+    "No native Excel engine or GUI check",
+    "No Excel web session test",
+    "No new visual, print or PDF-export QA",
+    "No paid payment/payout/post-payment disclosure test",
+    "Random mutation sample is bounded, not exhaustive"
+  ],
+  "release_archive_hashes": {
+    "cleaning": "334518208388483457c8849cfdf9c73955c80e929d38c1afa6631e9459d990d5",
+    "inventory": "0ebab37edde6db94b5ea80bc761dc82133ec6c3637a72e4a8489ac3dda0f23c0"
+  }
+}

@@ -6,6 +6,15 @@
 
 The inventory contains 1,296 preserved records and 216 additional individually specified hypotheses. Two additions are personal-capital research notes, not businesses. These totals are not counts of independently validated markets: offers can overlap and reuse business mechanisms. No exact offer has verified paid demand in this research dataset. Scores and prices are hypotheses, not promised income. Public privacy does not mean guaranteed anonymity.
 
+## Published digital products
+
+The store now operates as **Arshya Ghafaryan**: [Shop](https://payhip.com/ArshyaGhafaryan), [Contact](https://payhip.com/ArshyaGhafaryan/contact), and [Support and Refunds](https://payhip.com/ArshyaGhafaryan/support-and-refunds).
+
+- [Cleaning Business Pricing & Profit Calculator](https://payhip.com/b/bP6YN) — CA$15.
+- [Inventory Reorder Planner](https://payhip.com/b/dotFZ) — CA$9.
+
+See the [current launch status](outputs/payhip-launch-2026-10-30/CURRENT_LAUNCH_STATUS.md) for verified delivery, remaining checks and the final package locations. Earlier Cedargrid URLs in dated evidence are historical and do not redirect. These are published listings, not evidence of paid demand.
+
 ## Find the right part of the project
 
 | Area | Use | Start |

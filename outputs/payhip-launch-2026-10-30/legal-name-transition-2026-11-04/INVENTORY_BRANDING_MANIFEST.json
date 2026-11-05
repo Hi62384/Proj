@@ -1,0 +1,30 @@
+{
+  "name": "Inventory_Reorder_Planner_v1.0.2_CUSTOMER.zip",
+  "bytes": 206757,
+  "sha256": "0ebab37edde6db94b5ea80bc761dc82133ec6c3637a72e4a8489ac3dda0f23c0",
+  "changed_members": [
+    "Cover.png",
+    "Instructions.txt",
+    "README.txt"
+  ],
+  "workbook_byte_identical": true,
+  "formula_changes": false,
+  "original_preserved": true,
+  "status": "Saved on existing public CAD9 listing; new cover first; actual buyer download from existing zero-charge order independently matched",
+  "files": {
+    "Cover.png": "d5667712b2ae230660ff2645ae27890d10eda592949417278bc2d415bd2c98bc",
+    "Instructions.txt": "d26637982e405417ffaf0fe9df87b4894c8cdca4271467af59061a1be92c4050",
+    "Inventory_Reorder_Planner.xlsx": "5da211442cbc871601ea8e29c769aba98d7067a6beb70587ddf032e023e3b3c1",
+    "LICENSE_AND_DISCLAIMER.txt": "0c816ba023d4624454a82d5fd2815b8531727d4abf524dd7100ad276b7f0866c",
+    "Preview-1.png": "929545f713763b1c5755c2b680792aa6eab3ba5c4d268634feb4cb176fc989b1",
+    "Preview-2.png": "ee88a4bc370df114b742869645d7773738d3cd13bc1a723d55d60b87b44fe44a",
+    "README.txt": "d873556448e2536f59f2e4b67f5743b6a4e4b806d602bde8aac0578591c3cd55"
+  },
+  "buyer_download_verified": {
+    "date": "2026-11-04",
+    "bytes": 206757,
+    "sha256": "0ebab37edde6db94b5ea80bc761dc82133ec6c3637a72e4a8489ac3dda0f23c0",
+    "method": "Downloaded through the existing buyer download-page control, then read under the independently approved bridge file Read permission",
+    "new_order_created": false
+  }
+}

@@ -1,0 +1,221 @@
+{
+  "recorded_utc": "2026-11-05T01:55:56.215359+00:00",
+  "repository": "https://github.com/Hi62384/Proj",
+  "branch": "main",
+  "commit": "7a99db00caea8d88a7abae943edeb3439b63d9c5",
+  "commit_url": "https://github.com/Hi62384/Proj/commit/7a99db00caea8d88a7abae943edeb3439b63d9c5",
+  "parent": "b831f7fe24c98d8c6f6862ab11bb731575df5d8a",
+  "tree": "02acbd8d75f08eed682e5058bcc05a6fdbe62a61",
+  "publication_method": "Existing connected GitHub integration; force=false with exact expected old SHA. No credential changes.",
+  "files": [
+    {
+      "path": "apps/codex_desktop_assistant/COMPUTER_BRIDGE.md",
+      "bytes": 8527,
+      "sha256": "782d0f8a820514fcfc9669a6623fb3d44e63ae84f70e10aa31f8f0a67a8d64fb",
+      "git_blob": "33a33e9320ef6d49a1596d3b2ef15fe7f6196570"
+    },
+    {
+      "path": "apps/codex_desktop_assistant/assistant/action_policy.py",
+      "bytes": 8863,
+      "sha256": "064637295621b6135156e001ed1b72250123839849f323f0f60bff7c62a50edb",
+      "git_blob": "3c008078ac906f3e7d0274190eceb88dffaff440"
+    },
+    {
+      "path": "apps/codex_desktop_assistant/assistant/attachments.py",
+      "bytes": 5228,
+      "sha256": "c07b070de31f1226e4cbaad8ea943254618de178078bcbcce954007931ff2b8d",
+      "git_blob": "343f2d5d1dbe25202d0e571708cb9350e1f4c4cd"
+    },
+    {
+      "path": "apps/codex_desktop_assistant/assistant/chrome_control.py",
+      "bytes": 22523,
+      "sha256": "819647af2e9c2b718b8fab6adc9b273ef5f2441bfe70ff68551fa79498bfab18",
+      "git_blob": "31c28d235688bc9da3eec7f19f22b3e30ad0cfa7"
+    },
+    {
+      "path": "apps/codex_desktop_assistant/assistant/files.py",
+      "bytes": 10945,
+      "sha256": "7b14824ab1f9adcbacca5168edba7f54ae4c28b220b528e6f7991a3a50adb26a",
+      "git_blob": "db1aa9585ed256eb0cac38dfaceb6f8576d9d61e"
+    },
+    {
+      "path": "apps/codex_desktop_assistant/assistant/tools.py",
+      "bytes": 24550,
+      "sha256": "4b7129dd00f4b8cdacca057a377ba790705052b77b6fadac7d14000cf874c0e1",
+      "git_blob": "60d3950546f96794dddb82df47abe5386000867e"
+    },
+    {
+      "path": "apps/codex_desktop_assistant/bridge/dashboard.py",
+      "bytes": 15440,
+      "sha256": "320da9ac537a531d05ab9b49361de2013c09adf68084530ece3219ede24d97f1",
+      "git_blob": "b26f956689f6368d383fe29332bf42b33348f8eb"
+    },
+    {
+      "path": "apps/codex_desktop_assistant/bridge/runtime.py",
+      "bytes": 19756,
+      "sha256": "450577a0f7edd947d8f17688a44a75e32578c13fef48e135bf29a91e1afbe891",
+      "git_blob": "66b41272d4aaba077205ce1ff8d6cd0b1079c7bd"
+    },
+    {
+      "path": "apps/codex_desktop_assistant/chrome_extension/content.js",
+      "bytes": 30411,
+      "sha256": "a85de4baa30d2df1a784fb6f7c816b6a14d81c1360d8803be5fb179966f66346",
+      "git_blob": "ee50ce8b34a9a847386768e114e5161e1341bfd2"
+    },
+    {
+      "path": "apps/codex_desktop_assistant/chrome_extension/worker.js",
+      "bytes": 35531,
+      "sha256": "3213fe549d7cec4fefe904aa33c15f3aec18abfd8e5c5c5d756621674401c75d",
+      "git_blob": "fe4bc31df2731526c5db9bf6b5a65c22dfc20742"
+    },
+    {
+      "path": "apps/codex_desktop_assistant/tests/chrome_input_widgets.test.mjs",
+      "bytes": 7591,
+      "sha256": "f0785c6364b02590007da4afd904dd7dcd2988e620090f0fddd85070eff96528",
+      "git_blob": "21189aae2dc433befe9c3b630fe51482d034ebad"
+    },
+    {
+      "path": "apps/codex_desktop_assistant/tests/chrome_worker_tabs.test.mjs",
+      "bytes": 9436,
+      "sha256": "33b4c73260570c245d642a331098c46085b35d28f78de3205a202df559de49ef",
+      "git_blob": "aec3cc00e7fdcb19393cd11648d858b53758162d"
+    },
+    {
+      "path": "apps/codex_desktop_assistant/tests/test_action_policy.py",
+      "bytes": 10960,
+      "sha256": "951cc465768cbe1959c429973b5ffb9a36a4e5fbb2f739a43ea4f9d9e7d45574",
+      "git_blob": "e2db33d58c6af7e2574736fd28f7e6a5ff076b28"
+    },
+    {
+      "path": "apps/codex_desktop_assistant/tests/test_bridge_dashboard.py",
+      "bytes": 7195,
+      "sha256": "319a473d05fb540ee71ddbbd8e7d4599ffed2d839eb75bed075fd39233c07fbd",
+      "git_blob": "470d50c4f9fcec856ea39054822b74b2387537d7"
+    },
+    {
+      "path": "apps/codex_desktop_assistant/tests/test_chrome_control.py",
+      "bytes": 15662,
+      "sha256": "ea699de7bc99fe95c688d6d46d68e103980882df26eba9cc5d21e136476e2baa",
+      "git_blob": "55b431ba1449d4f1bd99301b72bb967f649fded1"
+    },
+    {
+      "path": "apps/codex_desktop_assistant/tests/test_computer_bridge.py",
+      "bytes": 7329,
+      "sha256": "4616fb486fd729fb7bceeb828156d3765d8d0f71992a5bf80e0816bcd1dd0945",
+      "git_blob": "bf1647f3775f4c926e2e2975fa69e18b1919fa5a"
+    },
+    {
+      "path": "apps/codex_desktop_assistant/tests/test_overhaul.py",
+      "bytes": 12498,
+      "sha256": "c58f03e4b91d35cca7808fa9e0d97f15090236408f5888c18e52cfe2050c2d33",
+      "git_blob": "447d42489ac306ac5515db8e76ddc111df6528d3"
+    },
+    {
+      "path": "apps/codex_desktop_assistant/bridge/routine_policy.py",
+      "bytes": 3480,
+      "sha256": "b8eb51312fe93680ac473210aed796b69e73ce07cc0b34ed03346bf2e07210e4",
+      "git_blob": "70651f522d2843ed9e5bb69f7c17e34dddc5e6fd"
+    },
+    {
+      "path": "apps/codex_desktop_assistant/tests/test_routine_policy.py",
+      "bytes": 6724,
+      "sha256": "1be6123ff3bd59f8f956ef1ab09d46e0d01e3c063102349f35aca8d1d8591b3e",
+      "git_blob": "f8b897ccefd88ff39ff1b432e2eb4fdb0cd0e845"
+    },
+    {
+      "path": "outputs/payhip-launch-2026-10-30/finalize_cleaning_release.py",
+      "bytes": 6164,
+      "sha256": "043a0e86535cdcb348d045ee4c17278da452de0cb7d4740826fecc53260ad1fe",
+      "git_blob": "827fc618740af72b6569d6456efb1070f260ba99"
+    },
+    {
+      "path": "outputs/payhip-launch-2026-10-30/inventory-release-2026-11-03/prepare.mjs",
+      "bytes": 2249,
+      "sha256": "17b56cc535bc7cdba77943b2353f6678df971d4c7fe81a9078947eafb9a0e575",
+      "git_blob": "bfec910fd8e531ed21988d938a0ac518782eaf88"
+    },
+    {
+      "path": "outputs/payhip-launch-2026-10-30/inventory-release-2026-11-03/verify.py",
+      "bytes": 4775,
+      "sha256": "7a0141e42cca8abc591f2a8fd0eae391f8ca465349c8db43470df2e55f17769e",
+      "git_blob": "848f562cda1f482acddf5f153adf73d8cba0965a"
+    },
+    {
+      "path": "outputs/payhip-launch-2026-10-30/merge_release_candidate.py",
+      "bytes": 5345,
+      "sha256": "f90d099c0d5a8c41991d09abe49623d7f48c788273087d110392b514656d471c",
+      "git_blob": "c1b965334c544a8b104b4a57d531ffe34784e32a"
+    },
+    {
+      "path": "outputs/payhip-launch-2026-10-30/prepare_release_candidate.mjs",
+      "bytes": 4311,
+      "sha256": "75a8d666c7ee87611e0f0dccc87de17536223693e5241a55e9f04476d333c83a",
+      "git_blob": "a8a0c39186f6a0b8b684703ce79782e4d3d15555"
+    },
+    {
+      "path": "products/cleaning-pricing-calculator/tools/verify_launch.py",
+      "bytes": 12519,
+      "sha256": "71ff6d2f94bc33b9f0315a127b7d07701dab5348ad2b45bee0bea0997d550da2",
+      "git_blob": "bac586fcaf85e33be87ce448533a1e6406cb0b68"
+    },
+    {
+      "path": "README.md",
+      "bytes": 5607,
+      "sha256": "7ac3cbdcce4d711d311c2fd989bb2568bb4cff7947827d4a143c5f219e9590d5",
+      "git_blob": "f77139581a4cd1029e5519fef1fbdd60c314a199"
+    },
+    {
+      "path": "outputs/payhip-launch-2026-10-30/website-checks.json",
+      "bytes": 6672,
+      "sha256": "32a1802f95f86254b9d09693e81319f854253c47566e00abe84f2763f1c87734",
+      "git_blob": "2df4e69f0f6fe09da698fece71a527c437cbbd8c"
+    },
+    {
+      "path": "outputs/payhip-launch-2026-10-30/CURRENT_LINKS.json",
+      "bytes": 604,
+      "sha256": "4e494483bc7f6044c7ddf8a2888d3b8dd7ded36e4d80ca4d4e5d554d206ab7d6",
+      "git_blob": "49cc3d957980d184c7d3e09a1750cab5913a2674"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 641,
+      "sha256": "a1deff0a3202d619ad4565790c53921b2b761640f99a382ac0e082e9bd1adc2a",
+      "git_blob": "5d9eb82df2d1ff5cb4a5c99f6d8f9987c7a6eaf7"
+    }
+  ],
+  "verification": {
+    "fresh_public_fetch_head_matches": true,
+    "exact_tree_matches_reviewed_local_tree": true,
+    "exact_29_changed_paths": true,
+    "all_live_blob_hashes_match": true,
+    "remote_commit_parent_preserved": true,
+    "isolated_checkout_clean_at_published_commit": true,
+    "original_head_index_and_29_original_file_bytes_unchanged": true
+  },
+  "tests": {
+    "python_passed": 110,
+    "python_failures": 0,
+    "python_errors": 0,
+    "node_regression_scripts_passed": 2,
+    "python_ast_syntax": "all candidate Python files parsed",
+    "node_syntax": "Both extension JS files and both historical release .mjs files passed node --check",
+    "evidence": "REVIEWED_29_TESTS.json",
+    "not_executed": "Historical release builders/Calc verification not rerun; dependencies and generated/release inputs intentionally not published."
+  },
+  "limits": [
+    "originalAutoDiscardable restoration not durable across worker/extension crash or reload",
+    "No new live Chrome/Windows foreground/capture or attachment-controller restart acceptance test",
+    "No native Excel or charged-payment/payout test",
+    "No claim of customer demand or whole-repository security clearance"
+  ],
+  "excluded": [
+    "manifest itself and audit/QA reports",
+    "ZIP/XLSX/customer release binaries and images",
+    "private owner/account/tax/receipt records and private buyer download links",
+    "application profiles/caches and generated case/recalculated artifacts",
+    ".tmp publication checkout",
+    "Cleaning demo files and unrelated dirty work"
+  ],
+  "local_metadata_note": "Original root .gitignore/README/current-links/snapshot originals were preserved; reviewed alternatives were published only through isolated checkout. No original local candidate files were replaced.",
+  "historical_rejection": "Earlier broad unspecified publication rejection remains preserved verbatim in BRIDGE_CANDIDATE_AUDIT.json/.md. This later publication followed a new exact 29-path, content-hashed instruction."
+}

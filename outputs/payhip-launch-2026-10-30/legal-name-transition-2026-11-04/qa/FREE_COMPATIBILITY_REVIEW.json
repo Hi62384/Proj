@@ -1,0 +1,60 @@
+{
+  "date": "2026-11-04",
+  "owner_desktop_office_license": "Owner explicitly reports no Microsoft365/Office licence including desktop Excel",
+  "constraints": "Free checks only; no purchase/trial/install/sign-in. No retry of denied Microsoft services tab. No CUA/native computer use/capture/foreground input.",
+  "discovery": {
+    "document_control_excel_sessions": 0,
+    "already_authorized_excel_web_tabs": 0,
+    "unauthorized_tabs_titles_and_contents_not_inspected": true,
+    "denied_microsoft_services_tab_not_revisited": true,
+    "alternative_microsoft_urls_opened": false
+  },
+  "excel_web_test": {
+    "performed": false,
+    "exact_blocker": "No connected Excel document session and no already-authorized Excel web tab in redacted bridge discovery. Access/sign-in/attachment expansion was not attempted.",
+    "workbook_uploaded_to_cloud": false
+  },
+  "evidence_distinctions": {
+    "libreoffice": "Historical Cleaning 59 calculation/input cases plus 9 regression checks; Inventory 11 recalculation cases. This is Calc evidence, not Excel certification.",
+    "structural": "Coordinating checks report ZIP integrity and no macros/external workbook links/cached error cells in the two Cleaning workbooks and Inventory workbook; structural only.",
+    "excel_web": "Not tested under current permissions.",
+    "desktop_excel": "Not installed, owner has no desktop licence; no native behavior verified."
+  },
+  "live_copy_review": {
+    "cleaning": {
+      "url": "https://payhip.com/b/bP6YN",
+      "observed_requirements": "Microsoft Excel with support for modern .xlsx workbooks. Compatibility with Google Sheets, Apple Numbers, and older Excel versions is not guaranteed.",
+      "native_excel_untested_disclaimer_explicit": true,
+      "correction_recommended": false,
+      "proposed_clarification": "Calculation and input checks passed in LibreOffice Calc. Native Microsoft Excel editing, recalculation, dropdowns, printing and PDF export have not been verified. Excel for web compatibility has not been tested.",
+      "scope": "Add transparent test limits; do not imply new compatibility guarantees or change the existing requirement/policy.",
+      "live_copy_changed": true,
+      "correction_staged_not_saved": false,
+      "staged_heading": "Requirements \u2014 LibreOffice Calc checks passed; Microsoft Excel untested",
+      "save_blocker": null,
+      "correction_saved_and_publicly_verified": true,
+      "current_heading": "Requirements \u2014 LibreOffice Calc checks passed; Microsoft Excel untested"
+    },
+    "inventory": {
+      "url": "https://payhip.com/b/dotFZ",
+      "observed_compatibility": "Provided in .xlsx format. Eleven recalculation cases passed in LibreOffice Calc, with both worksheets and printouts visually reviewed. Native Microsoft Excel was unavailable and remains unverified. Google Sheets, Apple Numbers and mobile spreadsheet compatibility are not promised.",
+      "native_excel_untested_disclaimer_explicit": true,
+      "required_correction_identified": false,
+      "live_copy_changed": false
+    }
+  },
+  "unchanged": [
+    "Prices",
+    "Customer ZIPs",
+    "Policies and licences",
+    "Account settings and personal disclosures",
+    "Completed checkout/order state"
+  ],
+  "actions_not_taken": [
+    "No installation, trial, purchase or sign-in",
+    "No uploads/cloud workbook copies",
+    "No payment/order controls repeated",
+    "No external messages",
+    "No commit/push"
+  ]
+}

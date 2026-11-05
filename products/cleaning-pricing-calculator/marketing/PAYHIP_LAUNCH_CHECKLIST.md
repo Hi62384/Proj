@@ -1,6 +1,6 @@
 # Payhip launch checklist (owner approval required)
 
-**STATUS: DRAFT — NO LISTING PUBLISHED, NO PLATFORM CONNECTED, NO SALE RECORDED.**
+**Historical preparation checklist.** The [existing Cleaning listing](https://payhip.com/b/bP6YN) is now published at CA$15 under [Arshya Ghafaryan](https://payhip.com/ArshyaGhafaryan). Use the [current product status](../README.md) for completed checks and remaining limits. Unchecked historical items below are not a current-state audit; do not repeat account setup, uploads or orders from this checklist.
 
 ## Before account setup
 

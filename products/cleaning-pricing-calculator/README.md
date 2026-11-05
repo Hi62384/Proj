@@ -1,6 +1,10 @@
 # Cleaning Business Pricing & Profit Calculator — original digital download
 
-**Status: PREPARED FOR SELLER REVIEW. NOT PUBLISHED. NO PAYMENTS CONNECTED.**
+**Current status (November 4, 2026):** [Published at CA$15](https://payhip.com/b/bP6YN) in the [Arshya Ghafaryan store](https://payhip.com/ArshyaGhafaryan). PayPal connection and the CA$0 delivery flow are verified; no charged payment or payout has been tested. Paid customer demand remains unverified.
+
+The current customer archive is **Cleaning_Pricing_Toolkit_v1.0.1_CUSTOMER.zip**, 61,130 bytes, SHA-256 `334518208388483457c8849cfdf9c73955c80e929d38c1afa6631e9459d990d5`. Its delivered buyer download matched that hash. This directory retains original authoring sources; do not assume rebuilding them reproduces the current live package or replace the live download without release review.
+
+Released-workbook calculation/input checks passed in LibreOffice Calc. Native Microsoft Excel and Excel for web remain untested; Calc results are not Excel certification. No spreadsheet-software licence is included. The existing [Support and Refunds policy](https://payhip.com/ArshyaGhafaryan/support-and-refunds) and [Contact page](https://payhip.com/ArshyaGhafaryan/contact) use the current seller identity.
 
 This product is an original, Excel-based cost-aware quoting tool intended for cleaning businesses. Pricing, sample hours, consumables and tax settings are illustrative. The product must be validated with a real buyer before advertising market fit; no revenue has been earned by creating it.
 
@@ -9,7 +13,7 @@ This product is an original, Excel-based cost-aware quoting tool intended for cl
 - `customer/` — **blank** Excel workbook, license and start note. These belong inside the customer ZIP.
 - `examples/` — separate fully marked fictional demonstration workbook and sample CSV. The demo workbook belongs inside the customer ZIP; the sample CSV is seller evidence/test fixture.
 - `documentation/` — text source for the bundled PDF quick-start guide.
-- `marketing/` — Payhip draft listing, launch checklist, preview artwork and privacy review. **Nothing here is published.**
+- `marketing/` — historical Payhip listing draft, launch checklist, preview artwork and privacy review. The current publication, price, policy and delivery status is summarized above; these drafts do not override the live release.
 - `release/` — the pre-packaged customer ZIP, plus a SHA-256 manifest.
 - `tests/` — stdlib tests for model math, workbook formula signatures, safety and packaging.
 - `tools/` — reproducible release packaging and optional workbook/PDF authoring code.

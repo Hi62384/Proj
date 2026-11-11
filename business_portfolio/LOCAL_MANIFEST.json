@@ -1,6 +1,6 @@
 {
-  "scope": "Edited local snapshot; excludes this manifest, private folders and caches. Original manifest/checksums remain historical delivery evidence.",
-  "date": "2026-11-05",
+  "scope": "Local text snapshot; excludes this manifest, private folders and caches. Original delivery manifests and checksums remain historical.",
+  "date": "2026-11-11",
   "projects": 139,
   "niches": 81,
   "sources": 108,
@@ -37,13 +37,13 @@
     },
     {
       "path": "PROJECT_BROWSER.html",
-      "bytes": 2531193,
-      "sha256": "cc8464dd5c6047229446aca34ca8779a5e4a12065bd9c917645f7ec72fd7cb05"
+      "bytes": 2531131,
+      "sha256": "11c2581d0d23f0e9591e4769f55977c81eee685b6968efc0e69438656f89ef13"
     },
     {
       "path": "PROJECT_INDEX.json",
-      "bytes": 2651491,
-      "sha256": "1f3ad46187994c4222ad8a8eae49559fdbadfb27089bad55366e2b64cae46626"
+      "bytes": 2651429,
+      "sha256": "7180da96030ae5e3d4fa3d740715397aa709759027920f3f2cf9e4f676d003c2"
     },
     {
       "path": "PROJECT_TEMPLATE.md",
@@ -132,8 +132,8 @@
     },
     {
       "path": "niches/ai-workflow-automation/agency/internal/client-delivery/projects/awa-013-new-client-intake-to-delivery-board.md",
-      "bytes": 21008,
-      "sha256": "37895fe0d4bc04295c4f0337058f387430a7b9bd109e978d1d3c53aa2f3430a8"
+      "bytes": 21007,
+      "sha256": "0ffcbee48474f331ee60baec3d97cdb7e5e2cf381385c0503f3f10e52a8425e3"
     },
     {
       "path": "niches/ai-workflow-automation/agency/internal/client-delivery/projects/awa-014-agency-access-request-tracker.md",
@@ -142,8 +142,8 @@
     },
     {
       "path": "niches/ai-workflow-automation/agency/internal/client-delivery/projects/awa-015-client-change-request-approval-queue.md",
-      "bytes": 21020,
-      "sha256": "dfed752fcf69ac21600ec71161471cef3db0bc0fe1873627f4baedc1d6943318"
+      "bytes": 21019,
+      "sha256": "97153bf54ddd5ea6d3afdbae99282676a13364e4a6aafcfd8fabcdcd310dd88d"
     },
     {
       "path": "niches/ai-workflow-automation/agency/internal/client-delivery/projects/awa-016-multi-client-workflow-inventory-report.md",
@@ -157,8 +157,8 @@
     },
     {
       "path": "niches/ai-workflow-automation/agency/internal/client-delivery/projects/awa-018-agency-support-to-engineering-escalation.md",
-      "bytes": 21028,
-      "sha256": "4a5cf7700ff192d0a9d1c2deca0d2d1c7a4d06a8e6e5695be2f22c1338ef1f80"
+      "bytes": 21027,
+      "sha256": "71db8ed0b5b182b5dc37404bdc6f605134d0f4f9b6b3692efcba4457b85c0fda"
     },
     {
       "path": "niches/ai-workflow-automation/agency/white-label/NICHE.json",
@@ -182,28 +182,28 @@
     },
     {
       "path": "niches/ai-workflow-automation/agency/white-label/builds/projects/awa-001-inbound-form-to-crm-starter.md",
-      "bytes": 21848,
-      "sha256": "e6ab04e19ba72479e032f039527a5e6e74946e010c09efb8a949a4af62070547"
+      "bytes": 21847,
+      "sha256": "dbb01aa224342b3ac82eaacf20d0c291cdad66e011cf0a8da9cce20d9445ba7a"
     },
     {
       "path": "niches/ai-workflow-automation/agency/white-label/builds/projects/awa-002-existing-webhook-to-team-board-bridge.md",
-      "bytes": 21621,
-      "sha256": "3381b5ab95f4e8d6e826ad7b9b634b6a534c5af3222341f7d341f65b88a5b54b"
+      "bytes": 21620,
+      "sha256": "6c2f84bb3e6dd1c80cb00c25e3139d92bc7dca36fcece5967cf09514cd279039"
     },
     {
       "path": "niches/ai-workflow-automation/agency/white-label/builds/projects/awa-003-ghl-subaccount-to-agency-status-sync.md",
-      "bytes": 21799,
-      "sha256": "c6a26839d730c77494530436b3a327ddb7af5ac608d52154a8a0ffa3464d0838"
+      "bytes": 21798,
+      "sha256": "e02f4277a7d50e97887caa2208a72e912d39bc57224d6cbc9a5ec2c07f339aba"
     },
     {
       "path": "niches/ai-workflow-automation/agency/white-label/builds/projects/awa-004-approved-calendar-booking-to-crm.md",
-      "bytes": 21704,
-      "sha256": "1e494c9cda751b03ba959ada3bb6baf606fda5f5c5bf96d5ad3f56541626289a"
+      "bytes": 21703,
+      "sha256": "1088e0bb35ecb223527ee60f4119b4d63098cd086ba9fe43ec8c040dfc2415ed"
     },
     {
       "path": "niches/ai-workflow-automation/agency/white-label/builds/projects/awa-005-form-field-mapping-rescue.md",
-      "bytes": 26164,
-      "sha256": "d2ab46bfb54c91f7b4a62971d241239254cb0e9df37d921b191d7be53508162b"
+      "bytes": 25845,
+      "sha256": "aa05d83a451de48dcf6c83b977873bddb2217ee9d9cb326d37faf40ad9437e6d"
     },
     {
       "path": "niches/ai-workflow-automation/agency/white-label/builds/projects/awa-006-agency-branded-handover-for-one-automation.md",
@@ -222,13 +222,13 @@
     },
     {
       "path": "niches/ai-workflow-automation/agency/white-label/rescue/projects/awa-007-broken-crm-webhook-diagnostic.md",
-      "bytes": 21352,
-      "sha256": "73fd350ca9f41582021fa9ddf88abd037443adb330a9f437d787b53a9b19d2cc"
+      "bytes": 21351,
+      "sha256": "f241247203983206dceef896d58a784754497aeac2a4fb58fd7431005f4c5349"
     },
     {
       "path": "niches/ai-workflow-automation/agency/white-label/rescue/projects/awa-008-duplicate-lead-incident-repair.md",
-      "bytes": 21201,
-      "sha256": "112305fe2838f686e581b1e856b185cc3f82b263fe16e0df7dc810fe4dbe0118"
+      "bytes": 21200,
+      "sha256": "ed033b0f43b274c37c2fcc76fe645dc3afdd708ed194178724872614d7e1ece4"
     },
     {
       "path": "niches/ai-workflow-automation/agency/white-label/rescue/projects/awa-009-api-rate-limit-retry-retrofit.md",
@@ -237,8 +237,8 @@
     },
     {
       "path": "niches/ai-workflow-automation/agency/white-label/rescue/projects/awa-010-one-workflow-pre-launch-acceptance-testing.md",
-      "bytes": 21370,
-      "sha256": "9d94608e1bfdacde34fdeeb4fdcc683cafc7f5e0433ff9b37418bc473aee75d7"
+      "bytes": 21369,
+      "sha256": "443501ff60ceae62ea1ae881cbad44f6f2bf02de19182ff7d502326531df667b"
     },
     {
       "path": "niches/ai-workflow-automation/agency/white-label/rescue/projects/awa-011-one-workflow-log-alert-retrofit.md",
@@ -247,8 +247,8 @@
     },
     {
       "path": "niches/ai-workflow-automation/agency/white-label/rescue/projects/awa-012-unfinished-automation-takeover-assessment.md",
-      "bytes": 21344,
-      "sha256": "74e6e1355ba29f1c35f2f572f62ecef510336c30fec9c7240db829e7fafe36bd"
+      "bytes": 21343,
+      "sha256": "9648b6c62fa67182eb02f35e1b387f12de5aaf12330ef8e837bb964e2dbfc55c"
     },
     {
       "path": "niches/ai-workflow-automation/back-office/NICHE.json",
@@ -282,18 +282,18 @@
     },
     {
       "path": "niches/ai-workflow-automation/back-office/delivery/handoffs/projects/awa-067-approved-project-to-task-template-bridge.md",
-      "bytes": 20435,
-      "sha256": "e66c084695e2a84a2b8ebefde959efe71fa4ef03793d991e9b396eeb480fd301"
+      "bytes": 20434,
+      "sha256": "cff80c3460ba66b9ca5ef95ca8e200f2930d616075847d0fd7c79ee9ed1634fa"
     },
     {
       "path": "niches/ai-workflow-automation/back-office/delivery/handoffs/projects/awa-068-milestone-status-consolidator.md",
-      "bytes": 20463,
-      "sha256": "41ae876eb9ce521ba10be48895c059880ff5ffec4a6c44740b98097406b52602"
+      "bytes": 20462,
+      "sha256": "e76c52f31bc04b56d7fcf523c4fcfde98eff5a824ee1d7c86e29414e9b1c2ff1"
     },
     {
       "path": "niches/ai-workflow-automation/back-office/delivery/handoffs/projects/awa-069-revision-request-issue-tracker.md",
-      "bytes": 20451,
-      "sha256": "4d1c7869292b673a56a6d975126e16615a4e95ed316aeb1a4a7f2f99301cbbbd"
+      "bytes": 20450,
+      "sha256": "905dd76115e0b51d57980e154725c1867e2dce796708697e0ba467a2d83e4d6d"
     },
     {
       "path": "niches/ai-workflow-automation/back-office/delivery/handoffs/projects/awa-070-deliverable-asset-manifest.md",
@@ -332,23 +332,23 @@
     },
     {
       "path": "niches/ai-workflow-automation/back-office/documents/intake/projects/awa-061-purchase-order-inbox-register.md",
-      "bytes": 20904,
-      "sha256": "5f0289c5afc4e9dc343a7cde376cdfb8bb89272c56634d91f9d0c07d662b4a20"
+      "bytes": 20903,
+      "sha256": "e62d7630a5d7c4926706fd5984d1e7ecd0fcccaed76ceb86fdf1589b9e940166"
     },
     {
       "path": "niches/ai-workflow-automation/back-office/documents/intake/projects/awa-062-incoming-quote-request-packet.md",
-      "bytes": 20924,
-      "sha256": "820cdc66ebab1cf37b4ac4a651e9f426b8d90531e84a0a2122b4712f30fefc14"
+      "bytes": 20923,
+      "sha256": "f9c02deceb346cb5d695574df031157a701ccaceb3d95e04fac4b3b2637882d5"
     },
     {
       "path": "niches/ai-workflow-automation/back-office/documents/intake/projects/awa-063-signed-agreement-receipt-to-project-setup.md",
-      "bytes": 20999,
-      "sha256": "1dc1b6e3cd23e294d755affa606a030a0d133cbe0cf52f47cdca4c435e73ed2e"
+      "bytes": 20998,
+      "sha256": "e21a609654f81860ae9a3fe2e0dfd16de5faaa2c87768b0fbbb5c18aa1227758"
     },
     {
       "path": "niches/ai-workflow-automation/back-office/documents/intake/projects/awa-064-vendor-document-expiration-register.md",
-      "bytes": 20949,
-      "sha256": "71edfdc5eb022aa8edde802e9127a6f68617181c92d389f06278200f7d52c0dd"
+      "bytes": 20948,
+      "sha256": "881119091ec9a57c08704e764c47fb51b1989e285c1661d17833a40ffa0e8233"
     },
     {
       "path": "niches/ai-workflow-automation/back-office/documents/intake/projects/awa-065-receipt-image-completeness-checker.md",
@@ -422,8 +422,8 @@
     },
     {
       "path": "niches/ai-workflow-automation/back-office/reporting/digests/projects/awa-073-crm-funnel-weekly-summary.md",
-      "bytes": 20716,
-      "sha256": "9b50315c80ae31c4c20bc2cb9f83ef169a6462b993061d56e8e6e241f004e4ae"
+      "bytes": 20715,
+      "sha256": "1393bae0b7a7b0d40d114c021016afa486d00817642d1d9e8831724567e08731"
     },
     {
       "path": "niches/ai-workflow-automation/back-office/reporting/digests/projects/awa-074-order-exception-trend-digest.md",
@@ -437,8 +437,8 @@
     },
     {
       "path": "niches/ai-workflow-automation/back-office/reporting/digests/projects/awa-076-team-sla-performance-snapshot.md",
-      "bytes": 20697,
-      "sha256": "6525f0bf03510bde57cb2c83d183d8ae55b5ab7a1fe8080a7a32d65346d66ea3"
+      "bytes": 20696,
+      "sha256": "e95ff9edeeb5c529ee4daa45d0193c7af4cbbd2aac1d9cc1243dc376442208f0"
     },
     {
       "path": "niches/ai-workflow-automation/back-office/reporting/digests/projects/awa-077-inventory-exception-morning-brief.md",
@@ -502,8 +502,8 @@
     },
     {
       "path": "niches/ai-workflow-automation/commerce/catalog/exceptions/projects/awa-059-backorder-exception-board.md",
-      "bytes": 20458,
-      "sha256": "0fac7287dc39f91c9a21f1879f5c541cd8f9c2a389039159d9da0a817c75a4b0"
+      "bytes": 20457,
+      "sha256": "6baab7dd29424490bb5e252311f9593bdfb0ae9a2cfb33a1a5c9f1ccd6bb05e4"
     },
     {
       "path": "niches/ai-workflow-automation/commerce/catalog/exceptions/projects/awa-060-catalog-image-readiness-checker.md",
@@ -532,28 +532,28 @@
     },
     {
       "path": "niches/ai-workflow-automation/commerce/orders/production/projects/awa-049-paid-order-to-production-board.md",
-      "bytes": 20340,
-      "sha256": "69b76a26e2c836449fb1775bf53994098acd2741a635f12eb5acd2083d785b59"
+      "bytes": 20339,
+      "sha256": "e89e6e2200b4cd47581970d4893ed89f4814bdd60dc7b730c536e42d876813a7"
     },
     {
       "path": "niches/ai-workflow-automation/commerce/orders/production/projects/awa-050-multi-store-order-intake-router.md",
-      "bytes": 20312,
-      "sha256": "93abe1afe313995f1700183eb016a5611a9247c4b970b1ac77af96d213126399"
+      "bytes": 20311,
+      "sha256": "f28fd7d2d61037b362d4882d881767df22d794e3cb1f3dd2679e396bfc08e882"
     },
     {
       "path": "niches/ai-workflow-automation/commerce/orders/production/projects/awa-051-per-line-personalization-extractor.md",
-      "bytes": 20404,
-      "sha256": "438654b70387674daa6c349681416707a390d1da3c6fe9e8882d5e83ffd5246f"
+      "bytes": 20403,
+      "sha256": "05dbef7410c6c933804f98c28fc62e86b8ff6fcb46313de15fde8275eba88531"
     },
     {
       "path": "niches/ai-workflow-automation/commerce/orders/production/projects/awa-052-shipping-exception-watcher.md",
-      "bytes": 20363,
-      "sha256": "69142602c369a5e47b5cd0ab313eac50d64ecf72b81e42e5473c975fe9ee4ff8"
+      "bytes": 20362,
+      "sha256": "1067ec2957fe5e93067216ecfd163866d2ae816d5356ab76cbe1488107773051"
     },
     {
       "path": "niches/ai-workflow-automation/commerce/orders/production/projects/awa-053-returns-intake-routing-board.md",
-      "bytes": 20303,
-      "sha256": "0212d079b784f6e0893c0d184445575957a4c9ea11ff88f0c9055b9e23c4660b"
+      "bytes": 20302,
+      "sha256": "6fec0e1ca38f108bee76713ee4b31787145b53b9e9d6b85840a948d19881e49f"
     },
     {
       "path": "niches/ai-workflow-automation/commerce/orders/production/projects/awa-054-gift-note-and-pack-slip-print-queue.md",
@@ -592,13 +592,13 @@
     },
     {
       "path": "niches/ai-workflow-automation/customer-operations/appointments/dispatch/projects/awa-043-appointment-to-job-prep-checklist.md",
-      "bytes": 20297,
-      "sha256": "caa903cf80eea542801bb21c22af2230eb96017ed9c15b70b1cff9e2e160da3f"
+      "bytes": 20296,
+      "sha256": "a6197c7671c8aab0f4dabb84c433426ea40f2245bd9cf569b73face83740150c"
     },
     {
       "path": "niches/ai-workflow-automation/customer-operations/appointments/dispatch/projects/awa-044-reschedule-cascade-to-dispatch-board.md",
-      "bytes": 20231,
-      "sha256": "b2003380def07aa827dd193fccb3e353493e329c95385fc5e6c4136b26fa7b68"
+      "bytes": 20230,
+      "sha256": "abad58bff9c0f17eb7533e1843f1446f529982f491ebb311c4b3c4e60b63f941"
     },
     {
       "path": "niches/ai-workflow-automation/customer-operations/appointments/dispatch/projects/awa-045-no-show-internal-follow-up-task.md",
@@ -617,8 +617,8 @@
     },
     {
       "path": "niches/ai-workflow-automation/customer-operations/appointments/dispatch/projects/awa-048-calendar-conflict-alert-bridge.md",
-      "bytes": 20269,
-      "sha256": "75d95896b2399408c108f54ddca727064dd2f656e2d2257cc5e52c36cbb52f2d"
+      "bytes": 20268,
+      "sha256": "2aa302463d3508257ffcc2d0e7ad2b4fff3c415948ac83dacae181007b926489"
     },
     {
       "path": "niches/ai-workflow-automation/customer-operations/support/NICHE.json",
@@ -642,8 +642,8 @@
     },
     {
       "path": "niches/ai-workflow-automation/customer-operations/support/triage/projects/awa-037-shared-inbox-issue-classifier.md",
-      "bytes": 20683,
-      "sha256": "8509ff57d19adea907b2667a045bd539e9ffb82b0f69a4bbfc596d39183de3cb"
+      "bytes": 20682,
+      "sha256": "84aa2f7d804774a06731b58d562c13b042270e9f63455c395c1b755c3ad02674"
     },
     {
       "path": "niches/ai-workflow-automation/customer-operations/support/triage/projects/awa-038-sla-breach-escalation-retrofit.md",
@@ -702,33 +702,33 @@
     },
     {
       "path": "niches/ai-workflow-automation/later-products/downloads/test-kits/projects/awa-109-form-to-crm-qa-fixture-kit.md",
-      "bytes": 15090,
-      "sha256": "24852556ef8cac11a6d7abe85f3cd494e807d9dfec40d941706e4dda1a7727ca"
+      "bytes": 15089,
+      "sha256": "4b45e4f6c5d9b8e751f9402c27ad36e96a3cc7197597824a77b35770b026c4ee"
     },
     {
       "path": "niches/ai-workflow-automation/later-products/downloads/test-kits/projects/awa-110-webhook-failure-replay-test-kit.md",
-      "bytes": 15080,
-      "sha256": "8acef006d2eab77583877f5812b9b9f7e3af59dac9b1f535b28b4119fefc7b22"
+      "bytes": 15079,
+      "sha256": "7e9f071a0a0135805d98d991feb486bc226d6445f7c3e422dfbe842ca08044bc"
     },
     {
       "path": "niches/ai-workflow-automation/later-products/downloads/test-kits/projects/awa-111-crm-duplicate-detection-reviewer-kit.md",
-      "bytes": 15007,
-      "sha256": "453538217856d624e4463db98e21ba194187754b7ea6d9570d58d1fc08b5ee85"
+      "bytes": 15006,
+      "sha256": "6e464275d03b54e5d264e5b0c036e4c49f2597360bc5d7f68f6bb16051ec90eb"
     },
     {
       "path": "niches/ai-workflow-automation/later-products/downloads/test-kits/projects/awa-112-order-exceptions-reference-workflows.md",
-      "bytes": 15065,
-      "sha256": "7687ce7d68d7dec58bc3737aec34c6a9bcdf68da23421f959d202b70313f6606"
+      "bytes": 15064,
+      "sha256": "35199db7ce74b6db3f24d259ba9a5181530e312fa7bd0d6dfd4150519dc5d645"
     },
     {
       "path": "niches/ai-workflow-automation/later-products/downloads/test-kits/projects/awa-113-human-approval-pattern-library.md",
-      "bytes": 15020,
-      "sha256": "aa60fc1f1f24a6414957a43d3ea4dce81d8dd6cbff36bdd60a4a74e4fdbead42"
+      "bytes": 15019,
+      "sha256": "4bfd1a123cd9930a541b9780aad9b7ad3e7d7ab42350ed21e754c996df9b87a9"
     },
     {
       "path": "niches/ai-workflow-automation/later-products/downloads/test-kits/projects/awa-114-platform-cost-model-worksheet-bundle.md",
-      "bytes": 15057,
-      "sha256": "614b91f06824b376faef0c040636413ede3098dd2d71c4d39b1bbee0b4a86f5e"
+      "bytes": 15056,
+      "sha256": "df2bede1af836b8650095a60033b214927e32dd576082acdf387f1f8eda05904"
     },
     {
       "path": "niches/ai-workflow-automation/later-products/software/NICHE.json",
@@ -752,33 +752,33 @@
     },
     {
       "path": "niches/ai-workflow-automation/later-products/software/integration-tools/projects/awa-115-cross-workflow-dead-letter-viewer.md",
-      "bytes": 15037,
-      "sha256": "cab0e4f6b715053b6d96078a891b83d6d8eeab734852f972cfd7c61e324f3032"
+      "bytes": 15036,
+      "sha256": "d1552fa3e848e0f980568768769c6456eec43f080ac83f2aafeecfbddc1f3f31"
     },
     {
       "path": "niches/ai-workflow-automation/later-products/software/integration-tools/projects/awa-116-schema-drift-early-warning-service.md",
-      "bytes": 15024,
-      "sha256": "e5bff8e2ffead3494bca1b99675405ad605366bff67c2843096f4b018e9acabe"
+      "bytes": 15023,
+      "sha256": "98666b773a25865f4f6875fa3a208497cc329499a15e12ad5f71dcada1bdf46d"
     },
     {
       "path": "niches/ai-workflow-automation/later-products/software/integration-tools/projects/awa-117-visual-cross-platform-mapping-diff.md",
-      "bytes": 14985,
-      "sha256": "eea4849597a03ef079f7530f3425b89007c8f4cf2188c9fcd71034d894a6c6f8"
+      "bytes": 14984,
+      "sha256": "d8dcf2cba362211a5fb931bd954776e50f559533752b05194239d7441ff140ad"
     },
     {
       "path": "niches/ai-workflow-automation/later-products/software/integration-tools/projects/awa-118-customer-owned-connector-health-console.md",
-      "bytes": 15063,
-      "sha256": "f3dae276930358801174377f0af1ffaaae0df524aa6c2570ea953f31c595ce85"
+      "bytes": 15062,
+      "sha256": "01026d1371152c894639c9843073ddebb5e58cd78c78e1d4d2bb2bbdd63a3769"
     },
     {
       "path": "niches/ai-workflow-automation/later-products/software/integration-tools/projects/awa-119-one-click-automation-test-harness-for-agencies.md",
-      "bytes": 15052,
-      "sha256": "dc0a4f847076c98ceac97fae82944b5db0f446953ce1f689dbb436a0dc2bea4c"
+      "bytes": 15051,
+      "sha256": "c0dae7ae85c82bbf90c9d0b056f287f5b366a3b45f726a252a7a4b927251a897"
     },
     {
       "path": "niches/ai-workflow-automation/later-products/software/integration-tools/projects/awa-120-agency-connector-permissions-inventory-saas.md",
-      "bytes": 15066,
-      "sha256": "decb869b601fafe47ba65110854b50e32aa1b918074ca21616330ea6c7afd40a"
+      "bytes": 15065,
+      "sha256": "930489f6572cf69904722f29bd83bad56eb5ee8e0dcf09086d580b4793ceabc3"
     },
     {
       "path": "niches/ai-workflow-automation/marketing/NICHE.json",
@@ -837,13 +837,13 @@
     },
     {
       "path": "niches/ai-workflow-automation/marketing/content/approval/projects/awa-079-jobsite-photo-to-caption-draft.md",
-      "bytes": 20601,
-      "sha256": "c041b4da5346c316a70c4992a84bc008e914a3a8e7b2077a27062a2965813b5a"
+      "bytes": 20600,
+      "sha256": "d049c0d47179b6669bfecdf3882ecbabaf4a6e02ae0714d6ecb10e7d409c90e9"
     },
     {
       "path": "niches/ai-workflow-automation/marketing/content/approval/projects/awa-080-campaign-asset-approval-queue.md",
-      "bytes": 20447,
-      "sha256": "e1dc6b8099742f24d3afc9506f0c79061a4534271da061c749c68f74369ffe97"
+      "bytes": 20446,
+      "sha256": "667e7e4e1293b41d1070c5ef743c14d61e434796e3925f1eae4b6aaf0b9769aa"
     },
     {
       "path": "niches/ai-workflow-automation/marketing/content/approval/projects/awa-081-testimonial-consent-tracker.md",
@@ -862,8 +862,8 @@
     },
     {
       "path": "niches/ai-workflow-automation/marketing/content/approval/projects/awa-084-client-feedback-to-revision-round-up.md",
-      "bytes": 20489,
-      "sha256": "e7cdbb2384f755c689cf775c930f17a55ac8d06213fc83c0000179ed0a28303d"
+      "bytes": 20488,
+      "sha256": "813bd5ca1df477e4a0257481dac5fa9c31577664e309c4df46d9b49f64ad1257"
     },
     {
       "path": "niches/ai-workflow-automation/marketing/lifecycle/NICHE.json",
@@ -932,8 +932,8 @@
     },
     {
       "path": "niches/ai-workflow-automation/marketing/measurement/reconciliation/projects/awa-086-lead-source-label-auditor.md",
-      "bytes": 20485,
-      "sha256": "2beece50d9b59633952b5b21d320baf614c7657f14a4356725cdfe5b9bc270e2"
+      "bytes": 20484,
+      "sha256": "deead6a9b010c32c702b68e84a66e2142372ef686c1412ecd8765378373111f2"
     },
     {
       "path": "niches/ai-workflow-automation/marketing/measurement/reconciliation/projects/awa-087-daily-campaign-spend-anomaly-review.md",
@@ -947,8 +947,8 @@
     },
     {
       "path": "niches/ai-workflow-automation/marketing/measurement/reconciliation/projects/awa-089-campaign-to-sales-reconciliation-table.md",
-      "bytes": 20596,
-      "sha256": "cecc513e94cc5d17174f0dc59357754b8f150e37fa0d30ebebae5e9b97f3b294"
+      "bytes": 20595,
+      "sha256": "e0e418b63075fce226e2b857f1230668390cb6556f3b2500577be2755eac8e09"
     },
     {
       "path": "niches/ai-workflow-automation/marketing/measurement/reconciliation/projects/awa-090-ad-lead-integration-delivery-receipt.md",
@@ -987,8 +987,8 @@
     },
     {
       "path": "niches/ai-workflow-automation/reliability/maintenance/care/projects/awa-103-monthly-single-workflow-health-review.md",
-      "bytes": 20579,
-      "sha256": "3586de39493c201d04dfa772a4daa1087b684b28efd7e16e615c2f86a7b60da7"
+      "bytes": 20578,
+      "sha256": "214a24674c05554667b9db210379abcb47f8a6094a51c76e8bb1ae992a949784"
     },
     {
       "path": "niches/ai-workflow-automation/reliability/maintenance/care/projects/awa-104-connector-credential-expiry-watch.md",
@@ -1012,8 +1012,8 @@
     },
     {
       "path": "niches/ai-workflow-automation/reliability/maintenance/care/projects/awa-108-capped-incident-response-hours-bank.md",
-      "bytes": 20520,
-      "sha256": "590cbbb482940b06a7de9a566a1ba6c5a47278a63ef05c3c8372e480e07ad0fd"
+      "bytes": 20519,
+      "sha256": "a04993141f6d8351972cbea9da8f0d728e341539dd607567ec6c879cb5332941"
     },
     {
       "path": "niches/ai-workflow-automation/reliability/migration/NICHE.json",
@@ -1037,18 +1037,18 @@
     },
     {
       "path": "niches/ai-workflow-automation/reliability/migration/platforms/projects/awa-097-zapier-to-make-feasibility-report.md",
-      "bytes": 20600,
-      "sha256": "aa27ab8d87c9b02c42478206f8d118ebab8a703c066853bbfea0c333c3ab5dc9"
+      "bytes": 20599,
+      "sha256": "394c9f3377dbc0d4ca06bc826e546ea3a544f9603fa2b515b0c9b1866d098384"
     },
     {
       "path": "niches/ai-workflow-automation/reliability/migration/platforms/projects/awa-098-make-to-n8n-scope-and-test-pack.md",
-      "bytes": 20648,
-      "sha256": "f780a73c27fd2f7dabfbef3aa201ab51f04e7832c4b997b14c3ac673a0a360b4"
+      "bytes": 20647,
+      "sha256": "6fb453665314c7607b0b2ca66a37f5fa70bc57b5ac609d9033b3a7c590ff8240"
     },
     {
       "path": "niches/ai-workflow-automation/reliability/migration/platforms/projects/awa-099-legacy-webhook-endpoint-cutover.md",
-      "bytes": 20692,
-      "sha256": "572ef0bea3e264e089da8b27f6610bfe70130671956ba6c97ba3bf84c872a101"
+      "bytes": 20691,
+      "sha256": "d7ef9a335c18fddb63e5c8a2cd1318f7087afdcc8ce974d2ddbc75640eabf399"
     },
     {
       "path": "niches/ai-workflow-automation/reliability/migration/platforms/projects/awa-100-automation-credential-migration-worksheet.md",
@@ -1087,8 +1087,8 @@
     },
     {
       "path": "niches/ai-workflow-automation/reliability/review/audits/projects/awa-091-workflow-reliability-assessment.md",
-      "bytes": 20969,
-      "sha256": "459f4371dda581fb5760acd258f7175b88496c103aacb185a51cf3b9c96874ac"
+      "bytes": 20968,
+      "sha256": "a454b4b12e8c7bc46d6bf1cfa80dd7726325b9807d8e362e31fbd76ed07de8df"
     },
     {
       "path": "niches/ai-workflow-automation/reliability/review/audits/projects/awa-092-idempotency-retrofit-service.md",
@@ -1107,8 +1107,8 @@
     },
     {
       "path": "niches/ai-workflow-automation/reliability/review/audits/projects/awa-095-automation-cost-cap-audit.md",
-      "bytes": 20973,
-      "sha256": "f98a3a0fc3f941454d379cbded5acb0fef1e7a9426eb9ca5a2d6ae3b962b65d5"
+      "bytes": 20972,
+      "sha256": "8bf46e6a68908caacbf7721c1fed2cf127042e3e9a188e8ee9a2b8839b84921e"
     },
     {
       "path": "niches/ai-workflow-automation/reliability/review/audits/projects/awa-096-data-leak-risk-review-for-workflow-exports.md",
@@ -1162,13 +1162,13 @@
     },
     {
       "path": "niches/ai-workflow-automation/revenue/crm/data-quality/projects/awa-025-contact-normalization-checkpoint.md",
-      "bytes": 20604,
-      "sha256": "47f6c7e6e6208f703c7876ebe9f5ac9f6503f03a4f751734e30205441a91e7fa"
+      "bytes": 20603,
+      "sha256": "06af4bb2c38b2d776b7cc07521f984fa37a89cdaaae00f66caeb1fcec5d7974c"
     },
     {
       "path": "niches/ai-workflow-automation/revenue/crm/data-quality/projects/awa-026-duplicate-contact-review-queue.md",
-      "bytes": 20585,
-      "sha256": "c49882112947f5801074b7ecbcb7e27419519f8f390178d9297cbde2db06bff5"
+      "bytes": 20584,
+      "sha256": "be8a0661404df09c47dd74b3ff0dddc6c0cba02adb6e5c2c95d2c032098a0423"
     },
     {
       "path": "niches/ai-workflow-automation/revenue/crm/data-quality/projects/awa-027-unmapped-crm-property-detector.md",
@@ -1177,8 +1177,8 @@
     },
     {
       "path": "niches/ai-workflow-automation/revenue/crm/data-quality/projects/awa-028-lifecycle-tag-consistency-audit.md",
-      "bytes": 20536,
-      "sha256": "01783fa52d7c6954d7b5e3e6af036acaafaa836a263973030ae482ce2393c915"
+      "bytes": 20535,
+      "sha256": "5d5d94de0ec4bb2542f46e69f09db33956b8e618c68f715e8dc1fbf6e04111bd"
     },
     {
       "path": "niches/ai-workflow-automation/revenue/crm/data-quality/projects/awa-029-stage-history-anomaly-report.md",
@@ -1187,8 +1187,8 @@
     },
     {
       "path": "niches/ai-workflow-automation/revenue/crm/data-quality/projects/awa-030-idempotent-csv-to-crm-import-wrapper.md",
-      "bytes": 20636,
-      "sha256": "f27c696f2a98ec1f7f43e4398327a8f126fc5dac247f785881f00321245a94f2"
+      "bytes": 20635,
+      "sha256": "36a5fa52b8617628caefe78e7d489d681d58b5c14096c61d52bb311fdf41927a"
     },
     {
       "path": "niches/ai-workflow-automation/revenue/intake/NICHE.json",
@@ -1212,13 +1212,13 @@
     },
     {
       "path": "niches/ai-workflow-automation/revenue/intake/routing/projects/awa-019-multi-form-intake-canonicalizer.md",
-      "bytes": 20930,
-      "sha256": "7b84b85ce9b1bd093686d6cc011d59ad190a8225cc92c2bb722936e6214488b0"
+      "bytes": 20929,
+      "sha256": "b3188db97686ee507c618598aab3b390e07330b8419da3723e003235012b1c38"
     },
     {
       "path": "niches/ai-workflow-automation/revenue/intake/routing/projects/awa-020-lead-to-owner-assignment-rules.md",
-      "bytes": 20879,
-      "sha256": "7ffbe0ee7c4e95e4a2584fbd06b3c3dc270b2bd44ce6d905f0ade59257c0b1a8"
+      "bytes": 20878,
+      "sha256": "416e6a2104b4c050ccbe682bc3894e7eff6ebc0fa5c88711367af788d589d7b1"
     },
     {
       "path": "niches/ai-workflow-automation/revenue/intake/routing/projects/awa-021-ai-assisted-inbound-enquiry-summary-human-reviewed.md",
@@ -1277,8 +1277,8 @@
     },
     {
       "path": "niches/ai-workflow-automation/revenue/sales/handoffs/projects/awa-034-won-deal-internal-kickoff.md",
-      "bytes": 20644,
-      "sha256": "00c8b7aeb596fdb3c0edb44218a455cb123fe13e139efcc64978d6cc9e758a34"
+      "bytes": 20643,
+      "sha256": "2d651a27169edce5a4bca8215f649386d324330f601c29efa359ce3b15156a49"
     },
     {
       "path": "niches/ai-workflow-automation/revenue/sales/handoffs/projects/awa-035-renewal-date-internal-reminder.md",

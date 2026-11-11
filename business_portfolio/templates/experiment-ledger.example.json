@@ -1,0 +1,31 @@
+{
+  "template_only": true,
+  "contains_actual_results": false,
+  "project_id": "AWA-005",
+  "currency": "CAD",
+  "private_real_ledger_required": true,
+  "approved_external_actions": [],
+  "authorized_spend": 0,
+  "cash_spent": null,
+  "committed_unpaid_costs": null,
+  "proof_hours": null,
+  "acquisition_hours": null,
+  "delivery_hours": null,
+  "support_hours": null,
+  "counts": {
+    "eligible_requests": null,
+    "approved_responses": null,
+    "qualified_visitors": null,
+    "meaningful_replies": null,
+    "scoped_conversations": null,
+    "funded_agreements": null,
+    "collected_paid_orders": null,
+    "refunds": null,
+    "repeat_paid_orders": null
+  },
+  "actual_receipts": null,
+  "actual_fees": null,
+  "actual_refunds": null,
+  "last_decision": null,
+  "next_action": "Record actual evidence only after approved activity; do not upload personal/customer evidence to public Git."
+}

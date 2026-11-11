@@ -1,0 +1,6 @@
+{
+  "original_records_checked": 133,
+  "completed_checkmark_lines": "identical for all original records",
+  "state_and_financial_evidence_fields": "unchanged",
+  "scope": "Compared against actual bytes of the earlier supplied ZIP, not against an invented baseline. Newer Windows state was not inspected."
+}

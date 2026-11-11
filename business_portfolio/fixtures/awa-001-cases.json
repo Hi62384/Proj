@@ -1,0 +1,109 @@
+{
+  "purpose": "Fictional acceptance specification only. No production connector has been implemented or tested.",
+  "sample": {
+    "event_id": "DEMO-EVT-001",
+    "contact_external_id": "DEMO-CONTACT-001",
+    "name": "Fictional Customer",
+    "email": "customer@example.invalid",
+    "service": "demo-service",
+    "consent_note": "Synthetic data only; no real contact or consent claim."
+  },
+  "cases": [
+    {
+      "id": "valid",
+      "input_condition": "A valid fictional inquiry",
+      "expected": "create one record and internal disposition",
+      "result": "not_run"
+    },
+    {
+      "id": "duplicate",
+      "input_condition": "Replay an identical event key",
+      "expected": "do not duplicate the business effect",
+      "result": "not_run"
+    },
+    {
+      "id": "concurrent_duplicate",
+      "input_condition": "Two identical event keys at once",
+      "expected": "one accepted identity; durable race handling",
+      "result": "not_run"
+    },
+    {
+      "id": "missing_required",
+      "input_condition": "Required fictional field absent",
+      "expected": "reject or queue with reason; no misleading success",
+      "result": "not_run"
+    },
+    {
+      "id": "zero_false",
+      "input_condition": "Zero and false values supplied",
+      "expected": "preserve them instead of treating as missing",
+      "result": "not_run"
+    },
+    {
+      "id": "invalid_enum",
+      "input_condition": "Unknown fictional service value",
+      "expected": "route to review; never invent a valid category",
+      "result": "not_run"
+    },
+    {
+      "id": "new_optional",
+      "input_condition": "New unmapped optional property",
+      "expected": "do not leak it or overwrite unrelated destination fields",
+      "result": "not_run"
+    },
+    {
+      "id": "rate_limit",
+      "input_condition": "Destination returns simulated 429",
+      "expected": "bounded provider-aware retry; no busy loop",
+      "result": "not_run"
+    },
+    {
+      "id": "permanent_error",
+      "input_condition": "Destination rejects invalid schema",
+      "expected": "record permanent failure rather than endless retries",
+      "result": "not_run"
+    },
+    {
+      "id": "auth_revoked",
+      "input_condition": "Scoped test credential unavailable",
+      "expected": "stop writes and alert authorized owner without secrets",
+      "result": "not_run"
+    },
+    {
+      "id": "uncertain_success",
+      "input_condition": "Remote success followed by lost acknowledgement",
+      "expected": "reconcile destination before retry",
+      "result": "not_run"
+    },
+    {
+      "id": "notification_failure",
+      "input_condition": "CRM succeeds, internal notification fails",
+      "expected": "do not recreate CRM record just to retry notice",
+      "result": "not_run"
+    },
+    {
+      "id": "same_phone",
+      "input_condition": "Different fictional people share phone",
+      "expected": "apply agreed identity rule; no unsafe merge",
+      "result": "not_run"
+    },
+    {
+      "id": "out_of_order",
+      "input_condition": "Old update arrives after new update",
+      "expected": "preserve newer state or make conflict explicit",
+      "result": "not_run"
+    },
+    {
+      "id": "unsafe_text",
+      "input_condition": "Input contains untrusted instruction-like text",
+      "expected": "treat as data; no authority change or code execution",
+      "result": "not_run"
+    },
+    {
+      "id": "retention",
+      "input_condition": "Test log reaches retention boundary",
+      "expected": "follow approved retention; preserve necessary non-sensitive reconciliation evidence",
+      "result": "not_run"
+    }
+  ]
+}

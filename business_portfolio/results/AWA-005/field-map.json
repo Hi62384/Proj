@@ -1,0 +1,119 @@
+{
+  "notice": "Fictional map only; destination demo_* properties are not verified HubSpot fields. Source of truth: fixtures/awa005-field-mapping.json.",
+  "mapping": {
+    "version": "1.0-fictional",
+    "pair": "fictional-form-to-fictional-contact",
+    "fields": [
+      {
+        "source_id": "external_id",
+        "target": "demo_external_id",
+        "type": "text",
+        "required": true
+      },
+      {
+        "source_id": "full_name",
+        "target": "demo_full_name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "source_id": "email",
+        "target": "demo_email",
+        "type": "text",
+        "required": true
+      },
+      {
+        "source_id": "service",
+        "target": "demo_service",
+        "type": "picklist",
+        "required": true,
+        "options": [
+          "demo-service",
+          "demo-other"
+        ]
+      },
+      {
+        "source_id": "seats",
+        "target": "demo_seats",
+        "type": "integer",
+        "required": false
+      },
+      {
+        "source_id": "approved",
+        "target": "demo_approved",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "source_id": "notes",
+        "target": "demo_notes",
+        "type": "text",
+        "required": false
+      },
+      {
+        "source_id": "phone",
+        "target": "demo_phone",
+        "type": "text",
+        "required": false
+      },
+      {
+        "source_id": "company",
+        "target": "demo_company",
+        "type": "text",
+        "required": false
+      },
+      {
+        "source_id": "website",
+        "target": "demo_website",
+        "type": "text",
+        "required": false
+      },
+      {
+        "source_id": "city",
+        "target": "demo_city",
+        "type": "text",
+        "required": false
+      },
+      {
+        "source_id": "language",
+        "target": "demo_language",
+        "type": "picklist",
+        "required": false,
+        "options": [
+          "en",
+          "fr"
+        ]
+      },
+      {
+        "source_id": "interests",
+        "target": "demo_interests",
+        "type": "multi_picklist",
+        "required": false,
+        "options": [
+          "reports",
+          "mapping"
+        ]
+      },
+      {
+        "source_id": "requested_date",
+        "target": "demo_requested_date",
+        "type": "date",
+        "required": false
+      },
+      {
+        "source_id": "rating",
+        "target": "demo_rating",
+        "type": "integer",
+        "required": false
+      }
+    ]
+  },
+  "reviewed_rename_demo": {
+    "version": "1.1-fictional",
+    "source_id_change": {
+      "full_name": "full_name_v2"
+    },
+    "unchanged_target": "demo_full_name",
+    "rollback": "Use v1 to hold changed-ID payload; no CRM rollback performed."
+  }
+}

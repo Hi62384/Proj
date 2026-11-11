@@ -1,0 +1,110 @@
+{
+  "scope": "V2 package browser in container Chromium, not the user Windows browser",
+  "mode": "in_memory",
+  "initial_file_url_failure": "Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at file:///mnt/data/portfolio_v2_work/business_portfolio/PROJECT_BROWSER.html\nCall log:\n  - navigating to \"file:///mnt/data/portfolio_v2_work/business_portfolio/PROJECT_BROWSER.html\", waiting until \"load\"\n",
+  "checks": [
+    {
+      "name": "renders_139_records",
+      "passed": true
+    },
+    {
+      "name": "initial_card_page_18",
+      "passed": true
+    },
+    {
+      "name": "budget_summary_visible",
+      "passed": true
+    },
+    {
+      "name": "no_javascript_errors",
+      "passed": true
+    },
+    {
+      "name": "exact_id_search",
+      "passed": true
+    },
+    {
+      "name": "existing_title",
+      "passed": true
+    },
+    {
+      "name": "existing_marketing_added",
+      "passed": true
+    },
+    {
+      "name": "existing_progress_visible",
+      "passed": true
+    },
+    {
+      "name": "software_gate_six",
+      "passed": true
+    },
+    {
+      "name": "budget_fit_discovery_filter_exists",
+      "passed": true
+    },
+    {
+      "name": "components_58",
+      "passed": true
+    },
+    {
+      "name": "existing_records_12",
+      "passed": true
+    },
+    {
+      "name": "recursive_child_filter",
+      "passed": true
+    },
+    {
+      "name": "new_followon",
+      "passed": true
+    },
+    {
+      "name": "price_not_startup",
+      "passed": true
+    },
+    {
+      "name": "empty_results",
+      "passed": true
+    },
+    {
+      "name": "pagination_second_page",
+      "passed": true
+    },
+    {
+      "name": "pagination_back",
+      "passed": true
+    },
+    {
+      "name": "marketing_report_embedded",
+      "passed": true
+    },
+    {
+      "name": "marketing_report_opens",
+      "passed": true
+    },
+    {
+      "name": "ad_gate_report_present",
+      "passed": true
+    },
+    {
+      "name": "embedded_internal_link",
+      "passed": true
+    },
+    {
+      "name": "mobile_no_horizontal_overflow",
+      "passed": true
+    },
+    {
+      "name": "final_no_javascript_errors",
+      "passed": true
+    },
+    {
+      "name": "no_external_network",
+      "passed": true
+    }
+  ],
+  "passed": 25,
+  "failed": 0,
+  "javascript_errors": []
+}

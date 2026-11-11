@@ -1,0 +1,10 @@
+{
+  "local_markdown_links_checked": 811,
+  "broken": [],
+  "exclusions": [
+    "external URLs",
+    "attachment references",
+    "fragment-only links"
+  ],
+  "external_link_availability": "Not checked by the local-link test"
+}

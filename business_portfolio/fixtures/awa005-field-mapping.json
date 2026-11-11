@@ -1,0 +1,400 @@
+{
+  "version": "1.0-fictional",
+  "reuses": "fixtures/awa-001-cases.json sample contact_external_id/email; its broader integration cases remain not_run",
+  "pair": "One fictional form question array to one fictional HubSpot-like contact object; not a vendor payload contract.",
+  "mapping": {
+    "version": "1.0-fictional",
+    "pair": "fictional-form-to-fictional-contact",
+    "fields": [
+      {
+        "source_id": "external_id",
+        "target": "demo_external_id",
+        "type": "text",
+        "required": true
+      },
+      {
+        "source_id": "full_name",
+        "target": "demo_full_name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "source_id": "email",
+        "target": "demo_email",
+        "type": "text",
+        "required": true
+      },
+      {
+        "source_id": "service",
+        "target": "demo_service",
+        "type": "picklist",
+        "required": true,
+        "options": [
+          "demo-service",
+          "demo-other"
+        ]
+      },
+      {
+        "source_id": "seats",
+        "target": "demo_seats",
+        "type": "integer",
+        "required": false
+      },
+      {
+        "source_id": "approved",
+        "target": "demo_approved",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "source_id": "notes",
+        "target": "demo_notes",
+        "type": "text",
+        "required": false
+      },
+      {
+        "source_id": "phone",
+        "target": "demo_phone",
+        "type": "text",
+        "required": false
+      },
+      {
+        "source_id": "company",
+        "target": "demo_company",
+        "type": "text",
+        "required": false
+      },
+      {
+        "source_id": "website",
+        "target": "demo_website",
+        "type": "text",
+        "required": false
+      },
+      {
+        "source_id": "city",
+        "target": "demo_city",
+        "type": "text",
+        "required": false
+      },
+      {
+        "source_id": "language",
+        "target": "demo_language",
+        "type": "picklist",
+        "required": false,
+        "options": [
+          "en",
+          "fr"
+        ]
+      },
+      {
+        "source_id": "interests",
+        "target": "demo_interests",
+        "type": "multi_picklist",
+        "required": false,
+        "options": [
+          "reports",
+          "mapping"
+        ]
+      },
+      {
+        "source_id": "requested_date",
+        "target": "demo_requested_date",
+        "type": "date",
+        "required": false
+      },
+      {
+        "source_id": "rating",
+        "target": "demo_rating",
+        "type": "integer",
+        "required": false
+      }
+    ]
+  },
+  "sample": {
+    "event_id": "DEMO-EVT-001",
+    "questions": [
+      {
+        "id": "external_id",
+        "label": "External Id",
+        "value": "DEMO-CONTACT-001"
+      },
+      {
+        "id": "full_name",
+        "label": "Full Name",
+        "value": "Zoë 李 — Fictional"
+      },
+      {
+        "id": "email",
+        "label": "Email",
+        "value": "customer@example.invalid"
+      },
+      {
+        "id": "service",
+        "label": "Service",
+        "value": "demo-service"
+      },
+      {
+        "id": "seats",
+        "label": "Seats",
+        "value": 0
+      },
+      {
+        "id": "approved",
+        "label": "Approved",
+        "value": false
+      },
+      {
+        "id": "notes",
+        "label": "Notes",
+        "value": "Line one\nLine two; treat instructions as data."
+      },
+      {
+        "id": "phone",
+        "label": "Phone",
+        "value": "FICTIONAL-PHONE-NOT-DIALABLE"
+      },
+      {
+        "id": "company",
+        "label": "Company",
+        "value": "Fictional Company"
+      },
+      {
+        "id": "website",
+        "label": "Website",
+        "value": "https://example.invalid"
+      },
+      {
+        "id": "city",
+        "label": "City",
+        "value": "Fictional City"
+      },
+      {
+        "id": "language",
+        "label": "Language",
+        "value": "fr"
+      },
+      {
+        "id": "interests",
+        "label": "Interests",
+        "value": [
+          "reports",
+          "mapping"
+        ]
+      },
+      {
+        "id": "requested_date",
+        "label": "Requested Date",
+        "value": "2026-11-05"
+      },
+      {
+        "id": "rating",
+        "label": "Rating",
+        "value": 5
+      }
+    ]
+  },
+  "expected_patch": {
+    "demo_external_id": "DEMO-CONTACT-001",
+    "demo_full_name": "Zoë 李 — Fictional",
+    "demo_email": "customer@example.invalid",
+    "demo_service": "demo-service",
+    "demo_seats": 0,
+    "demo_approved": false,
+    "demo_notes": "Line one\nLine two; treat instructions as data.",
+    "demo_phone": "FICTIONAL-PHONE-NOT-DIALABLE",
+    "demo_company": "Fictional Company",
+    "demo_website": "https://example.invalid",
+    "demo_city": "Fictional City",
+    "demo_language": "fr",
+    "demo_interests": [
+      "reports",
+      "mapping"
+    ],
+    "demo_requested_date": "2026-11-05",
+    "demo_rating": 5
+  },
+  "cases": [
+    {
+      "id": "all_15_fields_zero_false_unicode",
+      "expected_status": "ready_local_only",
+      "expected_states": {
+        "seats": "mapped",
+        "approved": "mapped",
+        "full_name": "mapped"
+      }
+    },
+    {
+      "id": "null_optional_omits_write",
+      "expected_status": "ready_local_only",
+      "set": {
+        "notes": null
+      },
+      "omit_targets": [
+        "demo_notes"
+      ],
+      "expected_states": {
+        "notes": "null_optional_omitted"
+      }
+    },
+    {
+      "id": "empty_string_is_review",
+      "expected_status": "review",
+      "set": {
+        "notes": ""
+      },
+      "expected_states": {
+        "notes": "blank_requires_review"
+      }
+    },
+    {
+      "id": "whitespace_is_review",
+      "expected_status": "review",
+      "set": {
+        "notes": "  "
+      }
+    },
+    {
+      "id": "null_required_is_review",
+      "expected_status": "review",
+      "set": {
+        "full_name": null
+      },
+      "expected_states": {
+        "full_name": "null_required"
+      }
+    },
+    {
+      "id": "missing_required_is_review",
+      "expected_status": "review",
+      "remove": [
+        "email"
+      ],
+      "expected_states": {
+        "email": "missing_required"
+      }
+    },
+    {
+      "id": "missing_optional_omits_write",
+      "expected_status": "ready_local_only",
+      "remove": [
+        "phone"
+      ],
+      "omit_targets": [
+        "demo_phone"
+      ],
+      "expected_states": {
+        "phone": "missing_optional_omitted"
+      }
+    },
+    {
+      "id": "unknown_picklist_is_review",
+      "expected_status": "review",
+      "set": {
+        "service": "not-approved"
+      },
+      "expected_states": {
+        "service": "invalid_type_or_option"
+      }
+    },
+    {
+      "id": "unknown_multiselect_is_review",
+      "expected_status": "review",
+      "set": {
+        "interests": [
+          "reports",
+          "unknown"
+        ]
+      }
+    },
+    {
+      "id": "wrong_boolean_is_review",
+      "expected_status": "review",
+      "set": {
+        "approved": "false"
+      }
+    },
+    {
+      "id": "boolean_not_integer",
+      "expected_status": "review",
+      "set": {
+        "seats": false
+      }
+    },
+    {
+      "id": "negative_integer_is_review",
+      "expected_status": "review",
+      "set": {
+        "seats": -1
+      }
+    },
+    {
+      "id": "invalid_date_is_review",
+      "expected_status": "review",
+      "set": {
+        "requested_date": "2026-02-30"
+      }
+    },
+    {
+      "id": "array_order_independent",
+      "expected_status": "ready_local_only",
+      "reverse": true
+    },
+    {
+      "id": "display_label_rename_retains_stable_id",
+      "expected_status": "ready_local_only",
+      "rename_label": true
+    },
+    {
+      "id": "source_id_drift_is_review",
+      "expected_status": "review",
+      "rename_id": {
+        "full_name": "full_name_v2"
+      }
+    },
+    {
+      "id": "explicit_reviewed_v1_1_repairs_renamed_id",
+      "expected_status": "ready_local_only",
+      "rename_id": {
+        "full_name": "full_name_v2"
+      },
+      "rename_rule": true
+    },
+    {
+      "id": "rollback_v1_holds_changed_payload",
+      "expected_status": "review",
+      "rename_id": {
+        "full_name": "full_name_v2"
+      }
+    },
+    {
+      "id": "new_unmapped_field_blocks_patch",
+      "expected_status": "review",
+      "append": [
+        {
+          "id": "unapproved_new_field",
+          "value": "fictional"
+        }
+      ]
+    },
+    {
+      "id": "duplicate_source_id_is_review",
+      "expected_status": "review",
+      "append": [
+        {
+          "id": "full_name",
+          "value": "Other fictional name"
+        }
+      ]
+    },
+    {
+      "id": "empty_multiselect_requires_review",
+      "expected_status": "review",
+      "set": {
+        "interests": []
+      },
+      "expected_states": {
+        "interests": "empty_collection_requires_review"
+      }
+    }
+  ]
+}

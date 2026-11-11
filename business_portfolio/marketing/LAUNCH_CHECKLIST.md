@@ -1,0 +1,15 @@
+# A small launch is complete only when acquisition and acceptance are defined
+- [ ] The exact buyer, buying event and current alternative are recorded.
+- [ ] A concrete supported outcome and exclusion list exist; no guaranteed-income claim.
+- [ ] The required skill has been demonstrated on fictional data and the distinct failure case has been checked.
+- [ ] The $0 path and any customer-paid requirements are honestly documented; unknown costs block launch.
+- [ ] Owner-time economics include proof, failed acquisition, delivery, QA and support.
+- [ ] One proof asset, one outcome headline and one call to action are ready.
+- [ ] A real eligible request or permission-appropriate audience/channel exists; no assumed traffic.
+- [ ] The project-specific batch/hour cap and stop rule are accepted.
+- [ ] Sale/delivery terms, support boundaries, licence and refund disclosures fit the actual offer.
+- [ ] A permitted checkout/delivery test is recorded without calling it a paid order.
+- [ ] Separate owner authorization exists before publishing, responding, spending or changing accounts.
+- [ ] The private ledger will distinguish views, leads, commitments, collected sales, refunds and payouts.
+- [ ] Advertising stays off until its separate evidence, cost and billing gates are met.
+- [ ] After real delivery, results and next actions are recorded without overwriting prior progress.

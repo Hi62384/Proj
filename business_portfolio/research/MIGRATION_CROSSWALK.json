@@ -1,0 +1,722 @@
+[
+  {
+    "id": "AWA-001",
+    "old_path": "ai-workflow-automation/agency-delivery/white-label/implementation/projects/awa-001-inbound-form-to-crm-starter.md",
+    "new_path": "niches/ai-workflow-automation/agency/white-label/builds/projects/awa-001-inbound-form-to-crm-starter.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-002",
+    "old_path": "ai-workflow-automation/agency-delivery/white-label/implementation/projects/awa-002-existing-webhook-to-team-board-bridge.md",
+    "new_path": "niches/ai-workflow-automation/agency/white-label/builds/projects/awa-002-existing-webhook-to-team-board-bridge.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-003",
+    "old_path": "ai-workflow-automation/agency-delivery/white-label/implementation/projects/awa-003-ghl-subaccount-to-agency-status-sync.md",
+    "new_path": "niches/ai-workflow-automation/agency/white-label/builds/projects/awa-003-ghl-subaccount-to-agency-status-sync.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-004",
+    "old_path": "ai-workflow-automation/agency-delivery/white-label/implementation/projects/awa-004-approved-calendar-booking-to-crm.md",
+    "new_path": "niches/ai-workflow-automation/agency/white-label/builds/projects/awa-004-approved-calendar-booking-to-crm.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-005",
+    "old_path": "ai-workflow-automation/agency-delivery/white-label/implementation/projects/awa-005-form-field-mapping-rescue.md",
+    "new_path": "niches/ai-workflow-automation/agency/white-label/builds/projects/awa-005-form-field-mapping-rescue.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-006",
+    "old_path": "ai-workflow-automation/agency-delivery/white-label/implementation/projects/awa-006-agency-branded-handover-for-one-automation.md",
+    "new_path": "niches/ai-workflow-automation/agency/white-label/builds/projects/awa-006-agency-branded-handover-for-one-automation.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-007",
+    "old_path": "ai-workflow-automation/agency-delivery/white-label/qa-and-rescue/projects/awa-007-broken-crm-webhook-diagnostic.md",
+    "new_path": "niches/ai-workflow-automation/agency/white-label/rescue/projects/awa-007-broken-crm-webhook-diagnostic.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-008",
+    "old_path": "ai-workflow-automation/agency-delivery/white-label/qa-and-rescue/projects/awa-008-duplicate-lead-incident-repair.md",
+    "new_path": "niches/ai-workflow-automation/agency/white-label/rescue/projects/awa-008-duplicate-lead-incident-repair.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-009",
+    "old_path": "ai-workflow-automation/agency-delivery/white-label/qa-and-rescue/projects/awa-009-api-rate-limit-retry-retrofit.md",
+    "new_path": "niches/ai-workflow-automation/agency/white-label/rescue/projects/awa-009-api-rate-limit-retry-retrofit.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-010",
+    "old_path": "ai-workflow-automation/agency-delivery/white-label/qa-and-rescue/projects/awa-010-automation-pre-launch-qa-certificate-pack.md",
+    "new_path": "niches/ai-workflow-automation/agency/white-label/rescue/projects/awa-010-one-workflow-pre-launch-acceptance-testing.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-011",
+    "old_path": "ai-workflow-automation/agency-delivery/white-label/qa-and-rescue/projects/awa-011-one-workflow-log-alert-retrofit.md",
+    "new_path": "niches/ai-workflow-automation/agency/white-label/rescue/projects/awa-011-one-workflow-log-alert-retrofit.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-012",
+    "old_path": "ai-workflow-automation/agency-delivery/white-label/qa-and-rescue/projects/awa-012-unfinished-automation-takeover-assessment.md",
+    "new_path": "niches/ai-workflow-automation/agency/white-label/rescue/projects/awa-012-unfinished-automation-takeover-assessment.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-013",
+    "old_path": "ai-workflow-automation/agency-delivery/internal/client-operations/projects/awa-013-new-client-intake-to-delivery-board.md",
+    "new_path": "niches/ai-workflow-automation/agency/internal/client-delivery/projects/awa-013-new-client-intake-to-delivery-board.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-014",
+    "old_path": "ai-workflow-automation/agency-delivery/internal/client-operations/projects/awa-014-agency-access-request-tracker.md",
+    "new_path": "niches/ai-workflow-automation/agency/internal/client-delivery/projects/awa-014-agency-access-request-tracker.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-015",
+    "old_path": "ai-workflow-automation/agency-delivery/internal/client-operations/projects/awa-015-client-change-request-approval-queue.md",
+    "new_path": "niches/ai-workflow-automation/agency/internal/client-delivery/projects/awa-015-client-change-request-approval-queue.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-016",
+    "old_path": "ai-workflow-automation/agency-delivery/internal/client-operations/projects/awa-016-multi-client-workflow-inventory-report.md",
+    "new_path": "niches/ai-workflow-automation/agency/internal/client-delivery/projects/awa-016-multi-client-workflow-inventory-report.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-017",
+    "old_path": "ai-workflow-automation/agency-delivery/internal/client-operations/projects/awa-017-delivery-artifact-receipt-generator.md",
+    "new_path": "niches/ai-workflow-automation/agency/internal/client-delivery/projects/awa-017-delivery-artifact-receipt-generator.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-018",
+    "old_path": "ai-workflow-automation/agency-delivery/internal/client-operations/projects/awa-018-agency-support-to-engineering-escalation.md",
+    "new_path": "niches/ai-workflow-automation/agency/internal/client-delivery/projects/awa-018-agency-support-to-engineering-escalation.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-019",
+    "old_path": "ai-workflow-automation/revenue-operations/lead-capture/inbound/projects/awa-019-multi-form-intake-canonicalizer.md",
+    "new_path": "niches/ai-workflow-automation/revenue/intake/routing/projects/awa-019-multi-form-intake-canonicalizer.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-020",
+    "old_path": "ai-workflow-automation/revenue-operations/lead-capture/inbound/projects/awa-020-lead-to-owner-assignment-rules.md",
+    "new_path": "niches/ai-workflow-automation/revenue/intake/routing/projects/awa-020-lead-to-owner-assignment-rules.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-021",
+    "old_path": "ai-workflow-automation/revenue-operations/lead-capture/inbound/projects/awa-021-ai-assisted-inbound-enquiry-summarizer.md",
+    "new_path": "niches/ai-workflow-automation/revenue/intake/routing/projects/awa-021-ai-assisted-inbound-enquiry-summary-human-reviewed.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-022",
+    "old_path": "ai-workflow-automation/revenue-operations/lead-capture/inbound/projects/awa-022-spam-test-submission-quarantine.md",
+    "new_path": "niches/ai-workflow-automation/revenue/intake/routing/projects/awa-022-spam-test-submission-quarantine.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-023",
+    "old_path": "ai-workflow-automation/revenue-operations/lead-capture/inbound/projects/awa-023-inbound-lead-completeness-follow-up-task.md",
+    "new_path": "niches/ai-workflow-automation/revenue/intake/routing/projects/awa-023-inbound-lead-completeness-follow-up-task.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-024",
+    "old_path": "ai-workflow-automation/revenue-operations/lead-capture/inbound/projects/awa-024-high-priority-lead-sla-escalation.md",
+    "new_path": "niches/ai-workflow-automation/revenue/intake/routing/projects/awa-024-high-priority-lead-sla-escalation.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-025",
+    "old_path": "ai-workflow-automation/revenue-operations/crm/data-quality/projects/awa-025-contact-normalization-checkpoint.md",
+    "new_path": "niches/ai-workflow-automation/revenue/crm/data-quality/projects/awa-025-contact-normalization-checkpoint.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-026",
+    "old_path": "ai-workflow-automation/revenue-operations/crm/data-quality/projects/awa-026-duplicate-contact-review-queue.md",
+    "new_path": "niches/ai-workflow-automation/revenue/crm/data-quality/projects/awa-026-duplicate-contact-review-queue.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-027",
+    "old_path": "ai-workflow-automation/revenue-operations/crm/data-quality/projects/awa-027-unmapped-crm-property-detector.md",
+    "new_path": "niches/ai-workflow-automation/revenue/crm/data-quality/projects/awa-027-unmapped-crm-property-detector.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-028",
+    "old_path": "ai-workflow-automation/revenue-operations/crm/data-quality/projects/awa-028-lifecycle-tag-consistency-audit.md",
+    "new_path": "niches/ai-workflow-automation/revenue/crm/data-quality/projects/awa-028-lifecycle-tag-consistency-audit.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-029",
+    "old_path": "ai-workflow-automation/revenue-operations/crm/data-quality/projects/awa-029-stage-history-anomaly-report.md",
+    "new_path": "niches/ai-workflow-automation/revenue/crm/data-quality/projects/awa-029-stage-history-anomaly-report.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-030",
+    "old_path": "ai-workflow-automation/revenue-operations/crm/data-quality/projects/awa-030-idempotent-csv-to-crm-import-wrapper.md",
+    "new_path": "niches/ai-workflow-automation/revenue/crm/data-quality/projects/awa-030-idempotent-csv-to-crm-import-wrapper.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-031",
+    "old_path": "ai-workflow-automation/revenue-operations/crm/pipeline/projects/awa-031-qualified-opportunity-to-task-handoff.md",
+    "new_path": "niches/ai-workflow-automation/revenue/sales/handoffs/projects/awa-031-qualified-opportunity-to-task-handoff.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-032",
+    "old_path": "ai-workflow-automation/revenue-operations/crm/pipeline/projects/awa-032-pre-meeting-account-brief-assembler.md",
+    "new_path": "niches/ai-workflow-automation/revenue/sales/handoffs/projects/awa-032-pre-meeting-account-brief-assembler.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-033",
+    "old_path": "ai-workflow-automation/revenue-operations/crm/pipeline/projects/awa-033-proposal-review-gate.md",
+    "new_path": "niches/ai-workflow-automation/revenue/sales/handoffs/projects/awa-033-proposal-review-gate.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-034",
+    "old_path": "ai-workflow-automation/revenue-operations/crm/pipeline/projects/awa-034-won-deal-internal-kickoff.md",
+    "new_path": "niches/ai-workflow-automation/revenue/sales/handoffs/projects/awa-034-won-deal-internal-kickoff.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-035",
+    "old_path": "ai-workflow-automation/revenue-operations/crm/pipeline/projects/awa-035-renewal-date-internal-reminder.md",
+    "new_path": "niches/ai-workflow-automation/revenue/sales/handoffs/projects/awa-035-renewal-date-internal-reminder.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-036",
+    "old_path": "ai-workflow-automation/revenue-operations/crm/pipeline/projects/awa-036-stalled-deal-exception-digest.md",
+    "new_path": "niches/ai-workflow-automation/revenue/sales/handoffs/projects/awa-036-stalled-deal-exception-digest.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-037",
+    "old_path": "ai-workflow-automation/customer-operations/support/triage/projects/awa-037-shared-inbox-issue-classifier.md",
+    "new_path": "niches/ai-workflow-automation/customer-operations/support/triage/projects/awa-037-shared-inbox-issue-classifier.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-038",
+    "old_path": "ai-workflow-automation/customer-operations/support/triage/projects/awa-038-sla-breach-escalation-retrofit.md",
+    "new_path": "niches/ai-workflow-automation/customer-operations/support/triage/projects/awa-038-sla-breach-escalation-retrofit.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-039",
+    "old_path": "ai-workflow-automation/customer-operations/support/triage/projects/awa-039-knowledge-article-suggestion-queue.md",
+    "new_path": "niches/ai-workflow-automation/customer-operations/support/triage/projects/awa-039-knowledge-article-suggestion-queue.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-040",
+    "old_path": "ai-workflow-automation/customer-operations/support/triage/projects/awa-040-escalation-context-packaging.md",
+    "new_path": "niches/ai-workflow-automation/customer-operations/support/triage/projects/awa-040-escalation-context-packaging.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-041",
+    "old_path": "ai-workflow-automation/customer-operations/support/triage/projects/awa-041-refund-request-eligibility-checklist.md",
+    "new_path": "niches/ai-workflow-automation/customer-operations/support/triage/projects/awa-041-refund-request-eligibility-checklist.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-042",
+    "old_path": "ai-workflow-automation/customer-operations/support/triage/projects/awa-042-ticket-category-drift-detector.md",
+    "new_path": "niches/ai-workflow-automation/customer-operations/support/triage/projects/awa-042-ticket-category-drift-detector.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-043",
+    "old_path": "ai-workflow-automation/customer-operations/appointments/service-ops/projects/awa-043-appointment-to-job-prep-checklist.md",
+    "new_path": "niches/ai-workflow-automation/customer-operations/appointments/dispatch/projects/awa-043-appointment-to-job-prep-checklist.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-044",
+    "old_path": "ai-workflow-automation/customer-operations/appointments/service-ops/projects/awa-044-reschedule-cascade-to-dispatch-board.md",
+    "new_path": "niches/ai-workflow-automation/customer-operations/appointments/dispatch/projects/awa-044-reschedule-cascade-to-dispatch-board.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-045",
+    "old_path": "ai-workflow-automation/customer-operations/appointments/service-ops/projects/awa-045-no-show-internal-follow-up-task.md",
+    "new_path": "niches/ai-workflow-automation/customer-operations/appointments/dispatch/projects/awa-045-no-show-internal-follow-up-task.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-046",
+    "old_path": "ai-workflow-automation/customer-operations/appointments/service-ops/projects/awa-046-territory-appointment-allocation-queue.md",
+    "new_path": "niches/ai-workflow-automation/customer-operations/appointments/dispatch/projects/awa-046-territory-appointment-allocation-queue.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-047",
+    "old_path": "ai-workflow-automation/customer-operations/appointments/service-ops/projects/awa-047-required-pre-visit-paperwork-checklist.md",
+    "new_path": "niches/ai-workflow-automation/customer-operations/appointments/dispatch/projects/awa-047-required-pre-visit-paperwork-checklist.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-048",
+    "old_path": "ai-workflow-automation/customer-operations/appointments/service-ops/projects/awa-048-calendar-conflict-alert-bridge.md",
+    "new_path": "niches/ai-workflow-automation/customer-operations/appointments/dispatch/projects/awa-048-calendar-conflict-alert-bridge.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-049",
+    "old_path": "ai-workflow-automation/commerce-operations/orders/fulfillment/projects/awa-049-paid-order-to-production-board.md",
+    "new_path": "niches/ai-workflow-automation/commerce/orders/production/projects/awa-049-paid-order-to-production-board.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-050",
+    "old_path": "ai-workflow-automation/commerce-operations/orders/fulfillment/projects/awa-050-multi-store-order-intake-router.md",
+    "new_path": "niches/ai-workflow-automation/commerce/orders/production/projects/awa-050-multi-store-order-intake-router.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-051",
+    "old_path": "ai-workflow-automation/commerce-operations/orders/fulfillment/projects/awa-051-per-line-personalization-extractor.md",
+    "new_path": "niches/ai-workflow-automation/commerce/orders/production/projects/awa-051-per-line-personalization-extractor.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-052",
+    "old_path": "ai-workflow-automation/commerce-operations/orders/fulfillment/projects/awa-052-shipping-exception-watcher.md",
+    "new_path": "niches/ai-workflow-automation/commerce/orders/production/projects/awa-052-shipping-exception-watcher.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-053",
+    "old_path": "ai-workflow-automation/commerce-operations/orders/fulfillment/projects/awa-053-returns-intake-routing-board.md",
+    "new_path": "niches/ai-workflow-automation/commerce/orders/production/projects/awa-053-returns-intake-routing-board.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-054",
+    "old_path": "ai-workflow-automation/commerce-operations/orders/fulfillment/projects/awa-054-gift-note-and-pack-slip-print-queue.md",
+    "new_path": "niches/ai-workflow-automation/commerce/orders/production/projects/awa-054-gift-note-and-pack-slip-print-queue.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-055",
+    "old_path": "ai-workflow-automation/commerce-operations/catalog/inventory/projects/awa-055-supplier-stock-feed-anomaly-review.md",
+    "new_path": "niches/ai-workflow-automation/commerce/catalog/exceptions/projects/awa-055-supplier-stock-feed-anomaly-review.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-056",
+    "old_path": "ai-workflow-automation/commerce-operations/catalog/inventory/projects/awa-056-sku-crosswalk-quality-gate.md",
+    "new_path": "niches/ai-workflow-automation/commerce/catalog/exceptions/projects/awa-056-sku-crosswalk-quality-gate.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-057",
+    "old_path": "ai-workflow-automation/commerce-operations/catalog/inventory/projects/awa-057-low-stock-purchase-review-digest.md",
+    "new_path": "niches/ai-workflow-automation/commerce/catalog/exceptions/projects/awa-057-low-stock-purchase-review-digest.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-058",
+    "old_path": "ai-workflow-automation/commerce-operations/catalog/inventory/projects/awa-058-product-listing-change-detector.md",
+    "new_path": "niches/ai-workflow-automation/commerce/catalog/exceptions/projects/awa-058-product-listing-change-detector.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-059",
+    "old_path": "ai-workflow-automation/commerce-operations/catalog/inventory/projects/awa-059-backorder-exception-board.md",
+    "new_path": "niches/ai-workflow-automation/commerce/catalog/exceptions/projects/awa-059-backorder-exception-board.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-060",
+    "old_path": "ai-workflow-automation/commerce-operations/catalog/inventory/projects/awa-060-catalog-image-readiness-checker.md",
+    "new_path": "niches/ai-workflow-automation/commerce/catalog/exceptions/projects/awa-060-catalog-image-readiness-checker.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-061",
+    "old_path": "ai-workflow-automation/back-office/documents/review-queues/projects/awa-061-purchase-order-inbox-register.md",
+    "new_path": "niches/ai-workflow-automation/back-office/documents/intake/projects/awa-061-purchase-order-inbox-register.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-062",
+    "old_path": "ai-workflow-automation/back-office/documents/review-queues/projects/awa-062-incoming-quote-request-packet.md",
+    "new_path": "niches/ai-workflow-automation/back-office/documents/intake/projects/awa-062-incoming-quote-request-packet.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-063",
+    "old_path": "ai-workflow-automation/back-office/documents/review-queues/projects/awa-063-signed-agreement-receipt-to-project-setup.md",
+    "new_path": "niches/ai-workflow-automation/back-office/documents/intake/projects/awa-063-signed-agreement-receipt-to-project-setup.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-064",
+    "old_path": "ai-workflow-automation/back-office/documents/review-queues/projects/awa-064-vendor-document-expiration-register.md",
+    "new_path": "niches/ai-workflow-automation/back-office/documents/intake/projects/awa-064-vendor-document-expiration-register.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-065",
+    "old_path": "ai-workflow-automation/back-office/documents/review-queues/projects/awa-065-receipt-image-completeness-checker.md",
+    "new_path": "niches/ai-workflow-automation/back-office/documents/intake/projects/awa-065-receipt-image-completeness-checker.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-066",
+    "old_path": "ai-workflow-automation/back-office/documents/review-queues/projects/awa-066-contract-attachment-naming-and-retention-queue.md",
+    "new_path": "niches/ai-workflow-automation/back-office/documents/intake/projects/awa-066-contract-attachment-naming-and-retention-queue.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-067",
+    "old_path": "ai-workflow-automation/back-office/projects/handoffs/projects/awa-067-approved-project-to-task-template-bridge.md",
+    "new_path": "niches/ai-workflow-automation/back-office/delivery/handoffs/projects/awa-067-approved-project-to-task-template-bridge.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-068",
+    "old_path": "ai-workflow-automation/back-office/projects/handoffs/projects/awa-068-milestone-status-consolidator.md",
+    "new_path": "niches/ai-workflow-automation/back-office/delivery/handoffs/projects/awa-068-milestone-status-consolidator.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-069",
+    "old_path": "ai-workflow-automation/back-office/projects/handoffs/projects/awa-069-revision-request-issue-tracker.md",
+    "new_path": "niches/ai-workflow-automation/back-office/delivery/handoffs/projects/awa-069-revision-request-issue-tracker.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-070",
+    "old_path": "ai-workflow-automation/back-office/projects/handoffs/projects/awa-070-deliverable-asset-manifest.md",
+    "new_path": "niches/ai-workflow-automation/back-office/delivery/handoffs/projects/awa-070-deliverable-asset-manifest.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-071",
+    "old_path": "ai-workflow-automation/back-office/projects/handoffs/projects/awa-071-internal-time-entry-discrepancy-reminder.md",
+    "new_path": "niches/ai-workflow-automation/back-office/delivery/handoffs/projects/awa-071-internal-time-entry-discrepancy-reminder.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-072",
+    "old_path": "ai-workflow-automation/back-office/projects/handoffs/projects/awa-072-blocked-task-dependency-notifier.md",
+    "new_path": "niches/ai-workflow-automation/back-office/delivery/handoffs/projects/awa-072-blocked-task-dependency-notifier.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-073",
+    "old_path": "ai-workflow-automation/back-office/reporting/management-digests/projects/awa-073-crm-funnel-weekly-summary.md",
+    "new_path": "niches/ai-workflow-automation/back-office/reporting/digests/projects/awa-073-crm-funnel-weekly-summary.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-074",
+    "old_path": "ai-workflow-automation/back-office/reporting/management-digests/projects/awa-074-order-exception-trend-digest.md",
+    "new_path": "niches/ai-workflow-automation/back-office/reporting/digests/projects/awa-074-order-exception-trend-digest.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-075",
+    "old_path": "ai-workflow-automation/back-office/reporting/management-digests/projects/awa-075-workflow-failure-cost-report.md",
+    "new_path": "niches/ai-workflow-automation/back-office/reporting/digests/projects/awa-075-workflow-failure-cost-report.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-076",
+    "old_path": "ai-workflow-automation/back-office/reporting/management-digests/projects/awa-076-team-sla-performance-snapshot.md",
+    "new_path": "niches/ai-workflow-automation/back-office/reporting/digests/projects/awa-076-team-sla-performance-snapshot.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-077",
+    "old_path": "ai-workflow-automation/back-office/reporting/management-digests/projects/awa-077-inventory-exception-morning-brief.md",
+    "new_path": "niches/ai-workflow-automation/back-office/reporting/digests/projects/awa-077-inventory-exception-morning-brief.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-078",
+    "old_path": "ai-workflow-automation/back-office/reporting/management-digests/projects/awa-078-project-delivery-risk-review.md",
+    "new_path": "niches/ai-workflow-automation/back-office/reporting/digests/projects/awa-078-project-delivery-risk-review.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-079",
+    "old_path": "ai-workflow-automation/marketing-operations/content/approval/projects/awa-079-jobsite-photo-to-caption-draft.md",
+    "new_path": "niches/ai-workflow-automation/marketing/content/approval/projects/awa-079-jobsite-photo-to-caption-draft.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-080",
+    "old_path": "ai-workflow-automation/marketing-operations/content/approval/projects/awa-080-campaign-asset-approval-queue.md",
+    "new_path": "niches/ai-workflow-automation/marketing/content/approval/projects/awa-080-campaign-asset-approval-queue.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-081",
+    "old_path": "ai-workflow-automation/marketing-operations/content/approval/projects/awa-081-testimonial-consent-tracker.md",
+    "new_path": "niches/ai-workflow-automation/marketing/content/approval/projects/awa-081-testimonial-consent-tracker.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-082",
+    "old_path": "ai-workflow-automation/marketing-operations/content/approval/projects/awa-082-blog-intake-to-editorial-plan.md",
+    "new_path": "niches/ai-workflow-automation/marketing/content/approval/projects/awa-082-blog-intake-to-editorial-plan.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-083",
+    "old_path": "ai-workflow-automation/marketing-operations/content/approval/projects/awa-083-multi-platform-crop-qa-ledger.md",
+    "new_path": "niches/ai-workflow-automation/marketing/content/approval/projects/awa-083-multi-platform-crop-qa-ledger.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-084",
+    "old_path": "ai-workflow-automation/marketing-operations/content/approval/projects/awa-084-client-feedback-to-revision-round-up.md",
+    "new_path": "niches/ai-workflow-automation/marketing/content/approval/projects/awa-084-client-feedback-to-revision-round-up.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-085",
+    "old_path": "ai-workflow-automation/marketing-operations/measurement/data-quality/projects/awa-085-utm-taxonomy-qa-helper.md",
+    "new_path": "niches/ai-workflow-automation/marketing/measurement/reconciliation/projects/awa-085-utm-taxonomy-qa-helper.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-086",
+    "old_path": "ai-workflow-automation/marketing-operations/measurement/data-quality/projects/awa-086-lead-source-label-auditor.md",
+    "new_path": "niches/ai-workflow-automation/marketing/measurement/reconciliation/projects/awa-086-lead-source-label-auditor.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-087",
+    "old_path": "ai-workflow-automation/marketing-operations/measurement/data-quality/projects/awa-087-daily-campaign-spend-anomaly-review.md",
+    "new_path": "niches/ai-workflow-automation/marketing/measurement/reconciliation/projects/awa-087-daily-campaign-spend-anomaly-review.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-088",
+    "old_path": "ai-workflow-automation/marketing-operations/measurement/data-quality/projects/awa-088-offline-conversion-upload-preview.md",
+    "new_path": "niches/ai-workflow-automation/marketing/measurement/reconciliation/projects/awa-088-offline-conversion-upload-preview.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-089",
+    "old_path": "ai-workflow-automation/marketing-operations/measurement/data-quality/projects/awa-089-campaign-to-sales-reconciliation-table.md",
+    "new_path": "niches/ai-workflow-automation/marketing/measurement/reconciliation/projects/awa-089-campaign-to-sales-reconciliation-table.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-090",
+    "old_path": "ai-workflow-automation/marketing-operations/measurement/data-quality/projects/awa-090-ad-lead-integration-delivery-receipt.md",
+    "new_path": "niches/ai-workflow-automation/marketing/measurement/reconciliation/projects/awa-090-ad-lead-integration-delivery-receipt.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-091",
+    "old_path": "ai-workflow-automation/reliability-and-platform/assurance/audits/projects/awa-091-workflow-reliability-assessment.md",
+    "new_path": "niches/ai-workflow-automation/reliability/review/audits/projects/awa-091-workflow-reliability-assessment.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-092",
+    "old_path": "ai-workflow-automation/reliability-and-platform/assurance/audits/projects/awa-092-idempotency-retrofit-service.md",
+    "new_path": "niches/ai-workflow-automation/reliability/review/audits/projects/awa-092-idempotency-retrofit-service.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-093",
+    "old_path": "ai-workflow-automation/reliability-and-platform/assurance/audits/projects/awa-093-webhook-authentication-review.md",
+    "new_path": "niches/ai-workflow-automation/reliability/review/audits/projects/awa-093-webhook-authentication-review.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-094",
+    "old_path": "ai-workflow-automation/reliability-and-platform/assurance/audits/projects/awa-094-recovery-and-dead-letter-runbook.md",
+    "new_path": "niches/ai-workflow-automation/reliability/review/audits/projects/awa-094-recovery-and-dead-letter-runbook.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-095",
+    "old_path": "ai-workflow-automation/reliability-and-platform/assurance/audits/projects/awa-095-automation-cost-cap-audit.md",
+    "new_path": "niches/ai-workflow-automation/reliability/review/audits/projects/awa-095-automation-cost-cap-audit.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-096",
+    "old_path": "ai-workflow-automation/reliability-and-platform/assurance/audits/projects/awa-096-data-leak-risk-review-for-workflow-exports.md",
+    "new_path": "niches/ai-workflow-automation/reliability/review/audits/projects/awa-096-data-leak-risk-review-for-workflow-exports.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-097",
+    "old_path": "ai-workflow-automation/reliability-and-platform/assurance/migrations/projects/awa-097-zapier-to-make-feasibility-report.md",
+    "new_path": "niches/ai-workflow-automation/reliability/migration/platforms/projects/awa-097-zapier-to-make-feasibility-report.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-098",
+    "old_path": "ai-workflow-automation/reliability-and-platform/assurance/migrations/projects/awa-098-make-to-n8n-scope-and-test-pack.md",
+    "new_path": "niches/ai-workflow-automation/reliability/migration/platforms/projects/awa-098-make-to-n8n-scope-and-test-pack.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-099",
+    "old_path": "ai-workflow-automation/reliability-and-platform/assurance/migrations/projects/awa-099-legacy-webhook-endpoint-cutover.md",
+    "new_path": "niches/ai-workflow-automation/reliability/migration/platforms/projects/awa-099-legacy-webhook-endpoint-cutover.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-100",
+    "old_path": "ai-workflow-automation/reliability-and-platform/assurance/migrations/projects/awa-100-automation-credential-migration-worksheet.md",
+    "new_path": "niches/ai-workflow-automation/reliability/migration/platforms/projects/awa-100-automation-credential-migration-worksheet.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-101",
+    "old_path": "ai-workflow-automation/reliability-and-platform/assurance/migrations/projects/awa-101-cross-platform-field-mapping-parity-test.md",
+    "new_path": "niches/ai-workflow-automation/reliability/migration/platforms/projects/awa-101-cross-platform-field-mapping-parity-test.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-102",
+    "old_path": "ai-workflow-automation/reliability-and-platform/assurance/migrations/projects/awa-102-single-workflow-rollback-rehearsal.md",
+    "new_path": "niches/ai-workflow-automation/reliability/migration/platforms/projects/awa-102-single-workflow-rollback-rehearsal.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-103",
+    "old_path": "ai-workflow-automation/reliability-and-platform/maintenance/retainers/projects/awa-103-monthly-single-workflow-health-review.md",
+    "new_path": "niches/ai-workflow-automation/reliability/maintenance/care/projects/awa-103-monthly-single-workflow-health-review.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-104",
+    "old_path": "ai-workflow-automation/reliability-and-platform/maintenance/retainers/projects/awa-104-connector-credential-expiry-watch.md",
+    "new_path": "niches/ai-workflow-automation/reliability/maintenance/care/projects/awa-104-connector-credential-expiry-watch.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-105",
+    "old_path": "ai-workflow-automation/reliability-and-platform/maintenance/retainers/projects/awa-105-weekly-replay-queue-review.md",
+    "new_path": "niches/ai-workflow-automation/reliability/maintenance/care/projects/awa-105-weekly-replay-queue-review.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-106",
+    "old_path": "ai-workflow-automation/reliability-and-platform/maintenance/retainers/projects/awa-106-workflow-ownership-and-runbook-refresh.md",
+    "new_path": "niches/ai-workflow-automation/reliability/maintenance/care/projects/awa-106-workflow-ownership-and-runbook-refresh.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-107",
+    "old_path": "ai-workflow-automation/reliability-and-platform/maintenance/retainers/projects/awa-107-api-dependency-change-watch.md",
+    "new_path": "niches/ai-workflow-automation/reliability/maintenance/care/projects/awa-107-api-dependency-change-watch.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-108",
+    "old_path": "ai-workflow-automation/reliability-and-platform/maintenance/retainers/projects/awa-108-capped-incident-response-hours-bank.md",
+    "new_path": "niches/ai-workflow-automation/reliability/maintenance/care/projects/awa-108-capped-incident-response-hours-bank.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-109",
+    "old_path": "ai-workflow-automation/later-stage-products/template-packs/specific/projects/awa-109-form-to-crm-qa-fixture-kit.md",
+    "new_path": "niches/ai-workflow-automation/later-products/downloads/test-kits/projects/awa-109-form-to-crm-qa-fixture-kit.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-110",
+    "old_path": "ai-workflow-automation/later-stage-products/template-packs/specific/projects/awa-110-webhook-failure-replay-test-kit.md",
+    "new_path": "niches/ai-workflow-automation/later-products/downloads/test-kits/projects/awa-110-webhook-failure-replay-test-kit.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-111",
+    "old_path": "ai-workflow-automation/later-stage-products/template-packs/specific/projects/awa-111-crm-duplicate-detection-reviewer-kit.md",
+    "new_path": "niches/ai-workflow-automation/later-products/downloads/test-kits/projects/awa-111-crm-duplicate-detection-reviewer-kit.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-112",
+    "old_path": "ai-workflow-automation/later-stage-products/template-packs/specific/projects/awa-112-order-exceptions-reference-workflows.md",
+    "new_path": "niches/ai-workflow-automation/later-products/downloads/test-kits/projects/awa-112-order-exceptions-reference-workflows.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-113",
+    "old_path": "ai-workflow-automation/later-stage-products/template-packs/specific/projects/awa-113-human-approval-pattern-library.md",
+    "new_path": "niches/ai-workflow-automation/later-products/downloads/test-kits/projects/awa-113-human-approval-pattern-library.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-114",
+    "old_path": "ai-workflow-automation/later-stage-products/template-packs/specific/projects/awa-114-platform-cost-model-worksheet-bundle.md",
+    "new_path": "niches/ai-workflow-automation/later-products/downloads/test-kits/projects/awa-114-platform-cost-model-worksheet-bundle.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-115",
+    "old_path": "ai-workflow-automation/later-stage-products/software/integration-tools/projects/awa-115-cross-workflow-dead-letter-viewer.md",
+    "new_path": "niches/ai-workflow-automation/later-products/software/integration-tools/projects/awa-115-cross-workflow-dead-letter-viewer.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-116",
+    "old_path": "ai-workflow-automation/later-stage-products/software/integration-tools/projects/awa-116-schema-drift-early-warning-service.md",
+    "new_path": "niches/ai-workflow-automation/later-products/software/integration-tools/projects/awa-116-schema-drift-early-warning-service.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-117",
+    "old_path": "ai-workflow-automation/later-stage-products/software/integration-tools/projects/awa-117-visual-cross-platform-mapping-diff.md",
+    "new_path": "niches/ai-workflow-automation/later-products/software/integration-tools/projects/awa-117-visual-cross-platform-mapping-diff.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-118",
+    "old_path": "ai-workflow-automation/later-stage-products/software/integration-tools/projects/awa-118-customer-owned-connector-health-console.md",
+    "new_path": "niches/ai-workflow-automation/later-products/software/integration-tools/projects/awa-118-customer-owned-connector-health-console.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-119",
+    "old_path": "ai-workflow-automation/later-stage-products/software/integration-tools/projects/awa-119-one-click-automation-test-harness-for-agencies.md",
+    "new_path": "niches/ai-workflow-automation/later-products/software/integration-tools/projects/awa-119-one-click-automation-test-harness-for-agencies.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  },
+  {
+    "id": "AWA-120",
+    "old_path": "ai-workflow-automation/later-stage-products/software/integration-tools/projects/awa-120-agency-connector-permissions-inventory-saas.md",
+    "new_path": "niches/ai-workflow-automation/later-products/software/integration-tools/projects/awa-120-agency-connector-permissions-inventory-saas.md",
+    "action": "retain_id_rewrite_research_and_classification"
+  }
+]

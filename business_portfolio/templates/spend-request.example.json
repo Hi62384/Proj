@@ -1,0 +1,15 @@
+{
+  "template_only": true,
+  "project_id": "AWA-005",
+  "currency": "CAD",
+  "approval_ref": null,
+  "approved_total": 0,
+  "already_spent": 0,
+  "existing_commitments": 0,
+  "proposed_cost": 0,
+  "tax_and_fx": 0,
+  "new_noncancelable_commitments": 0,
+  "costs_verified": false,
+  "auto_renewal": false,
+  "purpose": "Unapproved planning example; not a purchase request sent."
+}

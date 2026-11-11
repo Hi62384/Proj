@@ -187,6 +187,6 @@
     "mobile_verification": "Not passed: selecting Mobile did not produce a narrow iframe viewport; observed width stayed 1357px."
   },
   "record_type": "historical_snapshot",
-  "superseded_by": "CURRENT_LAUNCH_STATUS.md",
+  "superseded_by": "../../products/cleaning-pricing-calculator/README.md",
   "current_links_file": "CURRENT_LINKS.json"
 }

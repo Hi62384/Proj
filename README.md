@@ -13,7 +13,7 @@ The store now operates as **Arshya Ghafaryan**: [Shop](https://payhip.com/Arshya
 - [Cleaning Business Pricing & Profit Calculator](https://payhip.com/b/bP6YN) — CA$15.
 - [Inventory Reorder Planner](https://payhip.com/b/dotFZ) — CA$9.
 
-See the [current launch status](outputs/payhip-launch-2026-10-30/CURRENT_LAUNCH_STATUS.md) for verified delivery, remaining checks and the final package locations. Earlier Cedargrid URLs in dated evidence are historical and do not redirect. These are published listings, not evidence of paid demand.
+See the [current Cleaning product status](products/cleaning-pricing-calculator/README.md) and [current store links](outputs/payhip-launch-2026-10-30/CURRENT_LINKS.json). The listings, checkout opening and free-order delivery have been checked; actual paid processing and payout remain unverified. Earlier Cedargrid URLs in dated evidence are historical and do not redirect. These are published listings, not evidence of paid demand.
 
 ## Find the right part of the project
 

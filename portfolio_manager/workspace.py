@@ -1,5 +1,6 @@
 """Persistent chat contexts backed by the coordinator database."""
 import hashlib
+import hmac
 from pathlib import Path
 import re
 import secrets
@@ -42,12 +43,39 @@ class ChatWorkspaces:
                 id TEXT PRIMARY KEY, client TEXT UNIQUE NOT NULL, proof TEXT NOT NULL,
                 selection TEXT NOT NULL, revision INTEGER NOT NULL DEFAULT 0, worker_id TEXT
             )""")
+            db.execute('CREATE TABLE IF NOT EXISTS chat_workspace_secret(id INTEGER PRIMARY KEY, secret BLOB NOT NULL)')
+            db.execute('CREATE TABLE IF NOT EXISTS chat_workspace_detached(client TEXT PRIMARY KEY)')
 
     @staticmethod
     def _public(row):
         return {k: row[k] for k in ('id', 'selection', 'revision', 'worker_id')}
 
-    def attach(self, client, key=None):
+    @staticmethod
+    def _create(db, client, proof):
+        ident = secrets.token_hex(16)
+        selection = 'business_portfolio/niches'
+        db.execute('INSERT INTO chat_workspaces(id,client,proof,selection) VALUES(?,?,?,?)',
+                   (ident, client, proof, selection))
+        return dict(id=ident, selection=selection, revision=0, worker_id=None)
+
+    def reserve_codex_session(self, session_id):
+        """Provision through the local SessionStart hook, outside the model-facing catalog."""
+        if not isinstance(session_id, str) or not re.fullmatch(r'[A-Za-z0-9_-]{1,128}', session_id):
+            raise ValueError('The Codex hook did not supply a valid session identity.')
+        with self.coordinator._database(write=True) as db:
+            secret = db.execute('SELECT secret FROM chat_workspace_secret WHERE id=1').fetchone()
+            if secret is None:
+                key_material = secrets.token_bytes(32)
+                db.execute('INSERT INTO chat_workspace_secret(id,secret) VALUES(1,?)', (key_material,))
+            else:
+                key_material = secret['secret']
+            key = hmac.digest(key_material, session_id.encode('ascii'), 'sha256').hex()
+            proof = hashlib.sha256(key.encode()).hexdigest()
+            row = db.execute('SELECT * FROM chat_workspaces WHERE proof=?', (proof,)).fetchone()
+            workspace = self._public(row) if row else self._create(db, 'unbound:' + proof, proof)
+            return {**workspace, 'reconnect_key': key}
+
+    def attach(self, client, key=None, *, active_clients=()):
         if not isinstance(client, str) or not re.fullmatch(r'[a-f0-9]{32}', client):
             raise ValueError('A valid authenticated connection is required.')
         with self.coordinator._database(write=True) as db:
@@ -59,16 +87,19 @@ class ChatWorkspaces:
                 row = db.execute('SELECT * FROM chat_workspaces WHERE proof=?', (proof,)).fetchone()
                 if not row or (current and current['id'] != row['id']):
                     raise PermissionError('This connection cannot reconnect that workspace.')
+                if row['client'] != client and row['client'] in active_clients:
+                    raise PermissionError('This workspace is already connected. Close the other connection before reconnecting.')
+                if re.fullmatch(r'[a-f0-9]{32}', row['client']) and row['client'] != client:
+                    db.execute('INSERT OR IGNORE INTO chat_workspace_detached(client) VALUES(?)', (row['client'],))
                 db.execute('UPDATE chat_workspaces SET client=? WHERE id=?', (client, row['id']))
+                db.execute('DELETE FROM chat_workspace_detached WHERE client=?', (client,))
                 return self._public(row)
             if current:
                 return self._public(current)
+            if db.execute('SELECT 1 FROM chat_workspace_detached WHERE client=?', (client,)).fetchone():
+                raise PermissionError('This connection was disconnected from its workspace. Reconnect using its private key.')
             key = secrets.token_hex(32)
-            ident = secrets.token_hex(16)
-            selection = 'business_portfolio/niches'
-            db.execute('INSERT INTO chat_workspaces(id,client,proof,selection) VALUES(?,?,?,?)',
-                       (ident, client, hashlib.sha256(key.encode()).hexdigest(), selection))
-            return dict(id=ident, selection=selection, revision=0, worker_id=None, reconnect_key=key)
+            return {**self._create(db, client, hashlib.sha256(key.encode()).hexdigest()), 'reconnect_key': key}
 
     def get(self, ident):
         with self.coordinator._database() as db:

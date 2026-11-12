@@ -84,6 +84,15 @@ class CoordinatorTests(unittest.TestCase):
         with self.assertRaises(CoordinatorError):
             self.manager.register('../niches/agency')
 
+    def test_specific_project_claim_never_falls_back_to_another_project(self):
+        first = self.worker('agency')
+        second = self.worker('agency')
+        self.assertIsNone(self.manager.claim(first, project_id='TST-005'))
+        claim = self.manager.claim(first, project_id='TST-001')
+        self.assertEqual(claim['project_id'], 'TST-001')
+        self.assertIsNone(self.manager.claim(second, project_id='TST-001'))
+        self.assertEqual(self.manager.claim(second, project_id='TST-002')['project_id'], 'TST-002')
+
     def test_overlapping_claims_are_atomic_across_connections(self):
         a, b = self.worker(), self.worker()
         managers = self.manager, Coordinator(self.repo)

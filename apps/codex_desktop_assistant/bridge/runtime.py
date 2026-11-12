@@ -166,7 +166,9 @@ class Runtime:
         return [{'id':r['id'],'action':r['label'],'reason':r['args'].get('approval_reason') or r['args'].get('reason') or r['args'].get('question','Owner decision required'),'details':r['args']} for r in self.requests if not r['event'].is_set() and r['deadline']>time.monotonic() and r['generation']==self.permissions.generation]
 
     def status(self):
-        now=time.monotonic();clients=sum(now-at<45 for at in self.clients.values());chrome=self.broker.chrome.status();queue=self.broker.projects.queue
+        now=time.monotonic()
+        with self.lock:clients=sum(now-at<45 for at in self.clients.values())
+        chrome=self.broker.chrome.status();queue=self.broker.projects.queue
         work=queue.rows("SELECT id,objective,state FROM projects WHERE state NOT IN ('completed','cancelled') ORDER BY updated DESC LIMIT 25")
         for project in work:
             counts={row['state']:row['n'] for row in queue.rows('SELECT state,COUNT(*) n FROM jobs WHERE project=? GROUP BY state',(project['id'],))};project['completed_tasks']=counts.get('completed',0);project['total_tasks']=sum(counts.values())
@@ -191,24 +193,35 @@ class Runtime:
 
     def call(self,client,operation,arguments,request_id=None):
         if not isinstance(client,str) or len(client)!=32 or not isinstance(arguments,dict):raise Denied('Invalid client request')
-        now=time.monotonic();self.clients={key:at for key,at in self.clients.items() if now-at<45}
-        if operation=='bridge_mcp_connected':
-            if client not in self.clients and len(self.clients)>=64:raise Denied('Too many concurrent bridge clients')
-            self.clients[client]=now;return {'mcp_initialized':True}
-        if operation=='bridge_mcp_heartbeat':
-            if client in self.clients:self.clients[client]=now
-            return {'connected':client in self.clients}
+        if operation=='bridge_stop':return self.stop()
+        now=time.monotonic()
+        with self.lock:
+            self.clients={key:at for key,at in self.clients.items() if now-at<45}
+            if operation=='bridge_mcp_connected':
+                if client not in self.clients and len(self.clients)>=64:raise Denied('Too many concurrent bridge clients')
+                self.clients[client]=now;return {'mcp_initialized':True}
+            if operation=='bridge_mcp_heartbeat':
+                if client in self.clients:self.clients[client]=now
+                return {'connected':client in self.clients}
         manager=getattr(self,'manager',None)
+        if operation=='bridge_bind_codex_session':
+            if not manager:raise Denied('Open Portfolio Manager to use the portfolio dashboard')
+            workspace=manager.workspaces.reserve_codex_session(arguments.get('session_id'))
+            if arguments.get('show') is True:
+                self.emit('show_portfolio',None,{k:v for k,v in workspace.items() if k!='reconnect_key'})
+            return {'reconnect_key':workspace['reconnect_key']}
         if operation in {'portfolio_open','portfolio_context','portfolio_select','portfolio_start_selected','portfolio_stop_selected'}:
             if not manager:raise Denied('Open Portfolio Manager to use the portfolio dashboard')
-            workspace=manager.workspace(client,arguments if operation in {'portfolio_open','portfolio_select'} else
-                                        {key:arguments[key] for key in ('reconnect_key',) if key in arguments})
-            if operation=='portfolio_open':
-                self.emit('show_portfolio',None,{k:v for k,v in workspace.items() if k!='reconnect_key'})
-            if operation=='portfolio_start_selected':return {**workspace,'worker':manager.start_workspace_worker(workspace['id'])}
-            if operation=='portfolio_stop_selected':return {**workspace,**manager.stop_workspace_worker(workspace['id'])}
-            if operation=='portfolio_context':return {**workspace,**manager.control(),**manager.context_info(workspace)}
-            return {**workspace,**manager.control()}
+            with self.lock:
+                workspace=manager.workspace(client,arguments if operation in {'portfolio_open','portfolio_select'} else
+                                            {key:arguments[key] for key in ('reconnect_key',) if key in arguments},
+                                            active_clients=tuple(self.clients))
+                if operation=='portfolio_open':
+                    self.emit('show_portfolio',None,{k:v for k,v in workspace.items() if k!='reconnect_key'})
+                if operation=='portfolio_start_selected':return {**workspace,'worker':manager.start_workspace_worker(workspace['id'])}
+                if operation=='portfolio_stop_selected':return {**workspace,**manager.stop_workspace_worker(workspace['id'])}
+                if operation=='portfolio_context':return {**workspace,**manager.control(),**manager.context_info(workspace)}
+                return {**workspace,**manager.control()}
         if operation.startswith('portfolio_'):
             from portfolio_manager.integration import OPERATIONS
             if not manager or operation not in OPERATIONS:raise Denied('Open Portfolio Manager before requesting portfolio work')
@@ -224,13 +237,12 @@ class Runtime:
         if operation=='bridge_capabilities':return {'capabilities':CAPABILITIES,'desktop_default':'off','file_policy':'Explicit Deny wins; existing independent Read/Write/Create/Delete rules','no_shell':True,'no_arbitrary_javascript':True,'reasoning':'Official Codex only'}
         if operation=='bridge_get_pending_requests':return {'requests':self.pending()}
         if operation=='bridge_open_dashboard':self.emit('show_dashboard',None,None);return {'requested':True}
-        if operation=='bridge_stop':return self.stop()
         if operation=='bridge_cancel_call':
             event=self.inflight.get((client,arguments.get('request')))
             if event:event.set()
             return {'cancelled':bool(event),'note':'An already dispatched external effect may be uncertain. Inspect before continuing.'}
         if operation=='bridge_detach':
-            self.clients.pop(client,None)
+            with self.lock:self.clients.pop(client,None)
             for (identity,_),event in list(self.inflight.items()):
                 if identity==client:event.set()
             return {'disconnected':True}

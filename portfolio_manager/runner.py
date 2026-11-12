@@ -18,7 +18,7 @@ from portfolio_autopilot.codex_relay.config import Config, safe_path
 from portfolio_autopilot.codex_relay.diagnostics import RelayError, record, sanitize
 from portfolio_autopilot.codex_relay.permissions import selected_mode
 from portfolio_autopilot.codex_relay.workspace import Workspace
-from .development import BubblewrapVerifier, DevelopmentWorkspace
+from .development import BubblewrapVerifier, DevelopmentScope, DevelopmentWorkspace
 
 
 DRAFTS = frozenset({'result.md', 'draft.py', 'draft.json', 'draft.txt', 'draft.csv'})
@@ -284,7 +284,8 @@ class OfficialExecutor:
             'project_id': claim['project_id'], 'title': sanitize(claim['task']['title'])[:500],
             'criteria': sanitize(claim['task']['criteria'])[:4_000],
             'editable_paths': sorted(workspace.scope.edit_paths),
-            'scope': 'Read AGENTS.md and implement the requested changes using only relay_workspace. '
+            'scope': 'Read AGENTS.md and PROJECT.md and implement the requested changes using only relay_workspace. '
+                     'You may create bounded source files inside the selected folder by writing with sha256=new. '
                      'Keep the trusted tests and other input files read-only. The host will run the trusted tests.',
         }, ensure_ascii=False)
         existing = {name for name, digest in workspace.original.items() if digest != 'new'}
@@ -292,6 +293,10 @@ class OfficialExecutor:
         with self.session(workspace) as config:
             if verifier is None:
                 verifier = BubblewrapVerifier(config.wsl_distribution if config.execution_backend == 'wsl' else None)
+            # Reject an unsupported host before making a model call. A candidate
+            # cannot be accepted without a sandbox capable of running its tests.
+            if isinstance(verifier, BubblewrapVerifier):
+                verifier._prefix()
             response = self._turn(config, prompt, restricted, cancelled, emit, save_session)
         if cancelled.is_set():
             raise InterruptedError('Stopped before verifying development.')
@@ -371,16 +376,19 @@ class Supervisor:
                     event.set()
 
     def stop(self, worker_id):
-        self._signal(worker_id)
-        self.coordinator.set_worker_state(worker_id, 'stopped')
+        with self._lock:
+            self._signal(worker_id)
+            self.coordinator.set_worker_state(worker_id, 'stopped')
 
     def pause(self, worker_id):
-        self._signal(worker_id)
-        self.coordinator.set_worker_state(worker_id, 'paused')
+        with self._lock:
+            self._signal(worker_id)
+            self.coordinator.set_worker_state(worker_id, 'paused')
 
     def stop_all(self, *, emergency=False):
-        self._signal()
-        return self.coordinator.stop_all(emergency=emergency)
+        with self._lock:
+            self._signal()
+            return self.coordinator.stop_all(emergency=emergency)
 
     def close(self):
         with self._lock:
@@ -452,10 +460,20 @@ class Supervisor:
             verification = task.get('verification')
             if not verification and (task.get('provisional') or task.get('id') == 'next-action'):
                 verification = {'kind': 'artifact', 'name': 'result.md'}
-            if (not isinstance(verification, dict) or verification.get('kind') != 'artifact' or
-                    verification.get('name') not in DRAFTS):
+            development = isinstance(verification, dict) and verification.get('kind') == 'development'
+            if not development and (not isinstance(verification, dict) or verification.get('kind') != 'artifact' or
+                                    verification.get('name') not in DRAFTS):
                 raise VerificationRequired('This milestone needs a verification method the worker does not support.')
-            workspace = IsolatedWorkspace(self.coordinator.repo, self.coordinator.db_path.parent, claim, cancelled)
+            if development:
+                record = self.coordinator.guard_lease(worker_id, lease, lambda item: safe_path(
+                    self.coordinator.repo, item['record_path']).read_bytes())
+                private = self.coordinator.db_path.parent
+                run_root = _ensure_private_dir(private / 'worker-runs' / claim['project_id'], private)
+                scope = DevelopmentScope.discover(self.coordinator.repo, verification['folder'])
+                workspace = DevelopmentWorkspace(self.coordinator.repo, run_root, scope, cancelled,
+                                                 project_context=record, allow_new_files=True)
+            else:
+                workspace = IsolatedWorkspace(self.coordinator.repo, self.coordinator.db_path.parent, claim, cancelled)
 
             def save_session(value):
                 nonlocal session_ref
@@ -469,7 +487,11 @@ class Supervisor:
             if stop.is_set() or cancelled.is_set():
                 raise InterruptedError('Stopped before starting the task.')
             # Never persist raw reasoning or full tool/event transcripts in the coordinator.
-            response = self.executor.run(claim, workspace, cancelled, lambda *_: None, save_session)
+            if development:
+                response, development_evidence = self.executor.run_development(
+                    claim, workspace, None, cancelled, lambda *_: None, save_session)
+            else:
+                response = self.executor.run(claim, workspace, cancelled, lambda *_: None, save_session)
             if stop.is_set() or cancelled.is_set():
                 raise InterruptedError('The task stopped before its output was verified.')
             if response['kind'] in ('owner', 'question'):
@@ -485,6 +507,15 @@ class Supervisor:
                 return True
             if response['kind'] != 'result':
                 raise VerificationRequired('Codex returned an unrecognized result.')
+            if development:
+                if not development_evidence:
+                    raise VerificationRequired('The development candidate has no verified test evidence.')
+                self.coordinator.guard_lease(worker_id, lease, lambda _: development_evidence)
+                self.coordinator.finish(
+                    worker_id, lease, outcome='blocked', session_ref=session_ref, evidence=development_evidence,
+                    summary='Verified development candidate awaiting review and integration: '
+                            + development_evidence['path'] + ' SHA-256 ' + development_evidence['sha256'])
+                return True
             evidence = self.coordinator.guard_lease(
                 worker_id, lease, lambda _claim: workspace.evidence(verification['name']))
             self.coordinator.finish(

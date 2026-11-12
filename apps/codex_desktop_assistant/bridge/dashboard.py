@@ -36,7 +36,7 @@ class Dashboard(QMainWindow):
             self.setWindowTitle('Portfolio Manager');self.resize(1120,760)
             self.tabs=QTabWidget();bridge_view=self.takeCentralWidget()
             self.manager_panel=ManagerPanel(manager.coordinator,manager.supervisor,self.runtime.stop,
-                                            parent=self.tabs,on_stop_all=self.cancel_bridge_work)
+                                            parent=self.tabs,on_stop_all=self.cancel_bridge_work,candidate_host=manager)
             self.tabs.addTab(self.manager_panel,'Portfolio')
             self.tabs.addTab(bridge_view,'Computer Access')
             self.setCentralWidget(self.tabs)

@@ -5,6 +5,7 @@ from datetime import timedelta
 import json
 import os
 from pathlib import Path
+import re
 import subprocess
 import sys
 import tempfile
@@ -67,6 +68,20 @@ class PortfolioMCPSessionTests(unittest.TestCase):
                                           args=['-c', bootstrap, packages, str(APP / 'bridge' / 'server.py')],
                                           cwd=APP, env=environment)
 
+        def hook_key(session_id, source):
+            event = {'session_id': session_id, 'source': source, 'hook_event_name': 'SessionStart', 'cwd': str(ROOT)}
+            result = subprocess.run(
+                [sys._base_executable, '-c', bootstrap, packages, str(ROOT / 'portfolio_manager' / 'codex_session_hook.py')],
+                input=json.dumps(event), cwd=ROOT, env=environment, capture_output=True, text=True, timeout=15,
+                creationflags=subprocess.CREATE_NO_WINDOW,
+            )
+            self.assertEqual(result.returncode, 0)
+            self.assertTrue(result.stdout)
+            context = json.loads(result.stdout)['hookSpecificOutput']['additionalContext']
+            keys = re.findall(r'\b[0-9a-f]{64}\b', context)
+            self.assertEqual(len(keys), 1)
+            return keys[0]
+
         @asynccontextmanager
         async def connect():
             async with stdio_client(parameters) as (read, write):
@@ -83,15 +98,25 @@ class PortfolioMCPSessionTests(unittest.TestCase):
         # No external account, browser action, inference or worker is needed.
         first_path = 'docs/PORTFOLIO_MANAGER_WORKFLOW.md'
         second_path = 'business_portfolio/niches/ai-workflow-automation/agency'
+        first_key = hook_key('thr_test_first', 'startup')
+        second_key = hook_key('thr_test_second', 'startup')
         async with connect() as first:
             tools = await first.list_tools()
+            tool_names = {tool.name for tool in tools.tools}
             self.assertTrue({'portfolio_open', 'portfolio_select', 'portfolio_context'} <=
-                            {tool.name for tool in tools.tools})
-            workspace = await call(first, 'portfolio_open')
+                            tool_names)
+            self.assertNotIn('bridge_bind_codex_session', tool_names)
+            workspace = await call(first, 'portfolio_open', reconnect_key=first_key)
             self.assertEqual((await call(first, 'portfolio_open'))['id'], workspace['id'])
+            async with connect() as competing:
+                denied = await competing.call_tool('portfolio_open', {'arguments': {'reconnect_key': first_key}})
+                self.assertTrue(denied.isError)
+                self.assertEqual((await call(first, 'portfolio_context'))['id'], workspace['id'])
             async with connect() as second:
-                other = await call(second, 'portfolio_open', path=second_path)
+                other = await call(second, 'portfolio_open', path=second_path, reconnect_key=second_key)
                 self.assertNotEqual(workspace['id'], other['id'])
+                denied = await second.call_tool('portfolio_context', {'arguments': {'reconnect_key': first_key}})
+                self.assertTrue(denied.isError)
                 for session in (first, second):
                     self.assertEqual((await call(session, 'bridge_health'))['pid'], controller_pid)
                 await call(first, 'portfolio_select', path=first_path, revision=workspace['revision'])
@@ -99,6 +124,10 @@ class PortfolioMCPSessionTests(unittest.TestCase):
                 second_context = await call(second, 'portfolio_context')
                 self.assertEqual((first_context['selection'], first_context['kind']), (first_path, 'file'))
                 self.assertEqual((second_context['selection'], second_context['kind']), (second_path, 'folder'))
+                self.assertGreater(second_context['portfolio']['counts']['total'], 0)
+                self.assertTrue(all(row['record_path'].startswith(second_path + '/')
+                                    for row in second_context['portfolio']['projects']))
+                self.assertNotIn('portfolio', first_context)
 
                 # Update the shared setting through the same owner-side method as the UI.
                 coordinator = Coordinator(ROOT, state / 'portfolio-manager' / 'coordinator.sqlite3')
@@ -108,7 +137,7 @@ class PortfolioMCPSessionTests(unittest.TestCase):
                     self.assertEqual((await call(session, 'portfolio_context'))['mode'], mode)
 
         async with connect() as resumed:
-            restored = await call(resumed, 'portfolio_open', reconnect_key=workspace['reconnect_key'])
+            restored = await call(resumed, 'portfolio_open', reconnect_key=hook_key('thr_test_first', 'resume'))
             self.assertEqual(restored['id'], workspace['id'])
             self.assertEqual(restored['selection'], first_path)
             self.assertEqual(restored['mode'], mode)

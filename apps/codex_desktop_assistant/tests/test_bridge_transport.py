@@ -8,6 +8,7 @@ import threading
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
+from unittest.mock import Mock
 sys.path[:0]=[str(Path(__file__).resolve().parents[1]),str(Path(__file__).resolve().parents[3])]
 from bridge.runtime import Runtime
 from bridge.client import ControllerClient
@@ -17,7 +18,7 @@ from bridge.client import ControllerClient
 class BridgeTransportTests(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory();self.root=Path(self.tmp.name)
-        self.runtime=Runtime.__new__(Runtime);self.runtime.store=SimpleNamespace(directory=self.root);self.runtime.closed=threading.Event();self.runtime.clients={};self.runtime.inflight={};self.runtime.status=lambda:{'controller_ready':True,'independent_ai_engine':False};self.runtime.start_pipe()
+        self.runtime=Runtime.__new__(Runtime);self.runtime.store=SimpleNamespace(directory=self.root);self.runtime.closed=threading.Event();self.runtime.lock=threading.RLock();self.runtime.clients={};self.runtime.inflight={};self.runtime.status=lambda:{'controller_ready':True,'independent_ai_engine':False};self.runtime.start_pipe()
     def tearDown(self):
         self.runtime.closed.set();self.runtime.listener.close();self.tmp.cleanup()
 
@@ -29,6 +30,42 @@ class BridgeTransportTests(unittest.TestCase):
         client=ControllerClient(self.root);client.request('bridge_health');self.assertEqual(self.runtime.clients,{})
         client.request('bridge_mcp_connected');self.assertIn(client.identity,self.runtime.clients)
         client.close();self.assertNotIn(client.identity,self.runtime.clients)
+
+    def test_concurrent_client_registration_preserves_all_connections(self):
+        clients=[f'{number:032x}' for number in range(40)]
+        with concurrent.futures.ThreadPoolExecutor(max_workers=20) as pool:
+            list(pool.map(lambda client:self.runtime.call(client,'bridge_mcp_connected',{}),clients))
+        self.assertEqual(set(self.runtime.clients),set(clients))
+
+    def test_emergency_stop_does_not_wait_for_client_registry_lock(self):
+        self.runtime.stop=Mock(return_value={'stopped':True})
+        with self.runtime.lock, concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
+            result=pool.submit(self.runtime.call,'a'*32,'bridge_stop',{}).result(timeout=1)
+        self.assertTrue(result['stopped'])
+
+    def test_workspace_action_finishes_before_connection_can_detach(self):
+        entered=threading.Event();release=threading.Event()
+        def stop_worker(_workspace_id):
+            entered.set()
+            if not release.wait(3):raise TimeoutError('Test did not release worker operation')
+            return {'stopped':True}
+        self.runtime.manager=SimpleNamespace(
+            workspace=lambda *args,**kwargs:{'id':'workspace'},
+            stop_workspace_worker=stop_worker,
+        )
+        client='a'*32
+        self.runtime.call(client,'bridge_mcp_connected',{})
+        with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
+            action=pool.submit(self.runtime.call,client,'portfolio_stop_selected',{})
+            try:
+                self.assertTrue(entered.wait(2))
+                detach=pool.submit(self.runtime.call,client,'bridge_detach',{})
+                with self.assertRaises(concurrent.futures.TimeoutError):
+                    detach.result(timeout=.2)
+            finally:
+                release.set()
+            self.assertTrue(action.result(timeout=2)['stopped'])
+            self.assertTrue(detach.result(timeout=2)['disconnected'])
 
     def test_unapproved_client_key_cannot_connect(self):
         from multiprocessing.connection import Client,AuthenticationError

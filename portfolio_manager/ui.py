@@ -17,7 +17,7 @@ from PySide6.QtCore import QTimer, Qt, QUrl
 from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import (
     QComboBox, QDialog, QDialogButtonBox, QFileDialog, QGroupBox, QHBoxLayout,
-    QHeaderView, QLabel, QLineEdit, QPlainTextEdit, QPushButton, QSplitter,
+    QHeaderView, QInputDialog, QLabel, QLineEdit, QPlainTextEdit, QPushButton, QSplitter,
     QTabWidget, QTextBrowser, QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget,
 )
 
@@ -254,7 +254,7 @@ class ManagerPanel(QWidget):
 
     def __init__(self, coordinator, supervisor, on_emergency, parent=None, *, on_stop_all=None,
                  on_context=None, start_context_worker=None, can_start_context=None, context_worker=None,
-                 header_layout=None):
+                 header_layout=None, candidate_host=None, prepare_context_development=None):
         super().__init__(parent)
         self.coordinator = coordinator
         self.supervisor = supervisor
@@ -264,7 +264,9 @@ class ManagerPanel(QWidget):
         self.start_context_worker = start_context_worker
         self.can_start_context = can_start_context
         self.context_worker = context_worker
+        self.prepare_context_development = prepare_context_development
         self.header_layout = header_layout
+        self.candidate_host = candidate_host
         self.context_record = None
         self.repo = Path(coordinator.repo).resolve(strict=True)
         self.folder = NICHE_ROOT.as_posix()
@@ -281,6 +283,11 @@ class ManagerPanel(QWidget):
         self._closed = False
         self._epoch = 0
         self._pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix="portfolio-dashboard")
+        self._verification_pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix="portfolio-verification")
+        self._verification_future = None
+        self._verification_timer = QTimer(self)
+        self._verification_timer.setInterval(200)
+        self._verification_timer.timeout.connect(self._receive_verification)
         self.setObjectName("portfolioManager")
         self.setStyleSheet(STYLE)
         self._layout()
@@ -323,10 +330,14 @@ class ManagerPanel(QWidget):
         self.scope_label = _label("Worker folder · All projects", wrap=True)
         self.scope_label.setObjectName("folderScope")
         scope.addWidget(self.scope_label, 1)
-        scope.addWidget(_button("Choose folder…", self._choose_folder))
+        if self.on_context is None:
+            scope.addWidget(_button("Choose folder…", self._choose_folder))
         self.start = _button("Start worker", self._start_worker, "primaryWorkerButton")
         self.start.setEnabled(False)
         scope.addWidget(self.start)
+        self.develop = _button("Work on project files…", self._prepare_development)
+        self.develop.hide()
+        scope.addWidget(self.develop)
         layout.addLayout(scope)
         self.summary = _label("Loading saved projects…", wrap=True)
         self.summary.setObjectName("managerSummary")
@@ -336,6 +347,8 @@ class ManagerPanel(QWidget):
         horizontal = QSplitter(Qt.Orientation.Horizontal)
         vertical.addWidget(horizontal)
         navigation = QWidget()
+        if self.on_context is not None:
+            navigation.hide()
         navigation_layout = QVBoxLayout(navigation)
         navigation_layout.setContentsMargins(0, 0, 0, 0)
         self.search = QLineEdit()
@@ -363,6 +376,12 @@ class ManagerPanel(QWidget):
         self.review_task = _button("Review interrupted task…", self._review_task)
         self.review_task.hide()
         detail_layout.addWidget(self.review_task, alignment=Qt.AlignmentFlag.AlignLeft)
+        self.verify_candidate = _button('Verify applied changes', self._verify_candidate)
+        self.verify_candidate.hide()
+        detail_layout.addWidget(self.verify_candidate, alignment=Qt.AlignmentFlag.AlignLeft)
+        self.complete_candidate = _button('Review completion…', self._complete_candidate)
+        self.complete_candidate.hide()
+        detail_layout.addWidget(self.complete_candidate, alignment=Qt.AlignmentFlag.AlignLeft)
         result_layout = QHBoxLayout()
         result_layout.addWidget(_label("Files and results"), 1)
         self.open_result = _button("View selected result", self._open_result)
@@ -431,6 +450,7 @@ class ManagerPanel(QWidget):
         self.later = _button("Leave for later", lambda: self._resolve("later"))
         for widget in (self.approve, self.manual_done, self.deny, self.later):
             widget.setEnabled(False)
+            widget.hide()
             request_buttons.addWidget(widget)
         request_layout.addLayout(request_buttons)
         self.activity.addTab(requests_panel, "Requests")
@@ -502,7 +522,18 @@ class ManagerPanel(QWidget):
         self.stop_all.setEnabled(not stopped)
         self.resume.setVisible(bool(stopped))
         scope_available = self.can_start_context is None or self.can_start_context()
-        self.start.setEnabled(not stopped and scope_available and counts.get("eligible", 0) > 0)
+        selected_project = self._projects.get(self._selected_project) if self.context_record else None
+        eligible = bool(selected_project and selected_project.get('eligible')) if self.context_record else counts.get("eligible", 0) > 0
+        self.start.setEnabled(not stopped and scope_available and eligible)
+        if self.context_worker is not None:
+            worker_id = self.context_worker()
+            worker = self._workers.get(worker_id, {})
+            self.start.setVisible(scope_available and worker.get("state") != "running")
+        else:
+            worker = {}
+        self.develop.setVisible(bool(self.prepare_context_development and self.context_record and
+                                     worker.get('state') != 'running'))
+        self.develop.setEnabled(not stopped and bool(selected_project and selected_project.get('eligible')))
         pieces = [f"{counts.get(key, 0)} {title}" for key, title in (
             ("eligible", "eligible"), ("active", "active"), ("completed", "completed"),
             ("blocked", "blocked"), ("remaining", "remaining"),
@@ -564,6 +595,10 @@ class ManagerPanel(QWidget):
                 raise
 
         self._act(start, success="Worker assigned. Follow its progress below.")
+
+    def _prepare_development(self):
+        if self.prepare_context_development:
+            self._act(self.prepare_context_development)
 
     def _choose_folder(self):
         chosen = QFileDialog.getExistingDirectory(self, "Choose a portfolio project folder", str(self.repo / self.folder))
@@ -697,7 +732,15 @@ class ManagerPanel(QWidget):
 
     def _render_project(self):
         project = self._projects.get(self._selected_project)
-        self.review_task.setVisible(bool(self._reviewable(project)))
+        reviewable = self._reviewable(project)
+        self.review_task.setVisible(bool(reviewable))
+        has_candidate = any((task.get('evidence') or {}).get('kind') == 'passed_test' for task in reviewable)
+        self.review_task.setText('Review work…' if has_candidate else 'Review interrupted task…')
+        self.verify_candidate.setVisible(bool(self.candidate_host and has_candidate))
+        self.verify_candidate.setEnabled(self._verification_future is None)
+        self.complete_candidate.setVisible(bool(self.candidate_host and has_candidate and
+                                                hasattr(self.candidate_host, 'complete_candidate')))
+        self.complete_candidate.setEnabled(self._verification_future is None)
         if project is None:
             self.detail_title.setText("Select a project")
             self.detail.clear()
@@ -742,6 +785,38 @@ class ManagerPanel(QWidget):
         tasks = self._reviewable(self._projects.get(project_id))
         if not tasks:
             return
+        if len(tasks) > 1:
+            labels = [f'{_text(task.get("title"), "Task")} ({task["id"]})' for task in tasks]
+            choice, accepted = QInputDialog.getItem(self, 'Choose a task', 'Select a task to review', labels, 0, False)
+            if not accepted:
+                return
+            tasks = [tasks[labels.index(choice)]]
+        if self.candidate_host and (tasks[0].get('evidence') or {}).get('kind') == 'passed_test':
+            task = tasks[0]
+            try:
+                review = self.candidate_host.review_candidate(project_id, task['id'])
+            except (ValueError, OSError, RuntimeError) as error:
+                self.notice.setText(str(error)[:400])
+                return
+            dialog = QDialog(self)
+            dialog.setWindowTitle('Review proposed changes')
+            dialog.resize(800, 600)
+            layout = QVBoxLayout(dialog)
+            layout.addWidget(_label('Review these changes before applying them to your files.', wrap=True))
+            changes = QPlainTextEdit()
+            changes.setReadOnly(True)
+            changes.setAccessibleName('Proposed file changes')
+            changes.setPlainText('\n\n'.join(item['diff'] for item in review['files']))
+            layout.addWidget(changes, 1)
+            buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Cancel)
+            buttons.addButton('Apply reviewed changes', QDialogButtonBox.ButtonRole.AcceptRole)
+            buttons.accepted.connect(dialog.accept)
+            buttons.rejected.connect(dialog.reject)
+            layout.addWidget(buttons)
+            if dialog.exec() == QDialog.DialogCode.Accepted:
+                self._act(self.candidate_host.apply_candidate, project_id, task['id'], review['sha256'],
+                          success='Reviewed changes applied.')
+            return
         dialog = QDialog(self)
         dialog.setWindowTitle("Review interrupted task")
         dialog.resize(620, 480)
@@ -778,6 +853,84 @@ class ManagerPanel(QWidget):
         if dialog.exec() == QDialog.DialogCode.Accepted:
             self._act(self.coordinator.reconcile_task, project_id, choices.currentData()["id"],
                       note=note.toPlainText().strip(), success="Reviewed task returned to the queue.")
+
+    def _verify_candidate(self):
+        if self._verification_future is not None or not self.candidate_host:
+            return
+        project_id = self._selected_project
+        tasks = [task for task in self._reviewable(self._projects.get(project_id))
+                 if (task.get('evidence') or {}).get('kind') == 'passed_test']
+        if not tasks:
+            return
+        if len(tasks) > 1:
+            labels = [f'{_text(task.get("title"), "Task")} ({task["id"]})' for task in tasks]
+            choice, accepted = QInputDialog.getItem(self, 'Choose a task', 'Select changes to verify', labels, 0, False)
+            if not accepted:
+                return
+            task = tasks[labels.index(choice)]
+        else:
+            task = tasks[0]
+        self.notice.setText('Verifying applied changes…')
+        self.verify_candidate.setEnabled(False)
+        self._verification_future = self._verification_pool.submit(
+            self.candidate_host.verify_candidate, project_id, task['id'])
+        self._verification_timer.start()
+
+    def _receive_verification(self):
+        if self._verification_future is None or not self._verification_future.done():
+            return
+        self._verification_timer.stop()
+        future, self._verification_future = self._verification_future, None
+        try:
+            result = future.result()
+            self.notice.setText(f"Applied changes passed {result['tests_run']} tests. The task still needs review.")
+        except Exception as error:
+            self.notice.setText(f'Verification did not complete. {_text(error)[:500]}')
+        self.verify_candidate.setEnabled(True)
+        self.refresh()
+
+    def _complete_candidate(self):
+        if not self.candidate_host or self._verification_future is not None:
+            return
+        project_id = self._selected_project
+        tasks = [task for task in self._reviewable(self._projects.get(project_id))
+                 if (task.get('evidence') or {}).get('kind') == 'passed_test']
+        if not tasks:
+            return
+        if len(tasks) > 1:
+            labels = [f'{_text(task.get("title"), "Task")} ({task["id"]})' for task in tasks]
+            choice, accepted = QInputDialog.getItem(self, 'Choose a task', 'Select work to review', labels, 0, False)
+            if not accepted:
+                return
+            task = tasks[labels.index(choice)]
+        else:
+            task = tasks[0]
+        dialog = QDialog(self)
+        dialog.setWindowTitle('Review completion')
+        dialog.resize(620, 430)
+        layout = QVBoxLayout(dialog)
+        layout.addWidget(_label('Confirm the applied work meets the task criteria. Verification must have passed first.', wrap=True))
+        layout.addWidget(_label(_text(task.get('title'), 'Task'), wrap=True))
+        criteria = QPlainTextEdit()
+        criteria.setReadOnly(True)
+        criteria.setAccessibleName('Task acceptance criteria')
+        criteria.setPlainText(_text(task.get('criteria'), 'No acceptance criteria recorded.'))
+        layout.addWidget(criteria, 1)
+        layout.addWidget(_label('What did you review and verify?', wrap=True))
+        note = QPlainTextEdit()
+        note.setAccessibleName('Completion review note')
+        note.setMaximumHeight(110)
+        layout.addWidget(note)
+        controls = QDialogButtonBox(QDialogButtonBox.StandardButton.Cancel)
+        accept = controls.addButton('Confirm completion', QDialogButtonBox.ButtonRole.AcceptRole)
+        accept.setEnabled(False)
+        note.textChanged.connect(lambda: accept.setEnabled(bool(note.toPlainText().strip())))
+        controls.accepted.connect(dialog.accept)
+        controls.rejected.connect(dialog.reject)
+        layout.addWidget(controls)
+        if dialog.exec() == QDialog.DialogCode.Accepted:
+            self._act(self.candidate_host.complete_candidate, project_id, task['id'],
+                      note=note.toPlainText().strip(), success='Completion review recorded.')
 
     def _results_for(self, project):
         if not project:
@@ -982,8 +1135,10 @@ class ManagerPanel(QWidget):
         row = self._requests.get(item.data(0, ITEM_DATA), {}) if item else {}
         manual = row.get("kind") in {"login", "manual"}
         allowed = bool(row) and self._state.get("mode") == "human" and not self._state.get("emergency")
-        self.approve.setVisible(not manual)
-        self.manual_done.setVisible(manual)
+        self.approve.setVisible(bool(row) and not manual)
+        self.manual_done.setVisible(bool(row) and manual)
+        self.deny.setVisible(bool(row))
+        self.later.setVisible(bool(row))
         can_continue = allowed and not self._state.get("stopped")
         self.approve.setEnabled(can_continue and not manual)
         self.manual_done.setEnabled(can_continue and manual)
@@ -1007,4 +1162,6 @@ class ManagerPanel(QWidget):
         self._closed = True
         self._updates.stop()
         self._collect.stop()
+        self._verification_timer.stop()
+        self._verification_pool.shutdown(wait=False, cancel_futures=True)
         self._pool.shutdown(wait=True, cancel_futures=True)

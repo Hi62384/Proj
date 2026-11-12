@@ -42,6 +42,17 @@ def description(name,operation):
 def schema(operation):
     if operation=='bridge_wait_ready':return {'type':'object','properties':{'arguments':{'type':'object','properties':{'seconds':{'type':'integer','minimum':1,'maximum':25}},'required':['seconds'],'additionalProperties':False}},'required':['arguments'],'additionalProperties':False}
     if operation.startswith('bridge_') and operation not in ('bridge_reason_result','bridge_get_artifact','bridge_wait_ready'):return {'type':'object','properties':{},'additionalProperties':False}
+    if operation in {'portfolio_open','portfolio_select','portfolio_context','portfolio_start_selected','portfolio_stop_selected'}:
+        properties = {'reconnect_key': {'type': 'string', 'pattern': '^[a-f0-9]{64}$',
+                                        'description': 'Private key provided to this chat by its Codex hook or initial workspace response.'}}
+        if operation in {'portfolio_open','portfolio_select'}:
+            properties.update(path={'type': 'string', 'minLength': 1, 'maxLength': 1000},
+                              revision={'type': 'integer', 'minimum': 0})
+        arguments = {'type': 'object', 'properties': properties, 'additionalProperties': False}
+        if operation == 'portfolio_select':
+            arguments['required'] = ['path']
+        return {'type': 'object', 'properties': {'arguments': arguments}, 'required': ['arguments'],
+                'additionalProperties': False}
     # Tool identity is server-defined; callers cannot substitute another capability.
     return {'type':'object','properties':{'arguments':{'type':'object','description':'Structured arguments documented in this tool. No executable code or permission override fields.'}},'required':['arguments'],'additionalProperties':False}
 

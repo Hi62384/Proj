@@ -39,6 +39,9 @@ CREATE TABLE IF NOT EXISTS workers (
 CREATE TABLE IF NOT EXISTS worker_credentials (
     worker_id TEXT PRIMARY KEY REFERENCES workers(id), proof_hash TEXT NOT NULL
 );
+CREATE TABLE IF NOT EXISTS worker_targets (
+    worker_id TEXT PRIMARY KEY REFERENCES workers(id), project_id TEXT NOT NULL
+);
 CREATE TABLE IF NOT EXISTS tasks (
     project_id TEXT NOT NULL, id TEXT NOT NULL, position INTEGER NOT NULL,
     title TEXT NOT NULL, criteria TEXT NOT NULL, weight REAL NOT NULL,
@@ -207,7 +210,8 @@ class Coordinator:
         with self._database() as db:
             return dict(self._worker(db, worker_id))
 
-    def register(self, folder=None, *, kind='manual', label=None, session_ref=None, worker_key=None):
+    def register(self, folder=None, *, kind='manual', label=None, session_ref=None, worker_key=None,
+                 project_id=None):
         folder = self._folder(folder)
         if kind not in {'manual', 'background'}:
             raise CoordinatorError('Unknown worker kind')
@@ -217,6 +221,12 @@ class Coordinator:
         if worker_key is not None and (kind != 'manual' or not isinstance(worker_key, str)
                                        or not re.fullmatch(r'[a-f0-9]{64}', worker_key)):
             raise CoordinatorError('Invalid chat registration key')
+        if project_id is not None:
+            project_id = _text(project_id, 'project ID', 120)
+            records, _ = self._catalog()
+            record = records.get(project_id)
+            if not record or not PurePosixPath('business_portfolio/' + record['path']).is_relative_to(folder):
+                raise CoordinatorError('The selected project is outside the worker folder')
         with self._database(write=True) as db:
             self._expire(db)
             control = self._control(db)
@@ -229,6 +239,8 @@ class Coordinator:
             if worker_key:
                 db.execute('INSERT INTO worker_credentials VALUES (?,?)',
                            (worker_id, hashlib.sha256(worker_key.encode()).hexdigest()))
+            if project_id:
+                db.execute('INSERT INTO worker_targets VALUES (?,?)', (worker_id, project_id))
             self._log(db, 'worker_registered', label, worker_id=worker_id)
             return dict(self._worker(db, worker_id))
 
@@ -375,9 +387,17 @@ class Coordinator:
                 raise CoordinatorError('Invalid task dependencies')
             verification = raw.get('verification')
             if verification is not None:
-                if (not isinstance(verification, dict) or set(verification) != {'kind', 'name'}
-                    or verification['kind'] != 'artifact' or not isinstance(verification['name'], str)
-                    or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,79}\.(md|txt|json|csv)', verification['name'])):
+                if not isinstance(verification, dict):
+                    raise CoordinatorError('Invalid milestone verification')
+                if verification.get('kind') == 'development' and set(verification) == {'kind', 'folder'}:
+                    from .development import DevelopmentError, DevelopmentScope
+                    try:
+                        DevelopmentScope.discover(self.repo, verification['folder'])
+                    except (DevelopmentError, TypeError, OSError) as error:
+                        raise CoordinatorError('Choose a tracked source folder with supported tests') from error
+                elif (set(verification) != {'kind', 'name'} or verification.get('kind') != 'artifact'
+                      or not isinstance(verification.get('name'), str)
+                      or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,79}\.(md|txt|json|csv)', verification['name'])):
                     raise CoordinatorError('Artifact verification requires a simple text filename')
             plan[name] = dict(id=name, title=_text(raw.get('title'), 'milestone title', 500),
                               criteria=_text(raw.get('criteria'), 'completion criteria'), weight=weight,
@@ -441,11 +461,18 @@ class Coordinator:
                 all(row['status'] == 'completed' and not row['provisional']
                     and self._evidence_valid(pid, row) for row in tasks)}
 
-    def claim(self, worker_id):
+    def claim(self, worker_id, *, project_id=None):
+        if project_id is not None:
+            project_id = _text(project_id, 'project ID', 120)
         records, _ = self._catalog()
         with self._database(write=True) as db:
             self._expire(db)
             worker = self._worker(db, worker_id)
+            target = db.execute('SELECT project_id FROM worker_targets WHERE worker_id=?', (worker_id,)).fetchone()
+            if target:
+                if project_id is not None and project_id != target['project_id']:
+                    raise CoordinatorError('This worker is assigned to another project')
+                project_id = target['project_id']
             control = self._control(db)
             if control['stopped'] or control['emergency'] or worker['state'] != 'running':
                 return None
@@ -461,7 +488,8 @@ class Coordinator:
                                 r['work_state'] != 'active', r['id']))
             for record in candidates:
                 pid = record['id']
-                if (pid in leased or not self._canonical_eligible(record)
+                if ((project_id is not None and pid != project_id)
+                    or pid in leased or not self._canonical_eligible(record)
                     or not PurePosixPath('business_portfolio/' + record['path']).is_relative_to(worker['folder'])
                     or not self._project_dependencies(record, records, verified)
                     or self._unreconciled_effect(db, pid)):
@@ -569,6 +597,28 @@ class Coordinator:
             self._record_path(lease)
             return callback(self._claim_info(db, lease))
 
+    def set_development_scope(self, worker_id, lease_token, *, expected_sha256, folder):
+        """Bind a claimed manual task to a tracked source folder for later dispatch."""
+        from .development import DevelopmentError, DevelopmentScope
+        try:
+            scope = DevelopmentScope.discover(self.repo, folder)
+        except (DevelopmentError, TypeError, OSError) as error:
+            raise CoordinatorError('Choose a tracked source folder with supported tests') from error
+        with self._database(write=True) as db:
+            lease = self._lease(db, worker_id, lease_token)
+            worker = self._worker(db, worker_id)
+            if worker['kind'] != 'manual':
+                raise CoordinatorError('Only a manually claimed task can change its development scope')
+            if expected_sha256 != lease['record_sha256']:
+                raise CoordinatorError('The project record hash changed. Refresh the task before configuring it')
+            self._record_path(lease)
+            verification = {'kind': 'development', 'folder': scope.folder}
+            db.execute('UPDATE tasks SET verification=?,updated_at=? WHERE project_id=? AND id=?',
+                       (_json(verification), time.time(), lease['project_id'], lease['task_id']))
+            self._log(db, 'development_scope', scope.folder,
+                      project_id=lease['project_id'], worker_id=worker_id)
+            return self._claim_info(db, lease)
+
     def apply_checkpoint(self, worker_id, lease_token, *, expected_sha256, text):
         """Append an exact, validated canonical checkpoint under the claim lock."""
         if not isinstance(text, str) or len(text) > 500_000:
@@ -612,8 +662,26 @@ class Coordinator:
                 raise CoordinatorError('Completion evidence is missing or has changed')
         except OSError as exc:
             raise CoordinatorError('Completion evidence is unavailable') from exc
-        if task and task.get('verification') and resolved.name != task['verification']['name']:
-            raise CoordinatorError('Completion evidence does not match the milestone verification rule')
+        if task and task.get('verification'):
+            rule = task['verification']
+            if rule.get('kind') == 'development':
+                if evidence.get('kind') != 'passed_test' or type(evidence.get('tests_run')) is not int or evidence['tests_run'] < 1:
+                    raise CoordinatorError('Development completion requires a successful sandbox check')
+                note = _text(evidence.get('owner_review'), 'owner acceptance review', 6000)
+                from .applied_verification import validate_applied
+                from .development import DevelopmentError
+                try:
+                    report, _, _ = validate_applied(self.repo, self.db_path.parent, resolved, expected)
+                except DevelopmentError as exc:
+                    raise CoordinatorError(str(exc)) from exc
+                records, _ = self._catalog()
+                if not records.get(project_id) or records[project_id]['content_sha256'] != report['record_sha256']:
+                    raise CoordinatorError('The project record changed after the candidate was verified')
+                return {'kind': evidence['kind'], 'path': name, 'sha256': expected,
+                        'verified_at': evidence.get('verified_at', time.time()),
+                        'tests_run': evidence['tests_run'], 'owner_review': note}
+            if resolved.name != rule['name']:
+                raise CoordinatorError('Completion evidence does not match the milestone verification rule')
         return {'kind': evidence['kind'], 'path': name, 'sha256': expected, 'verified_at': time.time()}
 
     def _evidence_valid(self, project_id, row):
@@ -622,6 +690,76 @@ class Coordinator:
         except (ValueError, OSError, TypeError):
             return False
         return True
+
+    def candidate_evidence(self, project_id, task_id):
+        """Return only a blocked development task's host-verified candidate."""
+        with self._database() as db:
+            return self._candidate_evidence(db, project_id, task_id)
+
+    def _candidate_evidence(self, db, project_id, task_id):
+        row = db.execute('SELECT * FROM tasks WHERE project_id=? AND id=?',
+                         (project_id, task_id)).fetchone()
+        if not row:
+            raise CoordinatorError('Unknown development task')
+        task = self._task(row)
+        if (task['status'] != 'blocked' or not task['verification'] or
+                task['verification'].get('kind') != 'development' or not task['evidence']):
+            raise CoordinatorError('This task has no candidate awaiting review')
+        if db.execute('SELECT 1 FROM leases WHERE project_id=?', (project_id,)).fetchone():
+            raise CoordinatorError('The project has active work. Review this candidate after it stops')
+        return self._verify_evidence(project_id, task['evidence'])
+
+    def guard_candidate(self, project_id, task_id, callback):
+        """Keep coordinator claims and plan edits out during candidate integration."""
+        with self._database(write=True) as db:
+            return callback(self._candidate_evidence(db, project_id, task_id))
+
+    def record_candidate_check(self, project_id, task_id, callback):
+        """Persist a host check while keeping the task blocked for criteria review."""
+        with self._database(write=True) as db:
+            control = self._control(db)
+            if control['stopped'] or control['emergency']:
+                raise CoordinatorError('Resume Portfolio Manager before recording verification')
+            evidence = self._candidate_evidence(db, project_id, task_id)
+            result = callback(evidence)
+            if (not isinstance(result, dict) or type(result.get('tests_run')) is not int
+                    or result['tests_run'] < 1 or not re.fullmatch(r'[0-9a-f]{64}',
+                                                                     str(result.get('candidate_sha256', '')))
+                    or result['candidate_sha256'] != evidence['sha256']):
+                raise CoordinatorError('Invalid candidate verification result')
+            self._log(db, 'candidate_verified', _json({
+                'task_id': task_id, 'candidate_sha256': result['candidate_sha256'],
+                'tests_run': result['tests_run'],
+            }), project_id=project_id)
+            return result
+
+    def complete_candidate(self, project_id, task_id, *, note):
+        """Accept a development milestone after owner review and a current host check."""
+        note = _text(note, 'owner acceptance review', 6000)
+        with self._database(write=True) as db:
+            control = self._control(db)
+            if control['stopped'] or control['emergency']:
+                raise CoordinatorError('Resume Portfolio Manager before completing a task')
+            evidence = self._candidate_evidence(db, project_id, task_id)
+            task = self._task(db.execute('SELECT * FROM tasks WHERE project_id=? AND id=?',
+                                         (project_id, task_id)).fetchone())
+            checks = db.execute("SELECT detail FROM history WHERE project_id=? AND kind='candidate_verified' ORDER BY sequence DESC",
+                                (project_id,)).fetchall()
+            verified = None
+            for row in checks:
+                data = json.loads(row['detail'])
+                if data.get('task_id') == task_id and data.get('candidate_sha256') == evidence['sha256']:
+                    verified = data
+                    break
+            if not verified:
+                raise CoordinatorError('Verify the applied changes before completing this task')
+            completed = self._verify_evidence(project_id, {**evidence, 'tests_run': verified['tests_run'],
+                                                             'owner_review': note}, task)
+            db.execute("UPDATE tasks SET status='completed',checkpoint=?,evidence=?,updated_at=? WHERE project_id=? AND id=?",
+                       (note, _json(completed), time.time(), project_id, task_id))
+            self._log(db, 'owner_completed', note, project_id=project_id)
+            return self._task(db.execute('SELECT * FROM tasks WHERE project_id=? AND id=?',
+                                         (project_id, task_id)).fetchone())
 
     def finish(self, worker_id, lease_token, *, outcome, summary, evidence=None, session_ref=None):
         transitions = {'completed': 'completed', 'blocked': 'blocked', 'waiting': 'waiting',
@@ -641,6 +779,13 @@ class Coordinator:
             elif outcome == 'completed':
                 self._record_path(lease)
                 verified = self._verify_evidence(pid, evidence, self._claim_info(db, lease)['task'])
+            elif outcome == 'blocked' and evidence is not None:
+                task = self._claim_info(db, lease)['task']
+                if not task.get('verification') or task['verification'].get('kind') != 'development':
+                    raise CoordinatorError('Only development candidates can be saved for review')
+                verified = self._verify_evidence(pid, evidence)
+                if Path(verified['path']).name != 'verified-development.json':
+                    raise CoordinatorError('Invalid development candidate checkpoint')
             elif outcome == 'waiting':
                 raise CoordinatorError('Use request_human to save a specific waiting request')
             now = time.time()
@@ -786,6 +931,10 @@ class Coordinator:
             self._expire(db)
             if self._unreconciled_effect(db, project_id) or db.execute('SELECT 1 FROM leases WHERE project_id=?', (project_id,)).fetchone():
                 raise CoordinatorError('Reconcile the external effect and release active work first')
+            row = db.execute('SELECT * FROM tasks WHERE project_id=? AND id=?', (project_id, task_id)).fetchone()
+            invalid_completion = bool(row and row['status'] == 'completed' and not self._evidence_valid(project_id, row))
+            if invalid_completion:
+                db.execute("UPDATE tasks SET status='reconcile' WHERE project_id=? AND id=?", (project_id, task_id))
             updated = db.execute("UPDATE tasks SET status='queued',checkpoint=?,updated_at=? WHERE project_id=? AND id=? AND status IN ('blocked','reconcile')",
                                  (note, time.time(), project_id, task_id))
             if updated.rowcount != 1:
@@ -803,6 +952,8 @@ class Coordinator:
         tasks = [self._task(row) for row in rows]
         for task, row in zip(tasks, rows):
             task['verified'] = row['status'] == 'completed' and self._evidence_valid(record['id'], row)
+            if row['status'] == 'completed' and not task['verified']:
+                task['status'] = 'reconcile'
         progress = None
         if rows and not any(row['provisional'] for row in rows):
             achieved = sum(task['weight'] for task in tasks if task['verified'])

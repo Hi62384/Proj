@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "^(startup|resume|clear|compact|fork)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -NoProfile -NonInteractive -EncodedCommand JgAgACcAQwA6AFwAVQBzAGUAcgBzAFwAVQBzAGUAcgAxAFwARABvAGMAdQBtAGUAbgB0AHMAXABEAG8AdwBuAGwAbwBhAGQAcwBcAFAAcgBvAGoAXABhAHAAcABzAFwAYwBvAGQAZQB4AF8AZABlAHMAawB0AG8AcABfAGEAcwBzAGkAcwB0AGEAbgB0AFwALgB2AGUAbgB2AFwAUwBjAHIAaQBwAHQAcwBcAHAAeQB0AGgAbwBuAC4AZQB4AGUAJwAgACcAQwA6AFwAVQBzAGUAcgBzAFwAVQBzAGUAcgAxAFwARABvAGMAdQBtAGUAbgB0AHMAXABEAG8AdwBuAGwAbwBhAGQAcwBcAFAAcgBvAGoAXABwAG8AcgB0AGYAbwBsAGkAbwBfAG0AYQBuAGEAZwBlAHIAXABjAG8AZABlAHgAXwBzAGUAcwBzAGkAbwBuAF8AaABvAG8AawAuAHAAeQAnAA==",
+            "timeout": 35,
+            "statusMessage": "Connecting Portfolio Manager"
+          }
+        ]
+      }
+    ]
+  }
+}

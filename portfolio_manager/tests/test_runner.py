@@ -258,6 +258,48 @@ class DispatchTests(unittest.TestCase):
         self.assertEqual(self._state()['FAKE-001']['milestones'][0]['status'], 'reconcile')
         self.assertFalse(list(self.coordinator.db_path.parent.glob('worker-runs/*/*/workspace/result.md')))
 
+    def test_start_cannot_race_between_stop_signal_and_global_stop(self):
+        worker = self.coordinator.register('demo', kind='background')
+        self.coordinator.set_worker_state(worker['id'], 'paused')
+        supervisor = self._supervisor(FictionalTurns({}))
+        signalled = threading.Event()
+        release = threading.Event()
+        start_done = threading.Event()
+        original_signal = supervisor._signal
+        errors = []
+
+        def slow_signal(worker_id=None):
+            original_signal(worker_id)
+            signalled.set()
+            if not release.wait(5):
+                raise RuntimeError('Test did not release Stop.')
+
+        def start_worker():
+            try:
+                supervisor.start(worker['id'])
+            except Exception as error:
+                errors.append(error)
+            finally:
+                start_done.set()
+
+        with patch.object(supervisor, '_signal', side_effect=slow_signal):
+            stopping = threading.Thread(target=supervisor.stop_all)
+            starting = threading.Thread(target=start_worker)
+            stopping.start()
+            try:
+                self.assertTrue(signalled.wait(5))
+                starting.start()
+                self.assertFalse(start_done.wait(.1))
+            finally:
+                release.set()
+                stopping.join(5)
+                if starting.ident is not None:
+                    starting.join(5)
+        self.assertTrue(start_done.is_set())
+        self.assertEqual(len(errors), 1)
+        self.assertIn('Resume Portfolio Manager', str(errors[0]))
+        self.assertTrue(self.coordinator.control()['stopped'])
+
 
 if __name__ == '__main__':
     unittest.main()

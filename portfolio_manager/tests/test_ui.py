@@ -8,6 +8,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 import time
 import unittest
+from unittest.mock import patch
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 try:
@@ -168,8 +169,16 @@ class ManagerPanelTests(unittest.TestCase):
             _scope_path(self.repo, self.repo.parent)
 
     def test_afk_manual_request_and_emergency_are_distinct_owner_controls(self):
+        self.assertTrue(self.panel.approve.isHidden())
+        self.assertTrue(self.panel.manual_done.isHidden())
+        self.assertTrue(self.panel.deny.isHidden())
+        self.assertTrue(self.panel.later.isHidden())
         request = self.panel.requests.topLevelItem(0)
         self.panel.requests.setCurrentItem(request)
+        self.assertFalse(self.panel.manual_done.isHidden())
+        self.assertFalse(self.panel.deny.isHidden())
+        self.assertFalse(self.panel.later.isHidden())
+        self.assertTrue(self.panel.approve.isHidden())
         self.assertFalse(self.panel.manual_done.isEnabled())
         self.assertIn("Fictional read-only account", self.panel.request_details.toPlainText())
         self.panel.mode.setCurrentIndex(self.panel.mode.findData("human"))
@@ -255,6 +264,91 @@ class ManagerPanelTests(unittest.TestCase):
         self.panel.review_task.click()
         self.assertEqual(observed, [False])
         self.assertIn(("reconcile", "DEMO-001", "interrupted", "Reviewed the fictional saved state."), self.coordinator.calls)
+
+    def test_multiple_blocked_tasks_review_selected_candidate(self):
+        self.coordinator.record["milestones"] = [
+            {"id": "interrupted", "title": "Interrupted", "status": "reconcile"},
+            {"id": "candidate", "title": "Candidate", "status": "blocked",
+             "evidence": {"kind": "passed_test", "sha256": "a" * 64}},
+        ]
+        calls = []
+
+        class CandidateHost:
+            def review_candidate(self, project, task):
+                calls.append(("review", project, task))
+                return {"sha256": "a" * 64, "files": [{"diff": "example change"}]}
+
+            def apply_candidate(self, project, task, digest):
+                calls.append(("apply", project, task, digest))
+
+        self.panel.candidate_host = CandidateHost()
+        self.panel.refresh()
+        self.wait_for(lambda: not self.panel.review_task.isHidden())
+
+        def approve():
+            dialog = self.app.activeModalWidget()
+            changes = dialog.findChild(QPlainTextEdit)
+            self.assertEqual(changes.toPlainText(), "example change")
+            next(button for button in dialog.findChildren(QPushButton)
+                 if button.text() == "Apply reviewed changes").click()
+
+        with patch("portfolio_manager.ui.QInputDialog.getItem", return_value=("Candidate (candidate)", True)):
+            QTimer.singleShot(0, approve)
+            self.panel.review_task.click()
+        self.assertEqual(calls, [("review", "DEMO-001", "candidate"),
+                                 ("apply", "DEMO-001", "candidate", "a" * 64)])
+
+    def test_verify_candidate_runs_and_reports_result(self):
+        self.coordinator.record['milestones'] = [
+            {'id': 'candidate', 'title': 'Candidate', 'status': 'blocked',
+             'evidence': {'kind': 'passed_test', 'sha256': 'a' * 64}},
+        ]
+
+        class CandidateHost:
+            def verify_candidate(self, project, task):
+                return {'tests_run': 3, 'files': ['example.py']}
+
+        self.panel.candidate_host = CandidateHost()
+        self.panel.refresh()
+        self.wait_for(lambda: not self.panel.verify_candidate.isHidden())
+        self.panel.verify_candidate.click()
+        self.wait_for(lambda: 'passed 3 tests' in self.panel.notice.text())
+        self.assertIn('still needs review', self.panel.notice.text())
+
+    def test_candidate_completion_requires_review_note(self):
+        self.coordinator.record['milestones'] = [{
+            'id': 'candidate', 'title': 'Candidate', 'status': 'blocked',
+            'criteria': 'The example output matches the specification.',
+            'evidence': {'kind': 'passed_test', 'sha256': 'a' * 64},
+        }]
+        calls = []
+
+        class CandidateHost:
+            def complete_candidate(self, project, task, *, note):
+                calls.append((project, task, note))
+
+        self.panel.candidate_host = CandidateHost()
+        self.panel.refresh()
+        self.wait_for(lambda: not self.panel.complete_candidate.isHidden())
+        observed = []
+
+        def review():
+            dialog = self.app.activeModalWidget()
+            accept = next(button for button in dialog.findChildren(QPushButton)
+                          if button.text() == 'Confirm completion')
+            observed.append(accept.isEnabled())
+            criteria = next(widget for widget in dialog.findChildren(QPlainTextEdit)
+                            if widget.accessibleName() == 'Task acceptance criteria')
+            self.assertIn('matches the specification', criteria.toPlainText())
+            note = next(widget for widget in dialog.findChildren(QPlainTextEdit)
+                        if widget.accessibleName() == 'Completion review note')
+            note.setPlainText('Checked the example against the specification.')
+            accept.click()
+
+        QTimer.singleShot(0, review)
+        self.panel.complete_candidate.click()
+        self.assertEqual(observed, [False])
+        self.assertEqual(calls, [('DEMO-001', 'candidate', 'Checked the example against the specification.')])
 
 
 if __name__ == "__main__":

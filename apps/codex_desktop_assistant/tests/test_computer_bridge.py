@@ -8,7 +8,7 @@ import time
 import unittest
 from contextlib import closing
 from pathlib import Path
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 sys.path[:0]=[str(Path(__file__).resolve().parents[1]),str(Path(__file__).resolve().parents[3])]
 from bridge import server
 from bridge.runtime import Runtime
@@ -18,10 +18,50 @@ from assistant.storage import Store
 
 
 class ComputerBridgeTests(unittest.TestCase):
+    def test_desktop_scope_picker_shows_existing_exact_grant(self):
+        import os
+        os.environ.setdefault('QT_QPA_PLATFORM','offscreen')
+        from PySide6.QtWidgets import QApplication,QWidget,QDialog,QComboBox,QCheckBox
+        from bridge.dashboard import Dashboard
+        app=QApplication.instance() or QApplication([])
+        parent=QWidget();parent.permissions=Permissions();parent.permissions.desktop=True
+        parent.permissions.desktop_mode='Selected Window';parent.permissions.windows={2:(22,'Notepad','created')}
+        parent.permissions.allow_launches=True
+        parent.desktop=Mock();parent.desktop.windows.return_value=[
+            {'hwnd':1,'pid':11,'title':'Other'}, {'hwnd':2,'pid':22,'title':'Untitled - Notepad'}]
+        parent.desktop.identity.return_value=(22,'Notepad','created')
+        observed=[]
+        def inspect(dialog):
+            combos=dialog.findChildren(QComboBox);checks=dialog.findChildren(QCheckBox)
+            observed.append((combos[0].currentText(),combos[1].currentText(),checks[0].isChecked()))
+            return QDialog.Rejected
+        with patch.object(QDialog,'exec',inspect):Dashboard.desktop_settings(parent)
+        self.assertEqual(observed,[('Selected Window','Untitled - Notepad',True)])
+        parent.desktop.identity.return_value=(99,'Reused','different')
+        with patch.object(QDialog,'exec',inspect):Dashboard.desktop_settings(parent)
+        self.assertEqual(observed[-1][1],'Choose a window')
+        self.assertEqual(parent.permissions.windows,{2:(22,'Notepad','created')})
+
     def runtime(self):
-        runtime=Runtime.__new__(Runtime);runtime.clients={};runtime.inflight={};runtime.lock=threading.RLock();runtime.permissions=Permissions();runtime.owner='host-owner';runtime.permissions.resume(runtime.owner);runtime.broker=Mock();runtime.active=None;runtime.closed=threading.Event();runtime.requests=[];runtime.latest='Ready'
+        runtime=Runtime.__new__(Runtime);runtime.clients={};runtime.inflight={};runtime.lock=threading.RLock();runtime.operation_lock=threading.RLock();runtime.permissions=Permissions();runtime.owner='host-owner';runtime.permissions.resume(runtime.owner);runtime.broker=Mock();runtime.active=None;runtime.closed=threading.Event();runtime.requests=[];runtime.latest='Ready'
         runtime.store=Mock();runtime.store.settings.return_value={}
         return runtime
+
+    def test_slow_desktop_call_does_not_block_mcp_heartbeat(self):
+        runtime=self.runtime();started=threading.Event();release=threading.Event();done=threading.Event()
+        def slow(*args,**kwargs):
+            started.set()
+            if not release.wait(3):raise RuntimeError('Fixture timed out')
+            return []
+        runtime.broker.call.side_effect=slow
+        thread=threading.Thread(target=lambda:(runtime.call('a'*32,'desktop.list_windows',{}),done.set()))
+        thread.start()
+        try:
+            self.assertTrue(started.wait(2))
+            self.assertEqual(runtime.call('b'*32,'bridge_mcp_connected',{}),{'mcp_initialized':True})
+        finally:
+            release.set();thread.join(3)
+        self.assertTrue(done.is_set())
 
     def test_tool_metadata_is_valid_and_unique(self):
         import jsonschema

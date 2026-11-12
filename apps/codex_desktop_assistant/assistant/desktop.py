@@ -37,13 +37,21 @@ class Desktop:
         except AttributeError:return bool(control.element_info._element.CurrentIsPassword)
 
     def windows(self):
+        # Enumerate top-level windows with Win32 instead of querying every
+        # application's UI Automation provider, which can block on a hung app.
+        import win32gui
+        import win32process
         result=[]
-        for w in self._api().windows():
+        def collect(hwnd, _):
             try:
-                title=w.window_text()
-                if title and w.process_id()!=os.getpid() and w.class_name().lower() not in TERMINAL_CLASSES and w.is_visible() and not FORBIDDEN.search(title) and not any(x.lower() in title.lower() for x in self.exclusions if x):
-                    result.append({'hwnd':w.handle,'pid':w.process_id(),'title':title[:200]})
-            except Exception:continue
+                if len(result)>=100 or not win32gui.IsWindowVisible(hwnd):return True
+                title=win32gui.GetWindowText(hwnd)
+                _,pid=win32process.GetWindowThreadProcessId(hwnd)
+                if title and pid!=os.getpid() and win32gui.GetClassName(hwnd).lower() not in TERMINAL_CLASSES and not FORBIDDEN.search(title) and not any(x.lower() in title.lower() for x in self.exclusions if x):
+                    result.append({'hwnd':hwnd,'pid':pid,'title':title[:200]})
+            except Exception:pass
+            return True
+        win32gui.EnumWindows(collect,None)
         return result[:100]
 
     @staticmethod
@@ -56,14 +64,17 @@ class Desktop:
 
     def identity(self, hwnd):
         import win32api
+        import win32gui
         import win32process
         if not ctypes.windll.user32.IsWindow(int(hwnd)):raise Denied('Window no longer exists; refresh the window picker')
-        try:w=self._api().window(handle=int(hwnd)).wrapper_object()
-        except Exception as error:raise Denied('Window is no longer available to accessibility; inspect again') from error
-        process=win32api.OpenProcess(0x1000,False,w.process_id())
+        try:
+            _,pid=win32process.GetWindowThreadProcessId(int(hwnd))
+            class_name=win32gui.GetClassName(int(hwnd))
+            process=win32api.OpenProcess(0x1000,False,pid)
+        except Exception as error:raise Denied('Window is no longer available; inspect again') from error
         try:created=str(win32process.GetProcessTimes(process)['CreationTime'])
         finally:process.Close()
-        return (w.process_id(),w.class_name(),created)
+        return (pid,class_name,created)
 
     def window(self, hwnd):
         hwnd=int(hwnd)

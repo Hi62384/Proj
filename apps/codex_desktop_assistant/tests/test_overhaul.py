@@ -5,7 +5,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 sys.path[:0]=[str(Path(__file__).resolve().parents[1]),str(Path(__file__).resolve().parents[3])]
 from assistant.files import Files
 from assistant.file_policy import FilePolicy,ACTIONS
@@ -177,6 +177,21 @@ class FileTests(unittest.TestCase):
 
 
 class DesktopTests(unittest.TestCase):
+    def test_window_listing_uses_native_top_level_metadata_and_filters_sensitive_windows(self):
+        import os
+        import win32gui
+        import win32process
+        titles={1:'Untitled - Notepad',2:'Windows Security',3:'Private notes',4:'Command Prompt',5:'Hidden'}
+        classes={1:'Notepad',2:'Window',3:'Window',4:'ConsoleWindowClass',5:'Window'}
+        desktop=Desktop(Permissions());desktop.exclusions=['private']
+        def enumerate_windows(callback, data):
+            for handle in titles:callback(handle,data)
+        with patch.object(win32gui,'EnumWindows',side_effect=enumerate_windows), \
+             patch.object(win32gui,'IsWindowVisible',side_effect=lambda h:h!=5), \
+             patch.object(win32gui,'GetWindowText',side_effect=lambda h:titles[h]), \
+             patch.object(win32gui,'GetClassName',side_effect=lambda h:classes[h]), \
+             patch.object(win32process,'GetWindowThreadProcessId',return_value=(1,os.getpid()+1)):
+            self.assertEqual(desktop.windows(),[{'hwnd':1,'pid':os.getpid()+1,'title':'Untitled - Notepad'}])
     def test_physical_input_records_conflict_without_halting_turn(self):
         import threading
         from assistant.attention import InputGuard

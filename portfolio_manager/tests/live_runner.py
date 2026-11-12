@@ -50,15 +50,29 @@ def main():
             print(json.dumps({'preflight': 'blocked', 'error': sanitize(error)}))
             return 2
         if args.inference:
+            result = None
+            events = []
+            def capture_event(kind, detail):
+                if kind in ('WORKSPACE_REQUEST', 'WORKSPACE_DENIED', 'POLICY_DENIED'):
+                    events.append({'kind': kind, 'detail': sanitize(detail)[:300]})
             try:
-                result = executor.run(claim, staged, stopped, lambda *_: None, lambda _: None)
+                result = executor.run(claim, staged, stopped, capture_event, lambda _: None)
+                if result.get('kind') != 'result':
+                    print(json.dumps({'inference': 'blocked', 'response_kind': result.get('kind'),
+                                      'summary': sanitize(result.get('summary', ''))[:500],
+                                      'question': sanitize(result.get('question', ''))[:500], 'events': events}))
+                    return 3
                 evidence = staged.evidence('result.md')
-                if (result.get('kind') != 'result' or
-                        (staged.root / 'result.md').read_text(encoding='utf-8').strip() != expected):
+                if (staged.root / 'result.md').read_text(encoding='utf-8').strip() != expected:
                     raise RuntimeError('The fictional artifact failed the exact expected-content check.')
                 print(json.dumps({'inference': 'passed', 'verified_artifact': True, 'sha256': evidence['sha256']}))
             except (RuntimeError, ValueError, OSError) as error:
-                print(json.dumps({'inference': 'blocked', 'error': sanitize(error)}))
+                failure = {'inference': 'blocked', 'error': sanitize(error)}
+                if isinstance(result, dict):
+                    failure['response_kind'] = result.get('kind')
+                    failure['summary'] = sanitize(result.get('summary', ''))[:500]
+                failure['events'] = events
+                print(json.dumps(failure))
                 return 3
     return 0
 

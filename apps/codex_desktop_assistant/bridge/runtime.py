@@ -50,7 +50,7 @@ class OperationCancellation(threading.Event):
 
 class Runtime:
     def __init__(self,directory,emit,manager=None):
-        self.emit=emit;self.closed=threading.Event();self.lock=threading.RLock();self.clients={};self.inflight={};self.requests=[];self.fixtures=[];self.latest='Ready';self.active=None;self.listener=None
+        self.emit=emit;self.closed=threading.Event();self.lock=threading.RLock();self.operation_lock=threading.RLock();self.clients={};self.inflight={};self.requests=[];self.fixtures=[];self.latest='Ready';self.active=None;self.listener=None
         self.manager=manager
         self.store=Store(directory);self.attachments=Attachments(directory);self.permissions=Permissions()
         self.permissions.file_policy=FilePolicy(self.store.settings().get('file_rules',[]))
@@ -293,7 +293,7 @@ class Runtime:
         if operation not in CAPABILITIES:raise Denied('Unknown bridge capability')
         event=OperationCancellation(manager) if manager else threading.Event();key=(client,request_id or uuid.uuid4().hex);self.inflight[key]=event
         try:
-            with self.lock:
+            with self.operation_lock:
                 if manager:
                     control=manager.control()
                     if control['stopped'] or control['emergency']:raise Denied('Portfolio Manager is stopped. Resume locally first.')

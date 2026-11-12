@@ -222,16 +222,21 @@ class OfficialExecutor:
         return Config(workspace=workspace.root, data_dir=runtime, windows_sandbox=mode)
 
     @contextmanager
-    def session(self, workspace: IsolatedWorkspace | DevelopmentWorkspace):
+    def session(self, workspace: IsolatedWorkspace | DevelopmentWorkspace, cancelled=None):
         from . import runner_wsl
 
         config = self._config(workspace)
         locations = runner_wsl.configure(config) if self._prefer_wsl and os.name == 'nt' else None
         config.validate()
         failed = False
+        cleanup_required = bool(locations)
         try:
             if locations:
-                runner_wsl.prepare(config, locations)
+                try:
+                    runner_wsl.prepare(config, locations, cancelled=cancelled)
+                except runner_wsl.StagingCancelledBeforeStart:
+                    cleanup_required = False
+                    raise
             yield config
         except BaseException:
             failed = True
@@ -239,7 +244,8 @@ class OfficialExecutor:
         finally:
             try:
                 if locations:
-                    runner_wsl.remove_login(config)
+                    if cleanup_required:
+                        runner_wsl.remove_login(config)
                 else:
                     # Remove only the disposable login after the app-server exits.
                     (config.data_dir / 'codex-home' / 'auth.json').unlink(missing_ok=True)
@@ -251,7 +257,7 @@ class OfficialExecutor:
     def run(self, claim, workspace, cancelled, emit, save_session):
         if cancelled.is_set():
             raise InterruptedError('Stopped before starting Codex.')
-        with self.session(workspace) as config:
+        with self.session(workspace, cancelled) as config:
             return self._run(config, claim, workspace, cancelled, emit, save_session)
 
     def _run(self, config, claim, workspace, cancelled, emit, save_session):
@@ -290,7 +296,7 @@ class OfficialExecutor:
         }, ensure_ascii=False)
         existing = {name for name, digest in workspace.original.items() if digest != 'new'}
         restricted = SimpleNamespace(paths=tuple(sorted(existing)), call=workspace.call)
-        with self.session(workspace) as config:
+        with self.session(workspace, cancelled) as config:
             if verifier is None:
                 verifier = BubblewrapVerifier(config.wsl_distribution if config.execution_backend == 'wsl' else None)
             # Reject an unsupported host before making a model call. A candidate
@@ -352,6 +358,9 @@ class Supervisor:
             if running and running[0].is_alive():
                 if running[1].is_set():
                     raise RuntimeError('The worker is still stopping. Try again after it has stopped.')
+                if self.coordinator.worker(worker_id)['state'] != 'running':
+                    running[1].set()
+                    raise RuntimeError('The worker is still stopping. Try again after it has stopped.')
                 return
             self.coordinator.set_worker_state(worker_id, 'running')
             stop = threading.Event()
@@ -401,10 +410,18 @@ class Supervisor:
 
     def _loop(self, worker_id, stop):
         blocked = False
+        coordinator_stopped = False
         while not stop.is_set():
             try:
                 claim = self.coordinator.claim(worker_id)
                 if not claim:
+                    with self._lock:
+                        worker = self.coordinator.worker(worker_id)
+                        if worker['state'] != 'running':
+                            stop.set()
+                            self._describe(worker_id, worker['state'], worker.get('last_error') or '')
+                            coordinator_stopped = True
+                            break
                     self._describe(worker_id, 'idle', 'Waiting for eligible local work.')
                     stop.wait(self.poll_seconds)
                     continue
@@ -421,7 +438,7 @@ class Supervisor:
                 self.coordinator.set_worker_state(worker_id, 'paused')
             except (RuntimeError, ValueError, KeyError):
                 pass
-        if stop.is_set():
+        if stop.is_set() and not coordinator_stopped:
             self._describe(worker_id, 'stopped')
 
     def _run_turn(self, worker_id, claim, stop):

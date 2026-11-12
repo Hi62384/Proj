@@ -51,6 +51,34 @@ if not result.wasSuccessful() or result.testsRun != 1:
             output.write(b'{"tests_run": 4}\n')
             self.assertEqual(_test_result(output), 4)
 
+    def test_verifier_preserves_cancellation_instead_of_reporting_test_error(self):
+        verifier = BubblewrapVerifier('Ubuntu')
+        workspace = SimpleNamespace(root=Path('fixture'), scope=SimpleNamespace(
+            folder='demo', test_paths=('demo/test_wait.py',)))
+        cancelled = threading.Event()
+        cancelled.set()
+        process = Mock()
+        process.poll.return_value = None
+        context = Mock()
+        context.__enter__ = Mock(return_value=process)
+        context.__exit__ = Mock(return_value=False)
+        with patch.object(verifier, '_prefix', return_value=['wsl.exe']), \
+             patch('subprocess.check_output', return_value=b'/tmp/fixture'), \
+             patch('subprocess.Popen', return_value=context):
+            with self.assertRaises(InterruptedError):
+                verifier.run(workspace, cancelled)
+        process.kill.assert_called_once()
+
+    def test_verifier_explains_wsl_service_timeout(self):
+        verifier = BubblewrapVerifier('Ubuntu')
+        workspace = SimpleNamespace(root=Path('fixture'), scope=SimpleNamespace(
+            folder='demo', test_paths=('demo/test_wait.py',)))
+        error = subprocess.CalledProcessError(1, 'wsl', output='Wsl/Service/WSAETIMEDOUT'.encode('utf-16le'))
+        with patch.object(verifier, '_prefix', return_value=['wsl.exe']), \
+             patch('subprocess.check_output', side_effect=error):
+            with self.assertRaisesRegex(DevelopmentError, 'WSL service did not respond'):
+                verifier.run(workspace, threading.Event())
+
     def setUp(self):
         temp = tempfile.TemporaryDirectory()
         self.addCleanup(temp.cleanup)
@@ -290,6 +318,9 @@ if not result.wasSuccessful() or result.testsRun != 1:
     def test_selected_folder_can_create_new_source_without_overwriting_existing_files(self):
         scope = DevelopmentScope.discover(self.repo, 'demo')
         workspace = DevelopmentWorkspace(self.repo, self.private, scope, self.cancelled, allow_new_files=True)
+        instructions = self.call(workspace, 'read', 'AGENTS.md')
+        self.assertTrue(instructions['exists'])
+        self.assertIn('Scoped development', instructions['content'])
         self.assertEqual(self.call(workspace, 'read', 'demo/new/feature.py'),
                          {'exists': False, 'content': '', 'sha256': 'new'})
         with self.assertRaises(ValueError):
@@ -434,3 +465,71 @@ if not result.wasSuccessful() or result.testsRun != 1:
         result = workspace.verify(verifier)
         self.assertEqual(json.loads(Path(result['path']).read_bytes())['tests_run'], 1)
         self.assertEqual(self.git('diff', 'HEAD'), b'')
+
+    @unittest.skipUnless(os.environ.get('PORTFOLIO_TEST_SANDBOX'), 'requires the provisioned Linux sandbox')
+    def test_real_networkless_sandbox_cancels_running_verification(self):
+        folder = self.private / 'cancel-fixture'
+        (folder / 'demo').mkdir(parents=True)
+        fixture = folder / 'demo' / 'test_wait.py'
+        fixture.write_text('import time, unittest\nclass Slow(unittest.TestCase):\n'
+                           '    def test_wait(self): time.sleep(20)\n', encoding='utf-8')
+        scope = SimpleNamespace(folder='demo', test_paths=('demo/test_wait.py',))
+        workspace = SimpleNamespace(root=folder, scope=scope)
+        verifier = BubblewrapVerifier(os.environ['PORTFOLIO_TEST_SANDBOX'] if os.name == 'nt' else None, timeout=60)
+        launched, cancelled, finished = threading.Event(), threading.Event(), threading.Event()
+        errors = []
+        original_popen = subprocess.Popen
+
+        def observe_launch(command, *args, **kwargs):
+            process = original_popen(command, *args, **kwargs)
+            if '/usr/bin/bwrap' in command:
+                launched.set()
+            return process
+
+        def verify():
+            try:
+                verifier.run(workspace, cancelled)
+            except Exception as exc:
+                errors.append(exc)
+            finally:
+                finished.set()
+
+        with patch('subprocess.Popen', side_effect=observe_launch):
+            thread = threading.Thread(target=verify)
+            thread.start()
+            try:
+                for _ in range(200):
+                    if launched.wait(.1) or finished.is_set():
+                        break
+                if not launched.is_set() and errors:
+                    self.fail(f'The isolated verification could not start: {errors[0]}')
+                self.assertTrue(launched.is_set(), 'The isolated verification did not start')
+            finally:
+                cancelled.set()
+                thread.join(15)
+        self.assertFalse(thread.is_alive(), 'Cancellation did not return promptly')
+        self.assertEqual(len(errors), 1)
+        self.assertIsInstance(errors[0], InterruptedError)
+
+    @unittest.skipUnless(os.environ.get('PORTFOLIO_TEST_SANDBOX') and os.name == 'nt',
+                         'requires the private Windows-to-WSL Node runtime')
+    def test_real_private_node_verifier_rejects_failures_and_tampering(self):
+        folder = self.private / 'node-fixture'
+        (folder / 'demo').mkdir(parents=True)
+        fixture = folder / 'demo' / 'example.test.cjs'
+        scope = SimpleNamespace(folder='demo', test_paths=('demo/example.test.cjs',))
+        workspace = SimpleNamespace(root=folder, scope=scope)
+        verifier = BubblewrapVerifier(os.environ['PORTFOLIO_TEST_SANDBOX'], timeout=60)
+        fixture.write_text("require('node:test')('works', () => {});\n", encoding='utf-8')
+        self.assertEqual(verifier.run(workspace, self.cancelled), 1)
+        fixture.write_text("require('node:test')('fails', () => { throw Error('failed'); });\n", encoding='utf-8')
+        with self.assertRaisesRegex(DevelopmentError, 'failed'):
+            verifier.run(workspace, self.cancelled)
+        fixture.write_text("require('node:test').skip('skipped', () => {});\n", encoding='utf-8')
+        with self.assertRaisesRegex(DevelopmentError, 'failed'):
+            verifier.run(workspace, self.cancelled)
+        altered = self.private / 'altered-node'
+        altered.write_bytes(b'not the approved runtime')
+        with patch('portfolio_manager.development._PRIVATE_NODE', altered):
+            with self.assertRaisesRegex(DevelopmentError, 'integrity'):
+                verifier.run(workspace, self.cancelled)

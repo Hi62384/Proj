@@ -3,7 +3,10 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 from pathlib import Path
+import subprocess
+import sys
 import tempfile
 import threading
 import time
@@ -134,6 +137,27 @@ class WorkspaceTests(unittest.TestCase):
         self.assertFalse(config.data_dir.is_relative_to(self.repo))
         self.assertEqual(config.workspace, workspace.root)
 
+    @unittest.skipUnless(os.name == 'nt', 'WSL sessions require Windows')
+    def test_cancelled_wait_skips_wsl_cleanup_but_partial_staging_cleans_up(self):
+        workspace = IsolatedWorkspace(self.repo, self.private, self.claim, self.cancelled)
+        executor = OfficialExecutor(runtime_base=self.repo.parent)
+        from pathlib import PurePosixPath
+        old_home = PurePosixPath('/home/example/.local/share/codex-relay/codex-home')
+        old_binary = old_home.parent / 'runtime' / 'version' / 'codex'
+        with patch.object(runner_wsl, '_owner_config', return_value=('Ubuntu', old_home, old_binary)):
+            with patch.object(runner_wsl, 'prepare', side_effect=runner_wsl.StagingCancelledBeforeStart('stopped')):
+                with patch.object(runner_wsl, 'remove_login') as cleanup:
+                    with self.assertRaises(runner_wsl.StagingCancelledBeforeStart):
+                        with executor.session(workspace, self.cancelled):
+                            self.fail('Cancelled staging cannot start a session')
+                    cleanup.assert_not_called()
+            with patch.object(runner_wsl, 'prepare', side_effect=RuntimeError('partial staging')):
+                with patch.object(runner_wsl, 'remove_login') as cleanup:
+                    with self.assertRaisesRegex(RuntimeError, 'partial staging'):
+                        with executor.session(workspace, self.cancelled):
+                            self.fail('Failed staging cannot start a session')
+                    cleanup.assert_called_once()
+
     def test_prior_artifact_must_belong_to_this_project_and_match_digest(self):
         first = IsolatedWorkspace(self.repo, self.private, self.claim, self.cancelled)
         _call(first, 'write', 'result.md', 'Verified prior fictional artifact.', 'new')
@@ -167,6 +191,90 @@ class WorkspaceTests(unittest.TestCase):
         self.assertNotIn(str(old_home.parent) + '/', first.wsl_home)
         self.assertEqual(first.validate().execution_backend, 'wsl')
 
+    def test_wsl_staging_serializes_and_waiting_worker_can_stop(self):
+        entered = threading.Event()
+        release = threading.Event()
+        cancelled = threading.Event()
+        calls = []
+        errors = []
+
+        def stage(*args, **kwargs):
+            calls.append(threading.current_thread().name)
+            if len(calls) == 1:
+                entered.set()
+                if not release.wait(5):
+                    raise RuntimeError('Staging test timed out.')
+
+        def prepare(cancel=None):
+            try:
+                runner_wsl.prepare(None, {}, cancelled=cancel)
+            except Exception as error:
+                errors.append(error)
+
+        with patch.object(runner_wsl, 'python', side_effect=stage):
+            first = threading.Thread(target=prepare, name='first')
+            waiting = threading.Thread(target=prepare, args=(cancelled,), name='waiting')
+            first.start()
+            self.assertTrue(entered.wait(5))
+            waiting.start()
+            cancelled.set()
+            waiting.join(3)
+            self.assertFalse(waiting.is_alive())
+            self.assertEqual(calls, ['first'])
+            self.assertEqual(len(errors), 1)
+            self.assertIsInstance(errors[0], InterruptedError)
+            release.set()
+            first.join(5)
+            self.assertFalse(first.is_alive())
+            runner_wsl.prepare(None, {})
+            self.assertEqual(len(calls), 2)
+
+    @unittest.skipUnless(os.name == 'nt' and os.environ.get('PORTFOLIO_TEST_SANDBOX'),
+                         'requires the provisioned WSL runtime')
+    def test_wsl_staging_reuses_only_matching_compatibility_metadata(self):
+        script = r'''
+import json, os, pathlib, subprocess, sys, tempfile
+source = json.load(sys.stdin)['script']
+with tempfile.TemporaryDirectory(prefix='portfolio-stage-fixture-') as temp:
+ home = pathlib.Path(temp).resolve() / 'home'
+ source_home = home / '.local/share/codex-relay/codex-home'
+ source_home.mkdir(parents=True)
+ binary = home / '.local/share/codex-relay/runtime/version/codex'
+ binary.parent.mkdir(parents=True)
+ binary.write_text('fictional executable')
+ binary.chmod(0o700)
+ host = binary.with_name('codex-code-mode-host')
+ host.write_text('fictional companion')
+ host.chmod(0o700)
+ (source_home / 'auth.json').write_text(json.dumps({'auth_mode':'chatgpt','tokens':{'fixture':'not-real'}}))
+ protocol = source_home / 'protocol'
+ protocol.mkdir()
+ cache = protocol / 'verified.json'
+ fingerprint = str(binary.stat().st_size) + ':' + str(binary.stat().st_mtime_ns)
+ env = dict(os.environ, HOME=str(home))
+ results = []
+ for index, stored in enumerate((fingerprint, 'stale')):
+  cache.write_text(json.dumps({'version':'codex-cli 0.162.1','fingerprint':stored,'contract':2,'compatible':True,'extra':'discard'}))
+  run = home / '.local/share/portfolio-manager-runs' / str(index)
+  target_home = run / 'codex-home'
+  target_binary = run / 'runtime/codex'
+  payload = {'source_home':str(source_home),'source_binary':str(binary),'target_home':str(target_home),'target_binary':str(target_binary)}
+  subprocess.run([sys.executable,'-I','-c',source],input=json.dumps(payload),text=True,env=env,check=True,capture_output=True)
+  target_cache = target_home / 'protocol/verified.json'
+  results.append({'host':target_binary.with_name('codex-code-mode-host').is_file(),
+                  'cache':json.loads(target_cache.read_text()) if target_cache.exists() else None})
+ print(json.dumps(results))
+'''
+        result = subprocess.run(
+            ['wsl.exe', '-d', os.environ['PORTFOLIO_TEST_SANDBOX'], '--exec', '/usr/bin/python3', '-I', '-c', script],
+            input=json.dumps({'script': runner_wsl._PREPARE}), text=True, capture_output=True, timeout=60, check=True,
+        )
+        matching, stale = json.loads(result.stdout)
+        self.assertTrue(matching['host'])
+        self.assertTrue(stale['host'])
+        self.assertEqual(set(matching['cache']), {'version', 'fingerprint', 'contract', 'compatible'})
+        self.assertIsNone(stale['cache'])
+
 
 class DispatchTests(unittest.TestCase):
     def setUp(self):
@@ -184,6 +292,18 @@ class DispatchTests(unittest.TestCase):
         supervisor = Supervisor(self.coordinator, executor, poll_seconds=.025, **kwargs)
         self.addCleanup(supervisor.close)
         return supervisor
+
+    def test_worker_exits_after_coordinator_pauses_it_and_can_restart(self):
+        worker = self.coordinator.register('demo', kind='background')
+        supervisor = self._supervisor(FictionalTurns({}))
+        supervisor.start(worker['id'])
+        _wait(lambda: supervisor.status().get(worker['id'], {}).get('state') == 'idle')
+        self.coordinator.set_worker_state(worker['id'], 'paused')
+        _wait(lambda: not supervisor._running[worker['id']][0].is_alive())
+        self.assertEqual(supervisor.status()[worker['id']]['state'], 'paused')
+        supervisor.start(worker['id'])
+        _wait(lambda: supervisor.status().get(worker['id'], {}).get('state') == 'idle')
+        self.assertEqual(self.coordinator.worker(worker['id'])['state'], 'running')
 
     def test_afk_parks_request_and_continues_after_missing_evidence(self):
         self.coordinator.set_mode('afk')
@@ -220,6 +340,28 @@ class DispatchTests(unittest.TestCase):
         _wait(lambda: second.status().get(worker['id'], {}).get('state') == 'idle' and bool(after_restart.claimed))
         self.assertEqual(after_restart.claimed, [('FAKE-004', 'next-action')])
         self.assertEqual(self._state()['FAKE-001']['milestones'][0]['status'], 'completed')
+
+    def test_fresh_host_process_reconciles_interrupted_background_without_revoking_chat(self):
+        state = self.repo / 'disposable-host-state'
+        self.coordinator = Coordinator(self.repo, state / 'portfolio-manager' / 'coordinator.sqlite3')
+        background = self.coordinator.register('demo', kind='background')
+        manual = self.coordinator.register('demo', kind='manual')
+        interrupted = self.coordinator.claim(background['id'], project_id='FAKE-001')
+        independent = self.coordinator.claim(manual['id'], project_id='FAKE-002')
+        self.assertIsNotNone(interrupted)
+        self.assertIsNotNone(independent)
+        script = ('import sys; from portfolio_manager.integration import ManagerHost; '
+                  'host=ManagerHost(sys.argv[1],sys.argv[2]); host.supervisor.close()')
+        subprocess.run([sys.executable, '-c', script, str(self.repo), str(state)],
+                       check=True, capture_output=True, timeout=20)
+        self.assertFalse(self.coordinator.heartbeat(background['id'], interrupted['lease_token']))
+        self.assertTrue(self.coordinator.heartbeat(manual['id'], independent['lease_token']))
+        snapshot = self.coordinator.snapshot()
+        projects = {item['id']: item for item in snapshot['projects']}
+        workers = {item['id']: item for item in snapshot['workers']}
+        self.assertEqual(projects['FAKE-001']['milestones'][0]['status'], 'reconcile')
+        self.assertEqual(workers[background['id']]['state'], 'paused')
+        self.assertEqual(workers[manual['id']]['status'], 'working')
 
     def test_timeout_blocks_one_task_and_continues(self):
         worker = self.coordinator.register('demo', kind='background')

@@ -210,12 +210,28 @@ class Dashboard(QMainWindow):
 
     def desktop_settings(self):
         dialog=QDialog(self);dialog.setWindowTitle('Authorize desktop scope');layout=QVBoxLayout(dialog);mode=QComboBox();mode.addItems(['Selected Window','Entire Monitor']);target=QComboBox();launch=QCheckBox('Allow launching ordinary installed applications')
+        if self.permissions.desktop:
+            index=mode.findText(self.permissions.desktop_mode)
+            if index>=0:mode.setCurrentIndex(index)
+            launch.setChecked(self.permissions.allow_launches)
         def populate():
             target.clear()
+            target.addItem('Choose a window' if mode.currentText()=='Selected Window' else 'Choose a monitor',None)
+            selected=-1
             if mode.currentText()=='Selected Window':
-                for window in self.desktop.windows():target.addItem(window['title'],window)
+                for window in self.desktop.windows():
+                    target.addItem(window['title'],window)
+                    grant=self.permissions.windows.get(window['hwnd']) if self.permissions.desktop else None
+                    if grant:
+                        try:
+                            if tuple(grant)==self.desktop.identity(window['hwnd']):selected=target.count()-1
+                        except Exception:pass
             else:
-                for i,bounds in enumerate(self.desktop.monitors()[:-1]):target.addItem('Monitor '+str(i+1),bounds)
+                for i,bounds in enumerate(self.desktop.monitors()[:-1]):
+                    target.addItem('Monitor '+str(i+1),bounds)
+                    if self.permissions.desktop and self.permissions.capture_bounds is not None and tuple(bounds)==tuple(self.permissions.capture_bounds):
+                        selected=target.count()-1
+            target.setCurrentIndex(max(selected,0))
         mode.currentTextChanged.connect(populate);populate();layout.addWidget(mode);layout.addWidget(target);layout.addWidget(launch)
         text=QLabel('Authorized screen observations can be sent to official Codex. Passwords, MFA and CAPTCHA remain manual. Ctrl+Alt+F12 stops input.');text.setWordWrap(True);layout.addWidget(text)
         buttons=QDialogButtonBox(QDialogButtonBox.Save|QDialogButtonBox.Cancel);buttons.accepted.connect(dialog.accept);buttons.rejected.connect(dialog.reject);layout.addWidget(buttons)

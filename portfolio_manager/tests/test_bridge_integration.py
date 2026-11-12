@@ -35,6 +35,7 @@ class IntegrationTests(unittest.TestCase):
         self.runtime.inflight = {}
         self.runtime.reference_queries = set()
         self.runtime.lock = threading.RLock()
+        self.runtime.operation_lock = threading.RLock()
         self.runtime.owner = 'owner'
         self.runtime.broker = Mock()
         self.runtime.emit = Mock()

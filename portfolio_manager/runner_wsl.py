@@ -4,10 +4,18 @@ from __future__ import annotations
 import json
 from pathlib import PurePosixPath
 import re
+import threading
 import uuid
 
 from portfolio_autopilot.codex_relay.config import data_directory
 from portfolio_autopilot.codex_relay.wsl_runtime import python
+
+
+_prepare_lock = threading.Lock()
+
+
+class StagingCancelledBeforeStart(InterruptedError):
+    """A waiting worker stopped before it created any WSL runtime files."""
 
 
 _PREPARE = '''import json, os, pathlib, stat, sys
@@ -42,6 +50,30 @@ run.mkdir(mode=0o700)
 target_home.mkdir(mode=0o700)
 target_binary.parent.mkdir(mode=0o700)
 os.link(source_binary, target_binary, follow_symlinks=False)
+source_host = source_binary.parent / 'codex-code-mode-host'
+if source_host.exists():
+ host_info = check(source_host)
+ if not (host_info.st_mode & stat.S_IXUSR):
+  raise ValueError('The existing Codex workspace host is not executable')
+ os.link(source_host, target_binary.parent / source_host.name, follow_symlinks=False)
+cache = source_home / 'protocol' / 'verified.json'
+try:
+ if check(cache).st_size > 100000:
+  raise ValueError('Compatibility cache is too large')
+ with os.fdopen(os.open(cache, os.O_RDONLY | os.O_NOFOLLOW), 'rb') as f:
+  metadata = json.load(f)
+ fingerprint = str(binary_info.st_size) + ':' + str(binary_info.st_mtime_ns)
+ version = metadata.get('version')
+ if (metadata.get('fingerprint') == fingerprint and metadata.get('contract') == 2
+     and metadata.get('compatible') is True and isinstance(version, str)
+     and len(version) <= 100 and version.startswith('codex-cli ')):
+  protocol = target_home / 'protocol'
+  protocol.mkdir(mode=0o700)
+  clean = {'version': version, 'fingerprint': fingerprint, 'contract': 2, 'compatible': True}
+  with os.fdopen(os.open(protocol / 'verified.json', os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600), 'w') as f:
+   json.dump(clean, f)
+except (OSError, ValueError, TypeError, AttributeError):
+ pass  # A missing or invalid cache triggers the normal compatibility inspection.
 auth = source_home / 'auth.json'
 if check(auth).st_size > 1000000:
  raise ValueError('Unexpected existing ChatGPT login size')
@@ -108,8 +140,18 @@ def configure(config):
             'target_home': config.wsl_home, 'target_binary': config.wsl_binary}
 
 
-def prepare(config, locations):
-    python(config, _PREPARE, locations, timeout=35)
+def prepare(config, locations, *, cancelled=None):
+    # WSL can stall when multiple cold starts race. Serialize only staging,
+    # then release the lock before either app-server runs a task.
+    while not _prepare_lock.acquire(timeout=.1):
+        if cancelled is not None and cancelled.is_set():
+            raise StagingCancelledBeforeStart('Stopped while waiting for WSL runtime staging.')
+    try:
+        if cancelled is not None and cancelled.is_set():
+            raise StagingCancelledBeforeStart('Stopped before WSL runtime staging.')
+        python(config, _PREPARE, locations, timeout=35)
+    finally:
+        _prepare_lock.release()
 
 
 def remove_login(config):

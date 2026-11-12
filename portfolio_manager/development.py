@@ -27,6 +27,8 @@ _RESTRICTED = re.compile(r'-----BEGIN [A-Z ]*PRIVATE KEY-----|https://payhip\.co
 _MAX_FILE = 500_000
 _MAX_TOTAL = 8_000_000
 _MAX_FILES = 120
+_PRIVATE_NODE_SHA256 = '2f822d544601dfff107f57d945b649d15c5bf6302595735a6bd9cdc7ee9669bd'
+_PRIVATE_NODE = Path(__file__).resolve().parent.parent / 'business_portfolio' / '.local' / 'portfolio-manager' / 'runtime' / 'node-v22.23.5-linux-x64'
 _POLICY = """# Scoped development
 
 Use relay_workspace to inspect and edit the exact files provided for this task.
@@ -234,7 +236,7 @@ class DevelopmentWorkspace(Workspace):
             if (self.allow_new_files and isinstance(args, dict) and
                     set(args) == {'operation', 'path', 'content', 'sha256'} and
                     all(isinstance(value, str) for value in args.values()) and
-                    args['operation'] == 'read' and args['path'] not in self.paths):
+                    args['operation'] == 'read' and args['path'] != 'AGENTS.md' and args['path'] not in self.paths):
                 if not self.active():
                     raise ValueError('Task is paused or cancelled')
                 name = args['path']
@@ -539,6 +541,8 @@ class BubblewrapVerifier:
                     raise DevelopmentError('Windows reported insufficient resources to start WSL.') from exc
                 if b'E_ACCESSDENIED' in diagnostic:
                     raise DevelopmentError('The current Windows process cannot access the WSL service.') from exc
+                if b'WSAETIMEDOUT' in diagnostic:
+                    raise DevelopmentError('The WSL service did not respond while starting the isolated test.') from exc
                 raise DevelopmentError('WSL could not resolve the isolated test workspace.') from exc
             except (OSError, subprocess.SubprocessError) as exc:
                 raise DevelopmentError('WSL could not resolve the isolated test workspace.') from exc
@@ -558,7 +562,27 @@ class BubblewrapVerifier:
             commands.append([*sandbox, '/usr/bin/python3', '-I', '-B', '-c', _TEST_DRIVER,
                              folder, *('/work/' + name for name in python_tests)])
         if node_tests:
-            commands.append([*sandbox, '/usr/bin/node', '-e', _NODE_TEST_DRIVER,
+            node_sandbox = sandbox
+            node_executable = '/usr/bin/node'
+            if prefix and _PRIVATE_NODE.exists():
+                try:
+                    if _PRIVATE_NODE.is_symlink() or not _PRIVATE_NODE.is_file():
+                        raise DevelopmentError('The private Node runtime is not a regular file.')
+                    with _PRIVATE_NODE.open('rb') as runtime:
+                        digest = hashlib.file_digest(runtime, 'sha256').hexdigest()
+                    if digest != _PRIVATE_NODE_SHA256:
+                        raise DevelopmentError('The private Node runtime failed its integrity check.')
+                    node_path = subprocess.check_output(
+                        [*prefix, '/usr/bin/wslpath', '-a', '-u', str(_PRIVATE_NODE)],
+                        timeout=10, env=env, stderr=subprocess.STDOUT,
+                    ).decode('utf-8').strip()
+                    if not node_path.startswith('/') or '\n' in node_path or '\0' in node_path:
+                        raise DevelopmentError('The private Node runtime path is invalid.')
+                except (OSError, subprocess.SubprocessError, UnicodeError) as exc:
+                    raise DevelopmentError('The private Node runtime could not be checked.') from exc
+                node_sandbox = [*sandbox[:-1], '--dir', '/opt', '--ro-bind', node_path, '/opt/portfolio-node', '--']
+                node_executable = '/opt/portfolio-node'
+            commands.append([*node_sandbox, node_executable, '-e', _NODE_TEST_DRIVER,
                              *('/work/' + name for name in node_tests)])
         # The host waits for an isolated child and stores bounded output. No shell or
         # model-provided executable, command option, working directory or test script.
@@ -577,6 +601,8 @@ class BubblewrapVerifier:
                         if process.returncode != 0:
                             raise DevelopmentError('The sandboxed tests failed or the isolated runtime was unavailable.')
                     count = _test_result(output)
+            except InterruptedError:
+                raise
             except (OSError, ValueError, IndexError, UnicodeError) as exc:
                 raise DevelopmentError('The sandboxed verifier did not return a valid test result.') from exc
             total += count

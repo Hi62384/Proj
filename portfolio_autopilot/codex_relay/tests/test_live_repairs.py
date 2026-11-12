@@ -3,6 +3,7 @@ import json
 import tomllib
 import unittest
 from dataclasses import replace
+from pathlib import PurePosixPath
 from unittest.mock import Mock, patch
 
 import test_relay as fixtures
@@ -114,6 +115,7 @@ class LiveRepairRegressions(unittest.TestCase):
                          wsl_binary='/home/user/.local/share/codex-relay/runtime/1/bin/codex')
         fs = tomllib.loads(render(config))['permissions']['relay-locked']['filesystem']
         self.assertEqual(fs[config.wsl_binary], 'read')
+        self.assertEqual(fs[str(PurePosixPath(config.wsl_binary).with_name('codex-code-mode-host'))], 'read')
         self.assertEqual(fs[':root'], 'deny')
         self.assertNotIn('/home/user', fs)
         with self.assertRaises(ValueError):

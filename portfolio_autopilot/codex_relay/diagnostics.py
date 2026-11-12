@@ -42,6 +42,9 @@ def protocol_error(stage, error):
     if 'error_no_system_resources' in low or 'insufficient system resources' in low:
         return RelayError('environment.wsl_resources', stage, 'WSL2 could not start because Windows reports insufficient system resources.', raw,
                           'Free memory by closing unused applications, then rerun the approved WSL2 setup.', error.get('code'))
+    if 'wsl/service/wsaetimedout' in low:
+        return RelayError('environment.wsl_timeout', stage, 'The WSL2 service did not respond before the connection timed out.', raw,
+                          'Inspect the WSL service and distribution state before retrying.', error.get('code'))
     if 'restricted-token' in low or 'split filesystem' in low or 'unelevated' in low and 'cannot' in low:
         return RelayError('sandbox.windows_restricted_token', stage,
             'The Windows unelevated sandbox cannot enforce the required restricted reads.', raw,

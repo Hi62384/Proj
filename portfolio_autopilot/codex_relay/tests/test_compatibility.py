@@ -58,6 +58,11 @@ class CompatibilityTests(unittest.TestCase):
         self.assertEqual(root.category, 'sandbox.windows_root_read_required')
         self.assertIn('Do not broaden', root.action)
 
+    def test_wsl_service_timeout_is_not_reported_as_codex_protocol_error(self):
+        error = protocol_error('WSL2', {'message': 'Error code: Wsl/Service/WSAETIMEDOUT'})
+        self.assertEqual(error.category, 'environment.wsl_timeout')
+        self.assertIn('WSL2 service', error.explanation)
+
     def test_authentication_protocol_inference_and_missing_session_are_distinct(self):
         cases = [('Unauthorized 401', 'authentication'), ('Invalid request: readOnly.access is no longer supported', 'protocol.compatibility'),
                  ('no rollout found for thread id demo', 'session.missing'), ('model request failed', 'inference'),

@@ -1,7 +1,7 @@
 """One named profile, exact read grants, no shell access or filesystem writes."""
 import json
 import os
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import tomllib
 
 from .config import safe_path
@@ -32,6 +32,7 @@ def render(config, paths=None, path_mapper=str):
         if not config.wsl_home.endswith('/codex-home') or not config.wsl_binary.startswith(base + '/runtime/'):
             raise ValueError('Unexpected WSL Codex runtime path')
         grants.add(config.wsl_binary)
+        grants.add(str(PurePosixPath(config.wsl_binary).with_name('codex-code-mode-host')))
         # Bubblewrap re-executes this static binary as its sandbox bootstrap.
         # :minimal covers system tools/loaders, but not a binary in the private runtime home.
     lines = ['forced_login_method = "chatgpt"', 'model_provider = "openai"',

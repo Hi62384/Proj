@@ -3,7 +3,7 @@ import json
 import time
 from PySide6.QtCore import QObject,Signal,QTimer,Qt
 from PySide6.QtGui import QAction,QIcon
-from PySide6.QtWidgets import (QMainWindow,QWidget,QVBoxLayout,QHBoxLayout,QLabel,QPushButton,QDialog,QPlainTextEdit,QMenu,QSystemTrayIcon,QStyle,QComboBox,QCheckBox,QDialogButtonBox,QMessageBox,QScrollArea,QFileDialog)
+from PySide6.QtWidgets import (QMainWindow,QWidget,QVBoxLayout,QHBoxLayout,QLabel,QPushButton,QDialog,QPlainTextEdit,QMenu,QSystemTrayIcon,QStyle,QComboBox,QCheckBox,QDialogButtonBox,QMessageBox,QScrollArea,QFileDialog,QTabWidget)
 from .runtime import Runtime
 
 
@@ -15,35 +15,65 @@ def button(text,slot):
 
 
 class Dashboard(QMainWindow):
-    def __init__(self,directory):
+    def __init__(self,directory,manager=None,*,restore_saved=True):
         super().__init__();self.setWindowTitle('Codex Computer Bridge');self.resize(860,650);self.explicit_quit=False;self.cards={}
+        self.manager=manager;self.manager_panel=None;self.saved_workers_checked=False
         self.events=Events();self.events.event.connect(self.on_event);self.browser_message='';self.browser_showing=False
-        self.runtime=Runtime(directory,self.events.event.emit);self.store=self.runtime.store;self.permissions=self.runtime.permissions;self.desktop=self.runtime.desktop;self.broker=self.runtime.broker;self.attachments=self.runtime.attachments
+        self.runtime=Runtime(directory,self.events.event.emit,manager);self.store=self.runtime.store;self.permissions=self.runtime.permissions;self.desktop=self.runtime.desktop;self.broker=self.runtime.broker;self.attachments=self.runtime.attachments
         root=QWidget();self.setCentralWidget(root);layout=QVBoxLayout(root);layout.setContentsMargins(28,24,28,24);layout.setSpacing(16)
         title=QLabel('Codex Computer Bridge');title.setStyleSheet('font-size:25px;font-weight:600');layout.addWidget(title)
         caption=QLabel('Give instructions in official Codex. This window shows execution and requests.');caption.setWordWrap(True);layout.addWidget(caption)
         self.connection=QLabel();self.work=QLabel();self.work.setWordWrap(True);self.notice=QLabel('Ready');self.notice.setWordWrap(True)
         for widget in (self.connection,self.work,self.notice):layout.addWidget(widget)
         row=QHBoxLayout()
-        for text,slot in (('View Projects',self.show_projects),('Show Browser',self.show_browser),('Stop',self.runtime.stop),('Settings',self.settings)):row.addWidget(button(text,slot))
+        for text,slot in (('View Projects',self.show_projects),('Show Browser',self.show_browser),('Stop',lambda:self.runtime.stop()),('Settings',self.settings)):row.addWidget(button(text,slot))
         layout.addLayout(row)
         scroll=QScrollArea();scroll.setWidgetResizable(True);requests=QWidget();self.request_layout=QVBoxLayout(requests);self.request_layout.addStretch();scroll.setWidget(requests);layout.addWidget(scroll,1)
-        footer=QHBoxLayout();footer.addWidget(button('Emergency Stop',self.runtime.stop));footer.addStretch();footer.addWidget(button('Quit Bridge',self.quit_bridge));layout.addLayout(footer)
+        footer=QHBoxLayout();footer.addWidget(button('Emergency Stop',lambda:self.runtime.stop()));footer.addStretch();footer.addWidget(button('Quit Portfolio Manager' if manager else 'Quit Bridge',self.quit_bridge));layout.addLayout(footer)
+        if manager:
+            from portfolio_manager.ui import ManagerPanel
+            self.setWindowTitle('Portfolio Manager');self.resize(1120,760)
+            self.tabs=QTabWidget();bridge_view=self.takeCentralWidget()
+            self.manager_panel=ManagerPanel(manager.coordinator,manager.supervisor,self.runtime.stop,
+                                            parent=self.tabs,on_stop_all=self.cancel_bridge_work)
+            self.tabs.addTab(self.manager_panel,'Portfolio')
+            self.tabs.addTab(bridge_view,'Computer Access')
+            self.setCentralWidget(self.tabs)
         self.setStyleSheet('QWidget{background:#f7f8fa;color:#15202b;font-family:"Segoe UI";font-size:14px} QPushButton{background:white;border:1px solid #cbd2da;border-radius:7px;padding:10px 16px} QPushButton:hover{background:#e7eef4} QPlainTextEdit{background:white;border:1px solid #cbd2da} QScrollArea{border:0}')
         self.tray=QSystemTrayIcon(self.style().standardIcon(QStyle.SP_ComputerIcon),self);self.tray.setToolTip('Codex Computer Bridge')
-        menu=QMenu();menu.addAction('Open dashboard',self.show_dashboard);menu.addAction('Emergency Stop',self.runtime.stop);menu.addAction('Quit Bridge',self.quit_bridge);self.tray.setContextMenu(menu);self.tray.activated.connect(lambda reason:self.show_dashboard() if reason==QSystemTrayIcon.Trigger else None);self.tray.messageClicked.connect(self.show_dashboard);self.tray.show()
+        menu=QMenu();menu.addAction('Open dashboard',self.show_dashboard);menu.addAction('Emergency Stop',self.runtime.stop);menu.addAction('Quit Portfolio Manager' if manager else 'Quit Bridge',self.quit_bridge);self.tray.setContextMenu(menu);self.tray.activated.connect(lambda reason:self.show_dashboard() if reason==QSystemTrayIcon.Trigger else None);self.tray.messageClicked.connect(self.show_dashboard);self.tray.show()
         self.timer=QTimer(self);self.timer.timeout.connect(self.refresh);self.timer.start(1000);self.runtime.start_pipe();self.refresh()
+        if manager and restore_saved:
+            QTimer.singleShot(0,self.restore_workers)
+
+    def restore_workers(self):
+        if self.saved_workers_checked:return
+        try:
+            self.manager.restore()
+            self.saved_workers_checked=True
+        except (OSError,ValueError,RuntimeError) as error:
+            from portfolio_autopilot.codex_relay.diagnostics import sanitize
+            self.manager_panel.notice.setText('Could not restore workers. '+sanitize(error)[:400])
 
     def show_dashboard(self):
         if not self.isVisible():self.show()
         self.raise_();self.activateWindow()
 
+    def cancel_bridge_work(self):
+        for event in list(self.runtime.inflight.values()):event.set()
+        for request in self.runtime.requests:request['event'].set()
+        self.broker.projects.stop()
+        self.refresh()
+
     def on_event(self,kind,conversation,data):
         if kind=='show_dashboard':self.show_dashboard()
+        if kind=='show_portfolio' and self.manager:
+            self.tabs.setCurrentWidget(self.manager_panel);self.show_dashboard();self.restore_workers()
         if kind=='browser_show_result':
             self.browser_showing=False;self.browser_message=str(data)
         if kind=='request':
-            self.tray.showMessage('Codex needs your input','Open Codex Computer Bridge to review the required action.',QSystemTrayIcon.Warning,10000)
+            if not self.manager or self.manager.control()['mode']=='human':
+                self.tray.showMessage('Codex needs your input','Open Computer Access to review the required action.',QSystemTrayIcon.Warning,10000)
         self.refresh()
 
     def refresh(self):
@@ -56,8 +86,12 @@ class Dashboard(QMainWindow):
         if state.get('current_website'):lines.append('Website: '+state['current_website'])
         self.work.setTextFormat(Qt.PlainText);self.work.setText('\n'.join(lines))
         self.notice.setTextFormat(Qt.PlainText)
-        self.notice.setText('Pending human requests: '+str(state['pending_requests'])+ ('\n'+self.browser_message if self.browser_message else ''));self.tray.setToolTip('Codex Computer Bridge — '+('Stopped' if state['stopped'] else state['active_tool'] or 'Ready'))
-        pending={r['id']:r for r in self.runtime.requests if not r['event'].is_set() and r['deadline']>time.monotonic() and r['generation']==self.permissions.generation}
+        parked=self.store.settings().get('portfolio_parked_bridge_requests',[]) if self.manager else []
+        parked_note=('\nRecent actions held for human review: '+', '.join(row['action'] for row in parked[-3:])) if parked else ''
+        self.notice.setText('Pending human requests: '+str(state['pending_requests'])+parked_note+ ('\n'+self.browser_message if self.browser_message else ''));self.tray.setToolTip(('Portfolio Manager' if self.manager else 'Codex Computer Bridge')+' — '+('Stopped' if state['stopped'] else state['active_tool'] or 'Ready'))
+        control=self.manager.control() if self.manager else None
+        show_requests=not control or (control['mode']=='human' and not control['stopped'] and not control['emergency'])
+        pending={r['id']:r for r in self.runtime.requests if show_requests and not r['event'].is_set() and r['deadline']>time.monotonic() and r['generation']==self.permissions.generation}
         for key in set(self.cards)-set(pending):self.cards.pop(key).deleteLater()
         for key,request in pending.items():
             if key in self.cards:continue
@@ -169,6 +203,9 @@ class Dashboard(QMainWindow):
 
     def closeEvent(self,event):
         if not self.explicit_quit and QSystemTrayIcon.isSystemTrayAvailable():self.hide();event.ignore();return
-        self.timer.stop();self.runtime.close();self.tray.hide();event.accept()
+        self.timer.stop();self.runtime.close()
+        if self.manager_panel:self.manager_panel.shutdown()
+        if self.manager:self.manager.close()
+        self.tray.hide();event.accept()
         from PySide6.QtWidgets import QApplication
         QApplication.instance().quit()

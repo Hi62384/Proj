@@ -28,9 +28,30 @@ class MultiplexPipeListener(UserPipeListener):
         self.created_once=True
 
 
+class OperationCancellation(threading.Event):
+    """Check the mode again at the existing file, browser and desktop dispatch guards."""
+    def __init__(self, manager):
+        super().__init__()
+        self.manager=manager
+        self.mode_epoch=manager.control()['mode_epoch']
+
+    def is_set(self):
+        if super().is_set():
+            return True
+        try:
+            control=self.manager.control()
+            cancelled=control['stopped'] or control['emergency'] or control['mode_epoch']!=self.mode_epoch
+        except (OSError,ValueError,RuntimeError):
+            cancelled=True
+        if cancelled:
+            self.set()
+        return cancelled
+
+
 class Runtime:
-    def __init__(self,directory,emit):
+    def __init__(self,directory,emit,manager=None):
         self.emit=emit;self.closed=threading.Event();self.lock=threading.RLock();self.clients={};self.inflight={};self.requests=[];self.fixtures=[];self.latest='Ready';self.active=None;self.listener=None
+        self.manager=manager
         self.store=Store(directory);self.attachments=Attachments(directory);self.permissions=Permissions()
         self.permissions.file_policy=FilePolicy(self.store.settings().get('file_rules',[]))
         self.owner=self.store.settings().get('computer_bridge_owner')
@@ -52,7 +73,7 @@ class Runtime:
                 except (OSError,ValueError,KeyError):continue
         self.broker.chrome.mode=True;self.permissions.chrome_mode=True
         self.broker.chrome.reference_authorizer=self.authorize_reference;self.reference_queries=set()
-        self.hotkey=EmergencyStop(self.stop);self.session_guard=SessionGuard(lambda:self.stop('Windows locked or resumed; review before resuming'))
+        self.hotkey=EmergencyStop(self.stop);self.session_guard=SessionGuard(lambda:self.stop('Windows locked or resumed; review before resuming',notify_manager=False))
         self.permissions.safety_check=self.session_guard.check
         from assistant.attention import InputGuard
         self.input_guard=InputGuard(self.permissions);self.permissions.input_check=self.input_guard.check;self.permissions.input_coordinator=self.input_guard;self.broker.input_guard=self.input_guard
@@ -60,6 +81,7 @@ class Runtime:
         from .migration import migrate_projects
         migrate_projects(queue,self.owner)
         self.restore_local_stores()
+        if manager and manager.control()['stopped']:self.broker.projects.stop()
         queue.start()  # deterministic jobs only; dispatch remains None
         self.broker.chrome.bridge.start()
 
@@ -85,12 +107,20 @@ class Runtime:
         return accepted
 
     def approve(self,conversation,label,args):
+        manager=getattr(self,'manager',None)
+        control=manager.control() if manager else None
+        if control and (control['mode']=='afk' or control['stopped'] or control['emergency']):
+            self.park_approval(conversation,label,args)
+            return False
         if self.permissions.halted.is_set() or self.permissions.cancelled() or conversation!=self.permissions.owner:return False
         if self.store.settings().get('routine_approvals') is True:
             from .routine_policy import routine_reason,PROJECT_ROOT
             sites={row['origin'] for row in self.broker.chrome.status().get('attached',[]) if row['conversation']==conversation}
             reason=routine_reason(args,file_policy=self.permissions.file_policy,roots=[PROJECT_ROOT],authorized_origins=sites)
             if reason:
+                if not self.approval_mode_matches(control):
+                    self.park_approval(conversation,label,args)
+                    return False
                 self.latest='Automatically allowed routine work: '+label
                 self.store.action(conversation,'routine approval: '+label,'allowed — '+reason)
                 self.emit('auto_approved',conversation,{'action':label,'reason':reason})
@@ -101,9 +131,36 @@ class Runtime:
         request={'id':uuid.uuid4().hex,'conversation':conversation,'label':label,'args':args,'event':threading.Event(),'allowed':False,'generation':generation,'deadline':time.monotonic()+300}
         self.requests.append(request);self.emit('request',conversation,request)
         while not request['event'].wait(.1):
+            if not self.approval_mode_matches(control):
+                request['event'].set()
+                self.park_approval(conversation,label,args)
+                return False
             if self.closed.is_set() or self.permissions.halted.is_set() or self.permissions.cancelled() or self.permissions.generation!=generation or time.monotonic()>request['deadline']:
                 request['event'].set();return False
+        if not self.approval_mode_matches(control):
+            self.park_approval(conversation,label,args)
+            return False
         return request['allowed'] and generation==self.permissions.generation and not self.permissions.halted.is_set() and time.monotonic()<request['deadline']
+
+    def approval_mode_matches(self,original):
+        if original is None:
+            return True
+        current=self.manager.control()
+        return (current['mode']=='human' and not current['stopped'] and not current['emergency']
+                and current.get('mode_epoch')==original.get('mode_epoch'))
+
+    def park_approval(self,conversation,label,args):
+        import hashlib
+        from portfolio_autopilot.codex_relay.diagnostics import sanitize
+        # Keep identifiers and a digest, never passwords, form input or raw scope.
+        digest=hashlib.sha256(json.dumps([label,args],sort_keys=True,default=str).encode()).hexdigest()
+        with self.store.lock:
+            parked=self.store.settings().get('portfolio_parked_bridge_requests',[])
+            if not any(row['scope_digest']==digest for row in parked):
+                parked.append({'id':uuid.uuid4().hex,'scope_digest':digest,
+                               'action':sanitize(label)[:160],'at':time.time()})
+                self.store.setting('portfolio_parked_bridge_requests',parked[-30:])
+        self.latest='An action needs human review. Recheck the current state before requesting it again.'
 
     def pending(self):
         return [{'id':r['id'],'action':r['label'],'reason':r['args'].get('approval_reason') or r['args'].get('reason') or r['args'].get('question','Owner decision required'),'details':r['args']} for r in self.requests if not r['event'].is_set() and r['deadline']>time.monotonic() and r['generation']==self.permissions.generation]
@@ -116,13 +173,21 @@ class Runtime:
         waiting=queue.rows("SELECT j.id,j.project,j.key,j.payload FROM jobs j JOIN projects p ON p.id=j.project WHERE j.kind='reason' AND j.state='pending' AND p.state='running' AND p.conversation=? AND j.version=p.version AND NOT EXISTS(SELECT 1 FROM dependencies d JOIN jobs n ON n.id=d.needs WHERE d.job=j.id AND n.state!='completed') LIMIT 50",(self.owner,))
         return {'name':'Codex Computer Bridge','pid':os.getpid(),'controller_ready':not self.closed.is_set(),'mcp_clients_connected':clients,'chrome_connected':chrome['connected'],'full_browser_access':chrome.get('full_browser',False),'trusted_input':chrome.get('trusted_input',False),'desktop_authorized':self.permissions.desktop,'routine_approvals':self.store.settings().get('routine_approvals') is True,'stopped':self.permissions.halted.is_set(),'active_tool':self.active,'latest_action':self.latest,'current_website':self.broker.chrome.grants.get(self.broker.chrome.selected,{}).get('origin'),'pending_requests':len(self.pending()),'projects':work,'reasoning_state':'Waiting for Codex' if waiting else 'No reasoning jobs waiting','waiting_for_codex':waiting,'independent_ai_engine':False}
 
-    def stop(self,reason='Stopped by owner'):
+    def stop(self,reason='Stopped by owner',*,notify_manager=True):
+        self.permissions.revoke()
+        for event in list(self.inflight.values()):event.set()
+        for request in self.requests:request['event'].set()
         self.reference_queries.clear()
-        self.store.setting('bridge_stopped',True)
-        self.permissions.revoke();self.broker.chrome.stop();self.broker.projects.stop();self.latest=reason
-        for r in self.requests:r['event'].set()
-        self.emit('stopped',None,reason)
-        return {'stopped':True,'reason':reason}
+        steps=[('Chrome',self.broker.chrome.stop),('Bridge jobs',self.broker.projects.stop),
+               ('Bridge settings',lambda:self.store.setting('bridge_stopped',True))]
+        if notify_manager and getattr(self,'manager',None):steps.insert(0,('Portfolio workers',self.manager.emergency_stop))
+        failures=[]
+        for name,step in steps:
+            try:step()
+            except Exception:failures.append(name)
+        self.latest=reason+(' Stop needs review for '+', '.join(failures)+'.' if failures else '')
+        self.emit('stopped',None,self.latest)
+        return {'stopped':True,'reason':self.latest,'needs_review':failures}
 
     def call(self,client,operation,arguments,request_id=None):
         if not isinstance(client,str) or len(client)!=32 or not isinstance(arguments,dict):raise Denied('Invalid client request')
@@ -133,7 +198,16 @@ class Runtime:
         if operation=='bridge_mcp_heartbeat':
             if client in self.clients:self.clients[client]=now
             return {'connected':client in self.clients}
-        if operation in ('bridge_status','bridge_health','bridge_start_services','bridge_get_active_work'):return self.status()
+        manager=getattr(self,'manager',None)
+        if operation=='portfolio_open':
+            if not manager:raise Denied('Open Portfolio Manager to use the portfolio dashboard')
+            self.emit('show_portfolio',None,None);return {'requested':True}
+        if operation.startswith('portfolio_'):
+            from portfolio_manager.integration import OPERATIONS
+            if not manager or operation not in OPERATIONS:raise Denied('Open Portfolio Manager before requesting portfolio work')
+            return manager.call(operation,arguments)
+        if operation in ('bridge_status','bridge_health','bridge_start_services','bridge_get_active_work'):
+            return {**self.status(),'portfolio_manager':bool(manager)}
         if operation=='bridge_wait_ready':
             deadline=time.monotonic()+max(0,min(25,float(arguments.get('seconds',20))))
             while time.monotonic()<deadline and not self.closed.is_set():
@@ -157,6 +231,9 @@ class Runtime:
             # Historical messages are not deleted; no inference/old thread is resumed.
             return {'conversations':self.store.conversations()[:100],'projects':self.broker.projects.queue.rows('SELECT id,objective,state,conversation FROM projects ORDER BY updated DESC LIMIT 100')}
         if operation=='bridge_reason_tasks':return {'tasks':self.status()['waiting_for_codex']}
+        if manager:
+            control=manager.control()
+            if control['stopped'] or control['emergency']:raise Denied('Portfolio Manager is stopped. Resume locally first.')
         if operation=='bridge_verify_saved_payhip':
             from .payhip_verification import verify_saved
             return verify_saved(self)
@@ -195,9 +272,12 @@ class Runtime:
                 queue.db.execute('UPDATE jobs SET state=?,result=?,error=? WHERE id=?',(state,json.dumps({'reported':True,'result':result}),'Official Codex reported a reasoning blocker' if state=='blocked' else '',rows[0]['id']));queue.event(rows[0]['project'],rows[0]['id'],'official_codex_result',{'state':state});queue.db.commit()
             queue.wake.set();return {'state':state,'reasoning_only':True}
         if operation not in CAPABILITIES:raise Denied('Unknown bridge capability')
-        event=threading.Event();key=(client,request_id or uuid.uuid4().hex);self.inflight[key]=event
+        event=OperationCancellation(manager) if manager else threading.Event();key=(client,request_id or uuid.uuid4().hex);self.inflight[key]=event
         try:
             with self.lock:
+                if manager:
+                    control=manager.control()
+                    if control['stopped'] or control['emergency']:raise Denied('Portfolio Manager is stopped. Resume locally first.')
                 if event.is_set() or self.permissions.halted.is_set():raise Denied('Stopped. Resume locally in the dashboard; MCP cannot grant itself permission')
                 self.active=operation
                 try:
@@ -238,7 +318,7 @@ class Runtime:
         finally:connection.close()
 
     def close(self):
-        self.stop('Bridge shut down');self.closed.set()
+        self.stop('Bridge shut down',notify_manager=False);self.closed.set()
         for fixture in self.fixtures:fixture.close()
         if self.listener:self.listener.close()
         self.hotkey.close();self.session_guard.close();self.input_guard.close();self.broker.chrome.bridge.close();self.browser.close();self.broker.projects.close();self.store.close()

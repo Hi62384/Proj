@@ -11,6 +11,7 @@ from mcp.server.stdio import stdio_server
 from mcp.types import Tool,TextContent,ImageContent,ToolAnnotations
 from assistant.tools import CAPABILITIES,TOOL
 from bridge.client import ControllerClient
+from portfolio_manager.integration import OPERATIONS as PORTFOLIO_OPERATIONS
 
 server=Server('codex-computer-bridge');client=ControllerClient()
 BRIDGE={name:'bridge_'+name for name in ('status','health','capabilities','start_services','open_dashboard','get_active_work','get_pending_requests','stop','history','reason_tasks','reason_result','get_artifact')}
@@ -19,9 +20,11 @@ BRIDGE['wait_ready']='bridge_wait_ready'
 BRIDGE['verify_saved_payhip']='bridge_verify_saved_payhip'
 OPERATIONS={cap.replace('.','_'):cap for cap in CAPABILITIES}
 OPERATIONS.update({value:value for value in BRIDGE.values()})
+OPERATIONS.update({name:name for name in PORTFOLIO_OPERATIONS})
 
 
 def description(name,operation):
+    if operation in PORTFOLIO_OPERATIONS:return PORTFOLIO_OPERATIONS[operation]
     if operation=='chrome.open_tab':return 'Open an HTTP(S) URL in the authorized Chrome scope. Reuses an existing EXACT-URL tab without reloading it or moving focus; creates a background tab only when absent. Returns tab, reused, created, authorized. Do not close reused tabs as temporary cleanup: they may contain human work. An existing tab in manual control stays protected. Restricted sites still require their original Chrome permission. Inspect before acting; local consequential-action approvals remain enforced.'
     if operation.startswith('bridge_'):
         if operation=='bridge_start_local_business_test':return 'Create a disposable LOCAL storefront and host-bound zero-spending five-product test scope. Returns store ID, five exact recipe specifications and prices. Use projects_create, projects_products with that store and those products, projects_start, projects_wait, result and deliver to finish actual generation/native QA/package/local publication/verification. This cannot authorize any real website.'
@@ -49,7 +52,7 @@ async def list_tools():
         server.request_context  # real initialized MCP request, not a metadata unit test
         await asyncio.to_thread(client.request,'bridge_mcp_connected')
     except LookupError:pass
-    readonly={'bridge_status','bridge_health','bridge_capabilities','bridge_get_active_work','bridge_get_pending_requests','bridge_history','bridge_reason_tasks','chrome.list_tabs','chrome.list_windows','chrome.inspect','chrome.frames','files.read','files.list','projects.list','projects.status','projects.result'}
+    readonly={'portfolio_status','bridge_status','bridge_health','bridge_capabilities','bridge_get_active_work','bridge_get_pending_requests','bridge_history','bridge_reason_tasks','chrome.list_tabs','chrome.list_windows','chrome.inspect','chrome.frames','files.read','files.list','projects.list','projects.status','projects.result'}
     return [Tool(name=name,description=description(name,operation),inputSchema=schema(operation),annotations=ToolAnnotations(readOnlyHint=operation in readonly,destructiveHint=operation not in readonly,openWorldHint=operation.startswith(('chrome.','browser.','desktop.')))) for name,operation in OPERATIONS.items()]
 
 

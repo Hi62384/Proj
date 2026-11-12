@@ -179,6 +179,7 @@ class ChromeBridge:
             session=self.session;self.pending[ident]=pending
         try:
             if guard:guard()
+            if cancel and cancel():raise Denied('Chrome action cancelled before dispatch')
             self.send({'type':'request','version':VERSION,'session':session,'id':ident,'operation':operation,'arguments':args or {},'deadline':time.time()+timeout})
             deadline=time.monotonic()+timeout
             while time.monotonic()<deadline:

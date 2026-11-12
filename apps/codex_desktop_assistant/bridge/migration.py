@@ -5,8 +5,8 @@ from contextlib import closing
 from pathlib import Path
 
 
-def backup_state(directory):
-    directory=Path(directory);backup=directory/'state-backups'/'before-computer-bridge'
+def backup_state(directory, *, milestone='before-computer-bridge'):
+    directory=Path(directory);backup=directory/'state-backups'/milestone
     if (backup/'complete').exists():return backup
     backup.mkdir(parents=True,exist_ok=True)
     for relative in ('assistant.sqlite3','projects/queue.sqlite3'):

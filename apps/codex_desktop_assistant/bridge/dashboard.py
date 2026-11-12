@@ -18,6 +18,7 @@ class Dashboard(QMainWindow):
     def __init__(self,directory,manager=None,*,restore_saved=True):
         super().__init__();self.setWindowTitle('Codex Computer Bridge');self.resize(860,650);self.explicit_quit=False;self.cards={}
         self.manager=manager;self.manager_panel=None;self.saved_workers_checked=False
+        self.workspace_windows={}
         self.events=Events();self.events.event.connect(self.on_event);self.browser_message='';self.browser_showing=False
         self.runtime=Runtime(directory,self.events.event.emit,manager);self.store=self.runtime.store;self.permissions=self.runtime.permissions;self.desktop=self.runtime.desktop;self.broker=self.runtime.broker;self.attachments=self.runtime.attachments
         root=QWidget();self.setCentralWidget(root);layout=QVBoxLayout(root);layout.setContentsMargins(28,24,28,24);layout.setSpacing(16)
@@ -65,10 +66,38 @@ class Dashboard(QMainWindow):
         self.broker.projects.stop()
         self.refresh()
 
+    def show_computer_access(self):
+        self.tabs.setCurrentIndex(1)
+        self.show_dashboard()
+
+    def show_workspace(self, workspace):
+        from portfolio_manager.workspace_window import WorkspaceWindow
+
+        window = self.workspace_windows.get(workspace['id'])
+        if window is None:
+            window = WorkspaceWindow(self.manager, workspace, on_emergency=self.runtime.stop,
+                                     on_stop_all=self.cancel_bridge_work,
+                                     on_access=self.show_computer_access,
+                                     on_close=self.workspace_windows.pop)
+            window.setStyleSheet(self.styleSheet())
+            self.workspace_windows[workspace['id']] = window
+        else:
+            window.apply_workspace(workspace)
+        if window.isMinimized():
+            window.showNormal()
+        else:
+            window.show()
+        window.raise_()
+        window.activateWindow()
+
     def on_event(self,kind,conversation,data):
         if kind=='show_dashboard':self.show_dashboard()
         if kind=='show_portfolio' and self.manager:
-            self.tabs.setCurrentWidget(self.manager_panel);self.show_dashboard();self.restore_workers()
+            self.restore_workers()
+            if isinstance(data, dict) and 'id' in data:
+                self.show_workspace(data)
+            else:
+                self.tabs.setCurrentWidget(self.manager_panel);self.show_dashboard()
         if kind=='browser_show_result':
             self.browser_showing=False;self.browser_message=str(data)
         if kind=='request':
@@ -203,6 +232,8 @@ class Dashboard(QMainWindow):
 
     def closeEvent(self,event):
         if not self.explicit_quit and QSystemTrayIcon.isSystemTrayAvailable():self.hide();event.ignore();return
+        for window in list(self.workspace_windows.values()):
+            window.close()
         self.timer.stop();self.runtime.close()
         if self.manager_panel:self.manager_panel.shutdown()
         if self.manager:self.manager.close()

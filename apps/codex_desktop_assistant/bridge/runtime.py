@@ -199,9 +199,16 @@ class Runtime:
             if client in self.clients:self.clients[client]=now
             return {'connected':client in self.clients}
         manager=getattr(self,'manager',None)
-        if operation=='portfolio_open':
+        if operation in {'portfolio_open','portfolio_context','portfolio_select','portfolio_start_selected','portfolio_stop_selected'}:
             if not manager:raise Denied('Open Portfolio Manager to use the portfolio dashboard')
-            self.emit('show_portfolio',None,None);return {'requested':True}
+            workspace=manager.workspace(client,arguments if operation in {'portfolio_open','portfolio_select'} else
+                                        {key:arguments[key] for key in ('reconnect_key',) if key in arguments})
+            if operation=='portfolio_open':
+                self.emit('show_portfolio',None,{k:v for k,v in workspace.items() if k!='reconnect_key'})
+            if operation=='portfolio_start_selected':return {**workspace,'worker':manager.start_workspace_worker(workspace['id'])}
+            if operation=='portfolio_stop_selected':return {**workspace,**manager.stop_workspace_worker(workspace['id'])}
+            if operation=='portfolio_context':return {**workspace,**manager.control(),**manager.context_info(workspace)}
+            return {**workspace,**manager.control()}
         if operation.startswith('portfolio_'):
             from portfolio_manager.integration import OPERATIONS
             if not manager or operation not in OPERATIONS:raise Denied('Open Portfolio Manager before requesting portfolio work')

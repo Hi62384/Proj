@@ -18,6 +18,7 @@ from portfolio_autopilot.codex_relay.config import Config, safe_path
 from portfolio_autopilot.codex_relay.diagnostics import RelayError, record, sanitize
 from portfolio_autopilot.codex_relay.permissions import selected_mode
 from portfolio_autopilot.codex_relay.workspace import Workspace
+from .development import BubblewrapVerifier, DevelopmentWorkspace
 
 
 DRAFTS = frozenset({'result.md', 'draft.py', 'draft.json', 'draft.txt', 'draft.csv'})
@@ -204,7 +205,7 @@ class OfficialExecutor:
         self._runtime_base = runtime_base
         self._prefer_wsl = prefer_wsl
 
-    def _config(self, workspace: IsolatedWorkspace) -> Config:
+    def _config(self, workspace: IsolatedWorkspace | DevelopmentWorkspace) -> Config:
         # The existing Relay's choice of Windows sandbox is read, never rewritten.
         # Separate, per-run homes prevent concurrent permission configuration races.
         mode = selected_mode(Config())
@@ -221,7 +222,7 @@ class OfficialExecutor:
         return Config(workspace=workspace.root, data_dir=runtime, windows_sandbox=mode)
 
     @contextmanager
-    def session(self, workspace: IsolatedWorkspace):
+    def session(self, workspace: IsolatedWorkspace | DevelopmentWorkspace):
         from . import runner_wsl
 
         config = self._config(workspace)
@@ -254,15 +255,6 @@ class OfficialExecutor:
             return self._run(config, claim, workspace, cancelled, emit, save_session)
 
     def _run(self, config, claim, workspace, cancelled, emit, save_session):
-        codex = self._codex_factory(config)
-        done = threading.Event()
-
-        def interrupt_on_stop():
-            while not done.wait(.1):
-                if cancelled.is_set():
-                    codex.cancel()
-                    return
-
         task = claim['task']
         responses = [
             {key: sanitize(response.get(key, ''))[:600]
@@ -278,14 +270,48 @@ class OfficialExecutor:
                      'Save result.md and any permitted draft. Independently check the result of a reported manual step using '
                      'the evidence available in this workspace. Report an unmet criterion or owner dependency truthfully.',
         }, ensure_ascii=False)
+        # Candidate paths do not need filesystem grants or model-visible command access.
+        restricted = SimpleNamespace(paths=tuple(sorted(workspace.paths - DRAFTS)), call=workspace.call)
+        return self._turn(config, prompt, restricted, cancelled, emit, save_session)
+
+    def run_development(self, claim, workspace, verifier, cancelled, emit, save_session):
+        """Run an explicitly host-scoped task and return private verification evidence."""
+        if not isinstance(workspace, DevelopmentWorkspace) or workspace.cancelled is not cancelled:
+            raise ValueError('Development requires an explicit host-scoped workspace.')
+        if cancelled.is_set():
+            raise InterruptedError('Stopped before starting development.')
+        prompt = json.dumps({
+            'project_id': claim['project_id'], 'title': sanitize(claim['task']['title'])[:500],
+            'criteria': sanitize(claim['task']['criteria'])[:4_000],
+            'editable_paths': sorted(workspace.scope.edit_paths),
+            'scope': 'Read AGENTS.md and implement the requested changes using only relay_workspace. '
+                     'Keep the trusted tests and other input files read-only. The host will run the trusted tests.',
+        }, ensure_ascii=False)
+        existing = {name for name, digest in workspace.original.items() if digest != 'new'}
+        restricted = SimpleNamespace(paths=tuple(sorted(existing)), call=workspace.call)
+        with self.session(workspace) as config:
+            if verifier is None:
+                verifier = BubblewrapVerifier(config.wsl_distribution if config.execution_backend == 'wsl' else None)
+            response = self._turn(config, prompt, restricted, cancelled, emit, save_session)
+        if cancelled.is_set():
+            raise InterruptedError('Stopped before verifying development.')
+        return response, workspace.verify(verifier) if response['kind'] == 'result' else None
+
+    def _turn(self, config, prompt, restricted, cancelled, emit, save_session):
+        codex = self._codex_factory(config)
+        done = threading.Event()
+
+        def interrupt_on_stop():
+            while not done.wait(.1):
+                if cancelled.is_set():
+                    codex.cancel()
+                    return
+
         interrupter = threading.Thread(target=interrupt_on_stop, daemon=True)
         interrupter.start()
         try:
             if cancelled.is_set():
                 raise InterruptedError('Stopped before starting Codex.')
-            # A candidate can only be written by the exact host capability. Draft
-            # paths do not need filesystem grants or model-visible command access.
-            restricted = SimpleNamespace(paths=tuple(sorted(workspace.paths - DRAFTS)), call=workspace.call)
             return codex.run({}, prompt, restricted, cancelled, emit, save_session)
         finally:
             done.set()

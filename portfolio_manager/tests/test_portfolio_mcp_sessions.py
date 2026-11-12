@@ -1,0 +1,114 @@
+"""Exercise separate MCP chats against one real Windows controller."""
+import asyncio
+from contextlib import asynccontextmanager
+from datetime import timedelta
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+import time
+import unittest
+
+
+ROOT = Path(__file__).resolve().parents[2]
+APP = ROOT / 'apps' / 'codex_desktop_assistant'
+
+
+@unittest.skipUnless(os.name == 'nt', 'Windows controller required')
+class PortfolioMCPSessionTests(unittest.TestCase):
+    def test_two_stdio_clients_share_controller_and_keep_selections(self):
+        sys.path.insert(0, str(APP))
+        self.addCleanup(sys.path.remove, str(APP))
+        from bridge.client import ControllerClient
+
+        with tempfile.TemporaryDirectory(prefix='portfolio-mcp-') as temporary:
+            local = Path(temporary)
+            state = local / 'CodexDesktopAssistant'
+            environment = {**os.environ, 'LOCALAPPDATA': str(local), 'QT_QPA_PLATFORM': 'offscreen'}
+            packages = str(Path(sys.prefix) / 'Lib' / 'site-packages')
+            # Use the venv's dependencies without the extra Windows launcher process.
+            invoke = ('import runpy,site,sys; site.addsitedir(sys.argv.pop(1)); '
+                      'sys.exit(runpy.run_path(sys.argv.pop(1))["main"]())')
+            command = [sys._base_executable, '-c', invoke, packages, str(APP / 'run.py'), '--background']
+            with subprocess.Popen(command, cwd=APP, env=environment, creationflags=subprocess.CREATE_NO_WINDOW,
+                                  stdout=subprocess.DEVNULL, stderr=subprocess.PIPE) as controller:
+                try:
+                    client = ControllerClient(state)
+                    deadline = time.monotonic() + 20
+                    while True:
+                        if controller.poll() is not None:
+                            self.fail(controller.stderr.read().decode(errors='replace')[-2000:])
+                        try:
+                            health = client.request('bridge_health')
+                            break
+                        except (OSError, ValueError, RuntimeError):
+                            if time.monotonic() >= deadline:
+                                raise
+                            time.sleep(.1)
+                    self.assertTrue(health['portfolio_manager'])
+                    self.assertEqual(health['pid'], controller.pid)
+                    asyncio.run(self.exercise_sessions(environment, packages, state, controller.pid))
+                    self.assertEqual(client.request('bridge_health')['pid'], controller.pid)
+                    self.assertEqual(client.request('portfolio_status')['workers'], [])
+                finally:
+                    controller.terminate()
+                    controller.wait(timeout=10)
+
+    async def exercise_sessions(self, environment, packages, state, controller_pid):
+        from mcp import ClientSession, StdioServerParameters
+        from mcp.client.stdio import stdio_client
+        from portfolio_manager.coordinator import Coordinator
+
+        bootstrap = ('import runpy,site,sys; site.addsitedir(sys.argv.pop(1)); '
+                     'runpy.run_path(sys.argv.pop(1), run_name="__main__")')
+        parameters = StdioServerParameters(command=sys._base_executable,
+                                          args=['-c', bootstrap, packages, str(APP / 'bridge' / 'server.py')],
+                                          cwd=APP, env=environment)
+
+        @asynccontextmanager
+        async def connect():
+            async with stdio_client(parameters) as (read, write):
+                async with ClientSession(read, write, read_timeout_seconds=timedelta(seconds=15)) as session:
+                    await session.initialize()
+                    yield session
+
+        async def call(session, name, **arguments):
+            payload = {'arguments': arguments} if name.startswith('portfolio_') else {}
+            result = await session.call_tool(name, payload)
+            self.assertFalse(result.isError, f'{name} failed')
+            return json.loads(result.content[0].text)
+
+        # No external account, browser action, inference or worker is needed.
+        first_path = 'docs/PORTFOLIO_MANAGER_WORKFLOW.md'
+        second_path = 'business_portfolio/niches/ai-workflow-automation/agency'
+        async with connect() as first:
+            tools = await first.list_tools()
+            self.assertTrue({'portfolio_open', 'portfolio_select', 'portfolio_context'} <=
+                            {tool.name for tool in tools.tools})
+            workspace = await call(first, 'portfolio_open')
+            self.assertEqual((await call(first, 'portfolio_open'))['id'], workspace['id'])
+            async with connect() as second:
+                other = await call(second, 'portfolio_open', path=second_path)
+                self.assertNotEqual(workspace['id'], other['id'])
+                for session in (first, second):
+                    self.assertEqual((await call(session, 'bridge_health'))['pid'], controller_pid)
+                await call(first, 'portfolio_select', path=first_path, revision=workspace['revision'])
+                first_context = await call(first, 'portfolio_context')
+                second_context = await call(second, 'portfolio_context')
+                self.assertEqual((first_context['selection'], first_context['kind']), (first_path, 'file'))
+                self.assertEqual((second_context['selection'], second_context['kind']), (second_path, 'folder'))
+
+                # Update the shared setting through the same owner-side method as the UI.
+                coordinator = Coordinator(ROOT, state / 'portfolio-manager' / 'coordinator.sqlite3')
+                mode = 'human' if first_context['mode'] == 'afk' else 'afk'
+                coordinator.set_mode(mode)
+                for session in (first, second):
+                    self.assertEqual((await call(session, 'portfolio_context'))['mode'], mode)
+
+        async with connect() as resumed:
+            restored = await call(resumed, 'portfolio_open', reconnect_key=workspace['reconnect_key'])
+            self.assertEqual(restored['id'], workspace['id'])
+            self.assertEqual(restored['selection'], first_path)
+            self.assertEqual(restored['mode'], mode)

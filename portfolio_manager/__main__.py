@@ -11,6 +11,7 @@ def main():
     parser = argparse.ArgumentParser(description='Connect to Portfolio Manager')
     parser.add_argument('action', choices=[name.removeprefix('portfolio_') for name in OPERATIONS])
     parser.add_argument('--folder', help='Folder under business_portfolio/niches, or its full path')
+    parser.add_argument('--path', help='Repository file or folder to show in the workspace')
     parser.add_argument('--arguments', help='JSON arguments for worker lease operations')
     args = parser.parse_args()
     app = Path(__file__).resolve().parents[1] / 'apps' / 'codex_desktop_assistant'
@@ -22,6 +23,8 @@ def main():
         parser.error('--arguments must be a JSON object')
     if args.folder is not None:
         data['folder'] = args.folder
+    if args.path is not None:
+        data['path'] = args.path
     client = ControllerClient()
     try:
         health = client.ensure()

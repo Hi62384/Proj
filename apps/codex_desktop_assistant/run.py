@@ -34,7 +34,7 @@ def main():
         try:
             client=ControllerClient(state)
             health=client.request('bridge_health')
-            client.request('portfolio_open' if health.get('portfolio_manager') and not args.bridge_only else 'bridge_open_dashboard')
+            client.request('bridge_open_dashboard')
             if not args.bridge_only and not health.get('portfolio_manager'):
                 QMessageBox.information(None,'Portfolio Manager','The older Computer Bridge is running. Quit it from its tray menu, then open Portfolio Manager again.')
             return 0

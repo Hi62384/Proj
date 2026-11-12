@@ -1,3 +1,2 @@
 @echo off
-cd /d "%~dp0"
-start "" /b ".venv\Scripts\pythonw.exe" "run.py" --bridge
+call "%~dp0..\..\Start_Portfolio_Manager.cmd" %*

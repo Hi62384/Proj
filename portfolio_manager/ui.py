@@ -252,12 +252,20 @@ def _project_body(project, workers):
 class ManagerPanel(QWidget):
     """One owner-facing surface for the coordinator, with an embedded bridge sibling tab."""
 
-    def __init__(self, coordinator, supervisor, on_emergency, parent=None, *, on_stop_all=None):
+    def __init__(self, coordinator, supervisor, on_emergency, parent=None, *, on_stop_all=None,
+                 on_context=None, start_context_worker=None, can_start_context=None, context_worker=None,
+                 header_layout=None):
         super().__init__(parent)
         self.coordinator = coordinator
         self.supervisor = supervisor
         self.on_emergency = on_emergency
         self.on_stop_all = on_stop_all
+        self.on_context = on_context
+        self.start_context_worker = start_context_worker
+        self.can_start_context = can_start_context
+        self.context_worker = context_worker
+        self.header_layout = header_layout
+        self.context_record = None
         self.repo = Path(coordinator.repo).resolve(strict=True)
         self.folder = NICHE_ROOT.as_posix()
         self._state = {}
@@ -309,7 +317,7 @@ class ManagerPanel(QWidget):
         self.resume.hide()
         row.addWidget(self.resume)
         row.addWidget(_button("Emergency Stop", self._emergency, "emergencyButton"))
-        layout.addWidget(header)
+        (self.header_layout if self.header_layout is not None else layout).addWidget(header)
 
         scope = QHBoxLayout()
         self.scope_label = _label("Worker folder · All projects", wrap=True)
@@ -481,6 +489,9 @@ class ManagerPanel(QWidget):
     def _apply_state(self, state, counts):
         self._state = state
         self._projects = {_project_id(row): row for row in state.get("projects", []) if _project_id(row)}
+        if self.on_context:
+            self._selected_project = next((key for key, row in self._projects.items()
+                                           if row["record_path"] == self.context_record), None)
         self._workers = {row["id"]: row for row in state.get("workers", [])}
         self._requests = {row["id"]: row for row in state.get("requests", [])}
         mode = self.mode.findData(state.get("mode"))
@@ -490,7 +501,8 @@ class ManagerPanel(QWidget):
         stopped = state.get("stopped") or state.get("emergency")
         self.stop_all.setEnabled(not stopped)
         self.resume.setVisible(bool(stopped))
-        self.start.setEnabled(not stopped and counts.get("eligible", 0) > 0)
+        scope_available = self.can_start_context is None or self.can_start_context()
+        self.start.setEnabled(not stopped and scope_available and counts.get("eligible", 0) > 0)
         pieces = [f"{counts.get(key, 0)} {title}" for key, title in (
             ("eligible", "eligible"), ("active", "active"), ("completed", "completed"),
             ("blocked", "blocked"), ("remaining", "remaining"),
@@ -542,6 +554,8 @@ class ManagerPanel(QWidget):
         self.start.setEnabled(False)
 
         def start():
+            if self.start_context_worker:
+                return self.start_context_worker()
             worker = self.coordinator.register(self.folder, kind="background")
             try:
                 self.supervisor.start(worker["id"])
@@ -561,7 +575,9 @@ class ManagerPanel(QWidget):
                 return
             self._set_folder(folder)
 
-    def _set_folder(self, folder):
+    def _set_folder(self, folder, *, notify=True):
+        if notify and self.on_context and not self.on_context(folder):
+            return
         if folder == self.folder:
             return
         self.folder = folder
@@ -589,6 +605,7 @@ class ManagerPanel(QWidget):
             query, tuple(niches.items()),
             tuple((_project_id(p), p.get("title"), p.get("niche_path"),
                    p.get("status") or p.get("work_state")) for p in projects),
+            (self.folder, self.context_record) if self.on_context else None,
         )
         if signature == self._tree_signature:
             return
@@ -638,10 +655,18 @@ class ManagerPanel(QWidget):
                 key = ("project", identifier)
                 item.setData(0, ITEM_DATA, key)
                 keys[key] = item
-            selected = keys.get(old_key) or keys.get(("project", self._selected_project))
+            if self.on_context:
+                context_key = ("project", self._selected_project) if self._selected_project else ("folder", self.folder)
+                selected = keys.get(context_key)
+            else:
+                selected = keys.get(old_key) or keys.get(("project", self._selected_project))
             if selected is not None:
+                ancestor = selected.parent()
+                while ancestor:
+                    ancestor.setExpanded(True)
+                    ancestor = ancestor.parent()
                 self.project_tree.setCurrentItem(selected)
-            elif first and projects:
+            elif not self.on_context and first and projects:
                 identifier = _project_id(projects[0])
                 self._selected_project = identifier
                 selected = keys[("project", identifier)]
@@ -662,6 +687,8 @@ class ManagerPanel(QWidget):
         if kind == "folder":
             self._set_folder(key)
         else:
+            if self.on_context and not self.on_context(self._projects[key]["record_path"]):
+                return
             self._selected_project = key
             self._render_project()
             self._update_results([], {})
@@ -891,6 +918,8 @@ class ManagerPanel(QWidget):
     def _update_worker_table(self):
         rows = []
         for worker in self._workers.values():
+            if self.context_worker and worker["id"] != self.context_worker():
+                continue
             project = self._projects.get(worker.get("project_id"), {})
             task = project.get("current_task") or {}
             folder = _text(worker.get("folder"))

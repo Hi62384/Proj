@@ -4,11 +4,10 @@ from pathlib import Path, PurePosixPath
 
 from PySide6.QtCore import QSignalBlocker, Qt, QTimer
 from PySide6.QtGui import QImageReader, QPixmap
-from PySide6.QtWidgets import (QFileDialog, QHBoxLayout, QLabel, QLineEdit, QMainWindow,
-                               QPlainTextEdit, QPushButton, QScrollArea, QSplitter,
-                               QStackedWidget, QStyle, QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QComboBox, QHBoxLayout, QLabel, QLineEdit, QMainWindow,
+                               QMenu, QPlainTextEdit, QPushButton, QScrollArea, QSplitter,
+                               QStyle, QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget)
 
-from .ui import ManagerPanel, NICHE_ROOT
 from .workspace import context_path
 
 
@@ -70,10 +69,9 @@ class WorkspaceWindow(QMainWindow):
         self._preview_signature = None
         self._preview_readme = None
         self._pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix='workspace-files')
-        label = workspace.get('label') or ('Workspace ' + self.workspace_id[:8])
-        self.setWindowTitle('Portfolio Manager | ' + label)
+        self.setWindowTitle('Portfolio Manager | Chat ' + self.workspace_id[:8])
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
-        self.resize(1120, 760)
+        self.resize(1080, 720)
         self.setMinimumSize(620, 440)
         frame = QWidget(self)
         frame.setObjectName('workspaceFrame')
@@ -87,45 +85,45 @@ class WorkspaceWindow(QMainWindow):
             QTabBar::tab:selected { color: #20594b; font-weight: 600; }
         ''')
         layout = QVBoxLayout(frame)
-        controls = QVBoxLayout()
-        layout.addLayout(controls)
+        layout.setContentsMargins(20, 18, 20, 18)
+        layout.setSpacing(14)
         header = QHBoxLayout()
-        self.selection_label = QLabel()
+        self.selection_label = QLabel('Portfolio Manager')
         self.selection_label.setTextFormat(Qt.TextFormat.PlainText)
-        self.selection_label.setWordWrap(True)
+        self.selection_label.setStyleSheet('font-size: 22px; font-weight: 600; color: #183a32;')
         header.addWidget(self.selection_label, 1)
-        self.stop_worker = QPushButton('Stop worker')
-        self.stop_worker.clicked.connect(self._stop_worker)
-        header.addWidget(self.stop_worker)
-        access = QPushButton('Computer Access')
-        access.clicked.connect(on_access)
-        header.addWidget(access)
-        self.activity_button = QPushButton('Projects and activity')
-        self.activity_button.setCheckable(True)
-        self.activity_button.toggled.connect(self._show_activity)
-        header.addWidget(self.activity_button)
+        header.addWidget(QLabel('Chat ' + self.workspace_id[:8]))
+        self.mode = QComboBox()
+        self.mode.setAccessibleName('Global availability')
+        self.mode.addItem('AI Only (AFK)', 'afk')
+        self.mode.addItem('Human Available', 'human')
+        self.mode.activated.connect(self._set_mode)
+        header.addWidget(self.mode)
+        more = QPushButton('⋯')
+        more.setAccessibleName('More options')
+        menu = QMenu(more)
+        menu.addAction('Computer Access', on_access)
+        menu.addAction('Emergency Stop', on_emergency)
+        more.setMenu(menu)
+        header.addWidget(more)
         layout.addLayout(header)
-        self.panel = ManagerPanel(host.coordinator, host.supervisor, on_emergency,
-                                  on_stop_all=on_stop_all, on_context=self.select,
-                                  start_context_worker=self._start_worker,
-                                  can_start_context=self._is_worker_selection,
-                                  header_layout=controls,
-                                  candidate_host=host,
-                                  prepare_context_development=self._prepare_development,
-                                  context_worker=lambda: (self.workspace_state or {}).get('worker_id'))
+        self.notice = QLabel()
+        self.notice.setWordWrap(True)
+        self.notice.hide()
         layout.addWidget(self._make_explorer(), 1)
-        # Keep notices visible while the file preview is selected as well.
-        layout.addWidget(self.panel.notice)
+        layout.addWidget(self.notice)
         self.setCentralWidget(frame)
         self._sync = QTimer(self)
         self._sync.setInterval(400)
         self._sync.timeout.connect(self.sync)
         self.apply_workspace(workspace)
+        self.sync()
         self._sync.start()
 
     def _make_explorer(self):
         splitter = QSplitter()
         navigator = QWidget()
+        navigator.setMinimumWidth(300)
         layout = QVBoxLayout(navigator)
         self.find = QLineEdit()
         self.find.setAccessibleName('Search repository files')
@@ -151,24 +149,28 @@ class WorkspaceWindow(QMainWindow):
         self.image_scroll.setWidget(self.image)
         detail = QWidget()
         details = QVBoxLayout(detail)
-        self.detail_stack = QStackedWidget()
-        file_details = QWidget()
-        file_layout = QVBoxLayout(file_details)
-        file_layout.setContentsMargins(0, 0, 0, 0)
-        file_layout.addWidget(self.preview)
-        file_layout.addWidget(self.image_scroll)
-        self.detail_stack.addWidget(file_details)
-        self.detail_stack.addWidget(self.panel)
-        details.addWidget(self.detail_stack)
+        self.path_label = QLabel()
+        self.path_label.setWordWrap(True)
+        self.path_label.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
+        details.addWidget(self.path_label)
+        details.addWidget(self.preview)
+        details.addWidget(self.image_scroll)
         self.image_scroll.hide()
         splitter.addWidget(detail)
+        splitter.setChildrenCollapsible(False)
+        splitter.setSizes([320, 760])
         splitter.setStretchFactor(1, 2)
         self._root_node()
         return splitter
 
-    def _show_activity(self, visible):
-        self.detail_stack.setCurrentIndex(1 if visible else 0)
-        self.activity_button.setText('File preview' if visible else 'Projects and activity')
+    def _set_mode(self):
+        try:
+            self.host.coordinator.set_mode(self.mode.currentData())
+            self.notice.hide()
+        except (ValueError, OSError, RuntimeError) as error:
+            self.notice.setText(str(error)[:400])
+            self.notice.show()
+        self.sync()
 
     def _node(self, parent, name, directory, *, full=False):
         label = name if full else PurePosixPath(name).name
@@ -272,68 +274,21 @@ class WorkspaceWindow(QMainWindow):
         try:
             update = self.host.select(self.workspace_id, path, revision=self.workspace_state['revision'])
         except (ValueError, OSError, RuntimeError) as error:
-            self.panel.notice.setText(str(error)[:400])
+            self.notice.setText(str(error)[:400])
+            self.notice.show()
             self.sync()
             return False
         self.apply_workspace(update)
         return True
 
-    def _start_worker(self):
-        result = self.host.start_workspace_worker(self.workspace_id)
-        self.sync()
-        return result
-
-    def _prepare_development(self):
-        selected = dict(self.workspace_state)
-        chosen = QFileDialog.getExistingDirectory(self, 'Choose the project source folder', str(self.repo))
-        if not chosen:
-            return
-        folder = context_path(self.repo, chosen)
-        if not folder.is_dir():
-            raise ValueError('Choose a source folder inside this repository.')
-        result = self.host.prepare_selected_development(
-            self.workspace_id, folder.relative_to(self.repo).as_posix(),
-            expected_selection=selected['selection'], expected_revision=selected['revision'])
-        self.sync()
-        self.panel.notice.setText('Project worker started. Follow its progress in Projects and activity.')
-        return result
-
-    def _is_worker_folder(self):
-        if not self.workspace_state:
-            return False
-        selection = self.workspace_state['selection']
-        try:
-            return PurePosixPath(selection).is_relative_to(NICHE_ROOT) and context_path(self.repo, selection).is_dir()
-        except (ValueError, OSError):
-            return False
-
-    def _is_worker_selection(self):
-        if self._is_worker_folder():
-            return True
-        if not self.workspace_state:
-            return False
-        selection = self.workspace_state['selection']
-        try:
-            path = context_path(self.repo, selection)
-            return (path.is_file() and path.parent.name == 'projects' and
-                    path.suffix.lower() == '.md' and path.is_relative_to(self.host.coordinator.niches))
-        except (ValueError, OSError):
-            return False
-
-    def _stop_worker(self):
-        try:
-            self.host.stop_workspace_worker(self.workspace_id)
-            self.sync()
-        except (ValueError, OSError, RuntimeError) as error:
-            self.panel.notice.setText(str(error)[:400])
-
     def sync(self):
         try:
             self.apply_workspace(self.host.get_workspace(self.workspace_id))
             mode = self.host.control()['mode']
-            index = self.panel.mode.findData(mode)
+            index = self.mode.findData(mode)
             if index >= 0:
-                self.panel.mode.setCurrentIndex(index)
+                with QSignalBlocker(self.mode):
+                    self.mode.setCurrentIndex(index)
             if self._search and self._search.done():
                 future, self._search = self._search, None
                 results = future.result()
@@ -357,19 +312,14 @@ class WorkspaceWindow(QMainWindow):
                     self.search_status.show()
                     self._focus_tree(self.workspace_state['selection'])
         except (ValueError, OSError, RuntimeError) as error:
-            self.panel.notice.setText(str(error)[:400])
+            self.notice.setText(str(error)[:400])
+            self.notice.show()
 
     def apply_workspace(self, workspace):
         previous = self.workspace_state
         if previous and workspace['revision'] < previous['revision']:
             return
         self.workspace_state = workspace
-        worker_id = workspace.get('worker_id')
-        try:
-            worker = self.host.coordinator.worker(worker_id) if worker_id else None
-        except (ValueError, KeyError):
-            worker = None
-        self.stop_worker.setVisible(bool(worker and worker.get('state') in ('running', 'paused')))
         if previous and previous['selection'] == workspace['selection']:
             self._refresh_preview_if_changed(workspace['selection'])
             # Refresh the visible ancestry as other chats create or remove files.
@@ -378,26 +328,9 @@ class WorkspaceWindow(QMainWindow):
             self._focus_tree(workspace['selection'], reveal=False)
             return
         selection = workspace['selection']
-        self.selection_label.setText(f'Workspace {self.workspace_id[:8]} · {selection}')
-        path = PurePosixPath(selection)
-        is_record = path.is_relative_to(NICHE_ROOT) and path.parent.name == 'projects' and path.suffix.lower() == '.md'
-        is_folder = self._is_worker_folder()
-        self.panel.context_record = selection if is_record else None
-        self.panel._epoch += 1
-        # The previous project's actions and results must not remain available
-        # while the asynchronous state refresh resolves the new selection.
-        self.panel._selected_project = None
-        self.panel._render_project()
-        self.panel._update_results([], {})
-        if is_record:
-            self.panel._set_folder(path.parent.parent.as_posix(), notify=False)
-        elif is_folder:
-            self.panel._set_folder(selection, notify=False)
-        self.panel.refresh()
+        self.path_label.setText(str(self.repo / selection))
         self._focus_tree(selection)
         self._preview(selection)
-        self.activity_button.setChecked(is_record)
-        self._show_activity(is_record)
 
     def _refresh_preview_if_changed(self, selection):
         try:
@@ -476,7 +409,6 @@ class WorkspaceWindow(QMainWindow):
 
     def closeEvent(self, event):
         self._sync.stop()
-        self.panel.shutdown()
         self._pool.shutdown(wait=False, cancel_futures=True)
         self.on_close(self.workspace_id)
         event.accept()

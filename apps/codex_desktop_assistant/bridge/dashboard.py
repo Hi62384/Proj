@@ -32,20 +32,13 @@ class Dashboard(QMainWindow):
         scroll=QScrollArea();scroll.setWidgetResizable(True);requests=QWidget();self.request_layout=QVBoxLayout(requests);self.request_layout.addStretch();scroll.setWidget(requests);layout.addWidget(scroll,1)
         footer=QHBoxLayout();footer.addWidget(button('Emergency Stop',lambda:self.runtime.stop()));footer.addStretch();footer.addWidget(button('Quit Portfolio Manager' if manager else 'Quit Bridge',self.quit_bridge));layout.addLayout(footer)
         if manager:
-            from portfolio_manager.ui import ManagerPanel
-            self.setWindowTitle('Portfolio Manager');self.resize(1120,760)
-            self.tabs=QTabWidget();bridge_view=self.takeCentralWidget()
-            self.manager_panel=ManagerPanel(manager.coordinator,manager.supervisor,self.runtime.stop,
-                                            parent=self.tabs,on_stop_all=self.cancel_bridge_work,candidate_host=manager)
-            self.tabs.addTab(self.manager_panel,'Portfolio')
-            self.tabs.addTab(bridge_view,'Computer Access')
-            self.setCentralWidget(self.tabs)
+            self.setWindowTitle('Portfolio Manager · Computer Access')
         self.setStyleSheet('QWidget{background:#f7f8fa;color:#15202b;font-family:"Segoe UI";font-size:14px} QPushButton{background:white;border:1px solid #cbd2da;border-radius:7px;padding:10px 16px} QPushButton:hover{background:#e7eef4} QPlainTextEdit{background:white;border:1px solid #cbd2da} QScrollArea{border:0}')
         self.tray=QSystemTrayIcon(self.style().standardIcon(QStyle.SP_ComputerIcon),self);self.tray.setToolTip('Codex Computer Bridge')
         menu=QMenu();menu.addAction('Open dashboard',self.show_dashboard);menu.addAction('Emergency Stop',self.runtime.stop);menu.addAction('Quit Portfolio Manager' if manager else 'Quit Bridge',self.quit_bridge);self.tray.setContextMenu(menu);self.tray.activated.connect(lambda reason:self.show_dashboard() if reason==QSystemTrayIcon.Trigger else None);self.tray.messageClicked.connect(self.show_dashboard);self.tray.show()
         self.timer=QTimer(self);self.timer.timeout.connect(self.refresh);self.timer.start(1000);self.runtime.start_pipe();self.refresh()
-        if manager and restore_saved:
-            QTimer.singleShot(0,self.restore_workers)
+        # Legacy workers remain available for explicit recovery only. Starting
+        # the context service must never launch another Codex execution path.
 
     def restore_workers(self):
         if self.saved_workers_checked:return
@@ -54,7 +47,7 @@ class Dashboard(QMainWindow):
             self.saved_workers_checked=True
         except (OSError,ValueError,RuntimeError) as error:
             from portfolio_autopilot.codex_relay.diagnostics import sanitize
-            self.manager_panel.notice.setText('Could not restore workers. '+sanitize(error)[:400])
+            self.notice.setText('Could not restore workers. '+sanitize(error)[:400])
 
     def show_dashboard(self):
         if not self.isVisible():self.show()
@@ -67,7 +60,6 @@ class Dashboard(QMainWindow):
         self.refresh()
 
     def show_computer_access(self):
-        self.tabs.setCurrentIndex(1)
         self.show_dashboard()
 
     def show_workspace(self, workspace):
@@ -93,11 +85,10 @@ class Dashboard(QMainWindow):
     def on_event(self,kind,conversation,data):
         if kind=='show_dashboard':self.show_dashboard()
         if kind=='show_portfolio' and self.manager:
-            self.restore_workers()
             if isinstance(data, dict) and 'id' in data:
                 self.show_workspace(data)
             else:
-                self.tabs.setCurrentWidget(self.manager_panel);self.show_dashboard()
+                self.show_dashboard()
         if kind=='browser_show_result':
             self.browser_showing=False;self.browser_message=str(data)
         if kind=='request':

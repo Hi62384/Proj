@@ -185,12 +185,11 @@ class IntegrationTests(unittest.TestCase):
             dashboard = Dashboard(self.runtime.store.directory, manager)
         try:
             application.processEvents()
-            self.assertEqual(dashboard.windowTitle(), 'Portfolio Manager')
-            self.assertEqual([dashboard.tabs.tabText(i) for i in range(dashboard.tabs.count())],
-                             ['Portfolio', 'Computer Access'])
+            self.assertEqual(dashboard.windowTitle(), 'Portfolio Manager · Computer Access')
+            self.assertFalse(hasattr(dashboard, 'tabs'))
             runtime_factory.assert_called_once()
             runtime.start_pipe.assert_called_once()
-            manager.restore.assert_called_once()
+            manager.restore.assert_not_called()
         finally:
             dashboard.explicit_quit = True
             dashboard.close()

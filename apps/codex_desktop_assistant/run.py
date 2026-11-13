@@ -51,7 +51,7 @@ def main():
         from portfolio_manager.integration import ManagerHost
         manager=ManagerHost(ROOT,state)
     window=Dashboard(state,manager,restore_saved=not (args.bridge and args.background))
-    if not args.background:window.show()
+    if not args.background and not manager:window.show()
     result=app.exec();lock.unlock();return result
 
 

@@ -1,5 +1,6 @@
 """Independent views of the shared Portfolio Manager controller."""
 from concurrent.futures import ThreadPoolExecutor
+import os
 from pathlib import Path, PurePosixPath
 
 from PySide6.QtCore import QSignalBlocker, Qt, QTimer
@@ -34,24 +35,32 @@ def children(repo, parent):
 
 
 def search_paths(repo, query):
-    queue = [repo]
-    hits = []
-    remaining = 6000
-    while queue and len(hits) < 100 and remaining > 0:
-        folder = queue.pop()
-        try:
-            entries = children(repo, folder)
-        except OSError:
+    return [(name, directory) for name, directory in project_entries(repo)
+            if query in name.casefold()][:100]
+
+
+def project_entries(repo):
+    """Only canonical project records and the folders leading to them."""
+    niches = repo / 'business_portfolio' / 'niches'
+    visible = set()
+    for folder, dirs, files in os.walk(niches, followlinks=False):
+        dirs[:] = [name for name in dirs if not name.startswith('.') and
+                   not (Path(folder) / name).is_symlink()]
+        if Path(folder).name != 'projects':
             continue
-        remaining -= max(len(entries), 1)
-        for name, directory in entries:
-            if query in name.casefold():
-                hits.append((name, directory))
-                if len(hits) == 100:
-                    break
-            if directory:
-                queue.append(repo / name)
-    return hits
+        for file in files:
+            if not file.lower().endswith('.md'):
+                continue
+            path = Path(folder) / file
+            try:
+                relative = context_path(repo, path).relative_to(repo)
+            except (ValueError, OSError):
+                continue
+            visible.add((relative.as_posix(), False))
+            for parent in relative.parents:
+                if parent.as_posix() != '.':
+                    visible.add((parent.as_posix(), True))
+    return sorted(visible, key=lambda item: (item[0].count('/'), item[0].casefold()))
 
 
 class WorkspaceWindow(QMainWindow):
@@ -69,6 +78,7 @@ class WorkspaceWindow(QMainWindow):
         self._preview_signature = None
         self._preview_readme = None
         self._pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix='workspace-files')
+        self._project_entries = project_entries(self.repo)
         self.setWindowTitle('Portfolio Manager | Chat ' + self.workspace_id[:8])
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
         self.resize(1080, 720)
@@ -126,8 +136,8 @@ class WorkspaceWindow(QMainWindow):
         navigator.setMinimumWidth(300)
         layout = QVBoxLayout(navigator)
         self.find = QLineEdit()
-        self.find.setAccessibleName('Search repository files')
-        self.find.setPlaceholderText('Search repository paths, then press Enter')
+        self.find.setAccessibleName('Search projects')
+        self.find.setPlaceholderText('Search projects, then press Enter')
         self.find.returnPressed.connect(self._find_files)
         layout.addWidget(self.find)
         self.search_status = QLabel()
@@ -135,8 +145,7 @@ class WorkspaceWindow(QMainWindow):
         self.search_status.hide()
         layout.addWidget(self.search_status)
         self.tree = QTreeWidget()
-        self.tree.setHeaderLabels(['Repository files'])
-        self.tree.itemExpanded.connect(self._expand)
+        self.tree.setHeaderLabels(['Projects'])
         self.tree.itemSelectionChanged.connect(self._select_file)
         layout.addWidget(self.tree)
         splitter.addWidget(navigator)
@@ -189,8 +198,11 @@ class WorkspaceWindow(QMainWindow):
             self.tree.clear()
             root = self._node(self.tree, '.', True, full=True)
             root.setText(0, self.repo.name)
+            nodes = {'.': root}
+            for name, directory in self._project_entries:
+                parent = PurePosixPath(name).parent.as_posix()
+                nodes[name] = self._node(nodes[parent], name, directory)
             root.setExpanded(True)
-            self._expand(root)
 
     def _focus_tree(self, selection, *, reveal=True):
         with QSignalBlocker(self.tree):
@@ -208,7 +220,6 @@ class WorkspaceWindow(QMainWindow):
                     continue
                 if reveal:
                     item.setExpanded(True)
-                self._expand(item)
                 item = next((item.child(i) for i in range(item.childCount())
                              if item.child(i).data(0, ROLE) == parent.as_posix()), None)
                 if item is None:
@@ -219,31 +230,9 @@ class WorkspaceWindow(QMainWindow):
                     self.tree.scrollToItem(item)
 
     def _expand(self, node):
-        if not node.data(0, ROLE + 1):
-            return
-        try:
-            path = context_path(self.repo, node.data(0, ROLE))
-            stat = path.stat()
-            signature = (stat.st_mtime_ns, stat.st_ctime_ns)
-            if node.data(0, ROLE + 2) == signature:
-                return
-            entries = children(self.repo, path)
-            with QSignalBlocker(self.tree):
-                desired = {name: directory for name, directory in entries}
-                for index in reversed(range(node.childCount())):
-                    item = node.child(index)
-                    name = item.data(0, ROLE)
-                    if name not in desired or item.data(0, ROLE + 1) != desired[name]:
-                        node.takeChild(index)
-                for index, (name, directory) in enumerate(entries):
-                    if index < node.childCount() and node.child(index).data(0, ROLE) == name:
-                        continue
-                    item = self._node(node, name, directory)
-                    node.takeChild(node.indexOfChild(item))
-                    node.insertChild(index, item)
-                node.setData(0, ROLE + 2, signature)
-        except (ValueError, OSError):
-            return
+        # Kept for callers that previously asked for lazy expansion. The
+        # project-only tree is complete before it is shown.
+        return
 
     def _find_files(self):
         query = self.find.text().strip().casefold()
@@ -258,7 +247,8 @@ class WorkspaceWindow(QMainWindow):
             self.search_status.setText('Searching files…')
             self.search_status.show()
             self._search_query = query
-            self._search = self._pool.submit(search_paths, self.repo, query)
+            self._search = self._pool.submit(lambda: [(name, directory) for name, directory
+                                                       in self._project_entries if query in name.casefold()][:100])
         else:
             self.search_status.setText('Searching files…')
             self.search_status.show()
@@ -295,7 +285,8 @@ class WorkspaceWindow(QMainWindow):
                 pending, self._pending_search = self._pending_search, None
                 if pending and pending != self._search_query:
                     self._search_query = pending
-                    self._search = self._pool.submit(search_paths, self.repo, pending)
+                    self._search = self._pool.submit(lambda: [(name, directory) for name, directory
+                                                               in self._project_entries if pending in name.casefold()][:100])
                 else:
                     with QSignalBlocker(self.tree):
                         self.tree.clear()

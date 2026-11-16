@@ -41,16 +41,17 @@ def search_paths(repo, query):
             if query in name.casefold()][:100]
 
 
-def project_entries(repo):
+def project_entries(repo, niches=None):
     """Canonical project records, all active niches, and their parent folders."""
-    niches = repo / 'business_portfolio' / 'niches'
+    niche_root = repo / 'business_portfolio' / 'niches'
     visible = set()
-    for name, _, _, _ in niche_entries(repo):
+    niches = niche_entries(repo) if niches is None else niches
+    for name, _, _, _ in niches:
         visible.add((name, True))
         for parent in PurePosixPath(name).parents:
             if parent.as_posix() != '.':
                 visible.add((parent.as_posix(), True))
-    for folder, dirs, files in os.walk(niches, followlinks=False):
+    for folder, dirs, files in os.walk(niche_root, followlinks=False):
         dirs[:] = [name for name in dirs if not name.startswith('.') and
                    not (Path(folder) / name).is_symlink()]
         if Path(folder).name != 'projects':
@@ -67,7 +68,7 @@ def project_entries(repo):
             for parent in relative.parents:
                 if parent.as_posix() != '.':
                     visible.add((parent.as_posix(), True))
-    priorities = {name: priority for name, _, _, priority in niche_entries(repo)}
+    priorities = {name: priority for name, _, _, priority in niches}
     return sorted(visible, key=lambda item: (item[0].count('/'),
                                             priorities.get(item[0], 999), item[0].casefold()))
 
@@ -136,9 +137,11 @@ class WorkspaceWindow(QMainWindow):
         self._preview_signature = None
         self._preview_readme = None
         self._pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix='workspace-files')
-        self._project_entries = project_entries(self.repo)
-        self._history_entries = history_entries(self.repo)
-        self._niche_entries = niche_entries(self.repo)
+        self._project_entries = []
+        self._history_entries = []
+        self._niche_entries = []
+        self._entry_future = self._pool.submit(self._load_navigation_entries, self.repo)
+        self._entries_ready = False
         self._tree_mode = 'projects'
         self._file_loads = {}
         self._folder_icon = self.style().standardIcon(QStyle.StandardPixmap.SP_DirIcon)
@@ -259,6 +262,11 @@ class WorkspaceWindow(QMainWindow):
         self._root_node()
         return splitter
 
+    @staticmethod
+    def _load_navigation_entries(repo):
+        niches = niche_entries(repo)
+        return project_entries(repo, niches), history_entries(repo), niches
+
     def _set_mode(self):
         try:
             self.host.coordinator.set_mode(self.mode.currentData())
@@ -296,6 +304,10 @@ class WorkspaceWindow(QMainWindow):
             self.tree.clear()
             root = self._node(self.tree, '.', True, full=True)
             root.setText(0, self.repo.name)
+            if not self._entries_ready and self._tree_mode != 'files':
+                self._node(root, 'Loading navigation…', False, full=True)
+                root.setExpanded(True)
+                return
             if self._tree_mode == 'files':
                 root.setExpanded(True)
                 self._expand(root)
@@ -350,7 +362,6 @@ class WorkspaceWindow(QMainWindow):
         self._pending_search = None
         self.search_status.hide()
         self.tree.setHeaderLabels([self.view_mode.currentText()])
-        self._niche_entries = niche_entries(self.repo) if self._tree_mode == 'niches' else self._niche_entries
         self._root_node()
 
     def _focus_tree(self, selection, *, reveal=True):
@@ -430,6 +441,16 @@ class WorkspaceWindow(QMainWindow):
 
     def sync(self):
         try:
+            if not self._entries_ready and self._entry_future.done():
+                try:
+                    self._project_entries, self._history_entries, self._niche_entries = self._entry_future.result()
+                    self._entries_ready = True
+                    if self._tree_mode != 'files':
+                        self._root_node()
+                        self._focus_tree(self.workspace_state['selection'])
+                except (OSError, ValueError, RuntimeError) as error:
+                    self.search_status.setText('Could not load project navigation: ' + str(error)[:240])
+                    self.search_status.show()
             self.apply_workspace(self.host.get_workspace(self.workspace_id))
             mode = self.host.control()['mode']
             index = self.mode.findData(mode)

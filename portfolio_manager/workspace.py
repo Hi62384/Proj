@@ -8,6 +8,21 @@ import secrets
 from business_portfolio.tools.build_browser import linked_input
 
 
+MOVED_NICHE_CATEGORIES = {
+    'game-development-marketplaces': 'digital-products',
+    'advanced-online-products-and-software': 'software',
+    'platform-specific-apps-and-extensions': 'software',
+    'usage-based-apis': 'apis',
+    'marketplace-hosted-automations': 'automation',
+    'online-content-and-media': 'digital-content',
+    'specialized-data-and-intelligence-services': 'data-and-intelligence',
+    'ai-assisted-freelancing': 'services',
+    'online-games-and-virtual-economies': 'gaming',
+    'advertising-supported-utility-websites': 'advertising',
+    'affiliate-and-referral-businesses': 'affiliate-marketing',
+}
+
+
 def context_path(repo, value):
     if not isinstance(value, (str, Path)) or len(str(value)) > 1000:
         raise ValueError('Choose a repository file or folder.')
@@ -49,6 +64,27 @@ class ChatWorkspaces:
     @staticmethod
     def _public(row):
         return {k: row[k] for k in ('id', 'selection', 'revision', 'worker_id')}
+
+    def _reconcile_moved_selection(self, db, row):
+        selection = row['selection']
+        prefix = 'business_portfolio/niches/'
+        if not selection.startswith(prefix):
+            return row
+        slug = selection[len(prefix):].split('/', 1)[0]
+        category = MOVED_NICHE_CATEGORIES.get(slug)
+        if category is None:
+            return row
+        candidate = prefix + category + '/' + selection[len(prefix):]
+        repo = self.coordinator.repo
+        if (repo / selection).exists() or not (repo / candidate).exists():
+            return row
+        try:
+            context_path(repo, candidate)
+        except (ValueError, OSError):
+            return row
+        db.execute('UPDATE chat_workspaces SET selection=?,revision=revision+1 WHERE id=?',
+                   (candidate, row['id']))
+        return db.execute('SELECT * FROM chat_workspaces WHERE id=?', (row['id'],)).fetchone()
 
     @staticmethod
     def _create(db, client, proof):
@@ -93,9 +129,9 @@ class ChatWorkspaces:
                     db.execute('INSERT OR IGNORE INTO chat_workspace_detached(client) VALUES(?)', (row['client'],))
                 db.execute('UPDATE chat_workspaces SET client=? WHERE id=?', (client, row['id']))
                 db.execute('DELETE FROM chat_workspace_detached WHERE client=?', (client,))
-                return self._public(row)
+                return self._public(self._reconcile_moved_selection(db, row))
             if current:
-                return self._public(current)
+                return self._public(self._reconcile_moved_selection(db, current))
             if db.execute('SELECT 1 FROM chat_workspace_detached WHERE client=?', (client,)).fetchone():
                 raise PermissionError('This connection was disconnected from its workspace. Reconnect using its private key.')
             key = secrets.token_hex(32)
@@ -106,7 +142,14 @@ class ChatWorkspaces:
             row = db.execute('SELECT * FROM chat_workspaces WHERE id=?', (ident,)).fetchone()
             if not row:
                 raise ValueError('Unknown chat workspace.')
-            return self._public(row)
+            selection = row['selection']
+            prefix = 'business_portfolio/niches/'
+            slug = selection[len(prefix):].split('/', 1)[0] if selection.startswith(prefix) else ''
+            if slug not in MOVED_NICHE_CATEGORIES or (self.coordinator.repo / selection).exists():
+                return self._public(row)
+        with self.coordinator._database(write=True) as db:
+            row = db.execute('SELECT * FROM chat_workspaces WHERE id=?', (ident,)).fetchone()
+            return self._public(self._reconcile_moved_selection(db, row))
 
     def select(self, ident, selection, revision=None, *, client=None):
         repo = self.coordinator.repo

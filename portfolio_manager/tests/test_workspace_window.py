@@ -20,7 +20,7 @@ else:
     bridge_path = Path(__file__).resolve().parents[2] / 'apps' / 'codex_desktop_assistant'
     with patch.object(sys, 'path', [str(bridge_path), *sys.path]):
         from bridge.dashboard import Dashboard
-    from portfolio_manager.workspace_window import ROLE, project_entries, search_paths, niche_entries
+    from portfolio_manager.workspace_window import ROLE, project_entries, search_paths, niche_entries, history_entries
 
 
 @unittest.skipUnless(QApplication, 'PySide6 is required')
@@ -32,9 +32,20 @@ class WorkspaceWindowTests(unittest.TestCase):
     def test_business_niches_show_order_and_counts(self):
         repo=Path(__file__).resolve().parents[2]
         rows=niche_entries(repo)
-        self.assertEqual(len(rows),13)
-        self.assertEqual([row[3] for row in rows],list(range(1,14)))
-        self.assertEqual([row[2] for row in rows],[3]+[0]*12)
+        self.assertEqual(len(rows),23)
+        roots = [row for row in rows if row[0].count('/') == 2]
+        self.assertEqual(len(roots),12)
+        self.assertEqual([row[3] for row in roots],list(range(1,13)))
+        self.assertEqual([row[2] for row in roots],[3]+[0]*11)
+        entries = dict(project_entries(repo))
+        self.assertTrue(all(entries.get(row[0]) for row in rows))
+
+    def test_history_contains_both_preserved_archives(self):
+        repo = Path(__file__).resolve().parents[2]
+        names = {name for name, _ in history_entries(repo)}
+        self.assertTrue(any('/2026-11-15-legacy/niches/' in name and name.endswith('.md') for name in names))
+        self.assertTrue(any('/2026-11-15-taxonomy-view-v1/niches/' in name and name.endswith('.md')
+                            for name in names))
 
     def test_two_chat_windows_share_mode_but_not_selection(self):
         with TemporaryDirectory() as temp:

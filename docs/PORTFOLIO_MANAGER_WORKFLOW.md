@@ -2,7 +2,7 @@
 
 ## Current business view (2026-11-15)
 
-Projects shows GDM-001, GDM-002 and GDM-003. Niches shows the 13 primary business niches in priority order with active-project counts: Game Development Marketplaces has three; the others have zero. History & Existing Work retains the 139 older records, while Repository files remains the optional full explorer. The 36-category opportunity taxonomy is research under `opportunity_library`, not part of this menu. A selected GDM record has Overview, Files, Results, Tasks & Progress and Complete record tabs. Per-chat selections, global availability, Computer Access, Stop and Emergency Stop retain their existing behavior.
+Projects and Niches show 12 ordered business categories and their 13 preserved niches. Digital Products → Game Development Marketplaces contains GDM-001, GDM-002 and GDM-003; all other niches show zero projects and appear faded. History & Existing Work contains the 139 older records and the prior niche-layout snapshot under separate labels. Repository files remains the optional full explorer. The 36-category opportunity taxonomy is research under `opportunity_library`, not part of this menu. A selected GDM record has Overview, Files, Results, Tasks & Progress and Complete record tabs. Per-chat selections, global availability, Computer Access, Stop and Emergency Stop retain their existing behavior.
 
 The material below describes the prior active view and remains for migration history. Current verification is in `docs/BUSINESS_NICHES_13_REPORT_2026-11-15.md`.
 

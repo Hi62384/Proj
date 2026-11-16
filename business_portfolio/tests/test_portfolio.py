@@ -38,24 +38,35 @@ class PortfolioTests(unittest.TestCase):
     def test_snapshot_preserves_all_awa_ids(self):
         ids={x['id'] for x in self.data['archived_records']}
         self.assertTrue({f'AWA-{i:03d}' for i in range(1,121)}<=ids)
-    def test_thirteen_business_niches_and_three_active_families(self):
-        from migrate_business_niches import BUSINESS_NICHES
+    def test_twelve_categories_thirteen_niches_and_three_active_families(self):
+        from categorize_business_niches import CATEGORIES
         taxonomy=json.loads((ROOT.parent/'opportunity_library/data/taxonomy.json').read_text(encoding='utf-8'))
         self.assertEqual(len(taxonomy['categories']),36)
         self.assertEqual(sum(len(c['subcategories']) for c in taxonomy['categories']),144)
-        self.assertEqual([(n['path'],n['title']) for n in self.data['niches']],BUSINESS_NICHES)
-        self.assertEqual([n['priority'] for n in self.data['niches']],list(range(1,14)))
-        self.assertTrue(all(n['parent'] is None for n in self.data['niches']))
+        nodes={n['path']:n for n in self.data['niches']}
+        roots=[n for n in self.data['niches'] if n['parent'] is None]
+        self.assertEqual([(n['path'],n['title']) for n in roots],[(slug,title) for slug,title,_ in CATEGORIES])
+        self.assertEqual([n['priority'] for n in roots],list(range(1,13)))
+        self.assertEqual(len(nodes),23)
+        for slug,_,children in CATEGORIES:
+            for child in children:
+                node=nodes[f'{slug}/{child}']
+                self.assertEqual(node['parent'],nodes[slug]['id'])
+        self.assertEqual(len([n for n in nodes.values() if n['id'].startswith('N-business-') or
+                              n['id']=='N-gdm-20261115']),13)
         self.assertEqual({r['id'] for r in self.data['records']},{'GDM-001','GDM-002','GDM-003'})
-        self.assertTrue(all(r['niche_path']=='game-development-marketplaces' for r in self.data['records']))
+        self.assertTrue(all(r['niche_path']=='digital-products/game-development-marketplaces' for r in self.data['records']))
         self.assertEqual(len(list((ROOT/'niches').rglob('projects/*.md'))),3)
-        self.assertFalse(any((ROOT/'niches'/slug/'projects').exists() for slug,_ in BUSINESS_NICHES[1:]))
+        self.assertFalse(any((ROOT/'niches'/n['path']/'projects').exists() for n in nodes.values()
+                             if n['id']!='N-gdm-20261115'))
         self.assertEqual(len(self.data['archived_records']),139)
-        self.assertEqual(len(self.data['niches']),13)
+        self.assertEqual(len(self.data['niches']),23)
         self.assertEqual(self.data['taxonomy_snapshot'],{'files':185,'projects':3})
         self.assertEqual([r['planning_lane'] for r in self.data['records']],
                          ['next_to_validate_focus','queued','queued'])
         self.assertTrue(all(not r['execution_authorized'] and r['commercial_validation']=='unvalidated' for r in self.data['records']))
+        self.assertTrue(all(r['platforms_supported'] == [] and r['platforms_proposed']
+                            for r in self.data['records']))
     def test_taxonomy_snapshot_tampering_rejected(self):
         target=ROOT/'archive/2026-11-15-taxonomy-view-v1/niches/games-and-interactive-entertainment/game-development-marketplaces/projects/gdm-001-historical-save-regression-lab.md'
         original=Path.read_bytes

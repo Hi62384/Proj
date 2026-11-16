@@ -56,8 +56,9 @@ class ManagerHost:
         except FileNotFoundError:
             return {'kind': 'missing'}
         data = {'kind': 'folder' if path.is_dir() else 'file'}
-        archive = self.repo / 'business_portfolio' / 'archive' / '2026-11-15-legacy' / 'niches'
-        if path.is_file() and path.parent.name == 'projects' and path.is_relative_to(archive):
+        archives = [self.repo / 'business_portfolio' / 'archive' / name / 'niches'
+                    for name in ('2026-11-15-legacy', '2026-11-15-taxonomy-view-v1')]
+        if path.is_file() and path.parent.name == 'projects' and any(path.is_relative_to(a) for a in archives):
             from business_portfolio.tools.build_browser import parse_project
             meta, _ = parse_project(path.read_text(encoding='utf-8'), str(path))
             data['archived_project'] = {key: meta.get(key) for key in

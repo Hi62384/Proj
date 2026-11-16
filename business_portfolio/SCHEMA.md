@@ -1,8 +1,8 @@
 # Project format and recursive architecture
 
-## Current 13-niche business view (2026-11-15)
+## Current 12-category business view (2026-11-15)
 
-`niches/` now has exactly 13 top-level business niches. Their `NICHE.json` files add a `priority` integer 1–13; this orders the browser and Portfolio Manager. `game-development-marketplaces` retains stable niche ID `N-gdm-20261115` and owns the only active records, GDM-001/002/003. The other 12 niches have no `projects/` directory. The opportunity library's 36 categories and 144 subcategories are independent research and are not active business niches.
+`niches/` has 12 top-level categories in `priority` order 1–12 and 13 preserved business niches below them. Lead Generation and Licensing & Royalties are both category and niche, so no duplicate child is made. Ten new parent category nodes have stable `N-category-*` IDs. The existing 13 niche IDs are unchanged. `digital-products/game-development-marketplaces` retains stable niche ID `N-gdm-20261115` and owns the only active records, GDM-001/002/003. The other 12 niches have no `projects/` directory. Nested niche `priority` orders siblings. The opportunity library's 36 categories and 144 subcategories remain independent research.
 
 The previous 182-node active tree, including the original GDM record bytes, is preserved in `archive/2026-11-15-taxonomy-view-v1/` with a 185-file checksum manifest and GDM ID/path crosswalk. The older 139-record archive at `archive/2026-11-15-legacy/` is unchanged. The builder validates both snapshots and exposes the 139 older records under `archived_records`; the prior taxonomy snapshot remains a rollback/evidence source, not another active project list. Product implementation specifications were appended to the moved GDM records; their IDs, planned/unvalidated status, commercial permissions and original planning history remain intact.
 

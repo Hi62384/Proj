@@ -1,0 +1,8 @@
+{
+  "id": "N-category-services",
+  "title": "Services",
+  "parent": null,
+  "path": "services",
+  "priority": 7,
+  "description": "Business category; select a niche to see its projects."
+}

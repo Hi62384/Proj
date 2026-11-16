@@ -6,7 +6,7 @@ from pathlib import Path, PurePosixPath
 import re
 
 from PySide6.QtCore import QSignalBlocker, Qt, QTimer
-from PySide6.QtGui import QImageReader, QPixmap
+from PySide6.QtGui import QBrush, QColor, QImageReader, QPixmap
 from PySide6.QtWidgets import (QComboBox, QHBoxLayout, QLabel, QLineEdit, QMainWindow,
                                QMenu, QPlainTextEdit, QPushButton, QScrollArea, QSplitter,
                                QStyle, QTabWidget, QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget)
@@ -42,9 +42,14 @@ def search_paths(repo, query):
 
 
 def project_entries(repo):
-    """Only canonical project records and the folders leading to them."""
+    """Canonical project records, all active niches, and their parent folders."""
     niches = repo / 'business_portfolio' / 'niches'
     visible = set()
+    for name, _, _, _ in niche_entries(repo):
+        visible.add((name, True))
+        for parent in PurePosixPath(name).parents:
+            if parent.as_posix() != '.':
+                visible.add((parent.as_posix(), True))
     for folder, dirs, files in os.walk(niches, followlinks=False):
         dirs[:] = [name for name in dirs if not name.startswith('.') and
                    not (Path(folder) / name).is_symlink()]
@@ -62,53 +67,58 @@ def project_entries(repo):
             for parent in relative.parents:
                 if parent.as_posix() != '.':
                     visible.add((parent.as_posix(), True))
-    return sorted(visible, key=lambda item: (item[0].count('/'), item[0].casefold()))
+    priorities = {name: priority for name, _, _, priority in niche_entries(repo)}
+    return sorted(visible, key=lambda item: (item[0].count('/'),
+                                            priorities.get(item[0], 999), item[0].casefold()))
 
 
 def history_entries(repo):
     """Archived canonical records remain selectable without a repository-wide scan."""
-    base = repo / 'business_portfolio' / 'archive' / '2026-11-15-legacy' / 'niches'
     visible = set()
-    if not base.is_dir():
-        return []
-    for folder, dirs, files in os.walk(base, followlinks=False):
-        dirs[:] = [name for name in dirs if not name.startswith('.') and
-                   not (Path(folder) / name).is_symlink()]
-        if Path(folder).name != 'projects':
+    archive = repo / 'business_portfolio' / 'archive'
+    for snapshot in ('2026-11-15-legacy', '2026-11-15-taxonomy-view-v1'):
+        base = archive / snapshot / 'niches'
+        if not base.is_dir():
             continue
-        for file in files:
-            if not file.lower().endswith('.md'):
+        for folder, dirs, files in os.walk(base, followlinks=False):
+            dirs[:] = [name for name in dirs if not name.startswith('.') and
+                       not (Path(folder) / name).is_symlink()]
+            if Path(folder).name != 'projects':
                 continue
-            try:
-                relative = context_path(repo, Path(folder) / file).relative_to(repo)
-            except (ValueError, OSError):
-                continue
-            visible.add((relative.as_posix(), False))
-            for parent in relative.parents:
-                if parent.as_posix() != '.':
-                    visible.add((parent.as_posix(), True))
+            for file in files:
+                if not file.lower().endswith('.md'):
+                    continue
+                try:
+                    relative = context_path(repo, Path(folder) / file).relative_to(repo)
+                except (ValueError, OSError):
+                    continue
+                visible.add((relative.as_posix(), False))
+                for parent in relative.parents:
+                    if parent.as_posix() != '.':
+                        visible.add((parent.as_posix(), True))
     return sorted(visible, key=lambda item: (item[0].count('/'), item[0].casefold()))
 
 
 def niche_entries(repo):
-    """Show only active top-level business niches, in their declared priority."""
+    """Show the complete active category/niche hierarchy in declared order."""
     base = repo / 'business_portfolio' / 'niches'
     rows = []
     if not base.is_dir():
         return rows
-    for folder in base.iterdir():
-        if not folder.is_dir() or folder.is_symlink() or not (folder / 'NICHE.json').is_file():
+    for metadata in base.rglob('NICHE.json'):
+        folder = metadata.parent
+        if not folder.is_dir() or folder.is_symlink():
             continue
         try:
             relative = context_path(repo, folder).relative_to(repo).as_posix()
-            meta = json.loads((folder / 'NICHE.json').read_text(encoding='utf-8'))
-            if meta.get('parent') is not None or meta.get('path') != folder.name:
+            meta = json.loads(metadata.read_text(encoding='utf-8'))
+            if meta.get('path') != folder.relative_to(base).as_posix():
                 continue
-            count = sum(1 for p in (folder / 'projects').glob('*.md') if p.is_file())
+            count = sum(1 for p in folder.rglob('projects/*.md') if p.is_file())
             rows.append((relative, meta['title'], count, meta.get('priority', 999)))
         except (ValueError, OSError, KeyError, TypeError):
             continue
-    return sorted(rows, key=lambda row: (row[3], row[1].casefold()))
+    return sorted(rows, key=lambda row: (row[0].count('/'), row[3], row[1].casefold()))
 
 
 class WorkspaceWindow(QMainWindow):
@@ -131,6 +141,8 @@ class WorkspaceWindow(QMainWindow):
         self._niche_entries = niche_entries(self.repo)
         self._tree_mode = 'projects'
         self._file_loads = {}
+        self._folder_icon = self.style().standardIcon(QStyle.StandardPixmap.SP_DirIcon)
+        self._file_icon = self.style().standardIcon(QStyle.StandardPixmap.SP_FileIcon)
         self.setWindowTitle('Portfolio Manager | Chat ' + self.workspace_id[:8])
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
         self.resize(1080, 720)
@@ -264,8 +276,7 @@ class WorkspaceWindow(QMainWindow):
             if match:
                 label = match.group(1).upper() + ' · ' + match.group(2).replace('-', ' ').title()
         item = QTreeWidgetItem(parent, [label])
-        icon = QStyle.StandardPixmap.SP_DirIcon if directory else QStyle.StandardPixmap.SP_FileIcon
-        item.setIcon(0, self.style().standardIcon(icon))
+        item.setIcon(0, self._folder_icon if directory else self._file_icon)
         item.setData(0, ROLE, name)
         item.setData(0, ROLE + 1, directory)
         if directory:
@@ -274,6 +285,13 @@ class WorkspaceWindow(QMainWindow):
 
     def _root_node(self):
         self._search_view = False
+        self.tree.setUpdatesEnabled(False)
+        try:
+            self._populate_root_node()
+        finally:
+            self.tree.setUpdatesEnabled(True)
+
+    def _populate_root_node(self):
         with QSignalBlocker(self.tree):
             self.tree.clear()
             root = self._node(self.tree, '.', True, full=True)
@@ -283,14 +301,22 @@ class WorkspaceWindow(QMainWindow):
                 self._expand(root)
                 return
             if self._tree_mode == 'niches':
+                nodes = {'.': root}
                 for name, title, count, _ in self._niche_entries:
-                    node = self._node(root, name, True)
-                    node.setText(0, f'{title} · {count} active {"project" if count == 1 else "projects"}')
-                    if count:
-                        for project, directory in self._project_entries:
-                            if not directory and project.startswith(name + '/projects/'):
-                                self._node(node, project, False)
-                    else:
+                    parent = PurePosixPath(name).parent.as_posix()
+                    missing = []
+                    ancestor = parent
+                    while ancestor not in nodes:
+                        missing.append(ancestor)
+                        ancestor = PurePosixPath(ancestor).parent.as_posix()
+                    for ancestor in reversed(missing):
+                        above = PurePosixPath(ancestor).parent.as_posix()
+                        nodes[ancestor] = self._node(nodes[above], ancestor, True)
+                    node = self._node(nodes[parent], name, True)
+                    nodes[name] = node
+                    node.setText(0, f'{title} · {count} {"project" if count == 1 else "projects"}')
+                    if not count:
+                        node.setForeground(0, QBrush(QColor('#87938f')))
                         node.setChildIndicatorPolicy(QTreeWidgetItem.ChildIndicatorPolicy.DontShowIndicatorWhenChildless)
                 root.setExpanded(True)
                 return
@@ -299,6 +325,22 @@ class WorkspaceWindow(QMainWindow):
             for name, directory in entries:
                 parent = PurePosixPath(name).parent.as_posix()
                 nodes[name] = self._node(nodes[parent], name, directory)
+                if self._tree_mode == 'history':
+                    labels = {
+                        '2026-11-15-legacy': 'Earlier projects',
+                        '2026-11-15-taxonomy-view-v1': 'Previous niche layout',
+                    }
+                    if PurePosixPath(name).name in labels:
+                        nodes[name].setText(0, labels[PurePosixPath(name).name])
+                if self._tree_mode == 'projects':
+                    niche = next((row for row in self._niche_entries if row[0] == name), None)
+                    if niche:
+                        count = niche[2]
+                        nodes[name].setText(0, f'{niche[1]} · {count} {"project" if count == 1 else "projects"}')
+                        if count == 0:
+                            nodes[name].setForeground(0, QBrush(QColor('#87938f')))
+                            nodes[name].setChildIndicatorPolicy(
+                                QTreeWidgetItem.ChildIndicatorPolicy.DontShowIndicatorWhenChildless)
             root.setExpanded(True)
 
     def _change_view(self):
@@ -529,7 +571,8 @@ class WorkspaceWindow(QMainWindow):
                                               ('\n\nPreview shortened.' if len(data) > MAX_PREVIEW else ''))
                     if (suffix == '.md' and path.parent.name == 'projects' and
                             (path.is_relative_to(self.repo/'business_portfolio/niches') or
-                             path.is_relative_to(self.repo/'business_portfolio/archive/2026-11-15-legacy/niches'))):
+                             path.is_relative_to(self.repo/'business_portfolio/archive/2026-11-15-legacy/niches') or
+                             path.is_relative_to(self.repo/'business_portfolio/archive/2026-11-15-taxonomy-view-v1/niches'))):
                         self._project_detail(data[:MAX_PREVIEW].decode('utf-8', errors='replace'), selection,
                                              archived='/archive/' in '/'+selection)
                     return
@@ -549,6 +592,8 @@ class WorkspaceWindow(QMainWindow):
                     'Niche: ' + meta['niche_path'].replace('-', ' '),
                     'Status: ' + meta['work_state'].replace('_', ' '),
                     'Evidence: ' + meta['commercial_validation'].replace('_', ' '),
+                    'Supported platforms: ' + (', '.join(meta.get('platforms_supported', [])) or 'None verified'),
+                    'Proposed platforms: ' + (', '.join(meta.get('platforms_proposed', [])) or 'Not specified'),
                     '', purpose.group(1) if purpose else 'See the complete record for scope and evidence.',
                     '', 'Next step:', meta['next_action']]
         if archived:

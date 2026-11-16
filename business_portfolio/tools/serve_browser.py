@@ -74,7 +74,7 @@ def safe_file(repo: Path, relative: str) -> Path | None:
 def public_results(root: Path, data: dict) -> tuple[dict, dict]:
     results, files = {}, {}
     repo = root.parent
-    for record in data['records']:
+    for record in [*data['records'], *data.get('archived_records', [])]:
         ident = record['id']; rows = []
         for title, relative, note in GUIDES.get(ident, []):
             try:

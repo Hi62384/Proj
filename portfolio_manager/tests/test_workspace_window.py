@@ -59,6 +59,9 @@ class WorkspaceWindowTests(unittest.TestCase):
                 self.assertTrue(second.select(record))
                 self.assertEqual(first.workspace_state['selection'], 'source.py')
                 self.assertIn('DEMO-001', second.preview.toPlainText())
+                self.assertTrue(second.project_tabs.isVisible())
+                self.assertIn('Next step:', second.project_overview.toPlainText())
+                self.assertIn('Progress percentage: not measured.', second.project_tasks.toPlainText())
                 for item in (second.tree.topLevelItem(0), second.tree.topLevelItem(0).child(0)):
                     second._expand(item)
                 self.assertEqual(second.tree.topLevelItem(0).childCount(), 1)
@@ -78,6 +81,37 @@ class WorkspaceWindowTests(unittest.TestCase):
                 self.assertEqual(dashboard.workspace_windows[reopened['id']].workspace_state['selection'], 'source.py')
             finally:
                 for window in list(dashboard.workspace_windows.values()):
+                    window.close()
+                host.close()
+
+    def test_optional_repository_explorer_loads_without_blocking(self):
+        with TemporaryDirectory() as temp:
+            root = Path(temp)
+            repo = root / 'repo'
+            _record(repo, 'DEMO-003')
+            (repo / 'architecture.html').write_text('ordinary repository file', encoding='utf-8')
+            host = ManagerHost(repo, root / 'state')
+            window = None
+            try:
+                from portfolio_manager.workspace_window import WorkspaceWindow
+                workspace = host.workspace('e' * 32, {})
+                window = WorkspaceWindow(host, workspace, on_emergency=lambda: None,
+                                         on_stop_all=lambda: None, on_access=lambda: None,
+                                         on_close=lambda _: None)
+                self.assertNotIn('architecture.html', [name for name, _ in project_entries(repo)])
+                window.view_mode.setCurrentIndex(window.view_mode.findData('files'))
+                window._change_view()
+                deadline = perf_counter() + 3
+                while window._file_loads and perf_counter() < deadline:
+                    window.sync()
+                    self.app.processEvents()
+                self.assertFalse(window._file_loads)
+                self.assertIn('architecture.html', [window.tree.topLevelItem(0).child(i).data(0, ROLE)
+                    for i in range(window.tree.topLevelItem(0).childCount())])
+                self.assertTrue(window.select('architecture.html'))
+                self.assertEqual(window.preview.toPlainText(), 'ordinary repository file')
+            finally:
+                if window:
                     window.close()
                 host.close()
 

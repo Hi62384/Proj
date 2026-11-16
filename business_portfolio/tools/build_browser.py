@@ -97,6 +97,58 @@ def ensure_acyclic(mapping: dict[str, str | None], label: str):
             current = mapping[current]
         done.update(seen)
 
+def load_history(root: Path, active_records: list[dict]) -> list[dict]:
+    """Expose immutable legacy records while checking their original bytes and IDs."""
+    archive = root/'archive/2026-11-15-legacy'
+    if not archive.exists():
+        return []
+    if linked_input(archive):
+        raise ValidationError('Linked archive refused')
+    crosswalk = loads((archive/'PROJECT_CROSSWALK.json').read_text(encoding='utf-8'))
+    manifest = loads((archive/'FILE_MANIFEST.json').read_text(encoding='utf-8'))
+    if not isinstance(crosswalk,list) or not isinstance(manifest,list):
+        raise ValidationError('Invalid history manifests')
+    actual = {}
+    for path in walk_files(archive/'niches'):
+        rel = path.relative_to(archive).as_posix()
+        actual[rel] = (hashlib.sha256(path.read_bytes()).hexdigest(),path.stat().st_size)
+    expected = {row['path']:(row['sha256'],row['bytes']) for row in manifest}
+    if len(expected)!=len(manifest) or actual!=expected:
+        raise ValidationError('Archived file manifest mismatch')
+    rows=[];seen=set();active={record['id']:record for record in active_records}
+    for entry in crosswalk:
+        ident=entry['id']
+        if ident in seen:
+            raise ValidationError('Duplicate history project ID: '+ident)
+        if ident in active and active[ident].get('restored_from_archive_sha256')!=entry['sha256']:
+            raise ValidationError('Undocumented active/history project restoration: '+ident)
+        seen.add(ident)
+        prefix='business_portfolio/archive/2026-11-15-legacy/'
+        rel=entry['archive_path']
+        if not rel.startswith(prefix):
+            raise ValidationError('History path outside archive')
+        path=archive/rel[len(prefix):]
+        if not path.is_file() or linked_input(path):
+            raise ValidationError('History record missing or linked')
+        raw=path.read_bytes()
+        if hashlib.sha256(raw).hexdigest()!=entry['sha256']:
+            raise ValidationError('History record hash mismatch')
+        meta,body=parse_project(raw.decode('utf-8'),str(path))
+        for field in ('id','work_state','commercial_validation','niche_id','source_ids','parent_project','related_projects','evidence_basis'):
+            if meta.get(field)!=entry[field]:
+                raise ValidationError('History crosswalk mismatch: '+ident+' '+field)
+        rows.append(dict(meta,path=path.relative_to(root).as_posix(),body=body,
+                         content_sha256=entry['sha256'],archived=True,
+                         previous_path=entry['old_path']))
+    archived_ids={row['id'] for row in rows}
+    if len(rows)!=len([p for p in actual if '/projects/' in p and p.endswith('.md')]):
+        raise ValidationError('History record count mismatch')
+    ensure_acyclic({r['id']:r['parent_project'] for r in rows},'history project parents')
+    for row in rows:
+        if any(i not in archived_ids|active.keys() for i in row['related_projects']):
+            raise ValidationError('Unknown history related project: '+row['id'])
+    return sorted(rows,key=lambda row:row['id'])
+
 def load_portfolio(root: Path) -> dict:
     root = root.resolve()
     for name in ('niches','research','tools','results'):
@@ -190,6 +242,7 @@ def load_portfolio(root: Path) -> dict:
         if any(i not in ids for i in r['related_projects']):
             raise ValidationError(f"Unknown related project in {r['id']}")
     records.sort(key=lambda r:r['id'])
+    archived_records=load_history(root,records)
     documents=[]
     for rel in ['README.md','research/RESEARCH_V2.md','research/PRIORITIES_V2.md',
                 'research/MARKETING_PLAYBOOK.md','research/BUDGET_POLICY.md','research/ECONOMICS_V2.md',
@@ -207,7 +260,8 @@ def load_portfolio(root: Path) -> dict:
             documents.append(dict(path=rel,title=content.splitlines()[0].lstrip('# ').strip(),body=content))
     return dict(schema_version=1,generated_from='Canonical Markdown; offline build is not fresh research',
                 latest_record_review=max((r['last_reviewed'] for r in records),default='unknown'),
-                records=records,niches=sorted(nodes.values(),key=lambda n:n['path']),
+                records=records,archived_records=archived_records,
+                niches=sorted(nodes.values(),key=lambda n:n['path']),
                 sources=source_rows,documents=documents)
 
 def embedded_json(data: dict) -> str:

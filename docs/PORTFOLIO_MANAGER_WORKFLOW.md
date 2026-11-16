@@ -1,5 +1,11 @@
 # Portfolio Manager workflow
 
+## Current navigation (2026-11-15)
+
+Use **Projects** for the three current GDM families, **Niches** for the mostly empty taxonomy, and **History & Existing Work** for preserved prior project records. **Repository files** is the optional full file explorer for an arbitrary file or folder. Its folders load in the background when expanded, so the default project view stays small. The web project browser offers the same three primary views and separate Overview, Files & Results, Tasks & Progress and Complete record panels. History is read-only in the browser; changes to an archived plan require a reviewed restoration into an active niche. Each Codex chat retains its own selection, while AI Only/Human Available and Computer Access remain shared as before.
+
+The test results later in this document refer to the earlier version. Consult the current completion report for this overhaul's checks; historical test counts are not a claim that the new views passed every live UI action.
+
 Portfolio Manager is a visual file explorer for normal official Codex chats. It remembers one selected repository file or folder per chat and one shared availability setting. The chat does the work with its usual tools and permissions. Selecting an item does not start an AI worker.
 
 ## Open and use

@@ -1,3 +1,17 @@
+# Business Portfolio — active niche overhaul (2026-11-15)
+
+The active view contains **three planned game-development product families**: GDM-001 Historical Save Regression Lab (first validation focus), GDM-002 Capacity-Aware NPC Transport System (queued), and GDM-003 Native Dependency Preflight Verifier (queued). None is built, commercially validated, priced for sale or authorized for launch. The owner's marketplace workbook supports research hypotheses, not paid demand.
+
+**Browse:** Open `Open_Project_Browser.cmd`. **Projects** shows the three active records. **Niches** shows 36 taxonomy categories, their 144 subcategories, Game Development Marketplaces and AI Workflow Automation. Empty niches contain no invented project records. **History & Existing Work** searches all 139 preserved prior records by name or stable ID. A record's Overview, Files & Results, Tasks & Progress and Complete record are separate views. The generated `PROJECT_INDEX.json` and `PROJECT_BROWSER.html` are read-only views of canonical files.
+
+The prior 139 records and 301 original niche files were moved byte-for-byte to [`archive/2026-11-15-legacy/`](archive/2026-11-15-legacy/). [`PROJECT_CROSSWALK.json`](archive/2026-11-15-legacy/PROJECT_CROSSWALK.json) maps each stable ID and former path to its archived path; [`FILE_MANIFEST.json`](archive/2026-11-15-legacy/FILE_MANIFEST.json) records each original file's hash and size. The builder verifies both before showing history. Underlying Payhip files, source releases, private checkpoints, Computer Bridge and legacy recovery systems remain in their original locations. The archive is a view change, not a reversal of published or completed work. To restore one record to active planning, review its current private checkpoint and external state, assign a valid current niche, and move a **copy** back with the same ID after checking for collisions; do not replay uploads, orders or publication.
+
+The active spend authorization is CAD0; CAD100 is only a cumulative planning ceiling. No outreach, accounts, ads, uploads, production operation, purchase or publication is approved by this taxonomy change.
+
+## Historical revision 2 notes
+
+The following notes describe the November 5 package and its then-current active view. Its 139 records are now in History, and source counts and project suggestions below are historical rather than current priorities.
+
 # Business Portfolio — revision 2
 **Research-informed plans and a local project explorer · November 5, 2026**
 

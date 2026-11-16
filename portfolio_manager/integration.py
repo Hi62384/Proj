@@ -56,6 +56,14 @@ class ManagerHost:
         except FileNotFoundError:
             return {'kind': 'missing'}
         data = {'kind': 'folder' if path.is_dir() else 'file'}
+        archive = self.repo / 'business_portfolio' / 'archive' / '2026-11-15-legacy' / 'niches'
+        if path.is_file() and path.parent.name == 'projects' and path.is_relative_to(archive):
+            from business_portfolio.tools.build_browser import parse_project
+            meta, _ = parse_project(path.read_text(encoding='utf-8'), str(path))
+            data['archived_project'] = {key: meta.get(key) for key in
+                ('id', 'title', 'work_state', 'commercial_validation', 'next_action', 'last_reviewed')}
+            data['archived_project']['notice'] = ('Preserved historical record. Read the full record and latest '
+                'authorized private checkpoint before restoring; do not replay external actions.')
         if path.is_dir() and path.is_relative_to(self.coordinator.niches):
             state = self.coordinator.snapshot(path)
             projects = sorted(state['projects'], key=lambda row: (not row['eligible'], row['id']))

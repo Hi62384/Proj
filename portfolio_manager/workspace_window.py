@@ -2,12 +2,13 @@
 from concurrent.futures import ThreadPoolExecutor
 import os
 from pathlib import Path, PurePosixPath
+import re
 
 from PySide6.QtCore import QSignalBlocker, Qt, QTimer
 from PySide6.QtGui import QImageReader, QPixmap
 from PySide6.QtWidgets import (QComboBox, QHBoxLayout, QLabel, QLineEdit, QMainWindow,
                                QMenu, QPlainTextEdit, QPushButton, QScrollArea, QSplitter,
-                               QStyle, QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget)
+                               QStyle, QTabWidget, QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget)
 
 from .workspace import context_path
 
@@ -63,6 +64,31 @@ def project_entries(repo):
     return sorted(visible, key=lambda item: (item[0].count('/'), item[0].casefold()))
 
 
+def history_entries(repo):
+    """Archived canonical records remain selectable without a repository-wide scan."""
+    base = repo / 'business_portfolio' / 'archive' / '2026-11-15-legacy' / 'niches'
+    visible = set()
+    if not base.is_dir():
+        return []
+    for folder, dirs, files in os.walk(base, followlinks=False):
+        dirs[:] = [name for name in dirs if not name.startswith('.') and
+                   not (Path(folder) / name).is_symlink()]
+        if Path(folder).name != 'projects':
+            continue
+        for file in files:
+            if not file.lower().endswith('.md'):
+                continue
+            try:
+                relative = context_path(repo, Path(folder) / file).relative_to(repo)
+            except (ValueError, OSError):
+                continue
+            visible.add((relative.as_posix(), False))
+            for parent in relative.parents:
+                if parent.as_posix() != '.':
+                    visible.add((parent.as_posix(), True))
+    return sorted(visible, key=lambda item: (item[0].count('/'), item[0].casefold()))
+
+
 class WorkspaceWindow(QMainWindow):
     def __init__(self, host, workspace, *, on_emergency, on_stop_all, on_access, on_close):
         super().__init__()
@@ -79,6 +105,9 @@ class WorkspaceWindow(QMainWindow):
         self._preview_readme = None
         self._pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix='workspace-files')
         self._project_entries = project_entries(self.repo)
+        self._history_entries = history_entries(self.repo)
+        self._tree_mode = 'projects'
+        self._file_loads = {}
         self.setWindowTitle('Portfolio Manager | Chat ' + self.workspace_id[:8])
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
         self.resize(1080, 720)
@@ -135,6 +164,14 @@ class WorkspaceWindow(QMainWindow):
         navigator = QWidget()
         navigator.setMinimumWidth(300)
         layout = QVBoxLayout(navigator)
+        self.view_mode = QComboBox()
+        self.view_mode.setAccessibleName('Workspace section')
+        self.view_mode.addItem('Projects', 'projects')
+        self.view_mode.addItem('Niches', 'niches')
+        self.view_mode.addItem('History & Existing Work', 'history')
+        self.view_mode.addItem('Repository files', 'files')
+        self.view_mode.activated.connect(self._change_view)
+        layout.addWidget(self.view_mode)
         self.find = QLineEdit()
         self.find.setAccessibleName('Search projects')
         self.find.setPlaceholderText('Search projects, then press Enter')
@@ -147,11 +184,25 @@ class WorkspaceWindow(QMainWindow):
         self.tree = QTreeWidget()
         self.tree.setHeaderLabels(['Projects'])
         self.tree.itemSelectionChanged.connect(self._select_file)
+        self.tree.itemExpanded.connect(self._expand)
         layout.addWidget(self.tree)
         splitter.addWidget(navigator)
         self.preview = QPlainTextEdit()
         self.preview.setReadOnly(True)
         self.preview.setAccessibleName('Selected file or folder preview')
+        self.project_tabs = QTabWidget()
+        self.project_tabs.setAccessibleName('Project details')
+        self.project_overview = QPlainTextEdit()
+        self.project_files = QPlainTextEdit()
+        self.project_results = QPlainTextEdit()
+        self.project_tasks = QPlainTextEdit()
+        self.project_record = QPlainTextEdit()
+        for title, panel in [('Overview', self.project_overview), ('Files', self.project_files),
+                             ('Results', self.project_results), ('Tasks & Progress', self.project_tasks),
+                             ('Complete record', self.project_record)]:
+            panel.setReadOnly(True)
+            self.project_tabs.addTab(panel, title)
+        self.project_tabs.hide()
         self.image = QLabel()
         self.image.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         self.image_scroll = QScrollArea()
@@ -162,6 +213,7 @@ class WorkspaceWindow(QMainWindow):
         self.path_label.setWordWrap(True)
         self.path_label.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
         details.addWidget(self.path_label)
+        details.addWidget(self.project_tabs)
         details.addWidget(self.preview)
         details.addWidget(self.image_scroll)
         self.image_scroll.hide()
@@ -183,6 +235,11 @@ class WorkspaceWindow(QMainWindow):
 
     def _node(self, parent, name, directory, *, full=False):
         label = name if full else PurePosixPath(name).name
+        if not full and not directory and '/projects/' in name and name.lower().endswith('.md'):
+            stem = PurePosixPath(name).stem
+            match = re.match(r'([a-z]+-[0-9]+)-(.+)', stem, re.I)
+            if match:
+                label = match.group(1).upper() + ' · ' + match.group(2).replace('-', ' ').title()
         item = QTreeWidgetItem(parent, [label])
         icon = QStyle.StandardPixmap.SP_DirIcon if directory else QStyle.StandardPixmap.SP_FileIcon
         item.setIcon(0, self.style().standardIcon(icon))
@@ -198,11 +255,27 @@ class WorkspaceWindow(QMainWindow):
             self.tree.clear()
             root = self._node(self.tree, '.', True, full=True)
             root.setText(0, self.repo.name)
+            if self._tree_mode == 'files':
+                root.setExpanded(True)
+                self._expand(root)
+                return
             nodes = {'.': root}
-            for name, directory in self._project_entries:
+            entries = self._history_entries if self._tree_mode == 'history' else self._project_entries
+            if self._tree_mode == 'niches':
+                entries = [(name, directory) for name, directory in entries if directory]
+            for name, directory in entries:
                 parent = PurePosixPath(name).parent.as_posix()
                 nodes[name] = self._node(nodes[parent], name, directory)
             root.setExpanded(True)
+
+    def _change_view(self):
+        self._tree_mode = self.view_mode.currentData()
+        self.find.clear()
+        self._search = None
+        self._pending_search = None
+        self.search_status.hide()
+        self.tree.setHeaderLabels([self.view_mode.currentText()])
+        self._root_node()
 
     def _focus_tree(self, selection, *, reveal=True):
         with QSignalBlocker(self.tree):
@@ -230,9 +303,16 @@ class WorkspaceWindow(QMainWindow):
                     self.tree.scrollToItem(item)
 
     def _expand(self, node):
-        # Kept for callers that previously asked for lazy expansion. The
-        # project-only tree is complete before it is shown.
-        return
+        if self._tree_mode != 'files' or not node.data(0, ROLE + 1):
+            return
+        name = node.data(0, ROLE)
+        if name in self._file_loads or node.childCount():
+            return
+        try:
+            folder = context_path(self.repo, name)
+        except (ValueError, OSError):
+            return
+        self._file_loads[name] = (node, self._pool.submit(children, self.repo, folder))
 
     def _find_files(self):
         query = self.find.text().strip().casefold()
@@ -247,8 +327,9 @@ class WorkspaceWindow(QMainWindow):
             self.search_status.setText('Searching files…')
             self.search_status.show()
             self._search_query = query
+            entries = self._history_entries if self._tree_mode == 'history' else self._project_entries
             self._search = self._pool.submit(lambda: [(name, directory) for name, directory
-                                                       in self._project_entries if query in name.casefold()][:100])
+                                                       in entries if query in name.casefold()][:100])
         else:
             self.search_status.setText('Searching files…')
             self.search_status.show()
@@ -279,14 +360,28 @@ class WorkspaceWindow(QMainWindow):
             if index >= 0:
                 with QSignalBlocker(self.mode):
                     self.mode.setCurrentIndex(index)
+            for name, (node, future) in list(self._file_loads.items()):
+                if not future.done():
+                    continue
+                del self._file_loads[name]
+                try:
+                    rows = future.result()
+                except (ValueError, OSError):
+                    rows = []
+                if self._tree_mode == 'files':
+                    with QSignalBlocker(self.tree):
+                        for child, directory in rows:
+                            self._node(node, child, directory)
+                        node.setChildIndicatorPolicy(QTreeWidgetItem.ChildIndicatorPolicy.DontShowIndicatorWhenChildless)
             if self._search and self._search.done():
                 future, self._search = self._search, None
                 results = future.result()
                 pending, self._pending_search = self._pending_search, None
                 if pending and pending != self._search_query:
                     self._search_query = pending
+                    entries = self._history_entries if self._tree_mode == 'history' else self._project_entries
                     self._search = self._pool.submit(lambda: [(name, directory) for name, directory
-                                                               in self._project_entries if pending in name.casefold()][:100])
+                                                               in entries if pending in name.casefold()][:100])
                 else:
                     with QSignalBlocker(self.tree):
                         self.tree.clear()
@@ -340,6 +435,7 @@ class WorkspaceWindow(QMainWindow):
     def _preview(self, selection):
         self.image.clear()
         self.image_scroll.hide()
+        self.project_tabs.hide()
         self.preview.show()
         self._preview_readme = None
         try:
@@ -351,6 +447,11 @@ class WorkspaceWindow(QMainWindow):
                 names = [PurePosixPath(name).name + ('/' if directory else '')
                          for name, directory in entries[:50]]
                 contents = '\n'.join(names) if names else 'This folder has no visible items.'
+                if path.is_relative_to(self.repo / 'business_portfolio/niches') and path.name != 'projects':
+                    direct_projects = path / 'projects'
+                    if not direct_projects.is_dir():
+                        contents = ('No projects directly in this niche; browse its subniches.\n\n'
+                            if any(directory for _, directory in entries) else 'No active projects.\n\n') + contents
                 if len(entries) > 50:
                     contents += f'\n… and {len(entries) - 50} more items.'
                 summary = ''
@@ -392,11 +493,49 @@ class WorkspaceWindow(QMainWindow):
                 if b'\x00' not in data:
                     self.preview.setPlainText(data[:MAX_PREVIEW].decode('utf-8', errors='replace') +
                                               ('\n\nPreview shortened.' if len(data) > MAX_PREVIEW else ''))
+                    if (suffix == '.md' and path.parent.name == 'projects' and
+                            (path.is_relative_to(self.repo/'business_portfolio/niches') or
+                             path.is_relative_to(self.repo/'business_portfolio/archive/2026-11-15-legacy/niches'))):
+                        self._project_detail(data[:MAX_PREVIEW].decode('utf-8', errors='replace'), selection,
+                                             archived='/archive/' in '/'+selection)
                     return
             self.preview.setPlainText(f'{path.name}\n{size:,} bytes\nPreview unavailable for this file.')
         except (ValueError, OSError):
             self._preview_signature = None
             self.preview.setPlainText('The selected path is unavailable.')
+
+    def _project_detail(self, raw, selection, *, archived):
+        from business_portfolio.tools.build_browser import parse_project
+        try:
+            meta, body = parse_project(raw, selection)
+        except ValueError:
+            return
+        purpose = re.search(r'^\*\*Purpose:\*\*\s*(.+)$', body, re.M)
+        overview = [meta['title'], '', 'Preserved history' if archived else 'Current project',
+                    'Niche: ' + meta['niche_path'].replace('-', ' '),
+                    'Status: ' + meta['work_state'].replace('_', ' '),
+                    'Evidence: ' + meta['commercial_validation'].replace('_', ' '),
+                    '', purpose.group(1) if purpose else 'See the complete record for scope and evidence.',
+                    '', 'Next step:', meta['next_action']]
+        if archived:
+            overview += ['', 'Review the latest private checkpoint and external state before restoring.']
+        self.project_overview.setPlainText('\n'.join(overview))
+        self.project_files.setPlainText('Saved project record:\n' + selection +
+            '\n\nThis record is planning documentation. Protected customer packages are not shown here.')
+        results = meta.get('public_results', [])
+        self.project_results.setPlainText('\n'.join(r['label'] + ' — ' + r['path'] for r in results)
+            if results else 'No verified public results are declared for this project.')
+        done = re.findall(r'^\s*- \[[xX]\] (.+)$', body, re.M)
+        remaining = re.findall(r'^\s*- \[ \] (.+)$', body, re.M)
+        self.project_tasks.setPlainText('Completed\n' + ('\n'.join('• ' + item for item in done) if done else
+            'No completed tasks recorded.') + '\n\nRemaining\n' +
+            ('\n'.join('• ' + item for item in remaining) if remaining else
+             'No remaining checklist recorded; see the next step.') +
+            '\n\nProgress percentage: not measured.')
+        self.project_record.setPlainText(raw)
+        self.project_tabs.setCurrentIndex(0)
+        self.project_tabs.show()
+        self.preview.hide()
 
     def closeEvent(self, event):
         self._sync.stop()

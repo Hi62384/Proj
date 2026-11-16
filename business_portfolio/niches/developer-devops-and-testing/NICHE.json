@@ -1,0 +1,7 @@
+{
+  "id": "N-tax-C18",
+  "title": "Developer, DevOps & Testing",
+  "parent": null,
+  "path": "developer-devops-and-testing",
+  "description": "Package a painful reproducible engineering task with fixtures, CLI outputs and regression tests. Sell a measurable saved step rather than a generic boilerplate dump."
+}

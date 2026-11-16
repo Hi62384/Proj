@@ -85,7 +85,7 @@ class MappingProofTests(unittest.TestCase):
 
     def test_checkpoint_does_not_claim_customer_validation(self):
         import build_browser
-        record = next(r for r in build_browser.load_portfolio(ROOT)['records'] if r['id'] == 'AWA-005')
+        record = next(r for r in build_browser.load_portfolio(ROOT)['archived_records'] if r['id'] == 'AWA-005')
         self.assertEqual(record['work_state'], 'blocked')
         self.assertEqual(record['commercial_validation'], 'unvalidated')
         self.assertFalse(record['execution_authorized'])
@@ -93,7 +93,7 @@ class MappingProofTests(unittest.TestCase):
         self.assertEqual(record['owner_budget']['authorized_spend'], 0)
         self.assertIsNone(record['actual_revenue'])
         self.assertEqual(record['verified_paid_pilots'], 0)
-        original = (ROOT/'niches/ai-workflow-automation/agency/white-label/builds/projects/awa-005-form-field-mapping-rescue.md').read_text(encoding='utf-8')
+        original = (ROOT/'archive/2026-11-15-legacy/niches/ai-workflow-automation/agency/white-label/builds/projects/awa-005-form-field-mapping-rescue.md').read_text(encoding='utf-8')
         self.assertIn('- [x] Prior candidate ID retained and scope reviewed on 2026-11-05.', original)
         self.assertIn('- [x] Current source links, alternatives, classification and scope-specific edge case recorded.', original)
 

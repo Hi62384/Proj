@@ -27,8 +27,8 @@ class LiveBrowserTests(unittest.TestCase):
         for name in ['research','tools','niches']:(self.root/name).mkdir()
         (self.root/'research/SOURCE_REGISTER.json').write_bytes((ROOT/'research/SOURCE_REGISTER.json').read_bytes())
         (self.root/'tools/browser_template.html').write_bytes((ROOT/'tools/browser_template.html').read_bytes())
-        base=next(r for r in b.load_portfolio(ROOT)['records'] if r['id']=='AWA-001')
-        self.meta={k:v for k,v in base.items() if k not in {'body','path','content_sha256'}}
+        base=next(r for r in b.load_portfolio(ROOT)['archived_records'] if r['id']=='AWA-001')
+        self.meta={k:v for k,v in base.items() if k not in {'body','path','content_sha256','archived','previous_path'}}
         self.meta.update(niche_id='N-test',niche_path='test',parent_project=None,related_projects=[])
         folder=self.root/'niches/test/projects';folder.mkdir(parents=True)
         (folder.parent/'NICHE.json').write_text(json.dumps(dict(id='N-test',title='Test niche',path='test',parent=None)),encoding='utf-8')
@@ -121,7 +121,7 @@ class LiveBrowserTests(unittest.TestCase):
     def test_no_dashboard_controls_or_fabricated_percentage(self):
         html=(ROOT/'tools/browser_template.html').read_text(encoding='utf-8')
         for old in ['id="gate"','id="budgetfit"','id="origin"','id="showdoc"','Copy resume prompt']:self.assertNotIn(old,html)
-        self.assertIn('Complete original record',html);self.assertIn('No completed tasks recorded.',html)
+        self.assertIn('Complete record',html);self.assertIn('No completed tasks recorded.',html)
         self.assertIn('expanded=new Set()',html);self.assertIn('r.id===id',html)
         self.assertNotIn('.innerHTML',html)
 

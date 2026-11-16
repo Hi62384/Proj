@@ -342,7 +342,9 @@ class Coordinator:
 
     @staticmethod
     def _canonical_eligible(record):
-        return record['work_state'] in _DISPATCH_STATES and record['record_type'] not in _SKIP_TYPES
+        return (record['work_state'] in _DISPATCH_STATES
+                and record['record_type'] not in _SKIP_TYPES
+                and record.get('planning_lane') != 'queued')
 
     @staticmethod
     def _tasks(db, project_id):

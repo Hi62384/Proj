@@ -13,12 +13,12 @@ import commercial_checks as c
 class CommercialTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.data=b.load_portfolio(ROOT);cls.by={x['id']:x for x in cls.data['records']}
+        cls.data=b.load_portfolio(ROOT);cls.by={x['id']:x for x in cls.data['archived_records']}
     def test_all_original_and_new_ids(self):
-        self.assertEqual(len(self.data['records']),139)
+        self.assertEqual(len(self.data['archived_records']),139)
         self.assertTrue({f'AWA-{i:03d}' for i in range(1,127)}<=set(self.by))
     def test_budget_all_records(self):
-        for r in self.data['records']:
+        for r in self.data['archived_records']:
             c.validate_record(r)
             self.assertEqual(r['owner_budget']['preferred_upfront'],0)
             self.assertEqual(r['owner_budget']['planned_upfront'],0)
@@ -42,7 +42,7 @@ class CommercialTests(unittest.TestCase):
         r['new_noncancelable_commitments']=0
         self.assertEqual(c.validate_spend_request(r),Decimal(95))
     def test_explicit_zero_real_sales_not_fabricated(self):
-        for r in self.data['records']:
+        for r in self.data['archived_records']:
             if r['origin']=='revised_candidate':
                 self.assertEqual(r['verified_paid_pilots'],0);self.assertIsNone(r['actual_revenue']);self.assertEqual(r['commercial_validation'],'unvalidated')
     def test_all_original_states_preserved(self):
@@ -66,8 +66,8 @@ class CommercialTests(unittest.TestCase):
             else:
                 self.assertEqual(completed,entry['completed_checkbox_count'])
     def test_sources_distinguish_new_and_inherited(self):
-        self.assertEqual(len(self.data['sources']),108)
-        self.assertEqual(sum(s['v2_review_status']=='reviewed_for_this_revision' for s in self.data['sources']),41)
+        self.assertEqual(len(self.data['sources']),114)
+        self.assertEqual(sum(s.get('v2_review_status')=='reviewed_for_this_revision' for s in self.data['sources']),41)
     def test_product_ad_model(self):
         # 5% platform + assumed 3% processor, 5% refund reserve, fixed fee .30 and support 2.50.
         self.assertEqual(c.contribution(15,.08,.05,2.5,.30),Decimal('10.25'))
@@ -83,18 +83,18 @@ class CommercialTests(unittest.TestCase):
             r=self.by[f'AWA-{n:03d}'];self.assertEqual(r['launch_gate'],'production_deferred')
             self.assertEqual(r['owner_budget']['budget_fit'],'discovery_only_not_production')
     def test_components_not_independent_budgets(self):
-        for r in self.data['records']:
+        for r in self.data['archived_records']:
             if r['record_type']=='bundled_component':
                 self.assertEqual(r['owner_budget']['optional_total_ceiling'],0)
                 self.assertEqual(r['marketing_lane'],'parent_offer_only')
     def test_service_specific_sales_proof(self):
-        for r in self.data['records']:
+        for r in self.data['archived_records']:
             if r['record_type']=='standalone_service':
                 for part in ['Landing/profile headline draft','Specific discovery phrase','Distinct failure test','Advertising decision','Response draft for an invited']:
                     self.assertIn(part,r['body'],r['id'])
                 self.assertTrue(r['offer_price_cad_hypothesis'])
     def test_historical_prices_not_current_usd(self):
-        for r in self.data['records']:
+        for r in self.data['archived_records']:
             if r['id'].startswith('AWA-'):self.assertIsNone(r['offer_price_usd'])
     def test_nonzero_permission_needs_reference(self):
         r=copy.deepcopy(self.by['AWA-001']);r['owner_budget']['authorized_spend']=10

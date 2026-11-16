@@ -1,0 +1,7 @@
+{
+  "id": "N-tax-C29",
+  "title": "Localization & Accessibility",
+  "parent": null,
+  "path": "localization-and-accessibility",
+  "description": "Deterministic technical checks, editorial QA and accessible production helpers can be reused across industries. State what the tests do and do not establish."
+}

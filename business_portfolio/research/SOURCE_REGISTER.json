@@ -1294,5 +1294,71 @@
     "finding": "The GitHub main branch still points to the previously inspected November 5 commit.",
     "limitations": "A remote branch read does not inspect newer uncommitted local work, customer accounts, sales or native Windows behavior.",
     "v2_review_status": "reviewed_for_this_revision"
+  },
+  {
+    "id": "GDM-WB-2026",
+    "title": "Owner-supplied game marketplace research workbook (November 15, 2026)",
+    "url": "attachment:Game_Marketplace_Research_REPAIRED.xlsx",
+    "kind": "owner_research",
+    "access": "owner_attachment_reviewed_locally",
+    "reviewed_at": "2026-11-15",
+    "published_or_updated": "Owner research review, November 15, 2026",
+    "finding": "Shortlist, product briefs, alternatives, platform candidates and distribution constraints; no paid-customer proof.",
+    "limitations": "The workbook is not stored in this public repository. Candidate prices and market gaps are hypotheses."
+  },
+  {
+    "id": "GDM-UNITY-RULES",
+    "title": "Unity Asset Store submission guidelines",
+    "url": "https://assetstore.unity.com/publishing/submission-guidelines",
+    "kind": "marketplace_policy",
+    "access": "official_primary",
+    "reviewed_at": "2026-11-15",
+    "published_or_updated": "Current page; recheck before submission",
+    "finding": "Asset eligibility and executable restrictions require package-specific review.",
+    "limitations": "No candidate package has been submitted or accepted."
+  },
+  {
+    "id": "GDM-GODOT-STORE",
+    "title": "Godot Asset Library FAQ",
+    "url": "https://docs.godotengine.org/en/stable/community/asset_store/faq.html",
+    "kind": "marketplace_policy",
+    "access": "official_primary",
+    "reviewed_at": "2026-11-15",
+    "published_or_updated": "Current page; recheck before submission",
+    "finding": "The official asset library is a free discovery route in the current research, not an assumed paid checkout.",
+    "limitations": "Future store policy and acceptance may change."
+  },
+  {
+    "id": "GDM-ROBLOX-STORE",
+    "title": "Roblox Creator Store documentation",
+    "url": "https://create.roblox.com/docs/production/creator-store",
+    "kind": "marketplace_policy",
+    "access": "official_primary",
+    "reviewed_at": "2026-11-15",
+    "published_or_updated": "Current page; recheck before submission",
+    "finding": "Paid listings are for eligible models and plugins; seller eligibility and asset rights apply.",
+    "limitations": "No proposed adapter has been evaluated for store acceptance."
+  },
+  {
+    "id": "GDM-FAB",
+    "title": "Fab publisher documentation",
+    "url": "https://dev.epicgames.com/documentation/fab/publisher-get-started-in-fab",
+    "kind": "marketplace_policy",
+    "access": "official_primary",
+    "reviewed_at": "2026-11-15",
+    "published_or_updated": "Current page; recheck before submission",
+    "finding": "Fab has product-format and publisher requirements relevant to a future Unreal edition.",
+    "limitations": "No Unreal edition or seller eligibility is verified."
+  },
+  {
+    "id": "GDM-DEPENDENCIES",
+    "title": "Dependencies open-source Windows dependency analyzer",
+    "url": "https://github.com/lucasg/Dependencies",
+    "kind": "competitor_primary",
+    "access": "public_repository",
+    "reviewed_at": "2026-11-15",
+    "published_or_updated": "Repository; version-specific capabilities need recheck",
+    "finding": "A strong free dependency-tree baseline; a paid verifier needs a demonstrable packaged-build advantage.",
+    "limitations": "No comparative fixture has been run yet."
   }
 ]

@@ -1,5 +1,11 @@
 # Project format and recursive architecture
 
+## Active taxonomy and history (2026-11-15)
+
+`niches/` contains the current 36-category / 144-subcategory taxonomy, Game Development Marketplaces, AI Workflow Automation, and only GDM-001 through GDM-003 as active project-family records. Empty niches need only `NICHE.json`. Prior canonical records retain their original IDs, bytes, metadata and checklist history in `archive/2026-11-15-legacy/niches/`. The dated crosswalk maps former and archived paths; the manifest contains SHA-256 and byte length for all 301 original niche files. `build_browser.py` validates these before including `archived_records` in the generated read-only index. Do not edit the archive in place or treat an archived published record as cancelled. A restored project must be reviewed against the latest private checkpoint and current external state, assigned a valid active niche ID/path, and checked for an ID collision. Private receipts and customer material remain outside the public index.
+
+The generated index has `records` for active projects and `archived_records` for preserved history. Consumers must not infer that absence from `records` means deletion. Niche nodes may have zero projects. `planning_lane` on the three new families distinguishes the first validation focus from queued ideas; it is not commercial authorization. An intentionally restored active copy with an old ID must include `restored_from_archive_sha256` matching the archived crosswalk, so the builder can distinguish restoration from accidental ID reuse.
+
 ## Layout
 
 ```

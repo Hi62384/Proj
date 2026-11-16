@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT=Path(__file__).resolve().parents[1]
 spec=importlib.util.spec_from_file_location('portfolio_builder',ROOT/'tools/build_browser.py')
@@ -14,7 +15,7 @@ class PortfolioTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.data=b.load_portfolio(ROOT)
-        cls.base=next(r for r in cls.data['records'] if r['id']=='AWA-001')
+        cls.base=next(r for r in cls.data['archived_records'] if r['id']=='AWA-001')
 
     def fixture(self, depth=1):
         td=tempfile.TemporaryDirectory();self.addCleanup(td.cleanup);r=Path(td.name)
@@ -25,7 +26,7 @@ class PortfolioTests(unittest.TestCase):
             parts.append('d'+str(i));p='/'.join(parts);folder=r/'niches'/p;folder.mkdir(parents=True)
             (folder/'NICHE.json').write_text(json.dumps(dict(id=f'N-test-{i}',title=f'Depth {i}',parent=parent,path=p)))
             parent=f'N-test-{i}'
-        m={k:v for k,v in self.base.items() if k not in {'body','path','content_sha256'}}
+        m={k:v for k,v in self.base.items() if k not in {'body','path','content_sha256','archived','previous_path'}}
         m.update(niche_path='/'.join(parts),niche_id=parent,parent_project=None,related_projects=[])
         dest=r/'niches'/m['niche_path']/'projects'/'awa-001-test.md';dest.parent.mkdir()
         self.write(dest,m)
@@ -35,38 +36,64 @@ class PortfolioTests(unittest.TestCase):
         p.write_text('---\n'+json.dumps(m)+'\n---\n'+body+'\n')
 
     def test_snapshot_preserves_all_awa_ids(self):
-        ids={x['id'] for x in self.data['records']}
+        ids={x['id'] for x in self.data['archived_records']}
         self.assertTrue({f'AWA-{i:03d}' for i in range(1,121)}<=ids)
+    def test_three_active_families_and_taxonomy(self):
+        from overhaul_niches import slug
+        taxonomy=json.loads((ROOT.parent/'opportunity_library/data/taxonomy.json').read_text(encoding='utf-8'))
+        paths={n['path']:n for n in self.data['niches']}
+        self.assertEqual(len(taxonomy['categories']),36)
+        self.assertEqual(sum(len(c['subcategories']) for c in taxonomy['categories']),144)
+        for category in taxonomy['categories']:
+            self.assertEqual(paths[category['slug']]['title'],category['name'])
+            for subcategory in category['subcategories']:
+                child=category['slug']+'/'+slug(subcategory['name'])
+                self.assertEqual(paths[child]['title'],subcategory['name'])
+                self.assertEqual(paths[child]['parent'],paths[category['slug']]['id'])
+        self.assertEqual({r['id'] for r in self.data['records']},{'GDM-001','GDM-002','GDM-003'})
+        self.assertEqual(len(self.data['archived_records']),139)
+        self.assertEqual(len(self.data['niches']),182)
+        self.assertEqual(len([n for n in self.data['niches'] if n['parent'] is None and n['path']!='ai-workflow-automation']),36)
+        self.assertTrue(all(not r['execution_authorized'] and r['commercial_validation']=='unvalidated' for r in self.data['records']))
+    def test_archive_integrity_guard(self):
+        target=ROOT/'archive/2026-11-15-legacy/niches/ai-workflow-automation/agency/white-label/builds/projects/awa-001-inbound-form-to-crm-starter.md'
+        original=Path.read_bytes
+        def changed(path):
+            raw=original(path)
+            return raw+b'altered' if path==target else raw
+        with patch.object(Path,'read_bytes',changed):
+            with self.assertRaisesRegex(b.ValidationError,'manifest mismatch'):
+                b.load_portfolio(ROOT)
     def test_existing_progress_records_present(self):
-        ids={x['id'] for x in self.data['records']}
+        ids={x['id'] for x in self.data['archived_records']}
         self.assertTrue({f'EX-{i:03d}' for i in range(1,13)}|{'SYS-001'}<=ids)
     def test_candidate_validation_not_invented(self):
-        for r in self.data['records']:
+        for r in self.data['archived_records']:
             if r['origin']=='revised_candidate':
                 self.assertEqual(r['commercial_validation'],'unvalidated')
                 self.assertFalse(r['execution_authorized'])
                 self.assertIsNone(r['actual_revenue'])
     def test_existing_revenue_unknown(self):
-        for r in self.data['records']:
+        for r in self.data['archived_records']:
             if r['origin']=='existing_work':self.assertIsNone(r['actual_revenue'])
     def test_published_not_commercially_validated(self):
         for id in ['EX-001','EX-002']:
-            r=next(r for r in self.data['records'] if r['id']==id)
+            r=next(r for r in self.data['archived_records'] if r['id']==id)
             self.assertEqual(r['work_state'],'published_reported')
             self.assertEqual(r['commercial_validation'],'published_unvalidated')
     def test_migration_coverage(self):
         x=json.loads((ROOT/'research/MIGRATION_CROSSWALK.json').read_text())
         self.assertEqual({r['id'] for r in x},{f'AWA-{i:03d}' for i in range(1,121)})
-        for r in x:self.assertTrue((ROOT/r['new_path']).is_file())
+        for r in x:self.assertTrue((ROOT/'archive/2026-11-15-legacy'/r['new_path']).is_file())
     def test_unique_scope_acceptance(self):
         cases=[]
-        for r in self.data['records']:
+        for r in self.data['archived_records']:
             if r['origin']=='revised_candidate':
                 case=r['body'].split('**Distinct failure test:** ',1)[1].split('\n',1)[0];cases.append(case)
         self.assertEqual(len(cases),len(set(cases)))
     def test_paths_fit_reported_windows_checkout(self):
         prefix='C:\\Users\\User1\\Documents\\Downloads\\Proj\\business_portfolio\\'
-        for r in self.data['records']:self.assertLess(len(prefix+r['path']),240)
+        for r in self.data['archived_records']:self.assertLess(len(prefix+r['path']),240)
     def test_parser_crlf(self):
         text='---\r\n{"id":"X-001"}\r\n---\r\n# Title\r\n'
         m,body=b.parse_project(text);self.assertEqual(m['id'],'X-001');self.assertEqual(body,'# Title')

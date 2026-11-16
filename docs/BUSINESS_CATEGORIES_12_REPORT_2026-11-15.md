@@ -49,4 +49,4 @@ The browser's Projects and Niches sections now show Category → Niche → Proje
 
 ## Remaining limits
 
-The shared, already-running Portfolio Manager controller must restart before its open windows load the new code. It was not restarted during this change, to avoid interrupting other chats. A live screenshot of the new tree and a browser rendering check remain unverified; headless Chrome did not start in this restricted test environment. No real external checkout, publication, upload, outreach or spend was attempted.
+After owner approval, the shared Portfolio Manager controller was restarted once. Its new controller reported ready, and this chat reconnected to the same workspace ID with its former GDM-001 selection automatically moved to the new path. A live screenshot of the new tree and a browser rendering check remain unverified; the window capture timed out or reported the window minimized, and headless Chrome did not start in the restricted test environment. The Bridge Stop control remained latched after restart; only the owner can resume computer access if needed. No real external checkout, publication, upload, outreach or spend was attempted.

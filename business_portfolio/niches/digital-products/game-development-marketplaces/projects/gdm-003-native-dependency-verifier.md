@@ -24,7 +24,7 @@
     "GDM-002"
   ],
   "legacy_ids": [],
-  "next_action": "After higher-priority validation, compare a Windows x64 build-pipeline preflight against free Dependencies and engine build logs using a real consented game fixture.",
+  "next_action": "Build a local read-only Windows x64 dependency-scanner prototype against synthetic PE/package fixtures; verify missing, wrong-architecture, clean and unsupported cases without executing the binaries.",
   "last_reviewed": "2026-11-15",
   "offer_price_usd": null,
   "delivery_hours_assumption": null,
@@ -52,16 +52,16 @@
       "hosting"
     ],
     "unknown_cost_action": "Pause and ask the owner before commitment.",
-    "production_runtime": "Customer build pipeline only; engine and OS support costs are unknown.",
-    "budget_fit": "discovery_only_no_spend",
+    "production_runtime": "Local synthetic package fixtures first; real customer build pipelines are optional follow-up and require consent.",
+    "budget_fit": "local_prototype_no_spend",
     "optional_all_in_envelope": {},
     "optional_total_ceiling": 0
   },
   "marketing_execution_authorized": false,
   "production_budget_verified": false,
   "success_probability": "not_established",
-  "marketing_lane": "queued_discovery_draft_only",
-  "launch_gate": "free_tool_comparison_and_buyer_evidence",
+  "marketing_lane": "no_outreach_prototype_first",
+  "launch_gate": "tested_prototype_and_separate_owner_launch_approval",
   "pre_sale_work_cap_hours": 2,
   "ad_test_cap_cad": 0,
   "offer_price_cad_hypothesis": null,
@@ -85,7 +85,7 @@ Candidate buyers are game teams shipping native plugins or engine exports. The p
 
 ## Evidence and competition
 
-The free [Dependencies project](https://github.com/lucasg/Dependencies) and platform/engine build logs are direct substitutes. A paid tool needs to demonstrate a material improvement in engine-aware packaging, CI integration or diagnosis. A static dependency scan cannot guarantee that delay-loaded libraries, platform-specific runtime paths, graphics drivers or dynamically constructed loads will work. No buyer interview, paid pilot, accepted marketplace listing or working prototype exists.
+The free [Dependencies project](https://github.com/lucasg/Dependencies) and platform/engine build logs are direct substitutes. A paid tool needs to demonstrate a material improvement in engine-aware packaging, CI integration or diagnosis. A static dependency scan cannot guarantee that delay-loaded libraries, platform-specific runtime paths, graphics drivers or dynamically constructed loads will work. No buyer interview, paid pilot, accepted marketplace listing or working prototype exists. Interviews are not required before a synthetic local prototype.
 
 ## Family and candidate editions
 
@@ -102,7 +102,7 @@ One shared specification would define dependency observations, expected package 
 
 ## Planned narrow acceptance tests
 
-- On a consented disposable Windows x64 game build, detect missing, wrong-architecture and conflicting-version native dependencies before release; compare output with Dependencies and the engine's logs.
+- On synthetic disposable Windows x64 package fixtures, detect missing, wrong-architecture and conflicting-version native dependencies; compare output with Dependencies' documented behavior and engine logs where publicly available. A real game build is optional and requires its owner's consent.
 - Produce a deterministic machine-readable CI failure and a human-readable report identifying the affected package and search path.
 - Correctly mark dynamic loads, optional drivers and platform-specific paths as **unknown** rather than pass; never claim runtime compatibility from a static scan.
 - Test a clean fixture, a missing transitive library, a false-positive risk and a corrupted binary. Confirm source fixtures and customer files are unchanged.
@@ -115,20 +115,21 @@ Do not bundle proprietary game binaries, engine files or third-party tools witho
 
 ## Validation gate and kill rule
 
-First find an independent team's reproducible packaging failure and measure whether the proposed report saves time versus free tools. Later paid-pilot interest from independent teams is required before a commercial edition decision. Stop if free Dependencies plus build logs solve the problem, the scanner cannot produce reliable actionable advice, marketplace rules reject the needed executable, or maintenance exceeds buyer value.
+First build a local synthetic-fixture prototype and compare its findings with free tools and publicly documented engine behavior. Use correctness, false-positive rate, clarity, and local implementation effort to decide whether to continue. Interviews, real team trials, and paid-pilot signals are optional follow-up evidence, not prerequisites to prototyping. Use of a real team's package requires consent and separate owner approval. Keep commercial demand marked unknown until actual evidence exists. Stop, narrow, or continue based on the prototype results; do not claim a market from technical success.
 
 ## Resume checkpoint
 
 - Completed: research classification and candidate scope only. No product implementation or external effect.
-- Remaining: [ ] consented real fixture; [ ] free-tool baseline; [ ] engine/package policy checks; [ ] bounded prototype; [ ] negative tests; [ ] independent buyer signal.
+- Remaining: [ ] synthetic PE/package fixtures; [ ] free-tool baseline; [ ] engine/package policy checks; [ ] bounded read-only prototype; [ ] negative/unknown-state tests; [ ] optional real-team evaluation only if it resolves a specific question.
 - Blockers: owner approval before outreach, account access, customer data, spending, upload or publication.
-- Next concrete action: compare one Windows x64 native-plugin build failure with Dependencies and the engine log, with the team's permission, after higher-priority validation.
+- Next concrete action: generate harmless synthetic PE/package fixtures and implement a bounded parser/report that detects missing and wrong-architecture dependencies without loading or executing inspected files.
 - Owned deliverables: this planning record only. No binary, listing or customer file exists.
 - External effect state: not_started.
 
 ## Work log
 
 - 2026-11-15: Recorded a conditional multi-engine family with a Windows x64 first candidate; no implementation or sales claim.
+- 2026-11-15: Updated the first step to a synthetic-fixture, read-only scanner prototype; real team packages and interviews are optional and require consent where applicable. No outreach, spending, or product implementation occurred in this update.
 
 ## Implementation-ready specification — queued research candidate
 
@@ -151,19 +152,19 @@ First find an independent team's reproducible packaging failure and measure whet
 | Construct / GDevelop desktop exports | Research candidate only if a native dependency failure can be reproduced; may be rejected. | Separate extension/export mechanisms and buyer demand needed. |
 | Roblox | Rejected for this Windows-native-build scope | No suitable Windows packaged-game pipeline; do not force a port for platform count. |
 
-One pipeline is chosen from real buyer evidence; Unity is only the first **comparison** candidate. Shared parser/report code does not imply an engine adapter works elsewhere. Supported versions, seller channels, licensing and maintenance cost are unknown until tested.
+Choose the first local pipeline based on synthetic-fixture coverage, available tooling, public substitute comparison and implementation effort; Unity remains a **candidate**, not a proven winner. Shared parser/report code does not imply an engine adapter works elsewhere. Supported versions, seller channels, licensing and maintenance cost are unknown until tested. Interviews and real-team trials are optional later evidence, not prerequisites to this prototype.
 
 ### Sequenced milestones and deliverables
 
 | ID | Dependency | Deliverable and completion evidence |
 | --- | --- | --- |
-| D1 problem and free-tool baseline | GDM-001/002 priority decision and owner-approved discovery | One consented, reproducible packaged-build failure; report what Dependencies and engine logs do and do not explain, plus buyer debugging time. Stop if free tools suffice. |
-| D2 pipeline selection and rights | D1 | Select one Windows x64 engine/export pipeline, pin versions, review sample-binary rights and marketplace executable rules; reject unsupported channels. |
-| D3 safe parser contract | D2 and development authorization | Synthetic PE fixture set, architecture/import graph schema, bounded file/CPU limits and explicit unknown states; parser never executes game code. |
+| D1 synthetic prototype | Local work; no outreach | Synthetic PE fixture set, architecture/import graph schema, bounded file/CPU limits and explicit unknown states; parser never executes game code. |
+| D2 free-tool baseline | D1 | Compare synthetic cases with Dependencies and public engine documentation; record demonstrated gaps and cases where existing tools suffice. |
+| D3 pipeline selection and rights | D1–D2 | Select one Windows x64 engine/export pipeline, pin versions, review sample-binary rights and marketplace executable rules; reject unsupported channels. |
 | D4 engine rule pack | D3 | Detect missing transitive DLL, wrong CPU architecture, misplaced plugin and import-setting mismatch in four independently labelled package fixtures. |
 | D5 diagnostics and CI | D4 | Repeatable JSON/readable output, stable exit codes, import chain and actionable remedy; prove no input files changed and no customer data left the machine. |
 | D6 false-confidence evaluation | D5 | Delay-load, API-set/system library, runtime-only path, optional driver, corrupt binary and clean package cases; unknowns remain unknown and false positives are reviewed. |
-| D7 buyer/commercial gate | D6 and consent | Three independent team trials, measured debugging/support time and two positive paid-pilot signals or documented alternative; decide price, support and whether a paid edition is viable. |
-| D8 release preparation | D7 and owner launch approval | Versioned rule pack, license/dependency notices, supported engine matrix, sample failures/demo, store eligibility, documentation and maintenance policy. |
+| D7 optional external evaluation | Working prototype and separate owner approval | If useful, invite teams to evaluate with consent. Feedback is optional and not required to continue local work or prove paid demand. |
+| D8 release preparation | Prototype results and owner launch approval | Versioned rule pack, license/dependency notices, supported engine matrix, sample failures/demo, store eligibility, documentation and maintenance policy. |
 
-**Marketing, cost and kill rule.** Demonstrate a packaged build that fails on a clean machine, compare the free viewer and engine log, then show the extra configuration/package diagnosis with reproducible evidence. Publish setup guides or a free synthetic fixture only after rights and channel review. No ads, outreach or listing is authorized. Estimate parser maintenance, engine-version QA and support from real trial hours before pricing; CAD0 spending is authorized. Stop if the paid tool is merely a repackaged free dependency viewer, rule accuracy is poor, marketplace restrictions prevent lawful delivery, or buyers will not pay for the demonstrated diagnostic advantage. No D1–D8 milestone is complete.
+**Marketing, cost and kill rule.** Demonstrate synthetic packages, compare the free viewer and public engine documentation, then show any additional configuration/package diagnosis with reproducible evidence. Publish setup guides or a free synthetic fixture only after rights and channel review. No ads, outreach or listing is authorized. Estimate parser maintenance, engine-version QA and support from actual development and test time before pricing; CAD0 spending is authorized. Stop or narrow if the prototype merely repackages free functionality, rule accuracy is poor, marketplace restrictions prevent lawful delivery, or measured support/maintenance burden outweighs the product's potential value. No D1–D8 milestone is complete.

@@ -1,6 +1,6 @@
-# Unity Historical-Save Testing — Discovery Interview Guide
+# Unity Historical-Save Testing — Optional Discovery Interview Guide
 
-**Use:** Internal, permission-based discovery draft for GDM-001. This is a guide only; no studio has been contacted and no interview has occurred.
+**Use:** Optional internal research draft for GDM-001. Interviews are not required before starting or continuing the local prototype. This is a guide only; no studio has been contacted and no interview has occurred. Do not use it without separate owner approval for outreach.
 
 **Research question:** How do teams maintaining released Unity games verify that old player saves still restore the intended gameplay state after a release or migration?
 
@@ -64,5 +64,5 @@ For an anonymous summary, record only:
 - Keep verbatim quotations only with permission; otherwise paraphrase and remove identifying details.
 - Do not publish private contact details, game names, save contents, code, or confidential incidents.
 - A willingness to evaluate a prototype is not willingness to pay. A hypothetical price response is not a sale or paid-pilot signal.
-- After three independent interviews, compare workflows and disconfirming evidence. Do not authorize a prototype automatically; review fixture rights, privacy, feasibility, costs, and owner approval first.
+- If interviews are later approved and useful, treat each response as anecdotal context. They do not gate prototype work or establish paid demand; keep fixture rights, privacy, feasibility, costs, and owner approvals separate.
 

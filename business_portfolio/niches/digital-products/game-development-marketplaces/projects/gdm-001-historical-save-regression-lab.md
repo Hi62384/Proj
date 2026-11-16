@@ -26,10 +26,11 @@
   ],
   "legacy_ids": [],
   "public_results": [
-    {"label": "Unity discovery interview guide", "path": "results/GDM-001/unity-discovery-interview-guide.md"},
-    {"label": "Competitor comparison template", "path": "results/GDM-001/competitor-comparison-template.md"}
+    {"label": "Optional Unity interview guide (not a project gate)", "path": "results/GDM-001/unity-discovery-interview-guide.md"},
+    {"label": "Competitor comparison template", "path": "results/GDM-001/competitor-comparison-template.md"},
+    {"label": "Unity technical feasibility check", "path": "results/GDM-001/unity-technical-feasibility-2026-11-15.md"}
   ],
-  "next_action": "Interview three independent Unity teams maintaining released games; obtain permission to examine anonymized old-save failure examples and compare their current test workflow before authorizing a prototype.",
+  "next_action": "Build a small local Unity save-regression prototype with synthetic old-save fixtures; prove that a silent gameplay-state regression fails while valid loads pass and source fixtures remain unchanged.",
   "last_reviewed": "2026-11-15",
   "offer_price_usd": null,
   "delivery_hours_assumption": null,
@@ -57,16 +58,16 @@
       "hosting"
     ],
     "unknown_cost_action": "Pause and ask the owner before commitment.",
-    "production_runtime": "Unknown; a local test harness is preferred, and any hosted dependency needs separate approval.",
-    "budget_fit": "discovery_only_no_spend",
+    "production_runtime": "Local synthetic-fixture prototype first; any hosted dependency or real customer-game integration needs separate approval.",
+    "budget_fit": "local_prototype_no_spend",
     "optional_all_in_envelope": {},
     "optional_total_ceiling": 0
   },
   "marketing_execution_authorized": false,
   "production_budget_verified": false,
   "success_probability": "not_established",
-  "marketing_lane": "permission_based_discovery_draft_only",
-  "launch_gate": "buyer_and_comparative_prototype_evidence",
+  "marketing_lane": "no_outreach_prototype_first",
+  "launch_gate": "tested_prototype_and_separate_owner_launch_approval",
   "pre_sale_work_cap_hours": 2,
   "ad_test_cap_cad": 0,
   "offer_price_cad_hypothesis": null,
@@ -101,7 +102,7 @@ The owner-supplied workbook, reviewed 2026-11-15, flags adjacent Unity save prod
 | Candidate | Current substitute or competitor and dated source | Gap to validate; current decision |
 | --- | --- | --- |
 | Unity | Unity Test Framework/NUnit; [Save Migrator listing](https://assetstore.unity.com/packages/tools/utilities/save-migrator-version-safe-save-data-migration-411584), [SaveArchitect](https://singhaniialabs.itch.io/save-architect) (workbook review 2026-11-15). | Candidate first MVP. Prove real asynchronous load and gameplay invariants are simpler than custom tests; listing existence does not show demand. |
-| Unreal | [Save Compatibility Lab](https://www.unrealtools.com/save-compatibility-lab/) (workbook review 2026-11-15). | Close competitor; do not port unless a distinct unmet workflow and buyer signal emerge. |
+| Unreal | [Save Compatibility Lab](https://www.unrealtools.com/save-compatibility-lab/) (workbook review 2026-11-15). | Close competitor; any local port should first prove a distinct technical workflow with synthetic tests. Buyer feedback is optional evidence, not a build prerequisite. |
 | Godot | Native test scripts and [Godot asset discovery](https://docs.godotengine.org/en/stable/community/asset_store/faq.html) (policy check 2026-11-15). | Format/API and competing addon scan outstanding; candidate only. |
 | GameMaker | Native project-specific load tests; [GameMaker marketplace guidance](https://stage.gamemaker.io/en/help/articles/marketplace-setting-up-a-publisher-account) (workbook review 2026-11-15). | Buyer and distribution check outstanding; candidate only. |
 | RPG Maker | Game-specific save migration scripts; [official product documentation](https://www.rpgmakerweb.com/products/rpg-maker-mz) (research pointer checked 2026-11-15). | Save format, rights, automation and competitor check outstanding; candidate only. |
@@ -112,7 +113,7 @@ These are a dated screening matrix, not a completed market census. Exact prices,
 
 ## Narrow MVP and editions
 
-Unity first **only for validation**. A local harness invokes the buyer game's real load/migrate/reload path through a documented adapter, uses immutable old-save fixtures, waits for asynchronous reconstruction, asserts explicit gameplay invariants, and emits a deterministic CI-readable diff. Start with two independently licensed sample games or synthetic-but-realistic fixtures and one intentionally introduced regression that still deserializes. The buyer controls fixture privacy; no save data leaves its environment by default.
+Unity is the first **local prototype target**, not a claim of buyer demand. Start with synthetic-but-realistic fixtures and a minimal sample adapter; use immutable old-save fixtures, await asynchronous reconstruction, assert explicit gameplay invariants, and emit a deterministic CI-readable diff. Prove one intentionally introduced regression that still deserializes. Access to any real buyer game or save is optional for the initial prototype and requires the owner's permission and the rights-holder's consent; no private save data leaves its owner's environment.
 
 Shared family assets: test-vector specification, immutable fixture hashes, invariant schema, expected/actual report format, setup guide and comparison protocol. Each edition versions its engine adapter and package independently. Exclude universal format conversion, replacing the game's save system, cloud-fault simulation without a storage adapter, arbitrary encrypted saves, console certification, and production write access.
 
@@ -134,7 +135,7 @@ No prototype or verified edition exists. A theoretical port is not evidence that
 - A correct migration passes deterministically across repeated headless/CI runs; asynchronous load completion is awaited rather than inferred from a fixed sleep.
 - Baseline old-save bytes and hashes remain identical; test writes go to disposable copies.
 - Corrupt, missing, encrypted/unknown-format and unexpectedly newer saves receive explicit unsupported/failure states, not a misleading PASS.
-- Compare setup time, adapter lines and diagnostic usefulness against a straightforward buyer-written test suite and existing save products in independent games.
+- Compare setup steps, adapter size and diagnostic usefulness against a straightforward synthetic native-test baseline and documented alternatives. Real-team comparison is optional follow-up.
 
 These are **planned tests**, not completed results.
 
@@ -142,27 +143,29 @@ These are **planned tests**, not completed results.
 
 Historical saves may contain personal player data, copyrighted game assets or account identifiers. Use owner-provided, consented fixtures, sanitize public examples, check dependency redistribution and never include customer saves in a public package. Unity Asset Store submission and package rights need review; no seller account, listing or upload is authorized. Fab, Roblox and Superhive are not default channels for this Unity-first test harness. Godot's official library is a free discovery route under current research; itch.io or direct stores may be paid candidates after policy review.
 
-Effort is **unestimated** until one integration spike. Likely costs are adapter setup, fixture curation, engine-version QA and support for custom loaders; a support cap must be measured with pilots. The workbook's US$59–129 is a price experiment only, not a CAD quote or forecast. Marketing draft: demonstrate one deserialization-success/state-failure case, compare against native tests, publish a clear setup guide only after owner approval, and seek permission-based discovery rather than automated outreach or paid ads.
+Effort is **unestimated** until one local integration spike. Likely costs are adapter setup, fixture curation, engine-version QA and support for custom loaders; record actual build and support effort. The workbook's US$59–129 is a price experiment only, not a CAD quote or forecast. First demonstrate one deserialization-success/state-failure case with synthetic data and compare it with native tests. No outreach or paid ads; optional external feedback can follow a working prototype with separate owner approval.
 
 ## Validation gate and kill rule
 
-First interview three independent target teams and compare their current test effort. A later bounded prototype evaluation with at least three independent teams and paid-pilot interest from at least two is a decision heuristic, not sales proof. An alternative buyer signal must be described and approved explicitly. Stop or pivot if free scripts/native tests are adequate, the harness requires more integration than the buyer's own tests, privacy/rights prevent realistic fixtures, or nobody will pay for the demonstrated distinction.
+Build and test the bounded local prototype before seeking outside input. Use synthetic fixtures to measure whether the harness catches silent state regressions, preserves source saves, runs deterministically, and gives useful diagnostics; compare against native tests using reproducible local examples. Interviews and independent evaluations are optional follow-up evidence, not development gates. Real game/save access requires rights-holder consent and separate owner approval. Record demand as unknown until real market evidence exists; stop, narrow, or continue based on prototype results and available time, without treating technical success as proof of sales.
 
 ## Resume checkpoint
 
-- Completed with evidence: taxonomy and project-family plan; owner workbook reviewed as research; drafted `results/GDM-001/unity-discovery-interview-guide.md` and `results/GDM-001/competitor-comparison-template.md` as local planning materials. No product implementation or external commercial action.
-- Current task: buyer/problem discovery for Unity historical saves.
-- Remaining checklist: [ ] owner-authorized permission-based interviews; [ ] current competitor/version check; [ ] approved fixture access; [ ] bounded prototype; [ ] independent negative tests; [ ] paid-pilot signal review.
+- Completed with evidence: taxonomy and project-family plan; owner workbook reviewed as research; optional interview guide, competitor comparison template, and Unity technical feasibility note in `results/GDM-001/`. No product implementation or external commercial action.
+- Current task: start a local synthetic-fixture prototype; no interview or outside contact is required.
+- Remaining checklist: [ ] bounded prototype; [ ] synthetic valid, silent-regression, corrupt and unsupported fixture tests; [ ] fixture immutability and repeatability checks; [ ] current competitor/version check before any commercial claim; [ ] optional owner-approved external evaluation only if it would answer an unresolved integration question.
 - Blockers/decisions needed: owner approval before outreach, account access, use of customer data, spending, upload or publication.
-- Next concrete action: ask three independent Unity teams about their old-save release tests and obtain permission for anonymized failure examples; record their current setup time and willingness to evaluate a prototype.
-- Owned deliverables and hashes/versions: planning record plus the two public research drafts listed above; no binaries or customer fixtures.
+- Next concrete action: implement a minimal Unity test adapter/demo around synthetic old-save fixtures and one deserialization-success/gameplay-state-failure case; document setup time, test outcome, and limitations.
+- Owned deliverables and hashes/versions: planning record plus the three public research/feasibility notes listed above; no binaries or customer fixtures.
 - External effect state: not_started. Do not infer a paid sale or replay any historical action.
 - Private checkpoint reference: none for this new family.
 
 ## Decisions and work log
 
+- 2026-11-15: Reviewed official Unity test-runner, asynchronous Play Mode test, command-line, and persistent-data-path documentation. Recorded a technical feasibility check in `results/GDM-001/unity-technical-feasibility-2026-11-15.md`; no project, save fixture, package, or external account was accessed.
 - 2026-11-15: Created one family record, with Unity as the first validation target and all other engines as unverified editions. No build, listing, contact or payment occurred.
 - 2026-11-15: Added a neutral interview guide and blank competitor/workflow comparison template. These are drafts for later owner-approved discovery; no studio was contacted and no current competitor, buyer, or pricing claim was newly verified.
+- 2026-11-15: Updated the development sequence to prototype with synthetic fixtures before optional interviews, following the owner's direction to maximize low-cost product experiments. No outreach, real game access, spending, or implementation occurred in this update.
 
 ## Implementation-ready specification — research candidate, not an implemented product
 
@@ -170,7 +173,7 @@ First interview three independent target teams and compare their current test ef
 
 **Actors and boundaries.** A local CLI orchestrator reads a manifest; an engine adapter invokes the game-owned load function and emits state; a small comparison core checks typed assertions; a reporter writes JSON and readable diff. Game saves and proprietary game code remain local to the buyer. The shared interface is a versioned JSON schema for `fixture_id`, source/target game versions, fixture SHA-256, timeout, expected invariant paths/types, observed state, engine/adapter version, and outcome (`pass`, `regression`, `invalid_fixture`, `unsupported`, `timeout`, `adapter_error`). Engine-specific adapters may be separate implementations. No universal save parser or upload service is part of the MVP.
 
-**Unity-first adapter requirements.** Pin one Unity LTS version after buyer discovery. Provide a minimal test-scene or PlayMode adapter hook that calls the game's real loader, signals migration/load completion rather than sleeping, then reads inventory, quest, progression, character and world-state values through buyer-supplied accessors. Run with disposable `persistentDataPath` or equivalent isolated profile. Support deterministic fixture ordering and CI/headless invocation where Unity licensing and the project permit it. Fail explicitly when a game cannot expose a completion signal or observable state.
+**Unity-first adapter requirements.** Pin one Unity LTS version available for the local prototype and record it as a support assumption, not a market commitment. Provide a minimal test-scene or PlayMode adapter hook that exercises a synthetic sample loader, signals migration/load completion rather than sleeping, then reads inventory, quest, progression, character and world-state values through sample accessors. Run with disposable test data and prove its isolation. Support deterministic fixture ordering and CI/headless invocation where the installed Unity version and licensing permit it. A later adapter for a real game requires that game's owner's consent and an observable completion/state interface.
 
 **Functional and failure requirements.** Verify missing, duplicate, stale-version, corrupt, encrypted and future-version fixtures; schema path/type mismatches; changed IDs, item quantities, quest flags, character stats and world switches; asynchronous timeout; partial migration; nondeterministic state; and loader exceptions. Preserve fixture byte hashes before/after each run. Separate an actual game regression from a malformed expected-state manifest. Report exact fixture/version/property path, expected value, actual value, engine log excerpt and reproduction command. Never print personal save content by default; opt-in redaction and local retention rules need review.
 
@@ -190,14 +193,13 @@ No edition is technically or commercially verified. An edition may be rejected i
 
 | ID | Dependency | Deliverable and completion evidence |
 | --- | --- | --- |
-| S1 discovery | Owner approval for outreach | Three independent Unity-team problem interviews; anonymized current workflow, time to add a historical-save test, actual failure examples and willingness to evaluate. No invented customer signal. |
-| S2 comparison | S1 | Dated matrix of Unity Test Framework, save migrators, save-test competitors and buyer scripts; a written reason the proposed harness is materially easier or more diagnostic. Stop if no gap. |
-| S3 fixture contract | S1 and fixture rights | Versioned schema, synthetic old-save pair, expected state and source hashes; two real consented fixtures only if approved. Reject unknown format rather than silently converting it. |
-| S4 Unity spike | S2–S3 and development authorization | Minimal adapter calls a disposable game's actual async load path; records completion/state without replacing its save system. One intentionally silent inventory or quest regression fails. |
-| S5 comparison/report | S4 | Deterministic JSON and readable diff, CI exit codes, redaction, fixture immutability proof and repeatability across five runs. |
-| S6 independent evaluation | S5 and buyer consent | At least three independent target teams compare setup time and diagnostic usefulness; record objections, support hours and at least two positive paid-pilot signals or an explicitly justified alternative. |
-| S7 release preparation | S6 and owner launch approval | Version-pinned support matrix, license/dependency review, setup docs, sample project, accurate demo, marketplace-format check, price/cost test and support boundary. No listing until approved. |
+| S1 synthetic prototype | Local work; no outreach | Versioned schema, synthetic old-save pair, expected state and source hashes; one intentionally silent inventory or quest regression. |
+| S2 Unity spike | S1 | Minimal sample adapter exercises an asynchronous load path, records completion/state without fixed sleeps, and proves test-data isolation. Real game integration is optional and requires consent. |
+| S3 comparison | S1–S2 | Dated matrix of Unity Test Framework, save migrators and public alternatives; compare behavior and local setup effort using reproducible examples. State where native tools already suffice. |
+| S4 diagnostics and negative tests | S2 | Deterministic JSON/readable diff, CI exit codes, redaction, fixture immutability and repeatability across five runs; corrupt/unsupported fixtures fail clearly. |
+| S5 optional external evaluation | Working prototype and separate owner approval | If useful, invite teams to evaluate with their consent and without sharing private data by default. Record feedback as anecdotal; it is not required to build and is not paid-demand proof. |
+| S6 release preparation | Prototype results and owner launch approval | Version-pinned support matrix, license/dependency review, setup docs, sample project, accurate demo, marketplace-format check, price/cost assumptions and support boundary. No listing until approved. |
 
-**Marketing and economics.** A truthful demo must show an old save loading successfully but restoring the wrong gameplay state, then the exact failing assertion and unchanged fixture hash. Offer a free synthetic fixture/example only if its rights are clear. Candidate distribution is Unity Asset Store if policy and package review pass, with itch.io/direct alternatives; later editions need independent channel checks. Measure integration/setup/support hours and customer value before price selection. The workbook's US$59–129 remains an experiment, not an offer or revenue forecast. CAD0 spending is authorized.
+**Marketing and economics.** A truthful demo must show an old save loading successfully but restoring the wrong gameplay state, then the exact failing assertion and unchanged fixture hash. Offer a free synthetic fixture/example only if its rights are clear. Candidate distribution is Unity Asset Store if policy and package review pass, with itch.io/direct alternatives; later editions need independent channel checks. Measure integration/setup/support hours during local experiments; any customer-value or pricing claim remains unverified until separately supported. The workbook's US$59–129 remains an experiment, not an offer or revenue forecast. CAD0 spending is authorized.
 
-**Development gate:** S1–S2 discovery and owner authorization precede S3–S5 coding. The next authorized *local* Codex action is to draft a neutral interview guide and competitor comparison template; sending it or obtaining customer material needs separate approval. The canonical `next_action` above remains the first real-world validation task. All S1–S7 milestones are pending.
+**Development approach:** Start with a bounded local synthetic-data prototype and record both successful and failed experiments. Interviews are optional follow-up research, not a prerequisite to coding. Separate owner approval remains necessary for outreach, real customer/game data, spending, uploads and publication. All S1–S6 milestones are pending.

@@ -80,6 +80,12 @@ Keep purpose/buyer, evidence and alternatives, scope/exclusions, acceptance test
 
 Before resuming: read the whole record and relevant later private checkpoint; inspect the actual owned artifacts; reconcile uncertain external effects; preserve completed work; append new evidence; update one concrete next action. Use one writer per record or compare the expected file hash/version before replacing it. Do not mark old work incomplete merely because it was absent from a new conversation.
 
+## Fast build-and-learn default
+
+For new product projects, do not make interviews, outreach, or access to another person's project a prerequisite for starting useful work. Prefer a small local prototype, synthetic or public test data with clear rights, automated checks, and a written record of what worked or failed. Build breadth through bounded experiments, then use those results to decide what to improve, pause, or revisit. Keep demand and technical evidence separate: a passing prototype does not prove buyers, and a failed prototype is useful learning rather than a reason to require a survey before the next idea.
+
+Human participation is required only where the task itself depends on consent, private/customer data, access to a third party's project or account, a legally required review, or a real buyer's acceptance/payment. In those cases, keep the dependency narrowly scoped and owner-approved. Interviews and buyer feedback can be optional evidence, but must not block a local prototype by default. Existing budget, privacy, licensing, publication, contact, and safety permissions remain unchanged; this policy does not authorize spending or external actions.
+
 ## Derived views and integrity
 
 The builder recursively discovers `NICHE.json` and `projects/*.md`, validates identifiers, paths, parents, sources, states and evidence-reference requirements, then generates the index and browser. It makes no network calls and cannot refresh market evidence. It ignores private folders, rejects symlinks, embeds escaped JSON and renders content through DOM text nodes; links allow only safe web/relative destinations. A content-security policy blocks cross-origin connections and forms; the live view polls only its own loopback service.

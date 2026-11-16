@@ -23,7 +23,7 @@
 
 The project record identifies the first four rows as research starting points only. Revalidate every current capability and source before relying on it.
 
-## Workflow comparison (one real, consented scenario per row)
+## Workflow comparison (synthetic/public scenarios first; real scenarios only with permission)
 
 | Scenario ID | Team’s existing method | Proposed harness hypothesis (not a verified feature) | Setup steps / elapsed time | Failure detected? | Diagnostic usefulness | Source fixture changed? | Repeatability evidence | Integration burden | Participant’s preferred approach and reason |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -45,5 +45,5 @@ The project record identifies the first four rows as research starting points on
 - Evidence supporting the decision:
 - Remaining uncertainty and next check:
 
-Do not mark the product validated from this worksheet. A prototype decision needs owner authorization, consented fixture access, a cost/rights review, and an explicit test scope.
+Do not mark the product validated from this worksheet. Local prototype work can use synthetic fixtures and does not require interviews or customer access. Any real customer fixture requires rights-holder consent; external outreach, costs, and publication still require separate owner approval.
 

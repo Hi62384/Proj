@@ -24,7 +24,7 @@
     "GDM-003"
   ],
   "legacy_ids": [],
-  "next_action": "After GDM-001's validation decision, compare real unmet transport behavior and competitor coverage in Godot, Unity and Unreal before choosing the first edition.",
+  "next_action": "Build a small engine-neutral local transport simulation using synthetic agents and routes; test capacity, queues, disruptions, save/restore and deterministic recovery before selecting an engine adapter.",
   "last_reviewed": "2026-11-15",
   "offer_price_usd": null,
   "delivery_hours_assumption": null,
@@ -52,16 +52,16 @@
       "hosting"
     ],
     "unknown_cost_action": "Pause and ask the owner before commitment.",
-    "production_runtime": "Customer game runtime only; version/support costs are unknown.",
-    "budget_fit": "discovery_only_no_spend",
+    "production_runtime": "Local synthetic simulation first; any real customer game integration and its version/support costs are optional follow-up and need consent.",
+    "budget_fit": "local_prototype_no_spend",
     "optional_all_in_envelope": {},
     "optional_total_ceiling": 0
   },
   "marketing_execution_authorized": false,
   "production_budget_verified": false,
   "success_probability": "not_established",
-  "marketing_lane": "queued_discovery_draft_only",
-  "launch_gate": "engine_selection_buyer_and_competitor_evidence",
+  "marketing_lane": "no_outreach_prototype_first",
+  "launch_gate": "tested_prototype_and_separate_owner_launch_approval",
   "pre_sale_work_cap_hours": 2,
   "ad_test_cap_cad": 0,
   "offer_price_cad_hypothesis": null,
@@ -95,7 +95,7 @@ The owner workbook reviewed 2026-11-15 cites a [Godot discussion](https://forum.
 | Engine | Native/free/paid substitute and dated source | Gap and status |
 | --- | --- | --- |
 | Godot | [NavigationLink](https://docs.godotengine.org/en/stable/tutorials/navigation/navigation_using_navigationlinks.html), FlowAI and Smart Platforms (workbook review 2026-11-15). | Candidate; free motion/path links do not establish a capacity/recovery gap without comparative demo. |
-| Unity | [NavMesh links](https://docs.unity3d.com/Manual/class-OffMeshLink.html) and Asset Store crowd/elevator search (research pointer 2026-11-15). | Candidate; catalog comparison and buyer interviews still needed. |
+| Unity | [NavMesh links](https://docs.unity3d.com/Manual/class-OffMeshLink.html) and Asset Store crowd/elevator search (research pointer 2026-11-15). | Candidate; catalog comparison remains, while buyer interviews are optional and not a prototype gate. |
 | Unreal | [Smart Objects](https://dev.epicgames.com/documentation/en-us/unreal-engine/smart-objects-in-unreal-engine) and navigation/crowd tooling (research pointer 2026-11-15). | Candidate; existing systems may cover reservations; no edition promise. |
 | Roblox | [PathfindingService](https://create.roblox.com/docs/characters/pathfinding) and Creator Store models/plugins (research pointer 2026-11-15). | Candidate; server authority, replication and store eligibility need proof. |
 | GameMaker | Native path/grid workflows and [GameMaker manual](https://manual.gamemaker.io/) (research pointer 2026-11-15). | Candidate; integration API, state persistence and distribution are unknown. |
@@ -105,7 +105,7 @@ This table records research leads, not a complete competitor audit. Exact paid c
 
 ## Narrow MVP and edition architecture
 
-Choose the first engine through a scored review of unmet buyer demand, competitor coverage, implementation feasibility and test/support cost; **Godot is a candidate, not a preselected winner**. A bounded demo uses at most 20 NPCs, two finite-capacity vehicles and one transfer route on a fixed test machine. This is an initial **test target**, not a measured supported scale. It should exercise reservations, fair queues, schedules, missed departures, service disruption, rerouting, save/load mid-trip and deterministic recovery. Define a small integration API for route requests, vehicle events and state serialization.
+Choose the first engine by local implementation feasibility, available tooling, public substitute coverage and test/support cost; **Godot is a candidate, not a preselected winner**. A bounded demo uses at most 20 NPCs, two finite-capacity vehicles and one transfer route on a fixed test machine. This is an initial **test target**, not a measured supported scale. It should exercise reservations, fair queues, schedules, missed departures, service disruption, rerouting, save/load mid-trip and deterministic recovery. Define a small integration API for route requests, vehicle events and state serialization. Buyer interviews are not required to choose or prototype an edition.
 
 Share a behavior specification, state-machine test vectors, disruption fixtures, debug semantics and documentation. Isolate navigation, movement-controller, save-system and packaging adapters per engine with independent versions. Exclude multiplayer, arbitrary scale, full traffic simulation, every 2D/3D movement system and production integration until separate proof.
 
@@ -133,19 +133,19 @@ These are planned tests; none has been executed.
 
 Check license compatibility for engine APIs, borrowed example code, artwork and demo models. No customer game assets should be included without rights. Godot's official asset library is a free discovery route under current research; Fab, Unity Asset Store and Roblox Creator Store are conditional on a genuine engine-compatible edition and seller policy. Superhive is for Blender-specific products and is not a default channel for this family. itch.io/direct are candidate paid routes only. No uploads or seller-account changes authorized.
 
-Effort and support cost are **unknown**, likely high because movement controllers and save systems vary. Measure adapter hours and support per pilot before pricing. The workbook's US$39–79 Godot range is an experiment, not accepted pricing or expected income. A low-cost demo plan would show a capacity bottleneck, disruption and restored journey side by side with native/free approaches, with honest limits and permission-based discovery only.
+Effort and support cost are **unknown**, likely high because movement controllers and save systems vary. Measure local prototype and adapter hours before pricing. The workbook's US$39–79 Godot range is an experiment, not accepted pricing or expected income. First build a low-cost demo with synthetic data showing a capacity bottleneck, disruption and restored journey beside a simple native/free baseline. No outreach is required; external feedback can be considered after a working prototype with separate owner approval.
 
 ## Validation gate and kill rule
 
-This family is **queued behind GDM-001**, not a parallel build. First edition requires a buyer/competitor/feasibility comparison. A later three-team evaluation and at least two paid-pilot signals is a decision heuristic; an alternative meaningful signal requires explicit documentation. Stop or pivot if existing solutions already deliver the behavior, integration forces major customer AI rewrites, or support cost makes a sale uneconomic.
+This family can begin with a bounded local prototype without waiting for GDM-001 or outside interviews. Compare its synthetic behavior against a simple baseline and use measured implementation complexity, correctness, and support assumptions to decide whether to continue. Engine selection can follow the shared core. Interviews and team evaluations are optional follow-up evidence, not gates to building. Real customer projects require consent; publication, spending, outreach, and external account changes still require separate authorization.
 
 ## Resume checkpoint
 
 - Completed with evidence: family planning record and dated research screen only.
-- Current task: queued engine and buyer review; no development started.
-- Remaining checklist: [ ] edition selection; [ ] current paid competitor audit; [ ] permission-based buyer interviews; [ ] bounded prototype; [ ] disruption/save tests; [ ] support-cost measurement.
+- Current task: begin an engine-neutral local prototype with synthetic routes and agents; no interview or outside contact is required.
+- Remaining checklist: [ ] deterministic transport core; [ ] capacity/queue/disruption/save-restore tests; [ ] simple baseline comparison; [ ] choose an engine based on local feasibility; [ ] measure build effort; [ ] optional external evaluation only if useful after the prototype.
 - Blockers/decisions needed: GDM-001 validation decision, buyer evidence and owner authorization for contact, build costs or publication.
-- Next concrete action: after GDM-001's decision, compare Godot, Unity and Unreal transport substitutes with three target developers before selecting the first edition.
+- Next concrete action: implement synthetic journeys for capacity contention, missed transfers, service interruption and mid-trip save/restore; log pass/fail outcomes and prototype effort.
 - Owned deliverables and hashes/versions: this planning record only.
 - External effect state: not_started.
 - Private checkpoint reference: none for this new family.
@@ -153,6 +153,7 @@ This family is **queued behind GDM-001**, not a parallel build. First edition re
 ## Decisions and work log
 
 - 2026-11-15: Created one multi-engine family plan. No engine edition, buyer pilot, product code, listing or payment was completed.
+- 2026-11-15: Updated the next step to a parallel local synthetic-data prototype; interviews and team evaluations are optional follow-up, not build gates. No outreach, spending, or product implementation occurred in this update.
 
 ## Implementation-ready specification — queued research candidate
 
@@ -175,20 +176,20 @@ This family is **queued behind GDM-001**, not a parallel build. First edition re
 | GameMaker 2D | Research candidate | Separate path/state API and viable package format need proof. |
 | Construct / GDevelop 2D | Research candidate | Separate event-system integration and extension rules need proof; may be rejected if no affordable adapter. |
 
-All rows are untested. The first edition is chosen **after** comparing buyer pain, substitutes, feasibility and support cost, not by engine preference. Potential channels are Godot's free Asset Library for discovery, Unity Asset Store, Fab, Roblox Creator Store, itch.io or direct distribution only where the exact edition and seller rules allow it; no listing is approved.
+All rows are untested. Choose a first local edition **after** checking public substitutes, feasibility and support cost, not by engine preference. Potential channels are Godot's free Asset Library for discovery, Unity Asset Store, Fab, Roblox Creator Store, itch.io or direct distribution only where the exact edition and seller rules allow it; no listing is approved. Buyer research is optional and must not delay the prototype.
 
 ### Sequenced milestones and deliverables
 
 | ID | Dependency | Deliverable and completion evidence |
 | --- | --- | --- |
-| T1 market/engine selection | GDM-001 decision and owner-approved discovery | Dated competitor matrix for Godot, Unity and Unreal plus three target-team problem accounts; choose one engine/2D-or-3D edition or stop. |
-| T2 behavior contract | T1 | State-transition table, event IDs, capacity/queue policy, save schema and 12 synthetic journey traces, including cancellations and disruptions. |
-| T3 core spike | T2 and development authorization | Reproducible 20-agent/2-vehicle fixture on a stated machine and engine version; no overbooking or duplicate boarding; measured frame time and memory, not a universal performance claim. |
-| T4 adapter | T3 | A sample game integrates existing navigation/controller callbacks without replacing its movement system; a second controller shape documents integration cost. |
-| T5 recovery and diagnostics | T3–T4 | Save during boarding and transit, resume, replay a duplicate event, interrupt a service and compare deterministic final state; visual state inspector identifies agent, vehicle, reservation and reason for wait. |
-| T6 buyer evaluation | T5 and consent | Three independent team evaluations compare native/free/paid alternatives, integration hours and support load; positive paid-pilot signal from two or documented alternative before commercial build. |
-| T7 release preparation | T6 and owner launch approval | Versioned API, migration guide, test/demo project, license rights, channel review, measured support budget, price experiment and clear limitations. |
+| T1 behavior contract | Local work; no outreach | State-transition table, event IDs, capacity/queue policy, save schema and 12 synthetic journey traces, including cancellations and disruptions. |
+| T2 core prototype | T1 | Reproducible 20-agent/2-vehicle synthetic fixture on a stated machine; no overbooking or duplicate boarding; measure performance without a universal claim. |
+| T3 recovery and diagnostics | T2 | Save during boarding and transit, resume, replay a duplicate event, interrupt a service and compare deterministic final state; show why each agent is waiting. |
+| T4 simple adapter/demo | T2–T3 | Connect one available engine/sample movement callback without replacing a real project; clearly label any adapter not tested in an actual game. |
+| T5 local baseline comparison | T2–T4 | Compare behavior and implementation effort with a minimal native/free baseline; document when the baseline already suffices. |
+| T6 optional external evaluation | Working prototype and separate owner approval | If useful, invite teams to evaluate with consent; outside participation is optional and does not gate continued local work. Do not treat interest as a sale. |
+| T7 release preparation | Prototype results and owner launch approval | Versioned API, migration guide, test/demo project, license rights, channel review, measured support budget, price hypothesis and limitations. No listing until approved. |
 
 **Demonstration and economics.** Show several agents competing for the last seat, a missed transfer, a disrupted service and save/load during transit, with counters and invariant report visible. Compare against a basic lift/pathfinding demo to prove the additional behavior. Marketing may include useful setup documentation and a free bounded sample after rights review; no unsolicited messages or ads. Price and support cost remain unknown; the workbook's Godot US$39–79 idea is only a hypothesis. CAD0 is authorized for spending.
 
-**Stop rule:** reject or narrow an edition if a free/paid existing system already meets the same behavior, adapter work requires rewriting buyer AI, deterministic save/recovery cannot be achieved, or measured support cost makes the proposed sale uneconomic. The next local Codex action, once GDM-001's decision is recorded, is a dated competitor/engine comparison sheet. No T1–T7 milestone is complete.
+**Stop rule:** reject or narrow an edition if a free/paid existing system already meets the same behavior, adapter work requires rewriting buyer AI, deterministic save/recovery cannot be achieved, or measured support cost makes the proposed sale uneconomic. The next local action is to implement the synthetic behavior contract and fixtures. No T1–T7 milestone is complete.

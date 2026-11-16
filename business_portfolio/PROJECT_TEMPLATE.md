@@ -83,10 +83,10 @@ Define the number of sources/objects/records/fields, output, integration boundar
 Define expected outputs, malformed/duplicate/partial-failure behavior and independent verification. Separate mocks, staging and production results. Document uncertain side effects and recovery.
 
 ## Economics and remaining human work
-Include search/failed proposals, communication, discovery, access, build, QA, handover, support and admin. Distinguish gross revenue, cash contribution, owner time and illustrative economic surplus. Keep currencies separate.
+Include search/failed proposals, optional discovery, required consent/access, build, QA, handover, support and admin. Do not make interviews or outside participation a prerequisite to a local prototype when synthetic or clearly licensed data will work. Distinguish gross revenue, cash contribution, owner time and illustrative economic surplus. Keep currencies separate.
 
 ## Validation gate and stop condition
-What evidence permits the next stage? What would make the offer too risky, redundant or uneconomic? A management threshold is not a statistical guarantee.
+Prefer a small local build-and-learn step as the first gate. What evidence permits the next stage? What would make the offer too risky, redundant or uneconomic? Require other people's participation only when consent, private access, legal review, or a real buyer's acceptance/payment is essential. Interviews and market feedback are optional follow-up evidence, not a default prerequisite to making a prototype. A management threshold is not a statistical guarantee.
 
 ## Resume checkpoint
 - Completed with evidence:

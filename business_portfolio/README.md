@@ -1,3 +1,17 @@
+# Business Portfolio — 13 primary business niches
+
+The active portfolio has **13 business niches in priority order**. Game Development Marketplaces contains the only three active project records: [GDM-001](niches/game-development-marketplaces/projects/gdm-001-historical-save-regression-lab.md), [GDM-002](niches/game-development-marketplaces/projects/gdm-002-capacity-aware-npc-transport.md) and [GDM-003](niches/game-development-marketplaces/projects/gdm-003-native-dependency-verifier.md). The other 12 niches have **zero active projects**. These three records are implementation-ready plans, not built or commercially validated products; only GDM-001 is the next validation focus.
+
+Open Portfolio Manager in any Codex chat to use **Projects**, **Niches**, **History & Existing Work**, or the optional **Repository files** explorer. Each chat keeps its own selection. The read-only [project browser](PROJECT_BROWSER.html) has the same active/history split; double-click [Open_Project_Browser.cmd](Open_Project_Browser.cmd) for live updates. Open a project for Overview, Files, Results, Tasks & Progress and its complete canonical record. Empty niches show `0 active projects` and contain only `NICHE.json`.
+
+The 36-category/144-subcategory taxonomy remains in [`opportunity_library/data/taxonomy.json`](../opportunity_library/data/taxonomy.json) as **research**, separate from the business niches. The [previous 182-node view](archive/2026-11-15-taxonomy-view-v1/README.md) is preserved byte-for-byte with a path/ID crosswalk. The [139 older project records](archive/2026-11-15-legacy/README.md), including published product history, remain unchanged and searchable in History. No underlying product source or private checkpoint was moved.
+
+Current authorized spending is CAD0. The CAD100 planning ceiling grants no permission to spend; outreach, accounts, uploads, publication and paid development need their usual authorization. To resume GDM-001, read its full record and latest private checkpoint, then perform the next approved validation task. The [current completion report](../docs/BUSINESS_NICHES_13_REPORT_2026-11-15.md) lists verification and remaining work.
+
+## Earlier 182-node view (historical description)
+
+The following section describes the immediately prior taxonomy-oriented active view and is retained as migration context. It is not the current navigation.
+
 # Business Portfolio — active niche overhaul (2026-11-15)
 
 The active view contains **three planned game-development product families**: GDM-001 Historical Save Regression Lab (first validation focus), GDM-002 Capacity-Aware NPC Transport System (queued), and GDM-003 Native Dependency Preflight Verifier (queued). None is built, commercially validated, priced for sale or authorized for launch. The owner's marketplace workbook supports research hypotheses, not paid demand.

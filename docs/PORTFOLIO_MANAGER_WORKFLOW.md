@@ -1,5 +1,11 @@
 # Portfolio Manager workflow
 
+## Current business view (2026-11-15)
+
+Projects shows GDM-001, GDM-002 and GDM-003. Niches shows the 13 primary business niches in priority order with active-project counts: Game Development Marketplaces has three; the others have zero. History & Existing Work retains the 139 older records, while Repository files remains the optional full explorer. The 36-category opportunity taxonomy is research under `opportunity_library`, not part of this menu. A selected GDM record has Overview, Files, Results, Tasks & Progress and Complete record tabs. Per-chat selections, global availability, Computer Access, Stop and Emergency Stop retain their existing behavior.
+
+The material below describes the prior active view and remains for migration history. Current verification is in `docs/BUSINESS_NICHES_13_REPORT_2026-11-15.md`.
+
 ## Current navigation (2026-11-15)
 
 Use **Projects** for the three current GDM families, **Niches** for the mostly empty taxonomy, and **History & Existing Work** for preserved prior project records. **Repository files** is the optional full file explorer for an arbitrary file or folder. Its folders load in the background when expanded, so the default project view stays small. The web project browser offers the same three primary views and separate Overview, Files & Results, Tasks & Progress and Complete record panels. History is read-only in the browser; changes to an archived plan require a reviewed restoration into an active niche. Each Codex chat retains its own selection, while AI Only/Human Available and Computer Access remain shared as before.

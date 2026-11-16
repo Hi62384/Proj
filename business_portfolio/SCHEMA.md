@@ -1,5 +1,13 @@
 # Project format and recursive architecture
 
+## Current 13-niche business view (2026-11-15)
+
+`niches/` now has exactly 13 top-level business niches. Their `NICHE.json` files add a `priority` integer 1–13; this orders the browser and Portfolio Manager. `game-development-marketplaces` retains stable niche ID `N-gdm-20261115` and owns the only active records, GDM-001/002/003. The other 12 niches have no `projects/` directory. The opportunity library's 36 categories and 144 subcategories are independent research and are not active business niches.
+
+The previous 182-node active tree, including the original GDM record bytes, is preserved in `archive/2026-11-15-taxonomy-view-v1/` with a 185-file checksum manifest and GDM ID/path crosswalk. The older 139-record archive at `archive/2026-11-15-legacy/` is unchanged. The builder validates both snapshots and exposes the 139 older records under `archived_records`; the prior taxonomy snapshot remains a rollback/evidence source, not another active project list. Product implementation specifications were appended to the moved GDM records; their IDs, planned/unvalidated status, commercial permissions and original planning history remain intact.
+
+## Prior taxonomy-view notes (historical)
+
 ## Active taxonomy and history (2026-11-15)
 
 `niches/` contains the current 36-category / 144-subcategory taxonomy, Game Development Marketplaces, AI Workflow Automation, and only GDM-001 through GDM-003 as active project-family records. Empty niches need only `NICHE.json`. Prior canonical records retain their original IDs, bytes, metadata and checklist history in `archive/2026-11-15-legacy/niches/`. The dated crosswalk maps former and archived paths; the manifest contains SHA-256 and byte length for all 301 original niche files. `build_browser.py` validates these before including `archived_records` in the generated read-only index. Do not edit the archive in place or treat an archived published record as cancelled. A restored project must be reviewed against the latest private checkpoint and current external state, assigned a valid active niche ID/path, and checked for an ID collision. Private receipts and customer material remain outside the public index.

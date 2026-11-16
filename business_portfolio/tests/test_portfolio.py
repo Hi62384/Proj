@@ -38,23 +38,30 @@ class PortfolioTests(unittest.TestCase):
     def test_snapshot_preserves_all_awa_ids(self):
         ids={x['id'] for x in self.data['archived_records']}
         self.assertTrue({f'AWA-{i:03d}' for i in range(1,121)}<=ids)
-    def test_three_active_families_and_taxonomy(self):
-        from overhaul_niches import slug
+    def test_thirteen_business_niches_and_three_active_families(self):
+        from migrate_business_niches import BUSINESS_NICHES
         taxonomy=json.loads((ROOT.parent/'opportunity_library/data/taxonomy.json').read_text(encoding='utf-8'))
-        paths={n['path']:n for n in self.data['niches']}
         self.assertEqual(len(taxonomy['categories']),36)
         self.assertEqual(sum(len(c['subcategories']) for c in taxonomy['categories']),144)
-        for category in taxonomy['categories']:
-            self.assertEqual(paths[category['slug']]['title'],category['name'])
-            for subcategory in category['subcategories']:
-                child=category['slug']+'/'+slug(subcategory['name'])
-                self.assertEqual(paths[child]['title'],subcategory['name'])
-                self.assertEqual(paths[child]['parent'],paths[category['slug']]['id'])
+        self.assertEqual([(n['path'],n['title']) for n in self.data['niches']],BUSINESS_NICHES)
+        self.assertEqual([n['priority'] for n in self.data['niches']],list(range(1,14)))
+        self.assertTrue(all(n['parent'] is None for n in self.data['niches']))
         self.assertEqual({r['id'] for r in self.data['records']},{'GDM-001','GDM-002','GDM-003'})
+        self.assertTrue(all(r['niche_path']=='game-development-marketplaces' for r in self.data['records']))
+        self.assertEqual(len(list((ROOT/'niches').rglob('projects/*.md'))),3)
+        self.assertFalse(any((ROOT/'niches'/slug/'projects').exists() for slug,_ in BUSINESS_NICHES[1:]))
         self.assertEqual(len(self.data['archived_records']),139)
-        self.assertEqual(len(self.data['niches']),182)
-        self.assertEqual(len([n for n in self.data['niches'] if n['parent'] is None and n['path']!='ai-workflow-automation']),36)
+        self.assertEqual(len(self.data['niches']),13)
+        self.assertEqual(self.data['taxonomy_snapshot'],{'files':185,'projects':3})
+        self.assertEqual([r['planning_lane'] for r in self.data['records']],
+                         ['next_to_validate_focus','queued','queued'])
         self.assertTrue(all(not r['execution_authorized'] and r['commercial_validation']=='unvalidated' for r in self.data['records']))
+    def test_taxonomy_snapshot_tampering_rejected(self):
+        target=ROOT/'archive/2026-11-15-taxonomy-view-v1/niches/games-and-interactive-entertainment/game-development-marketplaces/projects/gdm-001-historical-save-regression-lab.md'
+        original=Path.read_bytes
+        with patch.object(Path,'read_bytes',lambda p:original(p)+b'altered' if p==target else original(p)):
+            with self.assertRaisesRegex(b.ValidationError,'Taxonomy snapshot file manifest mismatch'):
+                b.load_portfolio(ROOT)
     def test_archive_integrity_guard(self):
         target=ROOT/'archive/2026-11-15-legacy/niches/ai-workflow-automation/agency/white-label/builds/projects/awa-001-inbound-form-to-crm-starter.md'
         original=Path.read_bytes

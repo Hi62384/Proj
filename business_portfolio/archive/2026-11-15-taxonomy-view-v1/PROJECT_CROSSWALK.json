@@ -1,0 +1,35 @@
+[
+  {
+    "id": "GDM-001",
+    "old_path": "niches/games-and-interactive-entertainment/game-development-marketplaces/projects/gdm-001-historical-save-regression-lab.md",
+    "sha256": "6a7c99f32c5147b3efea7d9b4ba4b5250e4ac3b4634c90070a7380f3e54e509e",
+    "niche_id": "N-gdm-20261115",
+    "niche_path": "games-and-interactive-entertainment/game-development-marketplaces",
+    "work_state": "planned",
+    "commercial_validation": "unvalidated",
+    "new_path": "niches/game-development-marketplaces/projects/gdm-001-historical-save-regression-lab.md",
+    "preserved_snapshot": "archive/2026-11-15-taxonomy-view-v1/niches/games-and-interactive-entertainment/game-development-marketplaces/projects/gdm-001-historical-save-regression-lab.md"
+  },
+  {
+    "id": "GDM-002",
+    "old_path": "niches/games-and-interactive-entertainment/game-development-marketplaces/projects/gdm-002-capacity-aware-npc-transport.md",
+    "sha256": "bdacae79daee333f9c6abc94da3d69073eb28ff1d54787a7e8ae42e883ef0721",
+    "niche_id": "N-gdm-20261115",
+    "niche_path": "games-and-interactive-entertainment/game-development-marketplaces",
+    "work_state": "planned",
+    "commercial_validation": "unvalidated",
+    "new_path": "niches/game-development-marketplaces/projects/gdm-002-capacity-aware-npc-transport.md",
+    "preserved_snapshot": "archive/2026-11-15-taxonomy-view-v1/niches/games-and-interactive-entertainment/game-development-marketplaces/projects/gdm-002-capacity-aware-npc-transport.md"
+  },
+  {
+    "id": "GDM-003",
+    "old_path": "niches/games-and-interactive-entertainment/game-development-marketplaces/projects/gdm-003-native-dependency-verifier.md",
+    "sha256": "f18ffdf91bbe8668f4fabec636fe86e637045e6d3adb7a2cfa0cfddc7d36d593",
+    "niche_id": "N-gdm-20261115",
+    "niche_path": "games-and-interactive-entertainment/game-development-marketplaces",
+    "work_state": "planned",
+    "commercial_validation": "unvalidated",
+    "new_path": "niches/game-development-marketplaces/projects/gdm-003-native-dependency-verifier.md",
+    "preserved_snapshot": "archive/2026-11-15-taxonomy-view-v1/niches/games-and-interactive-entertainment/game-development-marketplaces/projects/gdm-003-native-dependency-verifier.md"
+  }
+]

@@ -20,7 +20,7 @@ else:
     bridge_path = Path(__file__).resolve().parents[2] / 'apps' / 'codex_desktop_assistant'
     with patch.object(sys, 'path', [str(bridge_path), *sys.path]):
         from bridge.dashboard import Dashboard
-    from portfolio_manager.workspace_window import ROLE, project_entries, search_paths
+    from portfolio_manager.workspace_window import ROLE, project_entries, search_paths, niche_entries
 
 
 @unittest.skipUnless(QApplication, 'PySide6 is required')
@@ -28,6 +28,13 @@ class WorkspaceWindowTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.app = QApplication.instance() or QApplication([])
+
+    def test_business_niches_show_order_and_counts(self):
+        repo=Path(__file__).resolve().parents[2]
+        rows=niche_entries(repo)
+        self.assertEqual(len(rows),13)
+        self.assertEqual([row[3] for row in rows],list(range(1,14)))
+        self.assertEqual([row[2] for row in rows],[3]+[0]*12)
 
     def test_two_chat_windows_share_mode_but_not_selection(self):
         with TemporaryDirectory() as temp:

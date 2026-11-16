@@ -1,0 +1,927 @@
+[
+  {
+    "path": "3d-cad-and-digital-fabrication/3d-asset-libraries/NICHE.json",
+    "sha256": "e01f52d945700e8b65500f119c4035e675faf2ca5e5eca6d72953e2a45715bc2",
+    "bytes": 239
+  },
+  {
+    "path": "3d-cad-and-digital-fabrication/cad-templates/NICHE.json",
+    "sha256": "642b58e39484c1b6cdb37eaaba3a7bc31580bfe190148760e87c7d08ef91ae4d",
+    "bytes": 229
+  },
+  {
+    "path": "3d-cad-and-digital-fabrication/fabrication-patterns/NICHE.json",
+    "sha256": "751d572648c3881863d2cdc46222c6decb2f1acaaec50b41cbf1b78f755dfd8a",
+    "bytes": 243
+  },
+  {
+    "path": "3d-cad-and-digital-fabrication/NICHE.json",
+    "sha256": "773fefdf673240f9e9ff0ccbdf31711ff718f74f795f0a0d1687c874fa657ecb",
+    "bytes": 322
+  },
+  {
+    "path": "3d-cad-and-digital-fabrication/production-add-ons/NICHE.json",
+    "sha256": "f6129b325096cc7c8879f8b77728cb613c5967361464d889010eb013a2858f9a",
+    "bytes": 239
+  },
+  {
+    "path": "advertising-and-marketing-analytics/attribution-reporting/NICHE.json",
+    "sha256": "ab26fc62af594ef741ca17f9635438d2206d7d530b8524e90b70e29bc1554222",
+    "bytes": 250
+  },
+  {
+    "path": "advertising-and-marketing-analytics/campaign-quality-checks/NICHE.json",
+    "sha256": "6c570a0e290c844c367844cea00b8218456b3a0a3049109ce27ea7f4664f5f9d",
+    "bytes": 254
+  },
+  {
+    "path": "advertising-and-marketing-analytics/conversion-tools/NICHE.json",
+    "sha256": "41b869448d8eae5979171a3fbed7203ae2ecb57f671dae229467895c3f5fda96",
+    "bytes": 240
+  },
+  {
+    "path": "advertising-and-marketing-analytics/creative-testing/NICHE.json",
+    "sha256": "9e1029de2770e520b23eacd21252154e87f13f0bac884948ab380a19b1aeb84d",
+    "bytes": 240
+  },
+  {
+    "path": "advertising-and-marketing-analytics/NICHE.json",
+    "sha256": "ba0be7989c7d3cc35d97dbfae5b1b8782aec3ac4c71335b7de0db44c02346b4e",
+    "bytes": 327
+  },
+  {
+    "path": "agriculture-environment-and-energy/energy-information/NICHE.json",
+    "sha256": "dc516d47d8da8138f172a0fddc5614c61123ccf8a1f03636efbadf6b2dec6480",
+    "bytes": 243
+  },
+  {
+    "path": "agriculture-environment-and-energy/environmental-recordkeeping/NICHE.json",
+    "sha256": "8073b5c61592bc5b4fe6b2b1d1c859a6bb66c2f37b46b5eb7b955e13e1bc7e88",
+    "bytes": 261
+  },
+  {
+    "path": "agriculture-environment-and-energy/farm-administration/NICHE.json",
+    "sha256": "780e2e80433bf454a373ed0881638b0dea52706623d6e87e1c2dce732028e76d",
+    "bytes": 245
+  },
+  {
+    "path": "agriculture-environment-and-energy/NICHE.json",
+    "sha256": "5977035e53231c0dae9b0191f859e79f41efc9e63d2dc5daecee77ffcb234bc6",
+    "bytes": 336
+  },
+  {
+    "path": "agriculture-environment-and-energy/resource-planning/NICHE.json",
+    "sha256": "b8931dc45ddb38b331f9bc5da14cd29b0adc3591de585b10e328be522310cfcd",
+    "bytes": 241
+  },
+  {
+    "path": "ai-content-systems/content-quality-tools/NICHE.json",
+    "sha256": "2f4fd86a41e8ef8261bc765705fcdf85d498d5d7e9e75aac0803d1ccd82609b7",
+    "bytes": 233
+  },
+  {
+    "path": "ai-content-systems/content-repurposing/NICHE.json",
+    "sha256": "03fba1072a92a4a2ae25c7373d5aebba9933df26ad8292c0bd0c19aa88c317bf",
+    "bytes": 229
+  },
+  {
+    "path": "ai-content-systems/grounded-drafting/NICHE.json",
+    "sha256": "7a7e047bebcfe5fa7f49453f80d2e8c9905af9367e557ba56fd76fc9a29b5b66",
+    "bytes": 225
+  },
+  {
+    "path": "ai-content-systems/NICHE.json",
+    "sha256": "aaf29f5f83259a6b3699db501af03bc7c91d2edacd278f937fcb793aea018d07",
+    "bytes": 335
+  },
+  {
+    "path": "ai-content-systems/synthetic-visual-workflows/NICHE.json",
+    "sha256": "5312ec139def4f154b4b09990fe9ddacbc3159ade412fece45840bf222d4ff33",
+    "bytes": 243
+  },
+  {
+    "path": "ai-workflow-automation/NICHE.json",
+    "sha256": "1333aa44ee57eb157153956602b3ed41a668edf7a1f8e4cbb4f2a8490dfb48ab",
+    "bytes": 252
+  },
+  {
+    "path": "analytics-reporting-and-spreadsheets/business-reporting/NICHE.json",
+    "sha256": "601a4d9dae9db69ad819ceeb82e3358cb22eea710605cd9dc2ff8fc87b95c85e",
+    "bytes": 245
+  },
+  {
+    "path": "analytics-reporting-and-spreadsheets/data-reconciliation/NICHE.json",
+    "sha256": "7890cc0708bcd6e8fc248a7ed81f3b17941f0209debc5f1b5c9e14d3b8ac71bd",
+    "bytes": 247
+  },
+  {
+    "path": "analytics-reporting-and-spreadsheets/NICHE.json",
+    "sha256": "d40308f86a9021e8b7f62683e1dd32dae79f4fc90fdcb567ccfec472c368d2cd",
+    "bytes": 350
+  },
+  {
+    "path": "analytics-reporting-and-spreadsheets/planning-analytics/NICHE.json",
+    "sha256": "7413afd411137b444eeccfe4fbcbaaae7a084caa149c353bf63c211f2e8c05ec",
+    "bytes": 245
+  },
+  {
+    "path": "analytics-reporting-and-spreadsheets/spreadsheet-quality/NICHE.json",
+    "sha256": "fa5c8e765900a0818a38faae09d93482ceb82dfc4931f3c1cced049accd80d1e",
+    "bytes": 247
+  },
+  {
+    "path": "apis-and-data-infrastructure/data-validation-apis/NICHE.json",
+    "sha256": "01016236aa69fef52fee63bce65eb6fe349363d12bd9024e894a7e956841cdb0",
+    "bytes": 241
+  },
+  {
+    "path": "apis-and-data-infrastructure/document-apis/NICHE.json",
+    "sha256": "75d8607dc8f37b7dcd5a9b62018c89d6f4351f587ff41d501c2672190d854ab7",
+    "bytes": 227
+  },
+  {
+    "path": "apis-and-data-infrastructure/media-apis/NICHE.json",
+    "sha256": "a13e1858296c1dd5c19ae267133f2104e47e3e9905abb5ae4c284d6beac18343",
+    "bytes": 221
+  },
+  {
+    "path": "apis-and-data-infrastructure/NICHE.json",
+    "sha256": "b29de47578192a7e0006853a95fa46c13fe115f71f8875b106ff73be4c5b453c",
+    "bytes": 318
+  },
+  {
+    "path": "apis-and-data-infrastructure/usage-infrastructure/NICHE.json",
+    "sha256": "6ca628da689a6b39857f138e818a9a32e9851b5b42f4b369279876c7ed1741e0",
+    "bytes": 241
+  },
+  {
+    "path": "audio-music-and-voice/audio-utilities/NICHE.json",
+    "sha256": "4c422d29ea8c689386d0e5b5f1283371cfd6d446fe6bf1de0883bad4ac1c0753",
+    "bytes": 224
+  },
+  {
+    "path": "audio-music-and-voice/licensed-narration/NICHE.json",
+    "sha256": "96217ddb4de5e9889bb88d1b63042854335413391cf6d5d82e92fe11b6e70a70",
+    "bytes": 230
+  },
+  {
+    "path": "audio-music-and-voice/NICHE.json",
+    "sha256": "1995377fb4ba3bb38d5e7effa9146d3e251e23ecb72db9539ce5ff7326a29cc5",
+    "bytes": 300
+  },
+  {
+    "path": "audio-music-and-voice/podcast-production/NICHE.json",
+    "sha256": "c0969a990a32a797821f63a4cd1a1dcbbf54ebcb06c8d5879f12776ae25a27f8",
+    "bytes": 230
+  },
+  {
+    "path": "audio-music-and-voice/sound-libraries/NICHE.json",
+    "sha256": "3785fba0dd5b40ed96402a189a5613669af41077ff83f29e0520cf939ce722c0",
+    "bytes": 224
+  },
+  {
+    "path": "desktop-and-mobile-utilities/device-utilities/NICHE.json",
+    "sha256": "040c3100630ff40bc4a3200ee5960623c605624cbe34027d8c3d46b0ebe0d524",
+    "bytes": 233
+  },
+  {
+    "path": "desktop-and-mobile-utilities/local-desktop-tools/NICHE.json",
+    "sha256": "02acc59b0cd3c0024f3ea183a71a9424828976295778e2d9d9da6e4c0d5c89a5",
+    "bytes": 239
+  },
+  {
+    "path": "desktop-and-mobile-utilities/mobile-productivity/NICHE.json",
+    "sha256": "cf2623ca55a03af5a2294d18ac62b4c28474dba360a8fea779694930f9b304cf",
+    "bytes": 239
+  },
+  {
+    "path": "desktop-and-mobile-utilities/NICHE.json",
+    "sha256": "fa1f20a31d6e2ca6f4789cbf8387411ea9696ebef39efb5d775a800838c34ecd",
+    "bytes": 302
+  },
+  {
+    "path": "desktop-and-mobile-utilities/offline-first-applications/NICHE.json",
+    "sha256": "c9313c9c4a8aa08065eba543102c6ab480d33065235c891fd0dba09f2add2e53",
+    "bytes": 253
+  },
+  {
+    "path": "developer-devops-and-testing/dependency-workflows/NICHE.json",
+    "sha256": "4955163d2ff9e74fe9431c458ac68882da63283fe7bf75c15f2744512108e007",
+    "bytes": 241
+  },
+  {
+    "path": "developer-devops-and-testing/documentation-tooling/NICHE.json",
+    "sha256": "7ebe6884ee0c1f73019245d9babb74bf56d4d8db1094f1f3ed1fdac032504065",
+    "bytes": 243
+  },
+  {
+    "path": "developer-devops-and-testing/NICHE.json",
+    "sha256": "4c76708ad2fa9683c3d182fff752bab703cd3756eb4e3244bfcefd9eed75e50e",
+    "bytes": 319
+  },
+  {
+    "path": "developer-devops-and-testing/release-tooling/NICHE.json",
+    "sha256": "acf4d885a9267d0a863a997de3c3079b584aa759cbfaeb63b3219ee817c9b327",
+    "bytes": 231
+  },
+  {
+    "path": "developer-devops-and-testing/test-and-qa-products/NICHE.json",
+    "sha256": "84524c17b38020811db9b406d5f86cf649216794f1fd325b4e46e8fb903a9fa5",
+    "bytes": 241
+  },
+  {
+    "path": "digital-templates-and-printables/calculator-workbooks/NICHE.json",
+    "sha256": "13b076565c706bb6102c3cf0cd56a5bc5226937163c59867400a986640e539f1",
+    "bytes": 245
+  },
+  {
+    "path": "digital-templates-and-printables/event-printables/NICHE.json",
+    "sha256": "a704c250eabca7757726f02722826c67f1cb22638cf41798fdff630fd92342cc",
+    "bytes": 237
+  },
+  {
+    "path": "digital-templates-and-printables/NICHE.json",
+    "sha256": "0f84904eddb3fac711f5ee1447ab659ae71e08eeeff0f87b04d8095e6463e737",
+    "bytes": 332
+  },
+  {
+    "path": "digital-templates-and-printables/operations-templates/NICHE.json",
+    "sha256": "94c04ab201de572bc909874e1e9b707fcc0f903a97b1250e5f785ecf8e718cd4",
+    "bytes": 245
+  },
+  {
+    "path": "digital-templates-and-printables/personal-organization/NICHE.json",
+    "sha256": "4ba306cce3c61729a1546a92c28a2529a7b21cea15a1a12eef500b750c09635b",
+    "bytes": 247
+  },
+  {
+    "path": "directories-jobs-and-marketplaces/marketplace-operations/NICHE.json",
+    "sha256": "6272064d9fdd673e9370be75415013b2827e04888563b4c21b28fe9eea154ef9",
+    "bytes": 250
+  },
+  {
+    "path": "directories-jobs-and-marketplaces/NICHE.json",
+    "sha256": "769a0cb619532b1d8b708ab24d2b6c01681fac96ef1530e6c4cc5d5fff263a87",
+    "bytes": 306
+  },
+  {
+    "path": "directories-jobs-and-marketplaces/qualified-introduction-tools/NICHE.json",
+    "sha256": "a3ae4c575a738c8327575312cf28243ea4bc3f0e5c38009a5fd1254ad44ed47a",
+    "bytes": 262
+  },
+  {
+    "path": "directories-jobs-and-marketplaces/specialist-job-boards/NICHE.json",
+    "sha256": "c90869f85ef7f2c7152c19f48d85c4861ea7953555c35299af200f6216562a53",
+    "bytes": 248
+  },
+  {
+    "path": "directories-jobs-and-marketplaces/verified-directories/NICHE.json",
+    "sha256": "15e9e1b3e68b4522966b79996901b57bcd0dee8970a21924a9c89a75bb9e22cb",
+    "bytes": 246
+  },
+  {
+    "path": "documents-extraction-and-workflow-automation/document-extraction/NICHE.json",
+    "sha256": "9934d169c8ce50452db7b0837d3e9c0474e0574e11b78c23dba95a68abdb4104",
+    "bytes": 255
+  },
+  {
+    "path": "documents-extraction-and-workflow-automation/document-generation/NICHE.json",
+    "sha256": "2acf2ec4ac5f8a8c691e06a0801a08cfb72bd7a4cb21bbc3a8c61248bda4447f",
+    "bytes": 255
+  },
+  {
+    "path": "documents-extraction-and-workflow-automation/NICHE.json",
+    "sha256": "954119ff3b490048a2387983084ec31f0f771e35deb1c31abb35e59ed7c47d70",
+    "bytes": 349
+  },
+  {
+    "path": "documents-extraction-and-workflow-automation/records-quality/NICHE.json",
+    "sha256": "ce09c34c0a4d14b4c06fa2c4a33c7f26329f66277f5018fa0b316298949239ba",
+    "bytes": 247
+  },
+  {
+    "path": "documents-extraction-and-workflow-automation/workflow-orchestration/NICHE.json",
+    "sha256": "b433a77839ca7584c236b976c97e11dab64894f58ed4a9ad29a290cce885fbbe",
+    "bytes": 261
+  },
+  {
+    "path": "ecommerce-product-operations/catalog-quality/NICHE.json",
+    "sha256": "bb6433da6b67c64852e6678b817118df0d5730c5549740bf8b3f1f53329285e4",
+    "bytes": 231
+  },
+  {
+    "path": "ecommerce-product-operations/customer-experience-utilities/NICHE.json",
+    "sha256": "ca663f6f452d8168a41aefc6183458f32345e6764c3d0919052d4fa2798a5ff4",
+    "bytes": 259
+  },
+  {
+    "path": "ecommerce-product-operations/inventory-exports/NICHE.json",
+    "sha256": "5dd58e897e9c965fa6d12d831235f763cb9cbf31ba87c4a8a15c021ff2cedb6b",
+    "bytes": 235
+  },
+  {
+    "path": "ecommerce-product-operations/merchandising-tools/NICHE.json",
+    "sha256": "6651da9f87f8af8c8452a31dfd86ace340cf796c0da236c0afc481a992e69e26",
+    "bytes": 239
+  },
+  {
+    "path": "ecommerce-product-operations/NICHE.json",
+    "sha256": "67214be224036d59bb389f74af142d873192c6846098da688e66579256fc1bc9",
+    "bytes": 323
+  },
+  {
+    "path": "education-and-training/instructor-tools/NICHE.json",
+    "sha256": "fc29e33f5fec27e06b5496c67d2bd3a956a9e4bf6b18017f918a09a2967ed431",
+    "bytes": 227
+  },
+  {
+    "path": "education-and-training/NICHE.json",
+    "sha256": "33fd40e3c998dea047101a3fb6ebc53e4254a3a9853cb53e1233315af53e1cce",
+    "bytes": 316
+  },
+  {
+    "path": "education-and-training/practice-resources/NICHE.json",
+    "sha256": "8e232f1748a80700962fb47febf46735c1d7af42840b070b0c6fe90fe03bd343",
+    "bytes": 231
+  },
+  {
+    "path": "education-and-training/self-paced-lessons/NICHE.json",
+    "sha256": "09acbbed52b531c8b9fe297def039423031ca18193f24ccdd371408a6b6f09c3",
+    "bytes": 231
+  },
+  {
+    "path": "education-and-training/workplace-training/NICHE.json",
+    "sha256": "2b0ef0d1dc8d8269fbf2fa7770c00aae714d27d71e406d464337bb36be657216",
+    "bytes": 231
+  },
+  {
+    "path": "email-crm-and-sales-enablement/crm-quality/NICHE.json",
+    "sha256": "3db27d8d54d5f253d58e5c8abf28f92eb11002ad4ee881beba12f358560cbd71",
+    "bytes": 225
+  },
+  {
+    "path": "email-crm-and-sales-enablement/NICHE.json",
+    "sha256": "a69f9d5d056da5ecd5a7aad8ae233e32aca0f3efa127a5e8e7b34456b2a64751",
+    "bytes": 302
+  },
+  {
+    "path": "email-crm-and-sales-enablement/permissioned-email-operations/NICHE.json",
+    "sha256": "ed7448a97e2a1e3594b4eb26af1339e8e97b37c1771fc36d4d9289e7e79859bf",
+    "bytes": 261
+  },
+  {
+    "path": "email-crm-and-sales-enablement/proposal-tools/NICHE.json",
+    "sha256": "d4fc35e11f515c9db5490eefd7616ab0060cbb77623179a85e8c364dfd704c26",
+    "bytes": 231
+  },
+  {
+    "path": "email-crm-and-sales-enablement/sales-handoffs/NICHE.json",
+    "sha256": "b1c3ed5b2d5c13f3666680d01ed656ff6db9fcd09f9f0cebc2b3b99f5b6e6b9a",
+    "bytes": 231
+  },
+  {
+    "path": "finance-and-bookkeeping-operations/cash-flow-planning/NICHE.json",
+    "sha256": "5448779b4ba1aafb3ac4a08f9414114618815373262f03938e67f07393cf60b7",
+    "bytes": 243
+  },
+  {
+    "path": "finance-and-bookkeeping-operations/finance-education-tools/NICHE.json",
+    "sha256": "d1ee0b3abf057b05ae7cb289113246d1a58a24a617d26b614e61764d255ad795",
+    "bytes": 253
+  },
+  {
+    "path": "finance-and-bookkeeping-operations/invoice-and-expense-tools/NICHE.json",
+    "sha256": "a754c8575a18967d60a9adc98c7c805d2bfa49e2264ff6d1591344a044163d99",
+    "bytes": 257
+  },
+  {
+    "path": "finance-and-bookkeeping-operations/NICHE.json",
+    "sha256": "fd8809feeb5f5d59e7412fb87d0d1af2794f6f717085d35627d289b97dd05619",
+    "bytes": 357
+  },
+  {
+    "path": "finance-and-bookkeeping-operations/reconciliation-utilities/NICHE.json",
+    "sha256": "90317bd9324c89539382794ae6fd42500d3fcb50428f6eb74f4f131368058f33",
+    "bytes": 255
+  },
+  {
+    "path": "food-hospitality-and-travel/booking-resources/NICHE.json",
+    "sha256": "7763770dc2296eeb2a0dd3b29d905f0c42e338c4b26203b2c279a6e564d9fddf",
+    "bytes": 234
+  },
+  {
+    "path": "food-hospitality-and-travel/food-business-administration/NICHE.json",
+    "sha256": "63c156532d5612dec6010d282c63a5cafdf4a2312e4ea207893447469222889a",
+    "bytes": 256
+  },
+  {
+    "path": "food-hospitality-and-travel/hospitality-operations/NICHE.json",
+    "sha256": "d2ba2e0eeb0b4dfc32ef2a371688f7b230a62dc729bc23030c1aeccc7bb8371f",
+    "bytes": 244
+  },
+  {
+    "path": "food-hospitality-and-travel/NICHE.json",
+    "sha256": "b0f4c224f6a9952688e67029aaeb50975645c25573abb70581a4b6fa981fa1a3",
+    "bytes": 310
+  },
+  {
+    "path": "food-hospitality-and-travel/travel-information/NICHE.json",
+    "sha256": "227a6c0e08d08bf7903b3b3d0c2c81d3c4f430a19758f9fb9f4dc551eda37b1f",
+    "bytes": 236
+  },
+  {
+    "path": "games-and-interactive-entertainment/game-development-marketplaces/NICHE.json",
+    "sha256": "ea5e44a35ba05051ead63423ca48ef50b2d74140e74c29a1f7bf46ceeb941a7c",
+    "bytes": 304
+  },
+  {
+    "path": "games-and-interactive-entertainment/game-development-marketplaces/projects/gdm-001-historical-save-regression-lab.md",
+    "sha256": "6a7c99f32c5147b3efea7d9b4ba4b5250e4ac3b4634c90070a7380f3e54e509e",
+    "bytes": 12610
+  },
+  {
+    "path": "games-and-interactive-entertainment/game-development-marketplaces/projects/gdm-002-capacity-aware-npc-transport.md",
+    "sha256": "bdacae79daee333f9c6abc94da3d69073eb28ff1d54787a7e8ae42e883ef0721",
+    "bytes": 10934
+  },
+  {
+    "path": "games-and-interactive-entertainment/game-development-marketplaces/projects/gdm-003-native-dependency-verifier.md",
+    "sha256": "f18ffdf91bbe8668f4fabec636fe86e637045e6d3adb7a2cfa0cfddc7d36d593",
+    "bytes": 7448
+  },
+  {
+    "path": "games-and-interactive-entertainment/game-production-tools/NICHE.json",
+    "sha256": "1c1dbb6e7df3a8727311362d5bc2b15163dbb4624dcf850c6ea0150b51ee9a55",
+    "bytes": 250
+  },
+  {
+    "path": "games-and-interactive-entertainment/gameplay-resources/NICHE.json",
+    "sha256": "1d192264d79557cadf3b32173d13ea0a7aa59016cab30b319187d5e42b1d4474",
+    "bytes": 244
+  },
+  {
+    "path": "games-and-interactive-entertainment/interactive-learning/NICHE.json",
+    "sha256": "2a79631aa3a5fda8358127ba904da7d5f9d40bec05a215990c16d75d31d752c7",
+    "bytes": 248
+  },
+  {
+    "path": "games-and-interactive-entertainment/NICHE.json",
+    "sha256": "c772eaad508f4d1cc5ee7cb6afb10ef41ca119a48a39fb7b0069aac590a6c8af",
+    "bytes": 330
+  },
+  {
+    "path": "games-and-interactive-entertainment/small-original-games/NICHE.json",
+    "sha256": "cf2ea08a1cc3c5422c4ae52106360d25586995daf5c41dccfaaf1ca2071a4621",
+    "bytes": 248
+  },
+  {
+    "path": "graphic-design-and-brand-assets/brand-systems/NICHE.json",
+    "sha256": "b34eb2dde90c684b864a201a2637a5423458b2306d9320dd75b9f755c3e46fb2",
+    "bytes": 230
+  },
+  {
+    "path": "graphic-design-and-brand-assets/icons-and-illustrations/NICHE.json",
+    "sha256": "e2903ec3c742a6358fa0d077994e2963c13c9bd8041652b29cadb3fdf71191fd",
+    "bytes": 250
+  },
+  {
+    "path": "graphic-design-and-brand-assets/NICHE.json",
+    "sha256": "47b52ffd9aaf7f31beee00e52ae79f2066d25e6eaafa55884507727317f1c597",
+    "bytes": 331
+  },
+  {
+    "path": "graphic-design-and-brand-assets/presentation-assets/NICHE.json",
+    "sha256": "b70e1272a1a77fccebda144f381442624fff7df94d62bff0fe802f920a0b2d07",
+    "bytes": 242
+  },
+  {
+    "path": "graphic-design-and-brand-assets/production-design-tools/NICHE.json",
+    "sha256": "c8115a846b20f9efb7277cbdfa73aa623ad6b2eca743d904e589b6a2610116ec",
+    "bytes": 250
+  },
+  {
+    "path": "health-and-wellness-administration/clinic-administration/NICHE.json",
+    "sha256": "146021a708d09cad1db9432fdbbdcc8900fcbafd1000f162c0b5f4a4418f6351",
+    "bytes": 249
+  },
+  {
+    "path": "health-and-wellness-administration/NICHE.json",
+    "sha256": "bcfb97b79ec0345ce6eaab6893678ce4de4bfbf18e503c51db3d0fe9bd1fe620",
+    "bytes": 328
+  },
+  {
+    "path": "health-and-wellness-administration/non-clinical-wellness-tools/NICHE.json",
+    "sha256": "1fde3feaec519a6f58adbccd726a7d25a559dc41d3526eb75e52de126dda4ff9",
+    "bytes": 261
+  },
+  {
+    "path": "health-and-wellness-administration/practice-resource-templates/NICHE.json",
+    "sha256": "f1af008f24044649e35952028ddc4cc3fbc766f35a5f71ae86b5cc1a5d6eb770",
+    "bytes": 261
+  },
+  {
+    "path": "health-and-wellness-administration/service-scheduling/NICHE.json",
+    "sha256": "a89536b3612725f6700fa422ffc8cccf31bfbb93c21c7bb2a62f0df860a0c3e5",
+    "bytes": 243
+  },
+  {
+    "path": "localization-and-accessibility/accessible-content-tools/NICHE.json",
+    "sha256": "66f168dd83ae35379ad3e0504ab7a16016d5334c1b52062a6ed52a755dcf5ae1",
+    "bytes": 251
+  },
+  {
+    "path": "localization-and-accessibility/caption-and-transcript-qa/NICHE.json",
+    "sha256": "638ff8777ef05cc106cf71400cfcc4bc5c1c076f2f1b8e79e24ffdcc92819978",
+    "bytes": 253
+  },
+  {
+    "path": "localization-and-accessibility/localization-quality/NICHE.json",
+    "sha256": "5e5c554218133d22501fc1009dcd64144302c74ab67afb80b59d44e653c6affa",
+    "bytes": 243
+  },
+  {
+    "path": "localization-and-accessibility/multilingual-operations/NICHE.json",
+    "sha256": "7a2dd9ada8d9637e500c2a761418c2c1ea221dc1c59e3884a75d093a5a40640b",
+    "bytes": 249
+  },
+  {
+    "path": "localization-and-accessibility/NICHE.json",
+    "sha256": "573a307db311315344927c34e1cc3dcb4d32cc8c0a1e78f670172f30d9c3643d",
+    "bytes": 314
+  },
+  {
+    "path": "logistics-manufacturing-and-supply-chains/fleet-and-shipping-administration/NICHE.json",
+    "sha256": "b935bc0872fcef78d48d8bd2780a29e160e46e475fdbf9bf8c81fe52f09652b1",
+    "bytes": 280
+  },
+  {
+    "path": "logistics-manufacturing-and-supply-chains/inventory-workflows/NICHE.json",
+    "sha256": "2cc2084ba91d37bee6c8b04908c5e8a8b6c572beac7a75ae14a8eb8bc1cfda81",
+    "bytes": 252
+  },
+  {
+    "path": "logistics-manufacturing-and-supply-chains/NICHE.json",
+    "sha256": "d3a299217b60ad90ae775de7f09bf3568641d9fcf98d4b6392349f0ccf769f40",
+    "bytes": 331
+  },
+  {
+    "path": "logistics-manufacturing-and-supply-chains/production-planning/NICHE.json",
+    "sha256": "b5febefc29bdd1892210c6e0b04f53b5efa02cd3d9f6b94a016701a6c55c1aae",
+    "bytes": 252
+  },
+  {
+    "path": "logistics-manufacturing-and-supply-chains/supplier-coordination/NICHE.json",
+    "sha256": "c3b16ed91e654be9dddf0383108975b9be0ea6fe539b1ebe8ee039976f4aadb4",
+    "bytes": 256
+  },
+  {
+    "path": "nonprofits-events-and-public-services/club-administration/NICHE.json",
+    "sha256": "07f9e6a02f61dab1f35fb949413572f015717e963ab448fbed78b3a88a5a7565",
+    "bytes": 248
+  },
+  {
+    "path": "nonprofits-events-and-public-services/event-resources/NICHE.json",
+    "sha256": "a021cb0452aab181f2ad7ce1f1cb9c5cb3f589fd6c0cf1d0f14f31ad276a0293",
+    "bytes": 240
+  },
+  {
+    "path": "nonprofits-events-and-public-services/NICHE.json",
+    "sha256": "b61e9a039d3b6fe19115a2df634f1b419821debbb540f7248206d0503bfb2b4d",
+    "bytes": 327
+  },
+  {
+    "path": "nonprofits-events-and-public-services/nonprofit-operations/NICHE.json",
+    "sha256": "37fa6e69dd54497108e1ade2a7ee60057006de07f022c84dd1b2c6ff2370aad4",
+    "bytes": 250
+  },
+  {
+    "path": "nonprofits-events-and-public-services/public-service-information/NICHE.json",
+    "sha256": "eb599a7cb1eb790412b3f42db030dc15614d5d99ffc61d3a6f974a893ab23eda",
+    "bytes": 262
+  },
+  {
+    "path": "people-hr-and-recruitment/career-resources/NICHE.json",
+    "sha256": "a1896f698513802bc57b309255a7e616bcf23f930fa9b98c748595dd96edb992",
+    "bytes": 230
+  },
+  {
+    "path": "people-hr-and-recruitment/employee-operations/NICHE.json",
+    "sha256": "3c078ebab71ed660794361a73c0a434979a6eaad2c9d421303a7baec097fc768",
+    "bytes": 236
+  },
+  {
+    "path": "people-hr-and-recruitment/NICHE.json",
+    "sha256": "d44295c14beed1faddc4b18f23366cb29a0a45ebeeb7a2ce33ae902a19cc071a",
+    "bytes": 304
+  },
+  {
+    "path": "people-hr-and-recruitment/recruiting-administration/NICHE.json",
+    "sha256": "4de235b1a50c5da5e0e0bdb4c9f114b8740bf51a6cdc2da318dbf2ec9b602b25",
+    "bytes": 248
+  },
+  {
+    "path": "people-hr-and-recruitment/training-logistics/NICHE.json",
+    "sha256": "7a1c9d6af43cdbc8df276a1400096fa8136a16ade2655ee879fa41530fb940bb",
+    "bytes": 234
+  },
+  {
+    "path": "plugins-extensions-and-connectors/authorized-connectors/NICHE.json",
+    "sha256": "88ef925590ac537a0356b1d70cf0452089989266516632f48497d1d497105364",
+    "bytes": 248
+  },
+  {
+    "path": "plugins-extensions-and-connectors/browser-extensions/NICHE.json",
+    "sha256": "18ca9a4e17c511a0f180ce0f57323cfce1a784123977ddcebdff5b13615b35d8",
+    "bytes": 242
+  },
+  {
+    "path": "plugins-extensions-and-connectors/commerce-plugins/NICHE.json",
+    "sha256": "667876c778d7140b1c72947ff32fe6dcfc0b260b13c591003cb44be01f447836",
+    "bytes": 238
+  },
+  {
+    "path": "plugins-extensions-and-connectors/editor-extensions/NICHE.json",
+    "sha256": "e239ff2c34cea2fdcb3bda50e0f3ab3b7c121e72c64daa68ff1d34e46b1dd148",
+    "bytes": 240
+  },
+  {
+    "path": "plugins-extensions-and-connectors/NICHE.json",
+    "sha256": "c086f627f1333f9a2d90b4b253085a503a149a94c0d75d13d5ebe3edf7496ffa",
+    "bytes": 326
+  },
+  {
+    "path": "print-on-demand-and-physical-fulfillment/fulfillment-analytics/NICHE.json",
+    "sha256": "2df19f85965fc4c94a328bfa156f659271a031959c7a8633325ebf7b466471bd",
+    "bytes": 255
+  },
+  {
+    "path": "print-on-demand-and-physical-fulfillment/NICHE.json",
+    "sha256": "2c3fd52a9b2fc1969c4ff29349f7ab6b9cea07890e98c230d6e9cc292fc21fab",
+    "bytes": 334
+  },
+  {
+    "path": "print-on-demand-and-physical-fulfillment/original-merchandise/NICHE.json",
+    "sha256": "e2301d0624a69ceade0139cfe6a74afa543ee3388ed6f2d0327b8102f1ca0687",
+    "bytes": 253
+  },
+  {
+    "path": "print-on-demand-and-physical-fulfillment/personalized-print-products/NICHE.json",
+    "sha256": "74154037dd16b2f097fdbda47b67e3d8b911d1db5dedab3f880f37e97b5a15bc",
+    "bytes": 267
+  },
+  {
+    "path": "print-on-demand-and-physical-fulfillment/production-workflows/NICHE.json",
+    "sha256": "735f710be88bec4d09626f773c9743022f706b8a134d267211f68d57be931a4e",
+    "bytes": 253
+  },
+  {
+    "path": "privacy-security-and-compliance-tools/authorized-security-checks/NICHE.json",
+    "sha256": "40a8fd8fe3a8650b2a921aa77997e67af25b27d0ebab4ee3ef0960257c7ac6ca",
+    "bytes": 262
+  },
+  {
+    "path": "privacy-security-and-compliance-tools/compliance-evidence/NICHE.json",
+    "sha256": "67b7f8c8e5bdfd0cf5b7616a6e0ef36a3688f16aeb468692107d9a5f87d27cff",
+    "bytes": 248
+  },
+  {
+    "path": "privacy-security-and-compliance-tools/credential-hygiene-tools/NICHE.json",
+    "sha256": "8baa2f69e0d709eaf9048f5513b3476b98ff242367a3bcd58af1fa01befeb08e",
+    "bytes": 258
+  },
+  {
+    "path": "privacy-security-and-compliance-tools/NICHE.json",
+    "sha256": "5909af849329c8653206a9f6841b1bcadc4d59c9e626e3604fbef1f5580e723c",
+    "bytes": 347
+  },
+  {
+    "path": "privacy-security-and-compliance-tools/privacy-documentation/NICHE.json",
+    "sha256": "8e17d93cb07e0ab64510e25b3bbdcf24d8fead847d61e70b9eea81376ad7b3f0",
+    "bytes": 252
+  },
+  {
+    "path": "property-construction-and-home-services/maintenance-operations/NICHE.json",
+    "sha256": "8dbbdfce0b464aa4a5308dc7bd160af132ce07f0f373f50b729fdf7d8aff4389",
+    "bytes": 256
+  },
+  {
+    "path": "property-construction-and-home-services/NICHE.json",
+    "sha256": "c2531c42dd250e7d84278f10cc7fedd3884279a9505ab6a565ba14c51dae7719",
+    "bytes": 366
+  },
+  {
+    "path": "property-construction-and-home-services/project-coordination/NICHE.json",
+    "sha256": "f0fa665de722850fe4c5ed6f833d115a84951363e269f242aa0ec892cc9701a5",
+    "bytes": 252
+  },
+  {
+    "path": "property-construction-and-home-services/property-administration/NICHE.json",
+    "sha256": "f8e3a4f29295ab46a4fed957324d0bb5bd238e9193b04a87eebe21c0b0a76fa0",
+    "bytes": 258
+  },
+  {
+    "path": "property-construction-and-home-services/trade-business-tools/NICHE.json",
+    "sha256": "7ecf8420b2f17059fd5a3ac18198fbad41f9a5fb9defb40c1d9a0ea99581dabd",
+    "bytes": 252
+  },
+  {
+    "path": "research-datasets-and-information-products/benchmark-products/NICHE.json",
+    "sha256": "45cc2cdeb4528c4be3a1eb03d79d672dc3827e10cf79076428c1fb415332e099",
+    "bytes": 251
+  },
+  {
+    "path": "research-datasets-and-information-products/change-intelligence/NICHE.json",
+    "sha256": "484ab746df028c25a087276f28c0f9c54b42e3cd23ef06109c7f994140aa14fd",
+    "bytes": 253
+  },
+  {
+    "path": "research-datasets-and-information-products/licensed-datasets/NICHE.json",
+    "sha256": "78a53883d961ec76520ae918d5f2255d78718da068dc7a0e1ca33e63af51ded4",
+    "bytes": 249
+  },
+  {
+    "path": "research-datasets-and-information-products/NICHE.json",
+    "sha256": "fbc6fdef9050994361b0f18b81891f6ab94878a57eaf0f22ec050b59dfc4e125",
+    "bytes": 337
+  },
+  {
+    "path": "research-datasets-and-information-products/tender-and-grant-research/NICHE.json",
+    "sha256": "45bee94bd5c41049f0d0682768e15dd36fcd076d34f643bb4e214e6e3084addf",
+    "bytes": 265
+  },
+  {
+    "path": "saas-and-business-applications/client-portals/NICHE.json",
+    "sha256": "4c277fa188c77ae2a284cabb0ac91c3239c8c6ece8bb215802ec149722d22e71",
+    "bytes": 231
+  },
+  {
+    "path": "saas-and-business-applications/knowledge-applications/NICHE.json",
+    "sha256": "59fb68c93e9347b5af6afecb829d95a33135e4cd8bac0381e2238e9e3468d8f4",
+    "bytes": 247
+  },
+  {
+    "path": "saas-and-business-applications/NICHE.json",
+    "sha256": "67f85d9fd3bc410ab6de4cf6193ca9545f6888bbbb718d6570e8572fedb93a5d",
+    "bytes": 329
+  },
+  {
+    "path": "saas-and-business-applications/scheduling-tools/NICHE.json",
+    "sha256": "bc135f5b76410d5bab97a4d3d369775f7ef34818ff60936d430aa5cbeb60994e",
+    "bytes": 235
+  },
+  {
+    "path": "saas-and-business-applications/workflow-applications/NICHE.json",
+    "sha256": "25ba401df5bb1a74106acbd4da11e2a99a8e632b9071c713ebb04977d3731e6e",
+    "bytes": 245
+  },
+  {
+    "path": "seo-and-search-led-websites/content-maintenance/NICHE.json",
+    "sha256": "6d69f4fe5ea7c03999618dee9f645ed3284aca6d66e9505857e9ff780b995593",
+    "bytes": 238
+  },
+  {
+    "path": "seo-and-search-led-websites/NICHE.json",
+    "sha256": "65817c30c8a7a4acf575869afec84efa850ae1bd2d2f77b1164e03d3ef4e4a66",
+    "bytes": 328
+  },
+  {
+    "path": "seo-and-search-led-websites/original-research-sites/NICHE.json",
+    "sha256": "92607cac067c2fdbc75fdac901f0c989d62df1e11dfc55853b79dcbeee4c239f",
+    "bytes": 246
+  },
+  {
+    "path": "seo-and-search-led-websites/search-utilities/NICHE.json",
+    "sha256": "44fd5cb718ea8eeb12b0fef42edd051e4d5ead4ca6d07628d2d7a23be966aa51",
+    "bytes": 232
+  },
+  {
+    "path": "seo-and-search-led-websites/technical-seo-tools/NICHE.json",
+    "sha256": "bd2d12001f544ce8fe13f984470fa421030dbb7d8a74ba9a106a7a19734c5a58",
+    "bytes": 238
+  },
+  {
+    "path": "social-community-and-memberships/community-resources/NICHE.json",
+    "sha256": "dd84aab2d7c5c4f51848b0f90137f87029ae5ef08e32666d469bf6a70458cb90",
+    "bytes": 243
+  },
+  {
+    "path": "social-community-and-memberships/creator-monetization/NICHE.json",
+    "sha256": "e593d79e2232bb0818dfe56c93b465f5abe3f9b595b065f7a212a3a494534fe5",
+    "bytes": 245
+  },
+  {
+    "path": "social-community-and-memberships/member-operations/NICHE.json",
+    "sha256": "3045651dcf568a192e57b625a7433b8d7340741305ccd1192047df93344855c8",
+    "bytes": 239
+  },
+  {
+    "path": "social-community-and-memberships/NICHE.json",
+    "sha256": "50f02a843aa2124260f8a545ed387e2751c7544abd12235a2252512c80a18c04",
+    "bytes": 331
+  },
+  {
+    "path": "social-community-and-memberships/social-publishing-tools/NICHE.json",
+    "sha256": "d1811e681f60bb863d97cb8f3897fa224fed0bfa6984a397a5ce0f438a6bf06b",
+    "bytes": 251
+  },
+  {
+    "path": "stocks-investing-and-market-tools/market-research-tools/NICHE.json",
+    "sha256": "18225622e1123e7ea637f04bd2023432b88055812b6b23ca6b759f3188e04aab",
+    "bytes": 248
+  },
+  {
+    "path": "stocks-investing-and-market-tools/NICHE.json",
+    "sha256": "e8feb9ce7fc674fc1128a80fb05257ad726717806b1a3fcdc259b353665bdbfe",
+    "bytes": 345
+  },
+  {
+    "path": "stocks-investing-and-market-tools/personal-capital-strategies/NICHE.json",
+    "sha256": "e1d40d6d2590f6bfb8c7fbfa6e415fac8d4faf4ca23d2bae5ae7767963b20f30",
+    "bytes": 260
+  },
+  {
+    "path": "stocks-investing-and-market-tools/portfolio-recordkeeping/NICHE.json",
+    "sha256": "4e7638d528926179eb67c053d1c23abc4a14586f186718748c64f755e02afe3b",
+    "bytes": 252
+  },
+  {
+    "path": "stocks-investing-and-market-tools/simulation-tools/NICHE.json",
+    "sha256": "639740a822e47be3550bc4b247d66d357ca94f9d05ca56ca76d36ff4dbe78f99",
+    "bytes": 238
+  },
+  {
+    "path": "video-and-creator-media/editing-workflows/NICHE.json",
+    "sha256": "1a73133c15749f01b56ce76eff906bea1814d74df39406fa3f899848e0b3c136",
+    "bytes": 230
+  },
+  {
+    "path": "video-and-creator-media/educational-channels/NICHE.json",
+    "sha256": "c35bc38791dd39a071fb479e6a3e012e055da1f52cf7b90d7516fba034cf9127",
+    "bytes": 236
+  },
+  {
+    "path": "video-and-creator-media/motion-assets/NICHE.json",
+    "sha256": "9ea619a2587167ac61bf441872faf33b65e3db4da970b17bcaa3f3ebef0f4977",
+    "bytes": 222
+  },
+  {
+    "path": "video-and-creator-media/NICHE.json",
+    "sha256": "95b84f3739abd72595a831ba650ebc2652b3c6c80c28500897c225faf800a80d",
+    "bytes": 333
+  },
+  {
+    "path": "video-and-creator-media/publishing-analytics/NICHE.json",
+    "sha256": "ebf23feb396844e9a2a8cef2531eed807e6993d9afb1509c602b1e2623a173c9",
+    "bytes": 236
+  },
+  {
+    "path": "websites-and-storefront-design/landing-page-systems/NICHE.json",
+    "sha256": "35f72e38f4736b9947d7fc201f2c19a8db86101f829007538648dacfc5511397",
+    "bytes": 243
+  },
+  {
+    "path": "websites-and-storefront-design/NICHE.json",
+    "sha256": "264c1b2bc02e69ff63d4d020414ffc33309cc535822158355bdc90a58c6a1137",
+    "bytes": 311
+  },
+  {
+    "path": "websites-and-storefront-design/site-utilities/NICHE.json",
+    "sha256": "4777b5037129e31c9c06c4e889a2af204bc76a9a5353400903bd317d87c20f9a",
+    "bytes": 231
+  },
+  {
+    "path": "websites-and-storefront-design/storefront-components/NICHE.json",
+    "sha256": "5709b0367f05ef64929713952eaaefc53370a8e56337dbbaa5d7d40f6984eea0",
+    "bytes": 245
+  },
+  {
+    "path": "websites-and-storefront-design/website-templates/NICHE.json",
+    "sha256": "64a8fb1432e53a6cd3769384b3c06d9cf0300ebdca0a07a7cd904bc006f18178",
+    "bytes": 237
+  },
+  {
+    "path": "writing-publishing-and-newsletters/book-production-resources/NICHE.json",
+    "sha256": "2d0be349828e9fd2567eeab7816da5902e20fb813eb63a430ac91d90a51811c7",
+    "bytes": 257
+  },
+  {
+    "path": "writing-publishing-and-newsletters/editorial-tools/NICHE.json",
+    "sha256": "caf6b4a4bd6363491bb7c43ea074323e6390937074cdde7e1c96b784238c5a0f",
+    "bytes": 237
+  },
+  {
+    "path": "writing-publishing-and-newsletters/NICHE.json",
+    "sha256": "a674145555c791fee781fce8db85068593383714fb9060dbced378fc49752959",
+    "bytes": 374
+  },
+  {
+    "path": "writing-publishing-and-newsletters/paid-newsletters/NICHE.json",
+    "sha256": "71523f64d4e08fd6f07b8d12c09b8f9b0374d36d29462fcb46308d8a6d181156",
+    "bytes": 239
+  },
+  {
+    "path": "writing-publishing-and-newsletters/practical-guides/NICHE.json",
+    "sha256": "21bbb1b34cc689766e932716ed5a5b5799d01d66d6fde53481d421e122bfd280",
+    "bytes": 239
+  }
+]

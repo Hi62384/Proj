@@ -131,7 +131,7 @@ class PortfolioMCPSessionTests(unittest.TestCase):
 
         # No external account, browser action, inference or worker is needed.
         first_path = 'docs/PORTFOLIO_MANAGER_WORKFLOW.md'
-        second_path = 'business_portfolio/niches/games-and-interactive-entertainment/game-development-marketplaces'
+        second_path = 'business_portfolio/niches/game-development-marketplaces'
         first_key = hook_key('thr_test_first', 'startup')
         second_key = hook_key('thr_test_second', 'startup')
         async with connect() as first:

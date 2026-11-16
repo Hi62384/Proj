@@ -1,6 +1,7 @@
 """Independent views of the shared Portfolio Manager controller."""
 from concurrent.futures import ThreadPoolExecutor
 import os
+import json
 from pathlib import Path, PurePosixPath
 import re
 
@@ -89,6 +90,27 @@ def history_entries(repo):
     return sorted(visible, key=lambda item: (item[0].count('/'), item[0].casefold()))
 
 
+def niche_entries(repo):
+    """Show only active top-level business niches, in their declared priority."""
+    base = repo / 'business_portfolio' / 'niches'
+    rows = []
+    if not base.is_dir():
+        return rows
+    for folder in base.iterdir():
+        if not folder.is_dir() or folder.is_symlink() or not (folder / 'NICHE.json').is_file():
+            continue
+        try:
+            relative = context_path(repo, folder).relative_to(repo).as_posix()
+            meta = json.loads((folder / 'NICHE.json').read_text(encoding='utf-8'))
+            if meta.get('parent') is not None or meta.get('path') != folder.name:
+                continue
+            count = sum(1 for p in (folder / 'projects').glob('*.md') if p.is_file())
+            rows.append((relative, meta['title'], count, meta.get('priority', 999)))
+        except (ValueError, OSError, KeyError, TypeError):
+            continue
+    return sorted(rows, key=lambda row: (row[3], row[1].casefold()))
+
+
 class WorkspaceWindow(QMainWindow):
     def __init__(self, host, workspace, *, on_emergency, on_stop_all, on_access, on_close):
         super().__init__()
@@ -106,6 +128,7 @@ class WorkspaceWindow(QMainWindow):
         self._pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix='workspace-files')
         self._project_entries = project_entries(self.repo)
         self._history_entries = history_entries(self.repo)
+        self._niche_entries = niche_entries(self.repo)
         self._tree_mode = 'projects'
         self._file_loads = {}
         self.setWindowTitle('Portfolio Manager | Chat ' + self.workspace_id[:8])
@@ -259,10 +282,20 @@ class WorkspaceWindow(QMainWindow):
                 root.setExpanded(True)
                 self._expand(root)
                 return
+            if self._tree_mode == 'niches':
+                for name, title, count, _ in self._niche_entries:
+                    node = self._node(root, name, True)
+                    node.setText(0, f'{title} · {count} active {"project" if count == 1 else "projects"}')
+                    if count:
+                        for project, directory in self._project_entries:
+                            if not directory and project.startswith(name + '/projects/'):
+                                self._node(node, project, False)
+                    else:
+                        node.setChildIndicatorPolicy(QTreeWidgetItem.ChildIndicatorPolicy.DontShowIndicatorWhenChildless)
+                root.setExpanded(True)
+                return
             nodes = {'.': root}
             entries = self._history_entries if self._tree_mode == 'history' else self._project_entries
-            if self._tree_mode == 'niches':
-                entries = [(name, directory) for name, directory in entries if directory]
             for name, directory in entries:
                 parent = PurePosixPath(name).parent.as_posix()
                 nodes[name] = self._node(nodes[parent], name, directory)
@@ -275,6 +308,7 @@ class WorkspaceWindow(QMainWindow):
         self._pending_search = None
         self.search_status.hide()
         self.tree.setHeaderLabels([self.view_mode.currentText()])
+        self._niche_entries = niche_entries(self.repo) if self._tree_mode == 'niches' else self._niche_entries
         self._root_node()
 
     def _focus_tree(self, selection, *, reveal=True):

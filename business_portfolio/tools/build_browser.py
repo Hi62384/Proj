@@ -149,6 +149,40 @@ def load_history(root: Path, active_records: list[dict]) -> list[dict]:
             raise ValidationError('Unknown history related project: '+row['id'])
     return sorted(rows,key=lambda row:row['id'])
 
+def verify_taxonomy_snapshot(root: Path, active_records: list[dict]) -> dict | None:
+    """Check the reversible prior active view without indexing it as active projects."""
+    archive=root/'archive/2026-11-15-taxonomy-view-v1'
+    if not archive.exists():
+        return None
+    if linked_input(archive):
+        raise ValidationError('Linked taxonomy snapshot refused')
+    manifest=loads((archive/'FILE_MANIFEST.json').read_text(encoding='utf-8'))
+    crosswalk=loads((archive/'PROJECT_CROSSWALK.json').read_text(encoding='utf-8'))
+    expected={row['path']:(row['sha256'],row['bytes']) for row in manifest}
+    actual={p.relative_to(archive/'niches').as_posix():
+            (hashlib.sha256(p.read_bytes()).hexdigest(),p.stat().st_size)
+            for p in walk_files(archive/'niches')}
+    if len(expected)!=len(manifest) or actual!=expected:
+        raise ValidationError('Taxonomy snapshot file manifest mismatch')
+    current={r['id']:r for r in active_records}
+    if len(crosswalk)!=3 or {r['id'] for r in crosswalk}!={'GDM-001','GDM-002','GDM-003'}:
+        raise ValidationError('Taxonomy project crosswalk mismatch')
+    for row in crosswalk:
+        old=row['old_path']
+        if not old.startswith('niches/') or row['new_path']!=current[row['id']]['path']:
+            raise ValidationError('Taxonomy project path mismatch')
+        if row['preserved_snapshot']!='archive/2026-11-15-taxonomy-view-v1/'+old:
+            raise ValidationError('Taxonomy snapshot path mismatch')
+        if actual.get(old[len('niches/'):],(None,))[0]!=row['sha256']:
+            raise ValidationError('Taxonomy project hash mismatch')
+        source=root/row['preserved_snapshot']
+        meta,_=parse_project(source.read_text(encoding='utf-8'),str(source))
+        if any(meta.get(field)!=row[field] for field in ('id','niche_id','niche_path','work_state','commercial_validation')):
+            raise ValidationError('Taxonomy project metadata mismatch')
+        if current[row['id']]['niche_id']!='N-gdm-20261115':
+            raise ValidationError('Moved game project lost niche identity')
+    return {'files':len(manifest),'projects':len(crosswalk)}
+
 def load_portfolio(root: Path) -> dict:
     root = root.resolve()
     for name in ('niches','research','tools','results'):
@@ -243,6 +277,7 @@ def load_portfolio(root: Path) -> dict:
             raise ValidationError(f"Unknown related project in {r['id']}")
     records.sort(key=lambda r:r['id'])
     archived_records=load_history(root,records)
+    taxonomy_snapshot=verify_taxonomy_snapshot(root,records)
     documents=[]
     for rel in ['README.md','research/RESEARCH_V2.md','research/PRIORITIES_V2.md',
                 'research/MARKETING_PLAYBOOK.md','research/BUDGET_POLICY.md','research/ECONOMICS_V2.md',
@@ -261,7 +296,8 @@ def load_portfolio(root: Path) -> dict:
     return dict(schema_version=1,generated_from='Canonical Markdown; offline build is not fresh research',
                 latest_record_review=max((r['last_reviewed'] for r in records),default='unknown'),
                 records=records,archived_records=archived_records,
-                niches=sorted(nodes.values(),key=lambda n:n['path']),
+                taxonomy_snapshot=taxonomy_snapshot,
+                niches=sorted(nodes.values(),key=lambda n:(n.get('priority',999),n['path'])),
                 sources=source_rows,documents=documents)
 
 def embedded_json(data: dict) -> str:

@@ -25,6 +25,10 @@
     "GDM-003"
   ],
   "legacy_ids": [],
+  "public_results": [
+    {"label": "Unity discovery interview guide", "path": "results/GDM-001/unity-discovery-interview-guide.md"},
+    {"label": "Competitor comparison template", "path": "results/GDM-001/competitor-comparison-template.md"}
+  ],
   "next_action": "Interview three independent Unity teams maintaining released games; obtain permission to examine anonymized old-save failure examples and compare their current test workflow before authorizing a prototype.",
   "last_reviewed": "2026-11-15",
   "offer_price_usd": null,
@@ -146,18 +150,19 @@ First interview three independent target teams and compare their current test ef
 
 ## Resume checkpoint
 
-- Completed with evidence: taxonomy and project-family plan only; owner workbook reviewed as research. No product implementation or external commercial action.
+- Completed with evidence: taxonomy and project-family plan; owner workbook reviewed as research; drafted `results/GDM-001/unity-discovery-interview-guide.md` and `results/GDM-001/competitor-comparison-template.md` as local planning materials. No product implementation or external commercial action.
 - Current task: buyer/problem discovery for Unity historical saves.
-- Remaining checklist: [ ] permission-based interviews; [ ] current competitor/version check; [ ] approved fixture access; [ ] bounded prototype; [ ] independent negative tests; [ ] paid-pilot signal review.
+- Remaining checklist: [ ] owner-authorized permission-based interviews; [ ] current competitor/version check; [ ] approved fixture access; [ ] bounded prototype; [ ] independent negative tests; [ ] paid-pilot signal review.
 - Blockers/decisions needed: owner approval before outreach, account access, use of customer data, spending, upload or publication.
 - Next concrete action: ask three independent Unity teams about their old-save release tests and obtain permission for anonymized failure examples; record their current setup time and willingness to evaluate a prototype.
-- Owned deliverables and hashes/versions: this planning record only; no binaries or customer fixtures.
+- Owned deliverables and hashes/versions: planning record plus the two public research drafts listed above; no binaries or customer fixtures.
 - External effect state: not_started. Do not infer a paid sale or replay any historical action.
 - Private checkpoint reference: none for this new family.
 
 ## Decisions and work log
 
 - 2026-11-15: Created one family record, with Unity as the first validation target and all other engines as unverified editions. No build, listing, contact or payment occurred.
+- 2026-11-15: Added a neutral interview guide and blank competitor/workflow comparison template. These are drafts for later owner-approved discovery; no studio was contacted and no current competitor, buyer, or pricing claim was newly verified.
 
 ## Implementation-ready specification — research candidate, not an implemented product
 

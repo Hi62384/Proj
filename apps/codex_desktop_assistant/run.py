@@ -21,12 +21,13 @@ def main():
     parser.add_argument('--data-dir',help='Private state directory outside the checkout, for isolated testing')
     parser.add_argument('--bridge',action='store_true',help='Start the computer bridge (default)')
     parser.add_argument('--bridge-only',action='store_true',help='Open the legacy dashboard for rollback or diagnostics')
+    parser.add_argument('--portfolio-only',action='store_true',help='Open the Portfolio Manager workspace without the legacy dashboard')
     parser.add_argument('--background',action='store_true',help='Start in the system tray')
     args=parser.parse_args()
     directory=private_directory();directory.mkdir(parents=True,exist_ok=True)
     state=Path(args.data_dir).resolve() if args.data_dir else directory
     if state.is_relative_to(ROOT) or not state.is_relative_to(Path.home()):raise ValueError('State must stay in the private user profile outside the checkout')
-    app=QApplication(sys.argv);app.setApplicationName('Portfolio Manager' if not args.bridge_only else 'Codex Computer Bridge');app.setStyle('Fusion');app.setQuitOnLastWindowClosed(False)
+    app=QApplication(sys.argv);app.setApplicationName('Portfolio Manager' if not args.bridge_only else 'Codex Computer Bridge');app.setStyle('Fusion');app.setQuitOnLastWindowClosed(args.portfolio_only)
     lock=QLockFile(str(directory/'application.lock'))
     if not lock.tryLock(100):
         if args.background:return 0
@@ -34,6 +35,12 @@ def main():
         try:
             client=ControllerClient(state)
             health=client.request('bridge_health')
+            if args.portfolio_only:
+                if not health.get('portfolio_manager'):
+                    QMessageBox.information(None,'Portfolio Manager','The older Computer Bridge is running. Quit it from its tray menu, then start Portfolio Manager again.')
+                    return 1
+                client.request('bridge_open_portfolio')
+                return 0
             client.request('bridge_open_dashboard')
             if not args.bridge_only and not health.get('portfolio_manager'):
                 QMessageBox.information(None,'Portfolio Manager','The older Computer Bridge is running. Quit it from its tray menu, then open Portfolio Manager again.')
@@ -51,7 +58,11 @@ def main():
         from portfolio_manager.integration import ManagerHost
         manager=ManagerHost(ROOT,state)
     window=Dashboard(state,manager,restore_saved=not (args.bridge and args.background))
-    if not args.background and not manager:window.show()
+    if args.portfolio_only:
+        from portfolio_manager.workspace import ChatWorkspaces
+        workspace=ChatWorkspaces(manager.coordinator).attach('0'*32)
+        window.show_workspace(workspace)
+    elif not args.background and not manager:window.show()
     result=app.exec();lock.unlock();return result
 
 

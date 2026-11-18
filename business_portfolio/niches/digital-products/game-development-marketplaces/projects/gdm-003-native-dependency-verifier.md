@@ -11,7 +11,7 @@
   "planning_lane": "queued",
   "work_state": "planned",
   "commercial_validation": "unvalidated",
-  "evidence_basis": "owner_research_and_technical_problem_only",
+  "evidence_basis": "public_official_and_competitor_research_no_verified_customer_sales",
   "source_ids": [
     "GDM-WB-2026",
     "GDM-DEPENDENCIES",
@@ -24,7 +24,7 @@
     "GDM-002"
   ],
   "legacy_ids": [],
-  "next_action": "Build a local read-only Windows x64 dependency-scanner prototype against synthetic PE/package fixtures; verify missing, wrong-architecture, clean and unsupported cases without executing the binaries.",
+  "next_action": "Without interviews or waiting for another project, construct an owned Windows x64 fixture with a GDExtension descriptor pointing to a missing/wrong-architecture DLL; compare free Dependencies plus export logs, then implement an engine-aware package-manifest check only if it finds a material diagnostic advantage.",
   "last_reviewed": "2026-11-15",
   "offer_price_usd": null,
   "delivery_hours_assumption": null,
@@ -43,128 +43,379 @@
     "authorized_spend": 0,
     "hard_ceiling": 100,
     "owner_recurring_monthly": 0,
-    "budget_window": "Cumulative planning ceiling only; no spending approved and no automatic reset.",
+    "budget_window": "Cumulative incremental owner cash commitments; review before any purchase; never auto-reset. Existing authorization is CAD0.",
     "includes": [
       "tax",
       "currency_conversion_cost",
       "noncancelable_commitments",
       "advertising",
-      "hosting"
+      "hosting",
+      "tooling",
+      "customer_support",
+      "payment_processing",
+      "potential_refund_reserves"
     ],
-    "unknown_cost_action": "Pause and ask the owner before commitment.",
-    "production_runtime": "Local synthetic package fixtures first; real customer build pipelines are optional follow-up and require consent.",
-    "budget_fit": "local_prototype_no_spend",
+    "unknown_cost_action": "Do not treat unknown as zero; research and prepare a no-spend alternative, and stop external commitment until authorized.",
+    "production_runtime": "Offline/local-first. No new paid hosted dependency is authorized.",
+    "budget_fit": "CAD0 proposed launch build; external marketplace requirements and final costs remain subject to verification",
     "optional_all_in_envelope": {},
     "optional_total_ceiling": 0
   },
   "marketing_execution_authorized": false,
   "production_budget_verified": false,
   "success_probability": "not_established",
-  "marketing_lane": "no_outreach_prototype_first",
-  "launch_gate": "tested_prototype_and_separate_owner_launch_approval",
-  "pre_sale_work_cap_hours": 2,
+  "marketing_lane": "direct_developer_utility_demo_no_paid_ads",
+  "launch_gate": "free_dependencies_comparison_verified_package_fixtures_qa_then_owner_approved_direct_release",
+  "pre_sale_work_cap_hours": 6,
   "ad_test_cap_cad": 0,
-  "offer_price_cad_hypothesis": null,
-  "historical_price_usd_hypothesis": "The owner's workbook includes a price experiment; no price is approved.",
+  "offer_price_cad_hypothesis": 89,
+  "historical_price_usd_hypothesis": "Prior owner workbook floated USD79–149; CAD89 is an illustrative direct-download pricing scenario and not an approved quote.",
   "platforms_supported": [],
   "platforms_proposed": [
-    "Windows x64 packaged builds: Unity",
-    "Unreal",
-    "Godot",
-    "GameMaker",
-    "Stride",
-    "Defold"
+    "Godot Windows x64",
+    "Unity Windows x64",
+    "Unreal Windows x64",
+    "GameMaker Windows x64",
+    "Stride Windows x64",
+    "Defold Windows x64"
   ]
 }
 ---
-# Packaged Build / Native Dependency Verifier
+# Packaged Build / Native Dependency Verifier — Complete Business and Implementation Plan
 
-## Buyer and outcome
+## 1. Executive decision and current status
 
-Candidate buyers are game teams shipping native plugins or engine exports. The proposed outcome is an actionable, reproducible failure report before packaging a release. The owner-supplied workbook identifies this problem; it does not establish buyer demand or technical success.
+**Decision: retain as a conditional, unvalidated developer release tool with a particularly strong free competitor.** The potential product is an **engine-aware packaged-build preflight**. Its customer feeds it a Windows x64 game export and relevant engine-native plugin metadata; it identifies missing native binaries, wrong architecture, broken staging paths or resolvable transitive imports, explaining *which engine/export setting caused the problem* instead of merely listing DLL dependencies.
 
-## Evidence and competition
+- **Target customers:** engine extension makers, small game studios shipping native SDKs, and teams maintaining Windows desktop games with native C/C++/GDExtension plugins.
+- **Buying trigger:** a build works on the developer's machine but fails after export or installation elsewhere because a required binary is missing or not loadable.
+- **First bounded case:** **Godot 4 GDExtension exports on Windows x64**, using static `.gdextension` library references + portable executable import inspection. General Windows build analysis is reusable; Unity/Unreal rulepacks are optional *later* editions.
+- **Distribution:** direct standalone download through eligible seller checkout; *not* a Unity Asset Store submission that bundles an executable. Even if Unity plugin support is later added, executable rules must be verified independently.
+- **Purchase reason:** a useful engine-context diagnosis, reproducible CI failure and remediation path. **A plain dependency tree viewer is not enough** and must not be sold as new value.
+- **Current state:** planned, unvalidated, no tests/fixtures/releases/sales completed; the immediate next activity is a synthetic reproducible comparison against the free **Dependencies** tool.
 
-The free [Dependencies project](https://github.com/lucasg/Dependencies) and platform/engine build logs are direct substitutes. A paid tool needs to demonstrate a material improvement in engine-aware packaging, CI integration or diagnosis. A static dependency scan cannot guarantee that delay-loaded libraries, platform-specific runtime paths, graphics drivers or dynamically constructed loads will work. No buyer interview, paid pilot, accepted marketplace listing or working prototype exists. Interviews are not required before a synthetic local prototype.
+## 2. Repository baseline and semantic duplication screen
 
-## Family and candidate editions
+Inspected `https://github.com/Hi62384/Proj` main at `6f2a420e9a1d7d5b44ec1759918e737059a6772e` on 2026-11-15. Canonical existing project: `business_portfolio/niches/digital-products/game-development-marketplaces/projects/gdm-003-native-dependency-verifier.md`; ID `GDM-003`, niche `N-gdm-20261115`. Keep stable ID and historical planning. `GDM-001` tests save behavior, `GDM-002` tests NPC journeys—no semantic duplicate. Existing `business_portfolio/archive/` and `opportunity_library/` research must be inspected before creating any additional related offer. No working GDM-003 verifier is claimed in published records; Codex must inspect the latest local working tree and search for current package/PE-analysis modules before creating new code.
 
-One shared specification would define dependency observations, expected package paths, supported architectures, a machine-readable report and reproducible fixtures. The first **candidate**, subject to evidence, is a Windows x64 pipeline preflight. Engine adapters are separate editions, never a claim that one binary works across all engines.
+**Reuse:** the current project browser/checkpoint format, source registry and GDM-003 planning; optionally a shared release/QA skeleton only where it is already rights-cleared and genuinely reduces effort. Do *not* bundle Microsoft's or Dependencies' code or licensed game binaries without checking all redistribution conditions. Synthetic fixtures should be constructed for this project.
 
-| Edition | Status and feasibility gate | Distribution candidate | Required proof |
-| --- | --- | --- | --- |
-| Unity | Candidate; verify native plugin import settings, editor/build versions and executable distribution rules. | Direct or Unity Asset Store only if its rules allow the format. | Detect a missing transitive DLL in a packaged Windows build, with a precise remedy. |
-| Unreal | Candidate; verify UBT packaging, plugin variants and engine version support. | Fab after policy and license review. | Compare against UBT output on an independent plugin. |
-| Godot | Candidate; verify GDExtension packaging and supported versions. | Direct/itch.io; free asset-library discovery if eligible. | Detect a misplaced or wrong-architecture extension dependency. |
-| GameMaker / RPG Maker | Candidate; native extension scope and buyer demand unverified. | Direct only after rights and format review. | Reproduce a real missing-library failure. |
-| Construct / GDevelop | Candidate; native export/plugin problem may be inapplicable. | No channel selected. | Establish a supported native dependency use case first. |
-| Roblox | Likely inapplicable to a Windows DLL checker; no edition promised. | None. | Reframe around a distinct documented dependency problem or drop. |
+## 3. Alternatives and selection rationale
 
-## Planned narrow acceptance tests
+The owner previously researched 33 marketplace directions; this revision refines the already chosen GDM-003 candidate instead of pretending to perform a new unrelated opportunity search.
 
-- On synthetic disposable Windows x64 package fixtures, detect missing, wrong-architecture and conflicting-version native dependencies; compare output with Dependencies' documented behavior and engine logs where publicly available. A real game build is optional and requires its owner's consent.
-- Produce a deterministic machine-readable CI failure and a human-readable report identifying the affected package and search path.
-- Correctly mark dynamic loads, optional drivers and platform-specific paths as **unknown** rather than pass; never claim runtime compatibility from a static scan.
-- Test a clean fixture, a missing transitive library, a false-positive risk and a corrupted binary. Confirm source fixtures and customer files are unchanged.
+| Alternative | Outcome | Why |
+|---|---|---|
+| Native Windows DLL dependency viewer | **Reject** as standalone product | `Dependencies` is a capable free MIT-licensed viewer/CLI. |
+| Generic Unity asset relationship scanner | Reject | Existing Unity tools inspect asset dependency graphs; different problem from packaged native imports. |
+| Mobile dependency resolution manager | Reject for v1 | Official and community native dependency management tools already exist, ecosystem-specific. |
+| Universal cross-OS binary compatibility guarantee | Reject as misleading | Actual Windows loader behavior, dynamic paths, drivers, runtime activation and host environments cannot be inferred from static exports. |
+| **Engine-aware exported-game preflight with explicit uncertain findings** | Conditional selected scope | Combining `.gdextension` metadata with actual shipped package and PE import chains may identify *why an extension wasn't staged*. Must beat free diagnostic baseline. |
 
-All tests are **planned**. No fixture or test result is claimed.
+**Risk summary:** high technical credibility demands, relatively narrow paying audience, marketplace distribution friction, and powerful free substitutes. This should be a **short killable local feasibility experiment**, not an expensive all-platform scanner. Unlike generic source-code generation, its potential value is in reliable, maintained engine configuration correlation and independently tested clean-package fixtures.
 
-## Rights, support, channel and economics
+## 4. Customer use case and reasons not to buy
 
-Do not bundle proprietary game binaries, engine files or third-party tools without their licenses. The free Dependencies tool must remain a visible comparison. Unity marketplace executable restrictions, Fab product requirements and each engine version's maintenance burden need a current review before any submission. No seller account, upload, marketing, outreach or expenditure is authorized. Delivery/support time and price are unknown; the workbook's price discussion is only a hypothesis.
+A developer uses a native extension that loads correctly in Godot Editor but fails in a distributed Windows build. The utility reads package directory, `.gdextension` manifest and only authorized project metadata. It shows a specific finding such as "Windows x64 library path points to missing `res://addons/example/bin/win64/my_extension.dll`" or "the shipped library is x86, while the export targets x64", plus the file that declared the expected library and a suggested fix.
 
-## Validation gate and kill rule
+Nonbuyers: pure-GDScript games, browser-only games, developers already getting a clear actionable error from engine logs, teams whose native dependency problem is exclusively runtime service setup, and security analysts seeking malware detection. **Do not imply** the tool can guarantee a game will run on arbitrary customers' PCs, that it executes tests safely, or that it can fix binaries automatically.
 
-First build a local synthetic-fixture prototype and compare its findings with free tools and publicly documented engine behavior. Use correctness, false-positive rate, clarity, and local implementation effort to decide whether to continue. Interviews, real team trials, and paid-pilot signals are optional follow-up evidence, not prerequisites to prototyping. Use of a real team's package requires consent and separate owner approval. Keep commercial demand marked unknown until actual evidence exists. Stop, narrow, or continue based on the prototype results; do not claim a market from technical success.
+## 5. Source-backed competing approaches and remaining gap
 
-## Resume checkpoint
+| Source | What was checked | Limitation of the inference |
+|---|---|---|
+| [Dependencies README](https://github.com/lucasg/Dependencies) | Free DLL viewer and CLI, supports import/export analysis and some API-set/SxS handling; cannot statically discover arbitrary `LoadLibrary` paths. | We have **not** tested superiority for any given package. |
+| [Dependencies documentation](https://lucasg.github.io/Dependencies/) | CLI/GUI, recursion options and technical limitations. | Documentation lists features, not evidence of customer payment. |
+| [Godot Windows exports](https://docs.godotengine.org/en/stable/tutorials/export/exporting_for_windows.html) | Export formats and supported architectures; default x86_64. | Does not prove our program will diagnose all Godot export issues. |
+| [Unity 2026 submission guidelines](https://assetstore.unity.com/publishing/submission-guidelines) | Section 1.5.a prohibits submissions including executables or external executable dependencies; verify before any future submission. | A future pure-editor Unity tool may have a different eligibility path, not preapproved. |
+| [Build & Dependency Analyzer (Unity)](https://assetstore.unity.com/packages/tools/utilities/build-dependency-analyzer-413664) | Editor **asset** dependency inspection exists; do not mislabel it as a direct competitor to native DLL import inspection. | Does not prove missing native dependency tool demand. |
+| [Payhip pricing](https://payhip.com/pricing) | Free tier 5% plus separate payment processing charges. | Direct storefront does not supply buyers automatically. |
 
-- Completed: research classification and candidate scope only. No product implementation or external effect.
-- Remaining: [ ] synthetic PE/package fixtures; [ ] free-tool baseline; [ ] engine/package policy checks; [ ] bounded read-only prototype; [ ] negative/unknown-state tests; [ ] optional real-team evaluation only if it resolves a specific question.
-- Blockers: owner approval before outreach, account access, customer data, spending, upload or publication.
-- Next concrete action: generate harmless synthetic PE/package fixtures and implement a bounded parser/report that detects missing and wrong-architecture dependencies without loading or executing inspected files.
-- Owned deliverables: this planning record only. No binary, listing or customer file exists.
-- External effect state: not_started.
+**Free/AI challenge:** create intentionally missing/misplaced native DLLs and run `Dependencies.exe`/GUI and Godot's export logs. Let an AI assistant write a small `.gdextension` path checker. Time integration and compare exact actionable findings. The proposed product only qualifies if it combines engine metadata, shipped files and safe import-chain diagnostics in a way substantially harder to reproduce reliably and easier to interpret than those alternatives. A more polished dashboard without such a gap is insufficient.
 
-## Work log
+**Not established:** independent buyer counts, willingness to pay, paid conversion, market saturation, clean-host performance, portability or ability to distribute an unsigned utility without friction.
 
-- 2026-11-15: Recorded a conditional multi-engine family with a Windows x64 first candidate; no implementation or sales claim.
-- 2026-11-15: Updated the first step to a synthetic-fixture, read-only scanner prototype; real team packages and interviews are optional and require consent where applicable. No outreach, spending, or product implementation occurred in this update.
+## 6. Offer and precise first-release scope
 
-## Implementation-ready specification — queued research candidate
+### Must have
 
-**Finished-product contract.** Given a packaged Windows x64 game build and an engine-specific export manifest, the verifier inventories shipped native modules, checks architecture and resolvable transitive imports, cross-checks engine plugin/export settings against the package, and reports actionable missing/misplaced/conflicting libraries before release. It emits deterministic JSON and a readable report with an `unknown` state for dynamic/runtime-only behavior. A bare DLL dependency tree is insufficient: the proposed advantage must be in packaged-build context and engine-aware diagnosis.
+1. Read-only Windows x64 standalone CLI accepting an exported game directory, optional Godot project/export metadata, expected architecture, and output directory.
+2. Godot 4 GDExtension rulepack: read `.gdextension` descriptors; enumerate candidate Windows library entries; normalize `res://` relative paths according to the supported package model and check whether referenced binaries were exported.
+3. Safe PE/COFF header parsing for supported x64 targets: machine/bitness, section layout, import and delay-import directories *within bounded inputs* and transitive dependencies found among shipped files.
+4. Evidence-rich findings: exact declaring manifest, imported-from chain, expected/actual architecture, searched directory rules, severity/confidence, limits and non-destructive suggested remediation.
+5. Stable JSON and readable Markdown/HTML reports, explicit exit codes, documented machine-readable finding schema and CI examples.
+6. Honest `unknown` classification for dynamically loaded modules, API-set resolution on other hosts, protected paths, system components and runtime-only conditions. "No definite issue detected" is not "guaranteed to run."
+7. Original synthetic plugin package fixture with one clean, one missing direct DLL, one missing transitive DLL, one wrong-architecture binary and one missing/misplaced `.gdextension` entry, plus a known false-positive case.
+8. Offline, no telemetry, input immutability, installer-free ZIP or other permitted distribution package, reproducible builds, changelog and exact supported Windows/engine version matrix.
 
-**Buyer and reason to purchase.** Candidate customers are small game/plugin teams shipping desktop builds with native extensions. The buying trigger is a failure that appears only in a packaged build or on a clean customer machine. The free Dependencies viewer, platform loader diagnostics and engine build logs are the baseline. A paid edition must measurably shorten root-cause time or catch package/configuration mismatches they leave unclear. No such advantage or willingness to pay has been proved yet.
+### Not in first release
 
-**Architecture.** A read-only CLI has five bounded stages: (1) collect package files and engine export/plugin metadata; (2) parse supported PE imports and architecture without executing untrusted binaries; (3) resolve imports against explicit package and documented system search roots; (4) apply a versioned engine rule pack; (5) emit findings with file path, import chain, confidence, evidence and remedy. A stable `Finding` schema distinguishes `missing`, `wrong_architecture`, `misplaced`, `conflict`, `settings_mismatch`, `unknown_dynamic_load` and `unsupported_format`. Engine adapters supply metadata extraction and rule packs; the PE parser and report schema may be shared. Never load a suspicious game DLL to inspect it. Run in a disposable local analysis directory and do not upload customer builds.
+macOS/Linux dependency resolution, fully automatic unpacking of signed installers, Unity importer YAML rulepacks, Unreal UBT rules, antivirus scanning, dynamic tracing of arbitrary game binaries, automatic file modifications, automatic external downloads, crash diagnosis for all driver/anti-cheat vendors, GUI wizard, generalized "all versions" support or C++ redistributable installer bundling.
 
-**Failure boundaries.** Windows system DLL/API-set resolution, delay-loaded imports, `LoadLibrary` with computed paths, injected modules, GPU drivers, redistributable installers, anti-cheat, signed/protected binaries and platform-specific runtime behavior need explicit uncertainty. Never label a build “works on all machines” from a static scan. File hashes, tool/rule versions and searched paths make each finding reproducible. No remediation automatically alters a buyer build.
+| Target environment | Candidate status | Required technical/commercial proof |
+|---|---|---|
+| **Windows x64 + Godot GDExtension** | **Chosen local spike**, not verified product. | Actual `.gdextension` descriptor parsing, export inclusion and PE import graph under packaged build. |
+| Unity Windows x64 | Later edition, direct distribution | Plugin importer settings and `.meta` parsing; cannot ship general standalone executable through Unity Asset Store. |
+| Unreal Windows x64 | Later edition | UBT/staging/plugin descriptor mapping, distinguish editor-only from packaged targets; Fab format and licensing. |
+| GameMaker Windows x64 | Conditional | Extension/export manifest format and customer need. |
+| Stride Windows x64 | Conditional | Build/publish output metadata and target audience. |
+| Defold Windows x64 | Conditional | Native extension bundle/export behavior and buyer channel. |
+| Construct / GDevelop desktop | Very conditional | Native library packaging needs proof; avoid creating a false port. |
+| Roblox | **Inapplicable** | No packaged Windows native DLL dependency problem for Creator Store customers in this form. |
 
-| Candidate pipeline | Status | Engine-specific evidence and distribution gate |
-| --- | --- | --- |
-| Unity Windows x64 | Research candidate; possible first spike | Match plugin importer platform/CPU settings and player output with package files; confirm exact Unity Asset Store executable restrictions or use lawful direct distribution. |
-| Unreal Windows x64 | Research candidate | Inspect UBT/plugin descriptors, staging rules and packaged binaries; compare Fab eligibility and existing UBT diagnostics. |
-| Godot Windows x64 | Research candidate | Inspect GDExtension descriptors, architecture paths and exported folder; check free addon/library alternatives. |
-| GameMaker Windows x64 | Research candidate | Verify extension/export metadata is available and inspectable before promising an edition. |
-| Stride Windows x64 | Research candidate | Validate native dependency packaging and buyer/tool ecosystem before investing in rules. |
-| Defold Windows x64 | Research candidate | Validate native extension bundle/export format and marketplace feasibility. |
-| Construct / GDevelop desktop exports | Research candidate only if a native dependency failure can be reproduced; may be rejected. | Separate extension/export mechanisms and buyer demand needed. |
-| Roblox | Rejected for this Windows-native-build scope | No suitable Windows packaged-game pipeline; do not force a port for platform count. |
+## 7. Narrow differentiated proof without interviews
 
-Choose the first local pipeline based on synthetic-fixture coverage, available tooling, public substitute comparison and implementation effort; Unity remains a **candidate**, not a proven winner. Shared parser/report code does not imply an engine adapter works elsewhere. Supported versions, seller channels, licensing and maintenance cost are unknown until tested. Interviews and real-team trials are optional later evidence, not prerequisites to this prototype.
+Build a controlled synthetic Godot GDExtension packaging fixture. First produce output with Godot's export logs and the free Dependencies tool. Then add the smallest engine-aware verifier. The tool must identify a path/configuration cause the baseline does not easily expose and emit a stable CI finding. Record time to diagnosis, reproduction steps, false positives, unknown cases and implementation cost.
 
-### Sequenced milestones and deliverables
+**Go/kill:** continue if it catches at least the defined missing/misplaced/wrong-architecture cases and produces **materially more actionable engine-specific reporting** than the free comparison. Pause/kill if a basic five-line path script plus free Dependencies achieves the same value, if robust PE interpretation is too costly to maintain, or if there is no viable buyer/market channel. No mandatory interviews, team trials or paid pilots.
 
-| ID | Dependency | Deliverable and completion evidence |
-| --- | --- | --- |
-| D1 synthetic prototype | Local work; no outreach | Synthetic PE fixture set, architecture/import graph schema, bounded file/CPU limits and explicit unknown states; parser never executes game code. |
-| D2 free-tool baseline | D1 | Compare synthetic cases with Dependencies and public engine documentation; record demonstrated gaps and cases where existing tools suffice. |
-| D3 pipeline selection and rights | D1–D2 | Select one Windows x64 engine/export pipeline, pin versions, review sample-binary rights and marketplace executable rules; reject unsupported channels. |
-| D4 engine rule pack | D3 | Detect missing transitive DLL, wrong CPU architecture, misplaced plugin and import-setting mismatch in four independently labelled package fixtures. |
-| D5 diagnostics and CI | D4 | Repeatable JSON/readable output, stable exit codes, import chain and actionable remedy; prove no input files changed and no customer data left the machine. |
-| D6 false-confidence evaluation | D5 | Delay-load, API-set/system library, runtime-only path, optional driver, corrupt binary and clean package cases; unknowns remain unknown and false positives are reviewed. |
-| D7 optional external evaluation | Working prototype and separate owner approval | If useful, invite teams to evaluate with consent. Feedback is optional and not required to continue local work or prove paid demand. |
-| D8 release preparation | Prototype results and owner launch approval | Versioned rule pack, license/dependency notices, supported engine matrix, sample failures/demo, store eligibility, documentation and maintenance policy. |
+## 8. Economics toward the CAD150/month portfolio milestone
 
-**Marketing, cost and kill rule.** Demonstrate synthetic packages, compare the free viewer and public engine documentation, then show any additional configuration/package diagnosis with reproducible evidence. Publish setup guides or a free synthetic fixture only after rights and channel review. No ads, outreach or listing is authorized. Estimate parser maintenance, engine-version QA and support from actual development and test time before pricing; CAD0 spending is authorized. Stop or narrow if the prototype merely repackages free functionality, rule accuracy is poor, marketplace restrictions prevent lawful delivery, or measured support/maintenance burden outweighs the product's potential value. No D1–D8 milestone is complete.
+**Proposed first edition:** CAD89 direct downloadable utility, single purchase / locally installed; no runtime license server or subscription. Price is an experiment; the historical owner workbook independently floated USD79–149 and neither is proof of buyer willingness.
+
+**Illustrative monthly unit economics:** current Payhip free plan platform fee is 5%; payment processor **assumed** 3% + CAD0.35, refund reserve **assumed** 5% gross, cash hosting/ads **assumed** CAD0. Net per CAD89 completed order ≈ `89 × (1 − 0.05 − 0.03 − 0.05) − 0.35 = CAD77.08` before personal tax, FX variability and owner time. The assumptions are expressly *not* live payment measurements.
+
+| Scenario | Monthly paid orders hypothetical | Gross CAD | Total assumed fees/reserve CAD | Net contribution CAD | % of CAD150 portfolio goal |
+|---|---:|---:|---:|---:|---:|
+| Stress | 0 | 0.00 | 0.00 | 0.00 | 0% |
+| Base hypothesis | 1 | 89.00 | 11.92 | 77.08 | 51.4% |
+| Upside hypothesis | 4 | 356.00 | 47.68 | 308.32 | 205.5% |
+
+Under these assumptions, **2 orders per month** contribute CAD154.16. This is *not* a monthly recurring subscription and actual sale count is unknown. With CAD0 proposed startup cash, the first paid order is nominal cash break-even excluding work time; a separately authorized CAD100 cash expense would require `ceil(100/77.08)=2` sales to recoup. Under higher total variable deductions of 25% gross + CAD0.35, a sale yields CAD66.40 and three monthly orders would be required for CAD150.
+
+**Time hypothesis:** 25–60 AI-assisted engineering/QA hours, 2–6 owner review hours, then 1–3 hours/month maintenance plus individual support incidents. If a two-hour support request follows each CAD89 sale, the effective owner time and maintenance may make the business unattractive even while cash contribution is positive. No seller demand has been established, so zero sales is a genuine base risk, not a remote edge case.
+
+**Capital governance:** planned upfront CAD0; authorized spend CAD0; cumulative planning ceiling CAD100. Unknown signing certificate, testing machines, paid installer or marketplace verification costs must be verified or removed from scope, never silently assumed free. Never trade or spend because of this plan.
+
+## 9. Distribution and marketing plan
+
+**Primary:** direct download through existing store where owner-controlled and eligible (Payhip free plan or other verified checkout) because Unity's Asset Store executable ban makes that platform an unreliable distribution route for this standalone utility. **Secondary discovery:** technical how-to page/demo and search-indexable documentation showing one real "works in editor / fails after export" case; any posting/account publishing needs normal approval. No paid ads at first. Since direct distribution does not bring built-in discovery, customer acquisition is a major unresolved commercial weakness.
+
+**Potential search terms (volume unverified):** `Godot GDExtension dll missing export`, `game builds missing native DLL`, `Godot Windows GDExtension packaging check`, `native plugin wrong architecture`, `Windows game plugin dependency CI`.
+
+**Listing draft headline:** *Native Package Preflight — Find Missing Game-Extension DLLs Before Shipping*.
+
+**Listing teaser:** *Inspect exported Windows x64 game builds against GDExtension references and native imports. Get clear, reproducible reports for missing libraries, wrong architecture and packaging mismatch—without executing customer binaries or changing the build.*
+
+**Limitations to disclose:** supported Windows x64/Godot version(s) only; not an AV product; cannot prove dynamic `LoadLibrary` requirements, system drivers, antivirus interference or compatibility with all clean machines; some findings remain `unknown`; no auto-fix.
+
+**Demo storyboard:** (1) Godot project has working extension in editor; (2) release folder omits required DLL; (3) free dependency viewer reveals generic missing import but lacks originating GDExtension field/path; (4) proposed verifier identifies `gdextension: [libraries] ...` and shows missing staged relative path and actionable rule; (5) patch export preset, rerun clean package. All demonstrations must be generated with owned test binaries and checked logs; no fake screenshot or claim until the tool works.
+
+**Launch sequence:** build demo packages and test → verify clear advantage → create clean ZIP/license/QA report → record authentic command output and page/demo visual → draft support/FAQ and version matrix → owner authorizes seller publication → confirm real listing URL/checkouts → record actual sales/support. If acquisition remains costly, prioritize reusable documentation rather than paying for ads without data.
+
+## 10. Architecture, toolchain and file ownership
+
+**Proposed first build:** .NET 8 LTS CLI using C# (version chosen for a local offline, cross-platform *build tool* with a Windows x64 target package). Exact SDK support/availability must be verified on the developer machine before pinning. Use `System.Reflection.PortableExecutable.PEReader` for validated PE header and section access, and implement **bounded** image-directory parsing where necessary. Do not assume PEReader directly resolves every Windows import without code. An alternative minimal native-independent Python prototype can test feasibility but must not become an undeclared runtime dependency in the paid package.
+
+```text
+Proposed product folder (not yet created):
+products/game-tools/native-package-preflight/
+  src/Preflight.Cli/{Program,Arguments,ExitCodes}.cs
+  src/Preflight.Core/{ScanConfig,WorkspaceScanner,SafePaths,BoundedPeReader}.cs
+  src/Preflight.Core/{ImportGraph,ModuleResolver,ArchitectureRules,ConfidenceModel}.cs
+  src/Preflight.Godot/{GDExtensionReader,LibraryPathRules,ExportRules}.cs
+  src/Preflight.Reporting/{Finding,JsonReport,MarkdownReport,DiagnosticCodes}.cs
+  tests/Unit/{PeRvaBoundsTests,PathTraversalTests,RuleTests}.cs
+  tests/Integration/{GoodExportTest,MissingDllTest,WrongArchTest,UnknownImportTest}.cs
+  tests/Fixtures/{good,missing-direct,missing-transitive,wrong-arch,misplaced,delayload}.zip
+  docs/{Quickstart,GodotSetup,CI,FindingCodes,Limitations,SupportPolicy}.md
+  tools/{fixture_builder.py,package.py,verify_release.py}
+  LICENSE, THIRD_PARTY_NOTICES.md, CHANGELOG.md
+```
+
+**Module boundaries:** `Core` owns read-only scanning and file classification; `Godot` extracts engine metadata and expected library paths; `ImportGraph` tracks direct import edges with bounded recursion; `ModuleResolver` classifies package-local/known Windows system/unknown, using explicit supported profiles; `Reporting` writes stable diagnostics and confidence. No module may execute scanned game binaries. No hidden internet services, privilege escalation or auto-downloads.
+
+**CLI contract proposal:**
+
+```text
+native-preflight scan --package "C:/build/release" --engine godot \
+  --target win-x64 --manifest "C:/project/addons/foo/plugin.gdextension" \
+  --output "C:/build/reports"
+# Exit: 0 no confirmed blocking finding; 1 confirmed issue; 2 invalid input; 3 incomplete/unsupported check
+# '0' still does not guarantee runtime compatibility; report includes unknown_checks.
+```
+
+This syntax is a design contract, not an executable command that already exists. Configuration must reject malformed absolute paths, traversal, reparse/symlink escape outside selected roots, unsupported binaries, zip bombs/oversized files and recursive import graphs that exceed time or size ceilings. If the utility scans packaged archives, enforce decompression limits; the first release may explicitly require a pre-extracted directory to avoid this risk.
+
+## 11. Finding schema, algorithms, and honest uncertainty
+
+**Finding fields:** `id`, `code`, `severity`, `confidence`, `module_path`, `declared_by`, `import_chain`, `expected_arch`, `actual_arch`, `search_roots`, `observed_sha256`, `evidence`, `recommended_action`, `limitations`. Distinguish `missing_exported_library`, `missing_transitive_dependency`, `wrong_architecture`, `conflicting_dll_candidate`, `invalid_manifest_path`, `unsupported_format`, `unknown_dynamic_load`, `unknown_system_resolution`.
+
+```json
+{
+  "schema_version": 1,
+  "engine": "godot", "target": "windows-x64",
+  "package_root": "C:/build/release", "tool_version": "0.1.0-proposed",
+  "findings": [{
+    "code": "missing_exported_library",
+    "severity": "blocking", "confidence": "high",
+    "module_path": "res://addons/demo/bin/windows_x64/demo.dll",
+    "declared_by": "addons/demo/demo.gdextension:[libraries]",
+    "import_chain": [],
+    "recommended_action": "Check feature-tagged GDExtension library path and export include rules"
+  }],
+  "unknown_checks": ["runtime LoadLibrary paths", "target machine system DLL availability"]
+}
+```
+
+This example is **invented fixture data for a future test**, not a real observed failure or verified Godot output. Paths must be consistently normalized in actual output; strip sensitive usernames/default absolute paths from shareable reports when requested.
+
+**Scanner algorithm:**
+
+```text
+assert input directory is authorized and normalized; never execute input code
+enumerate bounded files; build package-local index by relative path and casefolded basename
+parse supported .gdextension descriptors and feature-tagged Windows library entries
+for each required entry:
+    verify expected exported path exists; report missing/misplaced before PE parsing
+    inspect PE machine and section/import directories with checked integer arithmetic
+    if PE unsupported/corrupt: report unsupported rather than missing
+    bounded traverse imports; classify package-local, documented Windows system, or unknown
+    report direct/transitive definite absence when sufficient search-root evidence exists
+    represent delay-load and dynamic/driver/side-by-side ambiguity as unknown
+render reproducible JSON and readable report with tool/rule versions; exit by severity
+```
+
+**Important PE-reader correctness:** validate MZ/PE signatures, e_lfanew and section bounds, prevent integer overflow when mapping RVAs into file offsets, guard cyclic import chains and cap file count, bytes, recursion depth and scan time. Always separate file *presence* from Windows loader *availability*. Do not assume a DLL in a different folder is resolvable by `LoadLibrary`, or that a system DLL's presence proves exported symbols/SDK runtime compatibility. Do not infer clean-PC success from a static scan.
+
+**Security/privacy:** treat packages and metadata as untrusted read-only input. Do not load/unmarshal/execute DLL entry points. Never download engine dependencies automatically. No default telemetry. Avoid writing inside scanned directory. Reports go only to an explicit output folder; never reveal private host paths in a public demo. If asked for runtime tracing, decline until a properly isolated, separately authorized design exists.
+
+## 12. Detailed Codex implementation tasks
+
+The project should advance locally after a short free-tool baseline; no interviews, prospect outreach or paid-pilot signoff. All paths proposed; tasks do not claim implementation. Estimate focused engineering hours, not wall-clock launch dates.
+
+| Task | Hours est. | Dependency | Required action / deliverables | Test / stop condition |
+|---|---:|---|---|---|
+| D01 | 1–3 | None | Pin .NET and Godot available versions; record free Dependencies CLI/GUI and export log baseline; `research/comparison.md`. | Show raw output from 3 synthetic fixtures or declare blocker; stop if free baseline fully adequate. |
+| D02 | 2–4 | D01 | Build minimal synthetic Godot native extension or equivalent owned PE fixtures and `.gdextension` metadata. | Clean and failing export variants reproducible from owned source. |
+| D03 | 2–4 | D02 | Define finding JSON, stable codes, CLI options and report contract. | Invalid options return 2; empty/unsupported package never returns misleading success. |
+| D04 | 3–6 | D03 | Implement bounded file enumerator and safe path normalization. | Reject symlink escape, deeply nested path and enormous file input without unsafe operation. |
+| D05 | 4–8 | D04 | Implement safe PE reader for architecture/direct import table; add import-chain graph. | Correct x64 vs x86 detection; corrupt headers and overflow rejected. |
+| D06 | 3–5 | D02,D04 | Implement Godot descriptor reader for feature tags and exported libraries. | Missing/misplaced native extension in output correctly linked to descriptor line/key. |
+| D07 | 3–5 | D05–D06 | Implement package/Windows dependency resolution policy with `unknown` categories. | Detect missing direct/transitive import without false confident system failures. |
+| D08 | 2–4 | D07 | Implement deterministic JSON/Markdown reporting, exact evidence, repro and exit codes. | Same inputs yield equivalent report independent of scan order. |
+| D09 | 3–5 | D07–D08 | Add six negative fixtures: arch mismatch, direct/transitive missing, invalid manifest, cyclic imports, dynamic unknown. | No execution; status and confidence accurate; original package hashes untouched. |
+| D10 | 2–4 | D09 | Compare against Dependencies and Godot logs on each fixture; record setup and diagnostic delta. | **Kill** if same conclusions are trivial with free tool/script. |
+| D11 | 3–5 | D10 pass | Build self-contained Windows x64 package, original docs/FAQ/license, support version matrix and CI recipe. | Clean-machine install without hidden paid dependency; truthful SmartScreen/signing disclosure. |
+| D12 | 1–3 | D11 | Prepare real output screenshots/demo, store copy, pricing assumptions and local handoff. | No fabricated crash or external result. |
+| D13 | Variable | D12 + owner authorization | Publish direct listing and verify real download/checkout. | Only claim published when observed. |
+| D14 | 0.5–2/review | D13 | Log genuine visits, units sold, refunds and support hours; decide next adapter. | Do not assume sales from download/view counts. |
+
+**Critical path:** D01→D02→D03→D04→D05/D06→D07→D08/D09→D10→D11→D12→D13. **Initial effort hypothesis:** 25–60 engineering/QA hours and 2–6 owner setup/review hours; commercial platform review and acquisition effort unknown. D05 PE parser and D06 Godot descriptor work can be separate owned files/workstreams if the API contracts are frozen; no concurrent edits of one project record.
+
+## 13. Reproducible QA and negative-case contracts
+
+| Test case | Proposed synthetic input | Expected result |
+|---|---|---|
+| Valid packaged extension | `.gdextension` references existing x64 DLL plus complete package-local imports | No **confirmed** blocking finding; report includes scope/unknown runtime checks. |
+| Missing declared library | `.gdextension` Windows feature path points to absent file | `missing_exported_library`, exact descriptor field/path, exit 1. |
+| Wrong architecture | Windows x64 target contains x86 PE DLL | `wrong_architecture`, supported machine value, exit 1. |
+| Missing transitive import | A.dll imports B.dll; B.dll imports absent C.dll | Correct A→B→C chain, with search-profile assumption included. |
+| Optional dynamic `LoadLibrary` | Input has no static import for needed runtime name | `unknown_dynamic_load`, never "definitely passes." |
+| Windows API-set name | Import requests API-set alias | Classify using supported known scheme or `unknown_system_resolution`, not missing-package automatically. |
+| Broken PE header | Invalid `e_lfanew`/section length | `unsupported_format` or `invalid_binary`, never parser crash. |
+| Symlink/reparse escape | Source tree refers to files outside allowed package | Refuse traversal and do not open private outside file. |
+| Oversized/cyclic import graph | Synthetic depth/size beyond configured ceilings | Explicit scan-incomplete outcome; no infinite loop. |
+| Input files unchanged | Hash all owned fixtures before and after | Exact hashes stable, no writes into package. |
+| Deterministic report | Same fixtures, shuffled enumeration | Stable finding ordering/IDs, with deliberately volatile values excluded. |
+| Clean Windows test | Run built CLI on a separately configured clean Windows image | Record actual success and SmartScreen/SDK dependency; don't invent result. |
+
+**Proposed commands after actual implementation:**
+
+```powershell
+# Pin verified paths in the actual Windows checkout; do not run this against customer binaries.
+dotnet test products/game-tools/native-package-preflight/tests/Unit
+dotnet test products/game-tools/native-package-preflight/tests/Integration
+dotnet publish products/game-tools/native-package-preflight/src/Preflight.Cli -c Release -r win-x64 --self-contained true
+# Then execute packaged CLI with the actual --package/--engine/--output arguments.
+```
+
+Exact `.csproj`, target-framework and runtime identifiers must be checked in the generated source; `dotnet` commands above are **planned tests**, not a claim of execution. Avoid adding an unverified Python or proprietary testing runtime requirement to the customer release.
+
+## 14. Legal, marketplace eligibility, privacy, and financial authority
+
+- Source code, sample game assets, screenshots and logos must be original, permissively licensed for redistribution, or used with documented written rights. Provide a THIRD_PARTY_NOTICES file if any dependency is redistributable. Audit all package licenses before release; do not bundle competitor code because it is public.
+- Prefer a free local development environment and original synthetic fixtures. Do not ship private customer saves, proprietary production packages, or credentials. No analytics/telemetry by default; any opt-in diagnostics must be documented and deletable.
+- The owner is in Canada. Confirm current seller eligibility, tax declarations, identity verification, payout currency, marketplace EULA, applicable Canadian tax obligations and merchant-of-record treatment before opening accounts or publishing; recorded platform statements are **not** approval of this seller account.
+- A marketplace application is not a guaranteed listing. Draft locally, complete permitted QA, and then request the smallest actual owner approval/account verification required. The CAD100 ceiling is *not* a spending grant, and the proposed first release has no authorized cash outlay.
+- Observe `AGENTS.md`, `business_portfolio/SCHEMA.md`, `PROJECT_TEMPLATE.md`, `business_portfolio/tools/build_browser.py` and `commercial_checks.py`. Maintain stable IDs, one writer per canonical file, guarded checkpoint updates, and the current historical archives.
+
+## 15. Release-preparation and seller handoff
+
+1. Build the exact edition pinned by the acceptance matrix. Generate a repeatable versioned package from a clean checkout with a source revision identifier, checksums and licenses.
+2. Run the unit, integration, negative-case, performance, and installation tests on the declared support matrix. Capture tool output and real screenshots/videos, not generated stand-ins falsely described as the product.
+3. Have a second *self-created* test project/user journey consume the package following only the public quickstart. Measure setup time, record failed steps and revise documentation.
+4. Prepare a listing draft, concise feature and limitation statements, supported versions, demonstration script, meaningful search keywords, support route, update policy, cancellation/refund treatment and a release checklist.
+5. Confirm product-class eligibility and country payout requirements on the intended marketplace. Owner completes required identity/account/publishing steps; do not silently attempt them through other accounts or unofficial APIs.
+6. Archive hashes/manifest, signed-off QA evidence, actual uploaded package identifier and resulting public URL when genuinely observed. Do not mark `published` before a real listing is visible or before any required official review finishes.
+7. Once released, inspect real traffic/sales/support, not hypothetical product-page rank. Reuse the release pipeline for a second edition only when the edition's expected benefit exceeds extra testing/support cost.
+
+**Release-blocking acceptance:** a real build artifact reports exact declaration paths for missing exported DLL and wrong architecture, shows a valid transitive import chain, identifies all unsupported conditions as unknown, never executes scanned DLLs and supplies repeatable CI findings with safe bounded parsing. A free-tool comparison documents a meaningful gain.
+
+## 16. Post-release operations and customer support
+
+- Publish a clear supported version matrix; request *reproducible, redacted* bug reports rather than sensitive project archives. Disclose current limitations; do not promise unlimited bespoke integrations at the base price.
+- Triage: verify report/version → reproduce on minimal fixture → classify `supported bug`, `integration`, `unsupported use`, or `feature request` → provide workaround/patch → regression-test all prior fixtures → version release. Preserve previous packages for rollback.
+- Maintenance cost is uncertain. Reserve an illustrative 0.5–2 hours/month per product plus 0.25–1 hour per meaningful support incident, **not** a measured commitment. If the real load materially exceeds this, revise economics, reduce supported configurations or pause expansion.
+- Collect no product telemetry by default. Use actual accessible marketplace analytics and private support records without placing personal customer data in this public project record.
+
+## 17. Performance measurement, portfolio decisions, and future products
+
+Measure after actual publication: direct-listing views and downloads when visible, legitimate qualified inquiries, paid orders, platform fees, refunds, false-positive and true-positive support incidents, versions verified, per-ticket support time. Record the date, currency, fee deductions, refunded transactions, hours of support and net contribution in the appropriate authorized private financial systems; report only non-sensitive aggregates publicly. A pageview is not a sale and a listing favorite is not a verified purchase.
+
+Decision heuristics (not statistical proof): **continue** if actual positive net contribution and low support persist; **improve** when a specific demo, pricing, installation or discovery weakness can be addressed in a bounded update; **expand** only if there is proven traction plus a justified additional engine/channel; **pause** if exposure is tiny and costs are near-zero; **discontinue** if the engine log and free Dependencies already explain every promised failure equally well, an AI-authored short script is simpler to own, static-scan false positives overwhelm benefits, or direct distribution has no practical reachable paying audience. Do not infer a bad idea solely from zero sales without evidence that qualified customers saw it.
+
+## 18. Adversarial review and kill conditions
+
+The strongest reasons the business could fail are: the best existing tool is free; not all library loads are statically observable; DLL search depends on the target host; a self-contained executable may trigger signing/SmartScreen friction; direct sales lack built-in organic discovery. Before implementation, run a *free/AI DIY challenge*: reproduce the promised result using native engine tools, a public alternative and a short AI-assisted script. Record setup time, bug count and diagnostic quality for the same fixtures. If the new tool has no real advantage, cut the scope or stop—no rebranding a duplicate as a new project.
+
+Other fail conditions: insufficient legally permitted distribution, accuracy/privacy defects, platform/SDK changes exceeding support economics, or the release depending on paid/forbidden services outside the authorized budget. No human interviews or paid pilots are mandatory. Technical QA and official permission gates remain mandatory.
+
+## 19. First-session Codex handoff — ready for local work
+
+**Open first:** repository root `AGENTS.md`, `business_portfolio/SCHEMA.md`, `PROJECT_TEMPLATE.md`, this exact canonical file `business_portfolio/niches/digital-products/game-development-marketplaces/projects/gdm-003-native-dependency-verifier.md`, `business_portfolio/research/SOURCE_REGISTER.json`, the selected niche's `NICHE.json`, and `docs/PORTFOLIO_MANAGER_WORKFLOW.md`. Inspect other active GDM IDs and the archives; do not assume their project folders are available for modification. Keep unrelated projects untouched.
+
+**First session steps (local work, no commercial actions):**
+
+1. `git status --short` and `git rev-parse HEAD`; reconcile uncommitted or newer work and guard the project record from conflicting writers.
+2. Confirm `GDM-003` ID/niche/source IDs and source register; keep all existing evidence links and work history. Regenerate the browser only after canonical content changes.
+3. Execute D01–D05 now when ordinary local development is authorized: pin installed toolchains, create owned clean/missing/wrong-arch GDExtension/PE fixture packages, run the free Dependencies baseline, define the report schema, and build the bounded package enumerator/PE import reader. Do not require a customer-owned game or a prospect interview.
+4. Run the small fixture(s) immediately, capture exact command, exit status and test outputs. Identify which results are observed rather than planned.
+5. Record the task state and a specific next action in the canonical record, without claiming that a plan means implementation is done. If the root workspace differs from the verified remote repository, adapt carefully instead of clobbering local work.
+
+**On future import/update**, the existing non-sensitive source IDs are registered. New URLs in §21 are *not* automatically registered: Codex must add evidence entries to `business_portfolio/research/SOURCE_REGISTER.json` only when used as cited source IDs, then update `source_ids`. Run `python business_portfolio/tools/build_browser.py`, `python business_portfolio/tools/build_browser.py --check`, `python -m unittest discover -s business_portfolio/tests -v`, and `python business_portfolio/tools/commercial_checks.py --portfolio business_portfolio` from repo root **where tools exist**. Check optional budget math separately. Do not invent tests that could not run.
+
+## 20. Resume checkpoint and work log
+
+- **Completed with evidence:** detailed existing GDM plan read from the remote repo; current official/public source and product-feature review; this more specific architecture, test plan, financial *hypotheses*, launch drafts and Codex work breakdown. No source code, verified engine integration, published listing, confirmed sale, private buyer interview or paid market validation was generated by the document revision.
+- **Work state:** `planned`; **commercial validation:** `unvalidated`; **actual revenue/profit:** `null`; **authorized spending:** CAD0; **external effects:** `not_started`.
+- **Current task:** Godot Windows x64 native package preflight tool — begin the first no-cost implementation/feasibility task once the owner separately authorizes local development in the normal Codex workflow.
+- **Remaining checklist:** [ ] baseline comparison; [ ] working core; [ ] failing/negative fixtures; [ ] engine adapter; [ ] real package and installation; [ ] truthful demo; [ ] policy/rights check; [ ] publication authorization; [ ] real sales/maintenance review.
+- **Owned deliverables:** this planning file only; no product code, fixture package, test output, or listing exists. Proposed future artifact paths in this file do not yet exist.
+- **Original source revision:** `6f2a420e9a1d7d5b44ec1759918e737059a6772e` (`main`, inspected 2026-11-15); original frontmatter IDs, priority, status, related links and existing research continuity preserved. The local repository record was inspected and reconciled during the 2026-11-15 merge; project IDs and paths were retained.
+- **History:** original 2026-11-15 candidate selection and planning are preserved conceptually, including the original competing-product research and proposed platform editions. This revision **removes mandatory interviews and paid-pilot blockers** and replaces them with local comparative proofs and marketplace-as-validation, without falsely changing the commercial state.
+- **Next concrete action:** Execute D01–D05 now when ordinary local development is authorized: pin installed toolchains, create owned clean/missing/wrong-arch GDExtension/PE fixture packages, run the free Dependencies baseline, define the report schema, and build the bounded package enumerator/PE import reader. Do not require a customer-owned game or a prospect interview.
+
+### Work log
+
+- 2026-11-15 — Local repository reconciliation before replacement: Pre-replacement local record was planned/unvalidated; its latest action already called for a synthetic, read-only dependency-scanner prototype. No product source, PE fixtures, parser tests, customer package, outreach, spending, or external action was present. The attachment refines the fixture to a Godot GDExtension manifest and missing/wrong-architecture case; no completed implementation progress was lost.
+
+- 2026-11-15 — Previously recorded: project family identified from game-development marketplace research; candidate engine list and launch risks captured, without product implementation or sales.
+- 2026-11-15 — Current revision: expanded the execution-ready specification and removed research-interview/paid-pilot gates. This file is an updated planning artifact, not proof of completed tasks.
+
+## 21. Dated source and registration handoff
+
+The `source_ids` in the strict JSON frontmatter remain restricted to IDs already in the repository's `SOURCE_REGISTER.json` (verified from GitHub). All additional public URLs used below are **in-file evidence** until Codex registers them. Each source should be rechecked at the time of listing or toolchain/version selection.
+
+| Source / proposed register ID | Exact claim/limit | Date checked |
+|---|---|---|
+| `GDM-WB-2026` (registered) — owner workbook attachment | Prior candidate rationale and proposed price hypotheses, no buyers or sales. | 2026-11-15 |
+| `GDM-DEPENDENCIES` (registered) — https://github.com/lucasg/Dependencies | Free viewer/CLI is a strong baseline, cannot discover arbitrary dynamic LoadLibrary calls. | 2026-11-15 |
+| `GDM-UNITY-RULES` (registered) — https://assetstore.unity.com/publishing/submission-guidelines | Current Unity Asset Store applications/executables restriction; reject naive embedded executable submission. | 2026-11-15 |
+| `GDM-WIN-GODOT-EXPORT-2026` — https://docs.godotengine.org/en/stable/tutorials/export/exporting_for_windows.html | Godot Windows export and architecture conventions. | 2026-11-15 |
+| `GDM-DEPENDENCIES-SITE-2026` — https://lucasg.github.io/Dependencies/ | Details Dependencies feature set, recursion and static-scanning limitations. | 2026-11-15 |
+| `GDM-UNITY-ASSET-ANALYZER-2026` — https://assetstore.unity.com/packages/tools/utilities/build-dependency-analyzer-413664 | Asset dependency checking exists but solves a different problem; no claimed sales. | 2026-11-15 |
+| `GDM-PAYHIP-2026` — https://payhip.com/pricing | Free tier 5% fee plus payment processor; direct listing has no guaranteed traffic. | 2026-11-15 |
+| `GDM-FAB` (registered) — https://dev.epicgames.com/documentation/fab/publisher-get-started-in-fab | Future Unreal edition would require independent acceptance checks. | 2026-11-15 |
+
+**Evidence limits:** competitors' existence/prices/features are not proven sales; official revenue shares are gross-before-other-cost rules; market size, traffic, conversion and support time have **not** been measured for this offer. The historical owner workbook is research context, not a public redistributable asset. No source has been used as evidence of this project's own paid transactions.

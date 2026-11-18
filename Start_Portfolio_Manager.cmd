@@ -8,4 +8,4 @@ if not exist "%PM_APP%\.venv\Scripts\pythonw.exe" (
   pause
   exit /b 1
 )
-start "" /b "%PM_APP%\.venv\Scripts\pythonw.exe" "%PM_APP%\run.py" %*
+start "" /b "%PM_APP%\.venv\Scripts\pythonw.exe" "%PM_APP%\run.py" --portfolio-only %*

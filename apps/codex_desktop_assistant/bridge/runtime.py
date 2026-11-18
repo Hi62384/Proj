@@ -237,6 +237,11 @@ class Runtime:
         if operation=='bridge_capabilities':return {'capabilities':CAPABILITIES,'desktop_default':'off','file_policy':'Explicit Deny wins; existing independent Read/Write/Create/Delete rules','no_shell':True,'no_arbitrary_javascript':True,'reasoning':'Official Codex only'}
         if operation=='bridge_get_pending_requests':return {'requests':self.pending()}
         if operation=='bridge_open_dashboard':self.emit('show_dashboard',None,None);return {'requested':True}
+        if operation=='bridge_open_portfolio':
+            if not manager:raise Denied('Portfolio Manager is not running')
+            workspace=manager.workspace('0'*32,{})
+            self.emit('show_portfolio',None,{k:v for k,v in workspace.items() if k!='reconnect_key'})
+            return {'requested':True}
         if operation=='bridge_cancel_call':
             event=self.inflight.get((client,arguments.get('request')))
             if event:event.set()

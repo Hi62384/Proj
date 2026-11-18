@@ -11,7 +11,7 @@
   "planning_lane": "queued",
   "work_state": "planned",
   "commercial_validation": "unvalidated",
-  "evidence_basis": "owner_research_and_adjacent_engineering_problem_only",
+  "evidence_basis": "public_official_and_competitor_research_no_verified_customer_sales",
   "source_ids": [
     "GDM-WB-2026",
     "GDM-GODOT-STORE",
@@ -24,7 +24,7 @@
     "GDM-003"
   ],
   "legacy_ids": [],
-  "next_action": "Build a small engine-neutral local transport simulation using synthetic agents and routes; test capacity, queues, disruptions, save/restore and deterministic recovery before selecting an engine adapter.",
+  "next_action": "Without customer interviews or waiting for GDM-001, build and time a Godot 4 3D synthetic demo with two scheduled vehicles, twenty NPCs, queues, last-seat contention and save/load in transit; compare behavior with native links and FlowAI before approving a first paid edition.",
   "last_reviewed": "2026-11-15",
   "offer_price_usd": null,
   "delivery_hours_assumption": null,
@@ -43,34 +43,40 @@
     "authorized_spend": 0,
     "hard_ceiling": 100,
     "owner_recurring_monthly": 0,
-    "budget_window": "Cumulative planning ceiling only; no spending approved and no automatic reset.",
+    "budget_window": "Cumulative incremental owner cash commitments; review before any purchase; never auto-reset. Existing authorization is CAD0.",
     "includes": [
       "tax",
       "currency_conversion_cost",
       "noncancelable_commitments",
       "advertising",
-      "hosting"
+      "hosting",
+      "tooling",
+      "customer_support",
+      "payment_processing",
+      "potential_refund_reserves"
     ],
-    "unknown_cost_action": "Pause and ask the owner before commitment.",
-    "production_runtime": "Local synthetic simulation first; any real customer game integration and its version/support costs are optional follow-up and need consent.",
-    "budget_fit": "local_prototype_no_spend",
+    "unknown_cost_action": "Do not treat unknown as zero; research and prepare a no-spend alternative, and stop external commitment until authorized.",
+    "production_runtime": "Offline/local-first. No new paid hosted dependency is authorized.",
+    "budget_fit": "CAD0 proposed launch build; external marketplace requirements and final costs remain subject to verification",
     "optional_all_in_envelope": {},
     "optional_total_ceiling": 0
   },
   "marketing_execution_authorized": false,
   "production_budget_verified": false,
   "success_probability": "not_established",
-  "marketing_lane": "no_outreach_prototype_first",
-  "launch_gate": "tested_prototype_and_separate_owner_launch_approval",
-  "pre_sale_work_cap_hours": 2,
+  "marketing_lane": "direct_paid_edition_with_authentic_demo_no_paid_ads",
+  "launch_gate": "local_capacity_disruption_save_restore_demo_qa_then_owner_approved_marketplace",
+  "pre_sale_work_cap_hours": 6,
   "ad_test_cap_cad": 0,
-  "offer_price_cad_hypothesis": null,
-  "historical_price_usd_hypothesis": "39-79 for a Godot candidate in the workbook; not a family-wide quote",
+  "offer_price_cad_hypothesis": 79,
+  "historical_price_usd_hypothesis": "Owner workbook originally proposed USD39–79 for a Godot candidate; CAD79 is a new illustrative scenario, not an approved price.",
   "platforms_supported": [],
   "platforms_proposed": [
-    "Godot",
-    "Unity",
-    "Unreal",
+    "Godot 3D",
+    "Godot 2D",
+    "Unity 3D",
+    "Unity 2D",
+    "Unreal Engine",
     "Roblox",
     "GameMaker",
     "Construct",
@@ -78,118 +84,330 @@
   ]
 }
 ---
-# Advanced Capacity-Aware NPC Transport System
+# Advanced Capacity-Aware NPC Transport System — Complete Business and Implementation Plan
 
-**Purpose:** Give simulation/management games coordinated NPC queues, reservations, boarding, riding, transfers, exits and rerouting around finite-capacity vehicles. This is one family with independently validated engine adapters; no edition is selected for development.
+## 1. Executive decision and current status
 
-## Buyer, problem, buying trigger
+**Decision: retain as a differentiated but niche, unvalidated gameplay-system candidate.** Build an engine-integrated passenger *journey coordinator*, not another general pathfinder or elevator motion asset. It handles scheduled finite-capacity vehicles, stations, queue discipline, seat allocation, transfers, missed departures, disruptions and reliable save/load with multiple NPCs.
 
-The buyer is a developer whose game contains multiple NPCs competing for an elevator, ferry, train or comparable scheduled transport. The trigger is an integration milestone where normal pathfinding or a moving platform fails to handle capacity, queues, interrupted journeys or saved in-transit state. Payment would require a measured advantage over native navigation links, free examples, custom state machines and existing lift/crowd packages. A basic lift animation is not enough.
+- **Exact buyer:** small Godot simulation, colony, factory, hospital, transport, school or city-builder studios that already have NPC movement and need multiple agents to share transport resources.
+- **Buying trigger:** a game design requires NPCs to queue for elevators/ferries/buses and recover from changes; wiring navigation, reservations and persistence together is costly.
+- **First technical edition:** **Godot 4 3D** with an original, readable GDScript state-machine core. This selection is for the *shortest credible initial local proof*; the first paid channel must be checked independently. Do not automatically promise 2D or Unity.
+- **First paid route candidate:** itch.io or existing Payhip direct checkout; the official Godot Asset Store currently accepts free listings only. Revenue must not be assumed from a free asset listing.
+- **Commercial state:** no observed sales, licensed demo, tested game adapter or benchmark. The scope below is a **proposed** integration product, not a completed plugin.
+- **Deciding experiment:** compare native Godot navigation links and FlowAI against a local twenty-agent/two-vehicle transport schedule. If our component saves no meaningful implementation/QA effort, reject or narrow the family.
 
-## Evidence and limits
+## 2. Repository baseline, duplicate analysis and reuse
 
-The owner workbook reviewed 2026-11-15 cites a [Godot discussion](https://forum.godotengine.org/t/pathfinding-with-elevator-platform/45444) describing wait/board/ride/exit needs, [FlowAI](https://github.com/a6xdev/FlowAI) moving graphs and [Smart Platforms](https://asago.itch.io/smart-platforms). This is an engineering pain signal and substitute inventory, **not verified paid demand**. Buyer count, edition feasibility, current asset rules and actual performance are unknown.
+`Hi62384/Proj`, `main`, commit `6f2a420e9a1d7d5b44ec1759918e737059a6772e` inspected 2026-11-15. The existing canonical project is `business_portfolio/niches/digital-products/game-development-marketplaces/projects/gdm-002-capacity-aware-npc-transport.md`, project ID `GDM-002`, niche `N-gdm-20261115`. Preserve active projects `GDM-001` and `GDM-003`; their actual jobs differ. Archive/research locations: `business_portfolio/archive/2026-11-15-legacy`, `archive/2026-11-15-taxonomy-view-v1` and `opportunity_library`. Do not create a new ID, new niche, duplicate project, or touch another chat's owned files.
 
-### Candidate-engine competition screen (research check 2026-11-15)
+The repo contains no **verified implemented GDM-002 package** in the inspected public business record. Codex must search the current *local* repo for existing game AI/transport code before making a new module; the user has unrelated Godot game work outside this business portfolio, which cannot be assumed to be licensed for commercial reuse. Reuse only code/assets with proven rights and isolation. Shared test-vector descriptions and the project's prior state-machine research are legitimate planning assets.
 
-| Engine | Native/free/paid substitute and dated source | Gap and status |
-| --- | --- | --- |
-| Godot | [NavigationLink](https://docs.godotengine.org/en/stable/tutorials/navigation/navigation_using_navigationlinks.html), FlowAI and Smart Platforms (workbook review 2026-11-15). | Candidate; free motion/path links do not establish a capacity/recovery gap without comparative demo. |
-| Unity | [NavMesh links](https://docs.unity3d.com/Manual/class-OffMeshLink.html) and Asset Store crowd/elevator search (research pointer 2026-11-15). | Candidate; catalog comparison remains, while buyer interviews are optional and not a prototype gate. |
-| Unreal | [Smart Objects](https://dev.epicgames.com/documentation/en-us/unreal-engine/smart-objects-in-unreal-engine) and navigation/crowd tooling (research pointer 2026-11-15). | Candidate; existing systems may cover reservations; no edition promise. |
-| Roblox | [PathfindingService](https://create.roblox.com/docs/characters/pathfinding) and Creator Store models/plugins (research pointer 2026-11-15). | Candidate; server authority, replication and store eligibility need proof. |
-| GameMaker | Native path/grid workflows and [GameMaker manual](https://manual.gamemaker.io/) (research pointer 2026-11-15). | Candidate; integration API, state persistence and distribution are unknown. |
-| Other engines | Engine-specific navigation and customer code are default substitutes. | No named edition until independent demand, API and support review. |
+## 3. Reassessment of nearby products and why this one survives conditionally
 
-This table records research leads, not a complete competitor audit. Exact paid competitor coverage must be refreshed before choosing an edition.
+The previous 33-direction game-marketplace research narrowed to three active projects; this is a revision of GDM-002 rather than a new opportunity contest. The differentiation is **complete passenger lifecycle + recovery + integration into an existing controller**. It is not "more realistic graphics" or "50,000 agents".
 
-## Narrow MVP and edition architecture
+| Alternative | Observed capabilities (source) | Why we might still be distinct | Kill signal |
+|---|---|---|---|
+| Native Godot NavigationLink / signals | Navigation can connect areas; movement/behavior still belongs to game logic. [Godot NavigationLink docs](https://docs.godotengine.org/en/stable/tutorials/navigation/navigation_using_navigationlinks.html) | No ready-made passenger reservations, guaranteed capacity, transfers or in-transit persistence assumed. | Buyer can add it with a trivial script. |
+| Free FlowAI for Godot 4 | Moving graph areas can follow ships/elevators. [FlowAI](https://github.com/a6xdev/FlowAI) | We coordinate schedule/capacity/state on top of existing navigation. | FlowAI already has a direct equivalent passenger workflow in the required version. |
+| Unity Marchline (future edition competitor) | Deterministic crowds, door capacity, queues, multi-storey, save/load. [Unity listing](https://assetstore.unity.com/packages/tools/behavior-ai/marchline-rts-pathfinding-crowd-navigation-400596) | NOT a claim of low Unity competition. A port would need unique vehicle/passenger itinerary functions. | Its use in the buyer's game is already sufficient. |
+| Generic elevator/moving-platform scripts | Move between floors and synchronize doors. | Do not generally model shared queues, transfers and recovery. | A moving platform actually meets this buyer's full use case. |
+| Large all-in-one city simulation toolkit | May already provide vehicles/riders. | Our system integrates with *existing* NPC AI rather than replacing it. | Adapter cost exceeds DIY or toolkit adoption. |
 
-Choose the first engine by local implementation feasibility, available tooling, public substitute coverage and test/support cost; **Godot is a candidate, not a preselected winner**. A bounded demo uses at most 20 NPCs, two finite-capacity vehicles and one transfer route on a fixed test machine. This is an initial **test target**, not a measured supported scale. It should exercise reservations, fair queues, schedules, missed departures, service disruption, rerouting, save/load mid-trip and deterministic recovery. Define a small integration API for route requests, vehicle events and state serialization. Buyer interviews are not required to choose or prototype an edition.
+**Market evidence limit:** a developer forum describes elevator wait/board/exit needs; this is an engineering problem signal, not a measured paid market. Unity Marchline proves *competition*, not our demand. No credible number of Godot buyers, conversion rate, or unit sales is known. Godot-first is a **technical experiment**, subject to paid-route/customer reachability.
 
-Share a behavior specification, state-machine test vectors, disruption fixtures, debug semantics and documentation. Isolate navigation, movement-controller, save-system and packaging adapters per engine with independent versions. Exclude multiplayer, arbitrary scale, full traffic simulation, every 2D/3D movement system and production integration until separate proof.
+## 4. Buyer/job-to-be-done and reasons not to purchase
 
-| Edition | Status | Feasibility / maintenance gate | Potential package/channel | Negative test before claim |
-| --- | --- | --- | --- | --- |
-| Godot | candidate | Moving links, 3D boarding, engine versions and customer controller glue; high support. | Godot addon; free library sample, paid itch.io/direct if rights permit. | Full queue with cancelled ride and mid-trip restore. |
-| Unity | candidate | NavMesh updates, physics and save adapter; medium-high support. | Unity package/Asset Store after review, or itch.io/direct. | Two vehicles contend for one transfer route without duplicate boarding. |
-| Unreal | candidate | Smart Object/crowd interaction and plugin versioning; high support. | Fab only after format/license review. | Interrupted reservation recovers without deadlock. |
-| Roblox | candidate | Server-side capacity and replicated movement; high operational burden. | Eligible model/plugin on Creator Store if approved. | Disconnect/rejoin cannot duplicate seats. |
-| GameMaker | candidate | 2D path and state persistence API feasibility unknown. | Direct/itch.io, free discovery route only if eligible. | Restore deterministic queue order. |
+Buyer A is developing a hospital/office building with multiple floors and NPCs sharing lifts. Buyer B has a colony simulation with ferries/buses on timed routes. They need reliable agent progression: request route → wait for transport → reserve capacity → board exactly once → ride → transfer/exit → arrive or recover with an understandable reason. The system should not demand replacement of their existing movement or quest AI.
 
-No prototype/verified edition exists. Potential channels are not approved listings.
+Nonbuyers: games with one player-triggered lift, games without persistent NPC populations, teams already running a purpose-built passenger coordinator, developers who need road vehicle physics/networked traffic from day one, customers unable to provide stable agent and stop identifiers.
 
-## Acceptance and negative tests
+**Why buy versus AI?** A quick AI-generated queue can work in one demonstration, but event ordering, last-seat races, cancellations, save/restore at every transition and interoperable diagnostics require many tests and maintenance. The product only deserves a price if its tested implementation and integration API measurably reduce engineering and debugging effort.
 
-- Competing NPCs cannot overbook capacity; queue order and fairness policy are explicit and deterministic.
-- Service disruption cancels or reroutes only affected reservations; stranded agents receive a defined result, not silent disappearance.
-- Save/load during boarding and transit restores each agent, vehicle occupancy and schedule once; duplicate boarding is rejected.
-- A bounded stress fixture measures frame time and memory on a specified machine and engine version; the initial 20-agent target may be revised after evidence.
-- Compare integration steps, bugs found and behavior against native links, free examples and paid crowd/lift packages. A pretty moving-platform demo alone fails acceptance.
+## 5. First useful commercial edition — no overbuilding
 
-These are planned tests; none has been executed.
+### Must ship
 
-## Rights, distribution, effort and marketing
+1. One complete Godot 4 3D addon with a transport graph (`Stop`, `Service`, `Vehicle`), deterministic scheduler, seat ledger, station queues and agent journey state machine.
+2. A simple integration API: register stops/vehicles, request/cancel journeys, notify a boarding/movement callback, receive transport events and serialize/restore state.
+3. Configurable small multi-stop elevator/ferry/bus *behavior presets* using the same capacity engine—not simulated traffic physics or a full vehicle model. At least one reliable moving 3D platform demo.
+4. End-to-end journey from external NPC navigation through wait/board/ride/transfer/arrival, with clearly defined delays, failures and rerouting.
+5. Reproducible save/load snapshots including mid-queue and mid-boarding state, deterministic event IDs and a debugger that explains every agent's waiting reason.
+6. Bounded performance fixture: initially **20 agents, two capacity-limited vehicles and one transfer**, then measure on a pinned PC and Godot version. Do not advertise capacity larger than actually tested.
+7. Source, demo project, API reference, integration recipes for two movement-controller patterns, troubleshooting guide, supported versions, licensing and QA report.
 
-Check license compatibility for engine APIs, borrowed example code, artwork and demo models. No customer game assets should be included without rights. Godot's official asset library is a free discovery route under current research; Fab, Unity Asset Store and Roblox Creator Store are conditional on a genuine engine-compatible edition and seller policy. Superhive is for Blender-specific products and is not a default channel for this family. itch.io/direct are candidate paid routes only. No uploads or seller-account changes authorized.
+### Excluded from first sale
 
-Effort and support cost are **unknown**, likely high because movement controllers and save systems vary. Measure local prototype and adapter hours before pricing. The workbook's US$39–79 Godot range is an experiment, not accepted pricing or expected income. First build a low-cost demo with synthetic data showing a capacity bottleneck, disruption and restored journey beside a simple native/free baseline. No outreach is required; external feedback can be considered after a working prototype with separate owner approval.
+Unrestricted multiplayer replication, Roblox server economies, dynamic rail/road construction, physics/traffic simulation, all movement controllers, unrestricted train timetables, 10,000 agents, procedural map generation, visual editors for every topology, universal engine compatibility and fully autonomous crowds. These are separate products/features requiring proven demand. Animations and 3D meshes are replaceable demonstration assets; do not promise high-end artwork.
 
-## Validation gate and kill rule
+| Engine | Candidate edition / market feasibility | Proposed next action |
+|---|---|---|
+| **Godot 4 3D** | **Chosen for local proof**, direct paid sales; official Godot store free-only at this review. | Demonstrate actual capacity/transfer/recovery and verify paid-channel discovery. |
+| Godot 2D | Different movement signals and navigation integration. | Port only after demonstrated 3D traction or stronger independent buyer evidence. |
+| Unity 3D/2D | Marchline and many crowd/lift products; competition substantial. | Evaluate specific *vehicle itinerary* gap, not a broad navigation rewrite. |
+| Unreal Engine | Blueprint/C++ plugin and Smart Objects/lift products. | Re-assess against Fab's current paid systems before any port. |
+| Roblox | Server-authoritative reservations, replication, disconnections and abuse cases. | Independent edition; not a trivial module conversion. |
+| GameMaker | 2D room/path/instance model, save compatibility to test. | Needs viable SDK and marketplace pathway. |
+| Construct / GDevelop | Event/extension architectures and distribution rules differ. | Feasibility/reachability only; reject when integration is costly. |
 
-This family can begin with a bounded local prototype without waiting for GDM-001 or outside interviews. Compare its synthetic behavior against a simple baseline and use measured implementation complexity, correctness, and support assumptions to decide whether to continue. Engine selection can follow the shared core. Interviews and team evaluations are optional follow-up evidence, not gates to building. Real customer projects require consent; publication, spending, outreach, and external account changes still require separate authorization.
+A shared **behavior contract and test fixtures** can be reused; cross-engine source may need complete reimplementation. Do not count port listings as sales or separate businesses.
 
-## Resume checkpoint
+## 6. Competition and evidence ledger
 
-- Completed with evidence: family planning record and dated research screen only.
-- Current task: begin an engine-neutral local prototype with synthetic routes and agents; no interview or outside contact is required.
-- Remaining checklist: [ ] deterministic transport core; [ ] capacity/queue/disruption/save-restore tests; [ ] simple baseline comparison; [ ] choose an engine based on local feasibility; [ ] measure build effort; [ ] optional external evaluation only if useful after the prototype.
-- Blockers/decisions needed: GDM-001 validation decision, buyer evidence and owner authorization for contact, build costs or publication.
-- Next concrete action: implement synthetic journeys for capacity contention, missed transfers, service interruption and mid-trip save/restore; log pass/fail outcomes and prototype effort.
-- Owned deliverables and hashes/versions: this planning record only.
-- External effect state: not_started.
-- Private checkpoint reference: none for this new family.
+| Source | Verified information / limitation | Review |
+|---|---|---|
+| [Godot forum elevator pathfinding question](https://forum.godotengine.org/t/pathfinding-with-elevator-platform/45444) | Documents a concrete wait/board/ride/exit problem, **not** willingness to pay. | 2026-11-15 research review |
+| [FlowAI repository](https://github.com/a6xdev/FlowAI) | Moving pathnode graph/area can follow lifts or ships; no claim that its listed capabilities are incomplete without testing. | 2026-11-15 |
+| [Godot NavigationLink](https://docs.godotengine.org/en/stable/tutorials/navigation/navigation_using_navigationlinks.html) | Native navigation links are baseline primitives. | 2026-11-15 |
+| [Unity Marchline listing](https://assetstore.unity.com/packages/tools/behavior-ai/marchline-rts-pathfinding-crowd-navigation-400596) | Advertises capacity-limited passages, queues, cross-floor routing and saved queue state; high overlap for a Unity edition. | 2026-11-15 |
+| [Godot official store FAQ](https://docs.godotengine.org/en/stable/community/asset_store/faq.html) | Paid assets not available on official store currently; future plans are not current revenue. | 2026-11-15 |
+| [Payhip pricing](https://payhip.com/pricing) | Free seller plan lists 5% platform fee *plus separate card/PayPal processor fees*. | 2026-11-15 |
 
-## Decisions and work log
+These sources do not establish how many people would purchase *this* system. Search current Godot/itch.io competitors again immediately before a paid listing. If a complete existing passenger transport addon already satisfies this specification for less, stop rather than copy it.
 
-- 2026-11-15: Created one multi-engine family plan. No engine edition, buyer pilot, product code, listing or payment was completed.
-- 2026-11-15: Updated the next step to a parallel local synthetic-data prototype; interviews and team evaluations are optional follow-up, not build gates. No outreach, spending, or product implementation occurred in this update.
+## 7. Competitive baseline and bounded proof without interviews
 
-## Implementation-ready specification — queued research candidate
+Construct **two** demos in the same original Godot project. A baseline uses NavigationAgent/NavigationLink plus a minimal custom queue script; the proposed addon uses the transport core and two different movement-controller adapters. Record how many edge cases fail in baseline, implementation time, code modification burden and repeatable restart behavior. The tool passes its *technical differentiation* gate only if a vehicle's scheduled reservation and mid-ride save/recovery work more reliably with less integration effort. No survey or team evaluation is required.
 
-**Finished-product contract.** A game integrates a transport graph with stops, finite-capacity vehicles and schedules into its own navigation/controller system. Agents can request a journey, enter a waiting area, reserve a place if policy allows, board once, transfer, exit, change/cancel destination, miss a departure, reroute around service interruption and recover deterministically after save/load. The system reports why an agent is waiting or stranded. It is not a standalone pathfinder, visual elevator animation or promise of multiplayer-scale simulation.
+**Kill/no-go:** if adding a FIFO array to a moving platform solves all target uses at lower complexity; if save/restore is inconsistent; if controllers need invasive rewrites; if paid checkout/discovery cannot be established affordably; or if support effort is disproportionate. Production polish alone does not rescue a missing market.
 
-**Buyer and reason to purchase.** The candidate buyer is a small simulation/management/city-builder team with multiple simultaneous agents and vehicles. A paid edition must save meaningful engineering and debugging time over engine navigation, free queue examples and commercial lift/crowd packages. Competing packages and buyer demand require fresh per-engine investigation; the existence of an elevator asset is not validation.
+## 8. Business model and first CAD150/month economics
 
-**Conceptual architecture.** A deterministic route/transport core models `Stop`, `Service`, `Vehicle`, `Trip`, `Leg`, `Reservation` and `AgentJourney` with stable IDs. A capacity ledger owns seat transitions; a queue scheduler applies a documented FIFO/priority policy; a route planner computes feasible transfer legs and handles schedule windows; an event journal records boarding, departure, cancellation, disruption and arrival. Engine adapters translate route points and movement callbacks to the game's controller. A versioned save snapshot records the journey, queue position, reservation, vehicle occupancy and service timetable, then validates invariants on restore. UI/animations are optional adapter surfaces, never the source of truth.
+**Proposed direct digital download:** CAD79 initial price experiment, one-time engine-edition license with versioned updates under a stated support policy; license and actual checkout price require owner approval. Prefer use of the repo's existing store infrastructure only if license/redistribution and merchant-of-record terms work. No subscription, paid backend or per-seat billing infrastructure in v1.
 
-**Core invariants.** Occupancy is between zero and capacity; an agent has at most one active seat/reservation for a leg; a cancelled reservation cannot board; no agent is both on board and in a waiting queue; each departure has one event identity; an interrupted journey ends in a defined `rerouting`, `waiting`, `completed` or `failed` state. Stable tie-breaking and seeded fixture clocks make replay deterministic. No real-time networking or persistent live-service dependency is in scope.
+**Illustrative unit math:** Payhip free seller fee is currently 5% (source above). *Assume*, do not claim as sourced, payment processing 3% + CAD0.35 per completed order, refund allowance 5% of gross, CAD0 hosting/ads/new tooling. Per completed CAD79 order, provisional contribution before owner labor = `79 × (1 - 0.05 - 0.03 - 0.05) - 0.35 = CAD68.38`. Actual payment provider fees, FX/tax and refund rules must be checked.
 
-**Functional edge cases.** Simultaneous reservations for the last seat; delayed vehicle; missed transfer; inaccessible stop; service outage mid-ride; destination cancellation while boarded; vehicle removal; route cycle; queue starvation; save exactly between capacity allocation and animation callback; duplicate event replay; invalid or older snapshot; and an agent/nav controller that rejects a requested move. Each must produce a defined state and diagnostic event, not lost agents or overbooking.
+| Monthly scenario | Hypothetical paid orders | Gross CAD | Fee/reserve total CAD | Contribution CAD | CAD150 portfolio target share |
+|---|---:|---:|---:|---:|---:|
+| Stress | 0 | 0.00 | 0.00 | 0.00 | 0% |
+| Base hypothesis | 2 | 158.00 | 21.24 | 136.76 | 91.2% |
+| Upside hypothesis | 5 | 395.00 | 53.10 | 341.90 | 227.9% |
 
-| Candidate edition | Status | Shared core vs engine-specific work and commercial gate |
-| --- | --- | --- |
-| Godot 2D/3D | Research candidate | State-machine and test vectors may be shared; NavigationAgent, signals, serialization and scene integration differ. Compare paid/free Godot transport and crowd addons before choosing. |
-| Unity 2D/3D | Research candidate | Share conceptual state/tests; NavMesh or 2D controller bridge, job/performance model and save hooks are specific. Compare Unity navigation/crowd/lift products. |
-| Unreal 3D | Research candidate | Core schema may transfer; Mass/Smart Object/AI controller, Blueprint/C++ packaging and version maintenance are distinct. Compare Fab packages. |
-| Roblox | Research candidate | Server authority, replication and rejoin persistence require a separate design and moderation/store review; no multiplayer promise. |
-| GameMaker 2D | Research candidate | Separate path/state API and viable package format need proof. |
-| Construct / GDevelop 2D | Research candidate | Separate event-system integration and extension rules need proof; may be rejected if no affordable adapter. |
+**Three orders** in a month would yield approximately CAD205.14 under these unverified assumptions; one successful month is not automatically recurring. With CAD0 upfront, the first positive order is nominal cash break-even before owner labor. If a planned CAD60 cost were separately approved, break-even would require one paid order at the assumed unit contribution. If refund/processing/marketplace total variable deductions rise to 25% plus CAD0.35, each CAD79 sale yields CAD58.90 and three orders are still needed for CAD150. A one-order month yields CAD68.38, so the product can contribute partially toward the **portfolio-wide** goal.
 
-All rows are untested. Choose a first local edition **after** checking public substitutes, feasibility and support cost, not by engine preference. Potential channels are Godot's free Asset Library for discovery, Unity Asset Store, Fab, Roblox Creator Store, itch.io or direct distribution only where the exact edition and seller rules allow it; no listing is approved. Buyer research is optional and must not delay the prototype.
+**Effort hypothesis:** 35–75 focused AI-assisted engineering and QA hours; 2–6 hours of owner review/approval; after release ~1–3 hours/month maintenance plus incident support (not observed). Worst-case revenue is CAD0 while engineering and maintenance consume time. If support averages 2 hours *per* CAD79 sale, it may be economically unattractive even with positive cash contribution. Do not hide owner labor in a positive margin number.
 
-### Sequenced milestones and deliverables
+## 9. Distribution, listing drafts and organic launch
 
-| ID | Dependency | Deliverable and completion evidence |
-| --- | --- | --- |
-| T1 behavior contract | Local work; no outreach | State-transition table, event IDs, capacity/queue policy, save schema and 12 synthetic journey traces, including cancellations and disruptions. |
-| T2 core prototype | T1 | Reproducible 20-agent/2-vehicle synthetic fixture on a stated machine; no overbooking or duplicate boarding; measure performance without a universal claim. |
-| T3 recovery and diagnostics | T2 | Save during boarding and transit, resume, replay a duplicate event, interrupt a service and compare deterministic final state; show why each agent is waiting. |
-| T4 simple adapter/demo | T2–T3 | Connect one available engine/sample movement callback without replacing a real project; clearly label any adapter not tested in an actual game. |
-| T5 local baseline comparison | T2–T4 | Compare behavior and implementation effort with a minimal native/free baseline; document when the baseline already suffices. |
-| T6 optional external evaluation | Working prototype and separate owner approval | If useful, invite teams to evaluate with consent; outside participation is optional and does not gate continued local work. Do not treat interest as a sale. |
-| T7 release preparation | Prototype results and owner launch approval | Versioned API, migration guide, test/demo project, license rights, channel review, measured support budget, price hypothesis and limitations. No listing until approved. |
+**Primary paid route:** itch.io/direct download or existing Payhip checkout after owner-approved account/licensing setup. **Do not** place the full paid source in the official free Godot store. A genuinely free, separable tutorial/demo is an optional discovery channel *only if its license and the official store rules are compatible*; don't give away paid functionality unintentionally. Fab/Unity Asset Store are relevant only once genuine engine editions exist and qualify under those stores.
 
-**Demonstration and economics.** Show several agents competing for the last seat, a missed transfer, a disrupted service and save/load during transit, with counters and invariant report visible. Compare against a basic lift/pathfinding demo to prove the additional behavior. Marketing may include useful setup documentation and a free bounded sample after rights review; no unsolicited messages or ads. Price and support cost remain unknown; the workbook's Godot US$39–79 idea is only a hypothesis. CAD0 is authorized for spending.
+**Qualified search terms to test (not measured search volume):** `Godot NPC elevator queue`, `Godot ferry NPC boarding`, `Godot passenger transport simulation`, `Godot AI transport network`, `Godot save queue lift addon`.
 
-**Stop rule:** reject or narrow an edition if a free/paid existing system already meets the same behavior, adapter work requires rewriting buyer AI, deterministic save/recovery cannot be achieved, or measured support cost makes the proposed sale uneconomic. The next local action is to implement the synthetic behavior contract and fixtures. No T1–T7 milestone is complete.
+**Draft title:** *Passenger Transit Coordinator for Godot — Queues, Capacity, Transfers and Save/Load*.
+
+**Draft teaser:** *Let NPCs take scheduled lifts and transport without overbooking, duplicate boarding, or losing their place after a save/load. Integrate with your movement controller; visualize the journey and recover from delays.*
+
+**Main demo storyboard:** 20 differently colored NPC markers compete for two transport vehicles; an NPC misses a transfer; a vehicle goes out of service; midway through boarding, save and reload; HUD shows occupancy, queue length and journey state; replay final outcome and show no duplicate seat. Capture real software footage only after QA. Provide an original sample Godot project, integration gif/video, explanatory diagrams and an API checklist. Licensing must not overpromise multiplayer or all NPC controller types.
+
+**Launch sequence:** build scenario replay → capture authentic demonstration → make paid sample and setup docs → prepare product cover/thumbs → compare direct checkout usability and store discoverability → owner-approve any account/publication actions → publish → record genuine page visits and sales → adjust pricing or demo based on observed bottleneck. Ads remain CAD0 absent later authorization and conversion evidence.
+
+## 10. Architecture: pure transport rules plus engine adapters
+
+**First edition design:** GDScript for Godot 4 with a deterministic simulation tick and minimal Node-facing adapter. Navigation and rendered movement remain owned by the customer. The core must not depend on scene hierarchy, 3D animations or external networking; use explicit callback events from the controller.
+
+```text
+Proposed source tree (not yet built):
+products/game-tools/capacity-aware-npc-transport/
+  addons/transit_coordinator/plugin.cfg
+  addons/transit_coordinator/core/{transit_graph,route_planner,schedule_clock}.gd
+  addons/transit_coordinator/core/{seat_ledger,queue_policy,journey_machine,event_journal}.gd
+  addons/transit_coordinator/contracts/{transport_config,journey_result,snapshot_schema}.gd
+  addons/transit_coordinator/adapters/{movement_adapter_3d,navigation_link_adapter}.gd
+  addons/transit_coordinator/editor/{transit_inspector,network_gizmo,config_validator}.gd
+  demo/{project.godot,worlds,scenes,scripts,assets}
+  tests/unit/{ledger_test,queue_test,planner_test,snapshot_test}.gd
+  tests/integration/{lift_transfer_test,disruption_test,controller_adapter_test}.gd
+  tests/fixtures/{two_vehicle_trace,restoration_trace,disabled_service_trace}.json
+  docs/{quickstart,api,controller_adapters,save_restore,version_support,limitations}.md
+  tools/{run_fixture.py,package.py,verify_release.py}
+  LICENSE, CHANGELOG.md, THIRD_PARTY_NOTICES.md
+```
+
+**Ownership:** `transit_graph` is the source of stop/service edges and stable IDs. `route_planner` consumes graph + timetable and proposes legs but never allocates seats. `seat_ledger` is the **only seat allocator**, synchronized on one authoritative simulation tick. `journey_machine` orchestrates agent state; `event_journal` deduplicates each transition; `snapshot_schema` persists exact state; adapters issue/acknowledge movement but cannot change core occupancy. View/UI are read-only projections and never own reservations.
+
+**Configuration requirements:** stable `stop_id`, `service_id`, `vehicle_id`, `agent_id` strings; versioned service schedule, stop order, capacity >=1, dwell/departure times, queue discipline, deadlines and required agent movement callbacks. Validate missing endpoints, duplicate identifiers, nonpositive capacity, cyclic zero-time schedules, unreachable legs and timezone/unit mismatch. Simulation time is integer ticks, not wall-clock milliseconds.
+
+## 11. State machine, schemas, algorithms and invariants
+
+**Journey states:** `requested → routing → walking_to_stop → queued → reserved → boarding → onboard → alighting → transfer_waiting → completed`; side transitions to `rerouting`, `cancelled`, `failed`. Event IDs are stable `run_id:tick:vehicle_id:sequence` or another collision-safe deterministic scheme. Saved state includes current leg index, queue ticket, seat claim, boarded vehicle, last processed event and schedule tick.
+
+**Immutable invariants:** for every vehicle, `0 <= occupied_seats <= capacity`; no agent in two vehicle seats; no agent simultaneously marked queued and onboard; a seat claim is owned by exactly one agent; reprocessing the same event ID changes nothing; cancellation cannot create a later boarding; snapshot load reconstructs identical eventual state under identical inputs.
+
+**Public proposed API:**
+
+```gdscript
+var journey = transit.request_journey(agent_id, destination_stop_id, options)
+transit.cancel_journey(journey.id)
+transit.register_vehicle(vehicle_id, route_id, capacity)
+transit.notify_arrived_at_stop(agent_id, stop_id)
+transit.acknowledge_boarded(agent_id, vehicle_id, event_id)
+transit.acknowledge_disembarked(agent_id, vehicle_id, event_id)
+var state = transit.serialize_snapshot() # versioned data, NOT scene nodes
+transit.restore_snapshot(state)
+# Signals: journey_changed, boarding_requested, vehicle_departed, service_disrupted
+```
+
+All APIs above are **proposals**, not confirmed GDScript implementations; specify true Godot types once engine version is pinned.
+
+**Route planning (bounded deterministic Dijkstra/time-dependent graph):** a node is `(stop_id, arrival_tick)`; edges include walk or service departure with wait and ride time; compute earliest feasible itinerary given current schedule; tie-break by stable service/stop ID. Before boarding, journey state machine asks ledger for seat claim. If no capacity, queue by `(priority_class, request_tick, agent_id)` to avoid nondeterministic race. A missed departure invalidates only that leg and triggers replanning; do not strand other agents. For large recurrent schedules, cache schedule indexes only after correctness passes.
+
+```text
+on_tick(T):
+    collect input events; stable_sort by (tick, priority, vehicle_id, agent_id, event_id)
+    ignore event_id if processed; emit typed 'duplicate_event_ignored'
+    advance departures/arrivals and close boarding windows
+    for vehicle: allocate free seats FIFO to eligible waiting agents
+    for boarding ACK: verify active reserved seat+same vehicle, then commit occupancy once
+    for cancellation or disruption: release claims, journal cause, reroute affected agents
+    publish immutable state view and diagnostic reason codes
+```
+
+**Atomicity rule:** one authoritative event loop owns ledger writes; no thread can directly mutate seats. A boarding reservation is a *claim*, not occupancy; occupancy commits on acknowledgment. If a callback never arrives by timeout, release claim safely. If boarding animation finishes after cancellation, reject stale ACK and request adapter recovery. A save taken between reservation and animation persists a clearly identified `reserved` or `boarding` state and restores it once. Restore validates graph revisions and runs a migration function only for explicitly supported snapshot versions; unsupported versions return an error, not a quietly reset world.
+
+**Proposed snapshot excerpt:**
+
+```json
+{
+  "schema_version": 1, "tick": 240, "graph_version": "demo-v1",
+  "vehicles": [{"id":"lift-a", "capacity":2, "occupied":["npc-02"], "claimed":["npc-03"]}],
+  "journeys": [{"agent":"npc-03", "state":"boarding", "vehicle":"lift-a",
+                "current_leg":1, "queue_ticket":"ticket-37", "last_event":"demo:240:lift-a:4"}],
+  "processed_event_ids": ["demo:239:lift-a:3"]
+}
+```
+
+The example is a schema sketch; snapshots must never trust the `occupied` list without enforcing capacity, uniqueness and version validation. Use compact event retention with a proven safe replay window; do not store unbounded event IDs forever in a production game.
+
+**Performance target:** first demonstration 20 NPCs/two vehicles with deterministic replay. Record elapsed simulation time per tick, queue length, outstanding reservations and allocation operations on a specified Windows PC and pinned Godot build. No 1,000-agent performance claim until a real measured fixture establishes it.
+
+## 12. Dependency-aware engineering backlog
+
+Proposed file locations are not existing implementations. Estimates are focused engineering hours with substantial uncertainty. Work may proceed locally without human interviews if owner/normal Codex tool permissions allow. No file may be simultaneously written by unrelated chats without coordinator ownership.
+
+| ID | Hours est. | Depends | Action and precise deliverable | Verification / stop rule |
+|---|---:|---|---|---|
+| T01 | 1–3 | None | Pin available Godot 4 3D version; assemble native NavigationLink + FlowAI comparison in `research/free-baseline.md`. | Document exact native capabilities; drop if already turnkey. |
+| T02 | 2–4 | T01 | Create synthetic 20-agent/2-vehicle scenario with time ticks, routes, stops and deterministic input traces in `tests/fixtures/`. | Two routes incl transfer, no third-party assets, legal to distribute. |
+| T03 | 3–5 | T02 | Implement graph and config validators (`core/transit_graph.gd`, `contracts/transport_config.gd`). | Duplicate IDs, unreachable endpoints, invalid capacity/schedules rejected. |
+| T04 | 4–7 | T03 | Implement single-writer `seat_ledger` and FIFO policy; independently seeded unit fixture. | Simultaneous final-seat requests never overbook; canceled claims release once. |
+| T05 | 4–7 | T03–T04 | Implement deterministic `journey_machine` and `event_journal` with typed reason codes. | Same seed/input trace = same state hash and event sequence. |
+| T06 | 4–7 | T03–T05 | Implement schedule/route planner with time-dependent transfers and disruption rerouting. | Missed connection is handled; impossible itinerary returns explicit no-route. |
+| T07 | 4–7 | T05–T06 | Add 3D movement callback adapter, lift/boat motion reference and two controller styles. | Can replace demo controller without rewriting core; no lost/duplicated rider. |
+| T08 | 4–6 | T05–T07 | Versioned snapshots, migrations, hash fixtures, restore halfway through boarding. | Snapshot restored with identical ledger/journey state and no ghost seats. |
+| T09 | 3–5 | T07–T08 | Inspector gizmo and debug HUD for queue order, occupancy, current leg, wait reason. | Every waiting NPC exposes a reason; no editor crash on missing graph. |
+| T10 | 3–5 | T08–T09 | Build Godot 3D sample and reproduce at least 12 failure traces; measure performance. | No invariant violation; report actual FPS/tick and tested hardware. |
+| T11 | 2–4 | T10 | Baseline comparison vs native/FlowAI; install from fresh project. | Meaningful advantage survives; otherwise pause/kill. |
+| T12 | 3–6 | T11 pass | Package paid addon source and original demo, docs, licence, QA and release manifest. | Works after uninstall/reinstall; examples and version matrix honest. |
+| T13 | 1–3 | T12 | Draft genuine demonstration video script, storefront title/FAQ, page, customer support guide. | No claims without actual video/test output. |
+| T14 | Variable | T13 + authorization | Publish through eligible direct/marketplace channel, verify checkout/delivery once permitted. | Real listing URL and delivery evidence only. |
+| T15 | 0.5–2/review | T14 | Observe actual page visits, orders, refunds and support; choose improve/pause/expand. | Keep financial and work states separate. |
+
+**Critical path:** T01→T02→T03→T04/T05→T06→T07→T08→T10→T11→T12→T14. T09 UI and T13 listing copy can proceed in owned files in parallel after stable APIs. Estimated **~35–75 focused engineering hours**, not a guaranteed elapsed duration. The initial demo, not a full city-builder, is the quality milestone.
+
+## 13. Test fixtures and release-blocking QA
+
+| Fixture / situation | Expected result |
+|---|---|
+| Two agents request the final seat during one tick | Exactly one successful claim; second remains queued with reason `capacity_full`. |
+| One agent cancels while reserved | Claim released once; late boarding callback rejected; next in queue eligible. |
+| Boarding ACK duplicated after restore | Only one occupancy transition, one ticket used, one journal event committed. |
+| Vehicle departs before another agent arrives | Missed-trip condition; new feasible route or explicit failed/unreachable status. |
+| Vehicle breaks down mid-ride | Rider transitions to defined waiting/rerouting/failed, never silently vanishes. |
+| Stop becomes inaccessible during transfer | Replan or terminate with reason, preserve other trips. |
+| Agent changes destination twice | Older request canceled; no leaked queue ticket or seat. |
+| Save in `boarding` and reload | Identical seat/queue ownership, eventually same state under same replay. |
+| Restore snapshot with `occupied > capacity` | Reject invalid snapshot; do not spawn overlapping passenger state. |
+| Two controllers move at different speeds | Core remains correct; adapters correctly signal stop arrival/board/exit. |
+| Cyclic route with no service | Planner terminates bounded; returns explicit no-route, no infinite loop. |
+| Scene closed while NPC awaiting | Cleanup releases reservations and emits diagnostics. |
+
+**Run guidance (after implementation):** `godot --headless --path <DEMO_PROJECT> --script <TEST_RUNNER_SCRIPT>` and `godot --headless --path <DEMO_PROJECT> --quit-after <TICKS>` are **proposed** examples; Codex must verify the installed Godot command-line flags and actual script paths. Measure on an identified Windows workstation before making speed claims. Require all deterministic input traces and a clean fresh import to pass before sale.
+
+## 14. Legal, marketplace eligibility, privacy, and financial authority
+
+- Source code, sample game assets, screenshots and logos must be original, permissively licensed for redistribution, or used with documented written rights. Provide a THIRD_PARTY_NOTICES file if any dependency is redistributable. Audit all package licenses before release; do not bundle competitor code because it is public.
+- Prefer a free local development environment and original synthetic fixtures. Do not ship private customer saves, proprietary production packages, or credentials. No analytics/telemetry by default; any opt-in diagnostics must be documented and deletable.
+- The owner is in Canada. Confirm current seller eligibility, tax declarations, identity verification, payout currency, marketplace EULA, applicable Canadian tax obligations and merchant-of-record treatment before opening accounts or publishing; recorded platform statements are **not** approval of this seller account.
+- A marketplace application is not a guaranteed listing. Draft locally, complete permitted QA, and then request the smallest actual owner approval/account verification required. The CAD100 ceiling is *not* a spending grant, and the proposed first release has no authorized cash outlay.
+- Observe `AGENTS.md`, `business_portfolio/SCHEMA.md`, `PROJECT_TEMPLATE.md`, `business_portfolio/tools/build_browser.py` and `commercial_checks.py`. Maintain stable IDs, one writer per canonical file, guarded checkpoint updates, and the current historical archives.
+
+## 15. Release-preparation and seller handoff
+
+1. Build the exact edition pinned by the acceptance matrix. Generate a repeatable versioned package from a clean checkout with a source revision identifier, checksums and licenses.
+2. Run the unit, integration, negative-case, performance, and installation tests on the declared support matrix. Capture tool output and real screenshots/videos, not generated stand-ins falsely described as the product.
+3. Have a second *self-created* test project/user journey consume the package following only the public quickstart. Measure setup time, record failed steps and revise documentation.
+4. Prepare a listing draft, concise feature and limitation statements, supported versions, demonstration script, meaningful search keywords, support route, update policy, cancellation/refund treatment and a release checklist.
+5. Confirm product-class eligibility and country payout requirements on the intended marketplace. Owner completes required identity/account/publishing steps; do not silently attempt them through other accounts or unofficial APIs.
+6. Archive hashes/manifest, signed-off QA evidence, actual uploaded package identifier and resulting public URL when genuinely observed. Do not mark `published` before a real listing is visible or before any required official review finishes.
+7. Once released, inspect real traffic/sales/support, not hypothetical product-page rank. Reuse the release pipeline for a second edition only when the edition's expected benefit exceeds extra testing/support cost.
+
+**Release-blocking acceptance:** no overbooking, duplicate boarding or corrupted save/restore in 12 negative traces; a clean demo project installs and runs on the pinned Godot version; a documented controller adapter works with another movement implementation; any claimed performance is measured and labelled.
+
+## 16. Post-release operations and customer support
+
+- Publish a clear supported version matrix; request *reproducible, redacted* bug reports rather than sensitive project archives. Disclose current limitations; do not promise unlimited bespoke integrations at the base price.
+- Triage: verify report/version → reproduce on minimal fixture → classify `supported bug`, `integration`, `unsupported use`, or `feature request` → provide workaround/patch → regression-test all prior fixtures → version release. Preserve previous packages for rollback.
+- Maintenance cost is uncertain. Reserve an illustrative 0.5–2 hours/month per product plus 0.25–1 hour per meaningful support incident, **not** a measured commitment. If the real load materially exceeds this, revise economics, reduce supported configurations or pause expansion.
+- Collect no product telemetry by default. Use actual accessible marketplace analytics and private support records without placing personal customer data in this public project record.
+
+## 17. Performance measurement, portfolio decisions, and future products
+
+Measure after actual publication: direct store product views where available, download and demo completion counts when legitimate, orders, price/discount applied, real payment fees, refunds, bug categories, supported Godot versions, time spent helping users. Record the date, currency, fee deductions, refunded transactions, hours of support and net contribution in the appropriate authorized private financial systems; report only non-sensitive aggregates publicly. A pageview is not a sale and a listing favorite is not a verified purchase.
+
+Decision heuristics (not statistical proof): **continue** if actual positive net contribution and low support persist; **improve** when a specific demo, pricing, installation or discovery weakness can be addressed in a bounded update; **expand** only if there is proven traction plus a justified additional engine/channel; **pause** if exposure is tiny and costs are near-zero; **discontinue** if a free/native passenger queue example is sufficient for the identified buyer, an already available paid addon provides the same end-to-end function, or integration into ordinary NPC controllers costs more than DIY. Do not infer a bad idea solely from zero sales without evidence that qualified customers saw it.
+
+## 18. Adversarial review and kill conditions
+
+The strongest reasons the business could fail are: the target market for intricate passenger AI may be small; the first paid channel may be discoverability-poor; free FlowAI/navigation tools and paid Unity crowd systems already overlap; open-ended support requests could consume the revenue. Before implementation, run a *free/AI DIY challenge*: reproduce the promised result using native engine tools, a public alternative and a short AI-assisted script. Record setup time, bug count and diagnostic quality for the same fixtures. If the new tool has no real advantage, cut the scope or stop—no rebranding a duplicate as a new project.
+
+Other fail conditions: insufficient legally permitted distribution, accuracy/privacy defects, platform/SDK changes exceeding support economics, or the release depending on paid/forbidden services outside the authorized budget. No human interviews or paid pilots are mandatory. Technical QA and official permission gates remain mandatory.
+
+## 19. First-session Codex handoff — ready for local work
+
+**Open first:** repository root `AGENTS.md`, `business_portfolio/SCHEMA.md`, `PROJECT_TEMPLATE.md`, this exact canonical file `business_portfolio/niches/digital-products/game-development-marketplaces/projects/gdm-002-capacity-aware-npc-transport.md`, `business_portfolio/research/SOURCE_REGISTER.json`, the selected niche's `NICHE.json`, and `docs/PORTFOLIO_MANAGER_WORKFLOW.md`. Inspect other active GDM IDs and the archives; do not assume their project folders are available for modification. Keep unrelated projects untouched.
+
+**First session steps (local work, no commercial actions):**
+
+1. `git status --short` and `git rev-parse HEAD`; reconcile uncommitted or newer work and guard the project record from conflicting writers.
+2. Confirm `GDM-002` ID/niche/source IDs and source register; keep all existing evidence links and work history. Regenerate the browser only after canonical content changes.
+3. Execute T01–T05 locally without waiting for GDM-001: pin Godot version, build the two-vehicle synthetic route fixture, validate graph/contracts, enforce atomic capacity ledger, then implement a deterministic journey/event core. Compare results immediately with native NavigationLink baseline, not customer interviews.
+4. Run the small fixture(s) immediately, capture exact command, exit status and test outputs. Identify which results are observed rather than planned.
+5. Record the task state and a specific next action in the canonical record, without claiming that a plan means implementation is done. If the root workspace differs from the verified remote repository, adapt carefully instead of clobbering local work.
+
+**On future import/update**, the existing non-sensitive source IDs are registered. New URLs in §21 are *not* automatically registered: Codex must add evidence entries to `business_portfolio/research/SOURCE_REGISTER.json` only when used as cited source IDs, then update `source_ids`. Run `python business_portfolio/tools/build_browser.py`, `python business_portfolio/tools/build_browser.py --check`, `python -m unittest discover -s business_portfolio/tests -v`, and `python business_portfolio/tools/commercial_checks.py --portfolio business_portfolio` from repo root **where tools exist**. Check optional budget math separately. Do not invent tests that could not run.
+
+## 20. Resume checkpoint and work log
+
+- **Completed with evidence:** detailed existing GDM plan read from the remote repo; current official/public source and product-feature review; this more specific architecture, test plan, financial *hypotheses*, launch drafts and Codex work breakdown. No source code, verified engine integration, published listing, confirmed sale, private buyer interview or paid market validation was generated by the document revision.
+- **Work state:** `planned`; **commercial validation:** `unvalidated`; **actual revenue/profit:** `null`; **authorized spending:** CAD0; **external effects:** `not_started`.
+- **Current task:** capacity-limited passenger journey system — begin the first no-cost implementation/feasibility task once the owner separately authorizes local development in the normal Codex workflow.
+- **Remaining checklist:** [ ] baseline comparison; [ ] working core; [ ] failing/negative fixtures; [ ] engine adapter; [ ] real package and installation; [ ] truthful demo; [ ] policy/rights check; [ ] publication authorization; [ ] real sales/maintenance review.
+- **Owned deliverables:** this planning file only; no product code, fixture package, test output, or listing exists. Proposed future artifact paths in this file do not yet exist.
+- **Original source revision:** `6f2a420e9a1d7d5b44ec1759918e737059a6772e` (`main`, inspected 2026-11-15); original frontmatter IDs, priority, status, related links and existing research continuity preserved. The local repository record was inspected and reconciled during the 2026-11-15 merge; project IDs and paths were retained.
+- **History:** original 2026-11-15 candidate selection and planning are preserved conceptually, including the original competing-product research and proposed platform editions. This revision **removes mandatory interviews and paid-pilot blockers** and replaces them with local comparative proofs and marketplace-as-validation, without falsely changing the commercial state.
+- **Next concrete action:** Execute T01–T05 locally without waiting for GDM-001: pin Godot version, build the two-vehicle synthetic route fixture, validate graph/contracts, enforce atomic capacity ledger, then implement a deterministic journey/event core. Compare results immediately with native NavigationLink baseline, not customer interviews.
+
+### Work log
+
+- 2026-11-15 — Local repository reconciliation before replacement: Pre-replacement local record was planned/unvalidated; its latest action already called for a synthetic local prototype. No product source, engine integration, fixture results, customer evaluation, outreach, spending, or external action was present. The attachment supplies the more specific Godot 4 prototype plan; this carries forward the no-code/no-external-progress checkpoint without retaining the superseded research-first plan.
+
+- 2026-11-15 — Previously recorded: project family identified from game-development marketplace research; candidate engine list and launch risks captured, without product implementation or sales.
+- 2026-11-15 — Current revision: expanded the execution-ready specification and removed research-interview/paid-pilot gates. This file is an updated planning artifact, not proof of completed tasks.
+
+## 21. Dated source and registration handoff
+
+The `source_ids` in the strict JSON frontmatter remain restricted to IDs already in the repository's `SOURCE_REGISTER.json` (verified from GitHub). All additional public URLs used below are **in-file evidence** until Codex registers them. Each source should be rechecked at the time of listing or toolchain/version selection.
+
+| Source / proposed register ID | Fact supported, limits | Date checked |
+|---|---|---|
+| `GDM-WB-2026` (registered) — owner workbook attachment | Earlier concept selection, not verified sales. | 2026-11-15 |
+| `GDM-GODOT-STORE` (registered) — https://docs.godotengine.org/en/stable/community/asset_store/faq.html | Official Godot store cannot charge yet. | 2026-11-15 |
+| `GDM-FLOWAI-2026` — https://github.com/a6xdev/FlowAI | FlowAI supplies moving navigation graph support; partial substitute. | 2026-11-15 |
+| `GDM-GODOT-LINK-2026` — https://docs.godotengine.org/en/stable/tutorials/navigation/navigation_using_navigationlinks.html | Native navigation links need evaluation as free starting point. | 2026-11-15 |
+| `GDM-MARCHLINE-2026` — https://assetstore.unity.com/packages/tools/behavior-ai/marchline-rts-pathfinding-crowd-navigation-400596 | Strong Unity competitor with capacity/queues/multistorey/saved state. | 2026-11-15 |
+| `GDM-PAYHIP-2026` — https://payhip.com/pricing | Direct checkout free tier 5% plus separate payment processing. | 2026-11-15 |
+| `GDM-ROBLOX-STORE` (registered) — https://create.roblox.com/docs/production/creator-store | Conditional future Roblox model/plugin store eligibility; no Roblox edition built. | 2026-11-15 |
+| `GDM-FAB` (registered) — https://dev.epicgames.com/documentation/fab/publisher-get-started-in-fab | Fab rules matter only for independently implemented Unreal edition. | 2026-11-15 |
+
+**Evidence limits:** competitors' existence/prices/features are not proven sales; official revenue shares are gross-before-other-cost rules; market size, traffic, conversion and support time have **not** been measured for this offer. The historical owner workbook is research context, not a public redistributable asset. No source has been used as evidence of this project's own paid transactions.

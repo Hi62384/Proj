@@ -7,7 +7,7 @@ import re
 
 from PySide6.QtCore import QSignalBlocker, Qt, QTimer
 from PySide6.QtGui import QBrush, QColor, QImageReader, QPixmap
-from PySide6.QtWidgets import (QComboBox, QHBoxLayout, QLabel, QLineEdit, QMainWindow,
+from PySide6.QtWidgets import (QApplication, QComboBox, QFormLayout, QHBoxLayout, QLabel, QLineEdit, QMainWindow,
                                QMenu, QPlainTextEdit, QPushButton, QScrollArea, QSplitter,
                                QStyle, QTabWidget, QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget)
 
@@ -140,6 +140,8 @@ class WorkspaceWindow(QMainWindow):
         self._project_entries = []
         self._history_entries = []
         self._niche_entries = []
+        self._research_prompt = None
+        self._budget_setting = self.repo / 'business_portfolio' / '.research_prompt_budget'
         self._entry_future = self._pool.submit(self._load_navigation_entries, self.repo)
         self._entries_ready = False
         self._tree_mode = 'projects'
@@ -251,6 +253,19 @@ class WorkspaceWindow(QMainWindow):
         self.path_label.setWordWrap(True)
         self.path_label.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
         details.addWidget(self.path_label)
+        self.research_tools = QWidget()
+        research_layout = QFormLayout(self.research_tools)
+        self.research_budget = QLineEdit(self._load_research_budget())
+        self.research_budget.setAccessibleName('Research prompt ceiling cost in CAD')
+        self.research_budget.setPlaceholderText('100')
+        self.research_budget.textChanged.connect(self._save_research_budget)
+        self.copy_research_prompt = QPushButton('Copy opportunity research prompt')
+        self.copy_research_prompt.setAccessibleName('Copy niche opportunity research prompt')
+        self.copy_research_prompt.clicked.connect(self._copy_research_prompt)
+        research_layout.addRow('Research ceiling (CAD)', self.research_budget)
+        research_layout.addRow(self.copy_research_prompt)
+        self.research_tools.hide()
+        details.addWidget(self.research_tools)
         details.addWidget(self.project_tabs)
         details.addWidget(self.preview)
         details.addWidget(self.image_scroll)
@@ -515,6 +530,63 @@ class WorkspaceWindow(QMainWindow):
         self._focus_tree(selection)
         self._preview(selection)
 
+    def _load_research_budget(self):
+        try:
+            value = self._budget_setting.read_text(encoding='utf-8').strip()
+            return value if re.fullmatch(r'\d+(?:\.\d{1,2})?', value) else '100'
+        except OSError:
+            return '100'
+
+    def _save_research_budget(self, value):
+        value = value.strip()
+        if not re.fullmatch(r'\d+(?:\.\d{1,2})?', value):
+            return
+        try:
+            self._budget_setting.write_text(value, encoding='utf-8')
+        except OSError:
+            self.notice.setText('Could not save the research ceiling setting.')
+            self.notice.show()
+
+    def _selected_niche(self, selection):
+        prefix = 'business_portfolio/niches/'
+        if not selection.startswith(prefix):
+            return None
+        candidate = PurePosixPath(selection)
+        if candidate.name == 'projects' or candidate.parent.name == 'projects':
+            return None
+        metadata = self.repo / selection / 'NICHE.json'
+        try:
+            meta = json.loads(metadata.read_text(encoding='utf-8'))
+            return meta.get('title')
+        except (OSError, ValueError, TypeError):
+            return None
+
+    def _copy_research_prompt(self):
+        niche = self._selected_niche(self.workspace_state['selection'])
+        if not niche:
+            self.notice.setText('Select an active niche folder to copy its research prompt.')
+            self.notice.show()
+            return
+        source = self.repo / 'BUSINESS_OPPORTUNITY_RESEARCH_MEGAPROMPT.md'
+        try:
+            prompt = source.read_text(encoding='utf-8')
+        except OSError:
+            self.notice.setText('The opportunity research prompt file could not be read.')
+            self.notice.show()
+            return
+        budget = self.research_budget.text().strip()
+        if not re.fullmatch(r'\d+(?:\.\d{1,2})?', budget):
+            self.notice.setText('Enter a valid non-negative CAD ceiling, such as 50 or 50.00.')
+            self.notice.show()
+            return
+        prompt = re.sub(r'(?m)^\*\*BUSINESS_NICHE:\*\*.*$',
+                        '**BUSINESS_NICHE:** ' + niche, prompt, count=1)
+        prompt = re.sub(r'(?m)^\*\*BUDGET_CEILING_CAD:\*\*.*$',
+                        '**BUDGET_CEILING_CAD:** ' + budget, prompt, count=1)
+        QApplication.clipboard().setText(prompt)
+        self.notice.setText(f'Research prompt for {niche} copied to the clipboard (CAD {budget} ceiling).')
+        self.notice.show()
+
     def _refresh_preview_if_changed(self, selection):
         try:
             path = context_path(self.repo, selection)
@@ -535,11 +607,14 @@ class WorkspaceWindow(QMainWindow):
         self.project_tabs.hide()
         self.preview.show()
         self._preview_readme = None
+        self.research_tools.hide()
         try:
             path = context_path(self.repo, selection)
             stat = path.stat()
             self._preview_signature = (stat.st_mtime_ns, stat.st_ctime_ns, stat.st_size, path.is_dir())
             if path.is_dir():
+                if path.is_relative_to(self.repo / 'business_portfolio/niches') and self._selected_niche(selection):
+                    self.research_tools.show()
                 entries = children(self.repo, path)
                 names = [PurePosixPath(name).name + ('/' if directory else '')
                          for name, directory in entries[:50]]

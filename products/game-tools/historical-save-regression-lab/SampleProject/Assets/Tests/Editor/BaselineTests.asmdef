@@ -1,0 +1,5 @@
+{
+  "name": "BaselineTests",
+  "optionalUnityReferences": ["TestAssemblies"],
+  "includePlatforms": ["Editor"]
+}

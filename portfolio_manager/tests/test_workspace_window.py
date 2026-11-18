@@ -118,11 +118,16 @@ class WorkspaceWindowTests(unittest.TestCase):
                 while not json.loads(childfile.read_text())['working'] and perf_counter()<deadline:
                     first.sync();self.app.processEvents()
                 self.assertTrue(json.loads(childfile.read_text())['working'])
+                self.assertTrue(json.loads(parent.read_text())['working'])
+                self.assertEqual(find_item(first,'N-demo').checkState(0),Qt.CheckState.Checked)
+                self.assertEqual(find_item(first,'N-child').icon(0).cacheKey(),first._working_folder_icon.cacheKey())
                 deadline=perf_counter()+4
                 while (find_item(second,'N-child') is None or find_item(second,'N-child').checkState(0)!=Qt.CheckState.Checked) and perf_counter()<deadline:
                     second.sync();self.app.processEvents()
                 self.assertEqual(find_item(second,'N-child').checkState(0),Qt.CheckState.Checked)
-                find_item(first,'N-demo').setCheckState(0,Qt.CheckState.Checked)
+                find_item(first,'N-demo').setCheckState(0,Qt.CheckState.Unchecked)
+                self.assertTrue(json.loads(parent.read_text())['working'])
+                self.assertEqual(find_item(first,'N-demo').checkState(0),Qt.CheckState.Checked)
                 find_item(first,'N-child').setCheckState(0,Qt.CheckState.Unchecked)
                 self.assertTrue(json.loads(parent.read_text())['working'])
                 self.assertFalse(json.loads(childfile.read_text())['working'])

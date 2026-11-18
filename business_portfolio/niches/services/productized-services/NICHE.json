@@ -4,6 +4,6 @@
   "parent": "N-category-services",
   "path": "services/productized-services",
   "priority": 14,
-  "working": false,
+  "working": true,
   "description": "No active projects. Research and validate this niche before adding a project."
 }

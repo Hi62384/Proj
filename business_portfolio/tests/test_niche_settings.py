@@ -24,14 +24,17 @@ class NicheSettingTests(unittest.TestCase):
                 'priority': 1, 'working': False,
             }), encoding='utf-8')
 
-    def test_independent_setting_persists_and_is_boolean(self):
-        set_working(self.root, 'N-cat', True)
+    def test_enabling_child_enables_parent_and_protects_active_path(self):
         set_working(self.root, 'N-niche', True)
-        set_working(self.root, 'N-cat', False)
         category = json.loads((self.niches / 'digital-products/NICHE.json').read_text())
         niche = json.loads((self.niches / 'digital-products/example/NICHE.json').read_text())
-        self.assertIs(category['working'], False)
+        self.assertIs(category['working'], True)
         self.assertIs(niche['working'], True)
+        with self.assertRaisesRegex(ValueError, 'descendant'):
+            set_working(self.root, 'N-cat', False)
+        set_working(self.root, 'N-niche', False)
+        self.assertTrue(json.loads((self.niches / 'digital-products/NICHE.json').read_text())['working'])
+        set_working(self.root, 'N-cat', False)
         with self.assertRaises(ValueError):
             set_working(self.root, 'N-niche', 'false')
 

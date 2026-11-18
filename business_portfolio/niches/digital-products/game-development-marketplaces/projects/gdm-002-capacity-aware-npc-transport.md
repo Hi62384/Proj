@@ -9,7 +9,7 @@
   "origin": "current_package",
   "priority": "P2",
   "planning_lane": "queued",
-  "work_state": "planned",
+  "work_state": "active",
   "commercial_validation": "unvalidated",
   "evidence_basis": "public_official_and_competitor_research_no_verified_customer_sales",
   "source_ids": [
@@ -24,8 +24,8 @@
     "GDM-003"
   ],
   "legacy_ids": [],
-  "next_action": "Without customer interviews or waiting for GDM-001, build and time a Godot 4 3D synthetic demo with two scheduled vehicles, twenty NPCs, queues, last-seat contention and save/load in transit; compare behavior with native links and FlowAI before approving a first paid edition.",
-  "last_reviewed": "2026-11-15",
+  "next_action": "Build and test the scheduled 3D two-vehicle scenario with transfer and save/load, then compare the same trace and integration effort with native NavigationLink and FlowAI.",
+  "last_reviewed": "2026-11-17",
   "offer_price_usd": null,
   "delivery_hours_assumption": null,
   "total_first_order_hours_assumption": null,
@@ -81,6 +81,12 @@
     "GameMaker",
     "Construct",
     "GDevelop"
+  ],
+  "public_results": [
+    {
+      "label": "Seat-ledger proof and evidence limits",
+      "path": "results/GDM-002/seat-ledger-proof-2026-11-17.md"
+    }
   ]
 }
 ---
@@ -411,3 +417,10 @@ The `source_ids` in the strict JSON frontmatter remain restricted to IDs already
 | `GDM-FAB` (registered) — https://dev.epicgames.com/documentation/fab/publisher-get-started-in-fab | Fab rules matter only for independently implemented Unreal edition. | 2026-11-15 |
 
 **Evidence limits:** competitors' existence/prices/features are not proven sales; official revenue shares are gross-before-other-cost rules; market size, traffic, conversion and support time have **not** been measured for this offer. The historical owner workbook is research context, not a public redistributable asset. No source has been used as evidence of this project's own paid transactions.
+
+
+### 2026-11-17 local proof checkpoint
+
+- Built an original Godot 4.7.2 GDScript FIFO seat/queue proof at `products/game-tools/gdm-002-transit-proof/`. The headless test passed with exit 0; see the public result for commands, observed checks and engine log warnings.
+- No schedule, 3D scene, transfers, persistent disk save, performance measurements, comparable baseline, paid package or publication is complete. Commercial validation remains unvalidated; no spending, sales or other external commercial effects were observed.
+- Next: build and test the scheduled 3D two-vehicle scenario with transfer and save/load, then compare the same trace and integration effort with native NavigationLink and FlowAI.

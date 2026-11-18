@@ -6,7 +6,7 @@ from pathlib import Path, PurePosixPath
 import re
 
 from PySide6.QtCore import QEvent, QSignalBlocker, Qt, QTimer
-from PySide6.QtGui import QBrush, QColor, QImageReader, QPixmap
+from PySide6.QtGui import QBrush, QColor, QIcon, QImageReader, QPainter, QPixmap
 from PySide6.QtWidgets import (QApplication, QComboBox, QFormLayout, QHBoxLayout, QLabel, QLineEdit, QMainWindow,
                                QMenu, QPlainTextEdit, QPushButton, QScrollArea, QSplitter,
                                QStyle, QTabWidget, QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget)
@@ -151,6 +151,14 @@ class WorkspaceWindow(QMainWindow):
         self._tree_mode = 'projects'
         self._file_loads = {}
         self._folder_icon = self.style().standardIcon(QStyle.StandardPixmap.SP_DirIcon)
+        marked = self._folder_icon.pixmap(32, 32)
+        painter = QPainter(marked)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+        painter.setPen(QColor('white'))
+        painter.setBrush(QColor('#16835d'))
+        painter.drawEllipse(20, 1, 10, 10)
+        painter.end()
+        self._working_folder_icon = QIcon(marked)
         self._file_icon = self.style().standardIcon(QStyle.StandardPixmap.SP_FileIcon)
         self.setWindowTitle('Portfolio Manager | Chat ' + self.workspace_id[:8])
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
@@ -362,9 +370,10 @@ class WorkspaceWindow(QMainWindow):
                         node.setText(0, f'{title} · {count} {"project" if count == 1 else "projects"} · {"Working" if working else "Not Working"}')
                     node.setData(0, NICHE_ID_ROLE, ident)
                     node.setData(0, WORKING_ROLE, working)
+                    node.setIcon(0, self._working_folder_icon if working else self._folder_icon)
                     node.setFlags(node.flags() | Qt.ItemFlag.ItemIsUserCheckable)
                     node.setCheckState(0, Qt.CheckState.Checked if working else Qt.CheckState.Unchecked)
-                    node.setToolTip(0, 'Working is an independent focus setting. It does not start a worker.')
+                    node.setToolTip(0, 'Working marks this niche and its parents. It does not start a worker.')
                     if not count:
                         node.setForeground(0, QBrush(QColor('#87938f')))
                         node.setChildIndicatorPolicy(QTreeWidgetItem.ChildIndicatorPolicy.DontShowIndicatorWhenChildless)
@@ -393,9 +402,10 @@ class WorkspaceWindow(QMainWindow):
                         nodes[name].setText(0, label)
                         nodes[name].setData(0, NICHE_ID_ROLE, niche[4])
                         nodes[name].setData(0, WORKING_ROLE, niche[5])
+                        nodes[name].setIcon(0, self._working_folder_icon if niche[5] else self._folder_icon)
                         nodes[name].setFlags(nodes[name].flags() | Qt.ItemFlag.ItemIsUserCheckable)
                         nodes[name].setCheckState(0, Qt.CheckState.Checked if niche[5] else Qt.CheckState.Unchecked)
-                        nodes[name].setToolTip(0, 'Working is an independent focus setting. It does not start a worker.')
+                        nodes[name].setToolTip(0, 'Working marks this niche and its parents. It does not start a worker.')
                         if count == 0:
                             nodes[name].setForeground(0, QBrush(QColor('#87938f')))
                             nodes[name].setChildIndicatorPolicy(
@@ -420,7 +430,11 @@ class WorkspaceWindow(QMainWindow):
         from business_portfolio.tools.niche_settings import set_working
         try:
             set_working(self.repo / 'business_portfolio', item.data(0, NICHE_ID_ROLE), value)
-            self._niche_entries = [(*row[:5], value, *row[6:]) if row[4] == item.data(0, NICHE_ID_ROLE) else row for row in self._niche_entries]
+            target = next(row for row in self._niche_entries if row[4] == item.data(0, NICHE_ID_ROLE))
+            target_path = target[0]
+            self._niche_entries = [(*row[:5], value, *row[6:]) if
+                row[4] == target[4] or (value and target_path.startswith(row[0] + '/')) else row
+                for row in self._niche_entries]
             self._refresh_working_rows()
             self._update_working_count()
             self.notice.setText(('Working' if value else 'Not Working') + ' focus setting saved for ' +
@@ -649,6 +663,7 @@ class WorkspaceWindow(QMainWindow):
                         row = current[ident]
                         value = row[5]
                         item.setData(0, WORKING_ROLE, value)
+                        item.setIcon(0, self._working_folder_icon if value else self._folder_icon)
                         item.setCheckState(0, Qt.CheckState.Checked if value else Qt.CheckState.Unchecked)
                         status = 'Working' if value else 'Not Working'
                         if row[6] is None:

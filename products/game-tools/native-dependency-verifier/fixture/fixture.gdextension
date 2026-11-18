@@ -1,0 +1,7 @@
+[configuration]
+entry_symbol = "fixture_init"
+compatibility_minimum = "4.2"
+
+[libraries]
+windows.debug.x86_64 = "res://addons/fixture/bin/fixture.dll"
+windows.release.x86_64 = "res://addons/fixture/bin/fixture.dll"

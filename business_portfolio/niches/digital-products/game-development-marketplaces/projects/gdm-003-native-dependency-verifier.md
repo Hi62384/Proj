@@ -24,7 +24,7 @@
     "GDM-002"
   ],
   "legacy_ids": [],
-  "next_action": "Without interviews or waiting for another project, construct an owned Windows x64 fixture with a GDExtension descriptor pointing to a missing/wrong-architecture DLL; compare free Dependencies plus export logs, then implement an engine-aware package-manifest check only if it finds a material diagnostic advantage.",
+  "next_action": "Obtain or locate no-cost Godot and Dependencies tools, build a real minimal GDExtension export fixture, and compare export logs and Dependencies findings before the go/kill implementation decision.",
   "last_reviewed": "2026-11-15",
   "offer_price_usd": null,
   "delivery_hours_assumption": null,
@@ -78,6 +78,12 @@
     "GameMaker Windows x64",
     "Stride Windows x64",
     "Defold Windows x64"
+  ],
+  "public_results": [
+    {
+      "label": "Local feasibility checkpoint (2026-11-17)",
+      "path": "results/GDM-003/feasibility-checkpoint-2026-11-17.md"
+    }
   ]
 }
 ---
@@ -419,3 +425,6 @@ The `source_ids` in the strict JSON frontmatter remain restricted to IDs already
 | `GDM-FAB` (registered) — https://dev.epicgames.com/documentation/fab/publisher-get-started-in-fab | Future Unreal edition would require independent acceptance checks. | 2026-11-15 |
 
 **Evidence limits:** competitors' existence/prices/features are not proven sales; official revenue shares are gross-before-other-cost rules; market size, traffic, conversion and support time have **not** been measured for this offer. The historical owner workbook is research context, not a public redistributable asset. No source has been used as evidence of this project's own paid transactions.
+
+
+- 2026-11-17 — Local feasibility work: owned synthetic C DLL source and path-testing descriptor created; MSVC produced an x64 DLL confirmed by dumpbin, then generated binaries were removed. The DLL is not a functioning GDExtension. Godot and Dependencies were not found on PATH, so export logs, competitor comparison, product advantage and go/kill decision remain unverified. See public feasibility checkpoint. No spending or external actions.

@@ -24,7 +24,7 @@ class PortfolioTests(unittest.TestCase):
         parent=None;parts=[]
         for i in range(depth):
             parts.append('d'+str(i));p='/'.join(parts);folder=r/'niches'/p;folder.mkdir(parents=True)
-            (folder/'NICHE.json').write_text(json.dumps(dict(id=f'N-test-{i}',title=f'Depth {i}',parent=parent,path=p)))
+            (folder/'NICHE.json').write_text(json.dumps(dict(id=f'N-test-{i}',title=f'Depth {i}',parent=parent,path=p,priority=i+1,working=False)))
             parent=f'N-test-{i}'
         m={k:v for k,v in self.base.items() if k not in {'body','path','content_sha256','archived','previous_path'}}
         m.update(niche_path='/'.join(parts),niche_id=parent,parent_project=None,related_projects=[])
@@ -38,29 +38,39 @@ class PortfolioTests(unittest.TestCase):
     def test_snapshot_preserves_all_awa_ids(self):
         ids={x['id'] for x in self.data['archived_records']}
         self.assertTrue({f'AWA-{i:03d}' for i in range(1,121)}<=ids)
-    def test_twelve_categories_thirteen_niches_and_three_active_families(self):
-        from categorize_business_niches import CATEGORIES
+    def test_five_categories_twenty_five_required_niches_and_preserved_projects(self):
         taxonomy=json.loads((ROOT.parent/'opportunity_library/data/taxonomy.json').read_text(encoding='utf-8'))
         self.assertEqual(len(taxonomy['categories']),36)
         self.assertEqual(sum(len(c['subcategories']) for c in taxonomy['categories']),144)
         nodes={n['path']:n for n in self.data['niches']}
         roots=[n for n in self.data['niches'] if n['parent'] is None]
-        self.assertEqual([(n['path'],n['title']) for n in roots],[(slug,title) for slug,title,_ in CATEGORIES])
-        self.assertEqual([n['priority'] for n in roots],list(range(1,13)))
-        self.assertEqual(len(nodes),23)
-        for slug,_,children in CATEGORIES:
-            for child in children:
-                node=nodes[f'{slug}/{child}']
-                self.assertEqual(node['parent'],nodes[slug]['id'])
-        self.assertEqual(len([n for n in nodes.values() if n['id'].startswith('N-business-') or
-                              n['id']=='N-gdm-20261115']),13)
+        self.assertEqual([(n['path'],n['title']) for n in roots],[
+            ('digital-products','Digital Products'),('digital-content','Digital Content'),
+            ('services','Services'),('ecommerce','Ecommerce'),('investing','Investing')])
+        self.assertEqual([n['priority'] for n in roots],list(range(1,6)))
+        self.assertEqual(len(nodes),39)
+        required={
+            'digital-products':['game-development-marketplaces','software-apps-and-extensions','automation-products-and-templates','books-and-ebooks','digital-art-models-and-assets','games-and-interactive-products','data-products-and-apis'],
+            'digital-content':['youtube-channels','tiktok-and-short-form-video','instagram-and-social-accounts','blogs-newsletters-and-websites','original-images-video-and-entertainment'],
+            'services':['ai-assisted-freelancing','productized-services','business-automation-services','research-and-data-services','lead-generation-services'],
+            'ecommerce':['dropshipping','print-on-demand','specialized-physical-products','online-reselling'],
+            'investing':['stocks-and-etfs','bonds-gics-and-income-assets','real-estate-and-reits','alternative-and-collectible-assets']}
+        for category, slugs in required.items():
+            for slug in slugs:
+                node=nodes[f'{category}/{slug}']
+                self.assertEqual(node['parent'],nodes[category]['id'])
+        self.assertEqual(sum(len(v) for v in required.values()),25)
+        self.assertTrue(all(isinstance(n['working'],bool) for n in nodes.values()))
+        self.assertEqual({nodes[p]['id'] for p in ('digital-products/software-apps-and-extensions/advanced-online-products-and-software','digital-products/software-apps-and-extensions/platform-specific-apps-and-extensions','digital-products/automation-products-and-templates/marketplace-hosted-automations','digital-products/data-products-and-apis/usage-based-apis','digital-products/games-and-interactive-products/online-games-and-virtual-economies','digital-content/online-content-and-media','digital-content/online-content-and-media/affiliate-and-referral-businesses','digital-content/blogs-newsletters-and-websites/advertising-supported-utility-websites','digital-products/licensing-and-royalties')},{'N-business-02','N-business-04','N-business-05','N-business-07','N-business-08','N-business-09','N-business-10','N-business-11','N-business-12'})
+        self.assertTrue({'N-gdm-20261115',*(f'N-business-{i:02d}' for i in range(2,14))}
+                        <= {n['id'] for n in nodes.values()})
         self.assertEqual({r['id'] for r in self.data['records']},{'GDM-001','GDM-002','GDM-003'})
         self.assertTrue(all(r['niche_path']=='digital-products/game-development-marketplaces' for r in self.data['records']))
         self.assertEqual(len(list((ROOT/'niches').rglob('projects/*.md'))),3)
         self.assertFalse(any((ROOT/'niches'/n['path']/'projects').exists() for n in nodes.values()
                              if n['id']!='N-gdm-20261115'))
         self.assertEqual(len(self.data['archived_records']),139)
-        self.assertEqual(len(self.data['niches']),23)
+        self.assertEqual(len(self.data['niches']),39)
         self.assertEqual(self.data['taxonomy_snapshot'],{'files':185,'projects':3})
         self.assertEqual([r['planning_lane'] for r in self.data['records']],
                          ['next_to_validate_focus','queued','queued'])
@@ -151,6 +161,10 @@ class PortfolioTests(unittest.TestCase):
     def test_niche_parent_mismatch_rejected(self):
         root,p,m=self.fixture(2);q=p.parent.parent/'NICHE.json';n=json.loads(q.read_text());n['parent']=None;q.write_text(json.dumps(n))
         with self.assertRaises(b.ValidationError):b.load_portfolio(root)
+    def test_working_setting_requires_boolean(self):
+        root,p,m=self.fixture();niche=root/'niches'/m['niche_path']/'NICHE.json'
+        data=json.loads(niche.read_text());data['working']='false';niche.write_text(json.dumps(data))
+        with self.assertRaisesRegex(b.ValidationError,'working must be boolean'):b.load_portfolio(root)
     def test_traversal_rejected(self):
         for s in ['../evil','good/../../evil','a\\b','a/projects/b','a//b']:
             self.assertFalse(b.safe_niche(s))

@@ -1,8 +1,17 @@
 # Portfolio Manager workflow
 
+## Copy a business megaprompt
+
+Use the **Budget ceiling (CAD)** field and **Copy Megaprompt** menu in the right pane. The budget is saved for future sessions and does not authorize spending.
+
+- **Research a Business Opportunity:** Select an active niche folder, copy the prompt, and paste it into ChatGPT to research an opportunity in that niche.
+- **Develop My Business Idea:** Copy the prompt from any selection, paste it into ChatGPT, and replace the example in the `PROJECT_IDEA` block with your idea.
+
+Both prompts request one comprehensive Markdown project file that can be imported into the Business Portfolio after its metadata and sources are validated.
+
 ## Current business view (2026-11-15)
 
-Projects and Niches show 12 ordered business categories and their 13 preserved niches. Digital Products → Game Development Marketplaces contains GDM-001, GDM-002 and GDM-003; all other niches show zero projects and appear faded. History & Existing Work contains the 139 older records and the prior niche-layout snapshot under separate labels. Repository files remains the optional full explorer. The 36-category opportunity taxonomy is research under `opportunity_library`, not part of this menu. A selected GDM record has Overview, Files, Results, Tasks & Progress and Complete record tabs. Per-chat selections, global availability, Computer Access, Stop and Emergency Stop retain their existing behavior.
+Projects and Niches show five primary categories, the 25 required niches, and nine preserved legacy niches nested under their closest equivalents. Digital Products → Game Development Marketplaces contains GDM-001, GDM-002 and GDM-003. Each category and niche has an independent Working checkbox stored in `NICHE.json`; it is an informational focus setting and never starts a worker or changes project status. Changes are atomic, persist across restarts, synchronize across windows, and appear in the generated browser. Category totals count working descendant leaf niches without double-counting parent and nested nodes. History & Existing Work retains the 139 older records and prior niche-layout snapshot. Repository files remains the optional full explorer; the independent 36-category opportunity taxonomy stays in `opportunity_library`.
 
 The material below describes the prior active view and remains for migration history. Current verification is in `docs/BUSINESS_NICHES_13_REPORT_2026-11-15.md`.
 

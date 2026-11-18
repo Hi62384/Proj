@@ -1,0 +1,9 @@
+{
+  "id": "N-required-stocks-and-etfs",
+  "title": "Stocks & ETFs",
+  "parent": "N-category-investing",
+  "path": "investing/stocks-and-etfs",
+  "priority": 22,
+  "working": false,
+  "description": "No active projects. Research and validate this niche before adding a project."
+}

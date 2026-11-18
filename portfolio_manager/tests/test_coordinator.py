@@ -22,7 +22,8 @@ def write_fixture(repo):
         folder.mkdir(parents=True)
         parent = 'N-' + str(paths.index(name.rsplit('/', 1)[0])) if '/' in name else None
         (folder / 'NICHE.json').write_text(json.dumps({'id': f'N-{i}', 'path': name,
-              'parent': parent, 'title': name.split('/')[-1].title()}), encoding='utf8')
+              'parent': parent, 'title': name.split('/')[-1].title(), 'priority': i+1,
+              'working': False}), encoding='utf8')
     records = {}
     for number, niche, status, kind in ((1, paths[0], 'planned', 'standalone_service'),
                                         (2, paths[2], 'active', 'standalone_service'),

@@ -213,6 +213,10 @@ def load_portfolio(root: Path) -> dict:
             raise ValidationError(f'Niche path/id mismatch: {p}')
         if not isinstance(m.get('title'),str):
             raise ValidationError(f'Niche parent/title mismatch: {p}')
+        if not isinstance(m.get('working'), bool):
+            raise ValidationError(f'Niche working must be boolean: {p}')
+        if not isinstance(m.get('priority', 999), int):
+            raise ValidationError(f'Niche priority must be an integer: {p}')
         if m['id'] in nodes:
             raise ValidationError('Duplicate niche ID')
         nodes[m['id']] = m

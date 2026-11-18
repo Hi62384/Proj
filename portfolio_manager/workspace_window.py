@@ -5,7 +5,7 @@ import json
 from pathlib import Path, PurePosixPath
 import re
 
-from PySide6.QtCore import QSignalBlocker, Qt, QTimer
+from PySide6.QtCore import QEvent, QSignalBlocker, Qt, QTimer
 from PySide6.QtGui import QBrush, QColor, QImageReader, QPixmap
 from PySide6.QtWidgets import (QApplication, QComboBox, QFormLayout, QHBoxLayout, QLabel, QLineEdit, QMainWindow,
                                QMenu, QPlainTextEdit, QPushButton, QScrollArea, QSplitter,
@@ -15,6 +15,8 @@ from .workspace import context_path
 
 
 ROLE = int(Qt.ItemDataRole.UserRole)
+NICHE_ID_ROLE = ROLE + 2
+WORKING_ROLE = ROLE + 3
 MAX_PREVIEW = 128_000
 IMAGE_FORMATS = {'.png': b'png', '.jpg': b'jpeg', '.jpeg': b'jpeg', '.bmp': b'bmp',
                  '.gif': b'gif', '.webp': b'webp', '.ico': b'ico'}
@@ -46,7 +48,7 @@ def project_entries(repo, niches=None):
     niche_root = repo / 'business_portfolio' / 'niches'
     visible = set()
     niches = niche_entries(repo) if niches is None else niches
-    for name, _, _, _ in niches:
+    for name, *_ in niches:
         visible.add((name, True))
         for parent in PurePosixPath(name).parents:
             if parent.as_posix() != '.':
@@ -68,7 +70,7 @@ def project_entries(repo, niches=None):
             for parent in relative.parents:
                 if parent.as_posix() != '.':
                     visible.add((parent.as_posix(), True))
-    priorities = {name: priority for name, _, _, priority in niches}
+    priorities = {row[0]: row[3] for row in niches}
     return sorted(visible, key=lambda item: (item[0].count('/'),
                                             priorities.get(item[0], 999), item[0].casefold()))
 
@@ -116,7 +118,8 @@ def niche_entries(repo):
             if meta.get('path') != folder.relative_to(base).as_posix():
                 continue
             count = sum(1 for p in folder.rglob('projects/*.md') if p.is_file())
-            rows.append((relative, meta['title'], count, meta.get('priority', 999)))
+            rows.append((relative, meta['title'], count, meta.get('priority', 999),
+                         meta['id'], meta.get('working', False), meta.get('parent')))
         except (ValueError, OSError, KeyError, TypeError):
             continue
     return sorted(rows, key=lambda row: (row[0].count('/'), row[3], row[1].casefold()))
@@ -140,6 +143,7 @@ class WorkspaceWindow(QMainWindow):
         self._project_entries = []
         self._history_entries = []
         self._niche_entries = []
+        self._working_signature = None
         self._research_prompt = None
         self._budget_setting = self.repo / 'business_portfolio' / '.research_prompt_budget'
         self._entry_future = self._pool.submit(self._load_navigation_entries, self.repo)
@@ -171,6 +175,9 @@ class WorkspaceWindow(QMainWindow):
         self.selection_label.setTextFormat(Qt.TextFormat.PlainText)
         self.selection_label.setStyleSheet('font-size: 22px; font-weight: 600; color: #183a32;')
         header.addWidget(self.selection_label, 1)
+        self.working_count = QLabel('0 working niches')
+        self.working_count.setAccessibleName('Working niche count')
+        header.addWidget(self.working_count)
         header.addWidget(QLabel('Chat ' + self.workspace_id[:8]))
         self.mode = QComboBox()
         self.mode.setAccessibleName('Global availability')
@@ -192,6 +199,11 @@ class WorkspaceWindow(QMainWindow):
         layout.addWidget(self._make_explorer(), 1)
         layout.addWidget(self.notice)
         self.setCentralWidget(frame)
+        for widget in (self, frame, self.tree, self.tree.viewport(), self.preview,
+                       self.preview.viewport(), self.project_tabs, self.image_scroll):
+            widget.setAcceptDrops(True)
+            if widget is not self:
+                widget.installEventFilter(self)
         self._sync = QTimer(self)
         self._sync.setInterval(400)
         self._sync.timeout.connect(self.sync)
@@ -225,6 +237,7 @@ class WorkspaceWindow(QMainWindow):
         self.tree.setHeaderLabels(['Projects'])
         self.tree.itemSelectionChanged.connect(self._select_file)
         self.tree.itemExpanded.connect(self._expand)
+        self.tree.itemChanged.connect(self._niche_working_changed)
         layout.addWidget(self.tree)
         splitter.addWidget(navigator)
         self.preview = QPlainTextEdit()
@@ -256,15 +269,17 @@ class WorkspaceWindow(QMainWindow):
         self.research_tools = QWidget()
         research_layout = QFormLayout(self.research_tools)
         self.research_budget = QLineEdit(self._load_research_budget())
-        self.research_budget.setAccessibleName('Research prompt ceiling cost in CAD')
+        self.research_budget.setAccessibleName('Budget ceiling in CAD')
         self.research_budget.setPlaceholderText('100')
         self.research_budget.textChanged.connect(self._save_research_budget)
-        self.copy_research_prompt = QPushButton('Copy opportunity research prompt')
-        self.copy_research_prompt.setAccessibleName('Copy niche opportunity research prompt')
-        self.copy_research_prompt.clicked.connect(self._copy_research_prompt)
-        research_layout.addRow('Research ceiling (CAD)', self.research_budget)
+        self.copy_research_prompt = QPushButton('Copy Megaprompt')
+        self.copy_research_prompt.setAccessibleName('Copy Megaprompt')
+        prompt_menu = QMenu(self.copy_research_prompt)
+        prompt_menu.addAction('Research a Business Opportunity', lambda: self._copy_megaprompt('research'))
+        prompt_menu.addAction('Develop My Business Idea', lambda: self._copy_megaprompt('idea'))
+        self.copy_research_prompt.setMenu(prompt_menu)
+        research_layout.addRow('Budget ceiling (CAD)', self.research_budget)
         research_layout.addRow(self.copy_research_prompt)
-        self.research_tools.hide()
         details.addWidget(self.research_tools)
         details.addWidget(self.project_tabs)
         details.addWidget(self.preview)
@@ -319,7 +334,7 @@ class WorkspaceWindow(QMainWindow):
             self.tree.clear()
             root = self._node(self.tree, '.', True, full=True)
             root.setText(0, self.repo.name)
-            if not self._entries_ready and self._tree_mode != 'files':
+            if not self._entries_ready and not self._niche_entries and self._tree_mode != 'files':
                 self._node(root, 'Loading navigation…', False, full=True)
                 root.setExpanded(True)
                 return
@@ -329,7 +344,7 @@ class WorkspaceWindow(QMainWindow):
                 return
             if self._tree_mode == 'niches':
                 nodes = {'.': root}
-                for name, title, count, _ in self._niche_entries:
+                for name, title, count, _, ident, working, parent_id in self._niche_entries:
                     parent = PurePosixPath(name).parent.as_posix()
                     missing = []
                     ancestor = parent
@@ -341,7 +356,15 @@ class WorkspaceWindow(QMainWindow):
                         nodes[ancestor] = self._node(nodes[above], ancestor, True)
                     node = self._node(nodes[parent], name, True)
                     nodes[name] = node
-                    node.setText(0, f'{title} · {count} {"project" if count == 1 else "projects"}')
+                    if parent_id is None:
+                        node.setText(0, f'{title} · {self._category_working_count(name)} working · {"Working" if working else "Not Working"}')
+                    else:
+                        node.setText(0, f'{title} · {count} {"project" if count == 1 else "projects"} · {"Working" if working else "Not Working"}')
+                    node.setData(0, NICHE_ID_ROLE, ident)
+                    node.setData(0, WORKING_ROLE, working)
+                    node.setFlags(node.flags() | Qt.ItemFlag.ItemIsUserCheckable)
+                    node.setCheckState(0, Qt.CheckState.Checked if working else Qt.CheckState.Unchecked)
+                    node.setToolTip(0, 'Working is an independent focus setting. It does not start a worker.')
                     if not count:
                         node.setForeground(0, QBrush(QColor('#87938f')))
                         node.setChildIndicatorPolicy(QTreeWidgetItem.ChildIndicatorPolicy.DontShowIndicatorWhenChildless)
@@ -363,7 +386,16 @@ class WorkspaceWindow(QMainWindow):
                     niche = next((row for row in self._niche_entries if row[0] == name), None)
                     if niche:
                         count = niche[2]
-                        nodes[name].setText(0, f'{niche[1]} · {count} {"project" if count == 1 else "projects"}')
+                        is_category = niche[6] is None
+                        summary = self._category_working_count(name) if is_category else None
+                        label = (f'{niche[1]} · {summary} working · {"Working" if niche[5] else "Not Working"}' if is_category else
+                                 f'{niche[1]} · {count} {"project" if count == 1 else "projects"} · {"Working" if niche[5] else "Not Working"}')
+                        nodes[name].setText(0, label)
+                        nodes[name].setData(0, NICHE_ID_ROLE, niche[4])
+                        nodes[name].setData(0, WORKING_ROLE, niche[5])
+                        nodes[name].setFlags(nodes[name].flags() | Qt.ItemFlag.ItemIsUserCheckable)
+                        nodes[name].setCheckState(0, Qt.CheckState.Checked if niche[5] else Qt.CheckState.Unchecked)
+                        nodes[name].setToolTip(0, 'Working is an independent focus setting. It does not start a worker.')
                         if count == 0:
                             nodes[name].setForeground(0, QBrush(QColor('#87938f')))
                             nodes[name].setChildIndicatorPolicy(
@@ -379,6 +411,63 @@ class WorkspaceWindow(QMainWindow):
         self.tree.setHeaderLabels([self.view_mode.currentText()])
         self._root_node()
 
+    def _niche_working_changed(self, item, column):
+        if column != 0 or not item.data(0, NICHE_ID_ROLE):
+            return
+        value = item.checkState(0) == Qt.CheckState.Checked
+        if value == item.data(0, WORKING_ROLE):
+            return
+        from business_portfolio.tools.niche_settings import set_working
+        try:
+            set_working(self.repo / 'business_portfolio', item.data(0, NICHE_ID_ROLE), value)
+            self._niche_entries = [(*row[:5], value, *row[6:]) if row[4] == item.data(0, NICHE_ID_ROLE) else row for row in self._niche_entries]
+            self._refresh_working_rows()
+            self._update_working_count()
+            self.notice.setText(('Working' if value else 'Not Working') + ' focus setting saved for ' +
+                                item.text(0).split(' · ', 1)[0] + '.')
+            self.notice.show()
+        except (OSError, ValueError, TimeoutError) as error:
+            with QSignalBlocker(self.tree):
+                item.setCheckState(0, Qt.CheckState.Checked if item.data(0, WORKING_ROLE) else Qt.CheckState.Unchecked)
+            self.notice.setText(str(error)[:300])
+            self.notice.show()
+
+    def eventFilter(self, watched, event):
+        if event.type() in (QEvent.Type.DragEnter, QEvent.Type.DragMove, QEvent.Type.Drop):
+            return self._project_drop_event(event)
+        return super().eventFilter(watched, event)
+
+    def dragEnterEvent(self, event):
+        self._project_drop_event(event)
+
+    def dragMoveEvent(self, event):
+        self._project_drop_event(event)
+
+    def dropEvent(self, event):
+        self._project_drop_event(event)
+
+    def _project_drop_event(self, event):
+        urls = event.mimeData().urls()
+        if not urls or not all(url.isLocalFile() and url.toLocalFile().lower().endswith('.md') for url in urls):
+            event.ignore()
+            return False
+        if event.type() != QEvent.Type.Drop:
+            event.acceptProposedAction()
+            return True
+        from .project_import import import_projects
+        try:
+            ids = import_projects(self.repo, self.workspace_state['selection'],
+                                  [url.toLocalFile() for url in urls])
+            self.notice.setText('Imported: ' + ', '.join(ids))
+            self.notice.show()
+            self._entry_future = self._pool.submit(self._load_navigation_entries, self.repo)
+            self._entries_ready = False
+            event.acceptProposedAction()
+        except (OSError, ValueError, RuntimeError) as error:
+            self.notice.setText('Import failed: ' + str(error)[:600])
+            self.notice.show()
+            event.ignore()
+        return True
     def _focus_tree(self, selection, *, reveal=True):
         with QSignalBlocker(self.tree):
             if self._search_view:
@@ -456,16 +545,32 @@ class WorkspaceWindow(QMainWindow):
 
     def sync(self):
         try:
+            if self._entries_ready and self._tree_mode in {'projects', 'niches'}:
+                signature = self._current_working_signature()
+                if signature != self._working_signature:
+                    self._working_signature = signature
+                    self._entries_ready = False
+                    self._entry_future = self._pool.submit(self._load_navigation_entries, self.repo)
             if not self._entries_ready and self._entry_future.done():
                 try:
-                    self._project_entries, self._history_entries, self._niche_entries = self._entry_future.result()
+                    projects, history, niches = self._entry_future.result()
+                    old_structure = [(r[0], r[1], r[2], r[3], r[4], r[6]) for r in self._niche_entries]
+                    new_structure = [(r[0], r[1], r[2], r[3], r[4], r[6]) for r in niches]
+                    rebuild = not self._niche_entries or old_structure != new_structure or projects != self._project_entries or history != self._history_entries
+                    self._project_entries, self._history_entries, self._niche_entries = projects, history, niches
                     self._entries_ready = True
-                    if self._tree_mode != 'files':
+                    self._working_signature = self._current_working_signature()
+                    self._update_working_count()
+                    if rebuild and self._tree_mode != 'files':
                         self._root_node()
                         self._focus_tree(self.workspace_state['selection'])
+                    else:
+                        self._refresh_working_rows()
                 except (OSError, ValueError, RuntimeError) as error:
                     self.search_status.setText('Could not load project navigation: ' + str(error)[:240])
                     self.search_status.show()
+            else:
+                self._refresh_working_rows()
             self.apply_workspace(self.host.get_workspace(self.workspace_id))
             mode = self.host.control()['mode']
             index = self.mode.findData(mode)
@@ -530,6 +635,53 @@ class WorkspaceWindow(QMainWindow):
         self._focus_tree(selection)
         self._preview(selection)
 
+    def _refresh_working_rows(self):
+        """Refresh focus states from canonical metadata across connected windows."""
+        if self._search_view or self._tree_mode not in {'projects', 'niches'}:
+            return
+        current = {row[4]: row for row in self._niche_entries}
+        with QSignalBlocker(self.tree):
+            def visit(parent):
+                for index in range(parent.childCount()):
+                    item = parent.child(index)
+                    ident = item.data(0, NICHE_ID_ROLE)
+                    if ident in current:
+                        row = current[ident]
+                        value = row[5]
+                        item.setData(0, WORKING_ROLE, value)
+                        item.setCheckState(0, Qt.CheckState.Checked if value else Qt.CheckState.Unchecked)
+                        status = 'Working' if value else 'Not Working'
+                        if row[6] is None:
+                            item.setText(0, f'{row[1]} · {self._category_working_count(row[0])} working · {status}')
+                        else:
+                            item.setText(0, f'{row[1]} · {row[2]} {"project" if row[2] == 1 else "projects"} · {status}')
+                    visit(item)
+            if self.tree.topLevelItemCount():
+                visit(self.tree.topLevelItem(0))
+
+    def _current_working_signature(self):
+        rows = []
+        for path in (self.repo / 'business_portfolio/niches').rglob('NICHE.json'):
+            try:
+                stat = path.stat()
+                rows.append((str(path), stat.st_mtime_ns, stat.st_size))
+            except OSError:
+                continue
+        return tuple(sorted(rows))
+
+    def _category_working_count(self, category_path):
+        descendants = [row for row in self._niche_entries
+                       if row[0].startswith(category_path + '/') and row[5]]
+        leaves = [row for row in descendants if not any(
+            other[0].startswith(row[0] + '/') for other in descendants)]
+        return len(leaves)
+
+    def _update_working_count(self):
+        working = [row for row in self._niche_entries if row[5]]
+        leaf_count = sum(not any(other[0].startswith(row[0] + '/') for other in self._niche_entries)
+                         for row in working)
+        self.working_count.setText(f'{leaf_count} working {"niche" if leaf_count == 1 else "niches"}')
+
     def _load_research_budget(self):
         try:
             value = self._budget_setting.read_text(encoding='utf-8').strip()
@@ -561,17 +713,25 @@ class WorkspaceWindow(QMainWindow):
         except (OSError, ValueError, TypeError):
             return None
 
-    def _copy_research_prompt(self):
-        niche = self._selected_niche(self.workspace_state['selection'])
-        if not niche:
-            self.notice.setText('Select an active niche folder to copy its research prompt.')
-            self.notice.show()
+    def _copy_megaprompt(self, option):
+        niche = None
+        if option == 'research':
+            niche = self._selected_niche(self.workspace_state['selection'])
+            if not niche:
+                self.notice.setText('Select an active niche folder to copy the research prompt.')
+                self.notice.show()
+                return
+            filename = 'BUSINESS_OPPORTUNITY_RESEARCH_MEGAPROMPT.md'
+        elif option == 'idea':
+            filename = 'BUSINESS_IDEA_TO_PROJECT_MEGAPROMPT.md'
+        else:
             return
-        source = self.repo / 'BUSINESS_OPPORTUNITY_RESEARCH_MEGAPROMPT.md'
+        source = self.repo / filename
         try:
-            prompt = source.read_text(encoding='utf-8')
-        except OSError:
-            self.notice.setText('The opportunity research prompt file could not be read.')
+            with source.open('r', encoding='utf-8', newline='') as stream:
+                prompt = stream.read()
+        except (OSError, UnicodeError):
+            self.notice.setText(f'Could not read {filename}.')
             self.notice.show()
             return
         budget = self.research_budget.text().strip()
@@ -579,12 +739,20 @@ class WorkspaceWindow(QMainWindow):
             self.notice.setText('Enter a valid non-negative CAD ceiling, such as 50 or 50.00.')
             self.notice.show()
             return
-        prompt = re.sub(r'(?m)^\*\*BUSINESS_NICHE:\*\*.*$',
-                        '**BUSINESS_NICHE:** ' + niche, prompt, count=1)
-        prompt = re.sub(r'(?m)^\*\*BUDGET_CEILING_CAD:\*\*.*$',
-                        '**BUDGET_CEILING_CAD:** ' + budget, prompt, count=1)
+        budget_pattern = r'(?m)^(\*\*BUDGET_CEILING_CAD:\*\*[ \t]*)([^\r\n]*?\S)([ \t]*)(?=\r?$)'
+        niche_pattern = r'(?m)^(\*\*BUSINESS_NICHE:\*\*[ \t]*)([^\r\n]*?\S)([ \t]*)(?=\r?$)'
+        idea_pattern = r'(?m)^\*\*PROJECT_IDEA:\*\*[ \t]*\r?\n\r?\n```text\r?\n[\s\S]*?\r?\n```[ \t]*\r?$'
+        if (len(re.findall(budget_pattern, prompt)) != 1 or
+                (option == 'research' and len(re.findall(niche_pattern, prompt)) != 1) or
+                (option == 'idea' and len(re.findall(idea_pattern, prompt)) != 1)):
+            self.notice.setText(f'{filename} has missing or invalid setting markers; nothing copied.')
+            self.notice.show()
+            return
+        prompt = re.sub(budget_pattern, lambda match: match.group(1) + budget + match.group(3), prompt, count=1)
+        if niche is not None:
+            prompt = re.sub(niche_pattern, lambda match: match.group(1) + niche + match.group(3), prompt, count=1)
         QApplication.clipboard().setText(prompt)
-        self.notice.setText(f'Research prompt for {niche} copied to the clipboard (CAD {budget} ceiling).')
+        self.notice.setText(f'{"Research prompt for " + niche if niche else "Business idea prompt"} copied (CAD {budget} ceiling).')
         self.notice.show()
 
     def _refresh_preview_if_changed(self, selection):
@@ -607,14 +775,11 @@ class WorkspaceWindow(QMainWindow):
         self.project_tabs.hide()
         self.preview.show()
         self._preview_readme = None
-        self.research_tools.hide()
         try:
             path = context_path(self.repo, selection)
             stat = path.stat()
             self._preview_signature = (stat.st_mtime_ns, stat.st_ctime_ns, stat.st_size, path.is_dir())
             if path.is_dir():
-                if path.is_relative_to(self.repo / 'business_portfolio/niches') and self._selected_niche(selection):
-                    self.research_tools.show()
                 entries = children(self.repo, path)
                 names = [PurePosixPath(name).name + ('/' if directory else '')
                          for name, directory in entries[:50]]

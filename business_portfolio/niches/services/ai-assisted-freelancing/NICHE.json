@@ -3,6 +3,7 @@
   "title": "AI-Assisted Freelancing",
   "parent": "N-category-services",
   "path": "services/ai-assisted-freelancing",
-  "priority": 1,
+  "priority": 13,
+  "working": false,
   "description": "No active projects. Research and validate this niche before adding a project."
 }

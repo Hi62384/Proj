@@ -22,6 +22,33 @@ MOVED_NICHE_CATEGORIES = {
     'affiliate-and-referral-businesses': 'affiliate-marketing',
 }
 
+MOVED_NICHE_PATHS = {
+    'advertising': 'digital-content/blogs-newsletters-and-websites',
+    'advertising/advertising-supported-utility-websites':
+        'digital-content/blogs-newsletters-and-websites/advertising-supported-utility-websites',
+    'affiliate-marketing': 'digital-content/online-content-and-media',
+    'affiliate-marketing/affiliate-and-referral-businesses':
+        'digital-content/online-content-and-media/affiliate-and-referral-businesses',
+    'apis': 'digital-products/data-products-and-apis',
+    'apis/usage-based-apis': 'digital-products/data-products-and-apis/usage-based-apis',
+    'automation': 'digital-products/automation-products-and-templates',
+    'automation/marketplace-hosted-automations':
+        'digital-products/automation-products-and-templates/marketplace-hosted-automations',
+    'data-and-intelligence': 'services/research-and-data-services',
+    'data-and-intelligence/specialized-data-and-intelligence-services':
+        'services/research-and-data-services',
+    'gaming': 'digital-products/games-and-interactive-products',
+    'gaming/online-games-and-virtual-economies':
+        'digital-products/games-and-interactive-products/online-games-and-virtual-economies',
+    'lead-generation': 'services/lead-generation-services',
+    'licensing-and-royalties': 'digital-products/licensing-and-royalties',
+    'software': 'digital-products/software-apps-and-extensions',
+    'software/advanced-online-products-and-software':
+        'digital-products/software-apps-and-extensions/advanced-online-products-and-software',
+    'software/platform-specific-apps-and-extensions':
+        'digital-products/software-apps-and-extensions/platform-specific-apps-and-extensions',
+}
+
 
 def context_path(repo, value):
     if not isinstance(value, (str, Path)) or len(str(value)) > 1000:
@@ -70,7 +97,17 @@ class ChatWorkspaces:
         prefix = 'business_portfolio/niches/'
         if not selection.startswith(prefix):
             return row
-        slug = selection[len(prefix):].split('/', 1)[0]
+        old_path = selection[len(prefix):]
+        mapped = MOVED_NICHE_PATHS.get(old_path)
+        if mapped:
+            candidate = prefix + mapped
+            repo = self.coordinator.repo
+            if not (repo / candidate).exists():
+                return row
+            db.execute('UPDATE chat_workspaces SET selection=?,revision=revision+1 WHERE id=?',
+                       (candidate, row['id']))
+            return db.execute('SELECT * FROM chat_workspaces WHERE id=?', (row['id'],)).fetchone()
+        slug = old_path.split('/', 1)[0]
         category = MOVED_NICHE_CATEGORIES.get(slug)
         if category is None:
             return row
@@ -145,7 +182,9 @@ class ChatWorkspaces:
             selection = row['selection']
             prefix = 'business_portfolio/niches/'
             slug = selection[len(prefix):].split('/', 1)[0] if selection.startswith(prefix) else ''
-            if slug not in MOVED_NICHE_CATEGORIES or (self.coordinator.repo / selection).exists():
+            old_path = selection[len(prefix):] if selection.startswith(prefix) else ''
+            if ((old_path not in MOVED_NICHE_PATHS and slug not in MOVED_NICHE_CATEGORIES) or
+                    (self.coordinator.repo / selection).exists()):
                 return self._public(row)
         with self.coordinator._database(write=True) as db:
             row = db.execute('SELECT * FROM chat_workspaces WHERE id=?', (ident,)).fetchone()

@@ -31,7 +31,7 @@ class LiveBrowserTests(unittest.TestCase):
         self.meta={k:v for k,v in base.items() if k not in {'body','path','content_sha256','archived','previous_path'}}
         self.meta.update(niche_id='N-test',niche_path='test',parent_project=None,related_projects=[])
         folder=self.root/'niches/test/projects';folder.mkdir(parents=True)
-        (folder.parent/'NICHE.json').write_text(json.dumps(dict(id='N-test',title='Test niche',path='test',parent=None)),encoding='utf-8')
+        (folder.parent/'NICHE.json').write_text(json.dumps(dict(id='N-test',title='Test niche',path='test',parent=None,priority=1,working=False)),encoding='utf-8')
         self.project=folder/'awa-001.md';self.write(self.project,self.meta,'# Fictional project\n\n## Instructions\nOriginal scope.\n- [ ] Task A')
         self.state=s.PortfolioState(self.root)
     def write(self,path,meta,body):path.write_text('---\n'+json.dumps(meta)+'\n---\n'+body+'\n',encoding='utf-8')
@@ -86,7 +86,7 @@ class LiveBrowserTests(unittest.TestCase):
         self.assertEqual({x['id'] for x in self.state.data['records']},{'AWA-001','AWA-002'})
         def move():
             child=self.root/'niches/test/child';(child/'projects').mkdir(parents=True)
-            (child/'NICHE.json').write_text(json.dumps(dict(id='N-child',title='Child',path='test/child',parent='N-test')),encoding='utf-8')
+            (child/'NICHE.json').write_text(json.dumps(dict(id='N-child',title='Child',path='test/child',parent='N-test',priority=1,working=False)),encoding='utf-8')
             target=child/'projects/awa-002.md';self.write(target,{**m,'niche_id':'N-child','niche_path':'test/child'},'# Second project\n## Instructions\nMoved, same stable ID.');renamed.unlink()
         changed(move)
         moved=next(x for x in self.state.data['records'] if x['id']=='AWA-002');self.assertIn('/child/',moved['path'])

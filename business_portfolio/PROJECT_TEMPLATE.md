@@ -1,6 +1,6 @@
 # Project template — copy only when selecting a genuine new project
 
-Create a unique ID, preserve it across moves, choose an existing niche ID/path, replace every placeholder, and save under that niche’s `projects/` folder. Do not put this template itself into the indexed tree unchanged. Price/hours are assumptions until measured. External work remains subject to actual permissions.
+Create a unique ID, preserve it across moves, choose an existing niche ID/path, replace every placeholder, and save under that niche’s `projects/` folder. Niche focus is maintained separately as the boolean `working` field in that niche’s `NICHE.json`; it is not project status or execution authorization. Do not put this template itself into the indexed tree unchanged. Price/hours are assumptions until measured. External work remains subject to actual permissions.
 
 ```json
 {

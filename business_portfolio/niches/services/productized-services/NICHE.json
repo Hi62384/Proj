@@ -1,0 +1,9 @@
+{
+  "id": "N-required-productized-services",
+  "title": "Productized Services",
+  "parent": "N-category-services",
+  "path": "services/productized-services",
+  "priority": 14,
+  "working": false,
+  "description": "No active projects. Research and validate this niche before adding a project."
+}

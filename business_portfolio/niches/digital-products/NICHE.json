@@ -4,5 +4,6 @@
   "parent": null,
   "path": "digital-products",
   "priority": 1,
-  "description": "Business category; select a niche to see its projects."
+  "working": true,
+  "description": "Primary business category."
 }

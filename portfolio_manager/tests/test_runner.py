@@ -22,7 +22,8 @@ from portfolio_autopilot.codex_relay.diagnostics import RelayError
 def _record(repo, project, *, priority='P1', public_results=()):
     niche = repo / 'business_portfolio' / 'niches' / 'demo'
     (niche / 'projects').mkdir(parents=True, exist_ok=True)
-    (niche / 'NICHE.json').write_text(json.dumps({'id': 'N-demo', 'path': 'demo', 'title': 'Demo', 'parent': None}), encoding='utf-8')
+    (niche / 'NICHE.json').write_text(json.dumps({'id': 'N-demo', 'path': 'demo', 'title': 'Demo', 'parent': None,
+                                                   'priority': 1, 'working': False}), encoding='utf-8')
     research = repo / 'business_portfolio' / 'research'
     research.mkdir(exist_ok=True)
     (research / 'SOURCE_REGISTER.json').write_text(json.dumps([

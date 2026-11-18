@@ -1,0 +1,9 @@
+{
+  "id": "N-required-business-automation-services",
+  "title": "Business Automation Services",
+  "parent": "N-category-services",
+  "path": "services/business-automation-services",
+  "priority": 15,
+  "working": false,
+  "description": "No active projects. Research and validate this niche before adding a project."
+}

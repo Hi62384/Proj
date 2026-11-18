@@ -1,0 +1,9 @@
+{
+  "id": "N-category-investing",
+  "title": "Investing",
+  "parent": null,
+  "path": "investing",
+  "priority": 5,
+  "working": false,
+  "description": "Primary business category."
+}

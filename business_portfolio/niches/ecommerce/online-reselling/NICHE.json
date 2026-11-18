@@ -1,0 +1,9 @@
+{
+  "id": "N-required-online-reselling",
+  "title": "Online Reselling",
+  "parent": "N-category-ecommerce",
+  "path": "ecommerce/online-reselling",
+  "priority": 21,
+  "working": false,
+  "description": "No active projects. Research and validate this niche before adding a project."
+}

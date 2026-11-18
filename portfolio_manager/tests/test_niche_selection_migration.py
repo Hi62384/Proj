@@ -33,6 +33,22 @@ class SelectionMigrationTests(unittest.TestCase):
             finally:
                 host.close()
 
+    def test_saved_legacy_category_selection_moves_to_equivalent_niche(self):
+        with TemporaryDirectory() as temp:
+            root=Path(temp);repo=root/'repo'
+            old=repo/'business_portfolio/niches/software';old.mkdir(parents=True)
+            (repo/'business_portfolio/niches/digital-products/software-apps-and-extensions').mkdir(parents=True)
+            host=ManagerHost(repo,root/'state')
+            try:
+                workspace=host.workspace('c'*32,{})
+                host.select(workspace['id'],old.relative_to(repo).as_posix())
+                old.rmdir()
+                restored=host.get_workspace(workspace['id'])
+                self.assertEqual(restored['selection'],
+                    'business_portfolio/niches/digital-products/software-apps-and-extensions')
+            finally:
+                host.close()
+
 
 if __name__ == '__main__':
     unittest.main()

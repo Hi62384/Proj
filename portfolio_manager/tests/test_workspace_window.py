@@ -1,5 +1,6 @@
 """The normal workspace view has only chat context and shared availability."""
 import os
+import json
 from pathlib import Path
 import sys
 from tempfile import TemporaryDirectory
@@ -13,14 +14,16 @@ from portfolio_manager.tests.test_runner import _record
 
 os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
 try:
+    from PySide6.QtCore import Qt
     from PySide6.QtWidgets import QApplication
 except ModuleNotFoundError:
     QApplication = None
+    Qt = None
 else:
     bridge_path = Path(__file__).resolve().parents[2] / 'apps' / 'codex_desktop_assistant'
     with patch.object(sys, 'path', [str(bridge_path), *sys.path]):
         from bridge.dashboard import Dashboard
-    from portfolio_manager.workspace_window import ROLE, project_entries, search_paths, niche_entries, history_entries
+    from portfolio_manager.workspace_window import ROLE, NICHE_ID_ROLE, project_entries, search_paths, niche_entries, history_entries
 
 
 @unittest.skipUnless(QApplication, 'PySide6 is required')
@@ -32,13 +35,100 @@ class WorkspaceWindowTests(unittest.TestCase):
     def test_business_niches_show_order_and_counts(self):
         repo=Path(__file__).resolve().parents[2]
         rows=niche_entries(repo)
-        self.assertEqual(len(rows),23)
+        self.assertEqual(len(rows),39)
         roots = [row for row in rows if row[0].count('/') == 2]
-        self.assertEqual(len(roots),12)
-        self.assertEqual([row[3] for row in roots],list(range(1,13)))
-        self.assertEqual([row[2] for row in roots],[3]+[0]*11)
+        self.assertEqual(len(roots),5)
+        self.assertEqual([row[3] for row in roots],list(range(1,6)))
+        self.assertEqual([row[2] for row in roots],[3,0,0,0,0])
         entries = dict(project_entries(repo))
         self.assertTrue(all(entries.get(row[0]) for row in rows))
+
+    def test_megaprompt_menu_copies_live_templates_and_checks_settings(self):
+        with TemporaryDirectory() as temp:
+            root=Path(temp); repo=root/'repo'; _record(repo,'DEMO-011')
+            sources=Path(__file__).resolve().parents[2]
+            names=['BUSINESS_OPPORTUNITY_RESEARCH_MEGAPROMPT.md','BUSINESS_IDEA_TO_PROJECT_MEGAPROMPT.md']
+            for name in names:
+                (repo/name).write_bytes((sources/name).read_bytes())
+            host=ManagerHost(repo,root/'state'); window=None
+            try:
+                from portfolio_manager.workspace_window import WorkspaceWindow
+                window=WorkspaceWindow(host,host.workspace('f'*32,{}),on_emergency=lambda:None,
+                                       on_stop_all=lambda:None,on_access=lambda:None,on_close=lambda _:None)
+                self.assertEqual([a.text() for a in window.copy_research_prompt.menu().actions()],
+                                 ['Research a Business Opportunity','Develop My Business Idea'])
+                window.research_budget.setText('50.25')
+                window._copy_megaprompt('idea')
+                original=(repo/names[1]).read_text(encoding='utf-8')
+                expected=original.replace('**BUDGET_CEILING_CAD:** 100','**BUDGET_CEILING_CAD:** 50.25',1)
+                self.assertEqual(self.app.clipboard().text(),expected)
+                self.assertTrue(window.select('business_portfolio/niches/demo'))
+                window._copy_megaprompt('research')
+                original=(repo/names[0]).read_text(encoding='utf-8')
+                expected=original.replace('**BUSINESS_NICHE:** Game Development Marketplaces','**BUSINESS_NICHE:** Demo',1).replace('**BUDGET_CEILING_CAD:** 100','**BUDGET_CEILING_CAD:** 50.25',1)
+                self.assertEqual(self.app.clipboard().text(),expected)
+                (repo/names[1]).write_text((repo/names[1]).read_text(encoding='utf-8')+'\nUpdated source.\n',encoding='utf-8')
+                window._copy_megaprompt('idea')
+                self.assertTrue(self.app.clipboard().text().replace('\r\n','\n').endswith('Updated source.\n'))
+                prior=self.app.clipboard().text()
+                window.research_budget.setText('-1');window._copy_megaprompt('idea')
+                self.assertEqual(self.app.clipboard().text(),prior)
+                window.research_budget.setText('50');(repo/names[1]).write_text('malformed',encoding='utf-8')
+                window._copy_megaprompt('idea');self.assertEqual(self.app.clipboard().text(),prior)
+                (repo/names[1]).unlink();window._copy_megaprompt('idea')
+                self.assertEqual(self.app.clipboard().text(),prior)
+                self.assertEqual(len(list((repo/'business_portfolio/niches').rglob('projects/*.md'))),1)
+            finally:
+                if window:window.close()
+                host.close()
+
+    def test_working_toggles_persist_and_sync_between_windows(self):
+        with TemporaryDirectory() as temp:
+            root=Path(temp);repo=root/'repo';_record(repo,'DEMO-010')
+            parent=repo/'business_portfolio/niches/demo/NICHE.json'
+            meta=json.loads(parent.read_text());meta.update(priority=1,working=False);parent.write_text(json.dumps(meta))
+            child=repo/'business_portfolio/niches/demo/child';child.mkdir()
+            childfile=child/'NICHE.json'
+            childfile.write_text(json.dumps({'id':'N-child','title':'Child','parent':'N-demo','path':'demo/child','priority':1,'working':False}))
+            host=ManagerHost(repo,root/'state');windows=[]
+            try:
+                from portfolio_manager.workspace_window import WorkspaceWindow
+                for client in ('1'*32,'2'*32):
+                    window=WorkspaceWindow(host,host.workspace(client,{}),on_emergency=lambda:None,
+                                           on_stop_all=lambda:None,on_access=lambda:None,on_close=lambda _:None)
+                    windows.append(window)
+                first,second=windows
+                def find_item(window,ident):
+                    def walk(item):
+                        if item.data(0,NICHE_ID_ROLE)==ident:return item
+                        for i in range(item.childCount()):
+                            found=walk(item.child(i))
+                            if found:return found
+                    return walk(window.tree.topLevelItem(0))
+                deadline=perf_counter()+4
+                while (not first._entries_ready or not second._entries_ready) and perf_counter()<deadline:
+                    first.sync();second.sync();self.app.processEvents()
+                find_item(first,'N-child').setCheckState(0,Qt.CheckState.Checked)
+                with patch.object(first, '_load_navigation_entries', wraps=first._load_navigation_entries):
+                    first._entries_ready = False
+                    first._root_node()
+                    self.assertIsNotNone(find_item(first, 'N-child'))
+                    first._entries_ready = True
+                deadline=perf_counter()+4
+                while not json.loads(childfile.read_text())['working'] and perf_counter()<deadline:
+                    first.sync();self.app.processEvents()
+                self.assertTrue(json.loads(childfile.read_text())['working'])
+                deadline=perf_counter()+4
+                while (find_item(second,'N-child') is None or find_item(second,'N-child').checkState(0)!=Qt.CheckState.Checked) and perf_counter()<deadline:
+                    second.sync();self.app.processEvents()
+                self.assertEqual(find_item(second,'N-child').checkState(0),Qt.CheckState.Checked)
+                find_item(first,'N-demo').setCheckState(0,Qt.CheckState.Checked)
+                find_item(first,'N-child').setCheckState(0,Qt.CheckState.Unchecked)
+                self.assertTrue(json.loads(parent.read_text())['working'])
+                self.assertFalse(json.loads(childfile.read_text())['working'])
+            finally:
+                for window in windows:window.close()
+                host.close()
 
     def test_history_contains_both_preserved_archives(self):
         repo = Path(__file__).resolve().parents[2]

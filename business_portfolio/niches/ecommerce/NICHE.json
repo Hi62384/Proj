@@ -1,0 +1,9 @@
+{
+  "id": "N-category-ecommerce",
+  "title": "Ecommerce",
+  "parent": null,
+  "path": "ecommerce",
+  "priority": 4,
+  "working": false,
+  "description": "Primary business category."
+}

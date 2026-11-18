@@ -4,5 +4,6 @@
   "parent": "N-category-digital-products",
   "path": "digital-products/game-development-marketplaces",
   "priority": 1,
+  "working": true,
   "description": "One multi-engine game-development product family per canonical record."
 }

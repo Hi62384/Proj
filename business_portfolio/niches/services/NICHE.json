@@ -3,6 +3,7 @@
   "title": "Services",
   "parent": null,
   "path": "services",
-  "priority": 7,
-  "description": "Business category; select a niche to see its projects."
+  "priority": 3,
+  "working": false,
+  "description": "Primary business category."
 }

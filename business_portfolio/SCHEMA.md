@@ -1,14 +1,14 @@
 # Project format and recursive architecture
 
-## Current 12-category business view (2026-11-15)
+## Current five-category business view
 
-`niches/` has 12 top-level categories in `priority` order 1–12 and 13 preserved business niches below them. Lead Generation and Licensing & Royalties are both category and niche, so no duplicate child is made. Ten new parent category nodes have stable `N-category-*` IDs. The existing 13 niche IDs are unchanged. `digital-products/game-development-marketplaces` retains stable niche ID `N-gdm-20261115` and owns the only active records, GDM-001/002/003. The other 12 niches have no `projects/` directory. Nested niche `priority` orders siblings. The opportunity library's 36 categories and 144 subcategories remain independent research.
+`niches/` has five primary categories: Digital Products, Digital Content, Services, Ecommerce and Investing. Each contains the 25 required niche folders; nine narrower legacy niches are nested below the closest equivalent and retain their previous stable IDs. Every node has a `working` boolean, initially false for newly created nodes. Category and niche flags are independent. The Working flag is informational focus only and does not represent project completion, authorization or worker activity. `digital-products/game-development-marketplaces` retains stable ID `N-gdm-20261115` and owns GDM-001/002/003. Sibling `priority` values control display order. The opportunity library's 36 categories and 144 subcategories remain independent research.
 
 The previous 182-node active tree, including the original GDM record bytes, is preserved in `archive/2026-11-15-taxonomy-view-v1/` with a 185-file checksum manifest and GDM ID/path crosswalk. The older 139-record archive at `archive/2026-11-15-legacy/` is unchanged. The builder validates both snapshots and exposes the 139 older records under `archived_records`; the prior taxonomy snapshot remains a rollback/evidence source, not another active project list. Product implementation specifications were appended to the moved GDM records; their IDs, planned/unvalidated status, commercial permissions and original planning history remain intact.
 
 ## Prior taxonomy-view notes (historical)
 
-## Active taxonomy and history (2026-11-15)
+## Earlier active taxonomy and history (2026-11-15)
 
 `niches/` contains the current 36-category / 144-subcategory taxonomy, Game Development Marketplaces, AI Workflow Automation, and only GDM-001 through GDM-003 as active project-family records. Empty niches need only `NICHE.json`. Prior canonical records retain their original IDs, bytes, metadata and checklist history in `archive/2026-11-15-legacy/niches/`. The dated crosswalk maps former and archived paths; the manifest contains SHA-256 and byte length for all 301 original niche files. `build_browser.py` validates these before including `archived_records` in the generated read-only index. Do not edit the archive in place or treat an archived published record as cancelled. A restored project must be reviewed against the latest private checkpoint and current external state, assigned a valid active niche ID/path, and checked for an ID collision. Private receipts and customer material remain outside the public index.
 
@@ -44,7 +44,7 @@ Any niche can contain projects, child niches, both or neither. There is **no fix
 
 ## Niche metadata
 
-`NICHE.json` has `id`, `title`, `parent`, and `path`. IDs such as `N-8c35…` are assigned once and remain immutable on a rename/move. The initial package derives IDs deterministically, but a future rename does not recompute them. `path` is relative to `niches/`; `parent` is the immediate parent niche ID or null at the top level. Parent references, IDs and directory paths must agree. Do not create duplicate directory aliases to make a project appear in several categories; use project links/tags.
+`NICHE.json` has `id`, `title`, `parent`, `path`, integer `priority`, and boolean `working`. IDs are assigned once and remain immutable on a rename/move. `path` is relative to `niches/`; `parent` is the immediate parent node ID or null for one of the five root categories. Parent references, IDs and directory paths must agree. New nodes default to `working: false`. Portfolio Manager writes only this boolean through a validated, atomic metadata update guarded against concurrent writers. The generated project browser displays the flag read-only. Do not create duplicate directory aliases to make a project appear in several categories; use project links/tags.
 
 ## Markdown with JSON frontmatter
 

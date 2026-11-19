@@ -2,11 +2,21 @@
 
 Status: unpublished development build. These are observed checks, not a promise that all games, hardware or platforms are supported. No engine executable is included in the add-on or a review snapshot.
 
-| Engine on Windows x86-64 | Full 45-script baseline | Final-source 14-test smoke | Clean install / reinstall | Headless editor marker | Two later restore fixtures |
+| Engine on Windows x86-64 | Product suite (50 scripts) | Clean add-on install / reinstall | Headless editor marker | Temporary integration (34 cases) | Temporary main-scene smoke (120 frames) |
 |---|---|---|---|---|---|
-| Godot 4.4.1 stable (`49a5bc7b6`) | Pass | Pass | Pass | Pass | Pass individually |
-| Godot 4.5.1 stable (`f62fdbde1`) | Pass | Pass | Pass | Pass | Pass individually |
-| Godot 4.7.2 stable (`ed1daf0bf`) | Pass | Pass | Pass | Pass | Pass individually |
+| Godot 4.4.1 stable (`49a5bc7b6`) | Pass | Pass | Pass | Pass | Pass |
+| Godot 4.5.1 stable (`f62fdbde1`) | Pass | Pass | Pass | Pass | Pass |
+| Godot 4.7.2 stable (`ed1daf0bf`) | Pass | Pass | Pass | Pass | Pass |
+
+This is a provisional evidence matrix, not a customer support promise. All temporary-game checks use a private synthetic project and fixed scenes. Other operating systems, architectures, graphics drivers and representative customer games are untested.
+
+### Background integration and coordinator load — 2026-11-19 local time
+
+The private synthetic temporary game's complete 34-case suite passed headlessly with isolated user data on all three engine versions above. Its main scene also ran for 120 frames and exited successfully on each version. No test errors occurred; offline runs emitted the known root-certificate-store warning. The direct run with default Godot user data could not create `user://logs`; isolated temporary user data resolved this without changing the normal profile.
+
+The product's synthetic `tests/measure_coordinator.gd` was run on the same Windows x86-64 machine for each engine. It completed six repetitions at each size (five timed totals after one warm-up) with zero failures. Across the three engine versions, the five-run total-duration ranges were 0.88–1.85 ms for 20 agents, 6.01–12.36 ms for 100 agents, and 81.82–122.92 ms for 500 agents. The maximum individual tick observed across repetitions ranged from 0.465–0.543 ms, 1.051–1.555 ms, and 2.977–4.425 ms respectively. The separate 101-agent FIFO test passed without disruptions.
+
+These numbers measure coordinator logic in a small headless synthetic schedule. They exclude scene physics, navigation, rendering, other game systems and representative hardware variation. They are not FPS figures, capacity guarantees, fairness guarantees or customer support limits. The 101-agent test establishes FIFO completion for its fixed no-disruption case only; general starvation/fairness and performance in representative games remain open.
 
 ### Final-source run — 2026-11-18 local time
 

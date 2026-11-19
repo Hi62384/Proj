@@ -1007,3 +1007,34 @@ The `source_ids` in the strict JSON frontmatter remain restricted to IDs already
 - Reran all 34 headless temporary-game cases on Windows x86-64 Godot 4.4.1, 4.5.1 and 4.7.2. Each engine passed 34/34 with isolated user data and no test errors. This confirms the synthetic project can be tested without desktop control, but does not close visual acceptance, representative-game validation, non-Windows support, or broader performance/fairness questions.
 - Product source was unchanged. No spending, outreach or publication occurred. Next: obtain a rights-cleared representative game and complete human-facing acceptance through a reliable visual path; owner licensing/support/release decisions remain open.
 - Extended the main-scene smoke run to Godot 4.4.1 and 4.5.1 using isolated temporary user-data directories. Each exited successfully after 120 headless frames with only the known offline certificate-store warning. Together with the prior 4.7.2 run, all three tested Windows engine versions now have a main-scene headless smoke pass.
+
+
+### 2026-11-19 release evidence triage and synthetic load measurement
+
+- Updated the local compatibility page with the current evidence matrix: the 50-script product suite, clean copied add-on install/reinstall, editor-marker checks, private 34-case background integration suite, and 120-frame headless main-scene smoke all pass on Windows x86-64 Godot 4.4.1, 4.5.1 and 4.7.2. This is explicitly an evidence record, not a support promise.
+- Ran the coordinator-only measurement at 20, 100 and 500 agents on all three engines; all six repetitions per size completed without failures. Five timed totals after one warm-up ranged across engines from 0.88–1.85 ms, 6.01–12.36 ms and 81.82–122.92 ms. Maximum observed tick times were 0.465–0.543 ms, 1.051–1.555 ms and 2.977–4.425 ms respectively. The 101-agent FIFO no-disruption test also passes. These figures omit physics, navigation, rendering and other game work and make no FPS, fairness, capacity or support guarantee.
+- Refined the release checklist to mark synthetic controller lifecycle, connected navigation/restore, disconnected navigation safe failure, cancellation/deletion contracts, clean copied install, provisional compatibility evidence and synthetic measurements complete. Representative-game controller/route/lifecycle validation, representative performance/fairness, human-facing visual acceptance, a customer support commitment, license/rights decisions and separate release authorization remain open.
+- No product source changed. No spending, outreach or marketplace publication occurred. Next: use a representative game only after its code/assets are cleared for testing, and obtain owner decisions on license, support and release before distribution.
+
+
+### 2026-11-19 local checklist and performance evidence
+
+- Separated verified synthetic integration from representative-game validation in the release checklist. Existing product tests cover bridge/adapter cancellation and supersession, timeout, safe recovery, destroyed-agent release and in-flight request restoration; connected-mesh navigation restore and disconnected safe failure are exercised in synthetic product/temporary scenes. Physical lifecycle and general route behavior remain game-owned.
+- Published a provisional evidence matrix for the tested Windows x86-64 Godot 4.4.1, 4.5.1 and 4.7.2 configurations. It is explicitly not a customer support commitment. Captured coordinator-only timings at 20/100/500 agents and bounded 101-agent FIFO liveness; the raw ranges and exclusions are documented in the compatibility page. This is not an FPS, fairness or support guarantee.
+- Created the hash-manifested local review snapshot `products/game-tools/capacity-aware-npc-transport/review-candidate-2026-11-19a/` (83 files; manifest verified). It is local-only, unlicensed and not on the GitHub branch.
+- Remaining blockers require a rights-cleared representative game, human-facing visual acceptance, representative performance/fairness validation, owner-selected customer support and licensing terms, and separate release approval. No spending or marketplace publication occurred. Next: validate with a rights-cleared representative game when selected; obtain the owner's distribution decisions before release work.
+
+
+### 2026-11-19 checklist closeout and current local review snapshot
+
+- Reran the 101-agent no-disruption FIFO liveness test on Godot 4.4.1, 4.5.1 and 4.7.2; all three completed with zero failures. The result is deliberately bounded and does not establish fairness under disruption or dynamic arrivals.
+- The compatibility page and release checklist now close locally verified synthetic evidence: all three-version product/integration/main-scene matrix; connected navigation and restore, disconnected safe failure, crowd/obstacle and physical dispatch fixtures; synthetic controller lifecycle/cancellation/timeout/recovery/restore contracts; coordinator-only timing at 20/100/500 agents; and the fixed 101-agent FIFO case. Customer support language remains provisional.
+- Prepared `products/game-tools/capacity-aware-npc-transport/review-candidate-2026-11-19b/`, an unpublished local snapshot of 83 files; its manifest verifies all file hashes. It carries the updated checklist and compatibility evidence and is not licensed or approved for distribution.
+- Remaining items require an owner-approved, rights-cleared representative game, human-facing visual acceptance, representative hardware/game performance and fairness evaluation, the owner's customer support and licensing decisions, and separate release approval. No spending or marketplace publication occurred. This is the furthest local completion possible without those inputs.
+
+
+### 2026-11-19 static visual review and current snapshot
+
+- Reviewed retained 1152×648 start, in-progress and service-disabled demo captures for Godot 4.4.1, 4.5.1 and 4.7.2. Scene composition and HUD were legible and consistent across the three versions. This closes static synthetic-demo review only; human mouse/keyboard, accessibility/scaling and editor-gizmo visual acceptance remain open after native window capture timed out.
+- Prepared the refreshed local-only review snapshot `review-candidate-2026-11-19c/`; its 83-file manifest verifies with no mismatches. It includes the updated compatibility matrix, load-measurement scope, static visual QA note and release checklist. It is unlicensed and not on the GitHub branch.
+- Remaining work needs a rights-cleared representative project, human-facing interaction/editor acceptance, representative performance/fairness validation, owner-selected support and licensing terms, and separate release authorization. No spending or marketplace publication occurred.

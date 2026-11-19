@@ -2,7 +2,16 @@
 
 These are unpublished development snapshots. They are not licensed or approved for distribution.
 
-- `review-candidate-2026-11-18k/` is the latest snapshot, including the game-owned controller bridge, corrected HUD, compatibility guide and restore fixtures. It updates the documentation from `18j` and retains the same executable source. It remains unlicensed and unpublished.
+- `review-candidate-2026-11-19c/` is the latest local snapshot. It includes the provisional tested-configuration matrix, bounded coordinator measurement, static visual-review note and updated checklist; its 83-file manifest is hash-verified. It remains local-only, unlicensed and unpublished.
+- `review-candidate-2026-11-19b/` is the prior same-day snapshot; it predates the static screenshot review entry. It remains local-only, unlicensed and unpublished.
+- `review-candidate-2026-11-19a/` is the prior same-day snapshot; it predates the checklist's generic snapshot-name wording. It remains local-only, unlicensed and unpublished.
+- `review-candidate-2026-11-18q/` is the prior snapshot. It includes the final compatibility evidence and current 50-test suite; its manifest was hash-verified. It remains unlicensed and unpublished.
+- `review-candidate-2026-11-18p/` is the prior snapshot, adding a viewport mouse and keyboard input fixture for the demo. It remains unlicensed and unpublished.
+- `review-candidate-2026-11-18o/` is the prior snapshot, adding reconstruction during game-owned physical disruption recovery.
+- `review-candidate-2026-11-18n/` is the prior snapshot, adding the game-owned physical disruption and recovery integration fixture.
+- `review-candidate-2026-11-18m/` is the prior snapshot. It improves the unselected editor marker's visibility; its editor checks passed on three Godot versions.
+- `review-candidate-2026-11-18l/` is the prior snapshot. It updates editor visual evidence from `18k` and retains the same executable source.
+- `review-candidate-2026-11-18k/` is the prior snapshot, including the game-owned controller bridge, corrected HUD, compatibility guide and restore fixtures. It updates the documentation from `18j` and retains the same executable source.
 - `review-candidate-2026-11-18j/` is the prior 80-file snapshot. Its complete 47-script suite passed on Godot 4.4.1, 4.5.1 and 4.7.2; staged install and editor smoke checks also passed.
 - `review-candidate-2026-11-18i/` is the prior 67-file snapshot, including the staggered 20-agent, capacity-three two-platform collision transfer. Agent-to-agent collision is disabled.
 - `review-candidate-2026-11-18h/` is the prior 66-file snapshot, including the six-agent staggered transfer.

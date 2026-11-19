@@ -176,3 +176,33 @@ An attempted editor-visible inspection through the available native-app capture 
 The temporary game's main scene started and ran 120 frames headlessly on Windows x86-64 Godot 4.7.2 with isolated temporary user data, then exited successfully. A first attempt with default Godot user-data paths could not create `user://logs`; no default profile data was changed, and the isolated run succeeded. The full 34-case synthetic integration suite was rerun headlessly on Godot 4.4.1, 4.5.1 and 4.7.2; all three completed 34/34 with no test errors. Each case reported the known offline root-certificate-store warning. This validates background test execution of this synthetic project; visual acceptance and representative-game integration remain open.
 
 Extended the main-scene run to Godot 4.4.1 and 4.5.1 with isolated temporary user data. Both exited successfully after 120 headless frames and emitted only the same offline certificate-store warning. The main scene now has smoke coverage on all three tested engine versions.
+
+
+## Local checklist closure and coordinator measurement — 2026-11-19
+
+The local compatibility evidence matrix now states the verified Windows x86-64 Godot 4.4.1, 4.5.1 and 4.7.2 configurations without making a customer support promise. In addition to the existing 50 product tests/install/editor checks, the private 34-case integration and 120-frame main-scene runs passed on all three versions.
+
+The synthetic coordinator measurement passed at 20/100/500 agents on all three engines. Five timed totals after one warm-up ranged across versions from 0.88–1.85 ms, 6.01–12.36 ms and 81.82–122.92 ms respectively; the max individual tick reported across six repetitions ranged 0.465–0.543 ms, 1.051–1.555 ms and 2.977–4.425 ms. The 101-agent FIFO no-disruption test passed. These are coordinator-only measurements on one Windows x86-64 machine; they omit physics, navigation, rendering, other game load and hardware variation. They do not establish FPS, representative performance, fairness under disruption, starvation bounds or a customer limit.
+
+The release checklist now separates completed synthetic product checks from remaining real-game and owner-dependent gates. No rights-cleared representative game is selected. Visual acceptance could not be captured. The owner has not chosen licensing/support terms or approved marketplace release; no spending or publication occurred.
+
+
+## Release evidence triage and coordinator measurement — 2026-11-19
+
+Updated the checklist to distinguish completed synthetic product checks from open representative-game validation. Product tests cover adapter/bridge cancellation and supersession, timeouts, safe recovery, confirmed destroyed-agent removal, stale/missed requests and in-flight request restore. Connected-mesh navigation restore, disconnected-region safe failure, crowd/obstacle scenarios and multi-agent physical dispatch/reconstruction have bounded synthetic coverage. None validates arbitrary customer controllers or scene geometry.
+
+The provisional evidence matrix now records the tested Windows x86-64 Godot 4.4.1, 4.5.1 and 4.7.2 configurations and explicitly makes no customer support promise. Coordinator-only headless measurements passed at 20, 100 and 500 agents on all three versions. Five timed totals after one warm-up ranged across versions from 0.88–1.85 ms, 6.01–12.36 ms and 81.82–122.92 ms; the max tick across six repetitions ranged 0.465–0.543 ms, 1.051–1.555 ms and 2.977–4.425 ms. The bounded 101-agent FIFO no-disruption test passed. These measurements exclude physics, navigation, rendering and hardware/game variation; they do not establish FPS, general fairness or customer limits.
+
+A fresh local review snapshot `review-candidate-2026-11-19a/` contains 83 manifest-verified files and the updated compatibility/checklist documentation. It remains workspace-local and unlicensed. A representative rights-cleared game, human-facing visual review, representative performance/fairness assessment, customer support/license decisions and release authorization remain open. No spending or marketplace publication occurred.
+
+
+## Checklist closeout snapshot — 2026-11-19
+
+Reran the product's 101-agent FIFO liveness case on Godot 4.4.1, 4.5.1 and 4.7.2; all passed with zero failures in the fixed no-disruption scenario. The current compatibility matrix/checklist now distinguish these completed synthetic contracts and measurements from representative-game acceptance and customer support commitments. The latest local snapshot is `review-candidate-2026-11-19b/`, with 83 files and a verified manifest; it remains workspace-local, unlicensed and unpublished.
+
+No further local-only release item can be closed honestly. Remaining work needs rights-cleared representative game code/assets, human-facing visual acceptance, representative performance/fairness evaluation, owner-selected support/license terms, and separate publication approval. No spending or marketplace publication occurred.
+
+
+## Static visual review — 2026-11-19
+
+Reviewed the retained 1152×648 start, in-progress and service-disabled synthetic demo captures from Godot 4.4.1, 4.5.1 and 4.7.2. Scene composition and HUD are legible and consistent in the reviewed images. This does not constitute hands-on input, accessibility/scaling, editor-gizmo or representative-game acceptance. The latest 83-file review snapshot is `review-candidate-2026-11-19c/`; its manifest verified with zero mismatches and it remains local-only and unlicensed.

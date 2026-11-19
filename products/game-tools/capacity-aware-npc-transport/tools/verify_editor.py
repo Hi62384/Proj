@@ -37,7 +37,7 @@ def main() -> int:
         if gizmo_source.count(expected) != 1:
             raise RuntimeError("Marker recognition changed; update this smoke test")
         gizmo_source = gizmo_source.replace(expected, 'if node.get_script() == Marker:\n\t\tprint("TRANSIT_EDITOR_MARKER_RECOGNIZED")\n\t\treturn true\n\treturn false')
-        redraw = "gizmo.add_lines(lines,get_material(\"stop\",gizmo))"
+        redraw = "gizmo.add_lines(lines,get_material(\"stop\"))"
         if gizmo_source.count(redraw) != 1:
             raise RuntimeError("Gizmo drawing changed; update this smoke test")
         gizmo.write_text(gizmo_source.replace(redraw, redraw + '\n\tprint("TRANSIT_EDITOR_GIZMO_REDRAWN")'), encoding="utf-8")

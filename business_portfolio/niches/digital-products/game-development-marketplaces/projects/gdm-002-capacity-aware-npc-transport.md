@@ -24,7 +24,7 @@
     "GDM-003"
   ],
   "legacy_ids": [],
-  "next_action": "Investigate the editor warning and visually verify the stop marker and interactive demo, then integrate a representative real-game controller and complete rights and release QA; retain CAD0 and require owner approval for publication.",
+  "next_action": "Exercise capacity-two crossing vehicles with multiple CharacterBody riders through both reconstruction points, then rerun compatibility. Repeat manual UI acceptance only if the capture path becomes available; keep CAD0 and require owner approval before publication.",
   "last_reviewed": "2026-11-18",
   "offer_price_usd": null,
   "delivery_hours_assumption": null,
@@ -792,3 +792,188 @@ The `source_ids` in the strict JSON frontmatter remain restricted to IDs already
 - The complete 47-script suite passed on Windows x86-64 against local review snapshot `18j` on Godot 4.4.1, 4.5.1 and 4.7.2. Install/reinstall and instrumented editor registration, marker recognition and redraw passed on each version, including the documentation-updated 80-file `18k` snapshot with identical executable source and verified manifest. Offline Godot runs emitted a root-certificate-store warning.
 - Rendered demo captures and scripted control signals were checked on the three versions; they do not establish hands-on input, accessibility or scaling. An editor capture did not clearly establish the custom marker's appearance and showed a warning indicator, which needs investigation. Other operating systems, architectures, real-game controllers and crowd behavior remain untested. Work duration was not reliably measured. No spending, outreach or publication occurred; publication and spending require owner approval.
 - Next: investigate the editor warning, visually verify the marker and interactive demo, integrate a representative real-game controller, and complete rights and release QA.
+
+
+### 2026-11-18 editor warning investigation
+
+- Inspected the editor scene-tree tooltip: the warning was Godot's recommendation against transforming a scene root in the temporary test fixture. Moving the stop marker under an untransformed root removed the warning. An instrumented Godot 4.5.1 editor recognized and redrew the marker; a faint cyan line was visible with the marker offset from the world axes. Unselected visibility was poor at the captured zoom, and interactive visual acceptance remains open. This used one Windows graphics configuration and a temporary instrumented copy.
+- Staged the 80-file local review-only `18l` snapshot with updated documentation; its manifest verified and only documentation differs from `18k`, whose executable source matches the 47-script suites passed on three Godot versions. No spend, outreach or publication occurred.
+- Next: improve or visually review unselected marker visibility and test hands-on interactions, continue representative real-game integration, and complete rights and release QA. Work duration was not reliably measured; owner approval remains required for spending or publication.
+
+
+### 2026-11-18 editor marker visibility improvement
+
+- Changed the editor-only marker to an opaque unshaded cyan material with normal depth testing. In the same instrumented Godot 4.5.1 editor viewport and camera setup the unselected marker line was more visible. Editor registration, marker recognition and redraw checks passed with the change on 4.4.1, 4.5.1 and 4.7.2; the sandbox certificate-store warning persisted. Other graphics configurations, themes and hands-on editor interaction remain untested.
+- Staged and manifest-verified 80-file local review-only snapshot `18m`. Compared with `18l`, only the editor gizmo, its editor smoke instrumentation and two evidence documents changed. The complete 47-script suites passed before this editor-only change; runtime coordinator and controller source remained identical. No spending, outreach or publication occurred; spending and publication require owner approval.
+- Next: verify hands-on demo and editor interaction, integrate a representative real-game controller and complete broader compatibility, rights and release QA. Work duration was not reliably measured.
+
+
+### 2026-11-18 game-owned physical disruption integration
+
+- Added a synthetic one-passenger fixture connecting the game-owned CharacterBody3D example, controller bridge, collision platform and disruption recovery. It boards and rides, rejects a false physical-arrival check after the service is disabled, verifies that the seat stays occupied, then walks to a station and releases the seat only after confirmed recovery. This is a scripted original example, not an existing customer's game, general dispatch or a crowd test.
+- The complete 48-script suite passed from the local review-only `18n` snapshot on Godot 4.4.1, 4.5.1 and 4.7.2 on Windows x86-64. Staged install/reinstall and instrumented editor registration, marker recognition and redraw also passed on each. Sandbox root-certificate-store warnings continued during offline runs. The 81-file snapshot manifest verified; relative to `18m` only the integration fixture and two evidence documents changed.
+- Next: verify hands-on demo/editor interaction, integrate a representative existing-game controller with clear rights, and complete broader platform, rights and release QA. No spending, outreach or publication occurred; both spending and publication require owner approval. Work duration was not reliably measured.
+
+
+### 2026-11-18 game-owned disruption recovery restore
+
+- Added a synthetic one-passenger fixture saving while a game-owned controller walks to a safe stop after a service disruption. It reconstructs the passenger, platform, coordinator and bridge, verifies the original pending recovery ID and occupied seat, rejects a false arrival check, and completes recovery only after the recreated passenger reaches the station. The station and rest of the scene remain in memory; this does not prove full game-world persistence or integration with an external game.
+- The new test passed on Windows x86-64 with Godot 4.4.1, 4.5.1 and 4.7.2 in the product project, an independent copied consumer fixture, and local review snapshot `18o`. Staged install/reinstall and instrumented editor checks passed on all three. Sandbox root-certificate-store warnings continued. The 82-file snapshot manifest verified; relative to the 48-script fully tested `18n` snapshot, only the new fixture and two documentation files changed. The resulting 49-script collection was not run in one suite.
+- Next: verify hands-on demo/editor interaction, integrate a representative existing-game controller with clear rights, and complete broader platform, rights and release QA. No spending, outreach or publication occurred; owner approval remains required for spending or publication. Work duration was not reliably measured.
+
+
+### 2026-11-18 temporary game integration
+
+- At the owner's request, created a separate original temporary Godot game project with its own NPC controller, scene, ferry movement and HUD using a copied add-on. An automated one-passenger route passed on 4.4.1, 4.5.1 and 4.7.2: the character boards, rides, exits and leaves no occupied seat. The first run exposed an invalid game-side tick unit; using `simulation_tick` corrected it. Root-certificate-store warnings persisted in offline runs. This is a synthetic game made for testing, with no player input, crowds, obstacles, save/load or dynamic dispatch, not an existing third-party game.
+
+
+### 2026-11-18 demo viewport input integration
+
+- Added a headless fixture that injects mouse events at real demo button bounds, checks focus, and injects focused keyboard `ui_accept`. It exercises pause/resume, service toggles and local save/load. An initial test expected service toggles during arrivals and failed; the corrected fixture verifies the existing between-ticks message and retries during the ready phase. This does not establish physical device, accessibility, DPI scaling or window-manager behavior.
+- The 50-script suite passed against local review snapshot `18p` on Windows x86-64 using Godot 4.4.1, 4.5.1 and 4.7.2. Staged install/reinstall and instrumented editor checks passed on each; offline root-certificate-store warnings persisted. Its 83-file manifest verified; relative to `18o`, only the input fixture and two documentation files changed.
+- Next: verify physical mouse/keyboard and editor interaction, integrate a representative existing-game controller with clear rights, and complete broader platform, rights and release QA. No spending, outreach or publication occurred; owner approval remains required for spending or publication. Work duration was not reliably measured.
+
+
+### 2026-11-18 temporary game disruption and scene reconstruction
+
+- Extended the separate temporary game with a service-disruption scenario and local recovery checkpoint. Its game-level tests cover normal travel, an unverified recovery rejected while the seat remains held, and destruction and reconstruction of the entire small test scene during recovery. The game restores the coordinator and its one passenger and ferry from saved state and recreates fixed station geometry from the scene.
+- All three temporary-game checks passed on Windows x86-64 with Godot 4.4.1, 4.5.1 and 4.7.2 using isolated user data; offline root-certificate-store warnings continued. This is a synthetic single-passenger game, not proof of arbitrary world persistence, crowds, player input, dynamic dispatch or existing third-party game compatibility. The GDM-002 add-on was copied for local testing and its source was not changed in this continuation.
+- Next: expand the temporary game to multiple passengers and realistic dispatch, verify physical input and editor interaction, and complete broader platform, rights and release QA. Work duration was not reliably measured. No spending, outreach or publication occurred; owner approval remains required for spending or publication.
+
+
+### 2026-11-18 temporary game two-passenger capacity integration
+
+- Added a separate game-side two-passenger, one-seat ferry scenario using independent NPC controllers and the same bridge. The first passenger boards, rides and exits; the second stays queued during the first trip and the scripted empty return, then boards and completes the next trip. The test checks capacity and early boarding. NPCs use separate lanes with passenger-to-passenger collision disabled; this does not test crowd avoidance or arbitrary dispatch.
+- All four temporary-game checks passed on Windows x86-64 with Godot 4.4.1, 4.5.1 and 4.7.2 using isolated user data. The 12 copied add-on source files matched the product add-on by SHA-256. The sandbox root-certificate-store warning persisted during offline runs. This is a synthetic test game, not a third-party integration or a release.
+- Next: expand passenger interaction and flexible dispatch, verify physical input and editor interaction, and complete broader platform, rights and release QA. No spending, outreach or publication occurred; owner approval remains required for spending or publication. Work duration was not reliably measured.
+
+
+### 2026-11-18 passenger interaction and dispatch requeue
+
+- Extended the temporary game with actual passenger-to-passenger collision in a blocked boarding path. The first passenger physically collides with the second and stays in boarding with its claim held and no departure. After the test moves the blocker aside, both passengers complete separate trips. This is a controlled blocking scenario, not automatic crowd avoidance.
+- Added a dispatch scenario that cancels the queued second passenger during the first trip, verifies removal from the queue, re-requests that passenger and completes both trips. Ferry return movement remains scripted; this does not establish arbitrary dispatch or general route changes.
+- All six temporary-game integration checks passed on Windows x86-64 with Godot 4.4.1, 4.5.1 and 4.7.2 using isolated user data. Offline root-certificate-store warnings persisted. This synthetic test game and its copied add-on remain local and unpublished.
+- Next: extend dispatch and automatic passenger avoidance, verify physical input and editor interaction, and complete broader platform, rights and release QA. Work duration was not reliably measured. No spending, outreach or publication occurred; owner approval remains required for spending or publication.
+
+
+### 2026-11-18 temporary game cooperative avoidance and demand dispatch
+
+- Added an opt-in game-side cooperative policy: an idle passenger hit by a walking passenger moves to a fixed adjacent lane. The two-passenger test confirms the boarding claim remains held while the blocker yields automatically and both passengers finish. It is a bounded example policy, not general crowd avoidance and not a feature of the GDM-002 add-on.
+- Added tests for a passenger requesting service while the first is onboard and for demand-triggered ferry return: the empty ferry stays at the destination until a new passenger requests service, returns, and boards only after reaching the dock. This uses a fixed route and known schedule, not general vehicle routing.
+- All nine temporary-game checks passed on Windows x86-64 with Godot 4.4.1, 4.5.1 and 4.7.2 using isolated user data. Offline root-certificate-store warnings persisted. The temporary game and copied add-on remain local and unpublished.
+- Next: broaden passenger avoidance and dispatch beyond the fixed two-lane route, verify physical input and editor interaction, and complete broader platform, rights and release QA. No spending, outreach or publication occurred; owner approval remains required for spending or publication. Work duration was not reliably measured.
+
+
+### 2026-11-18 temporary game alternate avoidance and two-route dispatch
+
+- Extended the game-side cooperative movement example to test both sideways paths and require floor support at the endpoint. Tests exercise choosing the opposite side when one path is blocked, waiting with the boarding claim held when both are blocked, and rejecting a step whose endpoint has no floor. The policy checks immediate horizontal clearance and endpoint support, not the entire traversed floor, moving obstacles or general crowd navigation; it is not a GDM-002 add-on feature.
+- Added a one-ferry, two-service example with different destination stations and scripted physical movements. Two passengers complete their requested distinct destinations in scheduled order. This does not establish arbitrary routing, unscheduled dispatch, multiple vehicles or general traffic behavior. An initial new avoidance test had a GDScript type-inference parse error; explicitly typing the local variable corrected it.
+- All 13 temporary-game integration checks passed on Windows x86-64 with Godot 4.4.1, 4.5.1 and 4.7.2 using isolated user data. Offline root-certificate-store warnings persisted. The game and copied add-on remain local and unpublished.
+- Next: broaden avoidance beyond two candidate steps and dispatch beyond two scripted services; verify physical input and editor interaction and complete platform, rights and release QA. No spending, outreach or publication occurred; owner approval remains required for spending or publication. Work duration was not reliably measured.
+
+
+### 2026-11-18 extended temporary-game avoidance and seeded dispatch
+
+- Extended the opt-in game-side avoidance example to try up to eight short directions, sample floor support at four points and interrupt a yield when an obstacle appears immediately ahead. New checks cover a non-sideways choice with both sides blocked, a floor gap between supported endpoints, and an obstacle introduced mid-yield. Sampling can miss narrow gaps; the behavior does not predict moving obstacles or prove general crowd navigation, and is not an add-on feature. An initial gap-test parse error was corrected by explicitly typing a local variable.
+- Added a seeded coordination fixture with three seeds, twelve passengers per seed, varied arrival ticks and east/west destinations, two capacity-two vehicles and scheduled services. It verifies destinations, capacity and seat release via the coordinator and bridge, using immediate simulated movement acknowledgments. This is not physical multi-vehicle motion, arbitrary routing or proof of broad fairness.
+- All 17 temporary-game integration checks passed on Windows x86-64 with Godot 4.4.1, 4.5.1 and 4.7.2 using isolated user data. Offline root-certificate-store warnings persisted. The game and copied add-on remain local and unpublished.
+- Next: expand richer crowd behavior and physically simulated multi-vehicle dispatch, verify physical input and editor interaction, and complete platform, rights and release QA. No spending, outreach or publication occurred; owner approval remains required for spending or publication. Work duration was not reliably measured.
+
+
+### 2026-11-18 parallel physical vehicle disruption
+
+- Added a two-vehicle disruption variant: while both passengers are aboard, one service is disabled and its passenger's seat remains occupied until physical recovery, while the other vehicle continues to its destination. The new fixture passed separately on Godot 4.4.1, 4.5.1 and 4.7.2. Vehicle movement remains scripted and the test does not establish general routing or vehicle collision avoidance.
+
+
+### 2026-11-18 parallel physical vehicles and three-passenger avoidance
+
+- Added a temporary-game integration test with two capacity-one collision platforms and two game-owned passengers. Both board via the bridge, depart together, physically ride separate moving platforms, exit at their assigned destination events and release their seats. Vehicle tracks and motion are scripted, passenger collisions are disabled, and this does not establish general vehicle dispatch or crowd behavior.
+- Added a separate three-passenger avoidance test on a broad flat floor: one walking passenger encounters two stationary passengers in sequence; both automatically yield and all remain grounded. This does not establish dynamic multi-agent avoidance, general crowd navigation or fairness. The existing game-side avoidance example and the GDM-002 add-on were not changed.
+- All 19 temporary-game checks passed on Windows x86-64 with Godot 4.4.1, 4.5.1 and 4.7.2 using isolated user data. Offline root-certificate-store warnings persisted. The test game and copied add-on remain local and unpublished.
+- Next: broaden physical dispatch beyond scripted parallel tracks and test interacting moving crowds; verify physical input and editor interaction and complete platform, rights and release QA. No spending, outreach or publication occurred; owner approval remains required for spending or publication. Work duration was not reliably measured.
+
+
+### 2026-11-18 moving-crowd and mapped physical dispatch
+
+- Extended the temporary game-owned NPC example for two opposing moving passengers: deterministic priority selects the yielding walker, who sidesteps, waits for clearance and resumes the original request. The regression verifies both original endpoints and grounded arrival. A route-completion check that could mistake the temporary sidestep endpoint for the original destination was corrected. This remains a bounded two-agent example on flat ground, not general navigation, fairness or an add-on feature.
+- Added a physical dispatch integration driven by coordinator `departed` events. Two configured services map to distinct physical stop coordinates and move two platforms at different speeds; each passenger rides its assigned platform and releases its seat only after physically reaching its destination. Routes are still preconfigured and only two vehicles are covered; dynamic pathfinding, collision avoidance between vehicles and schedule replanning remain untested.
+- The complete 22-case temporary-game suite passed on Windows x86-64 with Godot 4.4.1, 4.5.1 and 4.7.2, using isolated user data. Headless editor initialization and asset import also exited successfully on all three. Offline runs emitted the known root-certificate-store warning. Computer Use capture of the launched Godot Project Manager timed out twice; manual editor interaction, mouse/keyboard input and rendered in-editor behavior therefore remain unverified.
+- The temporary game and copied add-on remain local. No spending, outreach or publication occurred. Owner approval remains required for any spending or publication. The suite is synthetic and does not establish third-party game compatibility, marketplace compliance, customer demand or release readiness.
+
+
+### 2026-11-18 crowd sidestep cancellation regression
+
+- Added a focused cancellation case that cancels a passenger while it is sidestepping a moving walker. The canceled agent remains stopped and grounded without emitting arrival or resuming the original route; the other walker completes its trip. The full 23-case temporary-game suite passed on Windows x86-64 with Godot 4.4.1, 4.5.1 and 4.7.2, using isolated user data. Headless editor initialization/import and configured main-scene smoke also exited successfully on all three. Offline Godot emitted the known root-certificate-store warning.
+- Compared the temporary project's copied add-on against product source: all 12 source files match by SHA-256; Godot-generated `.uid` metadata is local-only. The launched GUI Project Manager could not be captured after two timeouts, so mouse/keyboard and visual editor interaction remain unverified.
+- No spending, outreach or publication occurred. The temporary game remains private and synthetic. Next: test crowd crossings with three or more agents and physical dispatch interruption/recovery; complete manual UI and release QA if the capture path becomes available. Owner approval remains required for spending or publication.
+
+
+### 2026-11-18 three-agent crowd and physical dispatch recovery
+
+- Added a three-walker intersecting-route test. All three moving passengers emit arrival at their requested endpoints and stay grounded through subsequent interactions. The fixture records position at each arrival signal because an idle passenger may make a further safety sidestep after reporting arrival. This bounded three-agent crossing is not arbitrary crowd pathfinding, fairness or a GDM-002 add-on behavior.
+- Added physical interruption recovery to the event-mapped dispatch test. Disabling one service mid-route sends its occupied vehicle back to an allowed safe dock; the recovered passenger releases the seat and is marked `no_route` because that service is unavailable. The other vehicle continues and its passenger reaches the mapped stop. This tests a two-vehicle, preconfigured route map, not moving-vehicle collision avoidance, alternate-service replanning or general traffic.
+- The complete 25-case temporary-game suite passed on Windows x86-64 with Godot 4.4.1, 4.5.1 and 4.7.2 using isolated user data. Offline runs emitted the known certificate-store warning. GUI capture had timed out earlier, leaving manual mouse/keyboard and visual editor behavior unverified.
+- All work remains in the local temporary project; the product add-on was not changed. No spending, outreach or publication occurred. Next: add intersecting-vehicle collision coverage and alternate-service recovery, then complete manual UI review if capture becomes available. Owner approval remains required for spending or publication.
+
+
+### 2026-11-18 physical recovery reroutes to an alternate service
+
+- Expanded the temporary mapped-dispatch interruption scenario with a second, separately scheduled service on the same physical vehicle. When the first service is disabled mid-route, the vehicle returns its passenger to the allowed dock, releases and reacquires the seat on the alternate service, then physically carries the passenger to the original destination. A second vehicle continues to its separate destination throughout. The earlier no-route result was from the prior, single-service fixture; the current fixture proves this bounded alternate-service recovery path.
+- The full 25-case temporary-game suite passed again on Windows x86-64 with Godot 4.4.1, 4.5.1 and 4.7.2, with isolated user data. The three-agent crowd test and alternate-service recovery case both passed in the complete suite. Offline Godot runs continued to emit the sandbox certificate-store warning. Editor UI capture remains unavailable after the earlier two timeouts.
+- The temporary game is still private and synthetic. The product add-on remains unchanged; no spending, outreach or publication occurred. Next: test intersecting physical vehicle routes and four-or-more moving agents, then rerun compatibility. Owner approval remains required for spending or publication.
+
+
+### 2026-11-18 four-agent progress and crossing-vehicle reservation
+
+- The four-way passenger crossing initially stalled because a yielding agent could wait indefinitely for a nearby blocker. Added a 0.75-second maximum wait before resuming the original route. The test now confirms four arrival signals at the intended endpoints and grounded agents afterward. This bounded retry improves progress in the tested fixture but does not prove general fairness, safe yielding in arbitrary geometry or deadlock freedom.
+- Added a local game-owned physical fleet controller for one shared junction. Two AnimatableBody3D vehicles travel perpendicular routes; a fixed priority reserves the junction for one, holds the second outside the collision bounds, then allows it through. Both routes complete without overlapping collision bounds. It handles one configured junction and is not a general traffic planner or a GDM-002 add-on feature.
+- The full 27-case temporary-game suite passed on Windows x86-64 with Godot 4.4.1, 4.5.1 and 4.7.2 using isolated user data. Offline runs emitted the known certificate-store warning. GUI editor capture had previously timed out twice; manual visual and mouse/keyboard interaction remain unverified.
+- All work remains private in the temporary project; the product add-on was not changed. No spending, outreach or publication occurred. Next: extend junction reservation to multiple intersections and interruption cases. Owner approval remains required for spending or publication.
+
+### 2026-11-18 multi-junction and interruption-recovery checkpoint
+
+- Extended the private temporary game's physical fleet controller to reserve two configured junctions independently for three crossing vehicles. Collision-bound checks confirmed the tested routes never overlapped and all vehicles arrived. Added an interruption while a vehicle held a junction reservation: unsafe recovery inside the junction was rejected, the vehicle moved back to a configured safe point outside it, and the waiting vehicle proceeded after reservation clearance.
+- The full 29-case temporary-game suite passed with isolated user data on Windows x86-64 Godot 4.4.1, 4.5.1 and 4.7.2. Each offline case emitted the known root-certificate-store warning. This geometry is bounded and game-owned; the dispatcher is not yet connected to coordinator disruption events, generalized route generation, snapshot restore or arbitrary safe-stop selection. No fairness/deadlock guarantee is established.
+- GUI capture previously timed out twice, so manual editor, mouse/keyboard and rendered interaction remain unverified. This continuation changed only the private synthetic test project and its evidence; no spending, outreach or publication occurred, and approval remains required for spending or publication.
+- Next: connect physical junction reservations to coordinator departure/disruption and recovery state, add generated crossing layouts and snapshot recovery cases, then rerun compatibility and portfolio checks. Keep the commercial technical gate unpassed absent independent advantage evidence.
+
+### 2026-11-18 coordinator-driven junction integration and route layouts
+
+- Connected the temporary physical fleet controller to actual coordinator departed, recovery_requested and recovered state events. Two event-launched crossing vehicles demonstrate reservation wait, mid-junction service disable, physical retreat to the service safe stop, coordinator seat release and completion of the unaffected passenger's physical trip. In this fixture, boarding and alighting acknowledgments are test-driven calls, and rider markers follow platforms; it does not exercise the controller bridge or walking passengers.
+- Added six deterministic translated and rotated perpendicular crossing layouts with alternating priority. Bounds, route arrivals and endpoints passed. An exact quarter-turn layout completed safely without recording a wait for its configured lower-priority vehicle, so generated cases do not assert priority wait ordering; the fixed cardinal tests do.
+- All 31 temporary-game checks passed with isolated user data on Windows x86-64 Godot 4.4.1, 4.5.1 and 4.7.2. Each case emitted the known offline root-certificate-store warning. Broad generated service graphs, coordinator/controller snapshot reconstruction, general route planning and fairness/deadlock guarantees remain untested.
+- GUI capture previously timed out twice; manual editor, mouse/keyboard and rendered interaction remain unverified. Work remains private and synthetic. No spending, outreach or publication occurred; owner approval is required for spending or publication.
+- Next: add a bounded coordinator/controller reconstruction case for an in-progress junction crossing and interruption, then rerun compatibility and required portfolio checks. Keep the commercial technical gate unpassed absent independent advantage evidence.
+
+### 2026-11-18 junction reconstruction and 32-case compatibility checkpoint
+
+- Added a synthetic full-scene reconstruction during a physical crossing. It saves the coordinator snapshot and both platform positions while one vehicle owns the junction and the other is waiting, destroys and recreates the test scene, re-registers game-owned movement from saved positions, then disables the first service. The test confirms safe-stop return, reservation release, non-overlapping crossing, completion of the unaffected passenger and both seat releases.
+- The complete 32-case private temporary-game suite passed with isolated user data on Windows x86-64 Godot 4.4.1, 4.5.1 and 4.7.2. All cases emitted the previously observed offline certificate-store warning. The dispatcher itself has no snapshot API; the game reconstructs it from trusted scene/controller state. Boarding acknowledgments in the reconstruction fixture are test-driven; it is not full game persistence or use of the controller bridge for walking passengers.
+- Six generated crossing layouts also passed bounds and endpoint checks. One quarter-turn layout recorded no wait for the configured lower-priority route, so only fixed cardinal tests assert wait ordering. The generated cases do not prove arbitrary route planning, safety in untested geometry or general deadlock/fairness.
+- GUI capture previously timed out twice; manual editor, mouse/keyboard and rendered interaction remain unverified. This work remains private and synthetic; no spending, outreach or publication occurred. Owner approval remains required for spending or publication.
+- Next: specify and test a versioned game-owned dispatcher save/restore contract, integrate the controller bridge acknowledgments into the coordinator-driven junction interruption case, and rerun compatibility. Keep the commercial technical gate unpassed absent independent advantage evidence.
+
+### 2026-11-18 versioned physical dispatcher restore checkpoint
+
+- Added a version-1 game-owned dispatcher snapshot for junction coordinates and each vehicle's route, speed, priority, active/recovery state, waypoint index and wait count; platform transforms remain game-owned state. Restore validates the complete registered fleet before mutation, retains newly recreated body references and rebuilds reservation ownership as vehicles move.
+- Updated the coordinator crossing reconstruction to use the controller bridge for boarding, alighting and safe-stop acknowledgments after physical marker/platform checks. It also rejects an unsupported dispatcher snapshot version without changing registered route state.
+- The complete 32-case private temporary-game suite passed using isolated user data on Windows x86-64 Godot 4.4.1, 4.5.1 and 4.7.2. Every offline case emitted the known certificate-store warning. This is a synthetic local game fixture, not the GDM-002 add-on's snapshot API or proof of arbitrary save migration, geometry changes, route planning, fairness or deadlock freedom. The quarter-turn generated layout still does not assert priority wait ordering.
+- Manual editor/input/rendered interaction remains unverified after two GUI capture timeouts. No spending, outreach or publication occurred; owner approval remains required. The product add-on source was not changed in this continuation.
+- Next: add malformed route/junction snapshot rejection and in-progress recovery-state restore coverage, then rerun compatibility and portfolio checks. Keep CAD0 and the commercial technical gate unpassed absent independent advantage evidence.
+
+### 2026-11-18 malformed-state and mid-recovery reconstruction checkpoint
+
+- Expanded the version-1 physical dispatcher snapshot test to save again after service disruption has begun and the platform is partway to its safe stop. It recreates the coordinator, bridge, dispatcher and platforms from both trusted snapshots, republishes the pending recovery request through the bridge, and completes physical recovery and the unaffected passenger's trip.
+- Restore rejects an unknown version, changed junction coordinate, too-short route and negative wait counter; each rejection leaves registered dispatcher state unchanged. The full 32-case temporary-game suite passed on Windows x86-64 Godot 4.4.1, 4.5.1 and 4.7.2 with isolated user data. Each case emitted the known offline root-certificate-store warning.
+- The temporary copy matches the current product add-on across all 11 GDScript source paths and SHA-256 hashes. This continuation changes the private temporary game and evidence only; it does not add a snapshot API to the product or validate arbitrary migration, CharacterBody passenger restore, multiplayer, fairness or deadlock freedom.
+- Manual editor/input/rendered interaction remains unverified after two GUI capture timeouts. No spending, outreach or publication occurred; approval remains required for spending or publication. The technical commercial gate remains unpassed.
+- Next: integrate physical CharacterBody passengers into the reconstructed crossing and recovery case, then rerun compatibility. Repeat manual UI acceptance only if the capture path is available; keep CAD0 and require owner approval before publication.
+
+### 2026-11-18 physical CharacterBody crossing reconstruction
+
+- Replaced test-only rider markers in the reconstructed crossing/recovery case with game-owned CharacterBody passengers. Both walk from dock floors across fixed coplanar boarding pads, receive bridge acknowledgment only after grounded physical arrival, then ride parented to the moving platforms.
+- The test saves and rebuilds during the reserved crossing and again during safe-stop return. Recreated passengers remain aboard, and the recovery passenger dismounts and walks to the safe dock before the bridge accepts recovery; the unaffected passenger walks off at the destination before alighting acknowledgment. Malformed dispatcher snapshots still reject without mutation.
+- The complete 32-case private temporary-game suite passed on Windows x86-64 Godot 4.4.1, 4.5.1 and 4.7.2 with isolated user data. The known offline root-certificate-store warning appeared in each engine case. The 11 temporary-copy/product add-on GDScript paths and hashes still match; the product add-on was not changed.
+- The fixture uses fixed routes, flat ground, fixed boarding pads and one CharacterBody per vehicle. It does not establish general boarding geometry, multiple riders per platform, arbitrary route planning, multiplayer or general crowd fairness/deadlock behavior. Manual editor/input/rendered interaction remains unverified after two UI capture timeouts.
+- No spending, outreach or publication occurred; owner approval remains required. The commercial technical gate remains unpassed.
+- Next: exercise capacity-two crossing vehicles with multiple CharacterBody riders through both reconstruction points, then rerun compatibility. Repeat manual UI acceptance only if the capture path becomes available; keep CAD0 and require owner approval before publication.

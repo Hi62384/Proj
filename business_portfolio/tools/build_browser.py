@@ -195,7 +195,7 @@ def verify_taxonomy_snapshot(root: Path, active_records: list[dict]) -> dict | N
     crosswalk=loads((archive/'PROJECT_CROSSWALK.json').read_text(encoding='utf-8'))
     expected={row['path']:(row['sha256'],row['bytes']) for row in manifest}
     actual={p.relative_to(archive/'niches').as_posix():
-            (hashlib.sha256(p.read_bytes()).hexdigest(),p.stat().st_size)
+            historical_checksum(p.read_bytes(), expected.get(p.relative_to(archive/'niches').as_posix()))
             for p in walk_files(archive/'niches')}
     if len(expected)!=len(manifest) or actual!=expected:
         raise ValidationError('Taxonomy snapshot file manifest mismatch')

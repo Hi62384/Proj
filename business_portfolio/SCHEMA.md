@@ -2,7 +2,7 @@
 
 ## Current five-category business view
 
-`niches/` has five primary categories: Digital Products, Digital Content, Services, Ecommerce and Investing. Each contains the 25 required niche folders; nine narrower legacy niches are nested below the closest equivalent and retain their previous stable IDs. Every node has a `working` boolean, initially false for newly created nodes. Enabling a niche also enables its ancestors. Disable Working descendants before disabling a parent. The Working flag is informational focus only and does not represent project completion, authorization or worker activity. `digital-products/game-development-marketplaces` retains stable ID `N-gdm-20261115` and owns GDM-001/002/003. Sibling `priority` values control display order. The opportunity library's 36 categories and 144 subcategories remain independent research.
+`niches/` has five primary categories: Digital Products, Digital Content, Services, Ecommerce and Investing. Each contains the 25 required niche folders; nine narrower legacy niches are nested below the closest equivalent and retain their previous stable IDs. Every node has a `working` boolean, initially false for newly created nodes. Enabling a niche also enables its ancestors. Disable Working descendants before disabling a parent. The Working flag is informational focus only and does not represent project completion, authorization or worker activity. `digital-products/game-development-marketplaces` retains stable ID `N-gdm-20261115` and owns GDM-001/002/003. Books & eBooks also contains BOOK-001. Sibling `priority` values control display order. The opportunity library's 36 categories and 144 subcategories remain independent research.
 
 The previous 182-node active tree, including the original GDM record bytes, is preserved in `archive/2026-11-15-taxonomy-view-v1/` with a 185-file checksum manifest and GDM ID/path crosswalk. The older 139-record archive at `archive/2026-11-15-legacy/` is unchanged. The builder validates both snapshots and exposes the 139 older records under `archived_records`; the prior taxonomy snapshot remains a rollback/evidence source, not another active project list. Product implementation specifications were appended to the moved GDM records; their IDs, planned/unvalidated status, commercial permissions and original planning history remain intact.
 
@@ -33,9 +33,11 @@ business_portfolio/
   niches/
     <niche>/NICHE.json
     <niche>/README.md
-    <niche>/projects/<stable-id>-<title>.md
+    <niche>/projects/<stable-id>-<slug>/project.md
+    <niche>/projects/<stable-id>-<slug>/work/.gitkeep
     <niche>/<child>/NICHE.json
-    <niche>/<child>/projects/<stable-id>-<title>.md
+    <niche>/<child>/projects/<stable-id>-<slug>/project.md
+    <niche>/<child>/projects/<stable-id>-<slug>/work/.gitkeep
     <niche>/<child>/<grandchild>/...
   .local/                       optional private operational references; ignored
 ```
@@ -88,7 +90,7 @@ Human participation is required only where the task itself depends on consent, p
 
 ## Derived views and integrity
 
-The builder recursively discovers `NICHE.json` and `projects/*.md`, validates identifiers, paths, parents, sources, states and evidence-reference requirements, then generates the index and browser. It makes no network calls and cannot refresh market evidence. It ignores private folders, rejects symlinks, embeds escaped JSON and renders content through DOM text nodes; links allow only safe web/relative destinations. A content-security policy blocks cross-origin connections and forms; the live view polls only its own loopback service.
+The builder recursively discovers `NICHE.json`, folder-based `projects/*/project.md` and legacy standalone `projects/*.md`, validates identifiers, paths, parents, sources, states and evidence-reference requirements, then generates the index and browser. It makes no network calls and cannot refresh market evidence. It ignores private folders, rejects symlinks, embeds escaped JSON and renders content through DOM text nodes; links allow only safe web/relative destinations. A content-security policy blocks cross-origin connections and forms; the live view polls only its own loopback service.
 
 Rebuild after record changes. `--check` fails on stale/missing generated views and invalid records without writing source files. Generated views include public record bodies; marking a public file “private” is not a substitute for keeping actual sensitive data outside the indexed tree.
 
@@ -120,3 +122,12 @@ A record may declare up to 20 explicitly public text results:
 Use only reviewed, non-sensitive `.md`, `.txt`, `.csv` or `.json` files inside `business_portfolio/results/<the same stable project ID>/`. The record and result file are watched; a new file appears without a browser rebuild. This declaration is not an external publication, spending or filesystem-permission grant. Do not put credentials, real leads/customer documents, private receipts, account information or paid product packages here. The namespace is public planning content, not protected private storage. A narrow secret-pattern check is a safeguard, not privacy certification.
 
 The local service rejects cross-project paths, traversal, symlinks/reparse points, hard-linked files, private folders, unsupported binary releases and recognizable credentials/private buyer links. Files & Results separately labels canonical records/source guides, public results, existing product URLs and withheld/missing assets. Existing arbitrary repository folders are never automatically exposed. Adding another existing asset requires an explicit safe source-guide registry entry and review. No OS folder-open or arbitrary command endpoint exists.
+
+
+## Project folders, phases and retained completions
+
+New canonical projects use projects/<stable-id>-<slug>/project.md and work/. All project-specific source, artwork, binaries, builds, release files, tests, working drafts and marketing materials live under this work/ folder. The manager displays the project.md leaf directly in the Projects tree (without its parent project folder). The drag/drop importer converts validated standalone Markdown records into nested directories automatically, including a work/.gitkeep placeholder. The builder requires the work/ directory for folder-based records and rejects duplicate project IDs across old and new layouts.
+
+project_phase is separate from work_state and commercial_validation. Its values are working_phase_2, working_phase_3, and complete. Legacy records lacking this field are interpreted as working_phase_2. Phase 2 builds, tests, verifies platform suitability and prepares release packages; Phase 3 launches, distributes and markets on permitted relevant channels. Use the project lifecycle CLI to record verified Phase 2 → 3 and 3 → complete transitions, without skipping phases.
+
+On verified Phase 3 completion, business_portfolio/completed_projects/<PROJECT-ID>.json is created with a factual description, verified public sale/distribution and marketing links, and other relevant links. This is independent of the project file, survives deletion of the source directory and appears in the Completed Projects view. The Manager cannot delete these receipts; explicit filesystem edits/deletes are required. Project phase complete does not claim any sales, profit or commercial validation. Avoid customer data or private receipts in the public completed-project JSON.

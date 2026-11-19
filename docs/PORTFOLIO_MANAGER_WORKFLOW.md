@@ -1,13 +1,42 @@
 # Portfolio Manager workflow
 
-## Copy a business megaprompt
+## One Copy Prompt menu / Three project phases
 
-Use the **Budget ceiling (CAD)** field and **Copy Megaprompt** menu in the right pane. The budget is saved for future sessions and does not authorize spending.
+The main workspace has ONE **Copy Prompt** button. It offers:
 
-- **Research a Business Opportunity:** Select an active niche folder, copy the prompt, and paste it into ChatGPT to research an opportunity in that niche.
-- **Develop My Business Idea:** Copy the prompt from any selection, paste it into ChatGPT, and replace the example in the `PROJECT_IDEA` block with your idea.
+1. **Phase 1 → Research a Business Opportunity:** Select an active niche, copy, then paste into Codex. Research demand and competition, and save a validated business project record at business_portfolio/niches/<niche>/projects/<project-id>-<slug>/project.md plus a sibling work/ folder.
+2. **Phase 1 → Create a Project from My Idea:** Paste the copied prompt, replace its PROJECT_IDEA example, validate the resulting project record and create its work/ folder. Do not consider Phase 1 complete without an actual project.md.
+3. **Phase 2 → Build, Test & Prepare:** Copy and paste into the selected project's Codex chat. Starts with /goal; develops, tests and polishes the real product in work/, prepares packages for every genuinely suitable platform, and when verified moves the record to working_phase_3.
+4. **Phase 3 → Launch & Market:** Paste into Codex to prepare/publish on relevant, permitted marketplaces and market across suitable channels. Document real sale/distribution and marketing URLs. Complete only when live distribution and marketing are verified.
 
-Both prompts request one comprehensive Markdown project file that can be imported into the Business Portfolio after its metadata and sources are validated.
+The planning budget (CAD) applies to Phase 1 inputs and never authorizes spending. No project-specific GitHub branches: synchronize against latest upstream and push verified commits directly to main without force-pushing.
+
+### Project files and folder view
+
+Every active project is a folder named after its stable project ID and short slug:
+
+    business_portfolio/niches/<niche>/projects/<id>-<slug>/project.md
+    business_portfolio/niches/<niche>/projects/<id>-<slug>/work/
+
+All project-specific code, build files, assets, tests, drafts and release packages belong in work/. In the Projects tree, Portfolio Manager hides the enclosing project folder and shows the project.md record as the selectable leaf. Dragging a valid .md project file onto a niche creates this folder layout with work/.gitkeep automatically. Existing older flat records are readable for compatibility during migration.
+
+The phase icon is 2 (Working Phase 2), 3 (Working Phase 3), or a checkmark (Complete). Phases are independent of project work_state and commercial_validation; completion does not imply commercial success.
+
+To advance a project, run:
+
+    python -m portfolio_manager.project_lifecycle set-phase --project "business_portfolio/niches/.../projects/<slug>/project.md" --phase working_phase_3
+
+After a verified public product and at least one verified public marketing placement exist, Phase 3 can run:
+
+    python -m portfolio_manager.project_lifecycle set-phase --project "business_portfolio/niches/.../projects/<slug>/project.md" --phase complete --description "Short accurate summary" --sale-url "https://real-product-link" --marketing-url "https://real-marketing-link"
+
+For supported noncommercial releases, a verified public access link may be recorded with --other-url instead of --sale-url. Never invent launch evidence or URLs.
+
+### Independent Completed Projects
+
+Each completed project has a durable standalone public receipt under business_portfolio/completed_projects/<PROJECT-ID>.json containing the project's description, verified sale/access links, verified marketing links, and other important URLs. The Completed Projects view displays them as clickable links, even after the original project folder has been deleted. There is no delete function in Portfolio Manager; to delete or correct a receipt, edit the JSON on disk. Do not put sensitive information there.
+
+Rebuild the generated project browser/index and run the offline tests after modifying canonical records. The GitHub Actions portfolio regression workflow also rebuilds them from the canonical filesystem after validating tests.
 
 ## Current business view (2026-11-15)
 

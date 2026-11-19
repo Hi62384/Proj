@@ -2,6 +2,21 @@
 
 This file is a working checklist for an unpublished prototype. It does not authorize a release.
 
+## Remaining gates and unblockers — 2026-11-19
+
+The unchecked items below are not unfinished local implementation tasks; each depends on external project access, human acceptance or an owner decision. The private synthetic project cannot substitute for an existing game's code, assets, controllers, scenes or hardware profile.
+
+| Open gate | Current blocker | Next action that unblocks it |
+|---|---|---|
+| Representative controller and movement validation | No existing game with testing rights for its code and assets is selected. | Owner supplies/selects a local project and confirms its code/assets are cleared for this test; run both adapters through cancellation, timeout, recovery, lifecycle and save/restore scenarios. |
+| Representative navigation, vehicle motion and cancellation | Current navigation and vehicle fixtures are synthetic, flat/fixed, and scripted. | Use the same rights-cleared project to exercise connected/disconnected paths, obstacles, multiple agents, in-flight restore, scene deletion and physical continuity. |
+| Representative performance and fairness | Measurements cover coordinator-only headless schedules on one machine, and FIFO only without disruptions. | Run representative scenes on agreed hardware with arrival/disruption workloads; define any customer limits from those results. |
+| Hands-on visual acceptance | Godot window capture timed out twice. Static images and injected-input tests do not verify physical interaction or the editor gizmo. | Perform an interactive visual/editor review when a reliable display/capture path is available. |
+| Customer support matrix and license | The evidence matrix is provisional; no owner-selected support promise or redistribution license exists. | Owner chooses support terms and license after reviewing provenance and rights for the final file set. |
+| Marketplace release or spending | Separate owner authorization is required and has not been given. | Obtain explicit approval for the specific release and any spending before taking either action. |
+
+Until these gates are cleared, keep the project marked unpublished and do not represent the provisional evidence matrix as a customer support commitment.
+
 - [x] Keep coordinator and example in a separate project directory.
 - [x] Check a copied `addons` folder in a clean local Godot 4.5.1 project.
 - [x] Exercise synthetic multi-agent journeys, save/replay, availability changes, stale acknowledgments and selected physics scenes.

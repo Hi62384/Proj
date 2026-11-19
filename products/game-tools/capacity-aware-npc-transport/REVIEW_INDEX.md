@@ -2,7 +2,8 @@
 
 These are unpublished development snapshots. They are not licensed or approved for distribution.
 
-- `review-candidate-2026-11-19c/` is the latest local snapshot. It includes the provisional tested-configuration matrix, bounded coordinator measurement, static visual-review note and updated checklist; its 83-file manifest is hash-verified. It remains local-only, unlicensed and unpublished.
+- `review-candidate-2026-11-19d/` is the latest local snapshot. It includes the provisional tested-configuration matrix, bounded coordinator measurement, static visual-review note and explicit external-gate unblockers; its 83-file manifest is hash-verified. It remains local-only, unlicensed and unpublished.
+- `review-candidate-2026-11-19c/` is the prior same-day snapshot; it predates the explicit external-gate/unblocker table. It remains local-only, unlicensed and unpublished.
 - `review-candidate-2026-11-19b/` is the prior same-day snapshot; it predates the static screenshot review entry. It remains local-only, unlicensed and unpublished.
 - `review-candidate-2026-11-19a/` is the prior same-day snapshot; it predates the checklist's generic snapshot-name wording. It remains local-only, unlicensed and unpublished.
 - `review-candidate-2026-11-18q/` is the prior snapshot. It includes the final compatibility evidence and current 50-test suite; its manifest was hash-verified. It remains unlicensed and unpublished.

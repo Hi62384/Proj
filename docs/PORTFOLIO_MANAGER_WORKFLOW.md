@@ -1,5 +1,9 @@
 # Portfolio Manager workflow
 
+## Complete or delete a project
+
+Select an active project record to see **Mark Complete** and **Delete Project** in its detail pane. Completion sets the record's `work_state` to `completed`, records the owner's status choice, and displays a green check on the project icon. Select **Mark Not Complete** to undo that status; it restores the previous work state when known, or uses `planned` for older completions whose previous state was not recorded. The status history and checklist remain in the record. Delete asks for confirmation and moves the record into `business_portfolio/.local/project-trash/` for recovery; it does not delete project source files or results. Projects referenced by other active records must have those references resolved first. Both actions refuse records currently claimed by a coordinator worker or changed since the action began.
+
 ## Copy a business megaprompt
 
 Use the **Budget ceiling (CAD)** field and **Copy Megaprompt** menu in the right pane. The budget is saved for future sessions and does not authorize spending.

@@ -1038,3 +1038,10 @@ The `source_ids` in the strict JSON frontmatter remain restricted to IDs already
 - Reviewed retained 1152×648 start, in-progress and service-disabled demo captures for Godot 4.4.1, 4.5.1 and 4.7.2. Scene composition and HUD were legible and consistent across the three versions. This closes static synthetic-demo review only; human mouse/keyboard, accessibility/scaling and editor-gizmo visual acceptance remain open after native window capture timed out.
 - Prepared the refreshed local-only review snapshot `review-candidate-2026-11-19c/`; its 83-file manifest verifies with no mismatches. It includes the updated compatibility matrix, load-measurement scope, static visual QA note and release checklist. It is unlicensed and not on the GitHub branch.
 - Remaining work needs a rights-cleared representative project, human-facing interaction/editor acceptance, representative performance/fairness validation, owner-selected support and licensing terms, and separate release authorization. No spending or marketplace publication occurred.
+
+
+### 2026-11-19 remaining-gate closeout
+
+- Added a release-checklist gate table naming the precise missing inputs and next action for each remaining item. All locally verifiable synthetic tests, compatibility evidence, bounded measurements, static screenshot review and checklist documentation are complete; the latest 83-file local snapshot is `review-candidate-2026-11-19d/` with zero manifest mismatches.
+- The owner has said they will provide current-window images followed by target images. Keep the window/layout acceptance gate open until those images arrive and can be compared; do not infer the target from the failed capture attempts.
+- Other remaining gates need a rights-cleared representative game, representative hardware/scenes, owner-selected support/license terms and separate release approval. These cannot be completed from local synthetic fixtures alone. No spending or marketplace publication occurred.

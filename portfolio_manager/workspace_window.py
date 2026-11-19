@@ -2,12 +2,13 @@
 from concurrent.futures import ThreadPoolExecutor
 import os
 import json
+import hashlib
 from pathlib import Path, PurePosixPath
 import re
 
-from PySide6.QtCore import QEvent, QSignalBlocker, Qt, QTimer
-from PySide6.QtGui import QBrush, QColor, QIcon, QImageReader, QPainter, QPixmap
-from PySide6.QtWidgets import (QApplication, QComboBox, QFormLayout, QHBoxLayout, QLabel, QLineEdit, QMainWindow,
+from PySide6.QtCore import QEvent, QSize, QSignalBlocker, Qt, QTimer
+from PySide6.QtGui import QBrush, QColor, QIcon, QImageReader, QPainter, QPen, QPixmap
+from PySide6.QtWidgets import (QApplication, QComboBox, QFormLayout, QHBoxLayout, QLabel, QLineEdit, QMainWindow, QMessageBox,
                                QMenu, QPlainTextEdit, QPushButton, QScrollArea, QSplitter,
                                QStyle, QTabWidget, QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget)
 
@@ -168,6 +169,21 @@ class WorkspaceWindow(QMainWindow):
         painter.end()
         self._working_folder_icon = QIcon(marked)
         self._file_icon = self.style().standardIcon(QStyle.StandardPixmap.SP_FileIcon)
+        completed = QPixmap(32, 32)
+        completed.fill(Qt.GlobalColor.transparent)
+        painter = QPainter(completed)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+        painter.setPen(Qt.PenStyle.NoPen)
+        painter.setBrush(QColor('#16835d'))
+        painter.drawEllipse(1, 1, 30, 30)
+        pen = QPen(QColor('white'), 4)
+        pen.setCapStyle(Qt.PenCapStyle.RoundCap)
+        pen.setJoinStyle(Qt.PenJoinStyle.RoundJoin)
+        painter.setPen(pen)
+        painter.drawLine(8, 16, 13, 21)
+        painter.drawLine(13, 21, 24, 10)
+        painter.end()
+        self._completed_file_icon = QIcon(completed)
         self.setWindowTitle('Portfolio Manager | Chat ' + self.workspace_id[:8])
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
         self.resize(1080, 720)
@@ -250,6 +266,7 @@ class WorkspaceWindow(QMainWindow):
         self.search_status.hide()
         layout.addWidget(self.search_status)
         self.tree = QTreeWidget()
+        self.tree.setIconSize(QSize(24, 24))
         self.tree.setHeaderLabels(['Projects'])
         self.tree.itemSelectionChanged.connect(self._select_file)
         self.tree.itemExpanded.connect(self._expand)
@@ -301,6 +318,19 @@ class WorkspaceWindow(QMainWindow):
         self.copy_work_prompt.clicked.connect(self._copy_work_prompt)
         research_layout.addRow(self.copy_work_prompt)
         details.addWidget(self.research_tools)
+        self.project_actions = QWidget()
+        actions = QHBoxLayout(self.project_actions)
+        actions.setContentsMargins(0, 0, 0, 0)
+        self.complete_project_button = QPushButton('Mark Complete')
+        self.complete_project_button.clicked.connect(lambda: self._project_action(
+            'reopen' if self.complete_project_button.property('is_complete') else 'complete'))
+        self.delete_project_button = QPushButton('Delete Project')
+        self.delete_project_button.clicked.connect(lambda: self._project_action('delete'))
+        actions.addWidget(self.complete_project_button)
+        actions.addWidget(self.delete_project_button)
+        actions.addStretch()
+        self.project_actions.hide()
+        details.addWidget(self.project_actions)
         details.addWidget(self.project_tabs)
         details.addWidget(self.preview)
         details.addWidget(self.image_scroll)
@@ -340,11 +370,63 @@ class WorkspaceWindow(QMainWindow):
                 label = match.group(1).upper() + ' · ' + match.group(2).replace('-', ' ').title()
         item = QTreeWidgetItem(parent, [label])
         item.setIcon(0, self._folder_icon if directory else self._file_icon)
+        if not directory and '/projects/' in name:
+            self._set_project_icon(item, name)
         item.setData(0, ROLE, name)
         item.setData(0, ROLE + 1, directory)
         if directory:
             item.setChildIndicatorPolicy(QTreeWidgetItem.ChildIndicatorPolicy.ShowIndicator)
         return item
+
+    def _set_project_icon(self, item, name):
+        try:
+            from business_portfolio.tools.build_browser import parse_project
+            path = context_path(self.repo, name)
+            meta, _ = parse_project(path.read_text(encoding='utf-8'))
+            complete = meta.get('work_state') == 'completed'
+            item.setIcon(0, self._completed_file_icon if complete else self._file_icon)
+            item.setToolTip(0, 'Completed project' if complete else 'Project record')
+        except (OSError, ValueError, UnicodeError):
+            pass
+
+    def _project_action(self, action):
+        selection = self.workspace_state['selection']
+        try:
+            path = context_path(self.repo, selection)
+            raw = path.read_bytes()
+            expected = hashlib.sha256(raw).hexdigest()
+            if action == 'delete':
+                answer = QMessageBox.question(self, 'Delete project',
+                    f'Move {path.name} to the local project trash? Project source files are not deleted.',
+                    QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+                    QMessageBox.StandardButton.No)
+                if answer != QMessageBox.StandardButton.Yes:
+                    return
+            from .project_actions import update_project
+            saved = update_project(self.host, selection, expected, action)
+            if action == 'delete':
+                self.select(path.parent.parent.relative_to(self.repo).as_posix())
+                self.notice.setText(f'Project moved to local trash: {saved.name}')
+            else:
+                self.notice.setText('Project reopened.' if action == 'reopen' else 'Project marked complete.')
+                self._preview(selection)
+            self.notice.show()
+            self._entry_future = self._pool.submit(self._load_navigation_entries, self.repo)
+            self._entries_ready = False
+            self._refresh_project_icons()
+        except (OSError, ValueError, RuntimeError) as error:
+            self.notice.setText('Could not update project: ' + str(error)[:500])
+            self.notice.show()
+
+    def _refresh_project_icons(self):
+        def visit(item):
+            name = item.data(0, ROLE)
+            if isinstance(name, str) and '/projects/' in name and not item.data(0, ROLE + 1):
+                self._set_project_icon(item, name)
+            for i in range(item.childCount()):
+                visit(item.child(i))
+        if self.tree.topLevelItemCount():
+            visit(self.tree.topLevelItem(0))
 
     def _root_node(self):
         self._search_view = False
@@ -597,6 +679,7 @@ class WorkspaceWindow(QMainWindow):
                         self._focus_tree(self.workspace_state['selection'])
                     else:
                         self._refresh_working_rows()
+                        self._refresh_project_icons()
                 except (OSError, ValueError, RuntimeError) as error:
                     self.search_status.setText('Could not load project navigation: ' + str(error)[:240])
                     self.search_status.show()
@@ -693,7 +776,8 @@ class WorkspaceWindow(QMainWindow):
 
     def _current_working_signature(self):
         rows = []
-        for path in (self.repo / 'business_portfolio/niches').rglob('NICHE.json'):
+        base = self.repo / 'business_portfolio/niches'
+        for path in (*base.rglob('NICHE.json'), *base.rglob('projects/*.md')):
             try:
                 stat = path.stat()
                 rows.append((str(path), stat.st_mtime_ns, stat.st_size))
@@ -805,6 +889,7 @@ class WorkspaceWindow(QMainWindow):
         self.image.clear()
         self.image_scroll.hide()
         self.project_tabs.hide()
+        self.project_actions.hide()
         self.preview.show()
         self._preview_readme = None
         try:
@@ -907,6 +992,11 @@ class WorkspaceWindow(QMainWindow):
         self.project_record.setPlainText(raw)
         self.project_tabs.setCurrentIndex(0)
         self.project_tabs.show()
+        self.project_actions.setVisible(not archived)
+        completed = meta.get('work_state') == 'completed'
+        self.complete_project_button.setProperty('is_complete', completed)
+        self.complete_project_button.setText('Mark Not Complete' if completed else 'Mark Complete')
+        self.complete_project_button.setEnabled(True)
         self.preview.hide()
 
     def closeEvent(self, event):

@@ -43,7 +43,9 @@ def loads(text: str):
                       parse_constant=lambda v: (_ for _ in ()).throw(ValidationError(f'Invalid JSON constant: {v}')))
 
 def parse_project(text: str, label: str = '<record>') -> tuple[dict, str]:
-    normalized = text.replace('\r\n','\n')
+    # Some Windows-written records contain CRCRLF; raw UI previews do not pass
+    # through Python's universal-newline reader before reaching this parser.
+    normalized = text.replace('\r\r\n','\n').replace('\r\n','\n').replace('\r','\n')
     if not normalized.startswith('---\n'):
         raise ValidationError(f'{label}: missing JSON frontmatter')
     pieces = normalized.split('\n---\n', 1)
@@ -169,7 +171,7 @@ def verify_taxonomy_snapshot(root: Path, active_records: list[dict]) -> dict | N
         raise ValidationError('Taxonomy project crosswalk mismatch')
     for row in crosswalk:
         old=row['old_path']
-        if not old.startswith('niches/') or row['new_path']!=current[row['id']]['path']:
+        if not old.startswith('niches/') or (row['id'] in current and row['new_path']!=current[row['id']]['path']):
             raise ValidationError('Taxonomy project path mismatch')
         if row['preserved_snapshot']!='archive/2026-11-15-taxonomy-view-v1/'+old:
             raise ValidationError('Taxonomy snapshot path mismatch')
@@ -179,7 +181,7 @@ def verify_taxonomy_snapshot(root: Path, active_records: list[dict]) -> dict | N
         meta,_=parse_project(source.read_text(encoding='utf-8'),str(source))
         if any(meta.get(field)!=row[field] for field in ('id','niche_id','niche_path','work_state','commercial_validation')):
             raise ValidationError('Taxonomy project metadata mismatch')
-        if current[row['id']]['niche_id']!='N-gdm-20261115':
+        if row['id'] in current and current[row['id']]['niche_id']!='N-gdm-20261115':
             raise ValidationError('Moved game project lost niche identity')
     return {'files':len(manifest),'projects':len(crosswalk)}
 

@@ -15,7 +15,7 @@ from portfolio_manager.tests.test_runner import _record
 os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
 try:
     from PySide6.QtCore import Qt
-    from PySide6.QtWidgets import QApplication
+    from PySide6.QtWidgets import QApplication, QMessageBox
 except ModuleNotFoundError:
     QApplication = None
     Qt = None
@@ -39,7 +39,8 @@ class WorkspaceWindowTests(unittest.TestCase):
         roots = [row for row in rows if row[0].count('/') == 2]
         self.assertEqual(len(roots),5)
         self.assertEqual([row[3] for row in roots],list(range(1,6)))
-        self.assertEqual([row[2] for row in roots],[3,0,0,0,0])
+        self.assertEqual([row[2] for row in roots],
+                         [len(list((repo/row[0]).rglob('projects/*.md'))) for row in roots])
         entries = dict(project_entries(repo))
         self.assertTrue(all(entries.get(row[0]) for row in rows))
 
@@ -62,6 +63,50 @@ class WorkspaceWindowTests(unittest.TestCase):
                 if window:window.close()
                 host.close()
 
+    def test_project_actions_mark_complete_and_offer_recoverable_delete(self):
+        with TemporaryDirectory() as temp:
+            root=Path(temp); repo=root/'repo'; record=_record(repo,'DEMO-013')
+            tools=repo/'business_portfolio/tools';tools.mkdir(parents=True)
+            source=Path(__file__).resolve().parents[2]/'business_portfolio/tools/browser_template.html'
+            (tools/'browser_template.html').write_bytes(source.read_bytes())
+            host=ManagerHost(repo,root/'state');window=None
+            try:
+                from portfolio_manager.workspace_window import WorkspaceWindow
+                window=WorkspaceWindow(host,host.workspace('a'*32,{}),on_emergency=lambda:None,
+                                       on_stop_all=lambda:None,on_access=lambda:None,on_close=lambda _:None)
+                self.assertTrue(window.select(record.relative_to(repo).as_posix()))
+                window.complete_project_button.click()
+                self.assertIn('"work_state": "completed"',record.read_text(encoding='utf-8'))
+                self.assertTrue(window.complete_project_button.isEnabled())
+                self.assertEqual(window.complete_project_button.text(), 'Mark Not Complete')
+                window.complete_project_button.click()
+                self.assertIn('"work_state": "planned"',record.read_text(encoding='utf-8'))
+                self.assertEqual(window.complete_project_button.text(), 'Mark Complete')
+                with patch('portfolio_manager.workspace_window.QMessageBox.question', return_value=QMessageBox.StandardButton.Yes):
+                    window.delete_project_button.click()
+                self.assertFalse(record.exists())
+                self.assertEqual(len(list((repo/'business_portfolio/.local/project-trash').glob('*.md'))),1)
+            finally:
+                if window:window.close()
+                host.close()
+
+    def test_project_with_windows_crcrlf_shows_project_actions(self):
+        with TemporaryDirectory() as temp:
+            root=Path(temp);repo=root/'repo';record=_record(repo,'DEMO-014')
+            raw=record.read_bytes().replace(b'\r\n',b'\n').replace(b'\n',b'\r\r\n')
+            record.write_bytes(raw)
+            host=ManagerHost(repo,root/'state');window=None
+            try:
+                from portfolio_manager.workspace_window import WorkspaceWindow
+                window=WorkspaceWindow(host,host.workspace('a'*32,{}),on_emergency=lambda:None,
+                                       on_stop_all=lambda:None,on_access=lambda:None,on_close=lambda _:None)
+                self.assertTrue(window.select(record.relative_to(repo).as_posix()))
+                self.assertFalse(window.project_actions.isHidden())
+                self.assertFalse(window.project_tabs.isHidden())
+            finally:
+                if window:window.close()
+                host.close()
+
     def test_megaprompt_menu_copies_live_templates_and_checks_settings(self):
         with TemporaryDirectory() as temp:
             root=Path(temp); repo=root/'repo'; _record(repo,'DEMO-011')
@@ -80,12 +125,12 @@ class WorkspaceWindowTests(unittest.TestCase):
                 window._copy_megaprompt('idea')
                 original=(repo/names[1]).read_text(encoding='utf-8')
                 expected=original.replace('**BUDGET_CEILING_CAD:** 100','**BUDGET_CEILING_CAD:** 50.25',1)
-                self.assertEqual(self.app.clipboard().text(),expected)
+                self.assertEqual(self.app.clipboard().text().replace('\r\n','\n'),expected)
                 self.assertTrue(window.select('business_portfolio/niches/demo'))
                 window._copy_megaprompt('research')
                 original=(repo/names[0]).read_text(encoding='utf-8')
                 expected=original.replace('**BUSINESS_NICHE:** Game Development Marketplaces','**BUSINESS_NICHE:** Demo',1).replace('**BUDGET_CEILING_CAD:** 100','**BUDGET_CEILING_CAD:** 50.25',1)
-                self.assertEqual(self.app.clipboard().text(),expected)
+                self.assertEqual(self.app.clipboard().text().replace('\r\n','\n'),expected)
                 (repo/names[1]).write_text((repo/names[1]).read_text(encoding='utf-8')+'\nUpdated source.\n',encoding='utf-8')
                 window._copy_megaprompt('idea')
                 self.assertTrue(self.app.clipboard().text().replace('\r\n','\n').endswith('Updated source.\n'))

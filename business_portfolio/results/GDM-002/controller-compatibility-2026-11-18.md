@@ -206,3 +206,8 @@ No further local-only release item can be closed honestly. Remaining work needs 
 ## Static visual review — 2026-11-19
 
 Reviewed the retained 1152×648 start, in-progress and service-disabled synthetic demo captures from Godot 4.4.1, 4.5.1 and 4.7.2. Scene composition and HUD are legible and consistent in the reviewed images. This does not constitute hands-on input, accessibility/scaling, editor-gizmo or representative-game acceptance. The latest 83-file review snapshot is `review-candidate-2026-11-19c/`; its manifest verified with zero mismatches and it remains local-only and unlicensed.
+
+
+## Remaining external gates — 2026-11-19
+
+The release checklist now names the blocker and concrete unblocker for each outstanding task. The owner plans to send current-window screenshots followed by target screenshots; window/layout acceptance remains open pending those images. The other open gates require a rights-cleared representative game, representative hardware/scenes, owner decisions on support and license, and separate release approval. The latest 83-file review snapshot is `review-candidate-2026-11-19d/`, manifest verified, local-only and unlicensed. Local synthetic test and documentation work is complete; no spending or marketplace publication occurred.

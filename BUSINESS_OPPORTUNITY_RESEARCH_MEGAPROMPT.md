@@ -1,5 +1,3 @@
-# EDIT ONLY THESE TWO SETTINGS
-
 **BUSINESS_NICHE:** Game Development Marketplaces  
 **BUDGET_CEILING_CAD:** 100
 

@@ -1,0 +1,54 @@
+name: Portfolio Manager - project folders and phases
+
+on:
+  push:
+    paths:
+      - 'portfolio_manager/**'
+      - 'business_portfolio/tools/**'
+      - 'business_portfolio/niches/**'
+      - 'business_portfolio/tests/**'
+      - 'business_portfolio/SCHEMA.md'
+      - 'PHASE_*_MEGAPROMPT.md'
+      - '.github/workflows/portfolio-manager-regression.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  verify-and-rebuild:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      QT_QPA_PLATFORM: offscreen
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Qt for headless workspace UI regressions
+        run: python -m pip install --disable-pip-version-check PySide6
+      - name: Compile Python source
+        run: python -m compileall -q portfolio_manager business_portfolio/tools business_portfolio/tests
+      - name: Rebuild read-only portfolio outputs from canonical source
+        run: python business_portfolio/tools/build_browser.py
+      - name: Validate generated index and browser
+        run: python business_portfolio/tools/build_browser.py --check
+      - name: Offline regression suites
+        run: |
+          python -m unittest discover -s business_portfolio/tests -v
+          python -m unittest portfolio_manager.tests.test_project_import portfolio_manager.tests.test_project_lifecycle portfolio_manager.tests.test_workspace_window portfolio_manager.tests.test_workspaces portfolio_manager.tests.test_coordinator -v
+      - name: Commit regenerated portfolio browser and index directly to main
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git fetch origin main
+          test "$(git rev-parse HEAD)" = "$(git rev-parse origin/main)" || { echo "Main moved while validating; rerun on current main."; exit 1; }
+          if ! git diff --quiet -- business_portfolio/PROJECT_BROWSER.html business_portfolio/PROJECT_INDEX.json; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add business_portfolio/PROJECT_BROWSER.html business_portfolio/PROJECT_INDEX.json
+            git commit -m "Regenerate portfolio browser and index from canonical records"
+            git push origin HEAD:main
+          fi

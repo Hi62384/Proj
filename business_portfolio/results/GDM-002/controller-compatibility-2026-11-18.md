@@ -174,3 +174,5 @@ An attempted editor-visible inspection through the available native-app capture 
 ## Background temporary-project run — 2026-11-19 local time
 
 The temporary game's main scene started and ran 120 frames headlessly on Windows x86-64 Godot 4.7.2 with isolated temporary user data, then exited successfully. A first attempt with default Godot user-data paths could not create `user://logs`; no default profile data was changed, and the isolated run succeeded. The full 34-case synthetic integration suite was rerun headlessly on Godot 4.4.1, 4.5.1 and 4.7.2; all three completed 34/34 with no test errors. Each case reported the known offline root-certificate-store warning. This validates background test execution of this synthetic project; visual acceptance and representative-game integration remain open.
+
+Extended the main-scene run to Godot 4.4.1 and 4.5.1 with isolated temporary user data. Both exited successfully after 120 headless frames and emitted only the same offline certificate-store warning. The main scene now has smoke coverage on all three tested engine versions.

@@ -164,3 +164,7 @@ The complete expanded 34-case temporary-game suite passed on Windows x86-64 Godo
 ## Rights inventory scope check — 2026-11-18 local time
 
 The 84-file unpublished review snapshot was checked against its hash manifest and file formats. All files are UTF-8 text (GDScript, Python, Markdown, Godot project/scene/config, JSON, or review text); no executable, native library, image/audio/model/archive asset, or GDExtension declaration was found. This is an inventory fact only; authorship, copyright ownership, license compatibility and redistribution permission remain owner/legal decisions. The review snapshot remains workspace-local, unlicensed and unpublished.
+
+## Temporary integration compatibility rerun — 2026-11-19 local time
+
+Reran the complete 34-case private synthetic temporary-game suite with isolated user data on Windows x86-64 Godot 4.4.1, 4.5.1 and 4.7.2. Each run passed 34/34 cases. Coverage includes CharacterBody passenger boarding/riding/alighting, capacity-two junction crossing and scene reconstruction during travel and recovery, controller-bridge acknowledgments, and safe failure for a platform outside the navigation region. The runner reported the known offline root-certificate-store warning separately once per case; there were no test errors. This is a refreshed result for the private fixed synthetic fixture, not representative-game or non-Windows validation. Product source was unchanged. No spending, outreach or publication occurred.

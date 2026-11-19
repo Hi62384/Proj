@@ -620,6 +620,8 @@ class WorkspaceWindow(QMainWindow):
                 return
             item = self.tree.topLevelItem(0)
             for parent in (*reversed(PurePosixPath(selection).parents), PurePosixPath(selection)):
+                if self._tree_mode == 'projects' and project_record_leaf(selection) and parent == PurePosixPath(selection).parent:
+                    continue
                 if parent.as_posix() == '.':
                     continue
                 if reveal:
@@ -658,7 +660,8 @@ class WorkspaceWindow(QMainWindow):
             self.search_status.setText('Searching files…')
             self.search_status.show()
             self._search_query = query
-            entries = self._history_entries if self._tree_mode == 'history' else self._project_entries
+            entries = (self._history_entries if self._tree_mode == 'history' else
+                       self._completed_entries if self._tree_mode == 'completed' else self._project_entries)
             self._search = self._pool.submit(lambda: [(name, directory) for name, directory
                                                        in entries if query in name.casefold()][:100])
         else:
@@ -685,7 +688,7 @@ class WorkspaceWindow(QMainWindow):
 
     def sync(self):
         try:
-            if self._entries_ready and self._tree_mode in {'projects', 'niches'}:
+            if self._entries_ready and self._tree_mode in {'projects', 'niches', 'completed'}:
                 signature = self._current_working_signature()
                 if signature != self._working_signature:
                     self._working_signature = signature
@@ -693,11 +696,13 @@ class WorkspaceWindow(QMainWindow):
                     self._entry_future = self._pool.submit(self._load_navigation_entries, self.repo)
             if not self._entries_ready and self._entry_future.done():
                 try:
-                    projects, history, niches = self._entry_future.result()
+                    projects, history, completed, niches = self._entry_future.result()
                     old_structure = [(r[0], r[1], r[2], r[3], r[4], r[6]) for r in self._niche_entries]
                     new_structure = [(r[0], r[1], r[2], r[3], r[4], r[6]) for r in niches]
-                    rebuild = not self._niche_entries or old_structure != new_structure or projects != self._project_entries or history != self._history_entries
-                    self._project_entries, self._history_entries, self._niche_entries = projects, history, niches
+                    rebuild = (not self._niche_entries or old_structure != new_structure or
+                               projects != self._project_entries or history != self._history_entries or
+                               completed != self._completed_entries)
+                    self._project_entries, self._history_entries, self._completed_entries, self._niche_entries = projects, history, completed, niches
                     self._entries_ready = True
                     self._working_signature = self._current_working_signature()
                     self._update_working_count()
@@ -736,7 +741,8 @@ class WorkspaceWindow(QMainWindow):
                 pending, self._pending_search = self._pending_search, None
                 if pending and pending != self._search_query:
                     self._search_query = pending
-                    entries = self._history_entries if self._tree_mode == 'history' else self._project_entries
+                    entries = (self._history_entries if self._tree_mode == 'history' else
+                               self._completed_entries if self._tree_mode == 'completed' else self._project_entries)
                     self._search = self._pool.submit(lambda: [(name, directory) for name, directory
                                                                in entries if pending in name.casefold()][:100])
                 else:
@@ -801,14 +807,7 @@ class WorkspaceWindow(QMainWindow):
                 visit(self.tree.topLevelItem(0))
 
     def _current_working_signature(self):
-        rows = []
-        for path in (self.repo / 'business_portfolio/niches').rglob('NICHE.json'):
-            try:
-                stat = path.stat()
-                rows.append((str(path), stat.st_mtime_ns, stat.st_size))
-            except OSError:
-                continue
-        return tuple(sorted(rows))
+        return navigation_signature(self.repo)
 
     def _category_working_count(self, category_path):
         descendants = [row for row in self._niche_entries
@@ -914,6 +913,7 @@ class WorkspaceWindow(QMainWindow):
         self.image.clear()
         self.image_scroll.hide()
         self.project_tabs.hide()
+        self.completed_detail.hide()
         self.preview.show()
         self._preview_readme = None
         try:
@@ -951,6 +951,33 @@ class WorkspaceWindow(QMainWindow):
                         break
                 self.preview.setPlainText(f'{selection}{summary}\n\n{contents}')
                 return
+            if (path.parent == self.repo / 'business_portfolio/completed_projects'
+                    and path.suffix.lower() == '.json'):
+                record = json.loads(path.read_text(encoding='utf-8'))
+                if record.get('project_phase') != 'complete' or record.get('id') != path.stem:
+                    raise ValueError('Invalid completion receipt.')
+                title = html.escape(str(record.get('title', path.stem)))
+                description = html.escape(str(record.get('description', 'No description provided.')))
+                rows = [f'<h2>{title}</h2><p>{description}</p>']
+                for heading, field in (('Where to buy or download', 'sale_links'),
+                                       ('Where it is marketed', 'marketing_links'),
+                                       ('Other useful links', 'other_links')):
+                    links = record.get(field, [])
+                    if not isinstance(links, list):
+                        continue
+                    safe = [str(link) for link in links if isinstance(link, str)
+                            and link.startswith(('https://', 'http://'))]
+                    rows.append(f'<h3>{heading}</h3>')
+                    if safe:
+                        rows.extend(f'<p><a href="{html.escape(link, quote=True)}">{html.escape(link)}</a></p>'
+                                    for link in safe)
+                    else:
+                        rows.append('<p>Not recorded.</p>')
+                rows.append('<p><small>Saved completion record · remains after the work folder is deleted</small></p>')
+                self.completed_detail.setHtml(''.join(rows))
+                self.completed_detail.show()
+                self.preview.hide()
+                return
             suffix = path.suffix.lower()
             size = path.stat().st_size
             if suffix in IMAGE_FORMATS and size <= 12_000_000:
@@ -971,7 +998,8 @@ class WorkspaceWindow(QMainWindow):
                 if b'\x00' not in data:
                     self.preview.setPlainText(data[:MAX_PREVIEW].decode('utf-8', errors='replace') +
                                               ('\n\nPreview shortened.' if len(data) > MAX_PREVIEW else ''))
-                    if (suffix == '.md' and path.parent.name == 'projects' and
+                    if (suffix == '.md' and
+                            (path.parent.name == 'projects' or (path.name == 'project.md' and path.parent.parent.name == 'projects')) and
                             (path.is_relative_to(self.repo/'business_portfolio/niches') or
                              path.is_relative_to(self.repo/'business_portfolio/archive/2026-11-15-legacy/niches') or
                              path.is_relative_to(self.repo/'business_portfolio/archive/2026-11-15-taxonomy-view-v1/niches'))):
@@ -992,7 +1020,8 @@ class WorkspaceWindow(QMainWindow):
         purpose = re.search(r'^\*\*Purpose:\*\*\s*(.+)$', body, re.M)
         overview = [meta['title'], '', 'Preserved history' if archived else 'Current project',
                     'Niche: ' + meta['niche_path'].replace('-', ' '),
-                    'Status: ' + meta['work_state'].replace('_', ' '),
+                    'Phase: ' + meta.get('project_phase', 'working_phase_2').replace('_', ' ').title(),
+                    'Work status: ' + meta['work_state'].replace('_', ' '),
                     'Evidence: ' + meta['commercial_validation'].replace('_', ' '),
                     'Supported platforms: ' + (', '.join(meta.get('platforms_supported', [])) or 'None verified'),
                     'Proposed platforms: ' + (', '.join(meta.get('platforms_proposed', [])) or 'Not specified'),
@@ -1001,8 +1030,10 @@ class WorkspaceWindow(QMainWindow):
         if archived:
             overview += ['', 'Review the latest private checkpoint and external state before restoring.']
         self.project_overview.setPlainText('\n'.join(overview))
-        self.project_files.setPlainText('Saved project record:\n' + selection +
-            '\n\nThis record is planning documentation. Protected customer packages are not shown here.')
+        work_folder = str(PurePosixPath(selection).parent / 'work') if project_record_leaf(selection) else 'Legacy file; migrate to project-folder layout for new work.'
+        self.project_files.setPlainText('Project record:\n' + selection +
+            '\n\nOwned work folder:\n' + work_folder +
+            '\n\nKeep code, assets, drafts and tests under work/.')
         results = meta.get('public_results', [])
         self.project_results.setPlainText('\n'.join(r['label'] + ' — ' + r['path'] for r in results)
             if results else 'No verified public results are declared for this project.')

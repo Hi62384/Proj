@@ -39,28 +39,31 @@ class WorkspaceWindowTests(unittest.TestCase):
         roots = [row for row in rows if row[0].count('/') == 2]
         self.assertEqual(len(roots),5)
         self.assertEqual([row[3] for row in roots],list(range(1,6)))
-        self.assertEqual([row[2] for row in roots],[3,0,0,0,0])
+        self.assertEqual([row[2] for row in roots],[4,0,0,0,0])
         entries = dict(project_entries(repo))
         self.assertTrue(all(entries.get(row[0]) for row in rows))
 
-    def test_copy_work_prompt_button_copies_complete_goal(self):
+    def test_phase2_prompt_button_copies_complete_goal(self):
         with TemporaryDirectory() as temp:
             root=Path(temp);repo=root/'repo';_record(repo,'DEMO-012')
+            source=Path(__file__).resolve().parents[2]/'PHASE_2_DEVELOPMENT_MEGAPROMPT.md'
+            (repo/source.name).write_bytes(source.read_bytes())
             host=ManagerHost(repo,root/'state');window=None
             try:
-                from portfolio_manager.workspace_window import WorkspaceWindow, WORK_PROMPT
+                from portfolio_manager.workspace_window import WorkspaceWindow
                 window=WorkspaceWindow(host,host.workspace('a'*32,{}),on_emergency=lambda:None,
-                                       on_stop_all=lambda:None,on_access=lambda:None,on_close=lambda _:None)
+                                       on_stop_all=lambda:None,on_access=lambda _:None,on_close=lambda _:None)
                 self.app.clipboard().setText('previous')
-                window.copy_work_prompt.click()
-                self.assertEqual(self.app.clipboard().text(), WORK_PROMPT)
-                self.assertTrue(WORK_PROMPT.startswith('/goal Complete the project currently selected'))
-                self.assertIn('Mark the goal complete only when', WORK_PROMPT)
-                self.assertEqual(window.notice.text(), 'Work prompt copied to the clipboard.')
+                window._copy_megaprompt('phase2')
+                self.assertEqual(self.app.clipboard().text(), source.read_text(encoding='utf-8'))
+                self.assertTrue(self.app.clipboard().text().startswith('/goal '))
+                self.assertIn('working_phase_3', self.app.clipboard().text())
+                self.assertEqual(window.notice.text(), 'Phase 2 development megaprompt copied.')
                 self.assertEqual(host.get_workspace(window.workspace_id)['selection'], 'business_portfolio/niches')
             finally:
                 if window:window.close()
                 host.close()
+
 
     def test_megaprompt_menu_copies_live_templates_and_checks_settings(self):
         with TemporaryDirectory() as temp:
@@ -74,21 +77,26 @@ class WorkspaceWindowTests(unittest.TestCase):
                 from portfolio_manager.workspace_window import WorkspaceWindow
                 window=WorkspaceWindow(host,host.workspace('f'*32,{}),on_emergency=lambda:None,
                                        on_stop_all=lambda:None,on_access=lambda:None,on_close=lambda _:None)
-                self.assertEqual([a.text() for a in window.copy_research_prompt.menu().actions()],
-                                 ['Research a Business Opportunity','Develop My Business Idea'])
+                self.assertEqual([a.text() for a in window.copy_prompt.menu().actions()],
+                                 ['Phase 1 · Research or Create','Phase 2 · Build, Test & Prepare',
+                                  'Phase 3 · Launch & Market'])
+                self.assertEqual([a.text() for a in window.copy_prompt.menu().actions()[0].menu().actions()],
+                                 ['Research a Business Opportunity','Create a Project from My Idea'])
                 window.research_budget.setText('50.25')
                 window._copy_megaprompt('idea')
                 original=(repo/names[1]).read_text(encoding='utf-8')
                 expected=original.replace('**BUDGET_CEILING_CAD:** 100','**BUDGET_CEILING_CAD:** 50.25',1)
-                self.assertEqual(self.app.clipboard().text(),expected)
+                self.assertTrue(self.app.clipboard().text().startswith(expected.rstrip()))
+                self.assertIn('project.md', self.app.clipboard().text())
                 self.assertTrue(window.select('business_portfolio/niches/demo'))
                 window._copy_megaprompt('research')
                 original=(repo/names[0]).read_text(encoding='utf-8')
                 expected=original.replace('**BUSINESS_NICHE:** Game Development Marketplaces','**BUSINESS_NICHE:** Demo',1).replace('**BUDGET_CEILING_CAD:** 100','**BUDGET_CEILING_CAD:** 50.25',1)
-                self.assertEqual(self.app.clipboard().text(),expected)
+                self.assertTrue(self.app.clipboard().text().startswith(expected.rstrip()))
+                self.assertIn('project.md', self.app.clipboard().text())
                 (repo/names[1]).write_text((repo/names[1]).read_text(encoding='utf-8')+'\nUpdated source.\n',encoding='utf-8')
                 window._copy_megaprompt('idea')
-                self.assertTrue(self.app.clipboard().text().replace('\r\n','\n').endswith('Updated source.\n'))
+                self.assertIn('Updated source.\n', self.app.clipboard().text())
                 prior=self.app.clipboard().text()
                 window.research_budget.setText('-1');window._copy_megaprompt('idea')
                 self.assertEqual(self.app.clipboard().text(),prior)
@@ -214,6 +222,50 @@ class WorkspaceWindowTests(unittest.TestCase):
             finally:
                 for window in list(dashboard.workspace_windows.values()):
                     window.close()
+                host.close()
+
+    def test_project_folder_navigation_and_independent_completed_receipts(self):
+        with TemporaryDirectory() as temp:
+            root=Path(temp);repo=root/'repo'
+            old=_record(repo,'DEMO-009')
+            folder=old.parent/'demo-009-example'
+            (folder/'work').mkdir(parents=True)
+            (folder/'work'/'.gitkeep').write_text('')
+            project=folder/'project.md'
+            project.write_bytes(old.read_bytes())
+            old.unlink()
+            relative=project.relative_to(repo).as_posix()
+            entries=dict(project_entries(repo))
+            self.assertIs(entries.get(relative),False)
+            self.assertNotIn(folder.relative_to(repo).as_posix(),entries)
+            from portfolio_manager.project_lifecycle import set_phase,read_completions
+            host=ManagerHost(repo,root/'state');window=None
+            try:
+                from portfolio_manager.workspace_window import WorkspaceWindow
+                window=WorkspaceWindow(host,host.workspace('9'*32,{}),on_emergency=lambda:None,
+                                       on_stop_all=lambda:None,on_access=lambda:None,on_close=lambda _:None)
+                window._entry_future.result(timeout=10)
+                window.sync()
+                self.assertTrue(window.select(relative))
+                self.assertTrue(window.project_tabs.isVisible())
+                self.assertIn('work',window.project_files.toPlainText())
+                set_phase(repo,relative,'working_phase_3')
+                window.sync()
+                receipt=set_phase(repo,relative,'complete',description='Fictional completed project',
+                    sale_urls=['https://example.org/shop'],marketing_urls=['https://example.org/post'])
+                self.assertEqual(len(read_completions(repo)),1)
+                window.sync()
+                window.view_mode.setCurrentIndex(window.view_mode.findData('completed'))
+                window._change_view()
+                window._entry_future.result(timeout=10)
+                window.sync()
+                self.assertTrue(window.select(Path(receipt['snapshot']).relative_to(repo).as_posix()))
+                self.assertTrue(window.completed_detail.isVisible())
+                self.assertIn('https://example.org/shop',window.completed_detail.toHtml())
+                project.unlink()
+                self.assertEqual(len(read_completions(repo)),1)
+            finally:
+                if window:window.close()
                 host.close()
 
     def test_optional_repository_explorer_loads_without_blocking(self):

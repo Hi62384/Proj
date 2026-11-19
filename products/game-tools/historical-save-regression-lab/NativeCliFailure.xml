@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="1" result="Failed(Child)" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-18 19:51:56Z" end-time="2026-11-18 19:51:56Z" duration="0.1973893">
+  <test-suite type="TestSuite" id="1000" name="SampleProject" fullname="SampleProject" runstate="Runnable" testcasecount="47" result="Failed" site="Child" start-time="2026-11-18 19:51:56Z" end-time="2026-11-18 19:51:56Z" duration="0.197389" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1060" name="BaselineTests.dll" fullname="C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/SampleProject/Library/ScriptAssemblies/BaselineTests.dll" runstate="Runnable" testcasecount="47" result="Failed" site="Child" start-time="2026-11-18 19:51:56Z" end-time="2026-11-18 19:51:56Z" duration="0.173343" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="18740" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestFixture" id="1006" name="ComparativeFixtureTests" fullname="ComparativeFixtureTests" classname="ComparativeFixtureTests" runstate="Runnable" testcasecount="7" result="Failed" site="Child" start-time="2026-11-18 19:51:56Z" end-time="2026-11-18 19:51:56Z" duration="0.164730" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-case id="1013" name="NativeCliFailure" fullname="ComparativeFixtureTests.NativeCliFailure" methodname="NativeCliFailure" classname="ComparativeFixtureTests" runstate="Runnable" seed="1195650636" result="Failed" start-time="2026-11-18 19:51:56Z" end-time="2026-11-18 19:51:56Z" duration="0.123965" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <failure>
+            <message><![CDATA[  inventory.unique.shield_01
+  Expected: True
+  But was:  False
+]]></message>
+            <stack-trace><![CDATA[at ComparativeFixtureTests.NativeCliFailure () [0x000d1] in C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\SampleProject\Assets\Tests\Editor\ComparativeFixtureTests.cs:79
+at UnityEngine.TestTools.TestRunner.TestTaskWrapper+<Execute>d__2.MoveNext () [0x00063] in .\Library\PackageCache\com.unity.test-framework@01a8b42f9cf6\UnityEngine.TestRunner\TestRunner\TestTaskWrapper.cs:31
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__8.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@01a8b42f9cf6\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:52
+]]></stack-trace>
+          </failure>
+          <output><![CDATA[Saving results to: C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\NativeCliFailure.xml
+]]></output>
+        </test-case>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

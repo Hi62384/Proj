@@ -51,7 +51,7 @@ authority immediately. Connection recovery never replays a website action.
 
 Uploads use a selected attachment from the current chat, with a separate review of
 destination, filename, size and hash. The extension receives real bounded chunks;
-it never assigns a local path to a file input. Limit: 25 MB. Ordinary direct-file
+it never assigns a local path to a file input. The per-file limit is 1 GiB (1,073,741,824 bytes). The bridge verifies each chunk and the complete attachment before Chrome selects the file. An interrupted transfer requires a fresh upload. Ordinary direct-file
 Read/Write/Create/Delete permissions still apply independently. Upload results
 must be verified on the page or server; dispatch is not proof of a completed save.
 

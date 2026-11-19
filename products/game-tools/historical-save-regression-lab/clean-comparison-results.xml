@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="10" result="Passed" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-18 20:09:10Z" end-time="2026-11-18 20:09:10Z" duration="0.6232533">
+  <test-suite type="TestSuite" id="1000" name="SampleProject" fullname="SampleProject" runstate="Runnable" testcasecount="10" result="Passed" start-time="2026-11-18 20:09:10Z" end-time="2026-11-18 20:09:10Z" duration="0.623253" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1017" name="BaselineTests.dll" fullname="C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/experiments/CleanComparisonProject/Library/ScriptAssemblies/BaselineTests.dll" runstate="Runnable" testcasecount="10" result="Passed" start-time="2026-11-18 20:09:10Z" end-time="2026-11-18 20:09:10Z" duration="0.600234" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="9256" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestFixture" id="1001" name="NativeIntegrationExercise" fullname="NativeIntegrationExercise" classname="NativeIntegrationExercise" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-11-18 20:09:10Z" end-time="2026-11-18 20:09:10Z" duration="0.348606" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="ParameterizedMethod" id="1008" name="DetectsSyntheticFailure" fullname="NativeIntegrationExercise.DetectsSyntheticFailure" classname="NativeIntegrationExercise" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-18 20:09:10Z" end-time="2026-11-18 20:09:10Z" duration="0.192860" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="1006" name="DetectsSyntheticFailure(&quot;v1.json&quot;,&quot;shield&quot;,&quot;inventory.unique.shield_01&quot;)" fullname="NativeIntegrationExercise.DetectsSyntheticFailure(&quot;v1.json&quot;,&quot;shield&quot;,&quot;inventory.unique.shield_01&quot;)" methodname="DetectsSyntheticFailure" classname="NativeIntegrationExercise" runstate="Runnable" seed="768805265" result="Passed" start-time="2026-11-18 20:09:10Z" end-time="2026-11-18 20:09:10Z" duration="0.100874" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1007" name="DetectsSyntheticFailure(&quot;v2.json&quot;,&quot;quest&quot;,&quot;quests.complete&quot;)" fullname="NativeIntegrationExercise.DetectsSyntheticFailure(&quot;v2.json&quot;,&quot;quest&quot;,&quot;quests.complete&quot;)" methodname="DetectsSyntheticFailure" classname="NativeIntegrationExercise" runstate="Runnable" seed="344113212" result="Passed" start-time="2026-11-18 20:09:10Z" end-time="2026-11-18 20:09:10Z" duration="0.059187" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+        </test-suite>
+        <test-suite type="ParameterizedMethod" id="1005" name="RestoresExpectedState" fullname="NativeIntegrationExercise.RestoresExpectedState" classname="NativeIntegrationExercise" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-18 20:09:10Z" end-time="2026-11-18 20:09:10Z" duration="0.141962" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="1002" name="RestoresExpectedState(&quot;v1.json&quot;,3,False)" fullname="NativeIntegrationExercise.RestoresExpectedState(&quot;v1.json&quot;,3,False)" methodname="RestoresExpectedState" classname="NativeIntegrationExercise" runstate="Runnable" seed="469014577" result="Passed" start-time="2026-11-18 20:09:10Z" end-time="2026-11-18 20:09:10Z" duration="0.044557" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1003" name="RestoresExpectedState(&quot;v2.json&quot;,3,True)" fullname="NativeIntegrationExercise.RestoresExpectedState(&quot;v2.json&quot;,3,True)" methodname="RestoresExpectedState" classname="NativeIntegrationExercise" runstate="Runnable" seed="630930313" result="Passed" start-time="2026-11-18 20:09:10Z" end-time="2026-11-18 20:09:10Z" duration="0.044127" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1004" name="RestoresExpectedState(&quot;v3.json&quot;,4,True)" fullname="NativeIntegrationExercise.RestoresExpectedState(&quot;v3.json&quot;,4,True)" methodname="RestoresExpectedState" classname="NativeIntegrationExercise" runstate="Runnable" seed="1723904484" result="Passed" start-time="2026-11-18 20:09:10Z" end-time="2026-11-18 20:09:10Z" duration="0.050052" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+        </test-suite>
+      </test-suite>
+      <test-suite type="TestFixture" id="1009" name="PrototypeIntegrationExercise" fullname="PrototypeIntegrationExercise" classname="PrototypeIntegrationExercise" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-11-18 20:09:10Z" end-time="2026-11-18 20:09:10Z" duration="0.248858" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="ParameterizedMethod" id="1016" name="DetectsSyntheticFailure" fullname="PrototypeIntegrationExercise.DetectsSyntheticFailure" classname="PrototypeIntegrationExercise" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-18 20:09:10Z" end-time="2026-11-18 20:09:10Z" duration="0.096671" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="1014" name="DetectsSyntheticFailure(&quot;v1.json&quot;,&quot;462a55994a843bf1eaa4bf350a533d2a498edf01b5726f5820e4b2e68dcd22bc&quot;,&quot;shield&quot;,&quot;inventory.unique.shield_01&quot;)" fullname="PrototypeIntegrationExercise.DetectsSyntheticFailure(&quot;v1.json&quot;,&quot;462a55994a843bf1eaa4bf350a533d2a498edf01b5726f5820e4b2e68dcd22bc&quot;,&quot;shield&quot;,&quot;inventory.unique.shield_01&quot;)" methodname="DetectsSyntheticFailure" classname="PrototypeIntegrationExercise" runstate="Runnable" seed="71265519" result="Passed" start-time="2026-11-18 20:09:10Z" end-time="2026-11-18 20:09:10Z" duration="0.051765" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1015" name="DetectsSyntheticFailure(&quot;v2.json&quot;,&quot;aad6fb81678b3cd0bc49669338d61acfc9bd43a4101e31c767acf030f9ee04a5&quot;,&quot;quest&quot;,&quot;quests.complete&quot;)" fullname="PrototypeIntegrationExercise.DetectsSyntheticFailure(&quot;v2.json&quot;,&quot;aad6fb81678b3cd0bc49669338d61acfc9bd43a4101e31c767acf030f9ee04a5&quot;,&quot;quest&quot;,&quot;quests.complete&quot;)" methodname="DetectsSyntheticFailure" classname="PrototypeIntegrationExercise" runstate="Runnable" seed="441942410" result="Passed" start-time="2026-11-18 20:09:10Z" end-time="2026-11-18 20:09:10Z" duration="0.043499" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+        </test-suite>
+        <test-suite type="ParameterizedMethod" id="1013" name="RestoresExpectedState" fullname="PrototypeIntegrationExercise.RestoresExpectedState" classname="PrototypeIntegrationExercise" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-18 20:09:10Z" end-time="2026-11-18 20:09:10Z" duration="0.150707" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="1010" name="RestoresExpectedState(&quot;v1.json&quot;,&quot;462a55994a843bf1eaa4bf350a533d2a498edf01b5726f5820e4b2e68dcd22bc&quot;,3,False)" fullname="PrototypeIntegrationExercise.RestoresExpectedState(&quot;v1.json&quot;,&quot;462a55994a843bf1eaa4bf350a533d2a498edf01b5726f5820e4b2e68dcd22bc&quot;,3,False)" methodname="RestoresExpectedState" classname="PrototypeIntegrationExercise" runstate="Runnable" seed="855633504" result="Passed" start-time="2026-11-18 20:09:10Z" end-time="2026-11-18 20:09:10Z" duration="0.049137" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1011" name="RestoresExpectedState(&quot;v2.json&quot;,&quot;aad6fb81678b3cd0bc49669338d61acfc9bd43a4101e31c767acf030f9ee04a5&quot;,3,True)" fullname="PrototypeIntegrationExercise.RestoresExpectedState(&quot;v2.json&quot;,&quot;aad6fb81678b3cd0bc49669338d61acfc9bd43a4101e31c767acf030f9ee04a5&quot;,3,True)" methodname="RestoresExpectedState" classname="PrototypeIntegrationExercise" runstate="Runnable" seed="122647053" result="Passed" start-time="2026-11-18 20:09:10Z" end-time="2026-11-18 20:09:10Z" duration="0.049972" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1012" name="RestoresExpectedState(&quot;v3.json&quot;,&quot;c93bf46eedaf15bd39329f66bb25199c846237d18affc657e2d50fddbc23cab1&quot;,4,True)" fullname="PrototypeIntegrationExercise.RestoresExpectedState(&quot;v3.json&quot;,&quot;c93bf46eedaf15bd39329f66bb25199c846237d18affc657e2d50fddbc23cab1&quot;,4,True)" methodname="RestoresExpectedState" classname="PrototypeIntegrationExercise" runstate="Runnable" seed="455282204" result="Passed" start-time="2026-11-18 20:09:10Z" end-time="2026-11-18 20:09:10Z" duration="0.050102" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+            <output><![CDATA[Saving results to: C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\clean-comparison-results.xml
+]]></output>
+          </test-case>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

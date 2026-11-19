@@ -1,0 +1,415 @@
+VBCSCompilerPreWarmer: watching VBCSCompiler (PID 29936)
+VBCSCompilerPreWarmer: pre-warm launched (dotnet PID 6620)
+VBCSCompiler prewarm took 22.96 ms
+[Licensing::Module] Trying to connect to existing licensing client channel...
+Built from '6000.6/staging' branch; Version is '6000.6.9f1 (8c45277fb9c5) revision 9192743'; Using compiler version '194234433'; Build Type 'Release'
+OS: 'Windows 10  (10.0.19045) 64bit Core' Language: 'en' Physical Memory: 15628 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-User1" at "2026-11-18T20:49:18.5600896Z"
+System  architecture: x64
+Process architecture: x64
+Date: 2026-11-18T20:49:18Z
+[Licensing::Client] Code 10 while verifying Licensing Client signature (process Id: 10056, path: "C:/Program Files/Unity Hub/UnityLicensingClient_V1/Unity.Licensing.Client.exe")
+[Licensing::Module] LicensingClient has failed validation; ignoring
+[Licensing::Client] Error: HandshakeResponse reported an error:
+	ResponseCode: 505
+	ResponseStatus: Unsupported protocol version '1.19.0'.
+[Licensing::Module] Error: Failed to handshake to channel: "LicenseClient-User1"
+[Licensing::IpcConnector] LicenseClient-User1 channel disconnected successfully.
+[Licensing::IpcConnector] Channel LicenseClient-User1-1.19.0 doesn't exist
+[Licensing::Module] Successfully launched the LicensingClient (PId: 30696)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-User1-1.19.0" at "2026-11-18T20:49:18.6905937Z"
+[Licensing::Client] Code 10 while verifying Licensing Client signature (process Id: 30696, path: "C:/Program Files/Unity/Hub/Editor/6000.6.9f1/Editor/Data/Resources/Licensing/Client/Unity.Licensing.Client.exe")
+[Licensing::Module] LicensingClient has failed validation; ignoring
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\6000.6.9f1\Editor\Unity.exe
+-batchmode
+-nographics
+-projectPath
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\SampleProject
+-runTests
+-testPlatform
+EditMode
+-testResults
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\callback-results.xml
+-logFile
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\callback-run.log
+Successfully changed project path to: C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\SampleProject
+C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/SampleProject
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gfx=262144"
+    "memorysetup-remapper-allocator-initial-capacity=32768"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-main-allocator-mimalloc-enabled=1"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+Logging is directed to a specific file, skipping project log.
+Player connection [34600]  Target information:
+
+Player connection [34600]  * "[IP] 25.11.17.107 [Port] 55504 [Flags] 2 [Guid] 597218848 [EditorId] 597218848 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-5JOV04K) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [34600]  * "[IP] 10.0.0.162 [Port] 55504 [Flags] 2 [Guid] 597218848 [EditorId] 597218848 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-5JOV04K) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [34600] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [34600] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.19.0+4cc3dda
+  Session Id:              290ebe09933f4936a90a48ee0993c467
+  Correlation Id:          e7e24975fb0bd3d11bbd87eafbe3b7ce
+  External correlation Id: 8307277618830652281
+  Machine Id:              tZzfaOpn5FISrwWi+pAe+yUZjo4=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-User1-1.19.0" (connect: 0.07s, validation: 0.29s, handshake: 0.04s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-User1-1.19.0-notifications" at "2026-11-18T20:49:19.0167661Z"
+[Licensing::Module] Connected to LicensingClient (PId: 30696, launch time: 0.01, total connection time: 0.39s)
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: 3574487619519-UnityPersXXXX
+  Product: Unity Personal
+  Type: Assigned
+  Expiration: Unlimited
+[Licensing::Client] Successfully updated license, isAsync: True, time: 0.00
+[Licensing::Module] Licensing Background thread has ended after 0.48s
+[Package Manager] Connected to IPC stream "Upm-26228" after 0.4 seconds.
+[Licensing::Client] Successfully resolved entitlement details
+Library Redirect Path: Library/
+Launching Unity Data Store - C:/Program Files/Unity/Hub/Editor/6000.6.9f1/Editor/Data/Tools/Unity.DataStore.exe 
+Unity Data Store artifact dir = Library/DataStore, working dir = C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/SampleProjectUnity Data Store running and initialised
+[Physics::Module] Selected backend (deferred post-plugins).
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+Initialize engine version: 6000.6.9f1 (8c45277fb9c5)
+[EntityIdStore] init: VM path (explicit commit), pageSize=4096, blockCount=262144, entitiesPerBlock=1024, blocksPerSlotPage=0, slots reserved=4294967296 bytes
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.6.9f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/SampleProject/Assets
+Forcing GfxDevice: Null
+GfxDevice: creating device client; kGfxThreadingModeNonThreaded
+NullGfxDevice:
+    Version:  NULL 1.0 [1.0]
+    Renderer: Null Device
+    Vendor:   Unity Technologies
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.6.9f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.6.9f1/Editor/Data/BCLExtensions/runtime/netstandard2.1'
+Mono path[2] = 'C:/Program Files/Unity/Hub/Editor/6000.6.9f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.6.9f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56228
+CodeReloadManager initialized
+ImportWorker Server TCP listen port: 0
+AcceleratorClientConnectionCallback - disconnected - :0
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.6.9f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.6.9f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.004920 seconds.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Package Manager log level set to [2]
+ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:True
+Scripting: successfully reloaded assembly
+- Finished resetting the current domain, in  1.201 seconds
+Domain Reload Profiling: 2286ms
+	BeginReloadAssembly (247ms)
+		CreateAndSetChildDomain (8ms)
+	RebuildCommonClasses (12ms)
+	RebuildNativeTypeToScriptingClass (30ms)
+	initialDomainReloadingComplete (130ms)
+	LoadAllAssembliesAndSetupDomain (664ms)
+		LoadAssemblies (234ms)
+		TypeCache.Refresh (465ms)
+			TypeCache.ScanAssembly (441ms)
+		AnalyzeDomain (1ms)
+	FinalizeReload (1202ms)
+		SetupLoadedEditorAssemblies (0ms)
+			LogAssemblyErrors (4ms)
+			InitializePlatformSupportModulesInManaged (5ms)
+			BeforeProcessingInitializeOnLoad (195ms)
+			ProcessInitializeOnLoadAttributes (215ms)
+			ProcessInitializeOnLoadMethodAttributes (398ms)
+[Licensing::Client] Successfully resolved entitlement details
+Application.AssetDatabase Initial Refresh Start
+[Package Manager] Restoring resolved packages state from cache
+[Licensing::Client] Successfully resolved entitlement details
+[Package Manager] Registered 4 packages:
+  Built-in packages:
+    com.unity.test-framework@1.8.0 (location: C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\SampleProject\Library\PackageCache\com.unity.test-framework@01a8b42f9cf6)
+    com.unity.ext.nunit@2.1.0 (location: C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\SampleProject\Library\PackageCache\com.unity.ext.nunit@0198eae3b53e)
+    com.unity.modules.imgui@1.0.0 (location: C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\SampleProject\Library\PackageCache\com.unity.modules.imgui)
+    com.unity.modules.jsonserialize@1.0.0 (location: C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\SampleProject\Library\PackageCache\com.unity.modules.jsonserialize)
+[Subsystems] No new subsystems found in resolved package list.
+[Package Manager] Done registering packages in 0.00 seconds
+[ScriptCompilation] Requested script compilation because: AssetDatabase observed changes in script compilation related files
+Starting: C:\Program Files\Unity\Hub\Editor\6000.6.9f1\Editor\Data\Tools\BuildPipeline\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/SampleProject
+DisplayProgressbar: Compiling Scripts
+Starting: C:\Program Files\Unity\Hub\Editor\6000.6.9f1\Editor\Data\DotNetSdk\dotnet.exe "C:\Program Files\Unity\Hub\Editor\6000.6.9f1\Editor\Data\Tools\BuildPipeline\ScriptCompilationBuildProgram.exe" "Library/Bee/1900b0aE.dag.json" "Library/Bee/1900b0aE-inputdata.json" "Library\Bee\buildprogram0.traceevents"
+WorkingDir: C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/SampleProject
+ExitCode: 4 Duration: 0s468ms
+Rebuilding DAG because FileSignature timestamp changed: Library/Bee/1900b0aE-inputdata.json
+[184/194    0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+*** Tundra requires additional run (0.41 seconds), 1 items updated, 183 evaluated
+ExitCode: 0 Duration: 0s738ms
+Starting: C:\Program Files\Unity\Hub\Editor\6000.6.9f1\Editor\Data\Tools\BuildPipeline\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --dagfilejson="Library\Bee\1900b0aE.dag.json" --profile="Library/Bee/backend2.traceevents" ScriptAssemblies
+WorkingDir: C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/SampleProject
+ExitCode: 0 Duration: 2s390ms
+Finished compiling graph: 197 nodes, 868 flattened edges (846 ToBuild, 6 ToUse), maximum node priority 41
+[176/194    0s] WriteText Library/Bee/artifacts/1900b0aE.dag/BaselineTests.rsp
+[183/194    0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+[190/194    1s] Csc Library/Bee/artifacts/1900b0aE.dag/BaselineTests.dll (+2 others)
+[191/194    0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/BaselineTests.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/BaselineTests.dll, with 146 defines and 298 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+1 processor(s) skipped this assembly
+[192/194    0s] CopyFiles Library/ScriptAssemblies/BaselineTests.pdb
+[193/194    0s] CopyFiles Library/ScriptAssemblies/BaselineTests.dll
+*** Tundra build success (2.34 seconds), 6 items updated, 194 evaluated
+Total cache size 988952
+Total cache size after purge 988952, took 00:00:00.0202882
+AssetDatabase: script compilation time: 4.669136s
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True
+Scripting: successfully reloaded assembly
+- Finished resetting the current domain, in  1.037 seconds
+Domain Reload Profiling: 2094ms
+	BeginReloadAssembly (460ms)
+		DisableScriptedObjects (54ms)
+		CreateAndSetChildDomain (82ms)
+	RebuildCommonClasses (19ms)
+	RebuildNativeTypeToScriptingClass (27ms)
+	initialDomainReloadingComplete (104ms)
+	LoadAllAssembliesAndSetupDomain (444ms)
+		LoadAssemblies (401ms)
+		TypeCache.Refresh (25ms)
+			TypeCache.ScanAssembly (15ms)
+		AnalyzeDomain (10ms)
+			BuildScriptInfoCaches (7ms)
+	FinalizeReload (1040ms)
+		SetupLoadedEditorAssemblies (0ms)
+			LogAssemblyErrors (3ms)
+			InitializePlatformSupportModulesInManaged (6ms)
+			BeforeProcessingInitializeOnLoad (235ms)
+			ProcessInitializeOnLoadAttributes (154ms)
+			ProcessInitializeOnLoadMethodAttributes (114ms)
+			AfterProcessingInitializeOnLoad (23ms)
+		AwakeInstancesAfterBackupRestoration (66ms)
+Starting new worker id: 0 with log in C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/SampleProject/Logs/AssetImportWorkerHW0.log
+Importing 'GUID: 3c49363eaf71d4141834ad3860c9091a - Path: Assets/Tests/Fixtures/alternate-v1.save' with importer (DefaultImporter)
+Imported 'GUID: 3c49363eaf71d4141834ad3860c9091a' -> (Import Result ID: '1bfbe55f22de42ba1321a628f4f7b8ec') in 0.092 seconds [static dependencies only]. Details - ImportResultOutputID=772e35e857c9f23ade7d6157cc7920f1 DependenciesID=fa241977cc707a78feb6c3f925ce819b StaticDependenciesID=855bf8262ec8d9fd9d88baaea0ba5454 
+
+Asset Pipeline Refresh (id=03372c195aa03f74091ab3a3ec607b4a): Total: 7.475 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+	(Values over 0.05ms)
+	Summary:
+		Imports: total=1 (actual=1, local cache=0, cache server=0)
+		Asset DB Process Time: managed=6 ms, native=1476 ms
+		Asset DB Callback time: managed=159 ms, native=11 ms
+		Scripting: domain reloads=1, domain reload time=1122 ms, compile time=4674 ms, other=24 ms
+		Project Asset Count: scripts=83, non-scripts=15
+		Asset File Changes: new=3, changed=3, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokePackagesCallback: 9.746ms
+	ApplyChangesToAssetFolders: 0.553ms
+	Scan: 77.088ms
+	Collect global state as custom dependencies: 19.885ms
+	OnSourceAssetsModified: 1.716ms
+	CategorizeScriptCompilationAssets: 3.113ms
+	ProcessAssetsWithTransientArtifactChanges: 16.076ms
+	CategorizeAssets: 1.480ms
+	CompileScripts: 4674.206ms
+	ImportOutOfDateAssets: 1162.115ms (1041.917ms without children)
+		ImportManagerImport: 95.743ms (2.682ms without children)
+		UnloadImportedAssets: 2.282ms
+		ImportSchedulerStart: 22.109ms
+	PostProcessAllAssets: 160.098ms
+		VersionControlSettings.HiddenFilePostprocess 0.273ms
+		PostProcessCallbackCreateDeferredMaterials 0.054ms
+		MonoPostProcessAllAssets: 156.735ms
+			AssetPostprocessor.OnPostprocessAllAssets 61.009ms
+			WindowAssetPostprocessingWatcher.OnPostprocessAllAssets 19.538ms
+			StyleCatalogPostProcessor.OnPostprocessAllAssets 19.370ms
+			BuilderAssetPostprocessor.OnPostprocessAllAssets 14.032ms
+			AssetChangedListener.OnPostprocessAllAssets 4.720ms
+			RetainedModeAssetPostprocessor.OnPostprocessAllAssets 3.638ms
+			SyncVS.PostprocessSyncProject 3.283ms
+			EditModeScopePostprocessor.OnPostprocessAllAssets 1.921ms
+			SpeedTree9Postprocessor.OnPostprocessAllAssets 1.765ms
+			TextAssetPostProcessor.OnPostprocessAllAssets 1.467ms
+			ArtifactBrowserPostProcessor.OnPostprocessAllAssets 1.295ms
+			ReferencedClipsPostProcessor.OnPostprocessAllAssets 0.796ms
+			AudioMixerPostprocessor.OnPostprocessAllAssets 0.770ms
+			AssetEvents.OnPostprocessAllAssets 0.677ms
+			TerrainToolbarOverlayPostProcessor.OnPostprocessAllAssets 0.485ms
+			ConfigAssetsTracker.OnPostprocessAllAssets 0.401ms
+			SpeedTreePostProcessor.OnPostprocessAllAssets 0.380ms
+			AssetDatabaseCallbacks.OnPostprocessAllAssets 0.372ms
+			ThemePostprocessor.OnPostprocessAllAssets 0.349ms
+			ScenarioDriftAssetsTracker.OnPostprocessAllAssets 0.328ms
+			RenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 0.256ms
+			AudioContainerPostProcessor.OnPostprocessAllAssets 0.185ms
+	PostAssetChangesProfiler: 2.793ms
+	UnloadStreamsBegin: 2.852ms
+	PersistCurrentRevisions: 0.063ms
+	Untracked: 1284.566ms
+
+Application.AssetDatabase Initial Refresh End
+Scanning for USB devices : 7.085ms
+Initializing Unity extensions:
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-SampleProject
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 437 unused Assets / (0.5 MB). Loaded Objects now: 1163.
+Memory consumption went from 223.6 MB to 223.0 MB.
+Total: 13.352300 ms (FindLiveObjects: 0.343100 ms CreateObjectMapping: 0.075100 ms MarkObjects: 12.130800 ms  DeleteObjects: 0.597700 ms)
+
+Microsoft Media Foundation video decoding to texture disabled: graphics device is Null, only Direct3D 11 and Direct3D 12 (only on desktop) are supported for hardware-accelerated video decoding.
+[Project] Loading completed in 11.386 seconds
+	Project init time: 				10.858 seconds
+		Template init time: 		0.000 seconds
+		Package Manager init time: 		0.422 seconds
+		Asset Database init time: 		0.281 seconds
+		Global illumination init time: 	0.003 seconds
+		Assemblies load time: 			2.374 seconds
+		Unity extensions init time: 	0.004 seconds
+		Asset Database refresh time: 	7.475 seconds
+	Scene opening time: 			0.259 seconds
+##utp:{"type":"ProjectInfo","version":2,"phase":"Immediate","time":1795034969912,"processId":26228,"projectLoad":11.386090099999999,"projectInit":10.8581648,"templateInit":0.0,"packageManagerInit":0.4221418,"assetDatabaseInit":0.2814301,"globalIlluminationInit":0.0032114,"assembliesLoad":2.3744525,"unityExtensionsInit":0.0040826,"assetDatabaseRefresh":7.4748355,"sceneOpening":0.2592859}
+##utp:{"type":"EditorInfo","version":2,"phase":"Immediate","time":1795034969913,"processId":26228,"editorVersion":"6000.6.9f1 (8c45277fb9c5)","branch":"6000.6/staging","buildType":"Release","platform":"Windows"}
+[Licensing::Client] Successfully resolved entitlement details
+Running tests for ExecutionSettings with details:
+targetPlatform = 
+playerHeartbeatTimeout = 600
+filters[0] = 
+   Filter with settings:
+   testMode = EditMode
+   targetPlatform = 
+   testNames = null
+   groupNames = null
+   categoryNames = null
+   assemblyNames = null
+ignoreTests = {}
+featureFlags = null
+
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+UnityEditor.TestTools.TestRunner.CommandLineTest.Executer:InitializeAndExecuteRun (string[]) (at ./Library/PackageCache/com.unity.test-framework@01a8b42f9cf6/UnityEditor.TestRunner/CommandLineTest/Executer.cs:53)
+UnityEditor.TestTools.TestRunner.CommandLineTest.TestStarter:InitializeAndExecuteRun () (at ./Library/PackageCache/com.unity.test-framework@01a8b42f9cf6/UnityEditor.TestRunner/CommandLineTest/TestStarter.cs:64)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: ./Library/PackageCache/com.unity.test-framework@01a8b42f9cf6/UnityEditor.TestRunner/CommandLineTest/Executer.cs Line: 53)
+
+Start Indexing on Editor startup
+[Indexing] Starting Initial Indexing for Assets
+[UnityConnectServicesConfig] config is NOT valid, switching to default
+Created GICache directory at C:/Users/User1/AppData/LocalLow/Unity/Caches/GiCache. Took: 0.029s, timestamps: [11.390 - 11.418]
+Starting new worker id: 1 with log in C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/SampleProject/Logs/AssetImportWorkerHW1.log
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 0 unused Assets / (0 B). Loaded Objects now: 1319.
+Memory consumption went from 228.3 MB to 228.3 MB.
+Total: 11.931200 ms (FindLiveObjects: 0.189500 ms CreateObjectMapping: 0.017800 ms MarkObjects: 11.527300 ms  DeleteObjects: 0.008200 ms)
+
+Worker ready: AssetImportWorkerHW0 0
+Worker ready: AssetImportWorkerHW1 1
+Starting new worker id: 2 with log in C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/SampleProject/Logs/AssetImportWorkerHW2.log
+[Worker0] Imported GUID: 695fb6d8e07cf014f92aef4909f8ce5a - Path: Assets/Tests/Editor/PrototypeRunner.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '378adeaadd82e8119f346003d79af540') in 0.2032879 seconds
+[Worker0] Imported GUID: 2b301b727225f1941974d69e61a55620 - Path: Packages/com.unity.test-framework/UnityEditor.TestRunner/TestRunnerWindowSettings.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '61f391fd898051905f17f1ab47f5d790') in 0.0038786 seconds
+[Worker0] Imported GUID: 44306d44b8726fe41a0b9217f599b0dd - Path: Assets/Tests/Editor/NativeBaselineTests.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: 'bb9a0ef262a148f82c510eab16accc56') in 0.0024487 seconds
+[Worker0] Imported GUID: 8143d3a8390f2c64685e3bc272bd9e90 - Path: Packages/com.unity.ext.nunit/package.json - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: 'a814cbc831bb3e3c4924c89ca80610ec') in 0.0039889 seconds
+[Worker0] Imported GUID: 3ec7596410385054a9e0bc90377fbe63 - Path: Packages/com.unity.test-framework/LICENSE.md - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: 'a07882cb6d12d39e7cbaa643a923ff8e') in 0.0064342 seconds
+[Worker0] Imported GUID: c6d895caa5bf56348adf449ab5378da4 - Path: Assets/Tests/Editor/PrototypeRunJournal.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: 'a98af0bccb650ddcdaf42748e41dbaed') in 0.0024892 seconds
+[Worker0] Imported GUID: f71c96a57f9e7754c9b4bb16b26ade30 - Path: Assets/Tests/Editor/StrictManifest.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '9d49f3c2b50b8a1c95da522a14ee1baf') in 0.0027832 seconds
+[Worker0] Imported GUID: 9db19a04003fca7439552acd4de9baa1 - Path: Packages/com.unity.test-framework/UnityEditor.TestRunner/AssemblyInfo.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '053dda78b7fefeadfa318cd9bf84769b') in 0.0028522 seconds
+[Worker0] Imported GUID: 683a44629a7b4c14a9a3b8999dece422 - Path: Assets/Tests/Editor/PrototypeReportTests.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '7490bececde059f68f263245f8cecb04') in 0.0028222 seconds
+[Worker0] Imported GUID: 3411e19edd44cfd46b548b058c3bc36c - Path: Packages/com.unity.test-framework/UnityEditor.TestRunner/TestBuildAssemblyFilter.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: 'f7e97efaff7cbfa8c963058b5162b327') in 0.002627 seconds
+[Worker0] Imported GUID: ee8051139fea3d04bb858e4e5ac8880a - Path: Assets/Tests/Editor/FixtureValidationTests.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '6bdf6309018a19ce3d17d6eb45f3be9a') in 0.0027554 seconds
+[Worker0] Imported GUID: a667f6654ad7a9548b8c8e68b51c8895 - Path: Packages/com.unity.test-framework/UnityEditor.TestRunner/RequireApiProfileAttribute.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '083f9c3905420fa224afb0d59a93a8ab') in 0.0025483 seconds
+[Worker0] Imported GUID: ba066924a5dbd3541a2335b5b9433e4c - Path: Assets/Tests/Editor/ManifestAndCopyTests.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '90a7a0d859770568b03a663d398968e6') in 0.0021278 seconds
+[Worker0] Imported GUID: b370be785b3efb244b8455af46756ec5 - Path: Assets/Tests/Editor/ManifestRunner.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '3f6830f0c92c2c577e40cc767b50b2ad') in 0.0018915 seconds
+[Worker0] Imported GUID: 75639714a12a7634f9c72fc68935f8f3 - Path: Assets/Tests/Editor/FixtureCopy.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '448b34c8a11d82fc9b75630ebb86b826') in 0.0025525 seconds
+[Worker0] Imported GUID: 3c49363eaf71d4141834ad3860c9091a - Path: Assets/Tests/Fixtures/alternate-v1.save - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '91bfdf3d52ece4a47fcb7a4e9487a246') in 0.0040372 seconds
+[Worker0] Imported GUID: f904c259574ccda41a1c1767e1e543bb - Path: Assets/Tests/Editor/PrototypeJournalCi.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '7bb1bedd1911d78eac60ace4b638aebb') in 0.0025205 seconds
+[Worker0] Imported GUID: f49bbe06ffa5ae24abe32abdab430c24 - Path: Packages/com.unity.ext.nunit/CHANGELOG.md - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '1379510e68c902dc8319002c39fe4bcd') in 0.0029003 seconds
+[Worker0] Imported GUID: 27619889b8ba8c24980f49ee34dbb44a - Path: Packages/com.unity.test-framework/UnityEngine.TestRunner/UnityEngine.TestRunner.asmdef - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: 'e55b90c3d1af1649edc9f8bb843afdcc') in 0.0064693 seconds
+[Worker0] Imported GUID: 559482fe33c79e44882d3a6cedc55fb5 - Path: Packages/com.unity.test-framework/UnityEditor.TestRunner/TestResultSerializer.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '4c36aca66766cadbf8a479e2243d810f') in 0.0025114 seconds
+[Worker0] Imported GUID: a2529337a9f15fc4aa02569f31284745 - Path: Assets/Tests/Editor/PrototypeReport.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: 'fe0b7df199c2b135ad2ffd5f85335b2c') in 0.003377 seconds
+[Worker0] Imported GUID: 3c3a6849cb2bf4c44a046c5b53b27198 - Path: Assets/Tests/Fixtures/v1.json - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '978627af0ae9d5c02a6bf376ed01a8fe') in 0.0028327 seconds
+[Worker0] Imported GUID: eea34a28297f9bc4c9f4c573bc8d5d1c - Path: Packages/com.unity.test-framework/UnityEditor.TestRunner/Api/ExecutionSettings.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '970e60d379bd1a52035b9f092eea6d68') in 0.003803 seconds
+[Worker0] Imported GUID: 5da62a0c1c5218c4aa16b74546a7822d - Path: Packages/com.unity.ext.nunit/README.md - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: 'dee6090e693d737689cad44ff296ac05') in 0.0031523 seconds
+[Worker0] Imported GUID: 4dfcd3a631f61d248b7cc0b845d40345 - Path: Packages/com.unity.test-framework/UnityEditor.TestRunner/TestRunnerWindow.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '459d9aeca69069e24629efc8306af128') in 0.0030347 seconds
+[Worker0] Imported GUID: 48b3f292024def548806a15943e2cd03 - Path: Assets/Tests/Editor/HistoricalSaveTests.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '0198b2815f9fe2704cd4625ae880c728') in 0.0037473 seconds
+[Worker0] Imported GUID: 8614db307c161654688b3a0b1e720e76 - Path: Assets/Tests/Editor/AsyncAdapterSpikeTests.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '59499741daaa7ca510b93849d95b131c') in 0.0032521 seconds
+[Worker0] Imported GUID: 1c9eb3b58be167343a3bd05a77044cf3 - Path: Assets/Tests/Editor/PrototypeSuiteTests.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '54d7fb472f8d8860aaba95605134b318') in 0.0048543 seconds
+[Worker0] Imported GUID: 9d9e250f05834e8418e0661da5511d4d - Path: Assets/Tests/Editor/NativeIntegrationExercise.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '27399bc7f905f9c8dea48ac64b973669') in 0.0022918 seconds
+[Worker0] Imported GUID: 0a810b1246aae12468390105aa0f3a99 - Path: Assets/Tests/Editor/SampleSaveLoader.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: 'a441ea4ec32813e8aa8c3e3789963bc7') in 0.0031542 seconds
+[Worker0] Imported GUID: 40bf3cec17fa0b49fe04443c8332d638 - Path: Packages/com.unity.modules.jsonserialize/package.json - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '527cca9ed437bdfb5f5cd499259aad82') in 0.0023788 seconds
+[Worker0] Imported GUID: 37f3a4d9596c99b4caa5fb7245af21d2 - Path: Assets/Tests/Editor/AsyncAdapterSpike.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: 'e5ba359e0282b7e6bd8aa2d3a3d5a65f') in 0.0028937 seconds
+[Worker0] Imported GUID: f91a00d2dca52b843b2d50ccf750737d - Path: Packages/com.unity.ext.nunit/LICENSE.md - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '90ec1c000308201b6af89dfbdd0beeb1') in 0.003058 seconds
+[Worker0] Imported GUID: 3e5e1126ae074f44e8fcc9a43a0bdbd6 - Path: Assets/Tests/Editor/CallbackSampleGame.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '69cf222164fa3e40e2039ec699ecd917') in 0.0021434 seconds
+[Worker0] Imported GUID: 4d19e2e7726e2294ca7e915cecda285a - Path: Assets/Tests/Fixtures/v2.json - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: 'd32e7469855ea02dd2dfd924b351f3ef') in 0.0019414 seconds
+[Worker0] Imported GUID: bfcb3ba499f7d452b92d9a9cc3378788 - Path: Packages/com.unity.ext.nunit/Third Party Notices.md - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '56dfe058cc151139ea3bc58ac6efcfb8') in 0.0139249 seconds
+[Worker0] Imported GUID: 0acc523941302664db1f4e527237feb3 - Path: Packages/com.unity.test-framework/UnityEditor.TestRunner/UnityEditor.TestRunner.asmdef - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '792760e7046055ef29fe931b388d550c') in 0.0027938 seconds
+[Worker0] Imported GUID: 634cac2bb6a5eec42abdf2c6058c2ace - Path: Assets/Tests/Editor/CallbackSampleGameTests.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '9b697908a1b8c9220de1133354d90faf') in 0.002643 seconds
+[Worker0] Imported GUID: c86ba6f2a39967d44bcec3b61cb735a5 - Path: Assets/Tests/Editor/BaselineTests.asmdef - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '8fb81c018a59d81c273011b9b12a9fbc') in 0.0024545 seconds
+[Worker0] Imported GUID: 0de03ebd74e2b474fa23d05ab42d0cd8 - Path: Packages/com.unity.test-framework/UnityEditor.TestRunner/Api/CallbacksDelegator.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '27950692c9eea93ab65544a9e6bf6cd8') in 0.0039278 seconds
+[Worker0] Imported GUID: f967b47383d22344b90f8fcc6c6e4062 - Path: Assets/Tests/Editor/FixtureValidation.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '9fa19b8750f7af80d760eee5b296768e') in 0.0034031 seconds
+[Worker0] Imported GUID: e59094b434ebb46e6844f02ec9c4dc42 - Path: Packages/com.unity.ext.nunit/net472/unity-custom/nunit.framework.dll - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '1b4140f65197098efbcdc1c50dbfc862') in 0.0255456 seconds
+[Worker0] Imported GUID: cc22cc13b69c1094c85e176c008b9ef8 - Path: Packages/com.unity.test-framework/UnityEngine.TestRunner/AssemblyInfo.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: 'c2874487153be63d6bb2c659cc60f3c7') in 0.003715 seconds
+[Worker0] Imported GUID: 1b2a457a702f3734e8784b17e497f1a9 - Path: Assets/Tests/Fixtures/v3.json - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: 'b60d9807af6ffeefc93bcaf345536909') in 0.0020267 seconds
+[Worker0] Imported GUID: e6a135e3ea9cb46795d1b0e05ac3e1e5 - Path: Packages/com.unity.modules.jsonserialize/package.ModuleCompilationTrigger - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '51d0a1e9c9df5b4a78d265ea3000a0a1') in 0.0032218 seconds
+[Worker0] Imported GUID: bbfafc106d26c5e4290a9e8cfe21d40d - Path: Assets/Tests/Editor/PrototypeRunJournalTests.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: 'a96c5e53e17f409224b01311a066bebe') in 0.0020282 seconds
+[Worker0] Imported GUID: 845a3fd5d6abb5b4a8635a237b7bf46f - Path: Assets/Tests/Editor/PrototypeJournalEntryPoint.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '45cf13a2683d15b342e287978453d38a') in 0.002038 seconds
+[Worker0] Imported GUID: eb862eb59ecf78d4e9327bd34c7932dd - Path: Assets/Tests/Editor/ScalarAssertionTests.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '7ebb41dab8ee809f49f2129f22df3e90') in 0.0029538 seconds
+[Worker0] Imported GUID: 46c06bde4dac3dc45a280aa4d05604b4 - Path: Assets/Tests/Editor/PrototypeSuite.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '7e0ccf9a66040253ee1ee67c6f99704c') in 0.0030068 seconds
+[Worker0] Imported GUID: 4884ccc3528cb2e40a0e6f0a19a2b35b - Path: Packages/com.unity.test-framework/UnityEditor.TestRunner/Api/CallbacksHolder.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '5f35cef53240ebe652742402f538efe7') in 0.0048794 seconds
+[Worker0] Imported GUID: 05f92e4a2414cb144a92157752dfa324 - Path: Packages/com.unity.test-framework/UnityEditor.TestRunner/Api/Filter.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '8a0c6f342cd5bc2a634ee13294a52c83') in 0.0022817 seconds
+[Worker0] Imported GUID: d23a62101d363cd4782db8e465bc2d65 - Path: Assets/Tests/Editor/ComparativeFixtureTests.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '9301fb782708044cdc513b62612fdad8') in 0.0027493 seconds
+[Worker0] Imported GUID: 9c392148d8a54b246980cb0e3aba99dc - Path: Assets/Tests/Editor/PrototypeRunnerTests.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '7a632658e15eddd0ff04ea3b7d68fa50') in 0.0032713 seconds
+[Worker0] Imported GUID: ddd3cd4d13d5bb54a9fb84eb131035a9 - Path: Assets/Tests/Editor/PrototypeIntegrationExercise.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '1794f3ae467888e3686363cbeea3416c') in 0.0023375 seconds
+[Worker0] Imported GUID: d2146428d3f1ad54eb7326c9a44b3284 - Path: Packages/com.unity.test-framework/UnityEditor.TestRunner/RequirePlatformSupportAttribute.cs - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: 'd1d176a4bbeb10e27c5dadf9322077f9') in 0.0029598 seconds
+[Worker0] Imported GUID: d6a2e6e4803de7b43baacdc355fc144d - Path: Packages/com.unity.test-framework/package.json - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: '9150e21294cdc0e848f1bc0096499c85') in 0.0027518 seconds
+[Worker0] Imported GUID: d691174143fd3774ba63d7c493633b99 - Path: Packages/com.unity.test-framework/CHANGELOG.md - Importer: ScriptedImporter/UnityEditor.QuickSearchModule:UnityEditor.Search:ASIAI0B -> (ImportResultId: 'c2693ecf882dbb79fe67b84fdf4816a1') in 0.0018603 seconds
+Worker ready: AssetImportWorkerHW2 2

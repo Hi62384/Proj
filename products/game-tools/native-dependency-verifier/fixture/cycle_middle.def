@@ -1,0 +1,3 @@
+LIBRARY middle.dll
+EXPORTS
+    middle_value

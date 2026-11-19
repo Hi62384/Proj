@@ -18,7 +18,9 @@ public sealed class FixtureCopy : IDisposable
         if (String.IsNullOrWhiteSpace(name) || name == "." || name == ".." || name.IndexOfAny(new[] { '/', '\\', ':' }) >= 0 || Path.GetFileName(name) != name) throw new ArgumentException("Unsafe file");
         var root = Path.GetFullPath(sourceRoot);
         var scratch = Path.GetFullPath(scratchRoot);
-        if (String.Equals(root.TrimEnd(Path.DirectorySeparatorChar), scratch.TrimEnd(Path.DirectorySeparatorChar), StringComparison.OrdinalIgnoreCase)) throw new ArgumentException("Scratch must differ from source");
+        var sourcePrefix = root.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar) + Path.DirectorySeparatorChar;
+        var scratchPrefix = scratch.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar) + Path.DirectorySeparatorChar;
+        if (sourcePrefix.StartsWith(scratchPrefix, StringComparison.OrdinalIgnoreCase) || scratchPrefix.StartsWith(sourcePrefix, StringComparison.OrdinalIgnoreCase)) throw new ArgumentException("Scratch and source must be separate");
         RejectLinks(root); RejectLinks(scratch);
         var source = Path.Combine(root, name);
         RejectLinks(source);
@@ -27,7 +29,12 @@ public sealed class FixtureCopy : IDisposable
         using (var stream = new FileStream(source, FileMode.Open, FileAccess.Read, FileShare.Read))
         {
             if (stream.Length > 32 * 1024 * 1024) throw new ArgumentException("Fixture too large");
-            using (var buffer = new MemoryStream()) { stream.CopyTo(buffer); bytes = buffer.ToArray(); }
+            using (var buffer = new MemoryStream())
+            {
+                var chunk = new byte[81920]; int read;
+                while ((read = stream.Read(chunk, 0, chunk.Length)) != 0) { if (buffer.Length + read > 32 * 1024 * 1024) throw new ArgumentException("Fixture too large"); buffer.Write(chunk, 0, read); }
+                bytes = buffer.ToArray();
+            }
         }
         using (var sha = SHA256.Create())
         {

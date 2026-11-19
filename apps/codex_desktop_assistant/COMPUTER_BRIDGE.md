@@ -108,10 +108,16 @@ See `COMPUTER_BRIDGE_REPORT.md` for executed tests and outstanding acceptance.
 ## Importing a verified existing file
 
 `files.read` with `kind: "attachment"`, an absolute local `path`, and the expected
-`sha256` imports a regular file up to 500 KB into the bridge chat. Existing file
+`sha256` imports a regular file up to 1 GiB (1,073,741,824 bytes) into the bridge chat. Existing file
 Read rules, protected locations, link rejection, exclusive handles and Stop
 remain enforced. The copied private attachment survives an ordinary controller
 restart only if its hash is intact; this does not renew source-file permissions.
+
+After updating an existing installation, reload the unpacked Chrome extension and
+restart the Portfolio Manager controller. The bridge setup configures the MCP tool
+timeout to 3,630 seconds for slow transfers. Existing registrations can set
+`tool_timeout_sec = 3630` in `[mcp_servers.codex_computer_bridge]` and reconnect
+Codex. The local approval window and individual Chrome message deadlines still apply.
 
 Use the returned attachment ID with `chrome.action` upload. A Payhip upload may
 request `upload_receivers: ["https://pe56d.s3.amazonaws.com/"]`; the exact bucket

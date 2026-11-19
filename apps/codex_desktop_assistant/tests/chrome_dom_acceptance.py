@@ -103,7 +103,7 @@ def main():
                 raw=b'Synthetic upload bytes verified independently\x00\xff'*10000;digest=hashlib.sha256(raw).hexdigest();upload='synthetic-upload'
                 assert controller.call('upload_begin',observation=snapshot['observation'],element=file,upload=upload,name='synthetic.bin',size=len(raw),sha256=digest)['ok']
                 for offset in range(0,len(raw),128*1024):assert controller.call('upload_chunk',upload=upload,offset=offset,data=base64.b64encode(raw[offset:offset+128*1024]).decode())['ok']
-                assert controller.call('upload_finish',upload=upload)['result']['sha256']==digest
+                assert controller.call('upload_finish',upload=upload,verified_sha256=digest)['result']['sha256']==digest
                 try:action('Upload fixture','click')
                 except Exception:pass  # Navigation may destroy the reply context; never replay.
                 page.wait_for_url('**/upload');assert raw in Site.uploaded;record('real_filelist_selection_and_independently_verified_multipart_bytes')

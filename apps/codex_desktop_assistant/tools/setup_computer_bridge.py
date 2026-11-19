@@ -41,7 +41,7 @@ def main():
         section=re.sub(r'^tool_timeout_sec\s*=.*\n?','',section,flags=re.M)
         section=re.sub(r'^required\s*=.*\n?','',section,flags=re.M)
         trust='default_tools_approval_mode = "approve"\n' if args.trust_local_tools else ''
-        text=text[:start]+'\n'+trust+'required = true\nstartup_timeout_sec = 35\ntool_timeout_sec = 360\n'+section.lstrip('\n')+text[end:]
+        text=text[:start]+'\n'+trust+'required = true\nstartup_timeout_sec = 35\ntool_timeout_sec = 3630\n'+section.lstrip('\n')+text[end:]
         tomllib.loads(text);config.write_text(text,encoding='utf-8')
         # Existing extension key, identity and per-user native-host registration
         # remain intact. Setup_Chrome is only needed on a first installation.

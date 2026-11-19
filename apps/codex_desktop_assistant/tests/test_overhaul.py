@@ -38,13 +38,41 @@ class FileTests(unittest.TestCase):
         writer.assert_not_called();self.approve.assert_not_called()
         self.rule('read','ask')
         self.assertEqual(self.files.call('owner',args,'read',attach=writer),{'attachment_id':'imported'})
-        writer.assert_called_once_with('sample.txt',b'before');self.approve.assert_called_once()
+        writer.assert_called_once_with(self.path,args['sha256']);self.approve.assert_called_once()
         writer.reset_mock();self.rule('read','allow')
         with self.assertRaises(Denied):self.files.call('owner',{**args,'sha256':'0'*64},'read',attach=writer)
         writer.assert_not_called()
         self.permissions.halt()
         with self.assertRaises(Denied):self.files.call('owner',args,'read',attach=writer)
         writer.assert_not_called()
+
+    def test_large_attachment_import_keeps_text_limit_and_hash_check(self):
+        raw=b'x'*600001
+        self.path.write_bytes(raw)
+        self.rule('read','allow')
+        with self.assertRaises(Denied):self.call('read')
+        writer=Mock(return_value={'attachment_id':'large'})
+        args={'path':str(self.path),'kind':'attachment','sha256':hashlib.sha256(raw).hexdigest()}
+        self.assertEqual(self.files.call('owner',args,'read',attach=writer),{'attachment_id':'large'})
+        writer.assert_called_once_with(self.path,args['sha256'])
+        writer.reset_mock()
+        with self.assertRaises(Denied):self.files.call('owner',{**args,'sha256':'0'*64},'read',attach=writer)
+        writer.assert_not_called()
+        with self.path.open('wb') as f:f.truncate(1024**3+1)
+        with self.assertRaises(Denied):self.files.call('owner',args,'read',attach=writer)
+        writer.assert_not_called()
+
+    def test_failed_streaming_import_discards_partial_copy(self):
+        from assistant.attachments import Attachments
+        attachments = Attachments(self.store.directory)
+        self.path.write_bytes(b'x' * (1024 ** 2 + 1))
+        check = Mock(side_effect=[None, Denied('stopped')])
+        with self.assertRaises(Denied):
+            attachments.add(self.path, check=check)
+        self.assertEqual(list(attachments.directory.iterdir()), [])
+        with self.assertRaisesRegex(ValueError, 'expected attachment hash'):
+            attachments.add(self.path, expected_hash='0' * 64)
+        self.assertEqual(list(attachments.directory.iterdir()), [])
 
     def test_allow_ask_deny_all_four_actions(self):
         for action in ACTIONS:

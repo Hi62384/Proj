@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="77" result="Skipped:Ignored" total="77" passed="75" failed="0" inconclusive="0" skipped="2" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-18 20:32:28Z" end-time="2026-11-18 20:32:30Z" duration="1.7676319">
+  <test-suite type="TestSuite" id="1000" name="SampleProject" fullname="SampleProject" runstate="Runnable" testcasecount="77" result="Skipped" label="Ignored" start-time="2026-11-18 20:32:28Z" end-time="2026-11-18 20:32:30Z" duration="1.767632" total="77" passed="75" failed="0" inconclusive="0" skipped="2" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <reason>
+      <message><![CDATA[One or more child tests were ignored]]></message>
+    </reason>
+    <test-suite type="Assembly" id="1100" name="BaselineTests.dll" fullname="C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/SampleProject/Library/ScriptAssemblies/BaselineTests.dll" runstate="Runnable" testcasecount="77" result="Skipped" label="Ignored" start-time="2026-11-18 20:32:28Z" end-time="2026-11-18 20:32:30Z" duration="1.753230" total="77" passed="75" failed="0" inconclusive="0" skipped="2" asserts="0">
+      <properties>
+        <property name="_PID" value="18948" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <reason>
+        <message><![CDATA[One or more child tests were ignored]]></message>
+      </reason>
+      <test-suite type="TestFixture" id="1001" name="AsyncAdapterSpikeTests" fullname="AsyncAdapterSpikeTests" classname="AsyncAdapterSpikeTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-11-18 20:32:28Z" end-time="2026-11-18 20:32:28Z" duration="0.081415" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1003" name="CancellationBeforeResetStopsRun" fullname="AsyncAdapterSpikeTests.CancellationBeforeResetStopsRun" methodname="CancellationBeforeResetStopsRun" classname="AsyncAdapterSpikeTests" runstate="Runnable" seed="744273527" result="Passed" start-time="2026-11-18 20:32:28Z" end-time="2026-11-18 20:32:28Z" duration="0.034211" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1005" name="MissingPropertyIsAnError" fullname="AsyncAdapterSpikeTests.MissingPropertyIsAnError" methodname="MissingPropertyIsAnError" classname="AsyncAdapterSpikeTests" runstate="Runnable" seed="68619753" result="Passed" start-time="2026-11-18 20:32:28Z" end-time="2026-11-18 20:32:28Z" duration="0.010687" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1004" name="RestoreErrorDoesNotCaptureState" fullname="AsyncAdapterSpikeTests.RestoreErrorDoesNotCaptureState" methodname="RestoreErrorDoesNotCaptureState" classname="AsyncAdapterSpikeTests" runstate="Runnable" seed="1396221720" result="Passed" start-time="2026-11-18 20:32:28Z" end-time="2026-11-18 20:32:28Z" duration="0.005318" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1002" name="WaitsForCompletionAndFindsRegression" fullname="AsyncAdapterSpikeTests.WaitsForCompletionAndFindsRegression" methodname="WaitsForCompletionAndFindsRegression" classname="AsyncAdapterSpikeTests" runstate="Runnable" seed="2099302401" result="Passed" start-time="2026-11-18 20:32:28Z" end-time="2026-11-18 20:32:28Z" duration="0.005516" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1006" name="ComparativeFixtureTests" fullname="ComparativeFixtureTests" classname="ComparativeFixtureTests" runstate="Runnable" testcasecount="8" result="Skipped" label="Ignored" start-time="2026-11-18 20:32:28Z" end-time="2026-11-18 20:32:29Z" duration="0.599440" total="8" passed="6" failed="0" inconclusive="0" skipped="2" asserts="0">
+        <properties />
+        <reason>
+          <message><![CDATA[One or more child tests were ignored]]></message>
+        </reason>
+        <test-suite type="ParameterizedMethod" id="1013" name="NativeAndPrototypeDetectSameCases" fullname="ComparativeFixtureTests.NativeAndPrototypeDetectSameCases" classname="ComparativeFixtureTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-11-18 20:32:28Z" end-time="2026-11-18 20:32:29Z" duration="0.586895" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="1007" name="NativeAndPrototypeDetectSameCases(&quot;v1.json&quot;,False,3,&quot;none&quot;,null)" fullname="ComparativeFixtureTests.NativeAndPrototypeDetectSameCases(&quot;v1.json&quot;,False,3,&quot;none&quot;,null)" methodname="NativeAndPrototypeDetectSameCases" classname="ComparativeFixtureTests" runstate="Runnable" seed="466523020" result="Passed" start-time="2026-11-18 20:32:28Z" end-time="2026-11-18 20:32:28Z" duration="0.089567" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1008" name="NativeAndPrototypeDetectSameCases(&quot;v2.json&quot;,True,3,&quot;none&quot;,null)" fullname="ComparativeFixtureTests.NativeAndPrototypeDetectSameCases(&quot;v2.json&quot;,True,3,&quot;none&quot;,null)" methodname="NativeAndPrototypeDetectSameCases" classname="ComparativeFixtureTests" runstate="Runnable" seed="229639907" result="Passed" start-time="2026-11-18 20:32:28Z" end-time="2026-11-18 20:32:28Z" duration="0.096739" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1009" name="NativeAndPrototypeDetectSameCases(&quot;v3.json&quot;,True,4,&quot;none&quot;,null)" fullname="ComparativeFixtureTests.NativeAndPrototypeDetectSameCases(&quot;v3.json&quot;,True,4,&quot;none&quot;,null)" methodname="NativeAndPrototypeDetectSameCases" classname="ComparativeFixtureTests" runstate="Runnable" seed="1628985451" result="Passed" start-time="2026-11-18 20:32:28Z" end-time="2026-11-18 20:32:28Z" duration="0.099526" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1010" name="NativeAndPrototypeDetectSameCases(&quot;v1.json&quot;,False,3,&quot;shield&quot;,&quot;inventory.unique.shield_01&quot;)" fullname="ComparativeFixtureTests.NativeAndPrototypeDetectSameCases(&quot;v1.json&quot;,False,3,&quot;shield&quot;,&quot;inventory.unique.shield_01&quot;)" methodname="NativeAndPrototypeDetectSameCases" classname="ComparativeFixtureTests" runstate="Runnable" seed="838629317" result="Passed" start-time="2026-11-18 20:32:28Z" end-time="2026-11-18 20:32:28Z" duration="0.099513" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1011" name="NativeAndPrototypeDetectSameCases(&quot;v2.json&quot;,True,3,&quot;quest&quot;,&quot;quests.complete&quot;)" fullname="ComparativeFixtureTests.NativeAndPrototypeDetectSameCases(&quot;v2.json&quot;,True,3,&quot;quest&quot;,&quot;quests.complete&quot;)" methodname="NativeAndPrototypeDetectSameCases" classname="ComparativeFixtureTests" runstate="Runnable" seed="1455692444" result="Passed" start-time="2026-11-18 20:32:28Z" end-time="2026-11-18 20:32:28Z" duration="0.100404" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1012" name="NativeAndPrototypeDetectSameCases(&quot;v3.json&quot;,True,4,&quot;potions&quot;,&quot;inventory.potions&quot;)" fullname="ComparativeFixtureTests.NativeAndPrototypeDetectSameCases(&quot;v3.json&quot;,True,4,&quot;potions&quot;,&quot;inventory.potions&quot;)" methodname="NativeAndPrototypeDetectSameCases" classname="ComparativeFixtureTests" runstate="Runnable" seed="42970257" result="Passed" start-time="2026-11-18 20:32:28Z" end-time="2026-11-18 20:32:29Z" duration="0.099251" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+        </test-suite>
+        <test-case id="1014" name="NativeCliFailure" fullname="ComparativeFixtureTests.NativeCliFailure" methodname="NativeCliFailure" classname="ComparativeFixtureTests" runstate="Runnable" seed="237672482" result="Skipped" label="Ignored" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.009053" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <reason>
+            <message><![CDATA[Intentional negative CI experiment is opt-in]]></message>
+          </reason>
+        </test-case>
+        <test-case id="1015" name="PrototypeCliFailure" fullname="ComparativeFixtureTests.PrototypeCliFailure" methodname="PrototypeCliFailure" classname="ComparativeFixtureTests" runstate="Runnable" seed="1580022775" result="Skipped" label="Ignored" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.001929" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <reason>
+            <message><![CDATA[Intentional negative CI experiment is opt-in]]></message>
+          </reason>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1016" name="FixtureValidationTests" fullname="FixtureValidationTests" classname="FixtureValidationTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.008520" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1018" name="DuplicateIdsFail" fullname="FixtureValidationTests.DuplicateIdsFail" methodname="DuplicateIdsFail" classname="FixtureValidationTests" runstate="Runnable" seed="894283465" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.003433" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1019" name="FutureSchemaFails" fullname="FixtureValidationTests.FutureSchemaFails" methodname="FutureSchemaFails" classname="FixtureValidationTests" runstate="Runnable" seed="2050081351" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.000344" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-suite type="ParameterizedMethod" id="1025" name="UnsafePathFails" fullname="FixtureValidationTests.UnsafePathFails" classname="FixtureValidationTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.001875" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="1021" name="UnsafePathFails(&quot;../v1.json&quot;)" fullname="FixtureValidationTests.UnsafePathFails(&quot;../v1.json&quot;)" methodname="UnsafePathFails" classname="FixtureValidationTests" runstate="Runnable" seed="828105158" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.000538" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1022" name="UnsafePathFails(&quot;C:\\v1.json&quot;)" fullname="FixtureValidationTests.UnsafePathFails(&quot;C:\\v1.json&quot;)" methodname="UnsafePathFails" classname="FixtureValidationTests" runstate="Runnable" seed="46404600" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.000220" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1023" name="UnsafePathFails(&quot;sub/v1.json&quot;)" fullname="FixtureValidationTests.UnsafePathFails(&quot;sub/v1.json&quot;)" methodname="UnsafePathFails" classname="FixtureValidationTests" runstate="Runnable" seed="975543315" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.000201" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1024" name="UnsafePathFails(&quot;..&quot;)" fullname="FixtureValidationTests.UnsafePathFails(&quot;..&quot;)" methodname="UnsafePathFails" classname="FixtureValidationTests" runstate="Runnable" seed="99587932" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.000198" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+        </test-suite>
+        <test-case id="1017" name="ValidFixturePasses" fullname="FixtureValidationTests.ValidFixturePasses" methodname="ValidFixturePasses" classname="FixtureValidationTests" runstate="Runnable" seed="1035464771" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.000591" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1020" name="WrongHashFails" fullname="FixtureValidationTests.WrongHashFails" methodname="WrongHashFails" classname="FixtureValidationTests" runstate="Runnable" seed="969492830" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.000968" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1026" name="HistoricalSaveTests" fullname="HistoricalSaveTests" classname="HistoricalSaveTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.095124" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="ParameterizedMethod" id="1036" name="FiveDisposableCopiesLeaveSourceUnchanged" fullname="HistoricalSaveTests.FiveDisposableCopiesLeaveSourceUnchanged" classname="HistoricalSaveTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.089032" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="1033" name="FiveDisposableCopiesLeaveSourceUnchanged(&quot;v1.json&quot;)" fullname="HistoricalSaveTests.FiveDisposableCopiesLeaveSourceUnchanged(&quot;v1.json&quot;)" methodname="FiveDisposableCopiesLeaveSourceUnchanged" classname="HistoricalSaveTests" runstate="Runnable" seed="1003033209" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.034453" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1034" name="FiveDisposableCopiesLeaveSourceUnchanged(&quot;v2.json&quot;)" fullname="HistoricalSaveTests.FiveDisposableCopiesLeaveSourceUnchanged(&quot;v2.json&quot;)" methodname="FiveDisposableCopiesLeaveSourceUnchanged" classname="HistoricalSaveTests" runstate="Runnable" seed="452546656" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.026975" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1035" name="FiveDisposableCopiesLeaveSourceUnchanged(&quot;v3.json&quot;)" fullname="HistoricalSaveTests.FiveDisposableCopiesLeaveSourceUnchanged(&quot;v3.json&quot;)" methodname="FiveDisposableCopiesLeaveSourceUnchanged" classname="HistoricalSaveTests" runstate="Runnable" seed="536414006" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.026474" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+        </test-suite>
+        <test-case id="1032" name="FutureVersionIsRejected" fullname="HistoricalSaveTests.FutureVersionIsRejected" methodname="FutureVersionIsRejected" classname="HistoricalSaveTests" runstate="Runnable" seed="1805507369" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.000588" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-suite type="ParameterizedMethod" id="1030" name="HistoricalSaveRestoresExpectedState" fullname="HistoricalSaveTests.HistoricalSaveRestoresExpectedState" classname="HistoricalSaveTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.003119" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="1027" name="HistoricalSaveRestoresExpectedState(&quot;v1.json&quot;,3,False)" fullname="HistoricalSaveTests.HistoricalSaveRestoresExpectedState(&quot;v1.json&quot;,3,False)" methodname="HistoricalSaveRestoresExpectedState" classname="HistoricalSaveTests" runstate="Runnable" seed="276164481" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.000937" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1028" name="HistoricalSaveRestoresExpectedState(&quot;v2.json&quot;,3,True)" fullname="HistoricalSaveTests.HistoricalSaveRestoresExpectedState(&quot;v2.json&quot;,3,True)" methodname="HistoricalSaveRestoresExpectedState" classname="HistoricalSaveTests" runstate="Runnable" seed="377653761" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.000611" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1029" name="HistoricalSaveRestoresExpectedState(&quot;v3.json&quot;,4,True)" fullname="HistoricalSaveTests.HistoricalSaveRestoresExpectedState(&quot;v3.json&quot;,4,True)" methodname="HistoricalSaveRestoresExpectedState" classname="HistoricalSaveTests" runstate="Runnable" seed="923297388" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.000482" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+        </test-suite>
+        <test-case id="1031" name="NativeAssertionReportsSilentInventoryLoss" fullname="HistoricalSaveTests.NativeAssertionReportsSilentInventoryLoss" methodname="NativeAssertionReportsSilentInventoryLoss" classname="HistoricalSaveTests" runstate="Runnable" seed="1645351233" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.000978" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1037" name="ManifestAndCopyTests" fullname="ManifestAndCopyTests" classname="ManifestAndCopyTests" runstate="Runnable" testcasecount="16" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.399466" total="16" passed="16" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1049" name="CopiesVerifiedBytesAndDeletesOnlyCopy" fullname="ManifestAndCopyTests.CopiesVerifiedBytesAndDeletesOnlyCopy" methodname="CopiesVerifiedBytesAndDeletesOnlyCopy" classname="ManifestAndCopyTests" runstate="Runnable" seed="474685639" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.013788" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1053" name="DeadlineKeepsCopyUntilUncooperativeAdapterFinishes" fullname="ManifestAndCopyTests.DeadlineKeepsCopyUntilUncooperativeAdapterFinishes" methodname="DeadlineKeepsCopyUntilUncooperativeAdapterFinishes" classname="ManifestAndCopyTests" runstate="Runnable" seed="945547111" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.331109" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1050" name="HashMismatchCreatesNoCopy" fullname="ManifestAndCopyTests.HashMismatchCreatesNoCopy" methodname="HashMismatchCreatesNoCopy" classname="ManifestAndCopyTests" runstate="Runnable" seed="33012495" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.003215" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1052" name="InvalidHashStopsBeforeAdapter" fullname="ManifestAndCopyTests.InvalidHashStopsBeforeAdapter" methodname="InvalidHashStopsBeforeAdapter" classname="ManifestAndCopyTests" runstate="Runnable" seed="1259806459" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.006828" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1038" name="ParsesValidManifest" fullname="ManifestAndCopyTests.ParsesValidManifest" methodname="ParsesValidManifest" classname="ManifestAndCopyTests" runstate="Runnable" seed="1127894245" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.000776" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1046" name="RejectsDuplicateFixtureIds" fullname="ManifestAndCopyTests.RejectsDuplicateFixtureIds" methodname="RejectsDuplicateFixtureIds" classname="ManifestAndCopyTests" runstate="Runnable" seed="840777832" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.000690" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1054" name="RejectsInvalidDeadlineBeforeAdapter" fullname="ManifestAndCopyTests.RejectsInvalidDeadlineBeforeAdapter" methodname="RejectsInvalidDeadlineBeforeAdapter" classname="ManifestAndCopyTests" runstate="Runnable" seed="149800590" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.002366" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-suite type="ParameterizedMethod" id="1045" name="RejectsInvalidManifest" fullname="ManifestAndCopyTests.RejectsInvalidManifest" classname="ManifestAndCopyTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.005887" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="1039" name="RejectsInvalidManifest(&quot;\&quot;schema_version\&quot;:1&quot;,&quot;\&quot;schema_version\&quot;:2&quot;)" fullname="ManifestAndCopyTests.RejectsInvalidManifest(&quot;\&quot;schema_version\&quot;:1&quot;,&quot;\&quot;schema_version\&quot;:2&quot;)" methodname="RejectsInvalidManifest" classname="ManifestAndCopyTests" runstate="Runnable" seed="940799626" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.000964" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1040" name="RejectsInvalidManifest(&quot;\&quot;schema_version\&quot;:1&quot;,&quot;\&quot;schema_version\&quot;:1,\&quot;schema_version\&quot;:1&quot;)" fullname="ManifestAndCopyTests.RejectsInvalidManifest(&quot;\&quot;schema_version\&quot;:1&quot;,&quot;\&quot;schema_version\&quot;:1,\&quot;schema_version\&quot;:1&quot;)" methodname="RejectsInvalidManifest" classname="ManifestAndCopyTests" runstate="Runnable" seed="2123520862" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.002451" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1041" name="RejectsInvalidManifest(&quot;\&quot;suite_id\&quot;:\&quot;suite\&quot;&quot;,&quot;\&quot;suite_id\&quot;:\&quot;suite\&quot;,\&quot;unexpected\&quot;:0&quot;)" fullname="ManifestAndCopyTests.RejectsInvalidManifest(&quot;\&quot;suite_id\&quot;:\&quot;suite\&quot;&quot;,&quot;\&quot;suite_id\&quot;:\&quot;suite\&quot;,\&quot;unexpected\&quot;:0&quot;)" methodname="RejectsInvalidManifest" classname="ManifestAndCopyTests" runstate="Runnable" seed="1784997372" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.000224" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1042" name="RejectsInvalidManifest(&quot;\&quot;file\&quot;:\&quot;v1.json\&quot;&quot;,&quot;\&quot;file\&quot;:\&quot;../v1.json\&quot;&quot;)" fullname="ManifestAndCopyTests.RejectsInvalidManifest(&quot;\&quot;file\&quot;:\&quot;v1.json\&quot;&quot;,&quot;\&quot;file\&quot;:\&quot;../v1.json\&quot;&quot;)" methodname="RejectsInvalidManifest" classname="ManifestAndCopyTests" runstate="Runnable" seed="185608697" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.000160" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1043" name="RejectsInvalidManifest(&quot;\&quot;equals\&quot;:true&quot;,&quot;\&quot;equals\&quot;:\&quot;true\&quot;&quot;)" fullname="ManifestAndCopyTests.RejectsInvalidManifest(&quot;\&quot;equals\&quot;:true&quot;,&quot;\&quot;equals\&quot;:\&quot;true\&quot;&quot;)" methodname="RejectsInvalidManifest" classname="ManifestAndCopyTests" runstate="Runnable" seed="1709638591" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.000163" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1044" name="RejectsInvalidManifest(&quot;\&quot;equals\&quot;:true&quot;,&quot;\&quot;equals\&quot;:NaN&quot;)" fullname="ManifestAndCopyTests.RejectsInvalidManifest(&quot;\&quot;equals\&quot;:true&quot;,&quot;\&quot;equals\&quot;:NaN&quot;)" methodname="RejectsInvalidManifest" classname="ManifestAndCopyTests" runstate="Runnable" seed="2045795160" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.000180" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+        </test-suite>
+        <test-case id="1048" name="RejectsSourceAsScratch" fullname="ManifestAndCopyTests.RejectsSourceAsScratch" methodname="RejectsSourceAsScratch" classname="ManifestAndCopyTests" runstate="Runnable" seed="1453861398" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.000586" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1047" name="RejectsTrailingData" fullname="ManifestAndCopyTests.RejectsTrailingData" methodname="RejectsTrailingData" classname="ManifestAndCopyTests" runstate="Runnable" seed="16591359" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.000379" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1051" name="RunnerDetectsSilentLossAndPreservesSource" fullname="ManifestAndCopyTests.RunnerDetectsSilentLossAndPreservesSource" methodname="RunnerDetectsSilentLossAndPreservesSource" classname="ManifestAndCopyTests" runstate="Runnable" seed="1914290401" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.028520" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1055" name="NativeBaselineTests" fullname="NativeBaselineTests" classname="NativeBaselineTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.001528" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1056" name="NativeJsonAndAssertionsDetectLostInventory" fullname="NativeBaselineTests.NativeJsonAndAssertionsDetectLostInventory" methodname="NativeJsonAndAssertionsDetectLostInventory" classname="NativeBaselineTests" runstate="Runnable" seed="1066952781" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.000692" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1057" name="NativeIntegrationExercise" fullname="NativeIntegrationExercise" classname="NativeIntegrationExercise" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.149216" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="ParameterizedMethod" id="1061" name="RestoresExpectedState" fullname="NativeIntegrationExercise.RestoresExpectedState" classname="NativeIntegrationExercise" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.148640" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="1058" name="RestoresExpectedState(&quot;v1.json&quot;,3,False)" fullname="NativeIntegrationExercise.RestoresExpectedState(&quot;v1.json&quot;,3,False)" methodname="RestoresExpectedState" classname="NativeIntegrationExercise" runstate="Runnable" seed="119366838" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.048141" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1059" name="RestoresExpectedState(&quot;v2.json&quot;,3,True)" fullname="NativeIntegrationExercise.RestoresExpectedState(&quot;v2.json&quot;,3,True)" methodname="RestoresExpectedState" classname="NativeIntegrationExercise" runstate="Runnable" seed="1986676431" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.050295" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1060" name="RestoresExpectedState(&quot;v3.json&quot;,4,True)" fullname="NativeIntegrationExercise.RestoresExpectedState(&quot;v3.json&quot;,4,True)" methodname="RestoresExpectedState" classname="NativeIntegrationExercise" runstate="Runnable" seed="1548822899" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.049261" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+        </test-suite>
+      </test-suite>
+      <test-suite type="TestFixture" id="1062" name="PrototypeIntegrationExercise" fullname="PrototypeIntegrationExercise" classname="PrototypeIntegrationExercise" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.148074" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="ParameterizedMethod" id="1066" name="RestoresExpectedState" fullname="PrototypeIntegrationExercise.RestoresExpectedState" classname="PrototypeIntegrationExercise" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.147218" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="1063" name="RestoresExpectedState(&quot;v1.json&quot;,&quot;462a55994a843bf1eaa4bf350a533d2a498edf01b5726f5820e4b2e68dcd22bc&quot;,3,False)" fullname="PrototypeIntegrationExercise.RestoresExpectedState(&quot;v1.json&quot;,&quot;462a55994a843bf1eaa4bf350a533d2a498edf01b5726f5820e4b2e68dcd22bc&quot;,3,False)" methodname="RestoresExpectedState" classname="PrototypeIntegrationExercise" runstate="Runnable" seed="642148154" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.046430" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1064" name="RestoresExpectedState(&quot;v2.json&quot;,&quot;aad6fb81678b3cd0bc49669338d61acfc9bd43a4101e31c767acf030f9ee04a5&quot;,3,True)" fullname="PrototypeIntegrationExercise.RestoresExpectedState(&quot;v2.json&quot;,&quot;aad6fb81678b3cd0bc49669338d61acfc9bd43a4101e31c767acf030f9ee04a5&quot;,3,True)" methodname="RestoresExpectedState" classname="PrototypeIntegrationExercise" runstate="Runnable" seed="1599231376" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.049182" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1065" name="RestoresExpectedState(&quot;v3.json&quot;,&quot;c93bf46eedaf15bd39329f66bb25199c846237d18affc657e2d50fddbc23cab1&quot;,4,True)" fullname="PrototypeIntegrationExercise.RestoresExpectedState(&quot;v3.json&quot;,&quot;c93bf46eedaf15bd39329f66bb25199c846237d18affc657e2d50fddbc23cab1&quot;,4,True)" methodname="RestoresExpectedState" classname="PrototypeIntegrationExercise" runstate="Runnable" seed="1500487169" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.050339" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+        </test-suite>
+      </test-suite>
+      <test-suite type="TestFixture" id="1067" name="PrototypeReportTests" fullname="PrototypeReportTests" classname="PrototypeReportTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.008886" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1069" name="IncompleteOrAbortedCannotPass" fullname="PrototypeReportTests.IncompleteOrAbortedCannotPass" methodname="IncompleteOrAbortedCannotPass" classname="PrototypeReportTests" runstate="Runnable" seed="1164096776" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.003813" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1070" name="RejectsMissingDuplicateAndInconsistentResults" fullname="PrototypeReportTests.RejectsMissingDuplicateAndInconsistentResults" methodname="RejectsMissingDuplicateAndInconsistentResults" classname="PrototypeReportTests" runstate="Runnable" seed="440629437" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.001046" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1068" name="StableOrderingAndEscapingRoundTrip" fullname="PrototypeReportTests.StableOrderingAndEscapingRoundTrip" methodname="StableOrderingAndEscapingRoundTrip" classname="PrototypeReportTests" runstate="Runnable" seed="1717183851" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.002914" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1071" name="PrototypeRunnerTests" fullname="PrototypeRunnerTests" classname="PrototypeRunnerTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.015477" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1072" name="GoodSavePasses" fullname="PrototypeRunnerTests.GoodSavePasses" methodname="GoodSavePasses" classname="PrototypeRunnerTests" runstate="Runnable" seed="144654795" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.006425" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1074" name="InvalidHashStopsBeforeLoad" fullname="PrototypeRunnerTests.InvalidHashStopsBeforeLoad" methodname="InvalidHashStopsBeforeLoad" classname="PrototypeRunnerTests" runstate="Runnable" seed="1208971705" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.001378" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1073" name="SilentLossHasPath" fullname="PrototypeRunnerTests.SilentLossHasPath" methodname="SilentLossHasPath" classname="PrototypeRunnerTests" runstate="Runnable" seed="2018768570" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.006167" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1075" name="PrototypeSuiteTests" fullname="PrototypeSuiteTests" classname="PrototypeSuiteTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:30Z" duration="0.139242" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1078" name="ExternalCancellationDoesNotReturnCompleteReport" fullname="PrototypeSuiteTests.ExternalCancellationDoesNotReturnCompleteReport" methodname="ExternalCancellationDoesNotReturnCompleteReport" classname="PrototypeSuiteTests" runstate="Runnable" seed="784217578" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.005280" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1077" name="RejectsDuplicateIdsBeforeFactory" fullname="PrototypeSuiteTests.RejectsDuplicateIdsBeforeFactory" methodname="RejectsDuplicateIdsBeforeFactory" classname="PrototypeSuiteTests" runstate="Runnable" seed="54239581" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:29Z" duration="0.002036" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1076" name="SortsAndReportsDistinctOutcomesWithoutSecrets" fullname="PrototypeSuiteTests.SortsAndReportsDistinctOutcomesWithoutSecrets" methodname="SortsAndReportsDistinctOutcomesWithoutSecrets" classname="PrototypeSuiteTests" runstate="Runnable" seed="796636291" result="Passed" start-time="2026-11-18 20:32:29Z" end-time="2026-11-18 20:32:30Z" duration="0.130222" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1079" name="ScalarAssertionTests" fullname="ScalarAssertionTests" classname="ScalarAssertionTests" runstate="Runnable" testcasecount="17" result="Passed" start-time="2026-11-18 20:32:30Z" end-time="2026-11-18 20:32:30Z" duration="0.101983" total="17" passed="17" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1091" name="AdapterCannotEraseAssertionsDuringRun" fullname="ScalarAssertionTests.AdapterCannotEraseAssertionsDuringRun" methodname="AdapterCannotEraseAssertionsDuringRun" classname="ScalarAssertionTests" runstate="Runnable" seed="1381556989" result="Passed" start-time="2026-11-18 20:32:30Z" end-time="2026-11-18 20:32:30Z" duration="0.006783" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1092" name="EmptyMutatedAssertionsRejectedBeforeAdapter" fullname="ScalarAssertionTests.EmptyMutatedAssertionsRejectedBeforeAdapter" methodname="EmptyMutatedAssertionsRejectedBeforeAdapter" classname="ScalarAssertionTests" runstate="Runnable" seed="1680083374" result="Passed" start-time="2026-11-18 20:32:30Z" end-time="2026-11-18 20:32:30Z" duration="0.001404" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1093" name="InvalidMutatedToleranceRejectedBeforeAdapter" fullname="ScalarAssertionTests.InvalidMutatedToleranceRejectedBeforeAdapter" methodname="InvalidMutatedToleranceRejectedBeforeAdapter" classname="ScalarAssertionTests" runstate="Runnable" seed="361574713" result="Passed" start-time="2026-11-18 20:32:30Z" end-time="2026-11-18 20:32:30Z" duration="0.002121" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-suite type="ParameterizedMethod" id="1082" name="NumberAssertionChecksInteger" fullname="ScalarAssertionTests.NumberAssertionChecksInteger" classname="ScalarAssertionTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-18 20:32:30Z" end-time="2026-11-18 20:32:30Z" duration="0.019205" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="1080" name="NumberAssertionChecksInteger(3,&quot;pass&quot;)" fullname="ScalarAssertionTests.NumberAssertionChecksInteger(3,&quot;pass&quot;)" methodname="NumberAssertionChecksInteger" classname="ScalarAssertionTests" runstate="Runnable" seed="1587861365" result="Passed" start-time="2026-11-18 20:32:30Z" end-time="2026-11-18 20:32:30Z" duration="0.008497" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1081" name="NumberAssertionChecksInteger(4,&quot;regression&quot;)" fullname="ScalarAssertionTests.NumberAssertionChecksInteger(4,&quot;regression&quot;)" methodname="NumberAssertionChecksInteger" classname="ScalarAssertionTests" runstate="Runnable" seed="2099767941" result="Passed" start-time="2026-11-18 20:32:30Z" end-time="2026-11-18 20:32:30Z" duration="0.009695" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+        </test-suite>
+        <test-suite type="ParameterizedMethod" id="1090" name="RejectsInvalidScalarAssertion" fullname="ScalarAssertionTests.RejectsInvalidScalarAssertion" classname="ScalarAssertionTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-11-18 20:32:30Z" end-time="2026-11-18 20:32:30Z" duration="0.003204" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="1085" name="RejectsInvalidScalarAssertion(&quot;{\&quot;path\&quot;:\&quot;value\&quot;,\&quot;type\&quot;:\&quot;number\&quot;,\&quot;equals\&quot;:3,\&quot;tolerance\&quot;:-1}&quot;)" fullname="ScalarAssertionTests.RejectsInvalidScalarAssertion(&quot;{\&quot;path\&quot;:\&quot;value\&quot;,\&quot;type\&quot;:\&quot;number\&quot;,\&quot;equals\&quot;:3,\&quot;tolerance\&quot;:-1}&quot;)" methodname="RejectsInvalidScalarAssertion" classname="ScalarAssertionTests" runstate="Runnable" seed="2092956950" result="Passed" start-time="2026-11-18 20:32:30Z" end-time="2026-11-18 20:32:30Z" duration="0.000897" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1086" name="RejectsInvalidScalarAssertion(&quot;{\&quot;path\&quot;:\&quot;value\&quot;,\&quot;type\&quot;:\&quot;number\&quot;,\&quot;equals\&quot;:3,\&quot;tolerance\&quot;:1e999}&quot;)" fullname="ScalarAssertionTests.RejectsInvalidScalarAssertion(&quot;{\&quot;path\&quot;:\&quot;value\&quot;,\&quot;type\&quot;:\&quot;number\&quot;,\&quot;equals\&quot;:3,\&quot;tolerance\&quot;:1e999}&quot;)" methodname="RejectsInvalidScalarAssertion" classname="ScalarAssertionTests" runstate="Runnable" seed="881477463" result="Passed" start-time="2026-11-18 20:32:30Z" end-time="2026-11-18 20:32:30Z" duration="0.000276" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1087" name="RejectsInvalidScalarAssertion(&quot;{\&quot;path\&quot;:\&quot;value\&quot;,\&quot;type\&quot;:\&quot;boolean\&quot;,\&quot;equals\&quot;:true,\&quot;tolerance\&quot;:0}&quot;)" fullname="ScalarAssertionTests.RejectsInvalidScalarAssertion(&quot;{\&quot;path\&quot;:\&quot;value\&quot;,\&quot;type\&quot;:\&quot;boolean\&quot;,\&quot;equals\&quot;:true,\&quot;tolerance\&quot;:0}&quot;)" methodname="RejectsInvalidScalarAssertion" classname="ScalarAssertionTests" runstate="Runnable" seed="940343456" result="Passed" start-time="2026-11-18 20:32:30Z" end-time="2026-11-18 20:32:30Z" duration="0.000226" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1088" name="RejectsInvalidScalarAssertion(&quot;{\&quot;path\&quot;:\&quot;value\&quot;,\&quot;type\&quot;:\&quot;number\&quot;,\&quot;equals\&quot;:\&quot;3\&quot;}&quot;)" fullname="ScalarAssertionTests.RejectsInvalidScalarAssertion(&quot;{\&quot;path\&quot;:\&quot;value\&quot;,\&quot;type\&quot;:\&quot;number\&quot;,\&quot;equals\&quot;:\&quot;3\&quot;}&quot;)" methodname="RejectsInvalidScalarAssertion" classname="ScalarAssertionTests" runstate="Runnable" seed="2005640396" result="Passed" start-time="2026-11-18 20:32:30Z" end-time="2026-11-18 20:32:30Z" duration="0.000222" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1089" name="RejectsInvalidScalarAssertion(&quot;{\&quot;path\&quot;:\&quot;value\&quot;,\&quot;type\&quot;:\&quot;string\&quot;,\&quot;equals\&quot;:false}&quot;)" fullname="ScalarAssertionTests.RejectsInvalidScalarAssertion(&quot;{\&quot;path\&quot;:\&quot;value\&quot;,\&quot;type\&quot;:\&quot;string\&quot;,\&quot;equals\&quot;:false}&quot;)" methodname="RejectsInvalidScalarAssertion" classname="ScalarAssertionTests" runstate="Runnable" seed="464927405" result="Passed" start-time="2026-11-18 20:32:30Z" end-time="2026-11-18 20:32:30Z" duration="0.000234" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+        </test-suite>
+        <test-suite type="ParameterizedMethod" id="1098" name="RejectsUnsafeMagnitudeBeforeComparison" fullname="ScalarAssertionTests.RejectsUnsafeMagnitudeBeforeComparison" classname="ScalarAssertionTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-11-18 20:32:30Z" end-time="2026-11-18 20:32:30Z" duration="0.002415" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="1094" name="RejectsUnsafeMagnitudeBeforeComparison(&quot;9007199254740992&quot;)" fullname="ScalarAssertionTests.RejectsUnsafeMagnitudeBeforeComparison(&quot;9007199254740992&quot;)" methodname="RejectsUnsafeMagnitudeBeforeComparison" classname="ScalarAssertionTests" runstate="Runnable" seed="2145785989" result="Passed" start-time="2026-11-18 20:32:30Z" end-time="2026-11-18 20:32:30Z" duration="0.000620" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1095" name="RejectsUnsafeMagnitudeBeforeComparison(&quot;9007199254740993&quot;)" fullname="ScalarAssertionTests.RejectsUnsafeMagnitudeBeforeComparison(&quot;9007199254740993&quot;)" methodname="RejectsUnsafeMagnitudeBeforeComparison" classname="ScalarAssertionTests" runstate="Runnable" seed="2102103271" result="Passed" start-time="2026-11-18 20:32:30Z" end-time="2026-11-18 20:32:30Z" duration="0.000240" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1096" name="RejectsUnsafeMagnitudeBeforeComparison(&quot;9.007199254740993e15&quot;)" fullname="ScalarAssertionTests.RejectsUnsafeMagnitudeBeforeComparison(&quot;9.007199254740993e15&quot;)" methodname="RejectsUnsafeMagnitudeBeforeComparison" classname="ScalarAssertionTests" runstate="Runnable" seed="367069049" result="Passed" start-time="2026-11-18 20:32:30Z" end-time="2026-11-18 20:32:30Z" duration="0.000228" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1097" name="RejectsUnsafeMagnitudeBeforeComparison(&quot;-9007199254740993&quot;)" fullname="ScalarAssertionTests.RejectsUnsafeMagnitudeBeforeComparison(&quot;-9007199254740993&quot;)" methodname="RejectsUnsafeMagnitudeBeforeComparison" classname="ScalarAssertionTests" runstate="Runnable" seed="1394322542" result="Passed" start-time="2026-11-18 20:32:30Z" end-time="2026-11-18 20:32:30Z" duration="0.000223" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+        </test-suite>
+        <test-case id="1084" name="StringsCompareOrdinally" fullname="ScalarAssertionTests.StringsCompareOrdinally" methodname="StringsCompareOrdinally" classname="ScalarAssertionTests" runstate="Runnable" seed="639411626" result="Passed" start-time="2026-11-18 20:32:30Z" end-time="2026-11-18 20:32:30Z" duration="0.017582" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1083" name="ToleranceAndStrictTypes" fullname="ScalarAssertionTests.ToleranceAndStrictTypes" methodname="ToleranceAndStrictTypes" classname="ScalarAssertionTests" runstate="Runnable" seed="547750705" result="Passed" start-time="2026-11-18 20:32:30Z" end-time="2026-11-18 20:32:30Z" duration="0.035354" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1099" name="UnsafeObservedMagnitudeCannotPass" fullname="ScalarAssertionTests.UnsafeObservedMagnitudeCannotPass" methodname="UnsafeObservedMagnitudeCannotPass" classname="ScalarAssertionTests" runstate="Runnable" seed="1338443929" result="Passed" start-time="2026-11-18 20:32:30Z" end-time="2026-11-18 20:32:30Z" duration="0.011422" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[Saving results to: C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\completion-results.xml
+]]></output>
+        </test-case>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

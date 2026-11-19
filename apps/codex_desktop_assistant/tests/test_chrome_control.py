@@ -1,4 +1,6 @@
 """Conversation, origin, approval and file boundaries for existing Chrome."""
+import base64
+import hashlib
 import copy
 import json
 import sys
@@ -22,6 +24,9 @@ class FakeBridge:
     def request(self,operation,args,guard=None,**kwargs):
         if guard:guard()
         self.on_request(operation,args);self.calls.append((operation,copy.deepcopy(args)))
+        if operation=='upload_chunk':
+            block = base64.b64decode(args['data'])
+            return {'received':args['offset']+len(block),'checksum':hashlib.sha256(block).hexdigest()}
         if operation=='context':return dict(self.context)
         if operation=='inspect':return {'url':self.context['page_url'],'observation':'obs','controls':[{'element':0,'label':self.context['label']}]}
         if operation in ('list_tabs','find_tabs'):return {'tabs':self.state['tabs']}
@@ -233,6 +238,25 @@ class ChromeControlTests(unittest.TestCase):
         self.assertEqual(b''.join(base64.b64decode(c['data']) for c in chunks),raw)
         self.assertEqual(self.approve.call_args.args[2]['file']['name'],'synthetic.bin')
         self.assertEqual(next(a for op,a in self.bridge.calls if op=='upload_begin')['name'],'synthetic.bin')
+
+    def test_wrong_chunk_receipt_never_selects_partial_file(self):
+        source = self.root / 'package.bin'
+        source.write_bytes(b'x' * (512 * 1024 + 1))
+        record = self.attachments.add(source)
+        self.attach()
+        self.inspect()
+        request = self.bridge.request
+        def corrupt_receipt(operation, args, **kwargs):
+            receipt = request(operation, args, **kwargs)
+            if operation == 'upload_chunk':
+                receipt['checksum'] = '0' * 64
+            return receipt
+        self.bridge.request = corrupt_receipt
+        with self.assertRaisesRegex(Denied, 'chunk verification'):
+            self.control.call(self.conversation, 'action', {
+                'tab':42, 'observation':'obs', 'element':0, 'operation':'upload',
+                'attachment_id':record['id']}, {record['id']:record})
+        self.assertNotIn('upload_finish', [op for op, args in self.bridge.calls])
 
     def test_upload_rejects_changed_attachment_and_external_destination(self):
         source=self.root/'synthetic.txt';source.write_text('original');record=self.attachments.add(source)

@@ -30,7 +30,8 @@ class ControllerClient:
                 time.sleep(.025)
         with connection:
             connection.send_bytes(json.dumps({'client':self.identity,'operation':operation,'arguments':arguments or {},'request':request_id or uuid.uuid4().hex},allow_nan=False).encode())
-            if not connection.poll(330):raise TimeoutError('Bridge action timed out; inspect actual state before retrying')
+            upload = operation == 'chrome.action' and (arguments or {}).get('operation') == 'upload'
+            if not connection.poll(3600 if upload else 330):raise TimeoutError('Bridge action timed out; inspect actual state before retrying')
             response=json.loads(connection.recv_bytes(2000000))
         if not response.get('ok'):raise RuntimeError(response.get('error','Controller failed'))
         return response['result']

@@ -24,7 +24,7 @@
     "GDM-002"
   ],
   "legacy_ids": [],
-  "next_action": "Obtain or locate no-cost Godot and Dependencies tools, build a real minimal GDExtension export fixture, and compare export logs and Dependencies findings before the go/kill implementation decision.",
+  "next_action": "Reconsider the conditional feasibility pause if broader reproducible cases and a materially comparable diagnostic trial establish value beyond the free workflow and justify general parser, race-resistant input and support costs.",
   "last_reviewed": "2026-11-15",
   "offer_price_usd": null,
   "delivery_hours_assumption": null,
@@ -83,10 +83,67 @@
     {
       "label": "Local feasibility checkpoint (2026-11-17)",
       "path": "results/GDM-003/feasibility-checkpoint-2026-11-17.md"
+    },
+    {
+      "label": "Import fixture checkpoint (2026-11-18)",
+      "path": "results/GDM-003/import-fixture-checkpoint-2026-11-18.md"
+    },
+    {
+      "label": "Godot and free-tool baseline (2026-11-18)",
+      "path": "results/GDM-003/godot-free-baseline-2026-11-18.md"
+    },
+    {
+      "label": "Baseline boundaries and decision (2026-11-18)",
+      "path": "results/GDM-003/baseline-boundaries-2026-11-18.md"
+    },
+    {
+      "label": "Integrated feasibility spike (2026-11-18)",
+      "path": "results/GDM-003/integrated-spike-2026-11-18.md"
+    },
+    {
+      "label": "Secure input design and handle experiment (2026-11-18)",
+      "path": "results/GDM-003/secure-input-design-2026-11-18.md"
+    },
+    {
+      "label": "Feasibility decision (2026-11-18)",
+      "path": "results/GDM-003/feasibility-decision-2026-11-18.md"
+    },
+    {
+      "label": "Dependency collision follow-up (2026-11-18)",
+      "path": "results/GDM-003/dependency-collision-2026-11-18.md"
+    },
+    {
+      "label": "Workflow timing follow-up (2026-11-18)",
+      "path": "results/GDM-003/workflow-timing-2026-11-18.md"
+    },
+    {
+      "label": "Custom feature follow-up (2026-11-18)",
+      "path": "results/GDM-003/custom-feature-followup-2026-11-18.md"
+    },
+    {
+      "label": "Relative descriptor path follow-up (2026-11-18)",
+      "path": "results/GDM-003/relative-path-followup-2026-11-18.md"
+    },
+    {
+      "label": "Public technical evidence and debug baseline (2026-11-18)",
+      "path": "results/GDM-003/public-evidence-and-debug-baseline-2026-11-18.md"
+    },
+    {
+      "label": "Cyclic import follow-up (2026-11-18)",
+      "path": "results/GDM-003/cyclic-import-followup-2026-11-18.md"
+    },
+    {
+      "label": "Multiline descriptor follow-up (2026-11-18)",
+      "path": "results/GDM-003/multiline-descriptor-followup-2026-11-18.md"
     }
   ]
 }
 ---
+
+## Execution persistence for this project
+
+When the owner asks you to work on this project, continue autonomously through all remaining authorized tasks possible with available access and resources. Do not stop merely because a few minutes passed, after one task, a plan, or a progress update. Continue implementation, appropriate verification, evidence recording, and the next actionable task until the requested work is finished or no further authorized work can be performed. Give progress updates without ending longer work. If authorization, access, payment, another person, or external state blocks an action, complete independent authorized work first, then checkpoint and report the precise blocker and next action. Preserve completed progress, financial evidence, and uncertain external effects; respect existing scope, budget, permissions, and safety controls. Never claim unverified completion.
+
 # Packaged Build / Native Dependency Verifier — Complete Business and Implementation Plan
 
 ## 1. Executive decision and current status
@@ -98,7 +155,7 @@
 - **First bounded case:** **Godot 4 GDExtension exports on Windows x64**, using static `.gdextension` library references + portable executable import inspection. General Windows build analysis is reusable; Unity/Unreal rulepacks are optional *later* editions.
 - **Distribution:** direct standalone download through eligible seller checkout; *not* a Unity Asset Store submission that bundles an executable. Even if Unity plugin support is later added, executable rules must be verified independently.
 - **Purchase reason:** a useful engine-context diagnosis, reproducible CI failure and remediation path. **A plain dependency tree viewer is not enough** and must not be sold as new value.
-- **Current state:** planned, unvalidated, no tests/fixtures/releases/sales completed; the immediate next activity is a synthetic reproducible comparison against the free **Dependencies** tool.
+- **Current state (2026-11-18):** planned and commercially unvalidated. Owned fixture exports, a bounded trusted-input spike, and a free-tool comparison exist; no release or sale is verified. Expansion is conditionally paused at the differentiation gate; see the current checkpoint in §20 and the dated results for evidence and limits.
 
 ## 2. Repository baseline and semantic duplication screen
 
@@ -393,6 +450,14 @@ Other fail conditions: insufficient legally permitted distribution, accuracy/pri
 
 ## 20. Resume checkpoint and work log
 
+### Current checkpoint (2026-11-18)
+
+- **Observed work:** Owned Godot 4.7.2 fixtures and a trusted-input PE/engine-context spike were built and compared against Dependencies, Godot logs, `dumpbin`, and small fixture-specific helpers. Real exports demonstrated missing dependencies, wrong architecture, staging collisions and an incompatible replacement; a benign byte-change control loaded successfully. See the dated public results for exact evidence and reproducible source.
+- **Decision and limits:** Expansion is conditionally paused at the plan’s differentiation gate because a material general advantage over the tested free workflow remains unproven. This does not prove general equivalence or lack of demand. The spike is not a releasable product, does not safely handle hostile inputs, and does not prove clean-host compatibility. Actual revenue and profit remain unknown; no sale or publication is verified. The no-cost tools were downloaded for the experiment; no spending or commercial action occurred.
+- **Next action:** Reconsider the conditional pause if broader reproducible cases demonstrate material value beyond the free workflow and justify general parser, race-resistant input and support costs. Continue only within existing authorization and the stated gate.
+
+### Historical planning checkpoint (2026-11-15; superseded where stated as current)
+
 - **Completed with evidence:** detailed existing GDM plan read from the remote repo; current official/public source and product-feature review; this more specific architecture, test plan, financial *hypotheses*, launch drafts and Codex work breakdown. No source code, verified engine integration, published listing, confirmed sale, private buyer interview or paid market validation was generated by the document revision.
 - **Work state:** `planned`; **commercial validation:** `unvalidated`; **actual revenue/profit:** `null`; **authorized spending:** CAD0; **external effects:** `not_started`.
 - **Current task:** Godot Windows x64 native package preflight tool — begin the first no-cost implementation/feasibility task once the owner separately authorizes local development in the normal Codex workflow.
@@ -428,3 +493,49 @@ The `source_ids` in the strict JSON frontmatter remain restricted to IDs already
 
 
 - 2026-11-17 — Local feasibility work: owned synthetic C DLL source and path-testing descriptor created; MSVC produced an x64 DLL confirmed by dumpbin, then generated binaries were removed. The DLL is not a functioning GDExtension. Godot and Dependencies were not found on PATH, so export logs, competitor comparison, product advantage and go/kill decision remain unverified. See public feasibility checkpoint. No spending or external actions.
+
+- 2026-11-18 — Added owned PE import-chain sources; MSVC and dumpbin verified x64 root → middle → leaf imports and an x86 leaf header. Godot and Dependencies comparison remains unverified; direct network access was refused. See public import-fixture checkpoint. No spending or publication.
+
+- 2026-11-18 — Godot 4.7.2 exported and loaded an owned extension, and controlled missing imports, wrong architecture and missing export paths were compared with Dependencies 1.11.1. Dependencies plus a fixture-specific script explained the omitted transitive DLL; Godot itself named a missing release library during export. This weakens the differentiation hypothesis but does not prove general equivalence; go/kill remains open. See the dated public baseline for exact observations and limitations. No spending or publication.
+
+- 2026-11-18 — Expanded the free baseline with a valid-symbol x86 extension, misplaced and nested dependencies, dynamic loading, and a host PATH resolution discrepancy. The fixture-specific script exposed the observed chain, destination, and outside-package uncertainty. Pause product implementation at the plan’s differentiation gate: the cases do not demonstrate material added product value beyond the free combination; the narrow script does not prove general equivalence. See the dated baseline-boundaries result. No spending, publication, or sale.
+
+- 2026-11-18 — Corrected the earlier pause as premature: the plan requires an integrated comparison, and the prior helper depended on Dependencies. Built a fixture-limited .NET PE probe and Python integration experiment, checked x64/x86 ordinary imports, RVA-form delay imports, malformed inputs and owned package cases. This is not a product or a go decision; see the integrated-spike checkpoint for limits and tests. No spending or publication.
+
+- 2026-11-18 — Tested Godot 4.7.2 library-specificity and first-matching dependency-map behavior in fresh exports, checked against its loader source, and extended the trusted-fixture spike with limited feature selection. Six PE tests and five integration tests passed, including an RVA-form delay import and rejected malformed variants. The experiment remains restricted and the differentiation gate remains open; see integrated-spike result. No spending or publication.
+
+- 2026-11-18 — A real multi-extension export staged one of two byte-distinct DLLs sharing a basename without a collision warning. The trusted-fixture spike detected the conflicting sources and an identical-content control; a small separate DIY script also detected the owned collision. Seven integration tests passed. No general product advantage, runtime defect, spending, or publication is claimed. See integrated-spike result.
+
+- 2026-11-18 — Added a source-driven fixture builder; after correcting an initial Windows command-quoting failure, a fresh complete fixture matrix rebuilt and all six PE and seven integration tests passed against it. Clean and three negative exports were observed at runtime. The builder refuses an existing output directory; template and header hashes remain caller-verified. Product viability and general parser safety remain unproven.
+
+- 2026-11-18 — On rebuilt fixtures, the original free helper misread the first-matching dependency-map case; a small fixture-specific correction made it report the same missing declaration. Non-equivalent one-shot command timings and the unmeasured authoring/diagnosis limits are recorded in the integrated-spike result. Seven PE tests, including 14 deterministic header mutations, passed. The differentiated product case remains unproven.
+
+- 2026-11-18 — Rebuilt the full owned matrix again including an embedded-PCK export, and verified the probe and integration tests against it. The probe also matched dumpbin ordinary/delay import-name lists for four installed system DLLs; eight PE tests now include invalid directory sizes. This is limited local evidence, not general parser safety, product validation, or a release.
+
+- 2026-11-18 — Added bounded fixture enumeration and preliminary link/reparse/hardlink/path checks; eleven integration tests passed including Windows junction, hardlink, traversal and count-limit cases. These checks are not race-resistant, and the spike remains for owned trusted inputs only. See integrated-spike result.
+
+- 2026-11-18 — Documented untrusted-input risks and tested a separate Windows handle-relative read experiment on local NTFS. Five disposable tests passed, including rejected junctions and a concurrent swap sample; this is not integrated, not proven race-free, and not authorization for hostile or customer inputs. See secure-input design result. No spending or publication.
+
+- 2026-11-18 — The Windows handle experiment now hashes and parses a PE through the same opened stream; six tests passed, including disposable concurrent junction swaps. An optional fixture scanner mode matched four existing cases, but metadata traversal and package-root reacquisition remain race-prone and the code is not safe for hostile input. No commercial advantage or release is established.
+
+- 2026-11-18 — Completed the bounded integrated-versus-free fixture comparison and recorded a conditional pause at the plan’s differentiation gate. Free tools and small fixture-specific scripts explain the tested cases; general equivalence and market demand are not established. Preserve all experiments; revisit on concrete new evidence or a revised scope. No spend, publication, or sale.
+
+- 2026-11-18 — A new owned two-extension dependency collision exported successfully but failed with missing procedure error 127; the original spike and library-only helper missed it. The fixture spike now reports conflicting selected dependency hashes; a separate free-tool named-symbol helper also detects this controlled mismatch. This is further evidence, not proof of general parity or commercial differentiation. See dependency-collision follow-up.
+
+- 2026-11-18 — Rebuilt the new dependency-collision fixture from source and reproduced error 127 with the wrong staged DLL. Eight PE tests, fifteen fixture integration tests and two free-helper tests passed. The free Dependencies import/export JSON plus a narrow helper also detected the missing symbol; general product advantage remains unproven. See dependency-collision follow-up.
+
+- 2026-11-18 — Extended the controlled staging comparison to conflicts among other extensions and between a library and a dependency; seventeen fixture tests passed. The narrow free collision helper also detected the tested dependency source conflict, with identical-content and different-destination controls. No general product advantage or release is claimed; see dependency-collision follow-up.
+
+- 2026-11-18 — A single-extension replaced-DLL export reproduced error 127 and an incomplete no-finding spike result. Added an advisory source/staged hash comparison; a benign byte-overlay control loaded successfully and returns incomplete rather than confirmed failure. A fresh fixture rebuild and eight PE / nineteen integration tests passed; source and package hashes remained unchanged in the tested scans. Dependencies -json -modules returned non-JSON with exit 0. See dependency-collision follow-up; no general safety or product advantage is claimed.
+
+- 2026-11-18 — Timed both complete command workflows on four rebuilt fixture cases and recorded exact outputs and limits. Dependencies traversed a broader host graph; these execution times do not measure authoring, independent diagnosis or general performance. A reusable timing script rejects non-JSON output and existing output directories. The differentiation decision remains conditional; see workflow-timing result.
+
+- 2026-11-18 — Added an owned custom-feature export and missing-file variant; both the fixture spike and a separate narrow helper selected the same library when explicitly given the feature and refused to guess without it. A fresh rebuild and eight PE, twenty fixture and two custom-helper tests passed. This does not prove general feature support or a material product advantage; see custom-feature follow-up.
+
+- 2026-11-18 — An owned Godot export using relative descriptor paths exposed an incorrect “not declared” explanation in the free helper. Corrected the helper and added fixture-specific relative-path support to the spike; a fresh rebuild reproduced clean and missing cases and passed eight PE, twenty-one integration, two Dependencies-helper and three feature-helper tests. General path support and product differentiation remain unproven. See relative-path follow-up.
+
+- 2026-11-18 — Reviewed public Godot issue reports, Microsoft sample guidance, and a plugin-specific preflight: they support technical need but not paid demand or general equivalence. A rebuilt Godot 4.7.2 debug export named the missing fixture DLL, while a PATH-only copy hid the name in the diagnostic despite load failure. Three debug and twenty-one fixture tests passed. The release-oriented spike and conditional feasibility gate remain unchanged; see public-evidence/debug result.
+
+- 2026-11-18 — Built an owned cyclic static-import fixture without loading its recursively calling DLLs. The integrated spike and Dependencies chain terminate and expose the repeated path; the corrected free helper marks it runtime-unknown. Eight PE and twenty-two integration tests passed after fixing a test-detected variable shadowing error. The current builder omits a runnable game from the cycle variant; see cyclic-import follow-up. General differentiation remains unproven.
+
+- 2026-11-18 — A real Godot export accepted a multiline dependency dictionary that both controlled parsers initially rejected. The updated fixture spike and independent Dependencies helper identified the missing leaf on the owned case; a fresh matrix rebuild and regression suites passed, with the optional handle-mode integration test skipped. The parsers remain limited and the conditional differentiation decision is unchanged. See multiline descriptor follow-up. No spending or publication.

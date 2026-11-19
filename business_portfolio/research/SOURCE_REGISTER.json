@@ -1360,5 +1360,148 @@
     "published_or_updated": "Repository; version-specific capabilities need recheck",
     "finding": "A strong free dependency-tree baseline; a paid verifier needs a demonstrable packaged-build advantage.",
     "limitations": "No comparative fixture has been run yet."
+  },
+  {
+    "id": "BOOK-KDP-AI",
+    "title": "KDP Content Guidelines",
+    "url": "https://kdp.amazon.com/en_US/help/topic/G200672390",
+    "kind": "marketplace_policy",
+    "access": "official_primary",
+    "reviewed_at": "2026-11-18",
+    "published_or_updated": "Current page; recheck before submission",
+    "finding": "AI-generated text and artwork must be disclosed; editing does not change KDP classification.",
+    "limitations": "Not a rights or title-approval decision."
+  },
+  {
+    "id": "BOOK-ISBN-CA",
+    "title": "ISBN Canada About ISBNs",
+    "url": "https://www.canada.ca/en/library-archives/services/publishers/isbn/about.html",
+    "kind": "marketplace_policy",
+    "access": "official_primary",
+    "reviewed_at": "2026-11-18",
+    "published_or_updated": "Current page; recheck before submission",
+    "finding": "Registration includes a human-author declaration; AI guidance is under review.",
+    "limitations": "The title-specific eligibility and legal rights remain unresolved."
+  },
+  {
+    "id": "BOOK-D2D-AI",
+    "title": "Draft2Digital Content Guidelines",
+    "url": "https://draft2digital.com/content-guidelines/",
+    "kind": "marketplace_policy",
+    "access": "official_primary",
+    "reviewed_at": "2026-11-18",
+    "published_or_updated": "Current page; recheck before submission",
+    "finding": "Entirely AI-generated content without extensive human editing is not accepted.",
+    "limitations": "No qualifying human editing or title acceptance has been verified."
+  },
+  {
+    "id": "BOOK-KOBO-AI",
+    "title": "Kobo Writing Life prohibited content",
+    "url": "https://kobowritinglife.zendesk.com/hc/en-us/articles/32021666379803-What-Content-is-Not-Allowed",
+    "kind": "marketplace_policy",
+    "access": "official_primary",
+    "reviewed_at": "2026-11-18",
+    "published_or_updated": "Current page; recheck before submission",
+    "finding": "Primarily automated content lacking genuine human effort or quality control may be removed.",
+    "limitations": "Not a decision on this title."
+  },
+  {
+    "id": "BOOK-KDP-SELECT",
+    "title": "KDP Select enrollment",
+    "url": "https://kdp.amazon.com/en_US/help/topic/GD9PMU58BV24QFZ7",
+    "kind": "marketplace_policy",
+    "access": "official_primary",
+    "reviewed_at": "2026-11-18",
+    "published_or_updated": "Current page; recheck before submission",
+    "finding": "KDP Select imposes ebook exclusivity during its 90-day enrollment period, with stated public-library exception.",
+    "limitations": "No account enrollment has been observed."
+  },
+  {
+    "id": "BOOK-KDP-ISBN",
+    "title": "KDP Get an ISBN",
+    "url": "https://kdp.amazon.com/en_US/help/topic/GTJ8LBXL6Z4WV5QX",
+    "kind": "marketplace_policy",
+    "access": "official_primary",
+    "reviewed_at": "2026-11-18",
+    "published_or_updated": "Current page; recheck before submission",
+    "finding": "Free KDP ISBNs are for print and usable only with KDP; KDP ebooks do not require an ISBN.",
+    "limitations": "No ISBN is assigned; print route and eligibility remain open."
+  },
+  {
+    "id": "BOOK-APPLE-EPUB",
+    "title": "Apple Books publish from the web",
+    "url": "https://authors.apple.com/support/4574-publish-book-from-web",
+    "kind": "marketplace_policy",
+    "access": "official_primary",
+    "reviewed_at": "2026-11-18",
+    "published_or_updated": "Current page; recheck before submission",
+    "finding": "Apple requires submitted books to pass the latest EPUBCheck.",
+    "limitations": "A pass is not account eligibility or store acceptance; recheck current version before submission."
+  },
+  {
+    "id": "BOOK-KOBO-ROUTE",
+    "title": "Kobo non-exclusivity and duplicate distribution",
+    "url": "https://kobowritinglife.zendesk.com/hc/en-us/articles/360059386111-Do-my-books-need-to-be-exclusive-with-Kobo",
+    "kind": "marketplace_policy",
+    "access": "official_primary",
+    "reviewed_at": "2026-11-18",
+    "published_or_updated": "Current page; recheck before submission",
+    "finding": "Kobo Writing Life is nonexclusive and asks authors not to send the same title to Kobo through another distributor as well.",
+    "limitations": "No route or listing has been activated."
+  },
+  {
+    "id": "BOOK-INGRAM-AI",
+    "title": "IngramSpark Catalog Integrity Guidelines",
+    "url": "https://www.ingramspark.com/blog/ingramsparks-catalog-integrity-announcement",
+    "kind": "marketplace_policy",
+    "access": "official_primary",
+    "reviewed_at": "2026-11-18",
+    "published_or_updated": "Current page; recheck before submission",
+    "finding": "AI-generated content is among types that may not be accepted.",
+    "limitations": "Discretionary risk, not a title-specific rejection or approval."
+  },
+  {
+    "id": "BOOK-LULU-DIST",
+    "title": "Lulu Global Distribution Basics",
+    "url": "https://help.lulu.com/en/support/solutions/articles/64000255456-global-distribution-the-basics",
+    "kind": "marketplace_policy",
+    "access": "official_primary",
+    "reviewed_at": "2026-11-18",
+    "published_or_updated": "Current page; recheck before submission",
+    "finding": "Lulu states already-retail-listed titles are ineligible for retail distribution and charges a first-submission review fee.",
+    "limitations": "Clarify edition and format interpretation, currency and current total costs; no fee authorized."
+  },
+  {
+    "id": "BOOK-LULU-EPUB",
+    "title": "Lulu Mandatory Ebook Distribution Requirements",
+    "url": "https://help.lulu.com/en/support/solutions/articles/64000255463-mandatory-ebook-distribution-requirements",
+    "kind": "marketplace_policy",
+    "access": "official_primary",
+    "reviewed_at": "2026-11-18",
+    "published_or_updated": "Current page; recheck before submission",
+    "finding": "Lulu lists EPUBCheck v5, a complete NCX and an ebook ISBN on the copyright page among requirements.",
+    "limitations": "Current source EPUB has no NCX or assigned ISBN; a private NCX prototype is not a release or acceptance."
+  },
+  {
+    "id": "BOOK-BN-AI",
+    "title": "B&N Press Generative AI disclosure",
+    "url": "https://help-press.barnesandnoble.com/hc/en-us/articles/28267750176923-Use-of-Generative-AI-in-Your-Project",
+    "kind": "marketplace_policy",
+    "access": "official_primary",
+    "reviewed_at": "2026-11-18",
+    "published_or_updated": "Current page; recheck before submission",
+    "finding": "B&N Press asks about AI-created versus AI-assisted text and artwork; generated content remains AI-created after edits.",
+    "limitations": "Does not establish rights, account eligibility or acceptance."
+  },
+  {
+    "id": "BOOK-GOOGLE-COUNTRIES",
+    "title": "Google Play Books supported countries",
+    "url": "https://support.google.com/books/partner/table/6052428?hl=en",
+    "kind": "marketplace_policy",
+    "access": "official_primary",
+    "reviewed_at": "2026-11-18",
+    "published_or_updated": "Current page; recheck before submission",
+    "finding": "Canada is listed for ebook seller signup and payments.",
+    "limitations": "Country support is not account approval or content eligibility."
   }
 ]

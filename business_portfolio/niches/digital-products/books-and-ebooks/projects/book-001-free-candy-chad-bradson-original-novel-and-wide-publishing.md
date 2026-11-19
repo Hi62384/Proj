@@ -13,13 +13,26 @@
   "evidence_basis": "owner_supplied_book_assets_verified_locally_and_current_official_platform_rules_without_sales_or_store_approval",
   "source_ids": [
     "V2-01",
-    "V2-28"
+    "V2-28",
+    "BOOK-KDP-AI",
+    "BOOK-ISBN-CA",
+    "BOOK-D2D-AI",
+    "BOOK-KOBO-AI",
+    "BOOK-KDP-SELECT",
+    "BOOK-KDP-ISBN",
+    "BOOK-APPLE-EPUB",
+    "BOOK-KOBO-ROUTE",
+    "BOOK-INGRAM-AI",
+    "BOOK-LULU-DIST",
+    "BOOK-LULU-EPUB",
+    "BOOK-BN-AI",
+    "BOOK-GOOGLE-COUNTRIES"
   ],
   "parent_project": null,
   "related_projects": [],
   "legacy_ids": [],
-  "next_action": "Recheck live repository for BOOK-001 collisions; register the cited primary publishing sources; stage owner-provided files privately; begin rights/AI-disclosure and human editorial preflight without publishing or spending.",
-  "last_reviewed": "2026-11-17",
+  "next_action": "Owner waived independent editorial gate and chose KDP free print ISBN; resolve rights declaration, then complete draft and print preview.",
+  "last_reviewed": "2026-11-18",
   "owner": "owner_approval_pending",
   "execution_authorized": false,
   "privacy": "public_planning_only",
@@ -33,7 +46,7 @@
   "production_budget_verified": false,
   "success_probability": "not_established",
   "marketing_lane": "organic_reader_discovery_preparation_only",
-  "launch_gate": "verified_rights_and_ai_policy_human_editorial_review_epubcheck_printer_preview_owner_submission_approval",
+  "launch_gate": "verified_rights_and_ai_policy_owner_editorial_review_epubcheck_printer_preview",
   "ad_test_cap_cad": 0,
   "pre_sale_work_cap_hours": 45,
   "owner_budget": {
@@ -65,11 +78,18 @@
 }
 ---
 
+## Execution persistence for this project
+
+When the owner asks you to work on this project, continue autonomously through all remaining authorized tasks possible with available access and resources. Do not stop merely because a few minutes passed, after one task, a plan, or a progress update. Continue implementation, appropriate verification, evidence recording, and the next actionable task until the requested work is finished or no further authorized work can be performed. Give progress updates without ending longer work. If authorization, access, payment, another person, or external state blocks an action, complete independent authorized work first, then checkpoint and report the precise blocker and next action. Preserve completed progress, financial evidence, and uncertain external effects; respect existing scope, budget, permissions, and safety controls. Never claim unverified completion.
+
+
 # FREE CANDY — Complete Single-Book Production, Publication and Distribution Project
 
 **Status on 2026-11-17:** **PROCEED WITH A CONDITIONAL LAUNCH BLOCKER.** The completed novel and working print/ebook packages exist and were locally inspected. They have **not** been independently human-edited, legally cleared for every platform, assigned an ISBN, approved by any store, physically proofed, or observed selling. This is **one project for one book**. It is **not** an instruction to write another novel, spawn unrelated book niches, republish duplicates, create accounts, use payment credentials, or commit money. External effects remain **not started**.
 
 > **IMPORT BLOCKED — SOURCE REGISTRATION REQUIRED.** The niche `N-required-books-and-ebooks` and candidate `BOOK-001` were checked against the live repository. The only already-registered and directly relevant source IDs found were `V2-01` (Payhip free-plan pricing) and `V2-28` (Payhip email consent); both are present in the frontmatter. The official KDP, ISBN Canada, Draft2Digital, Kobo, Apple, Google, IngramSpark, B&N, etc. URLs cited below are **not** registered in the repository's `SOURCE_REGISTER.json`, so do **not** claim that the project has a complete source-register record or that `build_browser.py --check` passed. Codex must register the actually reviewed sources with collision-free IDs, update `source_ids`, recheck BOOK-001 uniqueness and run validators **before importing** into the canonical niche. File preparation can start privately before the import. No account operation or purchase is authorized by this plan.
+
+**Source-registration update, 2026-11-18:** The owner approved registering the 13 reviewed sources listed in `source_ids`; they are now in the local source register. The import-blocked notice and unregistered-source statements below are preserved as historical planning evidence. Other cited sources remain unregistered unless separately identified; no claim is made that all sources in section 4 were re-reviewed or registered.
 
 ## 1. Project decision, exact idea and fidelity contract
 
@@ -639,3 +659,59 @@ Capture actual console results/commit and repair real violations. Do **not** ann
 | 2026-11-17 | No publication, upload, account, approval, buyer contact or purchase attempted | External effect state `not_started` | Explicit future permission and real evidence |
 
 **Final red-team check before using this plan:** Confirm no fake source ID or duplicate project ID; verify title/pen-name mismatch hasn't slipped into an ebook; distinguish factory tour from holding-house; count 27 intact chapters; verify last chapter deaths cannot narrate later facts; check AI/disclosure/copyright/ISBN requirements by platform and country; reject every paid plan with unverified recurring cost; do not double-list Kobo or B&N via distributors; require readable print proof even if >248 pages; do not promise revenue from book availability; never claim a platform is live based only on a file. The book is viable as a conditional low-cash creative-release experiment, **not a guaranteed successful or universally accepted product**.
+
+
+### Checkpoint 2026-11-18 — local continuation
+
+- The selected record already exists in the canonical niche; its earlier staged-only and import-blocked descriptions are historical, not a claim that source registration is complete. The live checkout search found no other active or archived project body matching BOOK-001, FREE CANDY or Chad Bradson. The catalog search returned no match. Current local HEAD: `0734c2f3a8f0ac1ba53541c613b63810c834ffbe`; remote freshness was not verified.
+- The owner-supplied ZIP and ignored `.tmp/free-candy-preflight/` working copy exist locally. The five primary asset hashes still match section 2. The package lacks the editable DOCX and continuity JSON. The private local checkpoint and issue log document earlier normalized chapter/print comparison, structural checks and limited visual review; they are not a full editorial review, EPUBCheck, proof or store approval.
+- Current official KDP, ISBN Canada, Draft2Digital and Kobo policy pages were rechecked. Accurate disclosure and title-specific eligibility remain unresolved; source registration for those pages remains outstanding. No account, submission, publication, purchase or other external publishing action was performed. Authorized spending remains CAD0; actual revenue and profit remain unknown.
+- `build_browser.py --check` and commercial checks passed before this checkpoint; the portfolio suite ran 94 tests successfully with one platform-dependent skip. Validation is local and does not establish publishing readiness.
+- Next: read all 27 chapters against the continuity contract and record specific issues; obtain a trusted local EPUBCheck installation, establish rights and human/AI contribution evidence, and arrange human editorial review and printer proof before any separately authorized release action.
+
+
+### Checkpoint 2026-11-18 — preliminary manuscript review
+
+- Completed an AI-assisted sequential read of all 27 verified EPUB chapters against the project continuity contract. The ignored private preflight folder contains the chapter-by-chapter review and a consolidated editor handoff with specific source references. Three candidate continuity issues and the final narration perspective require human editorial decisions. No manuscript text was changed.
+- This pass is not an independent human edit, complete copy edit, rights determination, EPUBCheck, physical proof, or store approval. The editable DOCX and continuity JSON are absent from the supplied ZIP. Rights and contribution history remain unverified; authorized spend remains CAD0. All publishing and account actions remain not started.
+- Next: obtain independent human editorial review and owner provenance; resolve issues in an approved master, then regenerate and validate editions. Obtain a trusted EPUBCheck and platform-specific preview, and separately authorize any physical proof or submission.
+
+
+### Owner provenance update — 2026-11-18
+
+The owner reports creating the book with ChatGPT. The division between generated text or images and the owner’s own writing or editing is not yet specified; the statement does not establish rights or any platform’s eligibility. The detailed provenance record and editorial handoff are private. Independent human editorial review, EPUBCheck, printer preview and separately authorized publication remain open. No account, submission, purchase or revenue has been observed.
+
+
+### Owner contribution clarification — 2026-11-18
+
+The owner reports supplying the ideas and says ChatGPT wrote the entire book and created all images and files. Under the KDP guidance reviewed locally, the text and images would be AI-generated for disclosure even if later edited. Draft2Digital currently does not accept entirely AI-generated content without extensive human editing; no such independent human edit has been verified, and editing alone does not guarantee acceptance. ISBN Canada’s human-author declaration and title-specific rights remain unresolved; obtain appropriate guidance before any declaration. No claim is made about platform approval. No upload, account, purchase or publication was performed.
+
+
+### Channel eligibility update — 2026-11-18
+
+IngramSpark’s current [catalog guidance](https://www.ingramspark.com/blog/ingramsparks-catalog-integrity-announcement) lists AI-generated content among types that may not be accepted; this is a discretionary risk, not a title-specific decision. Lulu’s [Global Distribution guidance](https://help.lulu.com/en/support/solutions/articles/64000255456-global-distribution-the-basics) states that titles already listed at retailers are ineligible for retail distribution, so clarify its edition/format interpretation and channel sequence before any listing. Lulu’s ebook requirements also call for an NCX TOC and ISBN on the copyright page; the supplied EPUB has neither. StreetLib’s current print help states its print service is unavailable to Canadian users. Detailed sources and limits are in the private preflight; no platform was contacted and no account, submission, ISBN or payment occurred.
+
+
+### EPUB validation — 2026-11-18
+
+The unchanged source EPUB (SHA-256 `8c1a85237c6eaea3a9407d18d52ff91d353b81b3815b3a0ded49edac6cab5880`) passed official EPUBCheck 5.4.0 with zero fatal errors, errors or warnings, exit code 0. The JSON and console reports are retained in the ignored private preflight folder. This validates only the tested file; rerun after changes. It is not an accessibility, rights, retailer-acceptance or Lulu-specific ISBN/NCX determination. Human editing, rights and ISBN guidance, printer preview/proof and separately authorized submissions remain open. No publication or spending occurred.
+
+
+### NCX navigation prototype — 2026-11-18
+
+A separate private, unapproved EPUB prototype adds a 27-entry NCX derived from the existing navigation. Archive comparison found only the OPF changed and the NCX added; all other original entries are byte-identical. EPUBCheck 5.4.0 reported zero errors and warnings for this prototype. It has no ISBN, is not a release, and is not evidence of Lulu acceptance. Rebuild and revalidate from the approved master after human editorial decisions; rights, channel requirements and separately authorized submission remain open. The source EPUB remains unchanged.
+
+
+### Source registration — 2026-11-18
+
+The owner approved the local registration of 13 reviewed official sources. Their collision-checked IDs are linked in frontmatter. This records evidence only: other cited sources remain unregistered, and no store account, submission, proof purchase or publication is authorized by this update. Independent human editorial review and rights/ISBN decisions remain open.
+
+
+### Owner editorial decision — 2026-11-18
+
+The owner chose to review and edit the manuscript themselves. A private editable HTML review copy was derived from the verified EPUB and checked for exact section text; the original remains unchanged. The owner’s review and edits have not yet occurred. Their decision alone does not establish an independent human review, extensive editing under a distributor policy, rights or ISBN eligibility. After edits, reconcile the changes, select an approved master and regenerate and validate affected editions. No account, submission, proof order or spending was performed.
+
+
+## Owner editorial and ISBN decision — 2026-11-18
+
+The owner explicitly chose to proceed on their own review and waived this project’s independent-editor release requirement. No independent review or extensive human editing is claimed, and distributor-specific rules still apply. The owner selected KDP’s free paperback ISBN; no number has yet been assigned. A KDP paperback draft exists with title, pen name, description, adult-image answer and a crime category saved. The combined KDP copyright and publishing-rights declaration remains unresolved; do not assert it without a truthful basis. No upload, proof purchase or publication observed.

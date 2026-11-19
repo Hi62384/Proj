@@ -88,6 +88,10 @@ Include search/failed proposals, optional discovery, required consent/access, bu
 ## Validation gate and stop condition
 Prefer a small local build-and-learn step as the first gate. What evidence permits the next stage? What would make the offer too risky, redundant or uneconomic? Require other people's participation only when consent, private access, legal review, or a real buyer's acceptance/payment is essential. Interviews and market feedback are optional follow-up evidence, not a default prerequisite to making a prototype. A management threshold is not a statistical guarantee.
 
+## Execution persistence
+
+When the owner asks you to work on this project, continue autonomously through all remaining authorized tasks possible with available access and resources. Do not stop merely because a few minutes passed, after one task, a plan, or a progress update. Continue implementation, appropriate verification, evidence recording, and the next actionable task until the requested work is finished or no further authorized work can be performed. Give progress updates without ending longer work. If authorization, access, payment, another person, or external state blocks an action, complete independent authorized work first, then checkpoint and report the precise blocker and next action. Preserve completed progress, financial evidence, and uncertain external effects; respect existing scope, budget, permissions, and safety controls. Never claim unverified completion.
+
 ## Resume checkpoint
 - Completed with evidence:
 - Current task:

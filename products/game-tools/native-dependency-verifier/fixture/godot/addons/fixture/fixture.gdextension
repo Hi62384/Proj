@@ -1,0 +1,10 @@
+[configuration]
+entry_symbol = "fixture_init"
+compatibility_minimum = "4.4"
+
+[libraries]
+windows.debug.x86_64 = "res://addons/fixture/bin/extension.dll"
+windows.release.x86_64 = "res://addons/fixture/bin/extension.dll"
+
+[dependencies]
+windows.x86_64 = {"res://addons/fixture/bin/root.dll": "", "res://addons/fixture/bin/middle.dll": "", "res://addons/fixture/bin/leaf.dll": ""}

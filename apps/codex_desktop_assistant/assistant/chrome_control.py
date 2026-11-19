@@ -10,6 +10,7 @@ from .permissions import Denied,origin
 from .action_policy import classify,Review,request_review
 from .web_policy import safe_text
 from .chrome_bridge import ChromeBridge
+from .attachments import MAX_FILE
 
 
 class ChromeControl:
@@ -190,7 +191,7 @@ class ChromeControl:
                     if receivers!=['https://pe56d.s3.amazonaws.com/'] or self.grants[tab]['origin']!=origin('https://payhip.com'):raise Denied('Unsupported upload storage receiver')
                     upload_record={**upload_record,'_upload_receivers':receivers}
                 path=self.attachments.path(upload_record)
-                if path.stat().st_size>25*1024*1024:raise Denied('Chrome upload limit is 25 MB')
+                if path.stat().st_size>MAX_FILE:raise Denied('Chrome upload limit is 1 GiB')
                 receiver=context.get('form_action') or context['page_url']
                 if origin(receiver)!=self.grants[tab]['origin']:raise Denied('Upload form destination is outside this authorized tab site')
             if context.get('credential_form'):raise Denied('Credential form requires Manual Control')
@@ -230,18 +231,38 @@ class ChromeControl:
         record=attachments.get(args.get('attachment_id'))
         if not record:raise Denied('Select a file attachment in this chat before uploading; local paths are not accepted by the extension')
         path=self.attachments.path(record)
-        if path.stat().st_size>25*1024*1024:raise Denied('Chrome upload limit is 25 MB')
+        if path.stat().st_size>MAX_FILE:raise Denied('Chrome upload limit is 1 GiB')
         destination=context.get('form_action') or context['page_url']
         if origin(destination)!=self.grants[args['tab']]['origin']:raise Denied('Upload form targets another site. That destination is not authorized by this tab grant.')
-        raw=path.read_bytes();upload=uuid.uuid4().hex;digest=hashlib.sha256(raw).hexdigest()
-        if digest!=record['sha256']:raise Denied('Attachment changed after it was approved; reattach the intended file')
-        base={k:args[k] for k in ('tab','frame','observation','element') if k in args};base['upload']=upload
-        mime='image/png' if raw.startswith(b'\x89PNG\r\n\x1a\n') else 'image/jpeg' if raw.startswith(b'\xff\xd8') else 'application/zip' if raw.startswith(b'PK\x03\x04') else 'application/octet-stream'
+        base={k:args[k] for k in ('tab','frame','observation','element') if k in args}
+        base['upload']=uuid.uuid4().hex
         receivers=record.get('_upload_receivers',[])
         if receivers and (origin(destination)!='https://payhip.com:443' or receivers!=['https://pe56d.s3.amazonaws.com/']):raise Denied('Unsupported platform storage receiver')
-        self.request(conversation,'upload_begin',{**base,'name':record['name'],'size':len(raw),'sha256':digest,'mime':mime,'allowed_upload_receivers':receivers},epoch)
-        for offset in range(0,len(raw),128*1024):self.request(conversation,'upload_chunk',{**base,'offset':offset,'data':base64.b64encode(raw[offset:offset+128*1024]).decode()},epoch)
-        return self.request(conversation,'upload_finish',base,epoch)
+        size = path.stat().st_size
+        with path.open('rb') as source:
+            prefix = source.read(8)
+            source.seek(0)
+            mime = 'application/octet-stream'
+            for magic, kind in ((bytes.fromhex('89504e470d0a1a0a'), 'image/png'),
+                                (bytes.fromhex('ffd8'), 'image/jpeg'),
+                                (bytes.fromhex('504b0304'), 'application/zip')):
+                if prefix.startswith(magic):
+                    mime = kind
+                    break
+            self.request(conversation,'upload_begin',{**base,'name':record['name'],'size':size,'sha256':record['sha256'],'mime':mime,'allowed_upload_receivers':receivers},epoch)
+            digest = hashlib.sha256()
+            offset = 0
+            for block in iter(lambda: source.read(512 * 1024), b''):
+                if offset + len(block) > size:
+                    raise Denied('Attachment grew during transfer')
+                digest.update(block)
+                receipt = self.request(conversation,'upload_chunk',{**base,'offset':offset,'data':base64.b64encode(block).decode()},epoch)
+                offset += len(block)
+                if receipt.get('received') != offset or receipt.get('checksum') != hashlib.sha256(block).hexdigest():
+                    raise Denied('Chrome upload chunk verification failed')
+            if offset != size or digest.hexdigest() != record['sha256']:
+                raise Denied('Attachment changed after approval')
+        return self.request(conversation,'upload_finish',{**base,'verified_sha256':digest.hexdigest()},epoch)
 
     def stop(self):
         self.grants.clear();self.observations.clear();self.frames.clear();self.image_consent.clear();self.draft_scopes.clear();self.selected=None;self.permissions.chrome_protected=False;self.bridge.stop_tabs()

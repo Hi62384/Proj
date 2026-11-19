@@ -5,13 +5,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-// Prototype contract: one direct child file and explicit boolean observations.
+// Prototype contract: one direct child file and explicit scalar observations.
 // Reject unknown fields so extending this format requires a new schema version.
 public static class StrictManifest
 {
     public sealed class Suite { public string Id; public List<Fixture> Fixtures; }
     public sealed class Fixture { public string Id, File, Hash; public List<Assertion> Assertions; }
-    public sealed class Assertion { public string Path; public bool Expected; }
+    public sealed class Assertion { public string Path; public object Expected; public double Tolerance; }
 
     public static Suite Parse(string json)
     {
@@ -29,10 +29,20 @@ public static class StrictManifest
             var paths = new HashSet<string>(StringComparer.Ordinal);
             foreach (var a in Arr(o["assertions"]))
             {
-                var entry = Obj(a, "assertion", "path", "type", "equals");
-                var path = Str(entry["path"]);
-                if (!paths.Add(path) || Str(entry["type"]) != "boolean" || !(entry["equals"] is bool expected)) throw Error("Invalid assertion");
-                f.Assertions.Add(new Assertion { Path = path, Expected = expected });
+                var raw = a as Dictionary<string, object> ?? throw Error("Expected assertion object");
+                var hasTolerance = raw.ContainsKey("tolerance");
+                var entry = hasTolerance ? Obj(a, "assertion", "path", "type", "equals", "tolerance") : Obj(a, "assertion", "path", "type", "equals");
+                var path = Str(entry["path"]); var type = Str(entry["type"]); var expected = entry["equals"];
+                if (!paths.Add(path)) throw Error("Duplicate assertion path");
+                double tolerance = 0;
+                if (type == "number")
+                {
+                    if (!(expected is double number) || Math.Abs(number) > 9007199254740991d) throw Error("Expected number outside supported range");
+                    if (hasTolerance && (!(entry["tolerance"] is double t) || t < 0)) throw Error("Invalid tolerance");
+                    if (hasTolerance) tolerance = (double)entry["tolerance"];
+                }
+                else if (hasTolerance || (type == "boolean" && !(expected is bool)) || (type == "string" && !(expected is string)) || (type != "boolean" && type != "string")) throw Error("Invalid assertion type");
+                f.Assertions.Add(new Assertion { Path = path, Expected = expected, Tolerance = tolerance });
             }
             if (f.Assertions.Count == 0) throw Error("Empty assertions");
             suite.Fixtures.Add(f);
@@ -40,6 +50,7 @@ public static class StrictManifest
         if (suite.Fixtures.Count == 0) throw Error("Empty fixtures");
         return suite;
     }
+    internal static object ParseJson(string text) => new Json(text).Read();
     private static ArgumentException Error(string message) => new ArgumentException(message);
     private static string Str(object v) { if (!(v is string s) || String.IsNullOrWhiteSpace(s)) throw Error("Expected non-empty string"); return s; }
     private static List<object> Arr(object v) => v as List<object> ?? throw Error("Expected array");

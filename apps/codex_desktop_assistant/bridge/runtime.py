@@ -8,7 +8,7 @@ import uuid
 from multiprocessing import AuthenticationError
 from pathlib import Path
 
-from assistant.attachments import Attachments
+from assistant.attachments import Attachments,MAX_FILE,file_hash
 from assistant.browser import Browser
 from assistant.chrome_bridge import UserPipeListener,private_json
 from assistant.desktop import Desktop,EmergencyStop,SessionGuard
@@ -67,9 +67,8 @@ class Runtime:
             if message['role']!='assistant' or not message['text'].startswith('Imported local file under file Read permission: '):continue
             for record in json.loads(message['attachments']):
                 try:
-                    import hashlib
                     path=self.attachments.path(record)
-                    if path.stat().st_size<=500000 and hashlib.sha256(path.read_bytes()).hexdigest()==record['sha256']:self.broker.register([record])
+                    if path.stat().st_size<=MAX_FILE and file_hash(path)==record['sha256']:self.broker.register([record])
                 except (OSError,ValueError,KeyError):continue
         self.broker.chrome.mode=True;self.permissions.chrome_mode=True
         self.broker.chrome.reference_authorizer=self.authorize_reference;self.reference_queries=set()

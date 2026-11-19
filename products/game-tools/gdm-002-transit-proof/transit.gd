@@ -68,3 +68,19 @@ static func restore(data: Dictionary):
 	result.aboard.assign(data.aboard)
 	result.events.assign(data.events)
 	return result
+
+func disembark(id: String) -> bool:
+	if not aboard.has(id):
+		return false
+	aboard.erase(id)
+	events.append("disembarked:" + id)
+	return true
+
+func return_unboarded_to_queue() -> Array[String]:
+	# Preserve FIFO order when a boarding window closes before acknowledgment.
+	var missed: Array[String] = reserved.duplicate()
+	reserved.clear()
+	for id in missed:
+		events.append("missed:" + id)
+	waiting = missed + waiting
+	return missed

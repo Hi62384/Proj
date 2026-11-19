@@ -1,0 +1,35 @@
+{
+  "created_utc": "2026-11-18T23:22:06.418940+00:00",
+  "mode": "full",
+  "source_sha256": "2e93aadeff7939b8fbd53ebd7bdd407f94520074f0824d52bb78f5b3cdbf4281",
+  "platform": "Windows-10-10.0.19045-SP0",
+  "machine": "AMD64",
+  "results": [
+    {
+      "executable_name": "Godot_v4.5.1-stable_win64_console.exe",
+      "executable_sha256": "f0336c8b2ae039d39767a64c416f01b1b49d95d8dde87724012874dd4be1c1a8",
+      "version": "4.5.1.stable.official.f62fdbde1",
+      "checks": [
+        {
+          "name": "tests",
+          "passed": true,
+          "output": "Godot: 4.5.1.stable.official.f62fdbde1\ntest_adapter_blocked_crowd.gd: PASS\ntest_adapter_crowd.gd: PASS\ntest_adapter_crowd_recovery.gd: PASS\ntest_adapter_deleted.gd: PASS\ntest_adapter_physical_restore.gd: PASS\ntest_adapter_recovery.gd: PASS\ntest_adapter_recovery_restore.gd: PASS\ntest_adapter_restore.gd: PASS\ntest_adapter_safety.gd: PASS\ntest_adapter_superseded.gd: PASS\ntest_adapter_twenty_physics.gd: PASS\ntest_blocked_exit.gd: PASS\ntest_collision_crowd.gd: PASS\ntest_collision_platform.gd: PASS\ntest_continuity_audit.gd: PASS\ntest_controller_bridge.gd: PASS\ntest_controller_bridge_lifecycle.gd: PASS\ntest_core.gd: PASS\ntest_debug_overlay.gd: PASS\ntest_demo.gd: PASS\ntest_demo_disruption.gd: PASS\ntest_destroyed_agent.gd: PASS\ntest_disruption.gd: PASS\ntest_edges.gd: PASS\ntest_editor_marker.gd: PASS\ntest_fifo_liveness.gd: PASS\ntest_game_owned_airborne.gd: PASS\ntest_game_owned_controller.gd: PASS\ntest_journeys.gd: PASS\ntest_navigation_adapter.gd: PASS\ntest_navigation_boarding.gd: PASS\ntest_navigation_twenty.gd: PASS\ntest_node.gd: PASS\ntest_onboard_cancel.gd: PASS\ntest_physical_cancel.gd: PASS\ntest_physical_recovery.gd: PASS\ntest_physical_transfer.gd: PASS\ntest_physical_transfer_twenty.gd: PASS\ntest_physics_adapter.gd: PASS\ntest_seeded_invariants.gd: PASS\ntest_staggered_physical_transfer.gd: PASS\ntest_staggered_twenty_physics.gd: PASS\ntest_stops.gd: PASS\ntest_vertical_lift.gd: PASS\nTests: 44/44 passed; certificate-store warnings: 44\n"
+        },
+        {
+          "name": "install_reinstall",
+          "passed": true,
+          "output": "install: Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org\n\nStandalone copied add-on: PASS\nERROR: Failed to read the root certificate store.\n   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2548)\nreinstall: Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org\n\nStandalone copied add-on: PASS\nERROR: Failed to read the root certificate store.\n   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2548)\n"
+        },
+        {
+          "name": "editor_marker",
+          "passed": true,
+          "output": "Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org\n\n[   0% ] \u001b[90m\u001b[1mfirst_scan_filesystem\u001b[22m | Started Project initialization (5 steps)\u001b[39m\u001b[0m\n[   0% ] \u001b[90m\u001b[1mfirst_scan_filesystem\u001b[22m | Scanning file structure...\u001b[39m\u001b[0m\n[  16% ] \u001b[90m\u001b[1mfirst_scan_filesystem\u001b[22m | Loading global class names...\u001b[39m\u001b[0m\n[  33% ] \u001b[90m\u001b[1mfirst_scan_filesystem\u001b[22m | Verifying GDExtensions...\u001b[39m\u001b[0m\n[  50% ] \u001b[90m\u001b[1mfirst_scan_filesystem\u001b[22m | Creating autoload scripts...\u001b[39m\u001b[0m\n[  66% ] \u001b[90m\u001b[1mfirst_scan_filesystem\u001b[22m | Initializing plugins...\u001b[39m\u001b[0m\nTRANSIT_EDITOR_GIZMO_REGISTERED\n[  83% ] \u001b[90m\u001b[1mfirst_scan_filesystem\u001b[22m | Starting file scan...\u001b[39m\u001b[0m\n\u001b[92m[ DONE ]\u001b[39m \u001b[1mfirst_scan_filesystem\u001b[22m\n\u001b[0m\n[   0% ] \u001b[90m\u001b[1mupdate_scripts_classes\u001b[22m | Started Registering global classes... (11 steps)\u001b[39m\u001b[0m\n[   0% ] \u001b[90m\u001b[1mupdate_scripts_classes\u001b[22m | \u001b[39m\u001b[0m\n[   8% ] \u001b[90m\u001b[1mupdate_scripts_classes\u001b[22m | \u001b[39m\u001b[0m\n[  16% ] \u001b[90m\u001b[1mupdate_scripts_classes\u001b[22m | \u001b[39m\u001b[0m\n[  25% ] \u001b[90m\u001b[1mupdate_scripts_classes\u001b[22m | \u001b[39m\u001b[0m\n[  33% ] \u001b[90m\u001b[1mupdate_scripts_classes\u001b[22m | \u001b[39m\u001b[0m\n[  41% ] \u001b[90m\u001b[1mupdate_scripts_classes\u001b[22m | \u001b[39m\u001b[0m\n[  50% ] \u001b[90m\u001b[1mupdate_scripts_classes\u001b[22m | \u001b[39m\u001b[0m\n[  58% ] \u001b[90m\u001b[1mupdate_scripts_classes\u001b[22m | \u001b[39m\u001b[0m\n[  66% ] \u001b[90m\u001b[1mupdate_scripts_classes\u001b[22m | \u001b[39m\u001b[0m\n[  75% ] \u001b[90m\u001b[1mupdate_scripts_classes\u001b[22m | \u001b[39m\u001b[0m\n[  83% ] \u001b[90m\u001b[1mupdate_scripts_classes\u001b[22m | \u001b[39m\u001b[0m\n\u001b[92m[ DONE ]\u001b[39m \u001b[1mupdate_scripts_classes\u001b[22m\n\u001b[0m\n[   0% ] \u001b[90m\u001b[1mloading_editor_layout\u001b[22m | Started Loading editor (5 steps)\u001b[39m\u001b[0m\n[   0% ] \u001b[90m\u001b[1mloading_editor_layout\u001b[22m | Loading editor layout...\u001b[39m\u001b[0m\n\u001b[92m[ DONE ]\u001b[39m \u001b[1mloading_editor_layout\u001b[22m\n\u001b[0m\nTRANSIT_EDITOR_MARKER_RECOGNIZED\nTRANSIT_EDITOR_GIZMO_REDRAWN\nTRANSIT_EDITOR_GIZMO_REDRAWN\nERROR: Failed to read the root certificate store.\n   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2548)\nEditor plugin registration: PASS\n"
+        }
+      ],
+      "engine_binary_name": "Godot_v4.5.1-stable_win64.exe",
+      "engine_binary_sha256": "a829242096d640007de9fa93ea923d0f666d13d6a3b472a0231c820be6dc7627"
+    }
+  ],
+  "source_sha256_after": "2e93aadeff7939b8fbd53ebd7bdd407f94520074f0824d52bb78f5b3cdbf4281",
+  "source_unchanged": true
+}

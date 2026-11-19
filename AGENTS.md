@@ -8,6 +8,10 @@
 - For all other tasks, use the tools and delivery format explicitly requested by the user. Never replace direct Codex edits, commits, or PRs with a ZIP without the user asking.
 - Preserve project-specific build/optimization instructions elsewhere in `AGENTS.md`. Report tests honestly.
 
+## Project execution persistence
+
+- When the owner asks you to work on this project, continue autonomously through all remaining authorized tasks possible with available access and resources. Do not stop merely because a few minutes passed, after one task, a plan, or a progress update. Continue implementation, appropriate verification, evidence recording, and the next actionable task until the requested work is finished or no further authorized work can be performed. Give progress updates without ending longer work. If authorization, access, payment, another person, or external state blocks an action, complete independent authorized work first, then checkpoint and report the precise blocker and next action. Preserve completed progress, financial evidence, and uncertain external effects; respect existing scope, budget, permissions, and safety controls. Never claim unverified completion.
+
 ## Business Portfolio checkpoints
 
 - Active canonical records live in `business_portfolio/niches/**/projects/*.md` with strict JSON frontmatter. Preserved prior records live in `business_portfolio/archive/2026-11-15-legacy/niches/**/projects/*.md` and appear under History; their IDs, original bytes and progress are retained. Review the full record, archive crosswalk and latest authorized private checkpoint before restoring or resuming historical work. Stable project and niche IDs survive moves. Preserve completed work, actual financial evidence and uncertain external effects; do not replay uploads, publication or orders.

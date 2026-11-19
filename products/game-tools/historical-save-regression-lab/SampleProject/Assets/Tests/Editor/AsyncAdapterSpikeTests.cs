@@ -12,10 +12,10 @@ public class AsyncAdapterSpikeTests
         public bool Captured;
         public Task ResetAsync(CancellationToken cancellation) => Task.CompletedTask;
         public async Task RestoreAsync(string path, CancellationToken cancellation) { await Completion.Task; }
-        public Task<IReadOnlyDictionary<string, bool>> CaptureAsync(CancellationToken cancellation)
+        public Task<IReadOnlyDictionary<string, object>> CaptureAsync(CancellationToken cancellation)
         {
             Captured = true;
-            return Task.FromResult<IReadOnlyDictionary<string, bool>>(new Dictionary<string, bool> { ["shield"] = false });
+            return Task.FromResult<IReadOnlyDictionary<string, object>>(new Dictionary<string, object> { ["shield"] = false });
         }
     }
 
@@ -24,10 +24,10 @@ public class AsyncAdapterSpikeTests
         public bool Captured;
         public Task ResetAsync(CancellationToken cancellation) => Task.CompletedTask;
         public Task RestoreAsync(string path, CancellationToken cancellation) => Task.FromException(new InvalidOperationException("restore failed"));
-        public Task<IReadOnlyDictionary<string, bool>> CaptureAsync(CancellationToken cancellation)
+        public Task<IReadOnlyDictionary<string, object>> CaptureAsync(CancellationToken cancellation)
         {
             Captured = true;
-            return Task.FromResult<IReadOnlyDictionary<string, bool>>(new Dictionary<string, bool>());
+            return Task.FromResult<IReadOnlyDictionary<string, object>>(new Dictionary<string, object>());
         }
     }
 

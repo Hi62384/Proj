@@ -1,0 +1,19 @@
+# GDM-002 local gate assessment — 2026-11-18
+
+**Decision: no-go for packaging or paid release on current evidence.** The project plan requires the candidate to show more reliable scheduled reservations and mid-ride save/recovery with less integration effort than an alternative before packaging. The fixed FIFO baseline matched the selected happy-path, cancellation, stale callback, disruption and rescue traces after basic save validation was added. Both alternatives also matched in the specified one- and twenty-body native and FlowAI experiments. This does not prove every target use is solved by DIY, but the required advantage has not been demonstrated. The plan says to pause or narrow rather than proceed past that gate.
+
+The native and FlowAI obstacle tests both passed: a solid collision shape blocked direct movement, while the respective navigation route took a stranded CharacterBody3D around it to a safe point before the fixture released its seat. This is one passenger, one static obstacle, one manually constructed route and one shared test controller. It does not establish safe navigation for moving platforms, crowds or arbitrary game scenes. FlowAI reported ObjectDB and three resource warnings on exit; both tests emitted the root-certificate warning.
+
+Two small adapter harnesses were then written against the same fixed callback contract. Both passed boarding, disruption, snapshot/restore and rescue checks and each contains 32 nonblank, non-comment lines; each test harness has 15. The observed wall-clock interval from starting the ledger harness to its passing test was 24 seconds; the subsequent DIY adapter and test, derived by copying and modifying the first, took 17 seconds. These are AI-assisted local intervals with substantial order and reuse bias, not independent developer integration times. They cannot support a claim that either product saves effort. Both adapters reach into implementation-specific collections rather than a finished documented API. Test sources and reproduction information are in `products/game-tools/gdm-002-transit-proof/research/`.
+
+| Requirement | Current evidence | Assessment |
+|---|---|---|
+| Fixed 20-agent schedule, finite seats, transfer | Synthetic core and two controller styles, matched 80-event trace | Demonstrated only for the bounded fixture |
+| Missed boarding, cancellation, stale callbacks, mid-ride recovery | Selected comparison traces and one obstacle recovery | Partial; no general rerouting or arbitrary controller coverage |
+| Save/load | Trusted fixture and selected controller reconstruction | Partial; no hardened product format, migration, or support matrix |
+| Twelve release-blocking traces and measured hardware performance | Some named negative cases; fixed-frame elapsed times only | Incomplete |
+| Technical advantage and measured integration burden | DIY matched tested scenarios; biased harness timings | Not demonstrated; gate not passed |
+| Fresh installation, paid addon, docs, licensing, release manifest | No complete addon or independent installation test | Not started; downstream of gate |
+| Seller eligibility, owner approval, publication and actual sales | No authorized publication or observed sales | Not complete; no commercial claim |
+
+The CAD0 spending limit and no-publication authorization remain unchanged. No reliable total focused engineering time was recorded, so the six-hour pre-sale work-cap usage cannot be established from the elapsed chat clock. Future work should be bounded to resolving a specific untested differentiation hypothesis and tracking actual focused time; if no such hypothesis is supported, retain the project as a paused/no-go candidate rather than proceeding to packaging. This result records a decision for the current evidence, not proof that all possible transport products lack demand.

@@ -9,7 +9,7 @@ public interface IAsyncSaveAdapter
 {
     Task ResetAsync(CancellationToken cancellation);
     Task RestoreAsync(string isolatedPath, CancellationToken cancellation);
-    Task<IReadOnlyDictionary<string, bool>> CaptureAsync(CancellationToken cancellation);
+    Task<IReadOnlyDictionary<string, object>> CaptureAsync(CancellationToken cancellation);
 }
 
 public static class AsyncAdapterSpike
@@ -27,6 +27,6 @@ public static class AsyncAdapterSpike
         cancellation.ThrowIfCancellationRequested();
         if (state == null || !state.TryGetValue(property, out var actual))
             throw new InvalidOperationException("Missing observed property: " + property);
-        return actual == expected;
+        return actual is bool observed && observed == expected;
     }
 }

@@ -10,8 +10,18 @@ from pathlib import Path
 
 from PIL import Image
 
-MAX_FILE = 25 * 1024 * 1024
+MAX_FILE = 1024 ** 3
+MAX_PREVIEW = 25 * 1024 * 1024
+COPY_BLOCK = 1024 * 1024
 MAX_TEXT = 60000
+
+
+def file_hash(path):
+    hasher = hashlib.sha256()
+    with path.open('rb') as source:
+        for block in iter(lambda: source.read(COPY_BLOCK), b''):
+            hasher.update(block)
+    return hasher.hexdigest()
 
 
 def image_details(raw):
@@ -32,12 +42,33 @@ class Attachments:
         self.directory = Path(directory)/'attachments'
         self.directory.mkdir(parents=True,exist_ok=True)
 
-    def add(self, source):
+    def add(self, source, expected_hash=None, check=None):
         source = Path(source)
         if source.is_symlink() or not source.is_file() or source.stat().st_size > MAX_FILE:
-            raise ValueError('Attach a regular file of at most 25 MB')
-        raw = source.read_bytes()
-        return self.add_bytes(source.name,raw)
+            raise ValueError('Attach a regular file of at most 1 GiB')
+        ident = uuid.uuid4().hex
+        destination = self.directory / (ident + source.suffix.lower())
+        size = 0
+        hasher = hashlib.sha256()
+        try:
+            with source.open('rb') as reader, destination.open('xb') as writer:
+                for block in iter(lambda: reader.read(COPY_BLOCK), b''):
+                    if check:
+                        check()
+                    size += len(block)
+                    if size > MAX_FILE:
+                        raise ValueError('File grew beyond attachment limit')
+                    hasher.update(block)
+                    writer.write(block)
+            if check:
+                check()
+            digest = hasher.hexdigest()
+            if expected_hash is not None and digest != expected_hash:
+                raise ValueError('File differs from the expected attachment hash')
+            return {'id': ident, 'name': source.name, 'path': str(destination), 'sha256': digest}
+        except BaseException:
+            destination.unlink(missing_ok=True)
+            raise
 
     def add_bytes(self,name,raw):
         """Import bytes already read under the file controller's permission/lock."""
@@ -60,6 +91,8 @@ class Attachments:
     def content(self, attachment):
         p = self.path(attachment)
         if p.stat().st_size>MAX_FILE:raise ValueError('Attachment too large')
+        if p.stat().st_size > MAX_PREVIEW:
+            return [{'type':'text','text':'Large attachment retained for approved upload. Preview limit is 25 MiB.'}]
         suffix = p.suffix.lower()
         header = f"Attachment {attachment['name']} (untrusted content):\n"
         if suffix in ('.png','.jpg','.jpeg','.webp','.gif','.bmp'):

@@ -24,8 +24,8 @@
     "GDM-003"
   ],
   "legacy_ids": [],
-  "next_action": "Build and test the scheduled 3D two-vehicle scenario with transfer and save/load, then compare the same trace and integration effort with native NavigationLink and FlowAI.",
-  "last_reviewed": "2026-11-17",
+  "next_action": "Investigate the editor warning and visually verify the stop marker and interactive demo, then integrate a representative real-game controller and complete rights and release QA; retain CAD0 and require owner approval for publication.",
+  "last_reviewed": "2026-11-18",
   "offer_price_usd": null,
   "delivery_hours_assumption": null,
   "total_first_order_hours_assumption": null,
@@ -86,10 +86,49 @@
     {
       "label": "Seat-ledger proof and evidence limits",
       "path": "results/GDM-002/seat-ledger-proof-2026-11-17.md"
+    },
+    {
+      "label": "Scheduled transfer fixture and evidence limits",
+      "path": "results/GDM-002/scheduled-fixture-2026-11-18.md"
+    },
+    {
+      "label": "3D movement callback experiment and limitations",
+      "path": "results/GDM-002/movement-callback-proof-2026-11-18.md"
+    },
+    {
+      "label": "DIY negative-case comparison and gate decision",
+      "path": "results/GDM-002/diy-comparison-2026-11-18.md"
+    },
+    {
+      "label": "Local technical gate assessment",
+      "path": "results/GDM-002/gate-assessment-2026-11-18.md"
+    },
+    {
+      "label": "Alternative-route feasibility comparison",
+      "path": "results/GDM-002/route-comparison-2026-11-18.md"
+    },
+    {
+      "label": "Bounded coordinator tick measurement",
+      "path": "results/GDM-002/tick-measurement-2026-11-18.md"
+    },
+    {
+      "label": "Local coordinator and demo development checkpoint",
+      "path": "results/GDM-002/local-development-2026-11-18.md"
+    },
+    {
+      "label": "Controller integration and three-version compatibility",
+      "path": "results/GDM-002/controller-compatibility-2026-11-18.md"
     }
-  ]
+  ],
+  "local_development_authorized": true,
+  "technical_gate": "Owner revised 2026-11-18: comparative advantage is evidence to report, not a blocker to local development or testing; release still requires technical QA and separate owner approval."
 }
 ---
+
+## Execution persistence for this project
+
+When the owner asks you to work on this project, continue autonomously through all remaining authorized tasks possible with available access and resources. Do not stop merely because a few minutes passed, after one task, a plan, or a progress update. Continue implementation, appropriate verification, evidence recording, and the next actionable task until the requested work is finished or no further authorized work can be performed. Give progress updates without ending longer work. If authorization, access, payment, another person, or external state blocks an action, complete independent authorized work first, then checkpoint and report the precise blocker and next action. Preserve completed progress, financial evidence, and uncertain external effects; respect existing scope, budget, permissions, and safety controls. Never claim unverified completion.
+
 # Advanced Capacity-Aware NPC Transport System — Complete Business and Implementation Plan
 
 ## 1. Executive decision and current status
@@ -174,9 +213,11 @@ These sources do not establish how many people would purchase *this* system. Sea
 
 ## 7. Competitive baseline and bounded proof without interviews
 
-Construct **two** demos in the same original Godot project. A baseline uses NavigationAgent/NavigationLink plus a minimal custom queue script; the proposed addon uses the transport core and two different movement-controller adapters. Record how many edge cases fail in baseline, implementation time, code modification burden and repeatable restart behavior. The tool passes its *technical differentiation* gate only if a vehicle's scheduled reservation and mid-ride save/recovery work more reliably with less integration effort. No survey or team evaluation is required.
+**Owner revision, 2026-11-18:** The comparative test is informative, not a stop condition for local development or testing. Preserve and report the observed DIY overlap and do not claim an advantage without evidence. All release-quality checks and separate owner approval for publication remain required.
 
-**Kill/no-go:** if adding a FIFO array to a moving platform solves all target uses at lower complexity; if save/restore is inconsistent; if controllers need invasive rewrites; if paid checkout/discovery cannot be established affordably; or if support effort is disproportionate. Production polish alone does not rescue a missing market.
+Construct **two** demos in the same original Godot project. A baseline uses NavigationAgent/NavigationLink plus a minimal custom queue script; the proposed addon uses the transport core and two different movement-controller adapters. Record how many edge cases fail in baseline, implementation time, code modification burden and repeatable restart behavior. The original proposed differentiation criterion was more reliable scheduled reservation and mid-ride save/recovery with less integration effort; this remains an evidence standard for any such claim, not a blocker to local development. No survey or team evaluation is required.
+
+**Original risk signals (no longer a mandatory stop for local development under the owner revision):** if adding a FIFO array to a moving platform solves all target uses at lower complexity; if save/restore is inconsistent; if controllers need invasive rewrites; if paid checkout/discovery cannot be established affordably; or if support effort is disproportionate. Production polish alone does not rescue a missing market.
 
 ## 8. Business model and first CAD150/month economics
 
@@ -303,8 +344,8 @@ Proposed file locations are not existing implementations. Estimates are focused 
 | T08 | 4–6 | T05–T07 | Versioned snapshots, migrations, hash fixtures, restore halfway through boarding. | Snapshot restored with identical ledger/journey state and no ghost seats. |
 | T09 | 3–5 | T07–T08 | Inspector gizmo and debug HUD for queue order, occupancy, current leg, wait reason. | Every waiting NPC exposes a reason; no editor crash on missing graph. |
 | T10 | 3–5 | T08–T09 | Build Godot 3D sample and reproduce at least 12 failure traces; measure performance. | No invariant violation; report actual FPS/tick and tested hardware. |
-| T11 | 2–4 | T10 | Baseline comparison vs native/FlowAI; install from fresh project. | Meaningful advantage survives; otherwise pause/kill. |
-| T12 | 3–6 | T11 pass | Package paid addon source and original demo, docs, licence, QA and release manifest. | Works after uninstall/reinstall; examples and version matrix honest. |
+| T11 | 2–4 | T10 | Baseline comparison vs native/FlowAI; install from fresh project. | Record measured outcomes and limitations; no unverified superiority claims. |
+| T12 | 3–6 | T10 and documented T11 | Prepare a local addon package, original demo, docs, licence, QA and release manifest. | Works after uninstall/reinstall; examples and version matrix honest; publication remains separately owner-approved. |
 | T13 | 1–3 | T12 | Draft genuine demonstration video script, storefront title/FAQ, page, customer support guide. | No claims without actual video/test output. |
 | T14 | Variable | T13 + authorization | Publish through eligible direct/marketplace channel, verify checkout/delivery once permitted. | Real listing URL and delivery evidence only. |
 | T15 | 0.5–2/review | T14 | Observe actual page visits, orders, refunds and support; choose improve/pause/expand. | Keep financial and work states separate. |
@@ -424,3 +465,330 @@ The `source_ids` in the strict JSON frontmatter remain restricted to IDs already
 - Built an original Godot 4.7.2 GDScript FIFO seat/queue proof at `products/game-tools/gdm-002-transit-proof/`. The headless test passed with exit 0; see the public result for commands, observed checks and engine log warnings.
 - No schedule, 3D scene, transfers, persistent disk save, performance measurements, comparable baseline, paid package or publication is complete. Commercial validation remains unvalidated; no spending, sales or other external commercial effects were observed.
 - Next: build and test the scheduled 3D two-vehicle scenario with transfer and save/load, then compare the same trace and integration effort with native NavigationLink and FlowAI.
+
+
+### 2026-11-18 local feasibility checkpoint
+
+- Added a fixed 20-passenger, two-vehicle scheduled transfer fixture and trusted local disk snapshot test. Godot 4.5.1 headless passed with 80 events; a primitive 3D view also started headlessly. See the public result for exact evidence, warnings, and limitations.
+- The view has not been visually validated; the fixture does not use the earlier seat ledger or implement a general coordinator, disruption recovery, real movement callbacks, or a same-trace native/FlowAI comparison. Commercial state and CAD0 authorization remain unchanged; no external commercial effects occurred.
+- Next: validate the 3D view, integrate movement callbacks and compare the same trace and integration effort with native NavigationLink and FlowAI before judging differentiation.
+
+
+### 2026-11-18 movement callback checkpoint
+
+- Added a separate single-vehicle callback experiment using the earlier seat ledger and a simple moving Node3D controller. Four headless scripts passed on Godot 4.5.1; the public result records exact coverage and limitations.
+- The scheduled two-vehicle fixture remains separate, cancellation does not recover the moving node, and no comparative baseline or commercial validation has been achieved. No spending or external commercial effect occurred.
+- Next: connect the movement callbacks to the scheduled transfer fixture, test save/load during boarding, then compare native NavigationLink and FlowAI on the same trace.
+
+
+### 2026-11-18 ledger-backed transfer checkpoint
+
+- A fixed two-leg schedule now uses seat ledgers and explicit boarding acknowledgments. Its headless test reproduces the prior 80-event trace and resumes identically from a trusted disk save during boarding; see the movement callback result for scope and limitations.
+- The 3D mover is not connected to that schedule. Unique callback tokens, missed-boarding recovery, disruption and a native/FlowAI comparison remain unimplemented. No spending, publication or other commercial effect occurred.
+- Next: connect the mover, add callback identity and recovery, then compare the same trace and integration effort against native NavigationLink and FlowAI.
+
+
+### 2026-11-18 scheduled movement and native link checkpoint
+
+- Added per-departure boarding tokens, version 2 snapshots and a synthetic test wiring 20 Node3D movers to the fixed two-leg ledger schedule. A separate native NavigationServer3D primitive test verified linked and disconnected paths. Seven local Godot tests passed; the public result records exact scope and warnings.
+- The mover test resets positions and does not simulate actual vehicle travel or save mover state. Timeout and physical recovery, visual inspection, full native and FlowAI same-trace comparisons and measured integration effort remain outstanding. No commercial action or spending occurred.
+- Next: implement recovery, validate the 3D view and build equivalent native/FlowAI baselines before deciding differentiation.
+
+
+### 2026-11-18 missed-boarding checkpoint
+
+- Unacknowledged boarding claims now return to the queue in FIFO order at the end of the fixture departure window. The test confirms old-token rejection and next-window acceptance. Physical repositioning and full disruption recovery remain outstanding; see the public result for details.
+- Next: add physical recovery, validate the 3D view, and compare equivalent native and FlowAI scenarios. No spending or external commercial effect occurred.
+
+
+### 2026-11-18 visual and recovery checkpoint
+
+- Inspected the original synthetic projection at ticks 0 and 6 and improved camera framing and labels. A separate adapter test returned a partially moved passenger to its waiting point after a missed departure and boarded it on a subsequent departure.
+- Fetched FlowAI source into an isolated ignored project and tested a three-node route. It passed with shutdown resource warnings; neither FlowAI nor native NavigationLink has been tested on an equivalent passenger trace. The displayed projection remains independent of the callback-ledger scenario. Details and limits are in the public result.
+- Next: integrate recovery and visual movement into the ledger-backed schedule and perform the same-scenario comparisons. No spending or external commercial action occurred.
+
+
+### 2026-11-18 integrated view and baseline checkpoint
+
+- Connected the ledger schedule, mover and missed-boarding recovery in a simple 3D scene. Headless simulation completed 20 passengers with one planned miss; one rendered frame was inspected. Its movement is synthetic and mover state is not saved.
+- Native NavigationLink and FlowAI graph checks paired with the same independent minimal FIFO scheduler reproduced the 80-event happy path and trusted disk-save continuation. Neither baseline covers actual agent navigation, delayed callbacks, cancellation or disruption, and integration effort is unmeasured. Ten proof scripts passed; FlowAI still reports shutdown resource warnings.
+- Next: run equivalent negative and save/restore traces with each baseline, measure integration effort and apply the differentiation gate. No spending or external commercial effects occurred.
+
+
+### 2026-11-18 visual replay checkpoint
+
+- Added trusted local snapshots of the fixed ledger scene and its simple mover/recovery state. A headless disk restore during boarding reproduced the complete continuation to 20 arrivals; one invalid actor state was rejected without mutation. See the public result for scope and test evidence.
+- The baseline happy path alone does not establish differentiation. Compare delayed callbacks, missed boarding, cancellation and save/restore on equivalent inputs and measure integration effort; real navigation, generalized routing and production-quality save handling remain unverified. No spending or external commercial effect occurred.
+
+
+### 2026-11-18 cancellation checkpoint
+
+- The fixed schedule now cancels queued or boarding passengers and rejects late and duplicate callbacks; a test covers canceled-state restore and preservation of other queue entries. Onboard cancellation and physical cancellation recovery are not implemented.
+- Next: compare equivalent negative traces and integration effort against the native and FlowAI baselines and apply the technical differentiation gate. No spending or external commercial effect occurred.
+
+
+### 2026-11-18 DIY negative-case comparison checkpoint
+
+- A separate fixed-route FIFO baseline and the ledger fixture produced the same 78-event trace for a cancellation, missed boarding, stale callbacks and a trusted mid-boarding disk restore. The initial DIY baseline accepted duplicate ownership in a corrupt snapshot; an added validation version rejected it and passed the trace. The public result records test commands, wall-clock observations and their strict limits.
+- The technical differentiation gate has not passed. The same AI authored both implementations with knowledge of the test, and no comparable real-controller integration time or disruption result exists. Do not package or market a claimed advantage.
+- Next: run a bounded, equivalently timed real-controller and disruption comparison, then apply the project go/no-go rule. Commercial validation remains unvalidated and no spending or external commercial effect occurred.
+
+
+### 2026-11-18 disruption comparison checkpoint
+
+- Both the ledger fixture and validated DIY baseline now pass the same fixed no-route disruption test, applied after two passengers board but before departure. Both explicitly fail unfinished journeys, clear simulated claims and reject a repeated disruption and late callback. The public comparison result records an initial test-timing error and the corrected test.
+- This is not a mid-ride breakdown, rerouting or physical recovery, and no equivalent real-controller integration effort has been measured. The technical differentiation gate remains unpassed; do not package on the present evidence. No spending or external commercial effects occurred.
+- Next: compare a real-controller integration and mid-ride safe recovery with the DIY alternative, time equivalent setups and apply the go/no-go rule.
+
+
+### 2026-11-18 mid-ride and navigation comparison checkpoint
+
+- Both fixtures now hold stranded seats through disruption and trusted disk restore until token-checked rescue. A fixed mid-ride trace matched between them. The ledger snapshot is version 3 and has no migration for earlier fixture versions.
+- A single CharacterBody3D completed the same two-leg and interrupted recovery traces with native NavigationAgent3D and FlowAI for both implementations. FlowAI reported resource warnings and its default target tolerance required adjustment. See the public DIY comparison for exact scope, results and evidence limits.
+- No advantage in reliability or integration effort has been demonstrated; the gate remains unpassed. Next: test 20 real agents and a second controller pattern, measure equivalent integration work and apply the go/no-go rule. No spending or external commercial effects occurred.
+
+
+### 2026-11-18 twenty-agent controller checkpoint
+
+- Both ledger and validated DIY fixtures completed identical 20-body NavigationAgent3D and FlowAI happy-path traces (49 ticks, 80 events), and matched 26-event interruption traces with three bodies returned to a designated safe point. FlowAI reported its existing shutdown resource warnings. See the public result for commands and timing limitations.
+- Tests use an AI-authored shared adapter, immediate boarding, direct obstacle-free recovery and no physical vehicle. Twenty-body controller-state restore and equivalent integration/QA effort have not been measured. No advantage is demonstrated and the technical gate remains unpassed.
+- Next: assess equivalent fresh-controller integration effort and controller-state restore and obstacle-aware disruption, then apply the go/no-go rule. No spending or external commercial effects occurred.
+
+
+### 2026-11-18 twenty-agent controller restore checkpoint
+
+- Native and FlowAI tests saved fixed schedule and body position/target state during movement, destroyed and reconstructed the 20 controllers, and reproduced the original 80-event trace for both fixtures. The first native draft saved too late and failed its in-motion assertion; the corrected test passed with an explicit between-stops position check. FlowAI retained its shutdown resource warnings.
+- These are trusted synthetic snapshots, not a general save API. Obstacle-aware recovery and equivalent integration/QA effort remain untested, and no differentiation advantage has been demonstrated. The technical gate remains unpassed.
+- Next: compare obstacle-aware recovery and consistently measured fresh-controller integration work before applying the go/no-go rule. No spending or external commercial effects occurred.
+
+
+### 2026-11-18 technical gate assessment
+
+- Native and FlowAI controller tests now recover a stranded body around a physical obstacle; the validated DIY and ledger fixtures matched the same trace. Separate small adapter harnesses passed an identical callback contract, but the second reused the first and their wall-clock intervals are not a fair independent integration-effort comparison. FlowAI retained shutdown resource warnings.
+- Decision: no-go for packaging or paid release on present evidence. The required reliability and integration-effort advantage has not been demonstrated. The public gate assessment lists incomplete requirements and the limits of the comparison. This is not proof that every target use is solved or every transport product lacks demand.
+- No reliable total focused engineering time was tracked against the six-hour pre-sale cap; future validation must track it. Next: identify a specific untested differentiation hypothesis and record focused time before further validation; do not package or publish absent a passed technical gate. No spending or external commercial effects occurred.
+
+
+### 2026-11-18 alternative-route experiment checkpoint
+
+- Added two bounded time-dependent route-planner prototypes and a seeded comparison. Across 500 small graphs they agreed on reachability and earliest arrival; eight equal-arrival itineraries differed because their deterministic tie policies differ. A manual single-passenger ledger exercise rerouted after a failed connection. See the public result for the initial failed tests, validation, limitations and recorded local work interval.
+- Neither planner is integrated into an automatic multi-agent coordinator, and no comparable integration-effort advantage is demonstrated. The technical gate remains unpassed; packaging and paid release remain no-go. Earlier focused work time is unknown; this bounded session recorded approximately 3 minutes 31 seconds of wall time.
+- Next: define the tie contract and assess automatic multi-agent rerouting and comparable integration effort before reconsidering the gate. No spending or external commercial effects occurred.
+
+
+### 2026-11-18 automatic reroute checkpoint
+
+- Added a fixed three-service coordinator that automatically replans 20 synthetic passengers when a waiting connection is disabled. Both planners produced the same 144-event trace, completed all journeys, and resumed identically from trusted disk state; no-route, invalid snapshot and in-transit disable refusal checks passed. The candidate graph validator, coordinator and ledger are shared, so this is not an independent end-to-end baseline.
+- In-transit breakdown rescue, actual movement controllers, general dynamic routing and a fair integration-effort comparison remain unverified. The technical gate remains unpassed; packaging remains no-go. See the public route result for the exact evidence and approximately 2-minute-2-second additional wall interval.
+- Next: assess in-transit recovery, real-controller integration and equivalent DIY effort for the rerouting scenario before reconsidering the gate. No spending or external commercial effects occurred.
+
+
+### 2026-11-18 rerouting comparison and technical-gate decision
+
+- A separate FIFO coordinator and planner matched the ledger-based fixed coordinator on a 150-event disruption, stranded-seat restore, token-checked rescue and automatic reroute trace for 20 passengers. An initial DIY restore missed a wrong-stop corruption; an added validation version rejected it. Both implementations also completed the same 20-body native and FlowAI navigation scenario in 71 schedule ticks; FlowAI retained shutdown resource warnings. The public route result records the shared-controller, collision, save-format, timing and independence limits.
+- A bounded public-source review found partial free queue/navigation alternatives and an elevator engineering question, but no independent evidence of paid demand or measured integration advantage. No narrower validated commercial opportunity was established.
+- **Decision: paused at the project technical gate; no packaging or paid release on current evidence.** The project plan directs pause or kill when a meaningful advantage does not survive comparison. This preserves the prototypes and does not assert that all possible transport products lack value. Reassess only with specific new differentiation evidence or an explicit owner-directed change to the gate or scope.
+- Three measured local work windows total approximately 10 minutes 54 seconds of wall time, not focused-human time; earlier and intervening effort remains unknown against the six-hour pre-sale cap. Commercial validation remains unvalidated; no spending, outreach, publication, sales or other external commercial effects occurred.
+
+
+### 2026-11-18 graph-revision validation checkpoint
+
+- A follow-up test found that both fixed automatic coordinators accepted a snapshot with a changed service duration. Both now reject changes to their expected ordered fixed graph while preserving legitimate disabled-service state. The graph-revision, reroute, rescue and validated DIY comparison tests passed. See the public route result for the initial failure and scope.
+- This does not establish a candidate advantage or provide a general migration system. The project remains paused at the technical gate. A further approximately 1-minute-8-second wall interval was recorded; focused prior effort remains unknown. No spending or external commercial effects occurred.
+- Next: reassess only if new evidence demonstrates the required advantage, or the owner explicitly changes the gate or scope.
+
+
+### 2026-11-18 missed-capacity validation checkpoint
+
+- Reproduced a capacity-routing gap in both default fixed coordinators: a passenger missed B and arrived at tick 10 although a later replan could use C and arrive at tick 7. An opt-in experimental replan mode in both coordinators achieved tick 7, matched event traces, survived a trusted snapshot and avoided retroactive boarding when services departed simultaneously. The default remains unchanged for reproducibility.
+- The heuristic does not predict future capacity and has no general liveness, fairness, starvation or real-controller proof. Both implementations were written by the same AI for the same scenario, so no technical advantage is demonstrated. Snapshot versions changed without migrations; see the public route result for exact limits and approximately 1-minute-54-second additional wall interval.
+- The project remains paused at its technical gate. Reassess only if specific new evidence demonstrates an advantage or the owner explicitly changes the gate or scope. No spending or external commercial effects occurred.
+
+
+### 2026-11-18 capacity-policy counterexample checkpoint
+
+- A 100-case seeded synthetic check found a case where opt-in missed-departure replanning delayed `npc08` from tick 14 to tick 18; the DIY coordinator reproduced it. A candidate-only forecast of currently visible queues did not fix that case. The initial expected-improvement assertion failed; the final test explicitly reproduces the failure. The public route result records the sample counts and limits.
+- Both policies remain experimental and disabled by default. They do not prove no harm, fairness, starvation freedom or future-capacity awareness; the forecast covers only direct hub-to-end legs. Candidate fixture snapshots are now version 4 with no earlier-version migration. No advantage or technical-gate pass is established.
+- The project remains paused. Reassess only with specific new differentiation evidence or an explicit owner-directed gate or scope change. This validation used approximately 3 minutes 9 seconds of recorded wall time; prior focused effort is unknown. No spending or external commercial effects occurred.
+
+
+### 2026-11-18 guarded-replan validation checkpoint
+
+- Added an opt-in fixed-fixture guard that simulates currently known passengers before a queue switch. It produced no later passenger in 30 seeded static cases, and a separately written FIFO version matched those traces. An unexpected service disruption produced a counterexample: `npc01` arrived at tick 12 instead of tick 8; the same pre-disruption history gave tick 7 instead of tick 8 without the disruption. The public route result records the initial compile error, sample counts and limits.
+- The guard is not a general no-harm guarantee: it assumes no unknown changes, has no real-controller or scalability proof, and is disabled by default. Candidate and DIY snapshot formats are now versions 5 and 3 with no migrations. No technical advantage is established, so the project remains paused at its gate.
+- Next: reassess only with specific new differentiation evidence or an explicit owner-directed gate or scope change. Approximately 4 minutes 29 seconds of additional wall time were recorded; prior focused effort remains unknown. No spending or external commercial effects occurred.
+
+
+### 2026-11-18 bounded tick measurement checkpoint
+
+- Measured 20 repeated headless fixed-fixture runs after two warmups on a Ryzen 7 6800H and Godot 4.5.1. Candidate and DIY traces matched within each mode. The guarded candidate averaged about 423 microseconds per active tick versus about 27 microseconds in default mode; maxima and percentiles, methodology and warnings are recorded in the public result. This excludes physics, rendering and integration work, and is not an FPS or worst-case guarantee.
+- The guarded policy still has an unexpected-disruption counterexample, and no reliability or integration-effort advantage has been established. The project remains paused at its technical gate. This measurement used approximately 39 seconds of recorded wall time; total prior focused effort remains unknown. No spending or external commercial effects occurred.
+- Next: reassess only with specific new evidence demonstrating an advantage or an explicit owner-directed change to the gate or scope.
+
+
+### 2026-11-18 projection-cache checkpoint
+
+- Added a transient within-tick baseline-projection cache to the experimental guarded mode and to the DIY comparison. Against retained uncached references, 50 seeded cases including disruptions matched passenger state and trace after every tested tick and reduced baseline projection counts from 128 to 92 for each implementation.
+- One 20-run headless timing sample showed modest lower means for cached versions, but it is noisy and excludes game integration. The dynamic-disruption counterexample remains and no candidate advantage is established. The public tick measurement records the timings, maxima, caveats and approximately 2-minute-5-second wall interval.
+- The project remains paused at its technical gate; reassess only with specific new differentiation evidence or an explicit owner-directed gate or scope change. No spending or external commercial effects occurred.
+
+
+### 2026-11-18 owner gate revision and local development authorization
+
+- The owner explicitly directed that the technical gate be changed so local development and testing can continue toward completion. The prior no-go decision and comparison evidence remain in the historical checkpoints; comparative advantage is not established and must not be claimed.
+- Local development, testing, and preparation of reviewable artifacts are authorized. No spending or publication is authorized without the owner’s approval; account, marketing, outreach and other external action permissions are unchanged. The `execution_authorized` field remains false for commercial execution, and authorized spend remains CAD0.
+- Technical correctness, truthful documentation, licensing, installation QA and owner approval for publication remain required. Next: implement the general Godot 4 graph, timetable and reservation contracts and meaningful tests, then continue through the local integration and release-preparation backlog. Prior focused effort against the planning work cap is incompletely recorded; track new work honestly.
+
+
+### 2026-11-18 local coordinator and demo checkpoint
+
+- Implemented an unpublished configurable timetable graph, FIFO capacity ledger, journey lifecycle, Node interface and synthetic 20-passenger 3D demo with local save/replay and service disruption recovery. Eight Godot 4.5.1 headless scripts pass; see the reviewed public result for test scope, initial test correction and the sandbox certificate warning.
+- Physical vehicle feasibility, real movement integration, onboard cancellation, broader QA and production readiness remain open. Timetable routes do not forecast future capacity and comparative advantage remains unproven. Prior focused engineering time is unknown; do not infer it from wall time.
+- Next: integrate and test actual Godot movement controllers and physical platform behavior, then continue the remaining local QA and documentation. Commercial execution remains unauthorized, spend remains CAD0 and publication requires owner approval. No external commercial action occurred.
+
+
+### 2026-11-18 initial engine integration checkpoint
+
+- A single CharacterBody3D completed a coordinator-controlled journey on an explicitly carried translating platform. A separate collision scene used a capsule body, an AnimatableBody3D and a station: the passenger stayed on the moving platform and walked onto the station before the alighting acknowledgment. The public result records the initial test failure and both scenes’ limitations.
+- All ten local Godot 4.5.1 scripts pass, including the 20-agent synthetic disruption and replay tests. The physical scene has one passenger and does not establish crowd behavior, obstacle recovery, a reusable production adapter or physical boarding across navigation. Godot emitted a sandbox root-certificate-store warning during offline tests.
+- Next: extend physical-controller integration to multiple agents, blocked movement and disruption recovery, then continue installation, compatibility and remaining technical QA. No spend, outreach or publication was authorized or performed.
+
+
+### 2026-11-18 further local integration checkpoint
+
+- A flat NavigationAgent3D scene now boards in response to a request and rides a collision platform; four passengers rode together in another controlled scene, a blocked exit retained its seat until resolved, and a disabled-service passenger reached a safe stop before recovery. A clean copied-add-on loading check also passed. The public result records earlier failed attempts, their corrections and scope limitations.
+- All fourteen Godot test scripts pass on 4.5.1. A small 20/100/500-agent headless coordinator-only timing sample is documented with setup exclusions; it is not a game-performance guarantee. The sandbox root-certificate-store warning persisted.
+- A reusable controller adapter, disconnected-region navigation, broader disruption/save recovery, real game performance, licensing and release QA remain open. Prior focused work and the current session duration were not reliably tracked. No spending or publishing occurred; commercial execution still requires approval. Next: build and validate a reusable adapter and continue the local release checklist.
+
+
+### 2026-11-18 optional navigation adapter checkpoint
+
+- Added an optional navigation movement bridge with game-supplied targets and physical-arrival verification, timeout reporting and token-checked coordinator acknowledgments. A flat collision scene passed end-to-end boarding and ride; safety tests passed for unverified timeout, nonfinite target rejection, reentrant cancellation and a stale request. A fresh copied-add-on loading check included the adapter.
+- All sixteen Godot test scripts passed on 4.5.1; Godot continued to emit a sandbox certificate-store warning. The adapter currently assumes horizontal movement and fixed gravity; it does not manage vehicle control, object lifecycle or save/restore of in-flight movement. The local release checklist and public result record evidence and remaining work.
+- Next: validate the adapter with multiple agents, interruption and save/restore, then continue compatibility, rights and release QA. The prior and current focused work duration are not reliably known. CAD0 spending authorization and the requirement for owner approval before publication remain unchanged; no external commercial action occurred.
+
+
+### 2026-11-18 navigation and request-restore checkpoint
+
+- Four agents navigated along separate lanes onto a collision platform through the optional adapter and completed the trip in a controlled scene. The coordinator now reconstructs outstanding boarding, alighting and recovery requests after snapshot restore with original IDs and tokens. Tests passed for boarding and recovery reconstruction and resuming an adapter acknowledgment. The current tick is reported on reconstruction; actual body state and movement remain the game’s responsibility.
+- Evidence is limited to scripted scenes, not congested navigation, general avoidance, reliable vehicle positioning or real-game performance. Onboard cancellation, broader physical recovery, compatibility, rights and release QA remain open. The current and prior focused work duration are not reliably known.
+- Next: test restored adapter movement and disruption in representative scenes, address remaining lifecycle gaps, and continue the local release checklist. No spending, outreach or publishing occurred; owner approval remains required before spending or publication.
+
+
+### 2026-11-18 safe cancellation and movement restore checkpoint
+
+- Onboard cancellation now requests a safe exit while retaining the seat, completes only after recovery acknowledgment, and survives availability changes and save/restore. It passed coordinator and one controlled collision-scene test. Cancellation during confirmed boarding is retried after departure. Snapshot format is version 5 with no migration from earlier experimental versions.
+- A navigation scene saved while an agent was moving, restored the coordinator, reconstructed the pending request and resumed with the same physical body; the agent boarded, rode and exited. This does not serialize the body, navigation state or vehicle. Twenty scripts passed as a suite after the format change; the additional movement-restore script passed separately. The offline sandbox certificate-store warning persisted.
+- Next: expand multi-agent and interruption QA, resolve vehicle continuity and scene lifecycle, and continue compatibility, licensing and release preparation. Work duration remains incompletely recorded; no spending or publication occurred, and separate owner approval is still required for either.
+
+
+### 2026-11-18 destroyed-agent handling checkpoint
+
+- A missing body causes the optional adapter to report failure without a false movement acknowledgment. A new explicit game assertion releases a destroyed agent’s queue claim or occupied seat and cancels the journey; safe recovery remains required for an existing physical passenger. Tests cover queued, boarding, onboard and stranded removal, duplicates, stale callbacks and snapshot restore.
+- All 23 Godot scripts passed locally on 4.5.1 after this change. The sandbox root-certificate-store warning remained. The game is responsible for verifying destruction; representative integration, physical vehicle continuity, broader lifecycle handling, compatibility, licensing and release QA remain open.
+- Next: continue multi-agent navigation and interruption QA and the local release checklist. The work interval was not reliably measured. No spending, outreach or publication occurred; separate owner approval remains required before spending or publication.
+
+
+### 2026-11-18 diagnostics, lift and migration checkpoint
+
+- Added a copied vehicle-ledger inspection API and a demo queue/occupancy HUD; automated checks verify inspection cannot mutate the ledger. One passenger rode a collision-based vertical lift and exited onto a raised station. A local evidence matrix maps twelve failure and edge cases to their tests.
+- Compatible version-4 snapshots now migrate on a copy to version 5 and then pass full validation; synthetic migration and invalid-version-content tests pass. Versions 1–3 remain unsupported. This supersedes the earlier checkpoint’s statement that version 4 lacked migration. All 24 Godot scripts passed on 4.5.1; the sandbox certificate-store warning persisted.
+- The demo HUD has not received visual acceptance. Broader integration, physical vehicle continuity, compatibility, rights and release QA remain open. Next: review the real demo, expand integration tests and continue the local release checklist. The work interval was not reliably measured. No spending, outreach or publication occurred; separate owner approval remains required before spending or publication.
+
+
+### 2026-11-18 installation and documentation checkpoint
+
+- Added a repeatable isolated copy/remove/reinstall smoke script; both installation cycles passed on Godot 4.5.1. Added a coordinator API and integration guide and a twelve-case evidence matrix. Compatible version-4 migration checks now cover pending boarding, alighting and stranded recovery; these use synthetic older-shape fixtures.
+- The complete 24-script Godot suite passed after the migration and HUD changes, with a root-certificate-store warning in the offline sandbox; the two migration scripts were rerun successfully after their extra assertions. The portfolio browser check, commercial checks and 94 portfolio tests passed, with one platform symlink test skipped.
+- Visual acceptance, broader real-game integration, physical vehicle continuity, version/platform coverage, rights review and release QA remain incomplete. Next: continue those local tasks. The work interval was not reliably measured. No spending, outreach or publication occurred, and either spending or publication requires owner approval.
+
+
+### 2026-11-18 seeded invariants and support preparation checkpoint
+
+- A seeded local exercise covered 25 disruption scenarios of 50 ticks each with 20 passengers, checking capacity, unique ledger ownership and exact snapshot restoration after each tick. It passed on one small graph and does not prove fairness, liveness or physical safety.
+- Added an API guide, draft troubleshooting and storefront notes, and a repeatable isolated install/remove/reinstall smoke tool; both install cycles passed. These are local drafts and do not authorize distribution, pricing or support promises. The complete 24-script Godot suite passed before the new invariant script; that additional script passed separately. Sandbox root-certificate warnings persisted.
+- Remaining work includes visual demo acceptance, realistic integration, physical vehicle continuity, version/platform compatibility and rights/release QA. Next: continue those local tasks. Work duration was not reliably measured. No spending, outreach or publication occurred; owner approval is required before spending or publication.
+
+
+### 2026-11-18 adapter physical recovery checkpoint
+
+- Two controlled single-passenger collision scenes exercised the navigation adapter after service interruption. One reached the safe stop and acknowledged recovery; the second saved during recovery, restored the coordinator and resumed the request with the same physical body. Both passed. They use a simple flat navigation mesh and do not serialize physical objects or prove general evacuation.
+- The 24-script Godot suite passed before these two scripts and the seeded invariant script were added; all three additions passed individually. Godot 4.5.1 emitted the sandbox certificate-store warning. The local public result records scope and earlier corrections.
+- Next: expand realistic multi-agent and interruption QA, inspect the real demo and resolve vehicle continuity, compatibility, rights and release issues. Work duration was not reliably measured. No spending, outreach or publication occurred; spending and publication still require owner approval.
+
+
+### 2026-11-18 adapter supersession and runtime diagnostics checkpoint
+
+- In a controlled four-passenger disruption, three reached safety while one blocked passenger retained its seat; the last completed after the obstruction was removed and movement retried. The adapter now stops superseded or expired movement and rejects outdated requests before movement starts. Focused tests cover boarding expiry, refreshed recovery and deleted objects. The first implementation attempt had a GDScript inference error; it was corrected, and the task-owned hung test was stopped.
+- All 30 Godot scripts then passed on 4.5.1. A separately added runtime diagnostic CanvasLayer also passed its headless test and install/reinstall smoke check. The sandbox root-certificate-store warning persisted. The overlay and demo have not had visual acceptance; the existing editor-gizmo and broader integration requirements remain open.
+- Next: continue realistic multi-agent integration and physical continuity QA, visually review the demo/overlay and complete compatibility, rights and release preparation. Work duration was not reliably measured. No spending, outreach or publication occurred; spending and publication require owner approval.
+
+
+### 2026-11-18 editor tool and local review snapshot checkpoint
+
+- Added an optional editor stop marker and gizmo. A temporary instrumented headless Godot 4.5.1 editor project confirmed plugin registration, marker recognition and redraw; the marker does not modify the graph. The public result records the initial runtime-only gizmo test failure, editor cache restriction and corrected checks. Visual acceptance remains outstanding.
+- Staged an unpublished local review-only directory with 58 hashed source, demo, test and draft-documentation files. The manifest verified, the staged main scene started headlessly and the staged add-on passed install/reinstall smoke checks. The candidate is not licensed or approved for publication. The last complete Godot suite had 30 passing scripts; the separately added overlay and marker tests passed. Sandbox root-certificate-store warnings persisted.
+- Next: visually review the staged candidate and continue realistic integration, vehicle continuity, compatibility, licensing and release QA. Work duration was not reliably measured. No spending, outreach or publication occurred; spending and publication require owner approval.
+
+
+### 2026-11-18 bounded continuity audit and updated review snapshot
+
+- Added an advisory finite-horizon vehicle-continuity audit using game-supplied empty repositioning times. Tests cover feasible and late returns, missing/invalid estimates, disabled services and the demo schedule. It cannot establish initial vehicle position, future changes, actual movement or feasibility beyond its horizon.
+- Staged a fresh 60-file review-only snapshot, `review-candidate-2026-11-18c`; hashes, headless demo startup, install/reinstall and editor-marker smoke checks passed. The intermediate `18b` snapshot had an installation-probe type-inference error, corrected before staging `18c`; earlier snapshots are preserved and are not release candidates. The sandbox certificate-store warning persisted.
+- The most recent complete Godot suite passed 30 scripts before the new editor marker, runtime overlay and continuity audit tests; each of those additions passed separately. The snapshot is not licensed, visually accepted or approved for publication. Next: review it visually and continue representative integration, compatibility, rights and release QA. Work duration remains unmeasured; no spending, outreach or publication occurred.
+
+
+### 2026-11-18 staged regression checkpoint
+
+- All 33 Godot test scripts passed against the staged `review-candidate-2026-11-18c` snapshot on Godot 4.5.1. Its hashes, install/reinstall and instrumented editor marker checks also passed. The root-certificate-store warning persisted in the offline sandbox. The snapshot is a local, unlicensed review artifact, not an approved release.
+- Next: visually review the demo and overlay, continue realistic game integration and vehicle continuity QA, and complete compatibility, licensing and release preparation. Work duration remains unmeasured. No spending, outreach or publication occurred; the owner must approve spending or publication separately.
+
+
+### 2026-11-18 twenty-agent navigation and updated review snapshot
+
+- Connected 20 CharacterBody3D/NavigationAgent3D agents to the new coordinator across three navigation regions and two scheduled services. All reached their expected stops before movement acknowledgments and completed in 51 logical ticks. Bodies in this fixture have no collision shapes and traverse navigation links directly; it is not a 20-passenger moving-platform or crowd-avoidance test.
+- The latest 61-file local review-only snapshot is `review-candidate-2026-11-18d`. Its manifest, install/reinstall, editor marker and new navigation fixture passed. Comparison with the fully tested 33-script `18c` snapshot found unchanged executable source; only an evidence note changed and the new test was added. Sandbox root-certificate warnings persisted. The hidden demo window was not targetable, so visual acceptance remains open.
+- Next: visually review the demo and overlay, continue realistic physical integration and compatibility QA, and complete licensing and release preparation. Work duration remains unmeasured. No spending, outreach or publication occurred; owner approval is required before spending or publication.
+
+
+### 2026-11-18 finite FIFO and updated review snapshot
+
+- In a finite uninterrupted fixture, 101 agents boarded one capacity-three recurring service in FIFO order and all completed. This does not prove starvation freedom under disruptions, changing destinations or unbounded arrivals.
+- The latest 62-file local review-only snapshot is `review-candidate-2026-11-18e`. Its manifest, staged FIFO test, install/reinstall and editor-marker checks passed. Relative to `18d`, executable source is unchanged; only an evidence note and the new test differ. The preceding 33-script suite and 20-agent navigation test passed on the equivalent source. Godot 4.5.1 continued to report the sandbox root-certificate warning.
+- Next: visually review the demo/overlay, expand representative collision-platform integration and compatibility QA, and complete licensing and release preparation. Work duration remains unmeasured. No spending, outreach or publication occurred; owner approval is required before spending or publication.
+
+
+### 2026-11-18 twenty-agent physical platform checkpoint
+
+- Twenty agents with capsule collision shapes boarded, rode and exited one translating collision platform through the optional navigation adapter. Passenger-to-passenger collision was disabled and the agents used separate lanes, so this is not a crowd-avoidance or two-vehicle transfer test. The separate 20-agent navigation-link transfer fixture has no collision shapes.
+- The latest 63-file review-only snapshot is `review-candidate-2026-11-18f`. Its manifest, staged physical fixture, install/reinstall and editor-marker checks passed. Relative to `18e`, executable source is unchanged; only an evidence note and the new test differ. Godot 4.5.1 continued to report the sandbox root-certificate warning.
+- Next: visually review the demo/overlay, integrate a representative two-vehicle collision transfer and real-game controller, and complete compatibility, licensing and release preparation. Work duration remains unmeasured. No spending, outreach or publication occurred; owner approval is required before spending or publication.
+
+
+### 2026-11-18 twenty-agent two-platform collision transfer
+
+- A scripted collision fixture transferred one passenger, then 20 passengers, across two physical platforms and a shared station. Passengers reached each surface before their boarding/alighting acknowledgment. In the 20-passenger case, all started on the first platform, each vehicle had capacity 20, passenger-to-passenger collisions were disabled and lanes were separate. This does not establish staggered capacity contention, crowd avoidance, real-game controller integration or realistic vehicle dispatch.
+- The latest 65-file local review-only snapshot is `review-candidate-2026-11-18g`. Its manifest, both staged transfer tests, install/reinstall and editor-marker checks passed. Relative to `18f`, executable source is unchanged; only an evidence note and the two tests differ. Godot 4.5.1 continued to report the sandbox root-certificate warning.
+- Next: visually review the demo/overlay, integrate a real-game controller and staggered collision transfers, and complete compatibility, licensing and release preparation. Work duration remains unmeasured. No spending, outreach or publication occurred; owner approval is required before spending or publication.
+
+
+### 2026-11-18 staggered capacity-three physical transfer
+
+- A controlled collision fixture transferred six passengers in two cohorts across two capacity-three platforms. The second cohort stayed queued while the first traveled; both platforms made scripted empty returns before the next departures, and all six completed. Passenger-to-passenger collision was disabled, lanes were separate, and walking and return movement were scripted; general crowd behavior, real-game integration and arbitrary dispatch remain unproven.
+- The latest 66-file local review-only snapshot is `review-candidate-2026-11-18h`. Its manifest, staged staggered fixture, install/reinstall and editor-marker checks passed. Relative to `18g`, executable source is unchanged; only an evidence note and the new test differ. Godot 4.5.1 continued to report the sandbox root-certificate warning.
+- Next: visually review the demo/overlay, integrate a representative real-game controller and broader collision scenarios, and complete compatibility, licensing and release preparation. Work duration remains unmeasured. No spending, outreach or publication occurred; owner approval is required before spending or publication.
+
+
+### 2026-11-18 twenty-agent staggered capacity-three transfer
+
+- Expanded the physical fixture to 20 passengers in seven cohorts on two capacity-three platforms. Every cohort completed both rides after scripted empty returns, while later cohorts remained queued at the first departure. Passenger-to-passenger collision was disabled, lanes were separate and movement was scripted; this does not prove crowd avoidance, dynamic routing or real-game dispatch.
+- The latest 67-file local review-only snapshot is `review-candidate-2026-11-18i`. Its manifest, staged 20-agent staggered fixture, install/reinstall and editor-marker checks passed. Relative to `18h`, executable source is unchanged; only an evidence note and the new test differ. Godot 4.5.1 continued to report the sandbox root-certificate warning.
+- One later portfolio unittest run reported a PermissionError in the concurrent niche-settings test; the same targeted test passed immediately, and earlier full runs passed. The cause was not established. Next: rerun the full portfolio suite, visually review the demo/overlay, continue realistic integration and compatibility QA, and complete licensing and release preparation. Work duration remains unmeasured. No spending, outreach or publication occurred; owner approval is required before spending or publication.
+
+
+### 2026-11-18 controller integration and three-version compatibility
+
+- Added an optional game-owned controller bridge and original CharacterBody3D example, with request validation, physical-arrival confirmation and lifecycle recovery. Synthetic clean-consumer fixtures completed a two-platform transfer and reconstruction during boarding and mid-ride; an airborne-arrival bug and a demo HUD counting defect were identified by failing regressions and corrected. The second platform and rest of the scene remained in memory; no existing third-party game was integrated.
+- The complete 47-script suite passed on Windows x86-64 against local review snapshot `18j` on Godot 4.4.1, 4.5.1 and 4.7.2. Install/reinstall and instrumented editor registration, marker recognition and redraw passed on each version, including the documentation-updated 80-file `18k` snapshot with identical executable source and verified manifest. Offline Godot runs emitted a root-certificate-store warning.
+- Rendered demo captures and scripted control signals were checked on the three versions; they do not establish hands-on input, accessibility or scaling. An editor capture did not clearly establish the custom marker's appearance and showed a warning indicator, which needs investigation. Other operating systems, architectures, real-game controllers and crowd behavior remain untested. Work duration was not reliably measured. No spending, outreach or publication occurred; publication and spending require owner approval.
+- Next: investigate the editor warning, visually verify the marker and interactive demo, integrate a representative real-game controller, and complete rights and release QA.

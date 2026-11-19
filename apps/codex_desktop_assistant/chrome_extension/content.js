@@ -156,6 +156,16 @@
     }finally{automating--;}
     return {dispatched:true,next:'Inspect the current page and verify the result. A dispatched event is not proof the website saved a change.'};
   }
+  function scheduleUploadExpiry(id) {
+    function expire() {
+      const state = uploads.get(id);
+      if (!state) return;
+      const remaining = 120000 - (Date.now() - state.at);
+      if (remaining <= 0) uploads.delete(id);
+      else setTimeout(expire, remaining);
+    }
+    setTimeout(expire, 120000);
+  }
   const messageHandler=(args,sender,reply)=>{
     if(sender.id!==chrome.runtime.id||args?.channel!=='codex-content')return false;
     try{
@@ -201,24 +211,67 @@
             return Boolean(String(value(e)||'').trim());
           })),revision};break;
         case 'screenshot_check':if(sensitivePage()||roots().some(r=>[...r.querySelectorAll('input,textarea,[contenteditable=true]')].filter(visible).some(privateField)))throw Error('Sensitive page cannot be captured.');result={};break;
-        case 'upload_begin':{
-          const e=target(args);if(e.type!=='file'||!Number.isInteger(args.size)||args.size<0||args.size>25*1024*1024)throw Error('Unsupported file upload.');
-          uploads.clear();uploads.set(args.upload,{element:e,mime:['image/png','image/jpeg','application/zip'].includes(args.mime)?args.mime:'application/octet-stream',name:String(args.name).replace(/[\\/]/g,'_').slice(0,200),size:args.size,sha256:args.sha256,chunks:[],received:0,revision,at:Date.now()});result={ready:true};break;
+        case 'upload_begin': {
+          const element = target(args);
+          if (element.type !== 'file' || !Number.isSafeInteger(args.size) ||
+              args.size < 0 || args.size > 1024 ** 3 || !/^[a-f0-9]{64}$/.test(args.sha256)) {
+            throw Error('Unsupported file upload.');
+          }
+          const state = {
+            element, form: element.form, destination: element.form?.action, page: location.href,
+            mime: ['image/png','image/jpeg','application/zip'].includes(args.mime) ? args.mime : 'application/octet-stream',
+            name: String(args.name).replace(/[\\/]/g,'_').slice(0,200),
+            size: args.size, sha256: args.sha256, chunks: [], blobs: [], received: 0, revision, at: Date.now()
+          };
+          uploads.clear();
+          uploads.set(args.upload, state);
+          // Capture only the id, so a cancelled upload can release its blobs immediately.
+          scheduleUploadExpiry(args.upload);
+          result = {ready:true};
+          break;
         }
-        case 'upload_chunk':{
-          const u=uploads.get(args.upload);if(!u||Date.now()-u.at>120000||u.revision!==revision||args.offset!==u.received)throw Error('Upload expired or a human edit took priority.');
-          const bytes=Uint8Array.from(atob(args.data),c=>c.charCodeAt(0));if(bytes.length>128*1024||u.received+bytes.length>u.size)throw Error('Upload chunk exceeds approved size.');u.chunks.push(bytes);u.received+=bytes.length;result={received:u.received};break;
+        case 'upload_chunk': {
+          const u = uploads.get(args.upload);
+          if (!u || Date.now()-u.at > 120000 || u.revision !== revision || args.offset !== u.received) {
+            throw Error('Upload expired or changed.');
+          }
+          const bytes = Uint8Array.fromBase64 ? Uint8Array.fromBase64(args.data) :
+            Uint8Array.from(atob(args.data), c => c.charCodeAt(0));
+          if (!bytes.length || bytes.length > 512*1024 || u.received + bytes.length > u.size) {
+            throw Error('Upload chunk exceeds approved size.');
+          }
+          u.chunks.push(bytes);
+          u.received += bytes.length;
+          u.at = Date.now();
+          if (u.chunks.length === 8) {
+            u.blobs.push(new Blob(u.chunks));
+            u.chunks = [];
+          }
+          crypto.subtle.digest('SHA-256', bytes).then(hash => {
+            const checksum = Array.from(new Uint8Array(hash), v => v.toString(16).padStart(2,'0')).join('');
+            reply({ok:true, result:{received:u.received, checksum}});
+          }).catch(error => reply({ok:false,error:error.message}));
+          return true;
         }
-        case 'upload_finish':{
-          const u=uploads.get(args.upload);uploads.delete(args.upload);if(!u||u.revision!==revision||u.received!==u.size||!u.element.isConnected)throw Error('Upload changed before completion.');
-          const file=new File(u.chunks,u.name,{type:u.mime});
-          file.arrayBuffer().then(b=>crypto.subtle.digest('SHA-256',b)).then(hash=>{
-            check();if(u.revision!==revision)throw Error('Human edit took priority before file selection.');
-            const hex=[...new Uint8Array(hash)].map(x=>x.toString(16).padStart(2,'0')).join('');if(hex!==u.sha256)throw Error('Upload checksum mismatch.');
-            const transfer=new DataTransfer();transfer.items.add(file);u.element.files=transfer.files;observation=null;
-            u.element.dispatchEvent(new Event('input',{bubbles:true}));u.element.dispatchEvent(new Event('change',{bubbles:true}));
-            reply({ok:true,result:{selected:file.name,bytes:file.size,sha256:hex,next:'Inspect and verify the website upload result.'}});
-          }).catch(error=>reply({ok:false,error:error.message}));return true;
+        case 'upload_finish': {
+          const u = uploads.get(args.upload);
+          uploads.delete(args.upload);
+          if (!u || Date.now()-u.at > 120000 || u.revision !== revision || u.received !== u.size || args.verified_sha256 !== u.sha256 ||
+              !u.element.isConnected || u.element.disabled || u.element.type !== 'file' ||
+              u.element.form !== u.form || u.form?.action !== u.destination || location.href !== u.page ||
+              privateField(u.element) || sensitivePage() || u.form?.querySelector('input[type=password]')) {
+            throw Error('Upload changed before completion.');
+          }
+          const file = new File([...u.blobs,...u.chunks],u.name,{type:u.mime});
+          if (file.size !== u.size) throw Error('Upload size mismatch.');
+          const transfer = new DataTransfer();
+          transfer.items.add(file);
+          u.element.files = transfer.files;
+          observation = null;
+          u.element.dispatchEvent(new Event('input',{bubbles:true}));
+          u.element.dispatchEvent(new Event('change',{bubbles:true}));
+          result = {selected:file.name,bytes:file.size,sha256:u.sha256,next:'Inspect and verify the website upload result.'};
+          break;
         }
         default:throw Error('Unsupported content operation');
       }

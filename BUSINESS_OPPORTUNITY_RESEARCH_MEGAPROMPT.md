@@ -28,6 +28,12 @@ This is a universal business-research prompt, **not** a digital-product-only pro
 - Minimal human participation, not zero human accountability: do not require research interviews, surveys, customer calls or paid pilots before building. Human involvement is acceptable only when inherent to actual business operations (such as a paying service client), legally required, or necessary for authorization, identity verification, acquiring access, platform publication, payment, supplier contracts, financial decisions, or another unavoidable blocker.
 - The final project remains **planned/unvalidated** unless independent evidence shows otherwise. A detailed plan, active storefront, publicly listed product, review count, or apparent search demand does not establish paid sales.
 
+### Persistence instruction for the generated Codex project
+
+Include this instruction in the generated project’s first-session handoff and resume checkpoint: When the owner asks you to work on this project, continue autonomously through all remaining authorized tasks possible with available access and resources. Do not stop merely because a few minutes passed, after one task, a plan, or a progress update. Continue implementation, appropriate verification, evidence recording, and the next actionable task until the requested work is finished or no further authorized work can be performed. Give progress updates without ending longer work. If authorization, access, payment, another person, or external state blocks an action, complete independent authorized work first, then checkpoint and report the precise blocker and next action. Preserve completed progress, financial evidence, and uncertain external effects; respect existing scope, budget, permissions, and safety controls. Never claim unverified completion.
+
+For this research or planning run, continue through all research, drafting, checking, and file creation possible with available tools before delivering the requested single file. Report actual access and execution limits.
+
 ## 1. Read and obey the current repository before choosing an idea
 
 Use available GitHub-connected tools first if the account has access; otherwise inspect the public GitHub repository and source files via normal web browsing. Read the live repository, not recollections or a cached summary. Record the checked branch/commit when obtainable and the date of inspection. Do not falsely imply access to uncommitted local changes, private accounts, sales dashboards, or files you could not inspect.

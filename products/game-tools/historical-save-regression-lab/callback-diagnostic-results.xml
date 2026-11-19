@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="3" result="Passed" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-18 20:57:03Z" end-time="2026-11-18 20:57:03Z" duration="0.1358368">
+  <test-suite type="TestSuite" id="1000" name="SampleProject" fullname="SampleProject" runstate="Runnable" testcasecount="86" result="Passed" start-time="2026-11-18 20:57:03Z" end-time="2026-11-18 20:57:03Z" duration="0.135837" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1112" name="BaselineTests.dll" fullname="C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/experiments/CallbackDiagnosticProject/Library/ScriptAssemblies/BaselineTests.dll" runstate="Runnable" testcasecount="86" result="Passed" start-time="2026-11-18 20:57:03Z" end-time="2026-11-18 20:57:03Z" duration="0.120583" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="25124" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestFixture" id="1006" name="CallbackSampleGameTests" fullname="CallbackSampleGameTests" classname="CallbackSampleGameTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-18 20:57:03Z" end-time="2026-11-18 20:57:03Z" duration="0.116401" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1010" name="CancellationStopsPendingRestoreBeforeReturn" fullname="CallbackSampleGameTests.CancellationStopsPendingRestoreBeforeReturn" methodname="CancellationStopsPendingRestoreBeforeReturn" classname="CallbackSampleGameTests" runstate="Runnable" seed="1346671552" result="Passed" start-time="2026-11-18 20:57:03Z" end-time="2026-11-18 20:57:03Z" duration="0.067135" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-suite type="ParameterizedMethod" id="1009" name="WaitsForCallbackAndTestsState" fullname="CallbackSampleGameTests.WaitsForCallbackAndTestsState" classname="CallbackSampleGameTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-18 20:57:03Z" end-time="2026-11-18 20:57:03Z" duration="0.027612" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="1007" name="WaitsForCallbackAndTestsState(False,&quot;pass&quot;)" fullname="CallbackSampleGameTests.WaitsForCallbackAndTestsState(False,&quot;pass&quot;)" methodname="WaitsForCallbackAndTestsState" classname="CallbackSampleGameTests" runstate="Runnable" seed="901331958" result="Passed" start-time="2026-11-18 20:57:03Z" end-time="2026-11-18 20:57:03Z" duration="0.018349" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1008" name="WaitsForCallbackAndTestsState(True,&quot;regression&quot;)" fullname="CallbackSampleGameTests.WaitsForCallbackAndTestsState(True,&quot;regression&quot;)" methodname="WaitsForCallbackAndTestsState" classname="CallbackSampleGameTests" runstate="Runnable" seed="1175946533" result="Passed" start-time="2026-11-18 20:57:03Z" end-time="2026-11-18 20:57:03Z" duration="0.006541" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+            <output><![CDATA[Saving results to: C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\callback-diagnostic-results.xml
+]]></output>
+          </test-case>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

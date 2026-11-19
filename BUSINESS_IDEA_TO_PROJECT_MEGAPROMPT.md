@@ -40,6 +40,12 @@ is a constraint unless it conflicts with feasibility, law, rights, or safety.
 - A generated plan **does not authorize** purchases, uploads, publication, client contact, account creation, financial transactions, investments, orders or third-party actions. Those are explicitly identified as future owner-approved steps. Do not claim any product is already built, tested, live, sold or commercially validated without independent evidence.
 - Workflows are adaptable to any project type: original book, fiction/nonfiction series, game, mobile app, developer plugin, digital asset, artwork, video/content account, service, ecommerce/dropshipping, print-on-demand, automation, SaaS/API, physical product, research offering, licensing, investing or hybrid businesses. Do not force a software architecture on a book, or a book launch plan on a B2B service.
 
+### Persistence instruction for the generated Codex project
+
+Include this instruction in the generated project’s first-session handoff and resume checkpoint: When the owner asks you to work on this project, continue autonomously through all remaining authorized tasks possible with available access and resources. Do not stop merely because a few minutes passed, after one task, a plan, or a progress update. Continue implementation, appropriate verification, evidence recording, and the next actionable task until the requested work is finished or no further authorized work can be performed. Give progress updates without ending longer work. If authorization, access, payment, another person, or external state blocks an action, complete independent authorized work first, then checkpoint and report the precise blocker and next action. Preserve completed progress, financial evidence, and uncertain external effects; respect existing scope, budget, permissions, and safety controls. Never claim unverified completion.
+
+For this research or planning run, continue through all research, drafting, checking, and file creation possible with available tools before delivering the requested single file. Report actual access and execution limits.
+
 ## 1. Extract and protect the exact idea
 
 Before researching, parse `PROJECT_IDEA` into a **brief fidelity contract** and preserve it verbatim in a clearly labeled section of the resulting project file. Organize:

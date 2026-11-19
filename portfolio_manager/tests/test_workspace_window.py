@@ -43,6 +43,25 @@ class WorkspaceWindowTests(unittest.TestCase):
         entries = dict(project_entries(repo))
         self.assertTrue(all(entries.get(row[0]) for row in rows))
 
+    def test_copy_work_prompt_button_copies_complete_goal(self):
+        with TemporaryDirectory() as temp:
+            root=Path(temp);repo=root/'repo';_record(repo,'DEMO-012')
+            host=ManagerHost(repo,root/'state');window=None
+            try:
+                from portfolio_manager.workspace_window import WorkspaceWindow, WORK_PROMPT
+                window=WorkspaceWindow(host,host.workspace('a'*32,{}),on_emergency=lambda:None,
+                                       on_stop_all=lambda:None,on_access=lambda:None,on_close=lambda _:None)
+                self.app.clipboard().setText('previous')
+                window.copy_work_prompt.click()
+                self.assertEqual(self.app.clipboard().text(), WORK_PROMPT)
+                self.assertTrue(WORK_PROMPT.startswith('/goal Complete the project currently selected'))
+                self.assertIn('Mark the goal complete only when', WORK_PROMPT)
+                self.assertEqual(window.notice.text(), 'Work prompt copied to the clipboard.')
+                self.assertEqual(host.get_workspace(window.workspace_id)['selection'], 'business_portfolio/niches')
+            finally:
+                if window:window.close()
+                host.close()
+
     def test_megaprompt_menu_copies_live_templates_and_checks_settings(self):
         with TemporaryDirectory() as temp:
             root=Path(temp); repo=root/'repo'; _record(repo,'DEMO-011')

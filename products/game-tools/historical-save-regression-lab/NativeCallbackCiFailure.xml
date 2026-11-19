@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="1" result="Failed(Child)" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-18 21:01:33Z" end-time="2026-11-18 21:01:33Z" duration="0.0840514">
+  <test-suite type="TestSuite" id="1000" name="SampleProject" fullname="SampleProject" runstate="Runnable" testcasecount="90" result="Failed" site="Child" start-time="2026-11-18 21:01:33Z" end-time="2026-11-18 21:01:33Z" duration="0.084051" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1117" name="BaselineTests.dll" fullname="C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/experiments/CallbackDiagnosticProject/Library/ScriptAssemblies/BaselineTests.dll" runstate="Runnable" testcasecount="90" result="Failed" site="Child" start-time="2026-11-18 21:01:33Z" end-time="2026-11-18 21:01:33Z" duration="0.070223" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="11172" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestFixture" id="1006" name="CallbackSampleGameTests" fullname="CallbackSampleGameTests" classname="CallbackSampleGameTests" runstate="Runnable" testcasecount="7" result="Failed" site="Child" start-time="2026-11-18 21:01:33Z" end-time="2026-11-18 21:01:33Z" duration="0.065953" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-case id="1014" name="NativeCallbackCiFailure" fullname="CallbackSampleGameTests.NativeCallbackCiFailure" methodname="NativeCallbackCiFailure" classname="CallbackSampleGameTests" runstate="Runnable" seed="1945526405" result="Failed" start-time="2026-11-18 21:01:33Z" end-time="2026-11-18 21:01:33Z" duration="0.040499" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <failure>
+            <message><![CDATA[  inventory.sword
+  Expected: True
+  But was:  False
+]]></message>
+            <stack-trace><![CDATA[at CallbackSampleGameTests.NativeCallbackCiFailure () [0x00090] in C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\CallbackDiagnosticProject\Assets\Tests\Editor\CallbackSampleGameTests.cs:64
+]]></stack-trace>
+          </failure>
+          <output><![CDATA[Saving results to: C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\NativeCallbackCiFailure.xml
+]]></output>
+        </test-case>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

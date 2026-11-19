@@ -15,6 +15,14 @@ from .workspace import context_path
 
 
 ROLE = int(Qt.ItemDataRole.UserRole)
+WORK_PROMPT = (
+    '/goal Complete the project currently selected in this chat’s Portfolio Manager workspace.\n\n'
+    'First, read the current selection, its full project record, relevant project instructions, and the latest authorized checkpoint. Preserve existing work and identify the next actionable tasks.\n\n'
+    'Work autonomously through all remaining tasks that can be completed with the available access, resources, and existing authorization. Continue across turns until the project is complete or no further authorized work can be performed. Do not stop merely because you completed one task, produced a checkpoint, sent a progress update, or several minutes have passed.\n\n'
+    'Make reasonable decisions within the project’s stated scope. Implement, verify, fix problems, document evidence, update the appropriate project checkpoint, and proceed to the next actionable task. Give brief progress updates without ending the work.\n\n'
+    'Respect the project’s budget, privacy, permissions, and approval requirements. Do not invent results or repeat uncertain external actions. If an action requires my approval, payment, access, another person, or an external change, complete all independent authorized work first. Then clearly report the blocker, what is already prepared, and the exact action needed from me.\n\n'
+    'Mark the goal complete only when the project’s required outcomes are actually achieved and verified. If the project is ongoing by nature, continue until the currently authorized work is finished, then report what remains for future operation.'
+)
 NICHE_ID_ROLE = ROLE + 2
 WORKING_ROLE = ROLE + 3
 MAX_PREVIEW = 128_000
@@ -288,6 +296,10 @@ class WorkspaceWindow(QMainWindow):
         self.copy_research_prompt.setMenu(prompt_menu)
         research_layout.addRow('Budget ceiling (CAD)', self.research_budget)
         research_layout.addRow(self.copy_research_prompt)
+        self.copy_work_prompt = QPushButton('Copy Work Prompt')
+        self.copy_work_prompt.setAccessibleName('Copy Work Prompt')
+        self.copy_work_prompt.clicked.connect(self._copy_work_prompt)
+        research_layout.addRow(self.copy_work_prompt)
         details.addWidget(self.research_tools)
         details.addWidget(self.project_tabs)
         details.addWidget(self.preview)
@@ -313,6 +325,11 @@ class WorkspaceWindow(QMainWindow):
             self.notice.setText(str(error)[:400])
             self.notice.show()
         self.sync()
+
+    def _copy_work_prompt(self):
+        QApplication.clipboard().setText(WORK_PROMPT)
+        self.notice.setText('Work prompt copied to the clipboard.')
+        self.notice.show()
 
     def _node(self, parent, name, directory, *, full=False):
         label = name if full else PurePosixPath(name).name

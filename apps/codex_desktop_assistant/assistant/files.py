@@ -10,6 +10,9 @@ import uuid
 from contextlib import contextmanager,ExitStack
 from pathlib import Path
 from .permissions import Denied
+from .attachments import MAX_FILE as MAX_ATTACHMENT_FILE, file_hash
+
+MAX_TEXT_FILE = 500000
 
 
 def digest(raw):return hashlib.sha256(raw).hexdigest()
@@ -54,12 +57,12 @@ class Files:
             yield h
         finally:h.Close()
 
-    def snapshot(self,path,empty=True,read=True):
+    def snapshot(self,path,empty=True,read=True,max_bytes=MAX_TEXT_FILE):
         if not path.exists():return {'kind':'missing','sha256':'new'}
         if path.is_dir():
             if empty and any(path.iterdir()):raise Denied('Directory operations are limited to empty folders; inspect and handle files individually')
             return {'kind':'folder','identity':(path.stat().st_ino,path.stat().st_mtime_ns)}
-        if path.stat().st_size>500000:raise Denied('Text file operations are limited to 500 KB')
+        if path.stat().st_size>max_bytes:raise Denied('File exceeds the permitted size for this operation')
         info=path.stat();result={'kind':'file','identity':(info.st_ino,info.st_mtime_ns),'bytes':info.st_size}
         if read:result['sha256']=digest(path.read_bytes())
         return result
@@ -74,8 +77,8 @@ class Files:
             legacy=self.permissions.files.get(str(path))
             if decision=='ask' and legacy and (action=='read' or action=='write' and legacy=='write'):decision='allow'
         if decision=='deny':raise Denied('Explicit file policy denies '+action)
-        pre_read=action!='read' or decision=='allow'
-        before=self.snapshot(path,empty=action!='read',read=pre_read)
+        pre_read=not importing and (action!='read' or decision=='allow')
+        before=self.snapshot(path,empty=action!='read',read=pre_read,max_bytes=MAX_ATTACHMENT_FILE if importing else MAX_TEXT_FILE)
         if action in ('read','write','delete') and before['kind']=='missing':raise Denied('Target does not exist; use create for a new file')
         if action=='create' and before['kind']!='missing':raise Denied('Create cannot overwrite an existing target')
         if action in ('read','write') and before['kind']!='file' and not (listing and before['kind']=='folder'):raise Denied('This operation requires a text file')
@@ -96,24 +99,26 @@ class Files:
             # Lock every existing ancestor against replacement before revalidation.
             for parent in reversed(path.parents):stack.enter_context(self.handle(parent,directory=True))
             self.validate(path)
-            if self.snapshot(path,empty=action!='read',read=pre_read)!=before:raise Denied('Target changed during review; inspect again')
+            if self.snapshot(path,empty=action!='read',read=pre_read,max_bytes=MAX_ATTACHMENT_FILE if importing else MAX_TEXT_FILE)!=before:raise Denied('Target changed during review; inspect again')
             if listing:
                 return {'entries':[{'name':x.name,'kind':'folder' if x.is_dir() else 'file'} for x in list(path.iterdir())[:500]],'limit':500}
             expected_hash=before.get('sha256')
-            if before['kind']=='file' and expected_hash is None:expected_hash=digest(path.read_bytes())
+            if before['kind']=='file' and expected_hash is None and not importing:expected_hash=digest(path.read_bytes())
             backup=None
             if action in ('read','write','delete'):
                 import win32file
                 h=stack.enter_context(self.handle(path,write=action=='write',delete=action=='delete',directory=before['kind']=='folder'))
                 info=win32file.GetFileInformationByHandle(h)
                 if (info[8]<<32|info[9]) != before['identity'][0]&((1<<64)-1):raise Denied('Target identity changed before exclusive access')
+                if importing:
+                    if file_hash(path) != args['sha256']:
+                        raise Denied('File differs from the expected attachment hash')
+                    return attach(path, args['sha256'])
                 if before['kind']=='file':
-                    raw=win32file.ReadFile(h,500001)[1]
+                    raw=win32file.ReadFile(h,MAX_TEXT_FILE+1)[1]
+                    if len(raw) > MAX_TEXT_FILE:raise Denied('File grew beyond the permitted size')
                     if digest(raw)!=expected_hash:raise Denied('Target changed before exclusive access')
                 if action=='read':
-                    if importing:
-                        if digest(raw)!=args['sha256']:raise Denied('File differs from the expected attachment hash')
-                        return attach(path.name,raw)
                     try:
                         text=raw.decode('utf-8')
                         if '\0' in text:raise UnicodeError('Binary file')

@@ -140,6 +140,9 @@ class WorkspaceWindowTests(unittest.TestCase):
                 deadline=perf_counter()+4
                 while (not first._entries_ready or not second._entries_ready) and perf_counter()<deadline:
                     first.sync();second.sync();self.app.processEvents()
+                self.assertEqual(first._drop_niche_from_item(find_item(first,'N-child')),
+                                 'business_portfolio/niches/demo/child')
+                self.assertIsNone(first._drop_niche_from_item(first.tree.topLevelItem(0)))
                 find_item(first,'N-child').setCheckState(0,Qt.CheckState.Checked)
                 with patch.object(first, '_load_navigation_entries', wraps=first._load_navigation_entries):
                     first._entries_ready = False

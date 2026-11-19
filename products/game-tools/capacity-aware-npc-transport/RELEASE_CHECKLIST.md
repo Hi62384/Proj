@@ -14,8 +14,9 @@ This file is a working checklist for an unpublished prototype. It does not autho
 - [x] Run final-source regression checks: all 50 test scripts, copied add-on install/reinstall and headless editor marker checks passed on Godot 4.4.1, 4.5.1 and 4.7.2 for Windows x86-64. See the machine-readable report in `compatibility-results/2026-11-18-final-complete-source-50-tests.json`.
 - [ ] Decide and publish an honest support matrix. Only the Windows x86-64 configurations above were tested; other platforms and versions remain untested and none is approved as a customer support promise.
 - [ ] Decide a license and confirm rights and redistribution terms for every shipped file; the intended product's license has not been chosen. The local engine binary, prior third-party research fixtures and unrelated project assets are not part of the copied add-on.
-- [ ] Complete API, migration, support, known-limits and example documentation; audit claims against evidence.
+- [x] Complete the local API, migration, support, known-limits and example documentation and audit its technical claims against the current tests. These drafts do not set support or distribution terms.
 - [ ] Check the final files in a clean project and perform a human-facing visual review and acceptance run.
-- [ ] Prepare a reviewable release candidate and obtain the owner's separate approval before publication or any spending.
+- [x] Prepare hash-manifested unpublished review snapshot `review-candidate-2026-11-18q/` for owner inspection. It is local to this workspace and not included in the GitHub branch; it is not licensed or approved for distribution.
+- [ ] Obtain the owner's license and release decisions and separate approval before marketplace publication or any spending.
 
 Do not describe synthetic timing as an FPS guarantee, assume purchase demand or claim a measured advantage over existing solutions. No price or distribution terms have been approved.

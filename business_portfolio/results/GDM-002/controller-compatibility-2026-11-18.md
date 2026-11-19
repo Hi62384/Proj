@@ -154,3 +154,9 @@ The complete 32-case temporary-game suite passed on Windows x86-64 under Godot 4
 The product's machine-readable compatibility runner completed the current 50-script suite, copied add-on install/reinstall, and headless editor-marker checks on Godot 4.4.1, 4.5.1 and 4.7.2 (Windows x86-64). All nine version/check groups passed, and the source fingerprint remained unchanged: `8d34370bb4e2b8e38e28ffa696ea371de7644f4710b2808e94e1f7ca9814026b`. See `products/game-tools/capacity-aware-npc-transport/compatibility-results/2026-11-18-final-complete-source-50-tests.json`.
 
 The private temporary game's 33rd capacity-two crossing/recovery case passed separately on each of those versions. These checks close the local final-source regression gate only. Existing-game integration, broader platforms and performance, physical UI acceptance, license/rights, customer support terms and release approval remain open. No spending or external outreach occurred.
+
+## Disconnected-navigation safe failure — 2026-11-18 local time
+
+A new private temporary-game integration uses the copied NavigationAgent adapter with its only navigation region ending before the requested physical platform. The adapter times out, the coordinator refuses false boarding, the seat claim remains held while the boarding request is active, and the claim returns to the queue only after the departure window closes.
+
+The complete expanded 34-case temporary-game suite passed on Windows x86-64 Godot 4.4.1, 4.5.1 and 4.7.2. The new case checks safe failure, not successful navigation across disconnected regions or recovery to an unreachable safe stop. The fixture is private and synthetic; no spending, outreach or release occurred. A rights-cleared representative game and the owner's licensing/release decisions remain necessary for the remaining checklist.

@@ -32,8 +32,8 @@
   "parent_project": null,
   "related_projects": [],
   "legacy_ids": [],
-  "next_action": "Owner waived independent editorial gate and chose KDP free print ISBN; resolve rights declaration, then complete draft and print preview.",
-  "last_reviewed": "2026-11-18",
+  "next_action": "Owner must resolve whether they can truthfully certify publishing rights and select only territories where they hold those rights; then inspect the final Kindle preview and personally authorize any final publication submission.",
+  "last_reviewed": "2026-11-19",
   "owner": "owner_approval_pending",
   "execution_authorized": false,
   "privacy": "public_planning_only",
@@ -716,3 +716,8 @@ The owner chose to review and edit the manuscript themselves. A private editable
 ## Owner editorial and ISBN decision — 2026-11-18
 
 The owner explicitly chose to proceed on their own review and waived this project’s independent-editor release requirement. No independent review or extensive human editing is claimed, and distributor-specific rules still apply. The owner selected KDP’s free paperback ISBN; no number has yet been assigned. A KDP paperback draft exists with title, pen name, description, adult-image answer and a crime category saved. The combined KDP copyright and publishing-rights declaration remains unresolved; do not assert it without a truthful basis. No upload, proof purchase or publication observed.
+
+
+### KDP Kindle eBook draft — 2026-11-19
+
+In the existing KDP Kindle eBook draft, verified the uploaded `FREE_CANDY_REVISED_PREFLIGHT.epub` and cover; KDP reports both uploaded successfully, the EPUB processing/check completed, and its quality panel shows zero spelling or image issues. The AI disclosure was set to entire text with minimal/no editing, one or a few generated images with minimal/no editing, and no translations; tool fields were set to ChatGPT based on the owner’s stated workflow. Previewer was opened; no manual page-by-page visual review is claimed. Saved a draft price of US$4.99 with the 70% royalty option; KDP Select remains off in accordance with the wide-release plan. No KDP eBook publication was submitted and no purchase or spend occurred. KDP’s pricing page requires selecting territories where the publisher has rights and its Publish button certifies necessary publishing rights. Owner’s title-specific rights remain unresolved; next action is for the owner to resolve that issue and personally complete the rights/territory declaration truthfully, then inspect the final preview and decide whether to authorize publication.

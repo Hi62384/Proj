@@ -20,9 +20,14 @@ except ModuleNotFoundError:
     QApplication = None
     Qt = None
 else:
-    bridge_path = Path(__file__).resolve().parents[2] / 'apps' / 'codex_desktop_assistant'
-    with patch.object(sys, 'path', [str(bridge_path), *sys.path]):
-        from bridge.dashboard import Dashboard
+    # The Bridge dashboard imports Windows-only desktop integrations. Headless
+    # cross-platform tests can exercise the actual Portfolio Manager workspace
+    # without loading those OS-specific modules.
+    Dashboard = None
+    if os.name == 'nt':
+        bridge_path = Path(__file__).resolve().parents[2] / 'apps' / 'codex_desktop_assistant'
+        with patch.object(sys, 'path', [str(bridge_path), *sys.path]):
+            from bridge.dashboard import Dashboard
     from portfolio_manager.workspace_window import ROLE, NICHE_ID_ROLE, project_entries, search_paths, niche_entries, history_entries
 
 
@@ -169,6 +174,7 @@ class WorkspaceWindowTests(unittest.TestCase):
         self.assertTrue(any('/2026-11-15-taxonomy-view-v1/niches/' in name and name.endswith('.md')
                             for name in names))
 
+    @unittest.skipUnless(Dashboard, 'Windows-only Computer Bridge integration')
     def test_two_chat_windows_share_mode_but_not_selection(self):
         with TemporaryDirectory() as temp:
             root = Path(temp)

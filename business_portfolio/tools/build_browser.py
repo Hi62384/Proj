@@ -111,6 +111,25 @@ def ensure_acyclic(mapping: dict[str, str | None], label: str):
             current = mapping[current]
         done.update(seen)
 
+def historical_checksum(raw: bytes, expected: tuple[str, int] | None = None) -> tuple[str, int]:
+    """Verify original archive bytes even when Git normalized old CRLF text.
+
+    Three preserved archive Markdown files were committed as LF by text=auto
+    while their checksums were created on CRLF source bytes. A byte-identical
+    CRLF reconstitution must match the declared digest and size; never waive a
+    hash check just because the physical file uses LF.
+    """
+    actual = (hashlib.sha256(raw).hexdigest(), len(raw))
+    if expected is None or actual == expected:
+        return actual
+    if b'\r' not in raw and b'\n' in raw:
+        original = raw.replace(b'\n', b'\r\n')
+        restored = (hashlib.sha256(original).hexdigest(), len(original))
+        if restored == expected:
+            return restored
+    return actual
+
+
 def load_history(root: Path, active_records: list[dict]) -> list[dict]:
     """Expose immutable legacy records while checking their original bytes and IDs."""
     archive = root/'archive/2026-11-15-legacy'
@@ -122,11 +141,11 @@ def load_history(root: Path, active_records: list[dict]) -> list[dict]:
     manifest = loads((archive/'FILE_MANIFEST.json').read_text(encoding='utf-8'))
     if not isinstance(crosswalk,list) or not isinstance(manifest,list):
         raise ValidationError('Invalid history manifests')
+    expected = {row['path']:(row['sha256'],row['bytes']) for row in manifest}
     actual = {}
     for path in walk_files(archive/'niches'):
         rel = path.relative_to(archive).as_posix()
-        actual[rel] = (hashlib.sha256(path.read_bytes()).hexdigest(),path.stat().st_size)
-    expected = {row['path']:(row['sha256'],row['bytes']) for row in manifest}
+        actual[rel] = historical_checksum(path.read_bytes(), expected.get(rel))
     if len(expected)!=len(manifest) or actual!=expected:
         raise ValidationError('Archived file manifest mismatch')
     rows=[];seen=set();active={record['id']:record for record in active_records}
@@ -145,7 +164,9 @@ def load_history(root: Path, active_records: list[dict]) -> list[dict]:
         if not path.is_file() or linked_input(path):
             raise ValidationError('History record missing or linked')
         raw=path.read_bytes()
-        if hashlib.sha256(raw).hexdigest()!=entry['sha256']:
+        expected_record = expected.get(path.relative_to(archive).as_posix())
+        if (not expected_record or historical_checksum(raw, expected_record) != expected_record or
+                expected_record[0] != entry['sha256']):
             raise ValidationError('History record hash mismatch')
         meta,body=parse_project(raw.decode('utf-8'),str(path))
         for field in ('id','work_state','commercial_validation','niche_id','source_ids','parent_project','related_projects','evidence_basis'):

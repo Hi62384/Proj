@@ -28,6 +28,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install Linux libraries used by Qt
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends libegl1 libgl1 libxkbcommon-x11-0 libxcb-cursor0
       - name: Install Qt for headless workspace UI regressions
         run: python -m pip install --disable-pip-version-check PySide6
       - name: Compile Python source

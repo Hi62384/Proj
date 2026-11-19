@@ -19,12 +19,9 @@
     "GDM-ROBLOX-STORE"
   ],
   "parent_project": null,
-  "related_projects": [
-    "GDM-001",
-    "GDM-003"
-  ],
+  "related_projects": [],
   "legacy_ids": [],
-  "next_action": "Exercise capacity-two crossing vehicles with multiple CharacterBody riders through both reconstruction points, then rerun compatibility. Repeat manual UI acceptance only if the capture path becomes available; keep CAD0 and require owner approval before publication.",
+  "next_action": "Work through the remaining release checklist, starting with representative existing-game integration where code and asset rights are clear; keep CAD0 and require owner approval before release.",
   "last_reviewed": "2026-11-18",
   "offer_price_usd": null,
   "delivery_hours_assumption": null,

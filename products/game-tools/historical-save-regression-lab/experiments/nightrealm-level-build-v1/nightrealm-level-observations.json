@@ -1,0 +1,109 @@
+[
+  {
+    "restricted": false,
+    "mode": "regression",
+    "fixture": "v1.json",
+    "state": "exited",
+    "appcontainer_token": false,
+    "exit_code": 1,
+    "job_total_processes": 3,
+    "job_active_processes": 0,
+    "fixture_unchanged": true,
+    "canary_exists": true,
+    "result_file_exists": true,
+    "restore_started": true,
+    "payload": {
+      "status": "regression",
+      "path": "player.currentXp",
+      "outsideWriteBlocked": false,
+      "outsideWriteError": "",
+      "restoredXp": 2
+    },
+    "result_sha256": "f616b1805abfaddcd328622c6f76edb0f904930bca32632267f61d9051c841f4",
+    "save_files": [
+      "GameStatus",
+      "PlayerLevel",
+      "PlayerLevelBefore"
+    ],
+    "input_xp_matches": true,
+    "output_xp_matches": true,
+    "save_hashes": {
+      "GameStatus": "207bd7732deeb0515311725fb679a73b07749d065e6149a7d243001e1dc23c6c",
+      "PlayerLevel": "1bf7d30d032aa02222f3487fbd055d849147cac284608cfb5208cfafbd3746e2",
+      "PlayerLevelBefore": "151132998653851019cf6bf4d5a7b09784a1e820a0472c4925b435228b7d8490"
+    },
+    "diagnostics": []
+  },
+  {
+    "restricted": true,
+    "mode": "pass",
+    "fixture": "v1.json",
+    "state": "exited",
+    "appcontainer_token": true,
+    "exit_code": 0,
+    "job_total_processes": 3,
+    "job_active_processes": 0,
+    "fixture_unchanged": true,
+    "canary_exists": false,
+    "result_file_exists": true,
+    "restore_started": true,
+    "payload": {
+      "status": "pass",
+      "path": "",
+      "outsideWriteBlocked": true,
+      "outsideWriteError": "DirectoryNotFoundException",
+      "restoredXp": 7
+    },
+    "result_sha256": "8e2e1f5a6866488c43a208493b365d0d7d29796e04b643dc31e53b2c5bd49f54",
+    "save_files": [
+      "GameStatus",
+      "PlayerLevel",
+      "PlayerLevelBefore"
+    ],
+    "input_xp_matches": true,
+    "output_xp_matches": true,
+    "save_hashes": {
+      "GameStatus": "207bd7732deeb0515311725fb679a73b07749d065e6149a7d243001e1dc23c6c",
+      "PlayerLevel": "151132998653851019cf6bf4d5a7b09784a1e820a0472c4925b435228b7d8490",
+      "PlayerLevelBefore": "151132998653851019cf6bf4d5a7b09784a1e820a0472c4925b435228b7d8490"
+    },
+    "diagnostics": [],
+    "profile_deleted": true
+  },
+  {
+    "restricted": true,
+    "mode": "regression",
+    "fixture": "v1.json",
+    "state": "exited",
+    "appcontainer_token": true,
+    "exit_code": 1,
+    "job_total_processes": 3,
+    "job_active_processes": 0,
+    "fixture_unchanged": true,
+    "canary_exists": false,
+    "result_file_exists": true,
+    "restore_started": true,
+    "payload": {
+      "status": "regression",
+      "path": "player.currentXp",
+      "outsideWriteBlocked": true,
+      "outsideWriteError": "DirectoryNotFoundException",
+      "restoredXp": 2
+    },
+    "result_sha256": "cbecb253b9c2f532f1e891852a393d1dc83caa4a1f3964d5758b72386782d6b9",
+    "save_files": [
+      "GameStatus",
+      "PlayerLevel",
+      "PlayerLevelBefore"
+    ],
+    "input_xp_matches": true,
+    "output_xp_matches": true,
+    "save_hashes": {
+      "GameStatus": "207bd7732deeb0515311725fb679a73b07749d065e6149a7d243001e1dc23c6c",
+      "PlayerLevel": "1bf7d30d032aa02222f3487fbd055d849147cac284608cfb5208cfafbd3746e2",
+      "PlayerLevelBefore": "151132998653851019cf6bf4d5a7b09784a1e820a0472c4925b435228b7d8490"
+    },
+    "diagnostics": [],
+    "profile_deleted": true
+  }
+]

@@ -1,0 +1,23 @@
+{
+  "restricted": true,
+  "mode": "hang-child",
+  "state": "timeout",
+  "appcontainer_token": true,
+  "hold_marker_exists": true,
+  "child_report": [
+    "30060",
+    "True",
+    "True"
+  ],
+  "child_alive_before_termination": true,
+  "child_terminated_after_job": true,
+  "exit_code": 124,
+  "job_total_processes": 4,
+  "job_active_processes": 0,
+  "fixture_unchanged": true,
+  "canary_exists": false,
+  "result_file_exists": false,
+  "restore_started": true,
+  "diagnostics": [],
+  "profile_deleted": true
+}

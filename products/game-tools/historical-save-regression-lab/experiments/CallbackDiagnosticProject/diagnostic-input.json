@@ -1,0 +1,6 @@
+{
+  "test_source_sha256": "3fc273987f7a37d603291ea5490744dcdd68729421e04ef54de630ac9051d2a1",
+  "reason": "independent async cancellation test; not a replacement for existing Unity process",
+  "post_comparison_test_source_sha256": "9f3f35cda39bf98af68f2b2607c7b47b8625c133799506206bee31807d6325bc",
+  "post_ci_test_source_sha256": "f44da369274a84d4d0944d445f2fd2c540fe1820f9b2536980d4f0f1e321be05"
+}

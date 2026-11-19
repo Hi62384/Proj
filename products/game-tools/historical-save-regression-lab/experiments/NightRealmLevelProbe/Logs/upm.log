@@ -1,0 +1,12 @@
+[2026-11-18T22:21:17.766Z][INFO] Command-line: 'C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.9f1\\Editor\\Data\\Resources\\PackageManager\\Server\\UnityPackageManager.exe' server -s 20432 --ipc-path Unity-Upm-20432 -l 2 --log-file C:\\Users\\User1\\Documents\\Downloads\\Proj\\products\\game-tools\\historical-save-regression-lab\\experiments\\NightRealmLevelProbe/Logs/upm.log
+[2026-11-18T22:21:17.879Z][INFO] IPC server started (IPC path=Unity-Upm-20432).
+[2026-11-18T22:21:17.879Z][INFO] Hint: To connect to this UPM instance, launch Unity with the command-line parameter -upmIpcPath Upm-20432.
+[2026-11-18T22:21:35.254Z][INFO] project:list-packages <-- Request received
+params: {}
+[2026-11-18T22:21:35.942Z][INFO] project:list-packages --> 200 (688 ms)
+[2026-11-18T22:21:36.497Z][INFO] project:resolve-packages <-- Request received
+params: {}
+[2026-11-18T22:21:42.449Z][INFO] project:resolve-packages --> 200 (5952 ms)
+[2026-11-18T22:22:03.372Z][INFO] project:list-packages <-- Request received
+params: {}
+[2026-11-18T22:22:03.500Z][INFO] project:list-packages --> 200 (129 ms)

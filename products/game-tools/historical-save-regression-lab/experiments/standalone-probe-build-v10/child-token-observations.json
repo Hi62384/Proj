@@ -1,0 +1,70 @@
+{
+  "runs": [
+    {
+      "restricted": false,
+      "mode": "pass",
+      "state": "exited",
+      "appcontainer_token": false,
+      "exit_code": 0,
+      "job_total_processes": 5,
+      "job_active_processes": 0,
+      "fixture_unchanged": true,
+      "canary_exists": true,
+      "child_canary_exists": true,
+      "child_marker_exists": true,
+      "result_file_exists": true,
+      "restore_started": true,
+      "payload": {
+        "status": "pass",
+        "path": "",
+        "outsideWriteBlocked": false,
+        "outsideWriteError": "",
+        "loopbackConnected": true,
+        "loopbackResult": "connected",
+        "childStarted": true,
+        "childExit": 0,
+        "childError": "",
+        "childJobKnown": true,
+        "childInJob": true,
+        "childTokenKnown": true,
+        "childAppContainer": false
+      },
+      "result_sha256": "cacb7b635ce4d689f4681ddf85c57a3a6c314efaf9113282c2b86d79a51e5f71",
+      "diagnostics": []
+    },
+    {
+      "restricted": true,
+      "mode": "pass",
+      "state": "exited",
+      "appcontainer_token": true,
+      "exit_code": 0,
+      "job_total_processes": 5,
+      "job_active_processes": 0,
+      "fixture_unchanged": true,
+      "canary_exists": false,
+      "child_canary_exists": false,
+      "child_marker_exists": true,
+      "result_file_exists": true,
+      "restore_started": true,
+      "payload": {
+        "status": "pass",
+        "path": "",
+        "outsideWriteBlocked": true,
+        "outsideWriteError": "DirectoryNotFoundException",
+        "loopbackConnected": false,
+        "loopbackResult": "timeout",
+        "childStarted": true,
+        "childExit": 1,
+        "childError": "",
+        "childJobKnown": true,
+        "childInJob": true,
+        "childTokenKnown": true,
+        "childAppContainer": true
+      },
+      "result_sha256": "d51c8f69e88910a283f0c07fffaeb80f42df1822a5a64489be07ba91638ade08",
+      "diagnostics": [],
+      "profile_deleted": true
+    }
+  ],
+  "server_connections": 1
+}

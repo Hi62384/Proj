@@ -1,0 +1,1 @@
+{"schema_version":1,"state":"complete","success":false,"expected_count":3,"completed_count":3,"results":[{"fixture_id":"v1","status":"invalid_fixture","path":""},{"fixture_id":"v2","status":"pass","path":""},{"fixture_id":"v3","status":"pass","path":""}]}

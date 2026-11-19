@@ -1,0 +1,47 @@
+{
+  "context": {
+    "projectPath": "C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/experiments/NightRealmInventoryProbe/Packages",
+    "unityVersion": "6000.6.9f1"
+  },
+  "inputs": [
+    "C:\\Users\\User1\\Documents\\Downloads\\Proj\\products\\game-tools\\historical-save-regression-lab\\experiments\\NightRealmInventoryProbe\\Packages\\manifest.json",
+    "C:\\Users\\User1\\Documents\\Downloads\\Proj\\products\\game-tools\\historical-save-regression-lab\\experiments\\NightRealmInventoryProbe\\Packages\\packages-lock.json",
+    "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.9f1\\Editor\\Data\\Resources\\PackageManager\\BuiltInPackages\\BuiltInPackagesCombined.sha1"
+  ],
+  "outputs": {
+    "com.unity.test-framework@1.8.0": {
+      "name": "com.unity.test-framework",
+      "displayName": "Test Framework",
+      "resolvedPath": "C:\\Users\\User1\\Documents\\Downloads\\Proj\\products\\game-tools\\historical-save-regression-lab\\experiments\\NightRealmInventoryProbe\\Library\\PackageCache\\com.unity.test-framework@01a8b42f9cf6",
+      "fingerprint": "01a8b42f9cf63ff6c81da13c94a521aa4e09d268",
+      "version": "1.8.0",
+      "source": "builtin",
+      "testable": false
+    },
+    "com.unity.ext.nunit@2.1.0": {
+      "name": "com.unity.ext.nunit",
+      "displayName": "Custom NUnit",
+      "resolvedPath": "C:\\Users\\User1\\Documents\\Downloads\\Proj\\products\\game-tools\\historical-save-regression-lab\\experiments\\NightRealmInventoryProbe\\Library\\PackageCache\\com.unity.ext.nunit@0198eae3b53e",
+      "fingerprint": "0198eae3b53e4b243332e89e4af7bd396715ad55",
+      "version": "2.1.0",
+      "source": "builtin",
+      "testable": false
+    },
+    "com.unity.modules.imgui@1.0.0": {
+      "name": "com.unity.modules.imgui",
+      "displayName": "IMGUI",
+      "resolvedPath": "C:\\Users\\User1\\Documents\\Downloads\\Proj\\products\\game-tools\\historical-save-regression-lab\\experiments\\NightRealmInventoryProbe\\Library\\PackageCache\\com.unity.modules.imgui",
+      "version": "1.0.0",
+      "source": "builtin",
+      "testable": false
+    },
+    "com.unity.modules.jsonserialize@1.0.0": {
+      "name": "com.unity.modules.jsonserialize",
+      "displayName": "JSONSerialize",
+      "resolvedPath": "C:\\Users\\User1\\Documents\\Downloads\\Proj\\products\\game-tools\\historical-save-regression-lab\\experiments\\NightRealmInventoryProbe\\Library\\PackageCache\\com.unity.modules.jsonserialize",
+      "version": "1.0.0",
+      "source": "builtin",
+      "testable": false
+    }
+  }
+}

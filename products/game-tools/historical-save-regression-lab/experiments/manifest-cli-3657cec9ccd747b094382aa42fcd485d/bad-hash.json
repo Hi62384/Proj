@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "suite_id": "synthetic",
+  "fixtures": [
+    {
+      "fixture_id": "v1",
+      "file": "v1.json",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "assertions": [
+        {
+          "path": "shield",
+          "type": "boolean",
+          "equals": true
+        },
+        {
+          "path": "potions",
+          "type": "number",
+          "equals": 3
+        },
+        {
+          "path": "questComplete",
+          "type": "boolean",
+          "equals": false
+        }
+      ]
+    },
+    {
+      "fixture_id": "v2",
+      "file": "v2.json",
+      "sha256": "aad6fb81678b3cd0bc49669338d61acfc9bd43a4101e31c767acf030f9ee04a5",
+      "assertions": [
+        {
+          "path": "shield",
+          "type": "boolean",
+          "equals": true
+        },
+        {
+          "path": "potions",
+          "type": "number",
+          "equals": 3
+        },
+        {
+          "path": "questComplete",
+          "type": "boolean",
+          "equals": true
+        }
+      ]
+    },
+    {
+      "fixture_id": "v3",
+      "file": "v3.json",
+      "sha256": "c93bf46eedaf15bd39329f66bb25199c846237d18affc657e2d50fddbc23cab1",
+      "assertions": [
+        {
+          "path": "shield",
+          "type": "boolean",
+          "equals": true
+        },
+        {
+          "path": "potions",
+          "type": "number",
+          "equals": 4
+        },
+        {
+          "path": "questComplete",
+          "type": "boolean",
+          "equals": true
+        }
+      ]
+    }
+  ]
+}

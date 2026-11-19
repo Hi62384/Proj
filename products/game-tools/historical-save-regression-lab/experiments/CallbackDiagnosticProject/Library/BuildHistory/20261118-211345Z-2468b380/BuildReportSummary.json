@@ -1,0 +1,28 @@
+{
+    "Version": 2,
+    "BuildContentOptions": [
+        "None"
+    ],
+    "BuildManifestHash": "00000000000000000000000000000000",
+    "BuildName": "SampleProject",
+    "BuildOptions": [
+        "None"
+    ],
+    "BuildProfilePath": "",
+    "BuildResult": 1,
+    "BuildResultName": "Succeeded",
+    "BuildSessionGUID": "2468b380cfe811647ab8949dfcc7446a",
+    "BuildStartedAt": "2026-11-18T21:13:45.2913052Z",
+    "BuildType": 1,
+    "BuildTypeName": "Player",
+    "ContentSourceBuildSessionGUID": "f4bfbd25411153846a468a3bc8b621e7",
+    "OutputPath": "C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/experiments/standalone-probe-build-v4/SyntheticProbe.exe",
+    "Platform": 19,
+    "PlatformName": "StandaloneWindows64",
+    "Subtarget": 2,
+    "SubtargetName": "Player",
+    "TotalErrors": 0,
+    "TotalSizeBytes": 95966133,
+    "TotalTimeMs": 7323,
+    "TotalWarnings": 0
+}

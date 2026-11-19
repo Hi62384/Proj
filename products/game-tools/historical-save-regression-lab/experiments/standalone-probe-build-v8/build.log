@@ -1,0 +1,705 @@
+VBCSCompilerPreWarmer: watching VBCSCompiler (PID 33032)
+VBCSCompilerPreWarmer: pre-warm launched (dotnet PID 24716)
+VBCSCompiler prewarm took 25.45 ms
+[Licensing::Module] Trying to connect to existing licensing client channel...
+Built from '6000.6/staging' branch; Version is '6000.6.9f1 (8c45277fb9c5) revision 9192743'; Using compiler version '194234433'; Build Type 'Release'
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-User1" at "2026-11-18T21:26:31.4915726Z"
+OS: 'Windows 10  (10.0.19045) 64bit Core' Language: 'en' Physical Memory: 15628 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1
+System  architecture: x64
+Process architecture: x64
+Date: 2026-11-18T21:26:31Z
+[Licensing::Client] Code 10 while verifying Licensing Client signature (process Id: 10056, path: "C:/Program Files/Unity Hub/UnityLicensingClient_V1/Unity.Licensing.Client.exe")
+[Licensing::Module] LicensingClient has failed validation; ignoring
+[Licensing::Client] Error: HandshakeResponse reported an error:
+	ResponseCode: 505
+	ResponseStatus: Unsupported protocol version '1.19.0'.
+[Licensing::Module] Error: Failed to handshake to channel: "LicenseClient-User1"
+[Licensing::IpcConnector] LicenseClient-User1 channel disconnected successfully.
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-User1-1.19.0" at "2026-11-18T21:26:31.5505407Z"
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\6000.6.9f1\Editor\Unity.exe
+-batchmode
+-nographics
+-projectPath
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\CallbackDiagnosticProject
+-executeMethod
+StandaloneProbeBuild.Build
+-logFile
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\standalone-probe-build-v8\build.log
+Successfully changed project path to: C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\CallbackDiagnosticProject
+C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/experiments/CallbackDiagnosticProject
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gfx=262144"
+    "memorysetup-remapper-allocator-initial-capacity=32768"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-main-allocator-mimalloc-enabled=1"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+Logging is directed to a specific file, skipping project log.
+[Licensing::Client] Code 10 while verifying Licensing Client signature (process Id: 30696, path: "C:/Program Files/Unity/Hub/Editor/6000.6.9f1/Editor/Data/Resources/Licensing/Client/Unity.Licensing.Client.exe")
+[Licensing::Module] LicensingClient has failed validation; ignoring
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.19.0+4cc3dda
+  Session Id:              52a72cec7e3e468fb1bb845cb5eb8c41
+  Correlation Id:          e7e24975fb0bd3d11bbd87eafbe3b7ce
+  External correlation Id: 8140660467545304457
+  Machine Id:              tZzfaOpn5FISrwWi+pAe+yUZjo4=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-User1-1.19.0" (connect: 0.00s, validation: 0.00s, handshake: 0.06s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-User1-1.19.0-notifications" at "2026-11-18T21:26:31.6166427Z"
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: 3574487619519-UnityPersXXXX
+  Product: Unity Personal
+  Type: Assigned
+  Expiration: Unlimited
+[Licensing::Client] Successfully updated license, isAsync: True, time: 0.00
+Player connection [29852]  Target information:
+
+Player connection [29852]  * "[IP] 25.11.17.107 [Port] 55505 [Flags] 2 [Guid] 3935105980 [EditorId] 3935105980 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-5JOV04K) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [29852]  * "[IP] 10.0.0.162 [Port] 55505 [Flags] 2 [Guid] 3935105980 [EditorId] 3935105980 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-5JOV04K) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] Licensing Background thread has ended after 0.13s
+Player connection [29852] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [29852] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+[Package Manager] Connected to IPC stream "Upm-32424" after 0.6 seconds.
+[Licensing::Client] Successfully resolved entitlement details
+Library Redirect Path: Library/
+Launching Unity Data Store - C:/Program Files/Unity/Hub/Editor/6000.6.9f1/Editor/Data/Tools/Unity.DataStore.exe 
+Unity Data Store artifact dir = Library/DataStore, working dir = C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/experiments/CallbackDiagnosticProjectUnity Data Store running and initialised
+[Physics::Module] Selected backend (deferred post-plugins).
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+Initialize engine version: 6000.6.9f1 (8c45277fb9c5)
+[EntityIdStore] init: VM path (explicit commit), pageSize=4096, blockCount=262144, entitiesPerBlock=1024, blocksPerSlotPage=0, slots reserved=4294967296 bytes
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.6.9f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/experiments/CallbackDiagnosticProject/Assets
+Forcing GfxDevice: Null
+GfxDevice: creating device client; kGfxThreadingModeNonThreaded
+NullGfxDevice:
+    Version:  NULL 1.0 [1.0]
+    Renderer: Null Device
+    Vendor:   Unity Technologies
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.6.9f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.6.9f1/Editor/Data/BCLExtensions/runtime/netstandard2.1'
+Mono path[2] = 'C:/Program Files/Unity/Hub/Editor/6000.6.9f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.6.9f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56424
+CodeReloadManager initialized
+ImportWorker Server TCP listen port: 0
+AcceleratorClientConnectionCallback - disconnected - :0
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.6.9f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.6.9f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.006762 seconds.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Package Manager log level set to [2]
+ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:False
+Scripting: successfully reloaded assembly
+- Finished resetting the current domain, in  1.704 seconds
+Domain Reload Profiling: 2823ms
+	BeginReloadAssembly (287ms)
+		CreateAndSetChildDomain (17ms)
+	RebuildCommonClasses (8ms)
+	RebuildNativeTypeToScriptingClass (39ms)
+	initialDomainReloadingComplete (148ms)
+	LoadAllAssembliesAndSetupDomain (635ms)
+		LoadAssemblies (265ms)
+		TypeCache.Refresh (422ms)
+			TypeCache.ScanAssembly (393ms)
+		AnalyzeDomain (2ms)
+	FinalizeReload (1706ms)
+		SetupLoadedEditorAssemblies (0ms)
+			LogAssemblyErrors (4ms)
+			InitializePlatformSupportModulesInManaged (5ms)
+			BeforeProcessingInitializeOnLoad (198ms)
+			ProcessInitializeOnLoadAttributes (171ms)
+			ProcessInitializeOnLoadMethodAttributes (935ms)
+[Licensing::Client] Successfully resolved entitlement details
+Application.AssetDatabase Initial Refresh Start
+[Package Manager] Restoring resolved packages state from cache
+[Licensing::Client] Successfully resolved entitlement details
+[Package Manager] Registered 4 packages:
+  Built-in packages:
+    com.unity.test-framework@1.8.0 (location: C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\CallbackDiagnosticProject\Library\PackageCache\com.unity.test-framework@01a8b42f9cf6)
+    com.unity.ext.nunit@2.1.0 (location: C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\CallbackDiagnosticProject\Library\PackageCache\com.unity.ext.nunit@0198eae3b53e)
+    com.unity.modules.imgui@1.0.0 (location: C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\CallbackDiagnosticProject\Library\PackageCache\com.unity.modules.imgui)
+    com.unity.modules.jsonserialize@1.0.0 (location: C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\CallbackDiagnosticProject\Library\PackageCache\com.unity.modules.jsonserialize)
+[Subsystems] No new subsystems found in resolved package list.
+[Package Manager] Done registering packages in 0.01 seconds
+[ScriptCompilation] Requested script compilation because: AssetDatabase observed changes in script compilation related files
+Starting: C:\Program Files\Unity\Hub\Editor\6000.6.9f1\Editor\Data\Tools\BuildPipeline\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/experiments/CallbackDiagnosticProject
+DisplayProgressbar: Compiling Scripts
+ExitCode: 0 Duration: 1s772ms
+[196/214    0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+[206/214    1s] Csc Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp.dll (+2 others)
+[207/214    0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Assembly-CSharp.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp.dll, with 148 defines and 251 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+1 processor(s) skipped this assembly
+[208/214    0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp.pdb
+[209/214    0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp.dll
+[210/214    0s] Csc Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor.dll (+2 others)
+[211/214    0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Assembly-CSharp-Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor.dll, with 146 defines and 300 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+1 processor(s) skipped this assembly
+[212/214    0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.pdb
+[213/214    0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.dll
+*** Tundra build success (1.71 seconds), 9 items updated, 214 evaluated
+Total cache size 988952
+Total cache size after purge 988952, took 00:00:00.0226018
+AssetDatabase: script compilation time: 3.173423s
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True
+Scripting: successfully reloaded assembly
+- Finished resetting the current domain, in  0.947 seconds
+Domain Reload Profiling: 2142ms
+	BeginReloadAssembly (579ms)
+		DisableScriptedObjects (115ms)
+		CreateAndSetChildDomain (107ms)
+	RebuildCommonClasses (16ms)
+	RebuildNativeTypeToScriptingClass (31ms)
+	initialDomainReloadingComplete (88ms)
+	LoadAllAssembliesAndSetupDomain (476ms)
+		LoadAssemblies (456ms)
+		TypeCache.Refresh (26ms)
+			TypeCache.ScanAssembly (17ms)
+		AnalyzeDomain (12ms)
+			BuildScriptInfoCaches (10ms)
+	FinalizeReload (952ms)
+		SetupLoadedEditorAssemblies (0ms)
+			InitializePlatformSupportModulesInManaged (4ms)
+			BeforeProcessingInitializeOnLoad (231ms)
+			ProcessInitializeOnLoadAttributes (127ms)
+			ProcessInitializeOnLoadMethodAttributes (93ms)
+			AfterProcessingInitializeOnLoad (14ms)
+		AwakeInstancesAfterBackupRestoration (52ms)
+Starting new worker id: 0 with log in C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/experiments/CallbackDiagnosticProject/Logs/AssetImportWorkerHW0.log
+
+Asset Pipeline Refresh (id=e3d151d4bd040fe4ebf1840204f970ae): Total: 5.917 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+	(Values over 0.05ms)
+	Summary:
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=1308 ms
+		Asset DB Callback time: managed=128 ms, native=17 ms
+		Scripting: domain reloads=1, domain reload time=1258 ms, compile time=3178 ms, other=24 ms
+		Project Asset Count: scripts=85, non-scripts=16
+		Asset File Changes: new=0, changed=1, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokePackagesCallback: 12.729ms
+	ApplyChangesToAssetFolders: 0.716ms
+	Scan: 87.412ms
+	Collect global state as custom dependencies: 28.369ms
+	OnSourceAssetsModified: 1.662ms
+	CategorizeScriptCompilationAssets: 4.714ms
+	ProcessAssetsWithTransientArtifactChanges: 12.294ms
+	CategorizeAssets: 2.081ms
+	CompileScripts: 3178.350ms
+	ImportOutOfDateAssets: 975.130ms (954.652ms without children)
+		UnloadImportedAssets: 2.519ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.051ms
+		ImportSchedulerStart: 17.902ms
+	PostProcessAllAssets: 133.841ms
+		VCAutoAddAssetPostprocess 2.921ms
+		WindowTitlePostprocess 0.313ms
+		PostProcessCallbackCreateDeferredMaterials 0.291ms
+		ShaderAssetModifiedCallback 0.269ms
+		MonoPostProcessAllAssets: 127.479ms
+			AssetPostprocessor.OnPostprocessAllAssets 49.814ms
+			StyleCatalogPostProcessor.OnPostprocessAllAssets 17.420ms
+			WindowAssetPostprocessingWatcher.OnPostprocessAllAssets 12.565ms
+			BuilderAssetPostprocessor.OnPostprocessAllAssets 9.832ms
+			AssetChangedListener.OnPostprocessAllAssets 3.446ms
+			RetainedModeAssetPostprocessor.OnPostprocessAllAssets 3.158ms
+			SyncVS.PostprocessSyncProject 2.888ms
+			EditModeScopePostprocessor.OnPostprocessAllAssets 2.325ms
+			SpeedTree9Postprocessor.OnPostprocessAllAssets 1.226ms
+			ArtifactBrowserPostProcessor.OnPostprocessAllAssets 1.117ms
+			TextAssetPostProcessor.OnPostprocessAllAssets 0.914ms
+			ReferencedClipsPostProcessor.OnPostprocessAllAssets 0.764ms
+			AssetEvents.OnPostprocessAllAssets 0.603ms
+			AudioMixerPostprocessor.OnPostprocessAllAssets 0.518ms
+			ScenarioDriftAssetsTracker.OnPostprocessAllAssets 0.434ms
+			ConfigAssetsTracker.OnPostprocessAllAssets 0.351ms
+			TerrainToolbarOverlayPostProcessor.OnPostprocessAllAssets 0.346ms
+			SpeedTreePostProcessor.OnPostprocessAllAssets 0.255ms
+			AssetDatabaseCallbacks.OnPostprocessAllAssets 0.240ms
+			RenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 0.234ms
+			ThemePostprocessor.OnPostprocessAllAssets 0.204ms
+			AudioContainerPostProcessor.OnPostprocessAllAssets 0.167ms
+	PostAssetChangesProfiler: 1.716ms
+	UnloadStreamsBegin: 2.732ms
+	Untracked: 1426.650ms
+
+Application.AssetDatabase Initial Refresh End
+Scanning for USB devices : 7.162ms
+Initializing Unity extensions:
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-SampleProject
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 440 unused Assets / (0.6 MB). Loaded Objects now: 1164.
+Memory consumption went from 223.6 MB to 223.1 MB.
+Total: 10.190400 ms (FindLiveObjects: 0.255400 ms CreateObjectMapping: 0.030700 ms MarkObjects: 9.169900 ms  DeleteObjects: 0.368800 ms)
+
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 0 unused Assets / (Unknown). Loaded Objects now: 1166.
+Memory consumption went from 223.2 MB to 223.2 MB.
+Total: 7.921200 ms (FindLiveObjects: 0.245900 ms CreateObjectMapping: 0.019400 ms MarkObjects: 7.514400 ms  DeleteObjects: 0.006300 ms)
+
+Importing 'GUID: 099c2868a2370c34bb15ac2f6a9276ca - Path: Assets/StandaloneProbe/SyntheticProbe.unity' with importer (DefaultImporter)
+Imported 'GUID: 099c2868a2370c34bb15ac2f6a9276ca' -> (Import Result ID: '9d9b915dd9934fc47dc489b5d425eea0') in 0.009 seconds [static dependencies only]. Details - ImportResultOutputID=f3eb9bf1e90077982b87ca2404a464a6 DependenciesID=33faed3f50808b49a8fd96adff86e5db StaticDependenciesID=a5fd07e0d4cc0ced8353d05963c2e817 
+Asset Pipeline Refresh (id=8f5104cb01b325245af3fbc96aa72fed): Total: 0.042 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
+Starting: C:\Program Files\Unity\Hub\Editor\6000.6.9f1\Editor\Data\Tools\BuildPipeline\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aESkipCompile.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssembliesAndTypeDB
+WorkingDir: C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/experiments/CallbackDiagnosticProject
+ExitCode: 0 Duration: 0s497ms
+[2/3        0s] BuildPlayerDataGenerator Library/BuildPlayerData/Editor/TypeDb-All.json
+*** Tundra build success (0.44 seconds), 1 items updated, 3 evaluated
+Total cache size 988952
+Total cache size after purge 988952, took 00:00:00.0156208
+Asset Pipeline Refresh (id=c7b039c524921ef418052aa6df709d41): Total: 0.004 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+[ScriptCompilation] Requested script compilation because: Recompiling scripts for player build.
+BuildPlayer: start building target 19
+Starting: C:\Program Files\Unity\Hub\Editor\6000.6.9f1\Editor\Data\Tools\BuildPipeline\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aP.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssembliesAndTypeDB
+WorkingDir: C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/experiments/CallbackDiagnosticProject
+Total cache size 988952
+Total cache size after purge 988952, took 00:00:00.0036360
+ExitCode: 0 Duration: 0s926ms
+[56/63      0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+[57/63      0s] Csc Library/Bee/artifacts/1900b0aP.dag/Assembly-CSharp.dll (+2 others)
+[58/63      0s] ILPostProcess Library/Bee/artifacts/1900b0aP.dag/post-processed/Assembly-CSharp.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aP.dag/Assembly-CSharp.dll, with 135 defines and 182 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+1 processor(s) skipped this assembly
+[59/63      0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Assembly-CSharp.pdb
+[60/63      0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Assembly-CSharp.dll
+[62/63      0s] BuildPlayerDataGenerator Library/BuildPlayerData/Player/RuntimeInitializeOnLoads.json (+1 other)
+*** Tundra build success (0.86 seconds), 6 items updated, 63 evaluated
+Not rebuilding Data files -- no changes
+
+
+Mono dependencies included in the build
+Dependency assembly - System.IO.dll
+Dependency assembly - System.Web.Mvc.dll
+Dependency assembly - System.Resources.ReaderWriter.dll
+Dependency assembly - System.Security.Cryptography.X509Certificates.dll
+Dependency assembly - System.IO.IsolatedStorage.dll
+Dependency assembly - System.DirectoryServices.Protocols.dll
+Dependency assembly - System.Security.Cryptography.Primitives.dll
+Dependency assembly - System.Windows.dll
+Dependency assembly - System.Linq.Parallel.dll
+Dependency assembly - Mono.Data.Sqlite.dll
+Dependency assembly - System.Workflow.ComponentModel.dll
+Dependency assembly - System.Reactive.Linq.dll
+Dependency assembly - System.Net.Mail.dll
+Dependency assembly - System.Resources.Reader.dll
+Dependency assembly - Commons.Xml.Relaxng.dll
+Dependency assembly - System.Runtime.Serialization.Formatters.Soap.dll
+Dependency assembly - System.IO.Compression.FileSystem.dll
+Dependency assembly - Microsoft.CSharp.dll
+Dependency assembly - Novell.Directory.Ldap.dll
+Dependency assembly - System.Diagnostics.StackTrace.dll
+Dependency assembly - System.Transactions.dll
+Dependency assembly - Mono.Messaging.RabbitMQ.dll
+Dependency assembly - System.ComponentModel.DataAnnotations.dll
+Dependency assembly - System.Runtime.DurableInstancing.dll
+Dependency assembly - System.ObjectModel.dll
+Dependency assembly - PEAPI.dll
+Dependency assembly - System.AppContext.dll
+Dependency assembly - Mono.Simd.dll
+Dependency assembly - System.Net.Http.dll
+Dependency assembly - System.Net.WebSockets.Client.dll
+Dependency assembly - System.ServiceModel.Duplex.dll
+Dependency assembly - System.Globalization.Calendars.dll
+Dependency assembly - I18N.CJK.dll
+Dependency assembly - Mono.WebBrowser.dll
+Dependency assembly - System.Threading.ThreadPool.dll
+Dependency assembly - System.Xml.dll
+Dependency assembly - System.Security.SecureString.dll
+Dependency assembly - System.Dynamic.Runtime.dll
+Dependency assembly - System.Data.OracleClient.dll
+Dependency assembly - Assembly-CSharp.dll
+Dependency assembly - System.ServiceModel.Primitives.dll
+Dependency assembly - System.Web.RegularExpressions.dll
+Dependency assembly - System.IO.FileSystem.DriveInfo.dll
+Dependency assembly - System.Threading.Tasks.Dataflow.dll
+Dependency assembly - System.ServiceModel.Routing.dll
+Dependency assembly - mscorlib.dll
+Dependency assembly - ICSharpCode.SharpZipLib.dll
+Dependency assembly - System.Web.Http.WebHost.dll
+Dependency assembly - System.Net.Utilities.dll
+Dependency assembly - Microsoft.Build.Tasks.v4.0.dll
+Dependency assembly - System.ServiceModel.Web.dll
+Dependency assembly - System.Configuration.dll
+Dependency assembly - System.Runtime.Serialization.Json.dll
+Dependency assembly - System.Net.WebHeaderCollection.dll
+Dependency assembly - System.Reactive.Experimental.dll
+Dependency assembly - RabbitMQ.Client.dll
+Dependency assembly - System.Web.Razor.dll
+Dependency assembly - System.Web.Routing.dll
+Dependency assembly - System.Reactive.Windows.Forms.dll
+Dependency assembly - I18N.dll
+Dependency assembly - System.ComponentModel.Composition.dll
+Dependency assembly - System.Workflow.Activities.dll
+Dependency assembly - System.Runtime.Serialization.Primitives.dll
+Dependency assembly - System.Diagnostics.Contracts.dll
+Dependency assembly - System.ServiceModel.Internals.dll
+Dependency assembly - System.Resources.Writer.dll
+Dependency assembly - System.Runtime.Handles.dll
+Dependency assembly - System.Security.AccessControl.dll
+Dependency assembly - System.Security.Cryptography.OpenSsl.dll
+Dependency assembly - System.Xml.XPath.XDocument.dll
+Dependency assembly - System.ServiceModel.Http.dll
+Dependency assembly - Mono.Profiler.Log.dll
+Dependency assembly - System.Net.Http.Formatting.dll
+Dependency assembly - System.Threading.Tasks.Parallel.dll
+Dependency assembly - Microsoft.Win32.Primitives.dll
+Dependency assembly - Mono.C5.dll
+Dependency assembly - System.ServiceModel.Security.dll
+Dependency assembly - System.Xml.XPath.XmlDocument.dll
+Dependency assembly - System.IO.FileSystem.dll
+Dependency assembly - System.ValueTuple.dll
+Dependency assembly - System.Reflection.Context.dll
+Dependency assembly - System.Xml.Xsl.Primitives.dll
+Dependency assembly - System.Security.Cryptography.Encryption.dll
+Dependency assembly - System.Security.Cryptography.Hashing.dll
+Dependency assembly - Microsoft.Web.Infrastructure.dll
+Dependency assembly - System.Security.Principal.dll
+Dependency assembly - System.Runtime.Serialization.Xml.dll
+Dependency assembly - System.Xml.XPath.dll
+Dependency assembly - System.Linq.Queryable.dll
+Dependency assembly - System.Web.DynamicData.dll
+Dependency assembly - System.Xml.Serialization.dll
+Dependency assembly - System.Security.Cryptography.Csp.dll
+Dependency assembly - System.Security.Cryptography.Encoding.dll
+Dependency assembly - System.Collections.Concurrent.dll
+Dependency assembly - Mono.Security.dll
+Dependency assembly - System.Diagnostics.FileVersionInfo.dll
+Dependency assembly - System.Net.Security.dll
+Dependency assembly - System.Xml.Linq.dll
+Dependency assembly - System.Security.Cryptography.Cng.dll
+Dependency assembly - System.Security.Cryptography.DeriveBytes.dll
+Dependency assembly - System.Runtime.InteropServices.RuntimeInformation.dll
+Dependency assembly - System.Security.Cryptography.RandomNumberGenerator.dll
+Dependency assembly - System.Drawing.Design.dll
+Dependency assembly - System.EnterpriseServices.dll
+Dependency assembly - System.Web.WebPages.dll
+Dependency assembly - System.IO.MemoryMappedFiles.dll
+Dependency assembly - System.Net.Ping.dll
+Dependency assembly - System.Numerics.dll
+Dependency assembly - System.Security.Cryptography.Hashing.Algorithms.dll
+Dependency assembly - System.Security.Cryptography.Pkcs.dll
+Dependency assembly - System.Security.Principal.Windows.dll
+Dependency assembly - System.Xml.ReaderWriter.dll
+Dependency assembly - System.Diagnostics.Debug.dll
+Dependency assembly - System.IO.Compression.dll
+Dependency assembly - System.ComponentModel.Primitives.dll
+Dependency assembly - System.Memory.dll
+Dependency assembly - System.Data.Services.Client.dll
+Dependency assembly - System.Net.AuthenticationManager.dll
+Dependency assembly - System.Runtime.CompilerServices.Unsafe.dll
+Dependency assembly - System.Xaml.dll
+Dependency assembly - System.Workflow.Runtime.dll
+Dependency assembly - SystemWebTestShim.dll
+Dependency assembly - System.Net.Sockets.dll
+Dependency assembly - System.ServiceModel.dll
+Dependency assembly - Mono.Options.dll
+Dependency assembly - System.Runtime.Remoting.dll
+Dependency assembly - System.Buffers.dll
+Dependency assembly - WindowsBase.dll
+Dependency assembly - System.Net.WebSockets.dll
+Dependency assembly - System.Runtime.InteropServices.WindowsRuntime.dll
+Dependency assembly - Accessibility.dll
+Dependency assembly - IBM.Data.DB2.dll
+Dependency assembly - System.Reflection.Emit.ILGeneration.dll
+Dependency assembly - cscompmgd.dll
+Dependency assembly - System.Reflection.Emit.Lightweight.dll
+Dependency assembly - System.Reactive.Debugger.dll
+Dependency assembly - System.Security.Cryptography.ProtectedData.dll
+Dependency assembly - I18N.West.dll
+Dependency assembly - System.Diagnostics.DiagnosticSource.dll
+Dependency assembly - System.Web.Abstractions.dll
+Dependency assembly - Mono.Security.Win32.dll
+Dependency assembly - System.Globalization.dll
+Dependency assembly - System.Threading.dll
+Dependency assembly - System.Linq.Expressions.dll
+Dependency assembly - System.ComponentModel.TypeConverter.dll
+Dependency assembly - System.Reactive.Runtime.Remoting.dll
+Dependency assembly - System.Reflection.Primitives.dll
+Dependency assembly - System.Net.NameResolution.dll
+Dependency assembly - Microsoft.Build.dll
+Dependency assembly - System.Configuration.Install.dll
+Dependency assembly - CustomMarshalers.dll
+Dependency assembly - System.ServiceModel.Activation.dll
+Dependency assembly - System.Net.Primitives.dll
+Dependency assembly - System.Collections.Immutable.dll
+Dependency assembly - System.Data.Linq.dll
+Dependency assembly - System.ComponentModel.Annotations.dll
+Dependency assembly - System.Reflection.Extensions.dll
+Dependency assembly - System.Runtime.Extensions.dll
+Dependency assembly - System.Runtime.Loader.dll
+Dependency assembly - System.Security.Cryptography.Encryption.ECDiffieHellman.dll
+Dependency assembly - SMDiagnostics.dll
+Dependency assembly - System.Net.Cache.dll
+Dependency assembly - Mono.CompilerServices.SymbolWriter.dll
+Dependency assembly - monodoc.dll
+Dependency assembly - Microsoft.Build.Framework.dll
+Dependency assembly - System.Net.Http.Rtc.dll
+Dependency assembly - System.Data.dll
+Dependency assembly - System.Data.Services.dll
+Dependency assembly - System.Threading.Overlapped.dll
+Dependency assembly - System.Xml.XDocument.dll
+Dependency assembly - Microsoft.Extensions.DependencyInjection.Abstractions.dll
+Dependency assembly - System.Data.Entity.dll
+Dependency assembly - netstandard.dll
+Dependency assembly - System.Web.WebPages.Razor.dll
+Dependency assembly - System.Diagnostics.TextWriterTraceListener.dll
+Dependency assembly - System.Numerics.Vectors.dll
+Dependency assembly - System.Runtime.InteropServices.dll
+Dependency assembly - Microsoft.Bcl.AsyncInterfaces.dll
+Dependency assembly - System.ComponentModel.EventBasedAsync.dll
+Dependency assembly - System.Collections.dll
+Dependency assembly - System.Design.dll
+Dependency assembly - System.IO.Compression.ZipFile.dll
+Dependency assembly - System.Diagnostics.Tracing.dll
+Dependency assembly - System.Management.dll
+Dependency assembly - System.Resources.ResourceManager.dll
+Dependency assembly - WebMatrix.Data.dll
+Dependency assembly - System.Reactive.PlatformServices.dll
+Dependency assembly - System.Reflection.Metadata.dll
+Dependency assembly - Microsoft.Extensions.Logging.Abstractions.dll
+Dependency assembly - Mono.Http.dll
+Dependency assembly - System.Runtime.Numerics.dll
+Dependency assembly - System.Net.Http.WebRequest.dll
+Dependency assembly - Microsoft.Win32.Registry.AccessControl.dll
+Dependency assembly - System.Globalization.Extensions.dll
+Dependency assembly - System.Data.Common.dll
+Dependency assembly - System.IO.FileSystem.Primitives.dll
+Dependency assembly - System.Deployment.dll
+Dependency assembly - System.Diagnostics.Process.dll
+Dependency assembly - System.Web.dll
+Dependency assembly - System.Net.dll
+Dependency assembly - System.IO.UnmanagedMemoryStream.dll
+Dependency assembly - System.Reactive.Interfaces.dll
+Dependency assembly - System.Data.SqlClient.dll
+Dependency assembly - I18N.Rare.dll
+Dependency assembly - Microsoft.VisualC.dll
+Dependency assembly - System.Json.dll
+Dependency assembly - System.Security.Cryptography.Encryption.Aes.dll
+Dependency assembly - System.Threading.Timer.dll
+Dependency assembly - System.Collections.NonGeneric.dll
+Dependency assembly - System.ServiceProcess.dll
+Dependency assembly - System.IO.Pipes.dll
+Dependency assembly - System.Net.ServicePoint.dll
+Dependency assembly - Mono.Posix.dll
+Dependency assembly - System.Data.DataSetExtensions.dll
+Dependency assembly - System.Web.ApplicationServices.dll
+Dependency assembly - System.Json.Microsoft.dll
+Dependency assembly - I18N.Other.dll
+Dependency assembly - System.Web.WebPages.Deployment.dll
+Dependency assembly - System.Text.Json.dll
+Dependency assembly - Mono.Data.Tds.dll
+Dependency assembly - System.Diagnostics.TraceEvent.dll
+Dependency assembly - System.Net.NetworkInformation.dll
+Dependency assembly - System.Text.RegularExpressions.dll
+Dependency assembly - System.Text.Encoding.Extensions.dll
+Dependency assembly - System.Net.HttpListener.dll
+Dependency assembly - I18N.MidEast.dll
+Dependency assembly - System.Core.dll
+Dependency assembly - System.Windows.Forms.dll
+Dependency assembly - System.Security.Cryptography.Algorithms.dll
+Dependency assembly - System.Security.Cryptography.RSA.dll
+Dependency assembly - Microsoft.Win32.Registry.dll
+Dependency assembly - System.Security.Claims.dll
+Dependency assembly - System.dll
+Dependency assembly - System.Security.dll
+Dependency assembly - System.Runtime.Serialization.dll
+Dependency assembly - System.Threading.Tasks.dll
+Dependency assembly - System.DirectoryServices.dll
+Dependency assembly - System.Collections.Specialized.dll
+Dependency assembly - Mono.Cairo.dll
+Dependency assembly - System.Web.Services.dll
+Dependency assembly - System.Threading.Tasks.Extensions.dll
+Dependency assembly - System.IO.FileSystem.Watcher.dll
+Dependency assembly - System.Net.Requests.dll
+Dependency assembly - System.IO.FileSystem.AccessControl.dll
+Dependency assembly - Microsoft.Build.Utilities.v4.0.dll
+Dependency assembly - System.Messaging.dll
+Dependency assembly - Mono.Messaging.dll
+Dependency assembly - System.Reactive.Providers.dll
+Dependency assembly - System.Reflection.DispatchProxy.dll
+Dependency assembly - System.Diagnostics.Tools.dll
+Dependency assembly - Mono.Btls.Interface.dll
+Dependency assembly - System.Xml.XmlDocument.dll
+Dependency assembly - System.Runtime.Serialization.Formatters.dll
+Dependency assembly - System.Text.Encodings.Web.dll
+Dependency assembly - System.Reactive.Core.dll
+Dependency assembly - System.Windows.Forms.DataVisualization.dll
+Dependency assembly - System.Diagnostics.TraceSource.dll
+Dependency assembly - System.Web.Http.dll
+Dependency assembly - System.Reflection.TypeExtensions.dll
+Dependency assembly - System.Security.Cryptography.Encryption.ECDsa.dll
+Dependency assembly - System.Console.dll
+Dependency assembly - System.Reactive.Windows.Threading.dll
+Dependency assembly - System.Web.Http.SelfHost.dll
+Dependency assembly - System.ComponentModel.dll
+Dependency assembly - System.Runtime.Caching.dll
+Dependency assembly - System.IO.Hashing.dll
+Dependency assembly - System.Dynamic.dll
+Dependency assembly - System.Linq.dll
+Dependency assembly - System.Web.Extensions.Design.dll
+Dependency assembly - System.IdentityModel.Selectors.dll
+Dependency assembly - System.Runtime.dll
+Dependency assembly - System.Web.Extensions.dll
+Dependency assembly - System.Reflection.Emit.dll
+Dependency assembly - System.Reactive.Observable.Aliases.dll
+Dependency assembly - System.IdentityModel.dll
+Dependency assembly - Microsoft.Build.Engine.dll
+Dependency assembly - Mono.XBuild.Tasks.dll
+Dependency assembly - System.ServiceModel.Discovery.dll
+Dependency assembly - System.Threading.Thread.dll
+Dependency assembly - System.Text.Encoding.dll
+Dependency assembly - System.Text.Encoding.CodePages.dll
+Dependency assembly - Mono.Tasklets.dll
+Dependency assembly - Mono.Parallel.dll
+Dependency assembly - System.Web.Mobile.dll
+Dependency assembly - System.ServiceModel.NetTcp.dll
+Dependency assembly - System.Runtime.CompilerServices.VisualC.dll
+Dependency assembly - System.Drawing.Primitives.dll
+Dependency assembly - System.Drawing.dll
+Dependency assembly - Mono.Management.dll
+Dependency assembly - System.ServiceProcess.ServiceController.dll
+Dependency assembly - System.Xml.XmlSerializer.dll
+Dependency assembly - Mono.CSharp.dll
+Dependency assembly - System.Threading.AccessControl.dll
+Dependency assembly - System.Reflection.dll
+
+Starting: C:\Program Files\Unity\Hub\Editor\6000.6.9f1\Editor\Data\Tools\BuildPipeline\bee_backend.exe --ipc --dagfile="Library/Bee/Player06008ccf.dag" --profile="Library/Bee/backend1.traceevents" Player
+WorkingDir: C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/experiments/CallbackDiagnosticProject
+ExitCode: 4 Duration: 0s43ms
+Starting: C:\Program Files\Unity\Hub\Editor\6000.6.9f1\Editor\Data\DotNetSdk\dotnet.exe "C:\Program Files\Unity\Hub\Editor\6000.6.9f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\WinPlayerBuildProgram.exe" "C:/Program Files/Unity/Hub/Editor/6000.6.9f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/Bee;C:/Program Files/Unity/Hub/Editor/6000.6.9f1/Editor/Data/Tools/BuildPipeline" "Library/Bee/Player06008ccf.dag.json" "Library/Bee/Player06008ccf-inputdata.json" "Library\Bee\buildprogram0.traceevents"
+WorkingDir: C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/experiments/CallbackDiagnosticProject
+DisplayProgressbar: Incremental Player Build
+Worker ready: AssetImportWorkerHW0 0
+ExitCode: 0 Duration: 0s714ms
+Starting: C:\Program Files\Unity\Hub\Editor\6000.6.9f1\Editor\Data\Tools\BuildPipeline\bee_backend.exe --ipc --dagfile="Library/Bee/Player06008ccf.dag" --dagfilejson="Library\Bee\Player06008ccf.dag.json" --profile="Library/Bee/backend2.traceevents" Player
+WorkingDir: C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/experiments/CallbackDiagnosticProject
+Starting: C:\Program Files\Unity\Hub\Editor\6000.6.9f1\Editor\Data\DotNetSdk\dotnet.exe "C:\Program Files\Unity\Hub\Editor\6000.6.9f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\WinPlayerBuildProgram.exe" "C:/Program Files/Unity/Hub/Editor/6000.6.9f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/Bee;C:/Program Files/Unity/Hub/Editor/6000.6.9f1/Editor/Data/Tools/BuildPipeline" "Library/Bee/Player06008ccf.dag.json" "Library/Bee/Player06008ccf-inputdata.json" "Library\Bee\buildprogram1.traceevents"
+WorkingDir: C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/experiments/CallbackDiagnosticProject
+ExitCode: 4 Duration: 3s5ms
+ExitCode: 0 Duration: 0s615ms
+Starting: C:\Program Files\Unity\Hub\Editor\6000.6.9f1\Editor\Data\Tools\BuildPipeline\bee_backend.exe --ipc --dagfile="Library/Bee/Player06008ccf.dag" --dagfilejson="Library\Bee\Player06008ccf.dag.json" --profile="Library/Bee/backend3.traceevents" Player
+WorkingDir: C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/experiments/CallbackDiagnosticProject
+ExitCode: 0 Duration: 0s226ms
+Total cache size 988952
+Total cache size after purge 988952, took 00:00:00.0037471
+
+-------------------------------------------------------------------------------
+Build Report
+Information on used Assets is not available, since player data was not rebuilt.
+Do a clean build to view the Asset build report information.
+-------------------------------------------------------------------------------
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 32 unused Assets / (Unknown). Loaded Objects now: 1183.
+Memory consumption went from 233.4 MB to 233.9 MB.
+Total: 11.867600 ms (FindLiveObjects: 0.194300 ms CreateObjectMapping: 0.022900 ms MarkObjects: 10.955000 ms  DeleteObjects: 0.576800 ms)
+
+DisplayProgressNotification: Build Successful
+Build Finished, Result: Success.
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+Loaded scene 'Temp/__Backupscenes/0.backup'
+	Deserialize:            1.214 ms
+	Integration:            15.133 ms
+	Integration of assets:  0.004 ms
+	Thread Wait Time:       0.010 ms
+	Total Operation Time:   16.361 ms
+Unloading 0 unused Assets / (17 B). Loaded Objects now: 1182.
+Memory consumption went from 231.4 MB to 231.4 MB.
+Total: 11.194500 ms (FindLiveObjects: 0.284000 ms CreateObjectMapping: 0.028400 ms MarkObjects: 10.699200 ms  DeleteObjects: 0.010100 ms)
+
+##utp:{"success":true,"type":"PlayerBuildInfo","version":2,"phase":"Immediate","time":1795037209478,"processId":32424,"steps":[{"description":"Call PrepareForBuild callbacks","duration":1},{"description":"Call internal build started callbacks","duration":2},{"description":"Preprocess Player","duration":19},{"description":"Save scenes before build","duration":0},{"description":"Prepare For Build","duration":14},{"description":"ProducePlayerScriptAssemblies","duration":1742},{"description":"Verify Build setup","duration":77},{"description":"Prepare assets for target platform","duration":0},{"description":"Prepare splash screen","duration":2},{"description":"Run script only build","duration":33},{"description":"Build scripts DLLs","duration":96},{"description":"Postprocess built player","duration":4950},{"description":"Call Post-Process callbacks","duration":37}],"duration":6973}
+Synthetic standalone build result=Succeeded
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+StandaloneProbeBuild:Build () (at Assets/StandaloneProbe/Editor/StandaloneProbeBuild.cs:17)
+
+(Filename: Assets/StandaloneProbe/Editor/StandaloneProbeBuild.cs Line: 17)
+
+MonoPathRemapper: Attempts to remap: 2122; Successful remaps: 0
+Serialized file version minimum: 23, current 23
+[Physics::Module] Cleanup current backend.
+[Physics::Module] Id: 0xf2b8ea05
+Input System module state changed to: ShutdownInProgress.
+Input Polling Thread exited.
+Input System module state changed to: Shutdown.
+[Licensing::IpcConnector] LicenseClient-User1-1.19.0-notifications channel disconnected successfully.
+[Licensing::IpcConnector] LicenseClient-User1-1.19.0 channel disconnected successfully.
+Lingering sessions upon destruction of worker manager
+Unity Data Store service was successfully shut down
+UDS shutting down local client system
+AcceleratorClientConnectionCallback - disconnected - :0
+Cleanup mono
+CodeReloadManager destroyed
+VBCSCompilerPreWarmer: requested VBCSCompiler shutdown
+Checking for leaked weakptr:
+  Found no leaked weakptrs.
+[Package Manager] Server process was shutdown
+##utp:{"type":"MemoryLeaks","version":2,"phase":"Immediate","time":1795037211141,"processId":32424,"allocatedMemory":11598450,"memoryLabels":[{"Default":165556},{"Permanent":15516},{"NewDelete":69983},{"Thread":4198064},{"Manager":34109},{"VertexData":8},{"Geometry":824},{"Texture":24},{"Shader":832130},{"Material":132},{"GfxDevice":55968},{"Animation":952},{"Audio":1272},{"FreeType":8},{"FontEngine":736},{"Physics":1970},{"Physics2D":16},{"Serialization":16768},{"Input":42840},{"JobScheduler":264},{"TextLib":280},{"Mono":48},{"ScriptingNativeRuntime":1243480},{"BaseObject":48784},{"Resource":1444},{"Renderer":2504},{"Transform":4781},{"File":4424},{"WebCam":616},{"Culling":32},{"Terrain":11442},{"Wind":24},{"STL":40},{"String":1244557},{"StaticString":3808},{"Utility":2674806},{"Curl":2676},{"PoolAlloc":2168},{"AI":80},{"TypeTree":17165},{"ScriptManager":12688},{"CodeReload":448},{"RuntimeInitializeOnLoadManager":64},{"Sprites":102},{"SpriteAtlas":120},{"GI":7816},{"Director":8296},{"CloudService":7296},{"WebRequest":6383},{"VR":49650},{"SceneManager":608},{"Video":64},{"LazyScriptCache":32},{"Camera":729},{"Secure":2377},{"SerializationCache":9256},{"APIUpdating":10320},{"Subsystems":336},{"VirtualTexturing":57888},{"StaticSafetyDebugInfo":278528},{"Analytics":960},{"Hierarchy":1188},{"UIElements":40},{"CoreStats":14536},{"Identifiers":7152},{"EntityIdStore":33088},{"Gui":128},{"EditorUtility":95117},{"VersionControl":8},{"Undo":931},{"AssetDatabase":233937},{"AssetImporter":40},{"EditorGi":328},{"UnityConnect":40441},{"Upm":1912},{"UpmDiagnostics":8},{"AssetCompliance":96},{"DrivenProperties":72},{"LocalIPC":218},{"ProfilerEditor":9746},{"CoreBusinessMetrics":3620},{"Windowing":456},{"Licensing":1064},{"AssetReference":32},{"IPCStream":32}]}

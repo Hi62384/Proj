@@ -1,0 +1,62 @@
+{
+  "runs": [
+    {
+      "restricted": false,
+      "mode": "pass",
+      "state": "exited",
+      "appcontainer_token": false,
+      "exit_code": 0,
+      "job_total_processes": 5,
+      "job_active_processes": 0,
+      "fixture_unchanged": true,
+      "canary_exists": true,
+      "child_canary_exists": true,
+      "child_marker_exists": true,
+      "result_file_exists": true,
+      "restore_started": true,
+      "payload": {
+        "status": "pass",
+        "path": "",
+        "outsideWriteBlocked": false,
+        "outsideWriteError": "",
+        "loopbackConnected": true,
+        "loopbackResult": "connected",
+        "childStarted": true,
+        "childExit": 0,
+        "childError": ""
+      },
+      "result_sha256": "a5b7aac75e2a90943aa67d00c376a80253c32519c08ba42451139ef0d94ca695",
+      "diagnostics": []
+    },
+    {
+      "restricted": true,
+      "mode": "pass",
+      "state": "exited",
+      "appcontainer_token": true,
+      "exit_code": 0,
+      "job_total_processes": 5,
+      "job_active_processes": 0,
+      "fixture_unchanged": true,
+      "canary_exists": false,
+      "child_canary_exists": false,
+      "child_marker_exists": true,
+      "result_file_exists": true,
+      "restore_started": true,
+      "payload": {
+        "status": "pass",
+        "path": "",
+        "outsideWriteBlocked": true,
+        "outsideWriteError": "DirectoryNotFoundException",
+        "loopbackConnected": false,
+        "loopbackResult": "timeout",
+        "childStarted": true,
+        "childExit": 1,
+        "childError": ""
+      },
+      "result_sha256": "573b690f7c66ab7f9f79922903f0ee314237c334453ee1b4fb14f4adae829922",
+      "diagnostics": [],
+      "profile_deleted": true
+    }
+  ],
+  "server_connections": 1
+}

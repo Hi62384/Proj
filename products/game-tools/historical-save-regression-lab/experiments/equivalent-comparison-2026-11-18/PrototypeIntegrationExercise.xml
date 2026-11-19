@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="3" result="Passed" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-18 21:59:42Z" end-time="2026-11-18 21:59:42Z" duration="0.1773692">
+  <test-suite type="TestSuite" id="1000" name="SampleProject" fullname="SampleProject" runstate="Runnable" testcasecount="91" result="Passed" start-time="2026-11-18 21:59:42Z" end-time="2026-11-18 21:59:42Z" duration="0.177369" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1119" name="BaselineTests.dll" fullname="C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/experiments/CallbackDiagnosticProject/Library/ScriptAssemblies/BaselineTests.dll" runstate="Runnable" testcasecount="91" result="Passed" start-time="2026-11-18 21:59:42Z" end-time="2026-11-18 21:59:42Z" duration="0.159645" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="36228" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestFixture" id="1074" name="PrototypeIntegrationExercise" fullname="PrototypeIntegrationExercise" classname="PrototypeIntegrationExercise" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-18 21:59:42Z" end-time="2026-11-18 21:59:42Z" duration="0.156167" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="ParameterizedMethod" id="1078" name="RestoresExpectedState" fullname="PrototypeIntegrationExercise.RestoresExpectedState" classname="PrototypeIntegrationExercise" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-18 21:59:42Z" end-time="2026-11-18 21:59:42Z" duration="0.150730" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="1075" name="RestoresExpectedState(&quot;v1.json&quot;,&quot;462a55994a843bf1eaa4bf350a533d2a498edf01b5726f5820e4b2e68dcd22bc&quot;,3,False)" fullname="PrototypeIntegrationExercise.RestoresExpectedState(&quot;v1.json&quot;,&quot;462a55994a843bf1eaa4bf350a533d2a498edf01b5726f5820e4b2e68dcd22bc&quot;,3,False)" methodname="RestoresExpectedState" classname="PrototypeIntegrationExercise" runstate="Runnable" seed="1411949965" result="Passed" start-time="2026-11-18 21:59:42Z" end-time="2026-11-18 21:59:42Z" duration="0.066501" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1076" name="RestoresExpectedState(&quot;v2.json&quot;,&quot;aad6fb81678b3cd0bc49669338d61acfc9bd43a4101e31c767acf030f9ee04a5&quot;,3,True)" fullname="PrototypeIntegrationExercise.RestoresExpectedState(&quot;v2.json&quot;,&quot;aad6fb81678b3cd0bc49669338d61acfc9bd43a4101e31c767acf030f9ee04a5&quot;,3,True)" methodname="RestoresExpectedState" classname="PrototypeIntegrationExercise" runstate="Runnable" seed="963862081" result="Passed" start-time="2026-11-18 21:59:42Z" end-time="2026-11-18 21:59:42Z" duration="0.018161" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1077" name="RestoresExpectedState(&quot;v3.json&quot;,&quot;c93bf46eedaf15bd39329f66bb25199c846237d18affc657e2d50fddbc23cab1&quot;,4,True)" fullname="PrototypeIntegrationExercise.RestoresExpectedState(&quot;v3.json&quot;,&quot;c93bf46eedaf15bd39329f66bb25199c846237d18affc657e2d50fddbc23cab1&quot;,4,True)" methodname="RestoresExpectedState" classname="PrototypeIntegrationExercise" runstate="Runnable" seed="1727357575" result="Passed" start-time="2026-11-18 21:59:42Z" end-time="2026-11-18 21:59:42Z" duration="0.044223" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+            <output><![CDATA[Saving results to: C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\equivalent-comparison-2026-11-18\PrototypeIntegrationExercise.xml
+]]></output>
+          </test-case>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

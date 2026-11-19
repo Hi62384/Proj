@@ -1,0 +1,9 @@
+[2026-11-18T22:01:22.406Z][INFO] Command-line: 'C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.9f1\\Editor\\Data\\Resources\\PackageManager\\Server\\UnityPackageManager.exe' server -s 10940 --ipc-path Unity-Upm-10940 -l 2 --log-file C:\\Users\\User1\\Documents\\Downloads\\Proj\\products\\game-tools\\historical-save-regression-lab\\experiments\\CallbackDiagnosticProject/Logs/upm.log
+[2026-11-18T22:01:22.467Z][INFO] IPC server started (IPC path=Unity-Upm-10940).
+[2026-11-18T22:01:22.467Z][INFO] Hint: To connect to this UPM instance, launch Unity with the command-line parameter -upmIpcPath Upm-10940.
+[2026-11-18T22:01:24.852Z][INFO] project:list-packages <-- Request received
+params: {}
+[2026-11-18T22:01:24.985Z][INFO] project:list-packages --> 200 (133 ms)
+[2026-11-18T22:01:28.274Z][INFO] project:list-packages <-- Request received
+params: {}
+[2026-11-18T22:01:28.330Z][INFO] project:list-packages --> 200 (55 ms)

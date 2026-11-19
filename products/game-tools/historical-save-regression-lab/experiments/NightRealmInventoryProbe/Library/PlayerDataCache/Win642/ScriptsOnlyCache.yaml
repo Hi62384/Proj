@@ -1,0 +1,30 @@
+ScriptsOnlyBuild:
+  usedScripts:
+    UnityEditor.TestRunner.dll:
+    - UnityEditor.TestTools.TestRunner.CommandLineTest.RunData
+    - UnityEditor.TestTools.TestRunner.TestListCacheData
+    - UnityEditor.TestTools.TestRunner.TestRun.TestJobDataHolder
+  serializedClasses: {}
+  methodsToPreserve: []
+  sceneClasses:
+    Assets/StandaloneProbe/SyntheticProbe.unity:
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 89
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
+      Script: {instanceID: 0}
+  scriptHashData: []
+  platform: 19
+  scenePathNames:
+  - Assets/StandaloneProbe/SyntheticProbe.unity
+  nativeClasses: 000000003000000012000000820000001c0000001b000000150000000600000031000000730000000900000081000000d50000000d000000c0a219270b000000370000007e0000000f1baa530a05df37130000007bce860a8d0000002f000000740000005e0000002c0100009300000005000000620000001e0000004e000000c4000000590000009d0000000300000068000000i
+  playerPath: C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/experiments/nightrealm-inventory-build-v1/SyntheticProbe.exe

@@ -1,0 +1,10 @@
+{
+  "AsyncAdapterSpike.cs": "4243084b61296c1e087bdad3ca67d39975e792a14f90dcf5423b861c0f01e246",
+  "BaselineTests.asmdef": "e097a2b342dc8c952ce4e8c9496ac26b4d6c483cbc15edde6923d4247d303207",
+  "FixtureCopy.cs": "7fb1152cbe56fad0ddd6699cf674e4fb168295824c9c9756ac8ad3dcd38f318a",
+  "ManifestRunner.cs": "3cb74acda0caf0d70437c78ce74f55385a272a90bce499f1e2117bddddddb7bd",
+  "NativeIntegrationExercise.cs": "2f0960f1d8f1b5eb9f7fc2043ad77c1999b0f13de19411473bedd20fbc403f1f",
+  "PrototypeIntegrationExercise.cs": "f2d5fe8f74184fe25e373282c74fcfc503ae47245c4fca243e3146c6a876776b",
+  "SampleSaveLoader.cs": "a5950b0f8700a74a7acb342a4831f1b652f3f91726475d175e768ba7c8f59fea",
+  "StrictManifest.cs": "2a1177571557920bad422ce2262781afddbf23519f7f70806fa973db12048620"
+}

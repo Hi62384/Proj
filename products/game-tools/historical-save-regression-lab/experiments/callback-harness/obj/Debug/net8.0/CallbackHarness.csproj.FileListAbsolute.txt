@@ -1,0 +1,14 @@
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\callback-harness\bin\Debug\net8.0\CallbackHarness.deps.json
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\callback-harness\bin\Debug\net8.0\CallbackHarness.runtimeconfig.json
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\callback-harness\bin\Debug\net8.0\CallbackHarness.dll
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\callback-harness\bin\Debug\net8.0\CallbackHarness.pdb
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\callback-harness\obj\Debug\net8.0\CallbackHarness.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\callback-harness\obj\Debug\net8.0\CallbackHarness.AssemblyInfoInputs.cache
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\callback-harness\obj\Debug\net8.0\CallbackHarness.AssemblyInfo.cs
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\callback-harness\obj\Debug\net8.0\CallbackHarness.csproj.CoreCompileInputs.cache
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\callback-harness\obj\Debug\net8.0\CallbackHarness.sourcelink.json
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\callback-harness\obj\Debug\net8.0\CallbackHarness.dll
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\callback-harness\obj\Debug\net8.0\refint\CallbackHarness.dll
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\callback-harness\obj\Debug\net8.0\CallbackHarness.pdb
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\callback-harness\obj\Debug\net8.0\CallbackHarness.genruntimeconfig.cache
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\callback-harness\obj\Debug\net8.0\ref\CallbackHarness.dll

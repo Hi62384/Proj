@@ -1,0 +1,14 @@
+[2026-11-18T20:08:39.505Z][INFO] Command-line: 'C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.9f1\\Editor\\Data\\Resources\\PackageManager\\Server\\UnityPackageManager.exe' server -s 9256 --ipc-path Unity-Upm-9256 -l 2 --log-file C:\\Users\\User1\\Documents\\Downloads\\Proj\\products\\game-tools\\historical-save-regression-lab\\experiments\\CleanComparisonProject/Logs/upm.log
+[2026-11-18T20:08:39.590Z][INFO] IPC server started (IPC path=Unity-Upm-9256).
+[2026-11-18T20:08:39.590Z][INFO] Hint: To connect to this UPM instance, launch Unity with the command-line parameter -upmIpcPath Upm-9256.
+[2026-11-18T20:08:43.215Z][INFO] project:list-packages <-- Request received
+params: {}
+[2026-11-18T20:08:43.466Z][INFO] project:list-packages --> 200 (251 ms)
+[2026-11-18T20:08:44.512Z][INFO] project:resolve-packages <-- Request received
+params: {}
+[2026-11-18T20:08:44.876Z][INFO] Downloading package [com.unity.package-manager.metadata-6000.6@0.0.105] from registry 'https://packages.unity.com'
+[2026-11-18T20:08:45.202Z][INFO] Finished downloading package [com.unity.package-manager.metadata-6000.6@0.0.105] from registry 'https://packages.unity.com' (size: 11.5 kB, time: 325ms)
+[2026-11-18T20:08:50.035Z][INFO] project:resolve-packages --> 200 (5523 ms)
+[2026-11-18T20:09:07.592Z][INFO] project:list-packages <-- Request received
+params: {}
+[2026-11-18T20:09:07.696Z][INFO] project:list-packages --> 200 (104 ms)

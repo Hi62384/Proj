@@ -1,0 +1,28 @@
+{
+    "Version": 2,
+    "BuildContentOptions": [
+        "None"
+    ],
+    "BuildManifestHash": "00000000000000000000000000000000",
+    "BuildName": "SampleProject",
+    "BuildOptions": [
+        "None"
+    ],
+    "BuildProfilePath": "",
+    "BuildResult": 1,
+    "BuildResultName": "Succeeded",
+    "BuildSessionGUID": "55a0a9da22390a1428e350d95e9283d8",
+    "BuildStartedAt": "2026-11-18T22:22:05.1835475Z",
+    "BuildType": 1,
+    "BuildTypeName": "Player",
+    "ContentSourceBuildSessionGUID": "00000000000000000000000000000000",
+    "OutputPath": "C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/experiments/nightrealm-level-build-v1/SyntheticProbe.exe",
+    "Platform": 19,
+    "PlatformName": "StandaloneWindows64",
+    "Subtarget": 2,
+    "SubtargetName": "Player",
+    "TotalErrors": 0,
+    "TotalSizeBytes": 95974357,
+    "TotalTimeMs": 54125,
+    "TotalWarnings": 5
+}

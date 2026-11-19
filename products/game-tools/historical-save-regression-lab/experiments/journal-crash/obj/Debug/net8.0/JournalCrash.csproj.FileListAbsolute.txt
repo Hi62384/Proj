@@ -1,0 +1,14 @@
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\journal-crash\bin\Debug\net8.0\JournalCrash.deps.json
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\journal-crash\bin\Debug\net8.0\JournalCrash.runtimeconfig.json
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\journal-crash\bin\Debug\net8.0\JournalCrash.dll
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\journal-crash\bin\Debug\net8.0\JournalCrash.pdb
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\journal-crash\obj\Debug\net8.0\JournalCrash.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\journal-crash\obj\Debug\net8.0\JournalCrash.AssemblyInfoInputs.cache
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\journal-crash\obj\Debug\net8.0\JournalCrash.AssemblyInfo.cs
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\journal-crash\obj\Debug\net8.0\JournalCrash.csproj.CoreCompileInputs.cache
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\journal-crash\obj\Debug\net8.0\JournalCrash.sourcelink.json
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\journal-crash\obj\Debug\net8.0\JournalCrash.dll
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\journal-crash\obj\Debug\net8.0\refint\JournalCrash.dll
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\journal-crash\obj\Debug\net8.0\JournalCrash.pdb
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\journal-crash\obj\Debug\net8.0\JournalCrash.genruntimeconfig.cache
+C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\journal-crash\obj\Debug\net8.0\ref\JournalCrash.dll

@@ -1,0 +1,104 @@
+[
+  {
+    "restricted": false,
+    "mode": "pass",
+    "state": "exited",
+    "appcontainer_token": false,
+    "exit_code": 0,
+    "job_total_processes": 3,
+    "job_active_processes": 0,
+    "fixture_unchanged": true,
+    "canary_exists": true,
+    "result_file_exists": true,
+    "restore_started": true,
+    "payload": {
+      "status": "pass",
+      "path": "",
+      "outsideWriteBlocked": false,
+      "outsideWriteError": ""
+    },
+    "result_sha256": "c9f962edec5de1d58469c3a6d936af90eb77072b92d1a9a9a4aa7a77eecfffce",
+    "diagnostics": []
+  },
+  {
+    "restricted": true,
+    "mode": "pass",
+    "state": "exited",
+    "appcontainer_token": true,
+    "exit_code": 0,
+    "job_total_processes": 3,
+    "job_active_processes": 0,
+    "fixture_unchanged": true,
+    "canary_exists": false,
+    "result_file_exists": true,
+    "restore_started": true,
+    "payload": {
+      "status": "pass",
+      "path": "",
+      "outsideWriteBlocked": true,
+      "outsideWriteError": "DirectoryNotFoundException"
+    },
+    "result_sha256": "5335b32e63c13548dab7ecbcc6155563a3e921ce7d2f8694c8fa5305fd417745",
+    "diagnostics": [],
+    "profile_deleted": true
+  },
+  {
+    "restricted": true,
+    "mode": "pass",
+    "state": "exited",
+    "appcontainer_token": true,
+    "exit_code": 0,
+    "job_total_processes": 3,
+    "job_active_processes": 0,
+    "fixture_unchanged": true,
+    "canary_exists": false,
+    "result_file_exists": true,
+    "restore_started": true,
+    "payload": {
+      "status": "pass",
+      "path": "",
+      "outsideWriteBlocked": true,
+      "outsideWriteError": "DirectoryNotFoundException"
+    },
+    "result_sha256": "5335b32e63c13548dab7ecbcc6155563a3e921ce7d2f8694c8fa5305fd417745",
+    "diagnostics": [],
+    "profile_deleted": true
+  },
+  {
+    "restricted": true,
+    "mode": "regression",
+    "state": "exited",
+    "appcontainer_token": true,
+    "exit_code": 1,
+    "job_total_processes": 3,
+    "job_active_processes": 0,
+    "fixture_unchanged": true,
+    "canary_exists": false,
+    "result_file_exists": true,
+    "restore_started": true,
+    "payload": {
+      "status": "regression",
+      "path": "inventory.shield",
+      "outsideWriteBlocked": true,
+      "outsideWriteError": "DirectoryNotFoundException"
+    },
+    "result_sha256": "3c1dc4b95ad8ea316e37ae8ba8f249024089b426216ee91e6a29d428277ab78c",
+    "diagnostics": [],
+    "profile_deleted": true
+  },
+  {
+    "restricted": true,
+    "mode": "hang",
+    "state": "timeout",
+    "appcontainer_token": true,
+    "exit_code": 124,
+    "job_total_processes": 2,
+    "job_active_processes": 0,
+    "fixture_unchanged": true,
+    "canary_exists": false,
+    "result_file_exists": false,
+    "restore_started": true,
+    "diagnostics": [],
+    "profile_deleted": true
+  }
+]

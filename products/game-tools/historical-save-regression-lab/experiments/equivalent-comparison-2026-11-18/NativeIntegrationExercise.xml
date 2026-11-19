@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="3" result="Passed" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-18 21:59:33Z" end-time="2026-11-18 21:59:33Z" duration="0.188721">
+  <test-suite type="TestSuite" id="1000" name="SampleProject" fullname="SampleProject" runstate="Runnable" testcasecount="91" result="Passed" start-time="2026-11-18 21:59:33Z" end-time="2026-11-18 21:59:33Z" duration="0.188721" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1119" name="BaselineTests.dll" fullname="C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/experiments/CallbackDiagnosticProject/Library/ScriptAssemblies/BaselineTests.dll" runstate="Runnable" testcasecount="91" result="Passed" start-time="2026-11-18 21:59:33Z" end-time="2026-11-18 21:59:33Z" duration="0.173341" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="38096" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestFixture" id="1069" name="NativeIntegrationExercise" fullname="NativeIntegrationExercise" classname="NativeIntegrationExercise" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-18 21:59:33Z" end-time="2026-11-18 21:59:33Z" duration="0.170409" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="ParameterizedMethod" id="1073" name="RestoresExpectedState" fullname="NativeIntegrationExercise.RestoresExpectedState" classname="NativeIntegrationExercise" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-18 21:59:33Z" end-time="2026-11-18 21:59:33Z" duration="0.164858" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="1070" name="RestoresExpectedState(&quot;v1.json&quot;,3,False)" fullname="NativeIntegrationExercise.RestoresExpectedState(&quot;v1.json&quot;,3,False)" methodname="RestoresExpectedState" classname="NativeIntegrationExercise" runstate="Runnable" seed="1126606526" result="Passed" start-time="2026-11-18 21:59:33Z" end-time="2026-11-18 21:59:33Z" duration="0.078349" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1071" name="RestoresExpectedState(&quot;v2.json&quot;,3,True)" fullname="NativeIntegrationExercise.RestoresExpectedState(&quot;v2.json&quot;,3,True)" methodname="RestoresExpectedState" classname="NativeIntegrationExercise" runstate="Runnable" seed="489850024" result="Passed" start-time="2026-11-18 21:59:33Z" end-time="2026-11-18 21:59:33Z" duration="0.015877" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1072" name="RestoresExpectedState(&quot;v3.json&quot;,4,True)" fullname="NativeIntegrationExercise.RestoresExpectedState(&quot;v3.json&quot;,4,True)" methodname="RestoresExpectedState" classname="NativeIntegrationExercise" runstate="Runnable" seed="448556365" result="Passed" start-time="2026-11-18 21:59:33Z" end-time="2026-11-18 21:59:33Z" duration="0.051162" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+            <output><![CDATA[Saving results to: C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\equivalent-comparison-2026-11-18\NativeIntegrationExercise.xml
+]]></output>
+          </test-case>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

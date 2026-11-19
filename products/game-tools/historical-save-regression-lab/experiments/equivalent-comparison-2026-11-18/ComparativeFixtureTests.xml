@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="8" result="Skipped:Ignored" total="8" passed="6" failed="0" inconclusive="0" skipped="2" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-18 21:59:51Z" end-time="2026-11-18 21:59:51Z" duration="0.640985">
+  <test-suite type="TestSuite" id="1000" name="SampleProject" fullname="SampleProject" runstate="Runnable" testcasecount="91" result="Skipped" label="Ignored" start-time="2026-11-18 21:59:51Z" end-time="2026-11-18 21:59:51Z" duration="0.640985" total="8" passed="6" failed="0" inconclusive="0" skipped="2" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <reason>
+      <message><![CDATA[One or more child tests were ignored]]></message>
+    </reason>
+    <test-suite type="Assembly" id="1119" name="BaselineTests.dll" fullname="C:/Users/User1/Documents/Downloads/Proj/products/game-tools/historical-save-regression-lab/experiments/CallbackDiagnosticProject/Library/ScriptAssemblies/BaselineTests.dll" runstate="Runnable" testcasecount="91" result="Skipped" label="Ignored" start-time="2026-11-18 21:59:51Z" end-time="2026-11-18 21:59:51Z" duration="0.625976" total="8" passed="6" failed="0" inconclusive="0" skipped="2" asserts="0">
+      <properties>
+        <property name="_PID" value="18720" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <reason>
+        <message><![CDATA[One or more child tests were ignored]]></message>
+      </reason>
+      <test-suite type="TestFixture" id="1018" name="ComparativeFixtureTests" fullname="ComparativeFixtureTests" classname="ComparativeFixtureTests" runstate="Runnable" testcasecount="8" result="Skipped" label="Ignored" start-time="2026-11-18 21:59:51Z" end-time="2026-11-18 21:59:51Z" duration="0.622912" total="8" passed="6" failed="0" inconclusive="0" skipped="2" asserts="0">
+        <properties />
+        <reason>
+          <message><![CDATA[One or more child tests were ignored]]></message>
+        </reason>
+        <test-suite type="ParameterizedMethod" id="1025" name="NativeAndPrototypeDetectSameCases" fullname="ComparativeFixtureTests.NativeAndPrototypeDetectSameCases" classname="ComparativeFixtureTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-11-18 21:59:51Z" end-time="2026-11-18 21:59:51Z" duration="0.591538" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="1019" name="NativeAndPrototypeDetectSameCases(&quot;v1.json&quot;,False,3,&quot;none&quot;,null)" fullname="ComparativeFixtureTests.NativeAndPrototypeDetectSameCases(&quot;v1.json&quot;,False,3,&quot;none&quot;,null)" methodname="NativeAndPrototypeDetectSameCases" classname="ComparativeFixtureTests" runstate="Runnable" seed="1625249975" result="Passed" start-time="2026-11-18 21:59:51Z" end-time="2026-11-18 21:59:51Z" duration="0.091884" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1020" name="NativeAndPrototypeDetectSameCases(&quot;v2.json&quot;,True,3,&quot;none&quot;,null)" fullname="ComparativeFixtureTests.NativeAndPrototypeDetectSameCases(&quot;v2.json&quot;,True,3,&quot;none&quot;,null)" methodname="NativeAndPrototypeDetectSameCases" classname="ComparativeFixtureTests" runstate="Runnable" seed="1809764757" result="Passed" start-time="2026-11-18 21:59:51Z" end-time="2026-11-18 21:59:51Z" duration="0.088300" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1021" name="NativeAndPrototypeDetectSameCases(&quot;v3.json&quot;,True,4,&quot;none&quot;,null)" fullname="ComparativeFixtureTests.NativeAndPrototypeDetectSameCases(&quot;v3.json&quot;,True,4,&quot;none&quot;,null)" methodname="NativeAndPrototypeDetectSameCases" classname="ComparativeFixtureTests" runstate="Runnable" seed="1572536290" result="Passed" start-time="2026-11-18 21:59:51Z" end-time="2026-11-18 21:59:51Z" duration="0.100389" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1022" name="NativeAndPrototypeDetectSameCases(&quot;v1.json&quot;,False,3,&quot;shield&quot;,&quot;inventory.unique.shield_01&quot;)" fullname="ComparativeFixtureTests.NativeAndPrototypeDetectSameCases(&quot;v1.json&quot;,False,3,&quot;shield&quot;,&quot;inventory.unique.shield_01&quot;)" methodname="NativeAndPrototypeDetectSameCases" classname="ComparativeFixtureTests" runstate="Runnable" seed="299662546" result="Passed" start-time="2026-11-18 21:59:51Z" end-time="2026-11-18 21:59:51Z" duration="0.099701" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1023" name="NativeAndPrototypeDetectSameCases(&quot;v2.json&quot;,True,3,&quot;quest&quot;,&quot;quests.complete&quot;)" fullname="ComparativeFixtureTests.NativeAndPrototypeDetectSameCases(&quot;v2.json&quot;,True,3,&quot;quest&quot;,&quot;quests.complete&quot;)" methodname="NativeAndPrototypeDetectSameCases" classname="ComparativeFixtureTests" runstate="Runnable" seed="980148780" result="Passed" start-time="2026-11-18 21:59:51Z" end-time="2026-11-18 21:59:51Z" duration="0.099809" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1024" name="NativeAndPrototypeDetectSameCases(&quot;v3.json&quot;,True,4,&quot;potions&quot;,&quot;inventory.potions&quot;)" fullname="ComparativeFixtureTests.NativeAndPrototypeDetectSameCases(&quot;v3.json&quot;,True,4,&quot;potions&quot;,&quot;inventory.potions&quot;)" methodname="NativeAndPrototypeDetectSameCases" classname="ComparativeFixtureTests" runstate="Runnable" seed="1513285441" result="Passed" start-time="2026-11-18 21:59:51Z" end-time="2026-11-18 21:59:51Z" duration="0.101552" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+        </test-suite>
+        <test-case id="1026" name="NativeCliFailure" fullname="ComparativeFixtureTests.NativeCliFailure" methodname="NativeCliFailure" classname="ComparativeFixtureTests" runstate="Runnable" seed="416437665" result="Skipped" label="Ignored" start-time="2026-11-18 21:59:51Z" end-time="2026-11-18 21:59:51Z" duration="0.013587" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <reason>
+            <message><![CDATA[Intentional negative CI experiment is opt-in]]></message>
+          </reason>
+        </test-case>
+        <test-case id="1027" name="PrototypeCliFailure" fullname="ComparativeFixtureTests.PrototypeCliFailure" methodname="PrototypeCliFailure" classname="ComparativeFixtureTests" runstate="Runnable" seed="1236781023" result="Skipped" label="Ignored" start-time="2026-11-18 21:59:51Z" end-time="2026-11-18 21:59:51Z" duration="0.002598" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <reason>
+            <message><![CDATA[Intentional negative CI experiment is opt-in]]></message>
+          </reason>
+          <output><![CDATA[Saving results to: C:\Users\User1\Documents\Downloads\Proj\products\game-tools\historical-save-regression-lab\experiments\equivalent-comparison-2026-11-18\ComparativeFixtureTests.xml
+]]></output>
+        </test-case>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

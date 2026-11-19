@@ -1,0 +1,52 @@
+{
+  "runs": [
+    {
+      "restricted": false,
+      "mode": "pass",
+      "state": "exited",
+      "appcontainer_token": false,
+      "exit_code": 0,
+      "job_total_processes": 3,
+      "job_active_processes": 0,
+      "fixture_unchanged": true,
+      "canary_exists": true,
+      "result_file_exists": true,
+      "restore_started": true,
+      "payload": {
+        "status": "pass",
+        "path": "",
+        "outsideWriteBlocked": false,
+        "outsideWriteError": "",
+        "loopbackConnected": true,
+        "loopbackResult": "connected"
+      },
+      "result_sha256": "19a364835291071a264eaa879d32c1ec71f0f569162c62a56c2358e316c342d1",
+      "diagnostics": []
+    },
+    {
+      "restricted": true,
+      "mode": "pass",
+      "state": "exited",
+      "appcontainer_token": true,
+      "exit_code": 0,
+      "job_total_processes": 3,
+      "job_active_processes": 0,
+      "fixture_unchanged": true,
+      "canary_exists": false,
+      "result_file_exists": true,
+      "restore_started": true,
+      "payload": {
+        "status": "pass",
+        "path": "",
+        "outsideWriteBlocked": true,
+        "outsideWriteError": "DirectoryNotFoundException",
+        "loopbackConnected": false,
+        "loopbackResult": "timeout"
+      },
+      "result_sha256": "8ff0e2204ac8f8b93db60a064b830d8267bf9764850a0eef515b69d0b27b0b56",
+      "diagnostics": [],
+      "profile_deleted": true
+    }
+  ],
+  "server_connections": 1
+}

@@ -1,0 +1,23 @@
+{
+  "experiment": "NightRealm disposable AppContainer startup and save-root probe",
+  "result": "exited",
+  "appcontainer_token": true,
+  "exit_code": 1,
+  "job_total_processes": 10,
+  "job_active_processes": 0,
+  "probe_complete": false,
+  "save_files": [],
+  "log_exists": true,
+  "log_lines": [
+    "CreateDirectory 'C:/Users' failed: Cannot create a file when that file already exists.",
+    "CreateDirectory 'C:/Users' failed: Cannot create a file when that file already exists.",
+    "[Licensing::IpcConnector] Connection to channel LicenseClient-User1 refused",
+    "Assertion failed on expression: 'SUCCEEDED(hr)'",
+    "Assertion failed on expression: 'wmiOpened'",
+    "Assertion failed on expression: 'ERROR_SUCCESS == status'",
+    "[Package Manager] Could not connect to IPC stream \"Upm-37036\" after 30.0 seconds.",
+    "[Package Manager] Failed to start the Unity Package Manager local server process. Make sure the process [C:/Program Files/Unity/Hub/Editor/6000.6.9f1/Editor/Data/Resources/PackageManager/Server/UnityPackageManager.exe] is not blocked by Windows Defender or any other anti-virus configuration.",
+    "[ExitDontLaunchBugReporter] Exiting without the bug reporter. Application will exit with return code 1"
+  ],
+  "profile_deleted": true
+}

@@ -711,6 +711,7 @@ class WorkspaceWindow(QMainWindow):
                         self._focus_tree(self.workspace_state['selection'])
                     else:
                         self._refresh_working_rows()
+                        self._refresh_project_phase_rows()
                 except (OSError, ValueError, RuntimeError) as error:
                     self.search_status.setText('Could not load project navigation: ' + str(error)[:240])
                     self.search_status.show()
@@ -805,6 +806,34 @@ class WorkspaceWindow(QMainWindow):
                     visit(item)
             if self.tree.topLevelItemCount():
                 visit(self.tree.topLevelItem(0))
+
+    def _refresh_project_phase_rows(self):
+        """Update icons and names after another chat advances a project phase."""
+        if self._tree_mode != 'projects':
+            return
+        from business_portfolio.tools.build_browser import parse_project
+        from .project_lifecycle import project_phase
+        with QSignalBlocker(self.tree):
+            def visit(item):
+                name = item.data(0, ROLE)
+                directory = item.data(0, ROLE + 1)
+                if (not directory and isinstance(name, str) and '/projects/' in name
+                        and name.lower().endswith('.md')):
+                    try:
+                        path = context_path(self.repo, name)
+                        meta, _ = parse_project(path.read_text(encoding='utf-8'), name)
+                        stage = project_phase(meta)
+                        item.setIcon(0, self._phase_icons[stage])
+                        item.setText(0, meta.get('id', path.stem.upper()) + ' · ' + meta.get('title', path.stem))
+                        item.setToolTip(0, {'working_phase_2': 'Working Phase 2 · Build and test',
+                                            'working_phase_3': 'Working Phase 3 · Launch and market',
+                                            'complete': 'Complete'}[stage])
+                    except (OSError, ValueError, KeyError, TypeError):
+                        pass
+                for index in range(item.childCount()):
+                    visit(item.child(index))
+            for index in range(self.tree.topLevelItemCount()):
+                visit(self.tree.topLevelItem(index))
 
     def _current_working_signature(self):
         return navigation_signature(self.repo)

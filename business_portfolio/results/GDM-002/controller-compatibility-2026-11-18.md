@@ -160,3 +160,7 @@ The private temporary game's 33rd capacity-two crossing/recovery case passed sep
 A new private temporary-game integration uses the copied NavigationAgent adapter with its only navigation region ending before the requested physical platform. The adapter times out, the coordinator refuses false boarding, the seat claim remains held while the boarding request is active, and the claim returns to the queue only after the departure window closes.
 
 The complete expanded 34-case temporary-game suite passed on Windows x86-64 Godot 4.4.1, 4.5.1 and 4.7.2. The new case checks safe failure, not successful navigation across disconnected regions or recovery to an unreachable safe stop. The fixture is private and synthetic; no spending, outreach or release occurred. A rights-cleared representative game and the owner's licensing/release decisions remain necessary for the remaining checklist.
+
+## Rights inventory scope check — 2026-11-18 local time
+
+The 84-file unpublished review snapshot was checked against its hash manifest and file formats. All files are UTF-8 text (GDScript, Python, Markdown, Godot project/scene/config, JSON, or review text); no executable, native library, image/audio/model/archive asset, or GDExtension declaration was found. This is an inventory fact only; authorship, copyright ownership, license compatibility and redistribution permission remain owner/legal decisions. The review snapshot remains workspace-local, unlicensed and unpublished.

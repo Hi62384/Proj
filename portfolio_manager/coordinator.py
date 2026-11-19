@@ -160,7 +160,7 @@ class Coordinator:
         # is a view and can lag behind canonical edits, so it is not an input.
         with self._catalog_lock:
             files = [p for p in build_browser.walk_files(self.niches)
-                     if p.name == 'NICHE.json' or (p.parent.name == 'projects' and p.suffix.lower() == '.md')]
+                     if p.name == 'NICHE.json' or build_browser.project_record_path(p)]
             files.append(self.portfolio / 'research' / 'SOURCE_REGISTER.json')
             key = tuple((str(p), info.st_mtime_ns, info.st_size) for p in files for info in (p.stat(),))
             if key != self._catalog_key:

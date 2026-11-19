@@ -44,12 +44,14 @@ def import_projects(repo, selection, sources):
         seen.add(ident)
         meta['niche_id'] = niche_meta['id']
         meta['niche_path'] = niche_path
+        meta['project_phase'] = 'working_phase_2'
         normalized = raw.replace('\r\n', '\n')
         body = normalized.split('\n---\n', 1)[1]
         contents = '---\n' + json.dumps(meta, ensure_ascii=False, indent=2) + '\n---\n' + body
         slug = re.sub(r'[^a-z0-9]+', '-', str(meta.get('title', '')).lower()).strip('-')[:70]
-        name = ident.lower() + ('-' + slug if slug else '') + '.md'
-        prepared.append((ident, name, contents))
+        # One owned directory per project, not a loose Markdown record.
+        folder = ident.lower() + ('-' + slug[:48] if slug else '')
+        prepared.append((ident, folder, contents))
     destination = niche / 'projects'
     if destination.exists():
         context_path(repo, destination)
@@ -59,25 +61,30 @@ def import_projects(repo, selection, sources):
         shutil.copytree(portfolio, staged, ignore=shutil.ignore_patterns('.local', '__pycache__', '.niche-working.lock'))
         staged_dest = staged / 'niches' / niche_path / 'projects'
         staged_dest.mkdir(parents=True, exist_ok=True)
-        for _, name, contents in prepared:
-            target = staged_dest / name
+        for _, folder, contents in prepared:
+            target = staged_dest / folder
             if target.exists():
-                raise ValueError(f'{name}: destination already exists.')
-            target.write_text(contents, encoding='utf-8', newline='\n')
+                raise ValueError(f'{folder}: destination already exists.')
+            (target / 'work').mkdir(parents=True)
+            (target / 'project.md').write_text(contents, encoding='utf-8', newline='\n')
+            (target / 'work' / '.gitkeep').write_text('', encoding='utf-8')
         build_browser.load_portfolio(staged)
     destination.mkdir(exist_ok=True)
     created = []
     try:
-        for _, name, contents in prepared:
-            path = destination / name
-            with path.open('x', encoding='utf-8', newline='\n') as stream:
-                created.append(path)
+        for _, folder, contents in prepared:
+            path = destination / folder
+            path.mkdir()
+            created.append(path)
+            (path / 'work').mkdir()
+            with (path / 'project.md').open('x', encoding='utf-8', newline='\n') as stream:
                 stream.write(contents)
                 stream.flush()
                 os.fsync(stream.fileno())
+            (path / 'work' / '.gitkeep').write_text('', encoding='utf-8')
         build_browser.build(portfolio)
     except Exception:
-        for path in created:
-            path.unlink(missing_ok=True)
+        for path in reversed(created):
+            shutil.rmtree(path)
         raise
     return [ident for ident, _, _ in prepared]

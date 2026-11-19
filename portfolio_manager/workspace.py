@@ -98,6 +98,15 @@ class ChatWorkspaces:
         if not selection.startswith(prefix):
             return row
         old_path = selection[len(prefix):]
+        # Existing chat selections survive migration from projects/foo.md to
+        # projects/foo/project.md; never silently select a different project.
+        if old_path.endswith('.md') and '/projects/' in old_path and not (self.coordinator.repo / selection).exists():
+            prior = Path(selection)
+            nested = prior.with_suffix('') / 'project.md'
+            if (self.coordinator.repo / nested).is_file():
+                db.execute('UPDATE chat_workspaces SET selection=?,revision=revision+1 WHERE id=?',
+                           (nested.as_posix(), row['id']))
+                return db.execute('SELECT * FROM chat_workspaces WHERE id=?', (row['id'],)).fetchone()
         mapped = MOVED_NICHE_PATHS.get(old_path)
         if mapped:
             candidate = prefix + mapped

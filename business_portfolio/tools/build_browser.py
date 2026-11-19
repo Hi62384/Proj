@@ -62,6 +62,20 @@ def safe_niche(path: str) -> bool:
     return isinstance(path,str) and bool(path) and all(re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*',p)
         and p not in {'projects','private','local'} | reserved for p in path.split('/'))
 
+def project_record_path(path: Path) -> bool:
+    """Accept both old single-file projects and the canonical project-folder layout."""
+    return ((path.parent.name == 'projects' and path.suffix.lower() == '.md') or
+            (path.name == 'project.md' and path.parent.parent.name == 'projects'))
+
+
+def project_niche_folder(path: Path) -> Path:
+    if path.name == 'project.md' and path.parent.parent.name == 'projects':
+        return path.parent.parent.parent
+    if path.parent.name == 'projects' and path.suffix.lower() == '.md':
+        return path.parent.parent
+    raise ValidationError(f'Not a project record: {path}')
+
+
 def linked_input(path: Path) -> bool:
     info = path.stat(follow_symlinks=False)
     return path.is_symlink() or bool(getattr(info,'st_file_attributes',0) & 0x400) or (path.is_file() and info.st_nlink > 1)
@@ -169,7 +183,10 @@ def verify_taxonomy_snapshot(root: Path, active_records: list[dict]) -> dict | N
         raise ValidationError('Taxonomy project crosswalk mismatch')
     for row in crosswalk:
         old=row['old_path']
-        if not old.startswith('niches/') or row['new_path']!=current[row['id']]['path']:
+        migrated = row['new_path']
+        if migrated.endswith('.md'):
+            migrated = migrated[:-3] + '/project.md'
+        if not old.startswith('niches/') or current[row['id']]['path'] not in {row['new_path'], migrated}:
             raise ValidationError('Taxonomy project path mismatch')
         if row['preserved_snapshot']!='archive/2026-11-15-taxonomy-view-v1/'+old:
             raise ValidationError('Taxonomy snapshot path mismatch')
@@ -230,7 +247,7 @@ def load_portfolio(root: Path) -> dict:
     records = []
     ids = set()
     for p in files:
-        if p.suffix.lower() != '.md' or p.parent.name != 'projects':
+        if not project_record_path(p):
             continue
         m, body = parse_project(p.read_text(encoding='utf-8'),str(p))
         missing = REQUIRED-set(m)
@@ -241,9 +258,16 @@ def load_portfolio(root: Path) -> dict:
         if m['id'] in ids:
             raise ValidationError(f"Duplicate project ID: {m['id']}")
         ids.add(m['id'])
-        actual = p.parent.parent.relative_to(root/'niches').as_posix()
+        actual = project_niche_folder(p).relative_to(root/'niches').as_posix()
+        if p.name == 'project.md' and p.parent.parent.name == 'projects':
+            if not re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', p.parent.name):
+                raise ValidationError(f'{p}: unsafe project folder name')
+            if not (p.parent / 'work').is_dir() or linked_input(p.parent / 'work'):
+                raise ValidationError(f'{p}: project work/ folder is missing or unsafe')
         if m['niche_path'] != actual or m['niche_id'] != node_paths.get(actual):
             raise ValidationError(f'{p}: record niche mismatch/missing NICHE.json')
+        if m.get('project_phase', 'working_phase_2') not in {'working_phase_2', 'working_phase_3', 'complete'}:
+            raise ValidationError(f'{p}: invalid project phase')
         if m['work_state'] not in WORK_STATES or m['commercial_validation'] not in VALIDATIONS or m['priority'] not in PRIORITIES:
             raise ValidationError(f'{p}: unknown state/validation/priority')
         if not isinstance(m['source_ids'],list) or not m['source_ids'] or any(x not in sources for x in m['source_ids']):

@@ -35,6 +35,13 @@ class ProjectImportTests(unittest.TestCase):
         records = {r['id']: r for r in index['records']}
         self.assertEqual(records['TEST-002']['niche_id'], 'N-demo')
         self.assertEqual(records['TEST-003']['niche_path'], 'demo')
+        for ident in ids:
+            folder = self.repo / 'business_portfolio/niches/demo/projects'
+            matching = list(folder.glob(ident.lower() + '-*/project.md'))
+            self.assertEqual(len(matching), 1)
+            self.assertTrue((matching[0].parent / 'work').is_dir())
+            self.assertEqual(records[ident]['path'], matching[0].relative_to(self.repo / 'business_portfolio').as_posix())
+            self.assertEqual(records[ident]['project_phase'], 'working_phase_2')
 
     def test_duplicate_and_invalid_batch_leave_existing_records_untouched(self):
         original = self.example.read_bytes()

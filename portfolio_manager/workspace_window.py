@@ -855,23 +855,36 @@ class WorkspaceWindow(QMainWindow):
 
     def _copy_megaprompt(self, option):
         niche = None
+        filenames = {
+            'research': 'BUSINESS_OPPORTUNITY_RESEARCH_MEGAPROMPT.md',
+            'idea': 'BUSINESS_IDEA_TO_PROJECT_MEGAPROMPT.md',
+            'phase2': 'PHASE_2_DEVELOPMENT_MEGAPROMPT.md',
+            'phase3': 'PHASE_3_MARKETING_MEGAPROMPT.md',
+        }
+        filename = filenames.get(option)
+        if not filename:
+            return
         if option == 'research':
             niche = self._selected_niche(self.workspace_state['selection'])
             if not niche:
                 self.notice.setText('Select an active niche folder to copy the research prompt.')
                 self.notice.show()
                 return
-            filename = 'BUSINESS_OPPORTUNITY_RESEARCH_MEGAPROMPT.md'
-        elif option == 'idea':
-            filename = 'BUSINESS_IDEA_TO_PROJECT_MEGAPROMPT.md'
-        else:
-            return
-        source = self.repo / filename
         try:
-            with source.open('r', encoding='utf-8', newline='') as stream:
+            with (self.repo / filename).open('r', encoding='utf-8', newline='') as stream:
                 prompt = stream.read()
         except (OSError, UnicodeError):
             self.notice.setText(f'Could not read {filename}.')
+            self.notice.show()
+            return
+        if option in {'phase2', 'phase3'}:
+            if not prompt.startswith('/goal '):
+                self.notice.setText(f'{filename} must start with /goal; nothing copied.')
+                self.notice.show()
+                return
+            QApplication.clipboard().setText(prompt)
+            self.notice.setText(('Phase 2 development' if option == 'phase2' else
+                                 'Phase 3 marketing') + ' megaprompt copied.')
             self.notice.show()
             return
         budget = self.research_budget.text().strip()
@@ -891,8 +904,9 @@ class WorkspaceWindow(QMainWindow):
         prompt = re.sub(budget_pattern, lambda match: match.group(1) + budget + match.group(3), prompt, count=1)
         if niche is not None:
             prompt = re.sub(niche_pattern, lambda match: match.group(1) + niche + match.group(3), prompt, count=1)
+        prompt = prompt.rstrip() + '\n\n' + PHASE_ONE_RULES.strip() + '\n'
         QApplication.clipboard().setText(prompt)
-        self.notice.setText(f'{"Research prompt for " + niche if niche else "Business idea prompt"} copied (CAD {budget} ceiling).')
+        self.notice.setText(f'{"Research prompt for " + niche if niche else "Project idea prompt"} copied (CAD {budget} planning ceiling).')
         self.notice.show()
 
     def _refresh_preview_if_changed(self, selection):

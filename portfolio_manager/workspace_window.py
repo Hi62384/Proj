@@ -2,27 +2,30 @@
 from concurrent.futures import ThreadPoolExecutor
 import os
 import json
+import html
 from pathlib import Path, PurePosixPath
 import re
 
-from PySide6.QtCore import QEvent, QSignalBlocker, Qt, QTimer
+from PySide6.QtCore import QEvent, QRect, QSignalBlocker, Qt, QTimer
 from PySide6.QtGui import QBrush, QColor, QIcon, QImageReader, QPainter, QPixmap
 from PySide6.QtWidgets import (QApplication, QComboBox, QFormLayout, QHBoxLayout, QLabel, QLineEdit, QMainWindow,
-                               QMenu, QPlainTextEdit, QPushButton, QScrollArea, QSplitter,
+                               QMenu, QPlainTextEdit, QPushButton, QScrollArea, QSplitter, QTextBrowser,
                                QStyle, QTabWidget, QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget)
 
 from .workspace import context_path
 
 
 ROLE = int(Qt.ItemDataRole.UserRole)
-WORK_PROMPT = (
-    '/goal Complete the project currently selected in this chat’s Portfolio Manager workspace.\n\n'
-    'First, read the current selection, its full project record, relevant project instructions, and the latest authorized checkpoint. Preserve existing work and identify the next actionable tasks.\n\n'
-    'Work autonomously through all remaining tasks that can be completed with the available access, resources, and existing authorization. Continue across turns until the project is complete or no further authorized work can be performed. Do not stop merely because you completed one task, produced a checkpoint, sent a progress update, or several minutes have passed.\n\n'
-    'Make reasonable decisions within the project’s stated scope. Implement, verify, fix problems, document evidence, update the appropriate project checkpoint, and proceed to the next actionable task. Give brief progress updates without ending the work.\n\n'
-    'Respect the project’s budget, privacy, permissions, and approval requirements. Do not invent results or repeat uncertain external actions. If an action requires my approval, payment, access, another person, or an external change, complete all independent authorized work first. Then clearly report the blocker, what is already prepared, and the exact action needed from me.\n\n'
-    'Mark the goal complete only when the project’s required outcomes are actually achieved and verified. If the project is ongoing by nature, continue until the currently authorized work is finished, then report what remains for future operation.'
-)
+PHASE_ONE_RULES = """
+## Required Portfolio Manager Phase 1 handoff (overrides older file-layout instructions)
+- Phase 1 must create a validated Markdown project record; planning prose alone is not a completed Phase 1.
+- Put the record under business_portfolio/niches/<selected-niche>/projects/<project-id>-<short-slug>/project.md.
+- Create its sibling work/ folder with work/.gitkeep, storing future project code, assets, drafts and tests there.
+- Rebuild and validate the project browser after adding records. Set project_phase to working_phase_2.
+- Do not create individual project GitHub branches. Synchronize and commit directly to main without force-pushing or overwriting another chat.
+- The CAD budget ceiling is for planning; spending, accounts, publication, advertising and outreach still require applicable authorization.
+"""
+
 NICHE_ID_ROLE = ROLE + 2
 WORKING_ROLE = ROLE + 3
 MAX_PREVIEW = 128_000
@@ -51,9 +54,19 @@ def search_paths(repo, query):
             if query in name.casefold()][:100]
 
 
+def project_record_leaf(name):
+    item = PurePosixPath(name)
+    return item.name == 'project.md' and item.parent.parent.name == 'projects'
+
+
+def tree_parent(name):
+    item = PurePosixPath(name)
+    return item.parent.parent.as_posix() if project_record_leaf(name) else item.parent.as_posix()
+
+
 def project_entries(repo, niches=None):
-    """Canonical project records, all active niches, and their parent folders."""
-    niche_root = repo / 'business_portfolio' / 'niches'
+    """Keep project.md visible as the leaf, hiding its enclosing project folder."""
+    base = repo / 'business_portfolio' / 'niches'
     visible = set()
     niches = niche_entries(repo) if niches is None else niches
     for name, *_ in niches:
@@ -61,27 +74,75 @@ def project_entries(repo, niches=None):
         for parent in PurePosixPath(name).parents:
             if parent.as_posix() != '.':
                 visible.add((parent.as_posix(), True))
-    for folder, dirs, files in os.walk(niche_root, followlinks=False):
+    if not base.is_dir():
+        return sorted(visible)
+    for folder, dirs, files in os.walk(base, followlinks=False):
+        here = Path(folder)
         dirs[:] = [name for name in dirs if not name.startswith('.') and
-                   not (Path(folder) / name).is_symlink()]
-        if Path(folder).name != 'projects':
+                   not (here / name).is_symlink()]
+        if here.name != 'projects':
             continue
-        for file in files:
-            if not file.lower().endswith('.md'):
-                continue
-            path = Path(folder) / file
+        records = [here / name for name in files if name.lower().endswith('.md')]
+        for name in dirs:
+            candidate = here / name / 'project.md'
+            if candidate.is_file() and not candidate.is_symlink():
+                records.append(candidate)
+        dirs[:] = []  # Do not crawl large project work/ directories.
+        for item in records:
             try:
-                relative = context_path(repo, path).relative_to(repo)
+                relative = context_path(repo, item).relative_to(repo)
             except (ValueError, OSError):
                 continue
-            visible.add((relative.as_posix(), False))
+            name = relative.as_posix()
+            visible.add((name, False))
             for parent in relative.parents:
-                if parent.as_posix() != '.':
+                if parent.as_posix() != '.' and (not project_record_leaf(name) or parent != relative.parent):
                     visible.add((parent.as_posix(), True))
     priorities = {row[0]: row[3] for row in niches}
     return sorted(visible, key=lambda item: (item[0].count('/'),
                                             priorities.get(item[0], 999), item[0].casefold()))
 
+
+def completed_entries(repo):
+    """The completed-project navigation is independent of source project files."""
+    from .project_lifecycle import read_completions
+    base = 'business_portfolio/completed_projects'
+    visible = {(base, True), ('business_portfolio', True)}
+    for record in read_completions(repo):
+        visible.add((base + '/' + record['id'] + '.json', False))
+    return sorted(visible, key=lambda item: (item[0].count('/'), item[0].casefold()))
+
+
+def navigation_signature(repo):
+    """Detect imports and phase changes without scanning project work trees."""
+    rows = []
+    base = repo / 'business_portfolio/niches'
+    if base.is_dir():
+        for folder, dirs, files in os.walk(base, followlinks=False):
+            here = Path(folder)
+            dirs[:] = [name for name in dirs if not name.startswith('.') and not (here / name).is_symlink()]
+            if here.name == 'projects':
+                targets = [here, *(here / f for f in files if f.endswith('.md'))]
+                for name in dirs:
+                    targets.extend((here / name, here / name / 'project.md'))
+                dirs[:] = []
+            else:
+                targets = [here / 'NICHE.json'] if 'NICHE.json' in files else []
+            for target in targets:
+                try:
+                    info = target.stat()
+                    rows.append((str(target), info.st_mtime_ns, info.st_size))
+                except OSError:
+                    pass
+    completed = repo / 'business_portfolio/completed_projects'
+    if completed.is_dir():
+        for target in (completed, *completed.glob('*.json')):
+            try:
+                info = target.stat()
+                rows.append((str(target), info.st_mtime_ns, info.st_size))
+            except OSError:
+                pass
+    return tuple(sorted(rows))
 
 def history_entries(repo):
     """Archived canonical records remain selectable without a repository-wide scan."""
@@ -125,7 +186,8 @@ def niche_entries(repo):
             meta = json.loads(metadata.read_text(encoding='utf-8'))
             if meta.get('path') != folder.relative_to(base).as_posix():
                 continue
-            count = sum(1 for p in folder.rglob('projects/*.md') if p.is_file())
+            count = (sum(1 for p in folder.rglob('projects/*.md') if p.is_file()) +
+                     sum(1 for p in folder.rglob('projects/*/project.md') if p.is_file()))
             rows.append((relative, meta['title'], count, meta.get('priority', 999),
                          meta['id'], meta.get('working', False), meta.get('parent')))
         except (ValueError, OSError, KeyError, TypeError):

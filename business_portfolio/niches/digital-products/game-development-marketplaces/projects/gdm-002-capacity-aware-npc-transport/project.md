@@ -10,6 +10,7 @@
   "priority": "P2",
   "planning_lane": "queued",
   "work_state": "active",
+  "project_phase": "working_phase_2",
   "commercial_validation": "unvalidated",
   "evidence_basis": "public_official_and_competitor_research_no_verified_customer_sales",
   "source_ids": [
@@ -144,7 +145,7 @@ When the owner asks you to work on this project, continue autonomously through a
 
 ## 2. Repository baseline, duplicate analysis and reuse
 
-`Hi62384/Proj`, `main`, commit `6f2a420e9a1d7d5b44ec1759918e737059a6772e` inspected 2026-11-15. The existing canonical project is `business_portfolio/niches/digital-products/game-development-marketplaces/projects/gdm-002-capacity-aware-npc-transport.md`, project ID `GDM-002`, niche `N-gdm-20261115`. Preserve active projects `GDM-001` and `GDM-003`; their actual jobs differ. Archive/research locations: `business_portfolio/archive/2026-11-15-legacy`, `archive/2026-11-15-taxonomy-view-v1` and `opportunity_library`. Do not create a new ID, new niche, duplicate project, or touch another chat's owned files.
+`Hi62384/Proj`, `main`, commit `6f2a420e9a1d7d5b44ec1759918e737059a6772e` inspected 2026-11-15. The existing canonical project is `business_portfolio/niches/digital-products/game-development-marketplaces/projects/gdm-002-capacity-aware-npc-transport/project.md`, project ID `GDM-002`, niche `N-gdm-20261115`. Preserve active projects `GDM-001` and `GDM-003`; their actual jobs differ. Archive/research locations: `business_portfolio/archive/2026-11-15-legacy`, `archive/2026-11-15-taxonomy-view-v1` and `opportunity_library`. Do not create a new ID, new niche, duplicate project, or touch another chat's owned files.
 
 The repo contains no **verified implemented GDM-002 package** in the inspected public business record. Codex must search the current *local* repo for existing game AI/transport code before making a new module; the user has unrelated Godot game work outside this business portfolio, which cannot be assumed to be licensed for commercial reuse. Reuse only code/assets with proven rights and isolation. Shared test-vector descriptions and the project's prior state-machine research are legitimate planning assets.
 
@@ -412,7 +413,7 @@ Other fail conditions: insufficient legally permitted distribution, accuracy/pri
 
 ## 19. First-session Codex handoff — ready for local work
 
-**Open first:** repository root `AGENTS.md`, `business_portfolio/SCHEMA.md`, `PROJECT_TEMPLATE.md`, this exact canonical file `business_portfolio/niches/digital-products/game-development-marketplaces/projects/gdm-002-capacity-aware-npc-transport.md`, `business_portfolio/research/SOURCE_REGISTER.json`, the selected niche's `NICHE.json`, and `docs/PORTFOLIO_MANAGER_WORKFLOW.md`. Inspect other active GDM IDs and the archives; do not assume their project folders are available for modification. Keep unrelated projects untouched.
+**Open first:** repository root `AGENTS.md`, `business_portfolio/SCHEMA.md`, `PROJECT_TEMPLATE.md`, this exact canonical file `business_portfolio/niches/digital-products/game-development-marketplaces/projects/gdm-002-capacity-aware-npc-transport/project.md`, `business_portfolio/research/SOURCE_REGISTER.json`, the selected niche's `NICHE.json`, and `docs/PORTFOLIO_MANAGER_WORKFLOW.md`. Inspect other active GDM IDs and the archives; do not assume their project folders are available for modification. Keep unrelated projects untouched.
 
 **First session steps (local work, no commercial actions):**
 

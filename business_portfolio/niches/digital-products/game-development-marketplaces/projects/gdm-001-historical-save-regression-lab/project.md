@@ -9,7 +9,8 @@
   "origin": "current_package",
   "priority": "P1",
   "planning_lane": "next_to_validate_focus",
-  "work_state": "active",
+  "work_state": "active",
+  "project_phase": "working_phase_2",
   "commercial_validation": "unvalidated",
   "evidence_basis": "public_official_and_competitor_research_no_verified_customer_sales",
   "source_ids": [
@@ -139,7 +140,7 @@ When the owner asks you to work on this project, continue autonomously through a
 
 ## 2. Repository baseline, duplication and reuse
 
-Verified public repository: `Hi62384/Proj`, `main` at `6f2a420e9a1d7d5b44ec1759918e737059a6772e`, reviewed 2026-11-15. Canonical location is `business_portfolio/niches/digital-products/game-development-marketplaces/projects/gdm-001-historical-save-regression-lab.md`, niche ID `N-gdm-20261115`, project ID `GDM-001`. The other active game-development records are `GDM-002` (passenger transport) and `GDM-003` (packaging/dependencies): different jobs-to-be-done, not duplicates. Older portfolios/research are preserved in `business_portfolio/archive/2026-11-15-legacy/`, `archive/2026-11-15-taxonomy-view-v1/` and `opportunity_library/`. This file revises GDM-001; **do not create a new project ID**, overwrite an archive or reset historical work.
+Verified public repository: `Hi62384/Proj`, `main` at `6f2a420e9a1d7d5b44ec1759918e737059a6772e`, reviewed 2026-11-15. Canonical location is `business_portfolio/niches/digital-products/game-development-marketplaces/projects/gdm-001-historical-save-regression-lab/project.md`, niche ID `N-gdm-20261115`, project ID `GDM-001`. The other active game-development records are `GDM-002` (passenger transport) and `GDM-003` (packaging/dependencies): different jobs-to-be-done, not duplicates. Older portfolios/research are preserved in `business_portfolio/archive/2026-11-15-legacy/`, `archive/2026-11-15-taxonomy-view-v1/` and `opportunity_library/`. This file revises GDM-001; **do not create a new project ID**, overwrite an archive or reset historical work.
 
 **Reuse:** the repository's project browser, test/checkpoint system, source register, marketing research, and prior `results/GDM-001/` research files (if present). The historical Unity discovery interview guide is retained for continuity but **is not** a development dependency. No existing production save-test library for this project was observed in the published repository records; Codex must inspect the **current local checkout** before creating a source tree.
 
@@ -424,7 +425,7 @@ Other fail conditions: insufficient legally permitted distribution, accuracy/pri
 
 ## 19. First-session Codex handoff — ready for local work
 
-**Open first:** repository root `AGENTS.md`, `business_portfolio/SCHEMA.md`, `PROJECT_TEMPLATE.md`, this exact canonical file `business_portfolio/niches/digital-products/game-development-marketplaces/projects/gdm-001-historical-save-regression-lab.md`, `business_portfolio/research/SOURCE_REGISTER.json`, the selected niche's `NICHE.json`, and `docs/PORTFOLIO_MANAGER_WORKFLOW.md`. Inspect other active GDM IDs and the archives; do not assume their project folders are available for modification. Keep unrelated projects untouched.
+**Open first:** repository root `AGENTS.md`, `business_portfolio/SCHEMA.md`, `PROJECT_TEMPLATE.md`, this exact canonical file `business_portfolio/niches/digital-products/game-development-marketplaces/projects/gdm-001-historical-save-regression-lab/project.md`, `business_portfolio/research/SOURCE_REGISTER.json`, the selected niche's `NICHE.json`, and `docs/PORTFOLIO_MANAGER_WORKFLOW.md`. Inspect other active GDM IDs and the archives; do not assume their project folders are available for modification. Keep unrelated projects untouched.
 
 **First session steps (local work, no commercial actions):**
 

@@ -10,6 +10,7 @@
   "priority": "P3",
   "planning_lane": "queued",
   "work_state": "planned",
+  "project_phase": "working_phase_2",
   "commercial_validation": "unvalidated",
   "evidence_basis": "public_official_and_competitor_research_no_verified_customer_sales",
   "source_ids": [
@@ -159,7 +160,7 @@ When the owner asks you to work on this project, continue autonomously through a
 
 ## 2. Repository baseline and semantic duplication screen
 
-Inspected `https://github.com/Hi62384/Proj` main at `6f2a420e9a1d7d5b44ec1759918e737059a6772e` on 2026-11-15. Canonical existing project: `business_portfolio/niches/digital-products/game-development-marketplaces/projects/gdm-003-native-dependency-verifier.md`; ID `GDM-003`, niche `N-gdm-20261115`. Keep stable ID and historical planning. `GDM-001` tests save behavior, `GDM-002` tests NPC journeys—no semantic duplicate. Existing `business_portfolio/archive/` and `opportunity_library/` research must be inspected before creating any additional related offer. No working GDM-003 verifier is claimed in published records; Codex must inspect the latest local working tree and search for current package/PE-analysis modules before creating new code.
+Inspected `https://github.com/Hi62384/Proj` main at `6f2a420e9a1d7d5b44ec1759918e737059a6772e` on 2026-11-15. Canonical existing project: `business_portfolio/niches/digital-products/game-development-marketplaces/projects/gdm-003-native-dependency-verifier/project.md`; ID `GDM-003`, niche `N-gdm-20261115`. Keep stable ID and historical planning. `GDM-001` tests save behavior, `GDM-002` tests NPC journeys—no semantic duplicate. Existing `business_portfolio/archive/` and `opportunity_library/` research must be inspected before creating any additional related offer. No working GDM-003 verifier is claimed in published records; Codex must inspect the latest local working tree and search for current package/PE-analysis modules before creating new code.
 
 **Reuse:** the current project browser/checkpoint format, source registry and GDM-003 planning; optionally a shared release/QA skeleton only where it is already rights-cleared and genuinely reduces effort. Do *not* bundle Microsoft's or Dependencies' code or licensed game binaries without checking all redistribution conditions. Synthetic fixtures should be constructed for this project.
 
@@ -436,7 +437,7 @@ Other fail conditions: insufficient legally permitted distribution, accuracy/pri
 
 ## 19. First-session Codex handoff — ready for local work
 
-**Open first:** repository root `AGENTS.md`, `business_portfolio/SCHEMA.md`, `PROJECT_TEMPLATE.md`, this exact canonical file `business_portfolio/niches/digital-products/game-development-marketplaces/projects/gdm-003-native-dependency-verifier.md`, `business_portfolio/research/SOURCE_REGISTER.json`, the selected niche's `NICHE.json`, and `docs/PORTFOLIO_MANAGER_WORKFLOW.md`. Inspect other active GDM IDs and the archives; do not assume their project folders are available for modification. Keep unrelated projects untouched.
+**Open first:** repository root `AGENTS.md`, `business_portfolio/SCHEMA.md`, `PROJECT_TEMPLATE.md`, this exact canonical file `business_portfolio/niches/digital-products/game-development-marketplaces/projects/gdm-003-native-dependency-verifier/project.md`, `business_portfolio/research/SOURCE_REGISTER.json`, the selected niche's `NICHE.json`, and `docs/PORTFOLIO_MANAGER_WORKFLOW.md`. Inspect other active GDM IDs and the archives; do not assume their project folders are available for modification. Keep unrelated projects untouched.
 
 **First session steps (local work, no commercial actions):**
 

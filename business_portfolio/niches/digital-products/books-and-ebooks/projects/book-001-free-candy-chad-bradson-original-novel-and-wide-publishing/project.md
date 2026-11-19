@@ -9,6 +9,7 @@
   "origin": "current_package",
   "priority": "P1",
   "work_state": "planned",
+  "project_phase": "working_phase_2",
   "commercial_validation": "unvalidated",
   "evidence_basis": "owner_supplied_book_assets_verified_locally_and_current_official_platform_rules_without_sales_or_store_approval",
   "source_ids": [

@@ -212,6 +212,7 @@ class WorkspaceWindow(QMainWindow):
         self._pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix='workspace-files')
         self._project_entries = []
         self._history_entries = []
+        self._completed_entries = []
         self._niche_entries = []
         self._working_signature = None
         self._research_prompt = None
@@ -230,6 +231,23 @@ class WorkspaceWindow(QMainWindow):
         painter.end()
         self._working_folder_icon = QIcon(marked)
         self._file_icon = self.style().standardIcon(QStyle.StandardPixmap.SP_FileIcon)
+        self._phase_icons = {}
+        for phase, symbol, color in (('working_phase_2', '2', '#3377ad'),
+                                      ('working_phase_3', '3', '#ad722a'),
+                                      ('complete', '✓', '#20865a')):
+            pixmap = self._file_icon.pixmap(32, 32)
+            painter = QPainter(pixmap)
+            painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+            painter.setPen(QColor('#ffffff'))
+            painter.setBrush(QColor(color))
+            painter.drawEllipse(17, 1, 14, 14)
+            font = painter.font()
+            font.setBold(True)
+            font.setPixelSize(10)
+            painter.setFont(font)
+            painter.drawText(QRect(17, 1, 14, 14), Qt.AlignmentFlag.AlignCenter, symbol)
+            painter.end()
+            self._phase_icons[phase] = QIcon(pixmap)
         self.setWindowTitle('Portfolio Manager | Chat ' + self.workspace_id[:8])
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
         self.resize(1080, 720)
@@ -297,6 +315,7 @@ class WorkspaceWindow(QMainWindow):
         self.view_mode = QComboBox()
         self.view_mode.setAccessibleName('Workspace section')
         self.view_mode.addItem('Projects', 'projects')
+        self.view_mode.addItem('Completed Projects', 'completed')
         self.view_mode.addItem('Niches', 'niches')
         self.view_mode.addItem('History & Existing Work', 'history')
         self.view_mode.addItem('Repository files', 'files')
@@ -321,6 +340,10 @@ class WorkspaceWindow(QMainWindow):
         self.preview = QPlainTextEdit()
         self.preview.setReadOnly(True)
         self.preview.setAccessibleName('Selected file or folder preview')
+        self.completed_detail = QTextBrowser()
+        self.completed_detail.setAccessibleName('Completed project details and links')
+        self.completed_detail.setOpenExternalLinks(True)
+        self.completed_detail.hide()
         self.project_tabs = QTabWidget()
         self.project_tabs.setAccessibleName('Project details')
         self.project_overview = QPlainTextEdit()
@@ -350,20 +373,20 @@ class WorkspaceWindow(QMainWindow):
         self.research_budget.setAccessibleName('Budget ceiling in CAD')
         self.research_budget.setPlaceholderText('100')
         self.research_budget.textChanged.connect(self._save_research_budget)
-        self.copy_research_prompt = QPushButton('Copy Megaprompt')
-        self.copy_research_prompt.setAccessibleName('Copy Megaprompt')
-        prompt_menu = QMenu(self.copy_research_prompt)
-        prompt_menu.addAction('Research a Business Opportunity', lambda: self._copy_megaprompt('research'))
-        prompt_menu.addAction('Develop My Business Idea', lambda: self._copy_megaprompt('idea'))
-        self.copy_research_prompt.setMenu(prompt_menu)
-        research_layout.addRow('Budget ceiling (CAD)', self.research_budget)
-        research_layout.addRow(self.copy_research_prompt)
-        self.copy_work_prompt = QPushButton('Copy Work Prompt')
-        self.copy_work_prompt.setAccessibleName('Copy Work Prompt')
-        self.copy_work_prompt.clicked.connect(self._copy_work_prompt)
-        research_layout.addRow(self.copy_work_prompt)
+        self.copy_prompt = QPushButton('Copy Prompt')
+        self.copy_prompt.setAccessibleName('Copy Prompt')
+        prompt_menu = QMenu(self.copy_prompt)
+        first_phase = prompt_menu.addMenu('Phase 1 · Research or Create')
+        first_phase.addAction('Research a Business Opportunity', lambda: self._copy_megaprompt('research'))
+        first_phase.addAction('Create a Project from My Idea', lambda: self._copy_megaprompt('idea'))
+        prompt_menu.addAction('Phase 2 · Build, Test & Prepare', lambda: self._copy_megaprompt('phase2'))
+        prompt_menu.addAction('Phase 3 · Launch & Market', lambda: self._copy_megaprompt('phase3'))
+        self.copy_prompt.setMenu(prompt_menu)
+        research_layout.addRow('Planning budget (CAD)', self.research_budget)
+        research_layout.addRow(self.copy_prompt)
         details.addWidget(self.research_tools)
         details.addWidget(self.project_tabs)
+        details.addWidget(self.completed_detail)
         details.addWidget(self.preview)
         details.addWidget(self.image_scroll)
         self.image_scroll.hide()
@@ -377,7 +400,7 @@ class WorkspaceWindow(QMainWindow):
     @staticmethod
     def _load_navigation_entries(repo):
         niches = niche_entries(repo)
-        return project_entries(repo, niches), history_entries(repo), niches
+        return project_entries(repo, niches), history_entries(repo), completed_entries(repo), niches
 
     def _set_mode(self):
         try:
@@ -388,20 +411,38 @@ class WorkspaceWindow(QMainWindow):
             self.notice.show()
         self.sync()
 
-    def _copy_work_prompt(self):
-        QApplication.clipboard().setText(WORK_PROMPT)
-        self.notice.setText('Work prompt copied to the clipboard.')
-        self.notice.show()
+
 
     def _node(self, parent, name, directory, *, full=False):
         label = name if full else PurePosixPath(name).name
-        if not full and not directory and '/projects/' in name and name.lower().endswith('.md'):
-            stem = PurePosixPath(name).stem
-            match = re.match(r'([a-z]+-[0-9]+)-(.+)', stem, re.I)
-            if match:
-                label = match.group(1).upper() + ' · ' + match.group(2).replace('-', ' ').title()
+        icon = self._folder_icon if directory else self._file_icon
+        tooltip = ''
+        if not directory and self._tree_mode == 'projects' and '/projects/' in name and name.lower().endswith('.md'):
+            try:
+                from business_portfolio.tools.build_browser import parse_project
+                from .project_lifecycle import project_phase
+                record = context_path(self.repo, name)
+                meta, _ = parse_project(record.read_text(encoding='utf-8'), name)
+                label = meta.get('id', record.stem.upper()) + ' · ' + meta.get('title', record.stem)
+                stage = project_phase(meta)
+                icon = self._phase_icons[stage]
+                tooltip = {'working_phase_2': 'Working Phase 2 · Build and test',
+                           'working_phase_3': 'Working Phase 3 · Launch and market',
+                           'complete': 'Complete'}[stage]
+            except (OSError, ValueError, KeyError, TypeError):
+                label = PurePosixPath(name).stem.replace('-', ' ').title()
+        if not directory and self._tree_mode == 'completed' and '/completed_projects/' in name:
+            try:
+                record = json.loads(context_path(self.repo, name).read_text(encoding='utf-8'))
+                label = record['id'] + ' · ' + record['title']
+                icon = self._phase_icons['complete']
+                tooltip = 'Durable completion receipt'
+            except (OSError, ValueError, KeyError, TypeError):
+                pass
         item = QTreeWidgetItem(parent, [label])
-        item.setIcon(0, self._folder_icon if directory else self._file_icon)
+        item.setIcon(0, icon)
+        if tooltip:
+            item.setToolTip(0, tooltip)
         item.setData(0, ROLE, name)
         item.setData(0, ROLE + 1, directory)
         if directory:
@@ -420,7 +461,7 @@ class WorkspaceWindow(QMainWindow):
         with QSignalBlocker(self.tree):
             self.tree.clear()
             root = self._node(self.tree, '.', True, full=True)
-            root.setText(0, self.repo.name)
+            root.setText(0, 'Completed Projects' if self._tree_mode == 'completed' else self.repo.name)
             if not self._entries_ready and not self._niche_entries and self._tree_mode != 'files':
                 self._node(root, 'Loading navigation…', False, full=True)
                 root.setExpanded(True)
@@ -459,9 +500,10 @@ class WorkspaceWindow(QMainWindow):
                 root.setExpanded(True)
                 return
             nodes = {'.': root}
-            entries = self._history_entries if self._tree_mode == 'history' else self._project_entries
+            entries = (self._history_entries if self._tree_mode == 'history' else
+                       self._completed_entries if self._tree_mode == 'completed' else self._project_entries)
             for name, directory in entries:
-                parent = PurePosixPath(name).parent.as_posix()
+                parent = tree_parent(name) if self._tree_mode == 'projects' else PurePosixPath(name).parent.as_posix()
                 nodes[name] = self._node(nodes[parent], name, directory)
                 if self._tree_mode == 'history':
                     labels = {
@@ -499,6 +541,11 @@ class WorkspaceWindow(QMainWindow):
         self.search_status.hide()
         self.tree.setHeaderLabels([self.view_mode.currentText()])
         self._root_node()
+        if self._tree_mode == 'completed' and not any(not entry[1] for entry in self._completed_entries):
+            self.preview.setPlainText('No completed projects yet. Verified Phase 3 completions will appear here.')
+            self.preview.show()
+            self.project_tabs.hide()
+            self.completed_detail.hide()
 
     def _niche_working_changed(self, item, column):
         if column != 0 or not item.data(0, NICHE_ID_ROLE):

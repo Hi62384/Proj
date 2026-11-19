@@ -574,7 +574,7 @@ class WorkspaceWindow(QMainWindow):
 
     def eventFilter(self, watched, event):
         if event.type() in (QEvent.Type.DragEnter, QEvent.Type.DragMove, QEvent.Type.Drop):
-            return self._project_drop_event(event)
+            return self._project_drop_event(event, watched)
         return super().eventFilter(watched, event)
 
     def dragEnterEvent(self, event):
@@ -586,7 +586,15 @@ class WorkspaceWindow(QMainWindow):
     def dropEvent(self, event):
         self._project_drop_event(event)
 
-    def _project_drop_event(self, event):
+    def _drop_niche_from_item(self, item):
+        """Choose the hovered niche, not a stale selection from another window."""
+        while item is not None:
+            if item.data(0, NICHE_ID_ROLE):
+                return item.data(0, ROLE)
+            item = item.parent()
+        return None
+
+    def _project_drop_event(self, event, watched=None):
         urls = event.mimeData().urls()
         if not urls or not all(url.isLocalFile() and url.toLocalFile().lower().endswith('.md') for url in urls):
             event.ignore()
@@ -596,8 +604,15 @@ class WorkspaceWindow(QMainWindow):
             return True
         from .project_import import import_projects
         try:
-            ids = import_projects(self.repo, self.workspace_state['selection'],
-                                  [url.toLocalFile() for url in urls])
+            destination = self.workspace_state['selection']
+            if watched in (self.tree, self.tree.viewport()) and self._tree_mode in {'projects', 'niches'}:
+                location = event.position().toPoint()
+                if watched is self.tree:
+                    location = self.tree.viewport().mapFrom(self.tree, location)
+                destination = self._drop_niche_from_item(self.tree.itemAt(location))
+            if not destination:
+                raise ValueError('Drop onto a niche folder, not an empty area or project file.')
+            ids = import_projects(self.repo, destination, [url.toLocalFile() for url in urls])
             self.notice.setText('Imported: ' + ', '.join(ids))
             self.notice.show()
             self._entry_future = self._pool.submit(self._load_navigation_entries, self.repo)

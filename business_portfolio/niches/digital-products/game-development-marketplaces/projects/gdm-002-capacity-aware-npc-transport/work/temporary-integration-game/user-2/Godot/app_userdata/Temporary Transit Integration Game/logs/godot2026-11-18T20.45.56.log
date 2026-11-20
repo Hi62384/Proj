@@ -1,0 +1,5 @@
+Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2548)
+Temporary game multi-junction dispatch: PASS (0 failures; three vehicles, two junctions)

@@ -4,10 +4,12 @@
 
 The main workspace has ONE **Copy Prompt** button. It offers:
 
-1. **Phase 1 → Research a Business Opportunity:** Select an active niche, copy, then paste into Codex. Research demand and competition, and save a validated business project record at business_portfolio/niches/<niche>/projects/<project-id>-<slug>/project.md plus a sibling work/ folder.
-2. **Phase 1 → Create a Project from My Idea:** Paste the copied prompt, replace its PROJECT_IDEA example, validate the resulting project record and create its work/ folder. Do not consider Phase 1 complete without an actual project.md.
+1. **Phase 1 → Research a Business Opportunity:** Select an active niche, copy, then paste into Codex. Thoroughly verify independent buyer demand/payment signals, complete free/AI/paid competition, unit economics and acquisition, then independently try to disprove the candidate with a fresh search. Save a validated business project record at business_portfolio/niches/<niche>/projects/<project-id>-<slug>/project.md with sibling work/ **only for GO_TO_PHASE_B**.
+2. **Phase 1 → Create a Project from My Idea:** Paste the copied prompt, replace its PROJECT_IDEA example, preserve the idea and perform the same decision-first viability check. For GO_TO_PHASE_B validate the resulting project record and create its work/ folder. If it fails or needs material research/proof, produce a non-indexed decision report instead; do not manufacture project.md to mark Phase 1 complete.
 3. **Phase 2 → Build, Test & Prepare:** Copy and paste into the selected project's Codex chat. Starts with /goal; develops, tests and polishes the real product in work/, prepares packages for every genuinely suitable platform, and when verified moves the record to working_phase_3.
 4. **Phase 3 → Launch & Market:** Paste into Codex to prepare/publish on relevant, permitted marketplaces and market across suitable channels. Document real sale/distribution and marketing URLs. Complete only when live distribution and marketing are verified.
+
+**No forced project creation:** NO_GO, RESEARCH_BLOCKED and CONDITIONAL_PROOF_ONLY are legitimate Phase 1 outputs and must not be indexed as active projects or assigned working_phase_2. The conditional report permits only its specified bounded proof; retry the full viability decision before creating a project. A GO held for source registration or niche metadata may be staged for administrative import, but cannot skip any commercial research gate. A subsequent “look harder” review reversing GO using already-searchable facts indicates a Phase 1 research miss and must be documented.
 
 The planning budget (CAD) applies to Phase 1 inputs and never authorizes spending. No project-specific GitHub branches: synchronize against latest upstream and push verified commits directly to main without force-pushing.
 

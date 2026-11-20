@@ -18,11 +18,12 @@ from .workspace import context_path
 
 ROLE = int(Qt.ItemDataRole.UserRole)
 PHASE_ONE_RULES = """
-## Required Portfolio Manager Phase 1 handoff (overrides older file-layout instructions)
-- Phase 1 must create a validated Markdown project record; planning prose alone is not a completed Phase 1.
-- Put the record under business_portfolio/niches/<selected-niche>/projects/<project-id>-<short-slug>/project.md.
-- Create its sibling work/ folder with work/.gitkeep, storing future project code, assets, drafts and tests there.
-- Rebuild and validate the project browser after adding records. Set project_phase to working_phase_2.
+## Required Portfolio Manager Phase 1 decision and handoff (overrides older unconditional project-creation instructions)
+- Phase 1 is VERDICT FIRST, not a mandate to create an active project. Thoroughly research independent buyer/payment signals, full free and paid substitutes including AI-assisted DIY, pricing, reachable acquisition and passive workload. Conduct a separate skeptical, source-backed research pass before finalizing the verdict. Never create an active project simply to satisfy Phase 1.
+- GO_TO_PHASE_B requires source-backed PASS on every applicable hard gate; no material FAIL or unresearched UNKNOWN can be converted to GO by writing a convincing plan. In particular, demonstrate who would buy, why instead of free/cheaper alternatives, and a plausible lower-priced sustainable offer where required.
+- For NO_GO, RESEARCH_BLOCKED, or CONDITIONAL_PROOF_ONLY, output ONE clearly labeled, non-indexed decision/proof report. DO NOT create a canonical project record, work/ folder or project phase, or start broad production. A conditional report permits only its explicitly bounded technical proof; import a project only after that proof passes and the verdict is reassessed as GO.
+- ONLY for GO_TO_PHASE_B: create the validated Markdown project record under business_portfolio/niches/<selected-niche>/projects/<project-id>-<short-slug>/project.md and its sibling work/ folder with work/.gitkeep. Rebuild and validate the project browser, then set project_phase to working_phase_2. Preserve existing IDs and progress when updating an existing project rather than cloning it.
+- A genuine GO with missing source registration/niche metadata remains STAGED outside the indexed project tree until those administrative checks pass. Never mistake this administrative hold for a commercial NO_GO.
 - Do not create individual project GitHub branches. Synchronize and commit directly to main without force-pushing or overwriting another chat.
 - The CAD budget ceiling is for planning; spending, accounts, publication, advertising and outreach still require applicable authorization.
 """

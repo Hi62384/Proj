@@ -71,7 +71,7 @@ class PortfolioTests(unittest.TestCase):
         self.assertEqual(len(self.data['niches']),39)
         self.assertEqual(self.data['taxonomy_snapshot'],{'files':185,'projects':3})
         self.assertEqual([r['planning_lane'] for r in games],
-                         ['next_to_validate_focus','queued','queued'])
+                         ['queued'])
         self.assertTrue(all(not r['execution_authorized'] and r['commercial_validation']=='unvalidated' for r in games))
         self.assertTrue(all(r['platforms_supported'] == [] and r['platforms_proposed']
                             for r in games))

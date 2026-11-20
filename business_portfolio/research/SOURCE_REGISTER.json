@@ -1503,5 +1503,148 @@
     "published_or_updated": "Current page; recheck before submission",
     "finding": "Canada is listed for ebook seller signup and payments.",
     "limitations": "Country support is not account approval or content eligibility."
+  },
+  {
+    "id": "GDM004-GUA",
+    "title": "Gua — MIT multi-engine runtime semantic UI testing, recording and replay",
+    "url": "https://github.com/gua-project/gua",
+    "kind": "open_source_competitor",
+    "access": "github_primary_source_and_license_inspected",
+    "reviewed_at": "2026-11-19",
+    "published_or_updated": "Current repository and 2026-11-01 v1.2.0 release",
+    "finding": "MIT-licensed Gua offers Godot 4.7 and Unity 6000.5+ UI adapters, semantic controls, recording/replay, focus/assertions, screenshot/visual regression and CI integrations; released binary packages and code exist.",
+    "limitations": "Not installed/run by this research chat; Unity Mono and version constraints matter, and GDExtension/.NET integration may impose more setup than a small built-in helper."
+  },
+  {
+    "id": "GDM004-GUA-REL",
+    "title": "Gua v1.2.0 public GitHub release",
+    "url": "https://github.com/gua-project/gua/releases/tag/gua-v1.2.0",
+    "kind": "open_source_release",
+    "access": "github_primary_release_metadata",
+    "reviewed_at": "2026-11-19",
+    "published_or_updated": "2026-11-01",
+    "finding": "Public release contains Godot addon ZIP, Unity UPM package, native desktop binaries and inspector installers; counterexample to treating Gua as a paper-only proposal.",
+    "limitations": "Release existence does not prove bug-free operation or universal engine support; no installation test run."
+  },
+  {
+    "id": "GDM004-GODOT-UIAUTO",
+    "title": "Godot official Asset Library — Godot UI Automation",
+    "url": "https://godotengine.org/asset-library/asset/4665",
+    "kind": "free_official_asset_listing",
+    "access": "official_primary",
+    "reviewed_at": "2026-11-19",
+    "published_or_updated": "2026-01-13 initial publication",
+    "finding": "Free MIT-licensed visual UI automation tool with record/replay, keyboard and mouse capture, test manager and screenshot checkpoints for Godot 4.5.",
+    "limitations": "This listing does not verify gamepad-specific focus assertions; code README says Windows-tested and small-suite design; actual tests not run."
+  },
+  {
+    "id": "GDM004-GODOT-UIAUTO-REPO",
+    "title": "graydwarf Godot UI Automation source and README",
+    "url": "https://github.com/graydwarf/godot-ui-automation",
+    "kind": "open_source_competitor",
+    "access": "github_primary_source_and_license_inspected",
+    "reviewed_at": "2026-11-19",
+    "published_or_updated": "v1.0.0 2026-01-12",
+    "finding": "The MIT README describes working F11 recording, F12 test manager, step editing, screenshot assertions and tests stored as JSON, from an actual public source tree.",
+    "limitations": "No physical gamepad or real deployment benchmark verified; recorded mouse/keyboard input, no demonstrated object-focus assertion parity."
+  },
+  {
+    "id": "GDM004-GDUNIT",
+    "title": "gdUnit4 source and official version table",
+    "url": "https://github.com/godot-gdunit-labs/gdUnit4",
+    "kind": "free_testing_framework",
+    "access": "github_primary_source_and_license_inspected",
+    "reviewed_at": "2026-11-19",
+    "published_or_updated": "2026 versions listed in repository README",
+    "finding": "MIT Godot test framework for scene and script checks with editor and CI; v6.2.x documents Godot 4.5–4.7 support, v7.0.0 target 4.7; an AI-assisted test script is a strong free baseline.",
+    "limitations": "Requires developer-written assertions/scripts; no direct one-click workflow time measurement."
+  },
+  {
+    "id": "GDM004-FLOW299",
+    "title": "Template Foundry — Controller Menu Flow Tester",
+    "url": "https://mtw1man2.itch.io/controller-menu-flow-tester",
+    "kind": "paid_competitor_listing",
+    "access": "public_vendor_listing",
+    "reviewed_at": "2026-11-19",
+    "published_or_updated": "Price observed 2026-11-19",
+    "finding": "USD2.99 offline HTML5 menu layout/flow tester with editable UI, graph, issue heat maps, focus-leak reports and JSON/PNG export.",
+    "limitations": "Standalone manual layout, not established to replay actual Godot/Unity runtime game state; NOT proven fully comparable with an embedded test runner; sales unknown."
+  },
+  {
+    "id": "GDM004-FOCUS9",
+    "title": "Idle Hands — Focus Audit paid Godot auditor",
+    "url": "https://theidlehands.itch.io/focus-audit",
+    "kind": "paid_competitor_listing",
+    "access": "public_vendor_listing",
+    "reviewed_at": "2026-11-19",
+    "published_or_updated": "2026-09-05 release and 2026-11-19 price check",
+    "finding": "USD9 Godot editor focus-graph static auditor with JSON/MD report and focus fail checks, explicitly does not execute normal runtime scripts.",
+    "limitations": "No public sales counts from the page and no independent observed purchase for this product; asking price not proven demand."
+  },
+  {
+    "id": "GDM004-MENU999",
+    "title": "PocketNori — MenuPath QA Unity navigation auditor",
+    "url": "https://pocketnori.itch.io/menupath-qa",
+    "kind": "paid_competitor_listing",
+    "access": "public_vendor_listing",
+    "reviewed_at": "2026-11-19",
+    "published_or_updated": "2026-10-09 release and 2026-11-19 price check",
+    "finding": "USD9.99 Unity6 uGUI static reachability and navigation-path auditor, with Markdown reports, no full runtime input emulation.",
+    "limitations": "Only publisher-declared behavior; listing does not show verified sales/reviews."
+  },
+  {
+    "id": "GDM004-BETTERUI",
+    "title": "Unity Asset Store — Better UI",
+    "url": "https://assetstore.unity.com/packages/tools/gui/better-ui-79031",
+    "kind": "paid_adjacent_market",
+    "access": "unity_official_listing",
+    "reviewed_at": "2026-11-19",
+    "published_or_updated": "2026-01-03 latest listed release",
+    "finding": "USD64 broad uGUI toolkit advertises advanced gamepad navigation; listing displayed 44 ratings and 1,021 favorites as of inspection, a proxy for paid UI tooling market activity.",
+    "limitations": "Tool builds/fixes UI; it is NOT a menu QA regression auditor. Ratings/favorites do not establish sales quantity or demand for proposed audit."
+  },
+  {
+    "id": "GDM004-PAIDBUYER",
+    "title": "Unity Discussions — purchased UI Navigation Wizard",
+    "url": "https://discussions.unity.com/t/ui-ugui-navigation-wizard/951273",
+    "kind": "first_person_adjacent_purchase",
+    "access": "independent_developer_discussion",
+    "reviewed_at": "2026-11-19",
+    "published_or_updated": "2024-08-05 buyer follow-up",
+    "finding": "A developer explicitly says they purchased the UI Navigation Wizard and valued its null resolver/automatic button flow, then requested further input-mode behavior.",
+    "limitations": "One buyer for an adjacent navigation FIX product, not verified paid demand for standalone menu testing."
+  },
+  {
+    "id": "GDM004-MODERNREVIEW",
+    "title": "Unity Asset Store Modern UI Pack gamepad complaint in buyer review",
+    "url": "https://assetstore.unity.com/packages/tools/gui/modern-ui-pack-201717/reviews",
+    "kind": "direct_buyer_pain_proxy",
+    "access": "unity_public_customer_review_page",
+    "reviewed_at": "2026-11-19",
+    "published_or_updated": "2026 review page; dates relative on site",
+    "finding": "A user reviewing the paid Modern UI Pack complains selected states/gamepad navigation are missing or inconsistent, and asks whether to seek another product.",
+    "limitations": "Shows buyer pain regarding a purchased UI pack, not willingness to pay for automated focus QA."
+  },
+  {
+    "id": "GDM004-FREEUSER",
+    "title": "Reddit — Godot UI Automation used for multi-version regression tests",
+    "url": "https://www.reddit.com/r/godot/comments/1sdbx59/i_used_godot_ui_automation_gdvm_to_run_a/",
+    "kind": "independent_user_report",
+    "access": "public_reddit_comment",
+    "reviewed_at": "2026-11-19",
+    "published_or_updated": "2026-04-05",
+    "finding": "Developer reports free Godot UI Automation plus version manager caught library compatibility bug across Godot versions; commenter thanks them for discovering tool.",
+    "limitations": "Single anecdote with small engagement, not a professional benchmark or monetary transaction; does not specifically target gamepad focus."
+  },
+  {
+    "id": "GDM004-UNITYSURVEY",
+    "title": "Unity 2026 Game Development Report on AI automation adoption",
+    "url": "https://unity.com/resources/gaming-report",
+    "kind": "industry_context",
+    "access": "unity_first_party_survey",
+    "reviewed_at": "2026-11-19",
+    "published_or_updated": "2026 report based on Cint 2025 survey of 300 respondents",
+    "finding": "Unity reports 35% of surveyed respondents using AI for automated playtesting, demonstrating broad use of automation workflows.",
+    "limitations": "Convenience sample/Unity report and broad AI use; neither gamepad focus budget nor paid tool purchase intent measured."
   }
 ]

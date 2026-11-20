@@ -7,19 +7,32 @@
   "niche_path": "digital-products/game-development-marketplaces",
   "record_type": "product_family",
   "origin": "revised_candidate",
-  "priority": "P1",
-  "work_state": "planned",
+  "priority": "DEFER",
+  "work_state": "paused",
   "project_phase": "working_phase_2",
   "commercial_validation": "unvalidated",
-  "evidence_basis": "public_developer_problem_reports_official_engine_and_store_rules_competitor_offers_no_verified_sales",
+  "evidence_basis": "official_and_source_verified_free_runtime_automation_competitors_independent_adjacent_buyer_purchases_no_verified_paid_exact_QA_demand",
   "source_ids": [
     "GDM-UNITY-RULES",
-    "GDM-GODOT-STORE"
+    "GDM-GODOT-STORE",
+    "GDM004-GUA",
+    "GDM004-GUA-REL",
+    "GDM004-GODOT-UIAUTO",
+    "GDM004-GODOT-UIAUTO-REPO",
+    "GDM004-GDUNIT",
+    "GDM004-FLOW299",
+    "GDM004-FOCUS9",
+    "GDM004-MENU999",
+    "GDM004-BETTERUI",
+    "GDM004-PAIDBUYER",
+    "GDM004-MODERNREVIEW",
+    "GDM004-FREEUSER",
+    "GDM004-UNITYSURVEY"
   ],
   "parent_project": null,
   "related_projects": [],
   "legacy_ids": [],
-  "next_action": "B00: verify GDM-004 has no semantic duplicate in the large opportunity catalogue and reconcile current main; then run only the zero-cash, eight-hour maximum Godot side-by-side runtime controller focus proof B01 against native Godot plus Focus Audit Lite and gdUnit4. Stop broad production unless proof passes.",
+  "next_action": "NO_GO for original standalone paid menu replay auditor after 2026-11-19 second-pass research: Gua MIT offers semantic runtime recording/replay for Godot and Unity, and Godot UI Automation is free; no verified paid demand for this exact QA workflow. Do not run B01, create product code, publish, or market. Reopen only on dated material evidence of buyer willingness plus an objective, meaningful advantage over full free alternatives and acceptable undercut economics.",
   "last_reviewed": "2026-11-19",
   "owner": "owner_decision_pending",
   "offer_price_usd": null,
@@ -61,9 +74,9 @@
   "marketing_execution_authorized": false,
   "production_budget_verified": false,
   "success_probability": "not_established",
-  "marketing_lane": "organic_demo_developer_qa",
-  "launch_gate": "conditional_side_by_side_proof_then_edition_QA_rights_payout_account_approval_and_authorized_publication",
-  "pre_sale_work_cap_hours": 8,
+  "marketing_lane": "not_selected",
+  "launch_gate": "NO_GO_original_paid_scope_free_full_runtime_testing_and_unproven_purchase_differentiation",
+  "pre_sale_work_cap_hours": 0,
   "ad_test_cap_cad": 0,
   "offer_price_cad_hypothesis": 10.01,
   "platforms_supported": [],
@@ -74,9 +87,79 @@
 }
 ---
 
+
 # Controller Menu Replay Auditor — Phase A research and Codex B/C execution record
 
-**RESEARCH VERDICT: CONDITIONAL_PROOF_ONLY — 2026-11-19.** **Repository record:** planned/unvalidated; Phase 1 record in the working_phase_2 handoff, NOT a successful proof, release, approval, sale or completed project. **Market outcome is unvalidated.** Broad production is NOT approved by this research and must wait for B01 and B02 decision gates. No spending, public listing, person-directed outreach or new account action is authorized.
+## Dated second-pass viability reassessment — 2026-11-19 (supersedes CONDITIONAL_PROOF_ONLY below)
+
+**RESEARCH VERDICT: NO_GO FOR THE CURRENT PAID PRODUCT PROPOSAL.** Status = paused, original idea preserved; do not develop even the former 8-hour B01 proof under the earlier planning handoff. Do not delete the record, GDM-002, or historical projects. This new decision is a research decision and does not change the Portfolio Manager project_phase `working_phase_2` historical handoff or fabricate technical work.
+
+**Why verdict changed:** The first pass focused on free static Focus Audit Lite, gdUnit4 and two $9–$9.99 paid static auditors. The independent follow-up found *already operational, MIT-licensed full runtime UI recording/replay alternatives*, including Gua with Godot **and** Unity adapters, semantic UI identification, wait/assertions, recording, image evidence, CI and releases, plus free Godot UI Automation. Thus GDM-004's proposed paid distinguishing feature—runtime, repeatable stateful menu UI replay with useful reports—**is not unique** on currently inspected evidence. This is positive counter-evidence; not simply absence of competitors. A theoretically simpler interface or exact engine-version niche is not a demonstrated reason to pay.
+
+### Corrected strongest substitute/competitor matrix
+
+| Provider / actual observed offer | Verified/claimed feature overlap with first release | Price and actual limitations | Buyer purchasing significance |
+|---|---|---|---|
+| [Gua source](https://github.com/gua-project/gua) / [v1.2.0 release](https://github.com/gua-project/gua/releases/tag/gua-v1.2.0) (GDM004-GUA, GDM004-GUA-REL) | Runtime semantic UI tree, find/focus/click/press keys/waits/assertions, scripted and recorded test journeys, failure artifacts, CI, Godot 4.7 GDScript GDExtension addon, Unity 6000.5+ uGUI/UI Toolkit Mono package | **Free, MIT**, source and actual downloadable release; requires integration incl. native packages, sometimes .NET/agent tooling; *not* a trivial no-install editor dock. No local test performed. Godot older 4.6 and Unity 6000.3 are not covered by this Gua version; do not claim parity there | **Fatal challenge** to selling a basic recorded replay/schema/report across both engines |
+| [Godot UI Automation official asset](https://godotengine.org/asset-library/asset/4665) / [code](https://github.com/graydwarf/godot-ui-automation) (GDM004-GODOT-UIAUTO, GDM004-GODOT-UIAUTO-REPO) | Visual in-game keyboard/mouse UI record/replay, screenshots, edit steps, test management, regression capture | **Free, MIT**; official 4.5 listing, README requires 4.5+ and reports Windows tested, lacks verified automatic gamepad focus assertions and large-suite scale | Strong one-clickish free workflow for Godot test recording; not proven exact controller QA parity |
+| [gdUnit4](https://github.com/godot-gdunit-labs/gdUnit4) + engine native UI APIs (GDM004-GDUNIT) | Scripted assertions, scene runner, CI and simulated input; AI can help write tests | **Free, MIT**, significant script-writing/setup overhead for first test, but reusable | Allows user to create exact game-specific checks without buying separate QA tool |
+| [Focus Audit Lite](https://github.com/aandk1024/focus-audit-lite) + [$9 paid Focus Audit](https://theidlehands.itch.io/focus-audit) (GDM004-FOCUS9) | Godot saved-scene directional reachability, missing focus, loop/dead-end; paid export/report CI | Free static lite or **USD9** full; normal runtime scripts not executed | Partial substitute; original plan already captured this, but does not rescue replay differentiator |
+| [MenuPath QA](https://pocketnori.itch.io/menupath-qa) (GDM004-MENU999) | Unity uGUI directional/static path and unreachable-control audit | **USD9.99** one developer seat, static, not full input script emulation | Similar buyer segment; published price, no public sales confirmation |
+| [Controller Menu Flow Tester](https://mtw1man2.itch.io/controller-menu-flow-tester) (GDM004-FLOW299) | Offline HTML manual menu layout, live flow graph, simulated D-pad/stick/keyboard input, focus anomalies, JSON/PNG exports | **USD2.99**; IMPORTANT: separate reconstructed layout, **NOT** verified import/replay of customer's Godot/Unity runtime scene. It is NOT established as a capable full substitute; do not dishonestly call USD2.99 a matched end-to-end price benchmark | Inexpensive partial UX-audit substitute undercuts perceived value of a light flow-graph tool |
+| [Unity Test Framework](https://unity.com/how-to/automated-tests-unity-test-framework) | Free editor/PlayMode test runner, user-coded uGUI focus assertions | **Free** but requires coding, setup and scenario coverage | Strong native comparison to a paid Unity helper |
+| [Better UI](https://assetstore.unity.com/packages/tools/gui/better-ui-79031) (GDM004-BETTERUI) | UI building + gamepad navigation **fix** toolkit | **USD64**, 44 ratings, 1,021 favorites shown 2026-11-19; not a QA replay tool | Positive evidence some developers obtain paid UI workflow tools, not proof of specific audit purchases |
+
+**Do not conflate paid static checks with full free runtime replay.** The lowest priced publisher-advertised *potentially comparable static focus auditor* remains USD9 on Godot and USD9.99 on Unity; the USD2.99 browser layout product is not yet equivalent, so the paid undercut gate is not considered to have **independently** failed solely due to this cheap listing. The fatal challenge is the full free workflow and no observed reason to choose the paid runner. Published listing prices are not buyer-paid amounts.
+
+### Buyer demand / actual willingness-to-pay verification
+
+| Evidence | Strength and implications |
+|---|---|
+| [Unity forum 2024 purchaser statement](https://discussions.unity.com/t/ui-ugui-navigation-wizard/951273) GDM004-PAIDBUYER | Independent developer specifically **says they purchased** UI Navigation Wizard and asks for device-related functionality. One direct first-person report of paying for **navigation FIX**, not a replay tester. Strongest verifiable adjacent buyer purchase evidence; not a verified invoice and not representative market-size data. |
+| [Unity Better UI](https://assetstore.unity.com/packages/tools/gui/better-ui-79031) GDM004-BETTERUI | Paid $64 listing has 44 ratings and 1,021 favourites (snapshot); demonstrates demand proxy for mature UI development package, not sales count or demand for an auditor. |
+| [Modern UI Pack customer review](https://assetstore.unity.com/packages/tools/gui/modern-ui-pack-201717/reviews) GDM004-MODERNREVIEW | Public reviewer complains that selected gamepad state is absent/uneven and asks about alternatives. Direct buyer pain on paid menu asset, but buyer's proposed solution could be a navigation FIX, not a test runner. |
+| [Independent Godot UI Automation adoption anecdote](https://www.reddit.com/r/godot/comments/1sdbx59/i_used_godot_ui_automation_gdvm_to_run_a/) GDM004-FREEUSER | Developer used free record/replay for multi-version regression and caught an incompatibility; another commenter appreciated not needing to build it. Strengthens the **free substitute**, not paid demand. |
+| [Unity 2026 research](https://unity.com/resources/gaming-report) GDM004-UNITYSURVEY | Unity reports 35% of a 300-respondent Cint survey used AI for automated playtesting, *not* 35% willing to pay for our focus plugin. Broad adoption is not purchase intent. |
+| Focus Audit ($9), MenuPath QA ($9.99), Controller Menu Flow Tester ($2.99) live asking-price pages | Real publisher offers. Public pages do **not** expose verified purchases, revenue, conversion rates or credible buyer testimonials for this exact product family. Do not invent sales or interpret nonzero listing/price as demand. |
+
+**Finding:** A developer would plausibly *consider* buying a quality, easy-to-use menu builder/fixer because there is direct anecdotal paid behavior and paid asset reviews. We did **not** find equivalent evidence that enough developers would pay for a standalone focus replay auditor when free runtime recording, semantic automation, native testing and AI code are available. This is not a claim of zero buyers. The prior research's demand ledger was UNKNOWN; it remains UNKNOWN and is no longer sufficient to recommend a full paid build.
+
+**Demand disproof search coverage:** competitor job phrases: controller menu flow audit, Godot UI automation free record replay, Godot visual UI testing MIT, gamepad focus CI, Unity uGUI runtime UI automation, Godot Unity cross-engine semantic replay, Unity navigation tester, controller plugin sales reviews, actual purchaser discussions, paid Asset Store navigation reviews, itch paid focus audit and cheap QA browser tools. Cross-checked official engine/store pages, GitHub code + MIT licenses + Gua release artifacts, independent Reddit reports, Unity forum and customer reviews, and official Unity survey. Search does not have access to merchant private sales dashboards, storefront conversion analytics, checkout records, physical device installs or direct customer purchase commitments. **No independent on-device functionality benchmark was performed.**
+
+### Commercial and operational re-evaluation
+
+- Proposed USD6.99 ≈ CAD10 at the original dated 1.4317 reference FX. Existing hypothesis modeled ~CAD6–7 worst route after fees/refund reserve, *before owner labor*. 1/3/12 monthly one-time sales remain hypothetical. If three actual monthly units yielded roughly CAD20, an initial 26–47h build plus 2–4h monthly multi-engine maintenance and continual low-traffic discovery is not a credible attractive background-business investment on available evidence. That does **not** establish a forecast of three sales; actual volume could be zero.
+- A 15-minute synthetic time-saving threshold in the old B01 gate is weak economic justification for this buyer: a developer who can script or record with free tools may prefer to save USD6.99 and adapt a test themselves, while an indie might need less than an hour of total menu QA. No verified weekly testing cadence or external buyer return-on-investment figures support paid adoption.
+- Most exact paid tester listings are new, with no accessible independent paid buyer transactions. Mature UI building/fixing tools attract reviews, but the user value, price, support expectation and distribution are different. No empirical conversion or storefront impressions were observed.
+- Full Gua may be harder to integrate than a hypothetical lightweight UI-specific editor dock; this is **unproven potential difference**, not a basis for paid recommendation. A new paying product requires demonstrable (not assumed) time savings on a real existing game and results significantly beyond both Gua and Godot UI Automation, *not* a renamed wrapper around MIT primitives.
+- Spend and authority unchanged: CAD100 maximum *planning ceiling*; CAD0 authorized, no publication/accounts/ads/outreach.
+
+### Updated gate ledger
+
+| Gate | New verdict | Explanation |
+|---|---|---|
+| Real problem | PASS | Developer buyer complaints plus active competitors; menu/gamepad focus fails |
+| Buyers pay in adjacent sector | PASS, narrow scope | First-person purchase of navigation **fixer**; Better UI ratings |
+| Buyers pay for standalone **runtime audit** | UNKNOWN (critical) | No independent actual paid order or purchase intent for exact user job |
+| Significant paid advantage over free | **FAIL for current proposed scope** | Released MIT Gua plus free Godot UI Automation cover central runtime replay/report job; remaining simplicity advantage not proven |
+| Under cheaper paid capable substitute | UNKNOWN / not independently fatal | USD2.99 manual HTML tool not same in-engine job; USD9/9.99 paid static auditors but free tools already strong |
+| Passive economics + acquisition | UNKNOWN with negative risk | Low unit contribution, high initial two-engine development/ongoing upkeep, no demonstrated qualified exposure |
+| Duplicate/rights | No active-project collision known; non-unique solution category | Keep GDM-002 and history unchanged; no commercial rights infringement planned |
+| Overall **NO_GO** | **Do not spend developer time creating current offer** | Hard free-equivalent/differentiation gate fails on observed competitor capabilities |
+
+### Reopen conditions and explicit revised Codex instruction
+
+**Stop prior B00/B01/B02/B03... production and C marketing.** Do NOT create a prototype or run an 8-hour comparison merely because a Phase 1 record was indexed. Set no price, listing, launch or Complete status. Preserve all original research and existing project ID. Do not claim a competitive proof experiment ran; it did not.
+
+Only reopen after **material new dated evidence** changes the conclusion, such as (a) credible independent buyers explicitly requesting/committing to buy a specific missing runtime focus-check workflow that free Gua/UI Automation/gdUnit4 cannot provide at reasonable effort, **or** (b) a narrow workflow shown with existing code/docs or a *separately authorized tiny bounded comparison* to work materially better (reliability/coverage/setup/CI) than the strongest full free stack with comparable product quality, AND evidence of buyer value at a lower sustainable price than capable paid alternatives, AND a real low-workload acquisition route. Do not demand interviews as a generic prerequisite, but do not label anonymous developer complaints as paid demand. Without changed evidence, leave **GDM-004 paused** and research a genuinely distinct opportunity instead; do not quietly rescope into a different tool under the same ID.
+
+**Decision reversal record:** prior conditional reasoning 2026-11-19 assumed no free end-to-end dynamic runtime competitor verified. New evidence on 2026-11-19: MIT Gua shipped v1.2.0 in 2026-11 with both Godot and Unity semantic UI action/replay, plus an independently used MIT Godot UI Automation visual recorder released January 2026. This contradicts the assumed unmet functionality and invalidates the production recommendation despite credible general menu-navigation pain. Future reviewers should check original source URLs and account for version/installation limits before reversing again.
+
+--- 
+
+
+
+**HISTORICAL INITIAL RESEARCH VERDICT (SUPERSEDED BY SECOND-PASS NO_GO ABOVE): CONDITIONAL_PROOF_ONLY — 2026-11-19.** **Repository record:** planned/unvalidated; Phase 1 record in the working_phase_2 handoff, NOT a successful proof, release, approval, sale or completed project. **Market outcome is unvalidated.** Broad production is NOT approved by this research and must wait for B01 and B02 decision gates. No spending, public listing, person-directed outreach or new account action is authorized.
 
 ## 1. Executive decision and immutable scope
 

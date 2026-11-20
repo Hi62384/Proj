@@ -119,6 +119,41 @@
   ]
 }
 ---
+
+## Phase A evidence and Phase B/C handoff alignment (2026-11-19)
+
+This section cross-references the existing plan against the current Phase 1 megaprompt. **It does not establish new market validation, buyer purchases, engine compatibility, legal clearance or release readiness.** Preserve the existing dated execution history and its verified results. The authoritative `project_phase` remains unchanged.
+
+### A. Idea, demand and adversarial research
+- **Offer and buyer:** Historical Save Regression Lab. Retain the technical scope, buyer job-to-be-done, earliest usable full paid release and conditions for declining purchase documented below.
+- **Paid-demand state:** Unvalidated until independently evidenced; promising engineering tests do not prove willingness to pay.
+- **Free and paid alternatives:** Unity Test Framework, native save/load tests, existing backup and restore workflows, open-source fixtures, scripting and AI-assisted DIY. Compare current capabilities, costs, installation friction and learning time before pricing or distribution.
+- **Disconfirming challenge:** Demonstrate on a real contained project that multi-file, scene and inventory restore bugs are detected more reliably or cheaply than native fixtures. Treat a comparison failure or inability to verify isolation as a stop or scope-reduction trigger.
+
+### B. Explicit Phase A acceptance ledger
+| Research gate | Existing source of truth | Evidence required |
+| --- | --- | --- |
+| Idea and duplication | Sections 1–4 | No conflicting active equivalent; buyer and purchase trigger identified |
+| Alternatives/AI DIY | Sections 5 and 7 | Current dated comparable baseline, including free tools |
+| Price and portfolio economics | Section 8 | Net CAD contribution after fees, ongoing costs and refunds; not gross |
+| Technical compatibility | Sections 6, 10–13 | Tested Unity edition; other engines remain proposals until verified |
+| Distribution eligibility | Sections 9, 14–15 | Each marketplace assessed independently, verified eligibility and costs |
+| Acquisition and launch | Sections 9 and 15 | Marketing channels distinct from storefront destinations, permission and measurement |
+| Passive operating fit | Sections 16–18 | Owner hours/month, minutes per order, maintenance, exceptions and cash spend |
+| Independent red-team | Sections 7, 18 and dated results | Reproducible negative case, limitations and unresolved blockers |
+
+These pointers do **not** mark open gates complete. Revalidate dated evidence before making external sale claims.
+
+### C. Ordered project phases
+- **Phase 1 · Research/create:** Preserved research and plan. Continue evidence gaps only, without pretending the Phase 1 alignment is a new full research run.
+- **Phase 2 · Build/test/distribute preparation:** Read the newest checkpoint, reconcile the actual Unity test environment and existing work, complete the real-game comparison and negative-case QA, package verified engine adapters and prepare authorized listings. Keep project-owned new files in the sibling `work/` tree unless reconciling existing paths.
+- **Phase 3 · Market/operate:** Only after genuine readiness and permissions, submit eligible listings and promote the actual product through distinct channels. Track links, net contribution, customer support load and revision triggers.
+- **Complete:** Record verified delivery/sale URL and marketing URL with a factual summary; preserve the durable completion receipt.
+
+### D. Governance and resume
+The CAD100 planning ceiling is **not** permission to spend: new authorized spending stays CAD0. No unapproved paid ads, account actions, contact, uploads or publication. Preserve the existing source register and all checkpoints, check worker ownership before editing and continue independent authorized steps. Never create a project-specific branch; use current `main` with safe concurrent-change checks.
+
+---
 
 ## Execution persistence for this project
 

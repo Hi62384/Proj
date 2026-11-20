@@ -29,6 +29,26 @@ class ProjectLifecycleTests(unittest.TestCase):
         self.assertEqual(self.legacy.read_bytes(), original)
         self.assertEqual(read_completions(self.repo), [])
 
+    def test_phase_can_move_back_and_forward(self):
+        set_phase(self.repo, self.selection, "working_phase_3")
+        self.assertEqual(set_phase(self.repo, self.selection, "working_phase_2")["project_phase"],
+                         "working_phase_2")
+        self.assertEqual(set_phase(self.repo, self.selection, "working_phase_3")["project_phase"],
+                         "working_phase_3")
+        self.assertFalse(read_completions(self.repo))
+
+    def test_completed_project_can_be_demoted_and_receipt_revoked(self):
+        set_phase(self.repo, self.selection, "working_phase_3")
+        set_phase(self.repo, self.selection, "complete", description="Verified fictional package",
+                  sale_urls=["https://example.org/store"],
+                  marketing_urls=["https://example.org/promo"])
+        self.assertEqual(len(read_completions(self.repo)), 1)
+        set_phase(self.repo, self.selection, "working_phase_3")
+        self.assertFalse(read_completions(self.repo))
+        set_phase(self.repo, self.selection, "working_phase_2")
+        self.assertEqual(project_phase(json.loads(self.legacy.read_text().split("---", 2)[1])),
+                         "working_phase_2")
+
     def test_completion_survives_original_file_deletion(self):
         set_phase(self.repo, self.selection, "working_phase_3")
         result = set_phase(self.repo, self.selection, "complete", description="A verified fictional release.",

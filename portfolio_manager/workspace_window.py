@@ -9,7 +9,7 @@ import re
 from PySide6.QtCore import QEvent, QRect, QSignalBlocker, Qt, QTimer
 from PySide6.QtGui import QBrush, QColor, QIcon, QImageReader, QPainter, QPixmap
 from PySide6.QtWidgets import (QApplication, QComboBox, QFormLayout, QHBoxLayout, QLabel, QLineEdit, QMainWindow,
-                               QMenu, QPlainTextEdit, QPushButton, QScrollArea, QSplitter, QTextBrowser,
+                               QMenu, QInputDialog, QMessageBox, QPlainTextEdit, QPushButton, QScrollArea, QSplitter, QTextBrowser,
                                QStyle, QTabWidget, QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget)
 
 from .workspace import context_path
@@ -316,9 +316,6 @@ class WorkspaceWindow(QMainWindow):
         self.view_mode.setAccessibleName('Workspace section')
         self.view_mode.addItem('Projects', 'projects')
         self.view_mode.addItem('Completed Projects', 'completed')
-        self.view_mode.addItem('Niches', 'niches')
-        self.view_mode.addItem('History & Existing Work', 'history')
-        self.view_mode.addItem('Repository files', 'files')
         self.view_mode.activated.connect(self._change_view)
         layout.addWidget(self.view_mode)
         self.find = QLineEdit()
@@ -385,6 +382,22 @@ class WorkspaceWindow(QMainWindow):
         research_layout.addRow('Planning budget (CAD)', self.research_budget)
         research_layout.addRow(self.copy_prompt)
         details.addWidget(self.research_tools)
+        self.phase_controls = QWidget()
+        phase_layout = QHBoxLayout(self.phase_controls)
+        phase_layout.setContentsMargins(0, 0, 0, 0)
+        phase_layout.addWidget(QLabel('Project phase'))
+        self.phase_selector = QComboBox()
+        self.phase_selector.setAccessibleName('Project phase')
+        self.phase_selector.addItem('Phase 2 · Build & Verify', 'working_phase_2')
+        self.phase_selector.addItem('Phase 3 · Market & Operate', 'working_phase_3')
+        self.phase_selector.addItem('Complete · Verified', 'complete')
+        phase_layout.addWidget(self.phase_selector, 1)
+        self.phase_apply = QPushButton('Update Phase')
+        self.phase_apply.clicked.connect(self._apply_project_phase)
+        phase_layout.addWidget(self.phase_apply)
+        self.phase_controls.hide()
+        self._phase_project = None
+        details.addWidget(self.phase_controls)
         details.addWidget(self.project_tabs)
         details.addWidget(self.completed_detail)
         details.addWidget(self.preview)
@@ -968,6 +981,8 @@ class WorkspaceWindow(QMainWindow):
             self._preview(selection)
 
     def _preview(self, selection):
+        self._phase_project = None
+        self.phase_controls.hide()
         self.image.clear()
         self.image_scroll.hide()
         self.project_tabs.hide()
@@ -1103,9 +1118,66 @@ class WorkspaceWindow(QMainWindow):
              'No remaining checklist recorded; see the next step.') +
             '\n\nProgress percentage: not measured.')
         self.project_record.setPlainText(raw)
+        if not archived and project_record_leaf(selection):
+            from .project_lifecycle import project_phase
+            stage = project_phase(meta)
+            self._phase_project = selection
+            self.phase_selector.setCurrentIndex(self.phase_selector.findData(stage))
+            self.phase_selector.setEnabled(stage != 'complete')
+            self.phase_apply.setEnabled(stage != 'complete')
+            self.phase_controls.show()
         self.project_tabs.setCurrentIndex(0)
         self.project_tabs.show()
         self.preview.hide()
+
+    def _apply_project_phase(self):
+        """Advance the selected canonical project using validated lifecycle transitions."""
+        selection = self._phase_project
+        if not selection:
+            return
+        from .project_lifecycle import set_phase, project_phase, record_path
+        from business_portfolio.tools.build_browser import parse_project
+        target = self.phase_selector.currentData()
+        try:
+            path = record_path(self.repo, selection)
+            metadata, _ = parse_project(path.read_text(encoding='utf-8'), selection)
+            current = project_phase(metadata)
+            if target == current:
+                self.notice.setText('Project is already in this phase.')
+                self.notice.show()
+                return
+            if (current, target) not in {('working_phase_2', 'working_phase_3'),
+                                         ('working_phase_3', 'complete')}:
+                raise ValueError('Advance Phase 2 → Phase 3 → Complete, in order.')
+            arguments = {}
+            if target == 'complete':
+                description, ok = QInputDialog.getMultiLineText(
+                    self, 'Verified completion', 'Brief factual description of completed work:')
+                if not ok:
+                    return
+                sale, ok = QInputDialog.getText(
+                    self, 'Verified completion', 'Public sale, download or delivery URL:')
+                if not ok:
+                    return
+                marketing, ok = QInputDialog.getText(
+                    self, 'Verified completion', 'Public marketing URL:')
+                if not ok:
+                    return
+                arguments = {'description': description, 'sale_urls': [sale],
+                             'marketing_urls': [marketing]}
+            elif QMessageBox.question(
+                    self, 'Advance project phase',
+                    'Mark this project as Phase 3? This changes the canonical project record.') != QMessageBox.StandardButton.Yes:
+                return
+            set_phase(self.repo, selection, target, **arguments)
+            self.notice.setText('Project phase saved locally. Commit and push the updated record to share it.')
+            self.notice.show()
+            self._preview(selection)
+            self._refresh_project_phase_rows()
+        except (OSError, ValueError, TypeError) as error:
+            self.notice.setText('Could not update project phase: ' + str(error)[:300])
+            self.notice.show()
+            self._preview(selection)
 
     def closeEvent(self, event):
         self._sync.stop()

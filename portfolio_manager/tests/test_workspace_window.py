@@ -277,6 +277,38 @@ class WorkspaceWindowTests(unittest.TestCase):
                 if window:window.close()
                 host.close()
 
+    def test_project_phase_control_uses_validated_transitions(self):
+        with TemporaryDirectory() as temp:
+            root = Path(temp)
+            repo = root / 'repo'
+            record = _record(repo, 'DEMO-015')
+            host = ManagerHost(repo, root / 'state')
+            window = None
+            try:
+                from portfolio_manager.workspace_window import WorkspaceWindow
+                window = WorkspaceWindow(host, host.workspace('b' * 32, {}),
+                                         on_emergency=lambda: None, on_stop_all=lambda: None,
+                                         on_access=lambda _: None, on_close=lambda _: None)
+                selection = record.relative_to(repo).as_posix()
+                window._preview(selection)
+                self.assertFalse(window.phase_controls.isHidden())
+                self.assertEqual(window.phase_selector.currentData(), 'working_phase_2')
+                self.assertEqual([window.view_mode.itemText(i)
+                                  for i in range(window.view_mode.count())],
+                                 ['Projects', 'Completed Projects'])
+                window.phase_selector.setCurrentIndex(window.phase_selector.findData('working_phase_3'))
+                from PySide6.QtWidgets import QMessageBox
+                with patch.object(QMessageBox, 'question', return_value=QMessageBox.StandardButton.Yes):
+                    window._apply_project_phase()
+                from business_portfolio.tools.build_browser import parse_project
+                meta, _ = parse_project(record.read_text(encoding='utf-8'), selection)
+                self.assertEqual(meta['project_phase'], 'working_phase_3')
+                self.assertEqual(window.phase_selector.currentData(), 'working_phase_3')
+            finally:
+                if window:
+                    window.close()
+                host.close()
+
     def test_optional_repository_explorer_loads_without_blocking(self):
         with TemporaryDirectory() as temp:
             root = Path(temp)
@@ -292,8 +324,12 @@ class WorkspaceWindowTests(unittest.TestCase):
                                          on_stop_all=lambda: None, on_access=lambda: None,
                                          on_close=lambda _: None)
                 self.assertNotIn('architecture.html', [name for name, _ in project_entries(repo)])
-                window.view_mode.setCurrentIndex(window.view_mode.findData('files'))
-                window._change_view()
+                # Repository browsing remains supported internally, but is no longer
+                # exposed in the two-choice end-user section selector.
+                self.assertEqual([window.view_mode.itemText(i) for i in range(window.view_mode.count())],
+                                 ['Projects', 'Completed Projects'])
+                window._tree_mode = 'files'
+                window._root_node()
                 deadline = perf_counter() + 3
                 while window._file_loads and perf_counter() < deadline:
                     window.sync()

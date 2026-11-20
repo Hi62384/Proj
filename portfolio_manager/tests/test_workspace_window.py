@@ -45,7 +45,18 @@ class WorkspaceWindowTests(unittest.TestCase):
         roots = [row for row in rows if row[0].count('/') == 2]
         self.assertEqual(len(roots),5)
         self.assertEqual([row[3] for row in roots],list(range(1,6)))
-        self.assertEqual([row[2] for row in roots],[2,0,0,0,0])
+        # Derive expected totals from canonical project records, not a hardcoded
+        # count. Phase 1 can add project folders without changing this test.
+        expected_counts = []
+        for row in roots:
+            category = repo / row[0]
+            paths = list(category.glob('**/projects/*/project.md'))
+            paths += list(category.glob('**/projects/*.md'))
+            expected_counts.append(sum(
+                path.is_file() and 'work' not in path.relative_to(category).parts
+                for path in paths
+            ))
+        self.assertEqual([row[2] for row in roots],expected_counts)
         entries = dict(project_entries(repo))
         self.assertTrue(all(entries.get(row[0]) for row in rows))
 

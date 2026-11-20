@@ -20,10 +20,7 @@
     "GDM-ROBLOX-STORE"
   ],
   "parent_project": null,
-  "related_projects": [
-    "GDM-001",
-    "GDM-003"
-  ],
+  "related_projects": [],
   "legacy_ids": [],
   "next_action": "Investigate the editor warning and visually verify the stop marker and interactive demo, then integrate a representative real-game controller and complete rights and release QA; retain CAD0 and require owner approval for publication.",
   "last_reviewed": "2026-11-18",

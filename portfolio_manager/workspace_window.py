@@ -421,9 +421,10 @@ class WorkspaceWindow(QMainWindow):
         self.copy_prompt = QPushButton('Copy Prompt')
         self.copy_prompt.setAccessibleName('Copy Prompt')
         prompt_menu = QMenu(self.copy_prompt)
-        first_phase = prompt_menu.addMenu('Phase 1 · Research or Create')
+        first_phase = prompt_menu.addMenu('Phase 1 · Research, Create & Recheck')
         first_phase.addAction('Research a Business Opportunity', lambda: self._copy_megaprompt('research'))
         first_phase.addAction('Create a Project from My Idea', lambda: self._copy_megaprompt('idea'))
+        first_phase.addAction('Recheck or Replace Current Project', lambda: self._copy_megaprompt('recheck'))
         prompt_menu.addAction('Phase 2 · Build, Test & Prepare', lambda: self._copy_megaprompt('phase2'))
         prompt_menu.addAction('Phase 3 · Launch & Market', lambda: self._copy_megaprompt('phase3'))
         self.copy_prompt.setMenu(prompt_menu)
@@ -976,11 +977,27 @@ class WorkspaceWindow(QMainWindow):
         except (OSError, ValueError, TypeError):
             return None
 
+    def _recheck_initial_hint(self):
+        """Provide a safe initial project/niche hint without pinning later rechecks."""
+        selection = self.workspace_state.get('selection') or ''
+        if not isinstance(selection, str) or not selection.startswith('business_portfolio/niches/'):
+            return 'AUTO'
+        try:
+            selected = context_path(self.repo, selection)
+            if selected.is_dir() and (selected / 'NICHE.json').is_file():
+                return selection
+            if selected.is_file() and '/projects/' in selection and selected.suffix.lower() == '.md':
+                return selection
+        except (ValueError, OSError):
+            pass
+        return 'AUTO'
+
     def _copy_megaprompt(self, option):
         niche = None
         filenames = {
             'research': 'BUSINESS_OPPORTUNITY_RESEARCH_MEGAPROMPT.md',
             'idea': 'BUSINESS_IDEA_TO_PROJECT_MEGAPROMPT.md',
+            'recheck': 'PHASE_1_RECHECK_REPLACE_MEGAPROMPT.md',
             'phase2': 'PHASE_2_DEVELOPMENT_MEGAPROMPT.md',
             'phase3': 'PHASE_3_MARKETING_MEGAPROMPT.md',
         }
@@ -1018,18 +1035,25 @@ class WorkspaceWindow(QMainWindow):
         budget_pattern = r'(?m)^(\*\*BUDGET_CEILING_CAD:\*\*[ \t]*)([^\r\n]*?\S)([ \t]*)(?=\r?$)'
         niche_pattern = r'(?m)^(\*\*BUSINESS_NICHE:\*\*[ \t]*)([^\r\n]*?\S)([ \t]*)(?=\r?$)'
         idea_pattern = r'(?m)^\*\*PROJECT_IDEA:\*\*[ \t]*\r?\n\r?\n```text\r?\n[\s\S]*?\r?\n```[ \t]*\r?$'
+        hint_pattern = r'(?m)^(\*\*INITIAL_CONTEXT_HINT:\*\*[ \t]*)(AUTO)([ \t]*)(?=\r?$)'
         if (len(re.findall(budget_pattern, prompt)) != 1 or
                 (option == 'research' and len(re.findall(niche_pattern, prompt)) != 1) or
-                (option == 'idea' and len(re.findall(idea_pattern, prompt)) != 1)):
+                (option == 'idea' and len(re.findall(idea_pattern, prompt)) != 1) or
+                (option == 'recheck' and len(re.findall(hint_pattern, prompt)) != 1)):
             self.notice.setText(f'{filename} has missing or invalid setting markers; nothing copied.')
             self.notice.show()
             return
         prompt = re.sub(budget_pattern, lambda match: match.group(1) + budget + match.group(3), prompt, count=1)
         if niche is not None:
             prompt = re.sub(niche_pattern, lambda match: match.group(1) + niche + match.group(3), prompt, count=1)
+        if option == 'recheck':
+            hint = self._recheck_initial_hint()
+            prompt = re.sub(hint_pattern, lambda match: match.group(1) + hint + match.group(3), prompt, count=1)
         prompt = prompt.rstrip() + '\n\n' + PHASE_ONE_RULES.strip() + '\n'
         QApplication.clipboard().setText(prompt)
-        self.notice.setText(f'{"Research prompt for " + niche if niche else "Project idea prompt"} copied (CAD {budget} planning ceiling).')
+        description = ('Research prompt for ' + niche if niche else
+                       'Phase 1 recheck/replace prompt' if option == 'recheck' else 'Project idea prompt')
+        self.notice.setText(f'{description} copied (CAD {budget} planning ceiling).')
         self.notice.show()
 
     def _refresh_preview_if_changed(self, selection):

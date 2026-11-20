@@ -161,7 +161,8 @@ class WorkspaceWindowTests(unittest.TestCase):
         with TemporaryDirectory() as temp:
             root=Path(temp); repo=root/'repo'; _record(repo,'DEMO-011')
             sources=Path(__file__).resolve().parents[2]
-            names=['BUSINESS_OPPORTUNITY_RESEARCH_MEGAPROMPT.md','BUSINESS_IDEA_TO_PROJECT_MEGAPROMPT.md']
+            names=['BUSINESS_OPPORTUNITY_RESEARCH_MEGAPROMPT.md','BUSINESS_IDEA_TO_PROJECT_MEGAPROMPT.md',
+                   'PHASE_1_RECHECK_REPLACE_MEGAPROMPT.md']
             for name in names:
                 (repo/name).write_bytes((sources/name).read_bytes())
             host=ManagerHost(repo,root/'state'); window=None
@@ -170,10 +171,11 @@ class WorkspaceWindowTests(unittest.TestCase):
                 window=WorkspaceWindow(host,host.workspace('f'*32,{}),on_emergency=lambda:None,
                                        on_stop_all=lambda:None,on_access=lambda:None,on_close=lambda _:None)
                 self.assertEqual([a.text() for a in window.copy_prompt.menu().actions()],
-                                 ['Phase 1 · Research or Create','Phase 2 · Build, Test & Prepare',
+                                 ['Phase 1 · Research, Create & Recheck','Phase 2 · Build, Test & Prepare',
                                   'Phase 3 · Launch & Market'])
                 self.assertEqual([a.text() for a in window.copy_prompt.menu().actions()[0].menu().actions()],
-                                 ['Research a Business Opportunity','Create a Project from My Idea'])
+                                 ['Research a Business Opportunity','Create a Project from My Idea',
+                                  'Recheck or Replace Current Project'])
                 window.research_budget.setText('50.25')
                 window._copy_megaprompt('idea')
                 original=(repo/names[1]).read_text(encoding='utf-8')
@@ -190,6 +192,22 @@ class WorkspaceWindowTests(unittest.TestCase):
                 self.assertIn('project.md', self.app.clipboard().text())
                 self.assertIn('Never create an active project simply to satisfy Phase 1.', self.app.clipboard().text())
                 self.assertIn('For NO_GO, RESEARCH_BLOCKED, or CONDITIONAL_PROOF_ONLY', self.app.clipboard().text())
+                window._copy_megaprompt('recheck')
+                expected_recheck=(repo/names[2]).read_text(encoding='utf-8')
+                expected_recheck=expected_recheck.replace('**BUDGET_CEILING_CAD:** 100',
+                                                         '**BUDGET_CEILING_CAD:** 50.25',1)
+                expected_recheck=expected_recheck.replace('**INITIAL_CONTEXT_HINT:** AUTO',
+                                                         '**INITIAL_CONTEXT_HINT:** business_portfolio/niches/demo',1)
+                self.assertTrue(self.app.clipboard().text().replace('\\r\\n','\\n').startswith(expected_recheck.rstrip()))
+                self.assertIn('For NO_GO, RESEARCH_BLOCKED, or CONDITIONAL_PROOF_ONLY',self.app.clipboard().text())
+                self.assertIn('the NEXT paste must naturally target the NEW candidate',self.app.clipboard().text())
+                self.assertEqual(window.notice.text(),'Phase 1 recheck/replace prompt copied (CAD 50.25 planning ceiling).')
+                project_file=_record(repo,'DEMO-022')
+                self.assertTrue(window.select(project_file.relative_to(repo).as_posix()))
+                window._copy_megaprompt('recheck')
+                self.assertIn('**INITIAL_CONTEXT_HINT:** '+project_file.relative_to(repo).as_posix(),
+                              self.app.clipboard().text())
+                self.assertIn('It must never pin future repetitions',self.app.clipboard().text())
                 (repo/names[1]).write_text((repo/names[1]).read_text(encoding='utf-8')+'\nUpdated source.\n',encoding='utf-8')
                 window._copy_megaprompt('idea')
                 self.assertIn('Updated source.\n', self.app.clipboard().text().replace('\r\n','\n'))
@@ -200,7 +218,7 @@ class WorkspaceWindowTests(unittest.TestCase):
                 window._copy_megaprompt('idea');self.assertEqual(self.app.clipboard().text(),prior)
                 (repo/names[1]).unlink();window._copy_megaprompt('idea')
                 self.assertEqual(self.app.clipboard().text(),prior)
-                self.assertEqual(len(list((repo/'business_portfolio/niches').rglob('projects/*.md'))),1)
+                self.assertEqual(len(list((repo/'business_portfolio/niches').rglob('projects/*.md'))),2)
             finally:
                 if window:window.close()
                 host.close()

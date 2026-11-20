@@ -207,7 +207,12 @@ def verify_taxonomy_snapshot(root: Path, active_records: list[dict]) -> dict | N
         migrated = row['new_path']
         if migrated.endswith('.md'):
             migrated = migrated[:-3] + '/project.md'
-        if not old.startswith('niches/') or current[row['id']]['path'] not in {row['new_path'], migrated}:
+        # Historical crosswalk must remain intact even when the owner explicitly
+        # deletes an active project. Only validate active identity if it still exists.
+        if not old.startswith('niches/'):
+            raise ValidationError('Taxonomy project path mismatch')
+        live = current.get(row['id'])
+        if live is not None and live['path'] not in {row['new_path'], migrated}:
             raise ValidationError('Taxonomy project path mismatch')
         if row['preserved_snapshot']!='archive/2026-11-15-taxonomy-view-v1/'+old:
             raise ValidationError('Taxonomy snapshot path mismatch')
@@ -217,7 +222,7 @@ def verify_taxonomy_snapshot(root: Path, active_records: list[dict]) -> dict | N
         meta,_=parse_project(source.read_text(encoding='utf-8'),str(source))
         if any(meta.get(field)!=row[field] for field in ('id','niche_id','niche_path','work_state','commercial_validation')):
             raise ValidationError('Taxonomy project metadata mismatch')
-        if current[row['id']]['niche_id']!='N-gdm-20261115':
+        if live is not None and live['niche_id'] != 'N-gdm-20261115':
             raise ValidationError('Moved game project lost niche identity')
     return {'files':len(manifest),'projects':len(crosswalk)}
 

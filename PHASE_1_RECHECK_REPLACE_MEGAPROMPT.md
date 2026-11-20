@@ -21,7 +21,23 @@ If signals conflict, compare the chronology, canonical IDs and in-chat result; d
 
 This is an unlimited *sequence of manually triggered research reviews*. Each invocation conducts ONE complete recheck and, if necessary, researches ONE vetted replacement. Do not start a never-ending internal loop.
 
-## 2. Challenge the candidate as if you wanted to REJECT it
+## 2. Challenge the candidate without confusing normal launch uncertainty with a failed business
+
+### TEST-FIRST GO — a practical acceptance standard for new products
+
+**Phase 1 selects worthwhile small commercial experiments, NOT new products whose future sales are already proven.** Do not reject an unreleased product simply because it lacks its own buyers, first-month conversion, marketplace rank, unknown-author demand or demonstrated profit. These are unknowable prelaunch, not automatic FAIL/NO_GO. But do not manufacture a GO based on enthusiasm or AI-generated sales forecasts.
+
+**GO_TO_PHASE_B — TEST-FIRST** can be supported by a persuasive combination of independent buyer/workflow pain, relevant existing purchasing behavior or paying category, meaningful reviews/requests, demonstrated genre readership, **plus** specific buyer value or distinctive creative quality beyond the best complete free/native/open-source/AI substitute, practical accessible acquisition, sustainable lower price than an equivalent capable paid offer when required, rights/Canada/platform feasibility and small acceptable cash/time downside. No single listing, comment, like, review count or hypothetical revenue projection proves purchases. The evidence must make a low-risk **test** reasonable, not guarantee a sale.
+
+Three distinct outcomes must not be confused:
+- **Real FAIL / NO_GO:** no credible target audience/use/purchase context after meaningful searching; an equally effective/easy full free alternative without material advantage; unavoidable pricing below sustainable costs; unavailable lawful distribution; or costs/owner work/rights that make a reasonable test unworkable.
+- **Presently knowable decisive UNKNOWN / RESEARCH_BLOCKED:** actual licensing, required fees, platform payout eligibility, decisive competing capabilities or another verifiable fact that could overturn the verdict. Investigate and never invent the answer.
+- **Future TESTABLE hypothesis — NOT a prelaunch fail:** whether this exact unreleased offer will attract its first paying customer, its conversion rate, ranking, first-month profit and how well an unknown creator will sell. Specify Phase B/3 measurement and stop/pivot criteria. **An original creative book/game is not interchangeable with every free work in its genre**. A specialized tool can have a valuable integrated edge over free primitives. A free near-clone or generic AI-produced content without buyer value still fails.
+
+Use the existing `GO_TO_PHASE_B` verdict with the body label **TEST-FIRST / commercially unvalidated**. Preserve actual `commercial_validation: "unvalidated"` and schema-valid project_phase. Phase B starts with the cheapest differentiation/quality/technical proof before broad production; Phase C measures exposure, preference and actual paying demand within budget and permission constraints. Zero-sales stress scenarios matter for acceptable downside but **cannot by themselves reject every new business**.
+
+**Search demand first.** Seek real paying categories, painful workflows, specific buyers or compelling creative segments before brainstorming novel offerings. If 15–30 speculative ideas fail, that does NOT prove the entire niche cannot support a test; examine different paying subsegments and truly differentiated outcomes before a broad NO_GO. Do not force a GO just to meet a quota. Preserve independent skeptical research and reject evidenced fatal problems.
+
 
 The previous GO is a hypothesis, NOT a reason to approve again. Research at the depth of: "After much more digging, would anyone genuinely pay for this, does it already exist for free or cheaper, is the market too crowded, and is it worth our build/marketing/support effort?" Reuse facts and source history, but make **new skeptical searches**, verify current primary pages directly and look for decisive contrary evidence. An independent model's opinion is not market evidence.
 
@@ -40,12 +56,12 @@ Provide a dated gate ledger with PASS / FAIL / UNKNOWN for credible buyer value,
 
 ## 3. Decide: GO, LIMITED PROOF, BLOCKED or NO-GO
 
-- **GO_TO_PHASE_B:** every material applicable gate has credible support. This only means a bounded launch experiment is reasonable; it does not prove the product *will* sell or imply commercial validation. Commercial status remains unvalidated without verified revenue.
+- **GO_TO_PHASE_B:** source-backed relevant buyer/category need, real advantage versus complete substitutes, feasible sustainable cheaper-equivalent paid pricing, reachable acquisition, rights and small downside justify **TEST-FIRST** research approval. Exact first buyers/conversion remain post-launch unvalidated hypotheses.
 - **CONDITIONAL_PROOF_ONLY:** public research is complete, but one decisive technical advantage requires a **small, explicitly bounded side-by-side proof** against the best actual alternative. Specify identical inputs, realistic edge cases, pass/fail measure, time/cash bound, and stop rule. Broad product development remains blocked.
-- **RESEARCH_BLOCKED:** important publicly researchable or inaccessible evidence is still UNKNOWN; describe exactly the missing facts/links and continue useful work without inventing success.
-- **NO_GO:** a decisive gate fails without a realistic in-scope remedy. Explain the actual disqualifier with evidence, not simply a lack of perfect certainty.
+- **RESEARCH_BLOCKED:** a decision-changing fact knowable now (rights, competitor scope, eligibility or mandatory cost) remains unknown after research. Do not block merely because the new product's conversion/sales are unobservable before launch.
+- **NO_GO:** a genuinely decisive sourced problem has no realistic remedy; free goods with a different creative/buyer outcome and an unreleased product's lack of prior buyers are NOT automatically such a problem.
 
-Do not change a verdict to GO just because the owner keeps pasting this prompt. No amount of repeated brainstorming guarantees a profitable opportunity.
+Do not change a verdict merely because the owner repeats this prompt. Do not downgrade a justified TEST-FIRST GO solely because a not-yet-launched product lacks buyers or exact conversion estimates; require real newly verified contrary evidence. Repeated research cannot guarantee profit.
 
 ## 4. If the current project survives
 

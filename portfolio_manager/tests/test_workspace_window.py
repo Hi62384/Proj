@@ -281,7 +281,12 @@ class WorkspaceWindowTests(unittest.TestCase):
         with TemporaryDirectory() as temp:
             root = Path(temp)
             repo = root / 'repo'
-            record = _record(repo, 'DEMO-015')
+            legacy = _record(repo, 'DEMO-015')
+            folder = legacy.parent / 'demo-015'
+            folder.mkdir()
+            record = folder / 'project.md'
+            legacy.rename(record)
+            (folder / 'work').mkdir()
             host = ManagerHost(repo, root / 'state')
             window = None
             try:

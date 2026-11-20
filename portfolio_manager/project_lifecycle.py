@@ -126,7 +126,7 @@ def set_phase(repo: Path, selection: str | Path, phase: str, *,
         old = project_phase(meta)
         allowed = {PHASE_2: {PHASE_2, PHASE_3},
                    PHASE_3: {PHASE_2, PHASE_3, COMPLETE},
-                   COMPLETE: {PHASE_3, COMPLETE}}
+                   COMPLETE: {PHASE_2, PHASE_3, COMPLETE}}
         if phase not in allowed[old]:
             raise ValueError(f"Invalid phase transition from {old} to {phase}.")
         completion = repo / "business_portfolio" / "completed_projects" / (meta["id"] + ".json")

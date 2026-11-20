@@ -1149,14 +1149,12 @@ class WorkspaceWindow(QMainWindow):
                 return
             if target == 'complete':
                 raise ValueError('Codex marks projects Complete after verifying live delivery and marketing links.')
-            if (current, target) not in {('working_phase_2', 'working_phase_3'),
-                                         ('working_phase_3', 'working_phase_2'),
-                                         ('complete', 'working_phase_3')}:
-                raise ValueError('Choose an adjacent phase. Completed projects can return to Phase 3.')
+            if target not in {'working_phase_2', 'working_phase_3'}:
+                raise ValueError('Choose Phase 2 or Phase 3. Codex handles verified completion.')
             if QMessageBox.question(
                     self, 'Change project phase',
                     f'Change this project from {current} to {target}?'
-                    + (' This will revoke its Completed Projects receipt.' if current == 'complete' else '')
+                    + (' This removes its verified Completed Projects receipt until Codex verifies completion again.' if current == 'complete' else '')
                     + ' The canonical record will be updated.') != QMessageBox.StandardButton.Yes:
                 self._preview(selection)
                 return

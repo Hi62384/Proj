@@ -49,6 +49,18 @@ class ProjectLifecycleTests(unittest.TestCase):
         self.assertEqual(project_phase(json.loads(self.legacy.read_text().split("---", 2)[1])),
                          "working_phase_2")
 
+    def test_completed_project_can_return_directly_to_phase_2(self):
+        set_phase(self.repo, self.selection, "working_phase_3")
+        set_phase(self.repo, self.selection, "complete", description="Verified fictional release",
+                  sale_urls=["https://example.org/store"],
+                  marketing_urls=["https://example.org/promo"])
+        self.assertEqual(len(read_completions(self.repo)), 1)
+        result = set_phase(self.repo, self.selection, "working_phase_2")
+        self.assertEqual(result["project_phase"], "working_phase_2")
+        self.assertFalse(read_completions(self.repo))
+        self.assertEqual(project_phase(json.loads(self.legacy.read_text().split("---", 2)[1])),
+                         "working_phase_2")
+
     def test_completion_survives_original_file_deletion(self):
         set_phase(self.repo, self.selection, "working_phase_3")
         result = set_phase(self.repo, self.selection, "complete", description="A verified fictional release.",

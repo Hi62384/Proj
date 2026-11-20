@@ -314,6 +314,24 @@ class WorkspaceWindowTests(unittest.TestCase):
                     window._apply_project_phase()
                 meta, _ = parse_project(record.read_text(encoding='utf-8'), selection)
                 self.assertEqual(meta['project_phase'], 'working_phase_2')
+
+                # The owner can demote a completed project directly to Phase 2.
+                # Verified completion itself remains Codex-only.
+                from portfolio_manager.project_lifecycle import set_phase, read_completions
+                set_phase(repo, selection, 'working_phase_3')
+                set_phase(repo, selection, 'complete', description='Verified fixture',
+                          sale_urls=['https://example.org/release'],
+                          marketing_urls=['https://example.org/announcement'])
+                window._preview(selection)
+                self.assertEqual(window.phase_selector.currentData(), 'complete')
+                self.assertFalse(window.phase_selector.model().item(
+                    window.phase_selector.findData('complete')).isEnabled())
+                window.phase_selector.setCurrentIndex(window.phase_selector.findData('working_phase_2'))
+                with patch.object(QMessageBox, 'question', return_value=QMessageBox.StandardButton.Yes):
+                    window._apply_project_phase()
+                meta, _ = parse_project(record.read_text(encoding='utf-8'), selection)
+                self.assertEqual(meta['project_phase'], 'working_phase_2')
+                self.assertEqual(read_completions(repo), [])
             finally:
                 if window:
                     window.close()

@@ -126,6 +126,48 @@
 }
 ---
 
+## Phase A evidence and Phase B/C handoff alignment (2026-11-19)
+
+This section is a compatibility crosswalk to the current Phase 1 research/idea megaprompt. **No fresh market validation, technical test, sales, platform approval, publication or legal clearance is claimed by this formatting update.** Existing research, source citations, plans, dated logs and assets in this record remain authoritative. Keep the current JSON `project_phase`; prior Phase 2 progress must not be erased.
+
+### A. Idea, buyer and decision
+- Preserve the original project concept, intended buyer/reader, jobs-to-be-done, scope, hard constraints and specific purchase trigger in the existing decision and buyer sections.
+- Project: **GDM-002**. Real buyer-paid demand remains unverified unless independently supported in the project evidence ledger. Evaluate the fastest *credible complete offer*, not an untested prototype.
+- Strongest free/paid/AI-DIY challenges: NavMeshAgent and custom/marketplace transport scripts. Recheck present-day capability and pricing before a sale decision.
+- Critical adversarial proof: capacity, boarding, rerouting, crash/reload tests versus DIY baseline. Reject, narrow or stop if no differentiated reason to buy survives a fair reproducible comparison.
+
+### B. Phase A acceptance ledger
+| Gate | Source of truth | Requirement before claiming it passed |
+| --- | --- | --- |
+| Original idea and duplication | Existing baseline/idea/reuse sections | Same project identity; no conflicting duplicate |
+| Dated evidence and substitutes | Competition/research/source sections | Verifiable sources, free alternatives, AI DIY, adverse case |
+| Differentiation | Offer, technical evidence and risks | Independent meaningful buyer advantage |
+| Price and CAD150/month portfolio contribution | Economics section | Net contribution scenarios after costs and refunds, not gross sales |
+| Compatibility | Technical and QA sections | Real-target reproducible verification before `platforms_supported` |
+| Distribution and eligibility | Distribution/legal sections | Store/publisher eligibility, fees, accounts, rights and payout requirements |
+| Acquisition and ongoing marketing | Marketing/operations sections | Realistic channels, permissions, experiments and upkeep time |
+| Low-touch operating fit | Support/operations/risk sections | Owner minutes/order and hours/month, exceptions and maintenance costs |
+
+This ledger locates old evidence and identifies outstanding checks. It does **not** turn missing proof into a pass.
+
+### C. Distinct Phase B and C matrices
+- **Technical compatibility:** Unity NPC transport and proposed other engine adapters. Track proposed versus verified targets separately; cross-platform marketing does not imply compatibility.
+- **Sale/distribution channels:** For each selected storefront, document seller eligibility, fees, format/policy requirements, approval state and verified publication URL. A proposed listing is not live.
+- **Acquisition channels:** Different from storefronts. Document buyer discovery, reusable assets, permitted promotion, attribution metrics, recurring maintenance and channel stop rules.
+- **Background-work requirements:** Estimate startup and steady-state owner workload, agent workload, manual exceptions, support, refunds, compatibility updates, channel management and monthly cash obligations. Unknown automation is not completed automation.
+
+### D. Explicit execution handoffs and resume instructions
+- **Phase 1 · Research/create:** This preserved plan is the Phase A handoff. Revisit unresolved demand, competitor, legality, compatibility and workload assumptions when evidence becomes available. Do not redo earlier completed work.
+- **Phase 2 · Build/test/prepare:** Read the most recent work log before starting; continue the existing dependency-ordered tasks, build or edit only necessary work, record evidence for real-platform tests, QA and release readiness. Store new project-owned code, assets, drafts, tests and packaging under sibling `work/`; preserve and reconcile already-existing locations.
+- **Phase 3 · Market/operate:** Only after actual readiness and authorization, execute selected storefront and marketing plans, capture URLs and receipts, track real net contribution, owner time and evidence-driven improvements.
+- **Completed:** Only after verified Phase 3 delivery and marketing. Portfolio Manager completion requires a truthful description, a verified sale/download/delivery URL and a verified marketing URL.
+
+**Authorization:** CAD100 is a proposed cumulative ceiling where enforced, not spending approval. New spending remains CAD0 unless separately authorized. Do not create accounts, publish, run paid ads, contact customers or spend solely because this file says to plan those actions.
+
+**Resume checkpoint:** Read this record's latest dated checkpoint and the current `work/` tree, check shared worker assignments, identify the next unmet task and continue all independently authorized work. Never reset verified progress or invent evidence. Commit through `main` after checking for concurrent edits; no per-project branches or force pushes.
+
+---
+
 ## Execution persistence for this project
 
 When the owner asks you to work on this project, continue autonomously through all remaining authorized tasks possible with available access and resources. Do not stop merely because a few minutes passed, after one task, a plan, or a progress update. Continue implementation, appropriate verification, evidence recording, and the next actionable task until the requested work is finished or no further authorized work can be performed. Give progress updates without ending longer work. If authorization, access, payment, another person, or external state blocks an action, complete independent authorized work first, then checkpoint and report the precise blocker and next action. Preserve completed progress, financial evidence, and uncertain external effects; respect existing scope, budget, permissions, and safety controls. Never claim unverified completion.

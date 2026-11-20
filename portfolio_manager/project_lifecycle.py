@@ -115,7 +115,7 @@ def read_completions(repo: Path) -> list[dict]:
 def set_phase(repo: Path, selection: str | Path, phase: str, *,
               description: str | None = None, sale_urls=(),
               marketing_urls=(), other_urls=()) -> dict:
-    """Move to the next phase; Phase 3 -> Complete stores a durable snapshot."""
+    """Change project phase; completion stores a receipt and demotion revokes it."""
     if phase not in PHASES:
         raise ValueError("Choose working_phase_2, working_phase_3, or complete.")
     repo = Path(repo).resolve(strict=True)
@@ -125,11 +125,21 @@ def set_phase(repo: Path, selection: str | Path, phase: str, *,
         meta, _ = parse_project(raw, str(path))
         old = project_phase(meta)
         allowed = {PHASE_2: {PHASE_2, PHASE_3},
-                   PHASE_3: {PHASE_3, COMPLETE},
-                   COMPLETE: {COMPLETE}}
+                   PHASE_3: {PHASE_2, PHASE_3, COMPLETE},
+                   COMPLETE: {PHASE_3, COMPLETE}}
         if phase not in allowed[old]:
             raise ValueError(f"Invalid phase transition from {old} to {phase}.")
         completion = repo / "business_portfolio" / "completed_projects" / (meta["id"] + ".json")
+        if old == COMPLETE and phase != COMPLETE:
+            # A demoted project must no longer appear in Completed Projects.
+            # Only revoke a receipt that belongs to the exact canonical record.
+            if not completion.is_file() or completion.is_symlink():
+                raise ValueError("Completion receipt is missing or unsafe; cannot demote.")
+            existing = json.loads(completion.read_text(encoding="utf-8"))
+            if (existing.get("id") != meta["id"] or
+                    existing.get("source_project") != path.relative_to(repo).as_posix() or
+                    existing.get("project_phase") != COMPLETE):
+                raise ValueError("Completion receipt does not match the selected project.")
         if phase == COMPLETE:
             if not isinstance(description, str) or not description.strip():
                 raise ValueError("Completion requires a short, factual project description.")
@@ -172,6 +182,12 @@ def set_phase(repo: Path, selection: str | Path, phase: str, *,
                 os.fsync(stream.fileno())
         try:
             _atomic_text(path, updated)
+            if old == COMPLETE and phase != COMPLETE:
+                try:
+                    completion.unlink()
+                except OSError:
+                    _atomic_text(path, raw)
+                    raise
         except BaseException:
             if receipt is not None:
                 completion.unlink(missing_ok=True)

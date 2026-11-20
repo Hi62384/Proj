@@ -49,6 +49,8 @@ For EACH tentative finalist or user-supplied idea, require a small **decision ev
 
 **If inherently unworkable:** Deliver one `NO_GO_<idea-slug>.md` decision report instead of a fictitious active project, containing the precise blocker, what research actually established, and the nearest idea-faithful alternative that would resolve it. Do not dismiss an otherwise viable creative work merely because its commercial demand is unproven; a modest, differentiated, inexpensive release can be a legitimate marketplace experiment. A weak/uncertain business case should be openly labeled, not marketed as certainty.
 
+After this first Phase 1 result, the owner may paste the same **PHASE_1_RECHECK_REPLACE_MEGAPROMPT.md** repeatedly to challenge the latest surviving candidate and, if warranted, research a replacement/variation. This backup does NOT excuse incomplete initial viability research or promise eventual approval/sales.
+
 ### Phase A only — research now; specify Phases B and C for later
 
 **Prompt revision: 2026-11-19 — Phase A with full lifecycle handoff.** Executing this entire megaprompt means executing **Phase A only**. Complete the research and decision before writing a full production plan; deliver exactly one project Markdown file or one honest research/no-go report.

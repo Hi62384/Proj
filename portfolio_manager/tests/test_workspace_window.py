@@ -184,6 +184,9 @@ class WorkspaceWindowTests(unittest.TestCase):
                 self.assertIn('project.md', self.app.clipboard().text())
                 self.assertIn('Never create an active project simply to satisfy Phase 1.', self.app.clipboard().text())
                 self.assertIn('For NO_GO, RESEARCH_BLOCKED, or CONDITIONAL_PROOF_ONLY', self.app.clipboard().text())
+                window._copy_megaprompt('recheck')
+                self.assertIn('**INITIAL_CONTEXT_HINT:** AUTO',self.app.clipboard().text())
+                self.assertIn('GO_TO_PHASE_B',self.app.clipboard().text())
                 self.assertTrue(window.select('business_portfolio/niches/demo'))
                 window._copy_megaprompt('research')
                 original=(repo/names[0]).read_text(encoding='utf-8')
@@ -198,7 +201,7 @@ class WorkspaceWindowTests(unittest.TestCase):
                                                          '**BUDGET_CEILING_CAD:** 50.25',1)
                 expected_recheck=expected_recheck.replace('**INITIAL_CONTEXT_HINT:** AUTO',
                                                          '**INITIAL_CONTEXT_HINT:** business_portfolio/niches/demo',1)
-                self.assertTrue(self.app.clipboard().text().replace('\\r\\n','\\n').startswith(expected_recheck.rstrip()))
+                self.assertTrue(self.app.clipboard().text().replace('\r\n','\n').startswith(expected_recheck.rstrip()))
                 self.assertIn('For NO_GO, RESEARCH_BLOCKED, or CONDITIONAL_PROOF_ONLY',self.app.clipboard().text())
                 self.assertIn('the NEXT paste must naturally target the NEW candidate',self.app.clipboard().text())
                 self.assertEqual(window.notice.text(),'Phase 1 recheck/replace prompt copied (CAD 50.25 planning ceiling).')

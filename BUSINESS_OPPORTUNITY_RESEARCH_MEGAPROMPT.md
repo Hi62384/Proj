@@ -37,6 +37,8 @@ Your first task is to decide, through rigorous research, whether **any** nondupl
 
 This is a universal business-research prompt, **not** a digital-product-only prompt. Every candidate must also pass the passive/background operating-fit gate below; a listed business model is not automatically suitable. It must adapt to software, original games, creative media, services, ecommerce, dropshipping, affiliate marketing, advertising, licensing, data, automation, lead generation, APIs, investments, financial research, and any other legal business model that actually belongs to the selected niche. Some businesses require developing something; others require sourcing, providing a service, building distribution, managing operations, or allocating capital. Do not add irrelevant engineering sections just to resemble a software project.
 
+After this first Phase 1 result, the owner may paste the same **PHASE_1_RECHECK_REPLACE_MEGAPROMPT.md** repeatedly. That independent backup must scrutinize the latest surviving candidate, and if it fails, vet a variation or another within-niche idea before making a replacement. Rechecks are NOT permission to skip full buyer/competitor research now and never guarantee eventual sales or approval.
+
 ### Phase A only — research now; specify Phases B and C for later
 
 **Prompt revision: 2026-11-19 — Phase A with full lifecycle handoff.** Executing this entire megaprompt means executing **Phase A only**. Complete the research and decision before writing a full production plan; deliver exactly one project Markdown file or one honest research/no-go report.

@@ -44,7 +44,7 @@ class WorkspaceWindowTests(unittest.TestCase):
         roots = [row for row in rows if row[0].count('/') == 2]
         self.assertEqual(len(roots),5)
         self.assertEqual([row[3] for row in roots],list(range(1,6)))
-        self.assertEqual([row[2] for row in roots],[4,0,0,0,0])
+        self.assertEqual([row[2] for row in roots],[2,0,0,0,0])
         entries = dict(project_entries(repo))
         self.assertTrue(all(entries.get(row[0]) for row in rows))
 
@@ -309,6 +309,11 @@ class WorkspaceWindowTests(unittest.TestCase):
                 meta, _ = parse_project(record.read_text(encoding='utf-8'), selection)
                 self.assertEqual(meta['project_phase'], 'working_phase_3')
                 self.assertEqual(window.phase_selector.currentData(), 'working_phase_3')
+                window.phase_selector.setCurrentIndex(window.phase_selector.findData('working_phase_2'))
+                with patch.object(QMessageBox, 'question', return_value=QMessageBox.StandardButton.Yes):
+                    window._apply_project_phase()
+                meta, _ = parse_project(record.read_text(encoding='utf-8'), selection)
+                self.assertEqual(meta['project_phase'], 'working_phase_2')
             finally:
                 if window:
                     window.close()

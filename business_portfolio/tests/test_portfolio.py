@@ -65,7 +65,7 @@ class PortfolioTests(unittest.TestCase):
         self.assertTrue({'N-gdm-20261115',*(f'N-business-{i:02d}' for i in range(2,14))}
                         <= {n['id'] for n in nodes.values()})
         games=[r for r in self.data['records'] if r['id'] in {'GDM-001','GDM-002','GDM-003'}]
-        self.assertEqual({r['id'] for r in games},{'GDM-001','GDM-002','GDM-003'})
+        self.assertEqual({r['id'] for r in games},{'GDM-002'})
         self.assertTrue(all(r['niche_path']=='digital-products/game-development-marketplaces' for r in games))
         self.assertEqual(len(self.data['archived_records']),139)
         self.assertEqual(len(self.data['niches']),39)

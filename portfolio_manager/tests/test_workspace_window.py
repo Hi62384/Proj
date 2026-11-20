@@ -3,6 +3,7 @@ import os
 import json
 from pathlib import Path
 import sys
+import threading
 from tempfile import TemporaryDirectory
 from time import perf_counter
 from types import SimpleNamespace
@@ -48,6 +49,81 @@ class WorkspaceWindowTests(unittest.TestCase):
         entries = dict(project_entries(repo))
         self.assertTrue(all(entries.get(row[0]) for row in rows))
 
+    def test_slow_navigation_scan_does_not_block_expanding_tree(self):
+        with TemporaryDirectory() as temp:
+            root=Path(temp);repo=root/'repo';_record(repo,'DEMO-020')
+            host=ManagerHost(repo,root/'state');window=None
+            release=threading.Event();started=threading.Event()
+            try:
+                from portfolio_manager.workspace_window import WorkspaceWindow
+                window=WorkspaceWindow(host,host.workspace('b'*32,{}),on_emergency=lambda:None,
+                                       on_stop_all=lambda:None,on_access=lambda _:None,on_close=lambda _:None)
+                window._entry_future.result(timeout=5);window.sync()
+                if window._signature_future:
+                    window._signature_future.result(timeout=5);window.sync()
+                window._signature_future=None;window._next_signature_check=0
+                def slow_scan():
+                    started.set();release.wait(5);return ()
+                with patch.object(window,'_current_working_signature',side_effect=slow_scan):
+                    before=perf_counter();window.sync()
+                    self.assertLess(perf_counter()-before,1)
+                    self.assertTrue(started.wait(1))
+                    item=window.tree.topLevelItem(0)
+                    item.setExpanded(False);item.setExpanded(True)
+                    before=perf_counter();window.sync()
+                    self.assertLess(perf_counter()-before,1)
+                    self.assertTrue(item.isExpanded())
+            finally:
+                release.set()
+                if window:window.close()
+                host.close()
+
+    def test_niche_count_skips_project_work_directories(self):
+        with TemporaryDirectory() as temp:
+            repo=Path(temp)/'repo';_record(repo,'DEMO-021')
+            work=repo/'business_portfolio/niches/demo/projects/example/work'
+            work.mkdir(parents=True)
+            (work/'NICHE.json').write_text('not portfolio metadata',encoding='utf-8')
+            original=os.walk
+            visited=[]
+            def tracked(*args,**kwargs):
+                for folder, dirs, files in original(*args,**kwargs):
+                    visited.append(Path(folder))
+                    yield folder, dirs, files
+            with patch('portfolio_manager.workspace_window.os.walk', side_effect=tracked):
+                rows=niche_entries(repo)
+            self.assertEqual(rows[0][2],1)
+            self.assertNotIn(work,visited)
+
+    def test_slow_folder_preview_does_not_block_or_replace_new_selection(self):
+        with TemporaryDirectory() as temp:
+            root=Path(temp);repo=root/'repo';_record(repo,'DEMO-022')
+            (repo/'sample.txt').write_text('new selection',encoding='utf-8')
+            host=ManagerHost(repo,root/'state');window=None
+            release=threading.Event();started=threading.Event()
+            try:
+                from portfolio_manager.workspace_window import WorkspaceWindow, folder_preview
+                window=WorkspaceWindow(host,host.workspace('c'*32,{}),on_emergency=lambda:None,
+                                       on_stop_all=lambda:None,on_access=lambda _:None,on_close=lambda _:None)
+                window._entry_future.result(timeout=5);window.sync()
+                if window._preview_future:
+                    window._preview_future[1].result(timeout=5);window.sync()
+                def slow_preview(repo, selection):
+                    started.set();release.wait(5);return folder_preview(repo, selection)
+                with patch('portfolio_manager.workspace_window.folder_preview', side_effect=slow_preview):
+                    before=perf_counter()
+                    self.assertTrue(window.select('business_portfolio/niches/demo'))
+                    self.assertLess(perf_counter()-before,1)
+                    self.assertTrue(started.wait(1))
+                    self.assertTrue(window.select('sample.txt'))
+                    self.assertEqual(window.preview.toPlainText(),'new selection')
+                    release.set();window.sync()
+                    self.assertEqual(window.preview.toPlainText(),'new selection')
+            finally:
+                release.set()
+                if window:window.close()
+                host.close()
+
     def test_phase2_prompt_button_copies_complete_goal(self):
         with TemporaryDirectory() as temp:
             root=Path(temp);repo=root/'repo';_record(repo,'DEMO-012')
@@ -60,7 +136,7 @@ class WorkspaceWindowTests(unittest.TestCase):
                                        on_stop_all=lambda:None,on_access=lambda _:None,on_close=lambda _:None)
                 self.app.clipboard().setText('previous')
                 window._copy_megaprompt('phase2')
-                self.assertEqual(self.app.clipboard().text(), source.read_text(encoding='utf-8'))
+                self.assertEqual(self.app.clipboard().text().replace('\r\n','\n'), source.read_text(encoding='utf-8'))
                 self.assertTrue(self.app.clipboard().text().startswith('/goal '))
                 self.assertIn('working_phase_3', self.app.clipboard().text())
                 self.assertEqual(window.notice.text(), 'Phase 2 development megaprompt copied.')
@@ -91,17 +167,17 @@ class WorkspaceWindowTests(unittest.TestCase):
                 window._copy_megaprompt('idea')
                 original=(repo/names[1]).read_text(encoding='utf-8')
                 expected=original.replace('**BUDGET_CEILING_CAD:** 100','**BUDGET_CEILING_CAD:** 50.25',1)
-                self.assertTrue(self.app.clipboard().text().startswith(expected.rstrip()))
+                self.assertTrue(self.app.clipboard().text().replace('\r\n','\n').startswith(expected.rstrip()))
                 self.assertIn('project.md', self.app.clipboard().text())
                 self.assertTrue(window.select('business_portfolio/niches/demo'))
                 window._copy_megaprompt('research')
                 original=(repo/names[0]).read_text(encoding='utf-8')
                 expected=original.replace('**BUSINESS_NICHE:** Game Development Marketplaces','**BUSINESS_NICHE:** Demo',1).replace('**BUDGET_CEILING_CAD:** 100','**BUDGET_CEILING_CAD:** 50.25',1)
-                self.assertTrue(self.app.clipboard().text().startswith(expected.rstrip()))
+                self.assertTrue(self.app.clipboard().text().replace('\r\n','\n').startswith(expected.rstrip()))
                 self.assertIn('project.md', self.app.clipboard().text())
                 (repo/names[1]).write_text((repo/names[1]).read_text(encoding='utf-8')+'\nUpdated source.\n',encoding='utf-8')
                 window._copy_megaprompt('idea')
-                self.assertIn('Updated source.\n', self.app.clipboard().text())
+                self.assertIn('Updated source.\n', self.app.clipboard().text().replace('\r\n','\n'))
                 prior=self.app.clipboard().text()
                 window.research_budget.setText('-1');window._copy_megaprompt('idea')
                 self.assertEqual(self.app.clipboard().text(),prior)

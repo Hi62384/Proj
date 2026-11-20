@@ -5,6 +5,7 @@ import json
 import html
 from pathlib import Path, PurePosixPath
 import re
+import time
 
 from PySide6.QtCore import QEvent, QRect, QSignalBlocker, Qt, QTimer
 from PySide6.QtGui import QBrush, QColor, QIcon, QImageReader, QPainter, QPixmap
@@ -47,6 +48,38 @@ def children(repo, parent):
             continue
         found.append((name, path.is_dir()))
     return sorted(found, key=lambda item: (not item[1], item[0].casefold()))
+
+
+def folder_preview(repo, selection):
+    """Read a folder preview off the UI thread."""
+    path = context_path(repo, selection)
+    entries = children(repo, path)
+    names = [PurePosixPath(name).name + ('/' if directory else '') for name, directory in entries[:50]]
+    contents = '\n'.join(names) if names else 'This folder has no visible items.'
+    if path.is_relative_to(repo / 'business_portfolio/niches') and path.name != 'projects':
+        if not (path / 'projects').is_dir():
+            contents = ('No projects directly in this niche; browse its subniches.\n\n'
+                        if any(directory for _, directory in entries) else 'No active projects.\n\n') + contents
+    if len(entries) > 50:
+        contents += f'\n… and {len(entries) - 50} more items.'
+    summary, readme_name, readme_signature = '', None, ()
+    for name, directory in entries:
+        if not directory and PurePosixPath(name).name.casefold() in {'readme', 'readme.md', 'readme.txt'}:
+            try:
+                readme = context_path(repo, name)
+                with readme.open('rb') as file:
+                    data = file.read(4001)
+                if b'\x00' not in data:
+                    info = readme.stat()
+                    readme_name = name
+                    readme_signature = (info.st_mtime_ns, info.st_ctime_ns, info.st_size)
+                    summary = '\n\n' + data[:4000].decode('utf-8', errors='replace').strip()
+                    if len(data) > 4000:
+                        summary += '\n…'
+            except (ValueError, OSError):
+                pass
+            break
+    return f'{selection}{summary}\n\n{contents}', readme_name, readme_signature
 
 
 def search_paths(repo, query):
@@ -177,17 +210,28 @@ def niche_entries(repo):
     rows = []
     if not base.is_dir():
         return rows
-    for metadata in base.rglob('NICHE.json'):
-        folder = metadata.parent
-        if not folder.is_dir() or folder.is_symlink():
+    metadata_paths = []
+    project_folders = []
+    for folder, dirs, files in os.walk(base, followlinks=False):
+        here = Path(folder)
+        dirs[:] = [name for name in dirs if not name.startswith('.') and not (here / name).is_symlink()]
+        if here.name == 'projects':
+            count = sum(name.lower().endswith('.md') and (here / name).is_file() for name in files)
+            count += sum((here / name / 'project.md').is_file() and
+                         not (here / name / 'project.md').is_symlink() for name in dirs)
+            project_folders.append((here.parent, count))
+            dirs[:] = []  # Project work trees can contain thousands of files.
             continue
+        if 'NICHE.json' in files:
+            metadata_paths.append(here / 'NICHE.json')
+    for metadata in metadata_paths:
+        folder = metadata.parent
         try:
             relative = context_path(repo, folder).relative_to(repo).as_posix()
             meta = json.loads(metadata.read_text(encoding='utf-8'))
             if meta.get('path') != folder.relative_to(base).as_posix():
                 continue
-            count = (sum(1 for p in folder.rglob('projects/*.md') if p.is_file()) +
-                     sum(1 for p in folder.rglob('projects/*/project.md') if p.is_file()))
+            count = sum(number for parent, number in project_folders if parent.is_relative_to(folder))
             rows.append((relative, meta['title'], count, meta.get('priority', 999),
                          meta['id'], meta.get('working', False), meta.get('parent')))
         except (ValueError, OSError, KeyError, TypeError):
@@ -209,12 +253,15 @@ class WorkspaceWindow(QMainWindow):
         self._search_view = False
         self._preview_signature = None
         self._preview_readme = None
-        self._pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix='workspace-files')
+        self._preview_future = None
+        self._pool = ThreadPoolExecutor(max_workers=2, thread_name_prefix='workspace-files')
         self._project_entries = []
         self._history_entries = []
         self._completed_entries = []
         self._niche_entries = []
         self._working_signature = None
+        self._signature_future = None
+        self._next_signature_check = 0.0
         self._research_prompt = None
         self._budget_setting = self.repo / 'business_portfolio' / '.research_prompt_budget'
         self._entry_future = self._pool.submit(self._load_navigation_entries, self.repo)
@@ -413,8 +460,9 @@ class WorkspaceWindow(QMainWindow):
 
     @staticmethod
     def _load_navigation_entries(repo):
+        signature = navigation_signature(repo)
         niches = niche_entries(repo)
-        return project_entries(repo, niches), history_entries(repo), completed_entries(repo), niches
+        return project_entries(repo, niches), history_entries(repo), completed_entries(repo), niches, signature
 
     def _set_mode(self):
         try:
@@ -465,6 +513,7 @@ class WorkspaceWindow(QMainWindow):
 
     def _root_node(self):
         self._search_view = False
+        self._file_loads.clear()  # Tree items are about to be destroyed.
         self.tree.setUpdatesEnabled(False)
         try:
             self._populate_root_node()
@@ -718,14 +767,19 @@ class WorkspaceWindow(QMainWindow):
     def sync(self):
         try:
             if self._entries_ready and self._tree_mode in {'projects', 'niches', 'completed'}:
-                signature = self._current_working_signature()
-                if signature != self._working_signature:
+                if self._signature_future is not None and self._signature_future.done():
+                    future, self._signature_future = self._signature_future, None
+                    signature = future.result()
+                    if self._working_signature is not None and signature != self._working_signature:
+                        self._entries_ready = False
+                        self._entry_future = self._pool.submit(self._load_navigation_entries, self.repo)
                     self._working_signature = signature
-                    self._entries_ready = False
-                    self._entry_future = self._pool.submit(self._load_navigation_entries, self.repo)
+                if self._signature_future is None and time.monotonic() >= self._next_signature_check:
+                    self._signature_future = self._pool.submit(self._current_working_signature)
+                    self._next_signature_check = time.monotonic() + 0.4
             if not self._entries_ready and self._entry_future.done():
                 try:
-                    projects, history, completed, niches = self._entry_future.result()
+                    projects, history, completed, niches, signature = self._entry_future.result()
                     old_structure = [(r[0], r[1], r[2], r[3], r[4], r[6]) for r in self._niche_entries]
                     new_structure = [(r[0], r[1], r[2], r[3], r[4], r[6]) for r in niches]
                     rebuild = (not self._niche_entries or old_structure != new_structure or
@@ -733,7 +787,7 @@ class WorkspaceWindow(QMainWindow):
                                completed != self._completed_entries)
                     self._project_entries, self._history_entries, self._completed_entries, self._niche_entries = projects, history, completed, niches
                     self._entries_ready = True
-                    self._working_signature = self._current_working_signature()
+                    self._working_signature = signature
                     self._update_working_count()
                     if rebuild and self._tree_mode != 'files':
                         self._root_node()
@@ -744,9 +798,19 @@ class WorkspaceWindow(QMainWindow):
                 except (OSError, ValueError, RuntimeError) as error:
                     self.search_status.setText('Could not load project navigation: ' + str(error)[:240])
                     self.search_status.show()
-            else:
-                self._refresh_working_rows()
             self.apply_workspace(self.host.get_workspace(self.workspace_id))
+            if self._preview_future and self._preview_future[1].done():
+                selection, future = self._preview_future
+                self._preview_future = None
+                if self.workspace_state['selection'] == selection:
+                    try:
+                        contents, readme, signature = future.result()
+                        self._preview_readme = readme
+                        if self._preview_signature is not None:
+                            self._preview_signature = self._preview_signature[:4] + signature
+                        self.preview.setPlainText(contents)
+                    except (OSError, ValueError, RuntimeError) as error:
+                        self.preview.setPlainText('Could not read folder: ' + str(error)[:240])
             mode = self.host.control()['mode']
             index = self.mode.findData(mode)
             if index >= 0:
@@ -990,40 +1054,14 @@ class WorkspaceWindow(QMainWindow):
         self.completed_detail.hide()
         self.preview.show()
         self._preview_readme = None
+        self._preview_future = None
         try:
             path = context_path(self.repo, selection)
             stat = path.stat()
             self._preview_signature = (stat.st_mtime_ns, stat.st_ctime_ns, stat.st_size, path.is_dir())
             if path.is_dir():
-                entries = children(self.repo, path)
-                names = [PurePosixPath(name).name + ('/' if directory else '')
-                         for name, directory in entries[:50]]
-                contents = '\n'.join(names) if names else 'This folder has no visible items.'
-                if path.is_relative_to(self.repo / 'business_portfolio/niches') and path.name != 'projects':
-                    direct_projects = path / 'projects'
-                    if not direct_projects.is_dir():
-                        contents = ('No projects directly in this niche; browse its subniches.\n\n'
-                            if any(directory for _, directory in entries) else 'No active projects.\n\n') + contents
-                if len(entries) > 50:
-                    contents += f'\n… and {len(entries) - 50} more items.'
-                summary = ''
-                for name, directory in entries:
-                    if not directory and PurePosixPath(name).name.casefold() in {'readme', 'readme.md', 'readme.txt'}:
-                        try:
-                            readme = context_path(self.repo, name)
-                            with readme.open('rb') as file:
-                                data = file.read(4001)
-                        except (ValueError, OSError):
-                            continue
-                        if b'\x00' not in data:
-                            info = readme.stat()
-                            self._preview_readme = name
-                            self._preview_signature += (info.st_mtime_ns, info.st_ctime_ns, info.st_size)
-                            summary = '\n\n' + data[:4000].decode('utf-8', errors='replace').strip()
-                            if len(data) > 4000:
-                                summary += '\n…'
-                        break
-                self.preview.setPlainText(f'{selection}{summary}\n\n{contents}')
+                self.preview.setPlainText(f'{selection}\n\nLoading folder…')
+                self._preview_future = (selection, self._pool.submit(folder_preview, self.repo, selection))
                 return
             if (path.parent == self.repo / 'business_portfolio/completed_projects'
                     and path.suffix.lower() == '.json'):

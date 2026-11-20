@@ -9,7 +9,7 @@ import re
 from PySide6.QtCore import QEvent, QRect, QSignalBlocker, Qt, QTimer
 from PySide6.QtGui import QBrush, QColor, QIcon, QImageReader, QPainter, QPixmap
 from PySide6.QtWidgets import (QApplication, QComboBox, QFormLayout, QHBoxLayout, QLabel, QLineEdit, QMainWindow,
-                               QMenu, QInputDialog, QMessageBox, QPlainTextEdit, QPushButton, QScrollArea, QSplitter, QTextBrowser,
+                               QMenu, QMessageBox, QPlainTextEdit, QPushButton, QScrollArea, QSplitter, QTextBrowser,
                                QStyle, QTabWidget, QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget)
 
 from .workspace import context_path
@@ -390,7 +390,8 @@ class WorkspaceWindow(QMainWindow):
         self.phase_selector.setAccessibleName('Project phase')
         self.phase_selector.addItem('Phase 2 · Build & Verify', 'working_phase_2')
         self.phase_selector.addItem('Phase 3 · Market & Operate', 'working_phase_3')
-        self.phase_selector.addItem('Complete · Verified', 'complete')
+        self.phase_selector.addItem('Complete · Verified (Codex only)', 'complete')
+        self.phase_selector.model().item(2).setEnabled(False)
         phase_layout.addWidget(self.phase_selector, 1)
         self.phase_apply = QPushButton('Update Phase')
         self.phase_apply.clicked.connect(self._apply_project_phase)
@@ -1123,15 +1124,15 @@ class WorkspaceWindow(QMainWindow):
             stage = project_phase(meta)
             self._phase_project = selection
             self.phase_selector.setCurrentIndex(self.phase_selector.findData(stage))
-            self.phase_selector.setEnabled(stage != 'complete')
-            self.phase_apply.setEnabled(stage != 'complete')
+            self.phase_selector.setEnabled(True)
+            self.phase_apply.setEnabled(True)
             self.phase_controls.show()
         self.project_tabs.setCurrentIndex(0)
         self.project_tabs.show()
         self.preview.hide()
 
     def _apply_project_phase(self):
-        """Advance the selected canonical project using validated lifecycle transitions."""
+        """Allow phase reassignment; Codex alone records verified completion."""
         selection = self._phase_project
         if not selection:
             return
@@ -1146,31 +1147,21 @@ class WorkspaceWindow(QMainWindow):
                 self.notice.setText('Project is already in this phase.')
                 self.notice.show()
                 return
-            if (current, target) not in {('working_phase_2', 'working_phase_3'),
-                                         ('working_phase_3', 'complete')}:
-                raise ValueError('Advance Phase 2 → Phase 3 → Complete, in order.')
-            arguments = {}
             if target == 'complete':
-                description, ok = QInputDialog.getMultiLineText(
-                    self, 'Verified completion', 'Brief factual description of completed work:')
-                if not ok:
-                    return
-                sale, ok = QInputDialog.getText(
-                    self, 'Verified completion', 'Public sale, download or delivery URL:')
-                if not ok:
-                    return
-                marketing, ok = QInputDialog.getText(
-                    self, 'Verified completion', 'Public marketing URL:')
-                if not ok:
-                    return
-                arguments = {'description': description, 'sale_urls': [sale],
-                             'marketing_urls': [marketing]}
-            elif QMessageBox.question(
-                    self, 'Advance project phase',
-                    'Mark this project as Phase 3? This changes the canonical project record.') != QMessageBox.StandardButton.Yes:
+                raise ValueError('Codex marks projects Complete after verifying live delivery and marketing links.')
+            if (current, target) not in {('working_phase_2', 'working_phase_3'),
+                                         ('working_phase_3', 'working_phase_2'),
+                                         ('complete', 'working_phase_3')}:
+                raise ValueError('Choose an adjacent phase. Completed projects can return to Phase 3.')
+            if QMessageBox.question(
+                    self, 'Change project phase',
+                    f'Change this project from {current} to {target}?'
+                    + (' This will revoke its Completed Projects receipt.' if current == 'complete' else '')
+                    + ' The canonical record will be updated.') != QMessageBox.StandardButton.Yes:
+                self._preview(selection)
                 return
-            set_phase(self.repo, selection, target, **arguments)
-            self.notice.setText('Project phase saved locally. Commit and push the updated record to share it.')
+            set_phase(self.repo, selection, target)
+            self.notice.setText('Project phase saved locally. Commit and push to share this change.')
             self.notice.show()
             self._preview(selection)
             self._refresh_project_phase_rows()

@@ -89,7 +89,7 @@ class ProjectLifecycleTests(unittest.TestCase):
         self.assertEqual(len([r for r in meta['phase_history'] if 'MANUAL OVERRIDE' in r['evidence']]), 2)
         self.assertEqual(body, after)
         self.assertFalse(read_completions(self.repo))
-        with self.assertRaisesRegex(ValueError, "Codex marks Complete"):
+        with self.assertRaisesRegex(ValueError, "Only Codex can verify Phase 6 completion"):
             set_phase(self.repo, self.selection, "complete", actor="user",
                       description="Unverified", sale_urls=["https://example.org/store"],
                       marketing_urls=["https://example.org/post"])

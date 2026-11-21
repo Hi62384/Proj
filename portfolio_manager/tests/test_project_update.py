@@ -15,6 +15,10 @@ class Phase3UpdateTests(unittest.TestCase):
         self.tmp = TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
         self.repo = Path(self.tmp.name) / "repo"
+        template = Path(__file__).resolve().parents[2] / "business_portfolio/tools/browser_template.html"
+        target = self.repo / "business_portfolio/tools/browser_template.html"
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(template.read_bytes())
         legacy = _record(self.repo, "DEMO-301")
         folder = legacy.parent / "demo-301"
         folder.mkdir()

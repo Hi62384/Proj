@@ -143,7 +143,7 @@ def set_phase(repo: Path, selection: str | Path, phase: str, *,
                     existing.get("project_phase") != COMPLETE):
                 raise ValueError("Completion receipt does not match the selected project.")
         if phase == COMPLETE:
-            if old != PHASE_4:
+            if old not in {PHASE_4, COMPLETE}:
                 raise ValueError("Completion requires verified Phase 4 execution.")
             if not isinstance(description, str) or not description.strip():
                 raise ValueError("Completion requires a short, factual project description.")

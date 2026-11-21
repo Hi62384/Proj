@@ -89,6 +89,24 @@ class SixPhasePromptPolicyTests(unittest.TestCase):
                 self.assertIn("implementation-ready specification", prompt)
                 self.assertIn("preserve `commercial_validation`", prompt)
 
+    def test_initial_phase_one_research_finalists_get_deep_skeptical_evidence(self):
+        for filename in ("PHASE_1_RESEARCH_MEGAPROMPT.md", "PHASE_1_IDEA_MEGAPROMPT.md"):
+            with self.subTest(filename=filename):
+                prompt = read(filename)
+                for requirement in (
+                    "Mandatory finalist verification — research depth before project creation",
+                    "BEFORE final GO", "Independent buyer evidence",
+                    "End-to-end competitive evidence", "Price, feasibility and access",
+                    "Separate adversarial search", "Build-readiness audit",
+                    "8–15 relevant, distinct source pages", "coverage guide, not a mandatory count or time quota",
+                    "three strongest counterfindings", "PASS / FAIL / UNKNOWN",
+                    "next-best finalist", "5, 30 or 60 minutes", "TEST-FIRST",
+                    "exact direct source URL", "observation/access date",
+                ):
+                    self.assertIn(requirement, prompt)
+                self.assertLess(prompt.index("Mandatory finalist verification"),
+                                prompt.index("## Detailed Phase 1 specification"))
+
     def test_release_research_connects_adjacent_targets_to_real_build_work(self):
         prompt = read("PHASE_2_RELEASE_RESEARCH_MEGAPROMPT.md")
         for concept in ("compatibility targets", "distribution destinations",

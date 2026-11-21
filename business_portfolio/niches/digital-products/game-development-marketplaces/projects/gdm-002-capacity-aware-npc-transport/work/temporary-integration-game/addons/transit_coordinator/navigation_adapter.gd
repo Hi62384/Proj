@@ -9,15 +9,51 @@ signal movement_failed(agent: String, request_id: String, reason: String)
 var _transit: Node
 var _agents := {}
 var _moves := {}
+var _exiting := false
+var _detaching := false
+
+func _enter_tree() -> void:
+	_exiting = false
+
+func _exit_tree() -> void:
+	_exiting = true
+	_detach_coordinator()
+
+func _detach_coordinator() -> void:
+	if _detaching:
+		return
+	_detaching = true
+	var old = _transit
+	_transit = null
+	if is_instance_valid(old):
+		if old.is_connected("transit_event", Callable(self, "_on_transit_event")):
+			old.disconnect("transit_event", Callable(self, "_on_transit_event"))
+		if old.is_connected("tree_exiting", Callable(self, "_on_coordinator_exiting")):
+			old.disconnect("tree_exiting", Callable(self, "_on_coordinator_exiting"))
+	for id in _moves.keys().duplicate():
+		if _moves.has(id):
+			var request_id: String = _moves[id].event.id
+			cancel_movement(id)
+			movement_failed.emit(id, request_id, "agent_or_coordinator_missing")
+	_detaching = false
+
+func _on_coordinator_exiting() -> void:
+	_detach_coordinator()
 
 func configure(transit: Node) -> bool:
-	if not _moves.is_empty() or not is_instance_valid(transit) or not transit.has_method("acknowledge_boarding") or not transit.has_method("pending_request") or not transit.has_signal("transit_event"):
+	if _exiting or _detaching or not _moves.is_empty() or not is_instance_valid(transit) or not transit.is_inside_tree() or not transit.has_signal("transit_event"):
 		return false
+	for method in ["pending_request", "acknowledge_boarding", "acknowledge_alighting", "acknowledge_recovery"]:
+		if not transit.has_method(method):
+			return false
 	var callback := Callable(self,"_on_transit_event")
 	if is_instance_valid(_transit) and _transit.is_connected("transit_event",callback):
 		_transit.disconnect("transit_event",callback)
+	if is_instance_valid(_transit) and _transit.is_connected("tree_exiting", Callable(self, "_on_coordinator_exiting")):
+		_transit.disconnect("tree_exiting", Callable(self, "_on_coordinator_exiting"))
 	_transit = transit
 	_transit.connect("transit_event",callback)
+	_transit.connect("tree_exiting", Callable(self, "_on_coordinator_exiting"))
 	return true
 
 func _on_transit_event(event: Dictionary) -> void:
@@ -78,16 +114,21 @@ func _physics_process(delta: float) -> void:
 		var body = agent.get("body")
 		var navigation = agent.get("navigation")
 		if not is_instance_valid(body) or not is_instance_valid(navigation) or not is_instance_valid(_transit):
-			_moves.erase(id)
+			cancel_movement(id)
 			movement_failed.emit(id,move.event.id,"agent_or_coordinator_missing")
 			continue
 		move.elapsed += delta
 		var planar := Vector2(body.global_position.x-move.target.x,body.global_position.z-move.target.z)
 		var arrived := false
 		if planar.length() <= move.tolerance and move.check.is_valid():
-			arrived = bool(move.check.call(body,move.event.duplicate(true)))
+			var verified = move.check.call(body,move.event.duplicate(true))
+			arrived = verified is bool and verified
 		# The callback belongs to game code and can replace or cancel the task.
 		if not _moves.has(id) or not is_same(_moves[id],move):
+			continue
+		if not is_instance_valid(body) or not is_instance_valid(navigation) or not is_instance_valid(_transit):
+			cancel_movement(id)
+			movement_failed.emit(id,move.event.id,"agent_or_coordinator_missing")
 			continue
 		if arrived:
 			cancel_movement(id)

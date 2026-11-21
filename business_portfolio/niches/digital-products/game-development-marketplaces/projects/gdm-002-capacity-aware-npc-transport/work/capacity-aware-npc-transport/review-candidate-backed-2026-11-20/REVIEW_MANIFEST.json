@@ -1,0 +1,435 @@
+{
+  "status": "unpublished_review_only",
+  "files": [
+    {
+      "path": "addons/transit_coordinator/controller_bridge.gd",
+      "bytes": 5800,
+      "sha256": "ef26a7ebcfaa77c8396e41bc869c32d29849f23b60ed9b4800476bfede2d6f8d"
+    },
+    {
+      "path": "addons/transit_coordinator/core/continuity_audit.gd",
+      "bytes": 2236,
+      "sha256": "e19ad9217e398c5496d77774dd0d7ffd022777ca27f8464389a3d3476ad870a4"
+    },
+    {
+      "path": "addons/transit_coordinator/core/journey_coordinator.gd",
+      "bytes": 23790,
+      "sha256": "67d598478cba88425f74e77ef96943e67081b982c4b387650b8fa805efbb0e7d"
+    },
+    {
+      "path": "addons/transit_coordinator/core/seat_ledger.gd",
+      "bytes": 4352,
+      "sha256": "25bf5fd0ad062ae28932789cfb7a577b070d2766a0e7a7e6d552d39ad9ca1d8f"
+    },
+    {
+      "path": "addons/transit_coordinator/core/transit_graph.gd",
+      "bytes": 6356,
+      "sha256": "d98157ebd088feb95b6eab441779a1ac1d14691cb98146460bd3ffddf1429bcb"
+    },
+    {
+      "path": "addons/transit_coordinator/debug_overlay.gd",
+      "bytes": 1931,
+      "sha256": "f16cebffd875dd375c396b1fd58e9855e6b26cf3a8ebebb6165f3ef1315b0ce7"
+    },
+    {
+      "path": "addons/transit_coordinator/editor/plugin.gd",
+      "bytes": 338,
+      "sha256": "ba88951ee8e2ea9aa1a758aca3ccc103aff860894ab7d4f8070c3741e6260643"
+    },
+    {
+      "path": "addons/transit_coordinator/editor/stop_gizmo.gd",
+      "bytes": 613,
+      "sha256": "d75a90bb6a55e207a5d787ffc383470f5420bbd03403a065d29abb4bf992e24f"
+    },
+    {
+      "path": "addons/transit_coordinator/editor/stop_marker.gd",
+      "bytes": 125,
+      "sha256": "95dea79a3a2a56e74dd60cc18b0c673851280b42c0c69de037d284f082a0d703"
+    },
+    {
+      "path": "addons/transit_coordinator/navigation_adapter.gd",
+      "bytes": 7397,
+      "sha256": "2b804b3de9ef3d0459d7e2175ea326a83cd7327282b8b3220a8e3544c9bab349"
+    },
+    {
+      "path": "addons/transit_coordinator/plugin.cfg",
+      "bytes": 186,
+      "sha256": "24cfa063c3d3092ec9b058255244cc07771b58728894665d7d22c836a232bbe8"
+    },
+    {
+      "path": "addons/transit_coordinator/transit_coordinator.gd",
+      "bytes": 4658,
+      "sha256": "078dc4c10fb3f570b24410af52378ef9c2309b90a452d18a70b5bd9f01d09359"
+    },
+    {
+      "path": "API.md",
+      "bytes": 10046,
+      "sha256": "5109691233fd40657ac5a4336ec061328f2685bd2c0504a703d3a898f1a7a6e2"
+    },
+    {
+      "path": "COMPATIBILITY.md",
+      "bytes": 4985,
+      "sha256": "9347c3dad3890602c5bc5a2deef0c97ad1e10d17d271e506ca0a9ea27b621a56"
+    },
+    {
+      "path": "demo/transit_demo.gd",
+      "bytes": 13011,
+      "sha256": "85915ccbbf66ea7edfff21d5af0fc9138f82905508120262a5adb5ebe9ab39df"
+    },
+    {
+      "path": "demo/transit_demo.tscn",
+      "bytes": 170,
+      "sha256": "e72c170987a4041ea885338cfb547af53c025bf420af863f88e9349d20bf2314"
+    },
+    {
+      "path": "examples/game_owned_character.gd",
+      "bytes": 1229,
+      "sha256": "c973cf0aa8c81db04610750c11b47895f705aa96f3f9551f341f9d47714e356d"
+    },
+    {
+      "path": "PERFORMANCE_TRANSFER_LOCAL_2026-11-20.md",
+      "bytes": 1628,
+      "sha256": "e83a8ea10d84c76c95c93b26aef30ed36568d90cf3b711ee0ffd338f226f50b2"
+    },
+    {
+      "path": "project.godot",
+      "bytes": 258,
+      "sha256": "991cb14af90bf0e858f6a1ed11822e5321a83d9afb96cc8ef5e6135c2f2d18f6"
+    },
+    {
+      "path": "PROVENANCE_DRAFT.md",
+      "bytes": 1725,
+      "sha256": "b94e0fe904a8e352eaf9ae382f8357fcebd6548ebcadc0814a957d70286c47ae"
+    },
+    {
+      "path": "README.md",
+      "bytes": 8320,
+      "sha256": "3d1d7080d060b7497e690ae95865e2d2b47ce8a82654d82e833280e450edcbce"
+    },
+    {
+      "path": "RELEASE_CHECKLIST.md",
+      "bytes": 2307,
+      "sha256": "15919ec54c835f14d41c2f6eacfa0dcfdbc9200f7a60d6f2c84c37dfcdfe9d23"
+    },
+    {
+      "path": "REVIEW_ONLY.txt",
+      "bytes": 191,
+      "sha256": "73c7303488b37bab0be0f2455fccb11a584b0787b6e0c46560a1efede20898a0"
+    },
+    {
+      "path": "STOREFRONT_DRAFT.md",
+      "bytes": 1724,
+      "sha256": "fdb4779b1cb77a596c428a085981ac89c8de93c431be8743a09da73967329472"
+    },
+    {
+      "path": "SUPPORT_DRAFT.md",
+      "bytes": 3624,
+      "sha256": "407afd7ffeaf97ed2c55c9d6172caa6f7990223bdd7c6cff178fccecace80770"
+    },
+    {
+      "path": "TEST_EVIDENCE.md",
+      "bytes": 3151,
+      "sha256": "e1d9fd1cc9d1a638135fc2f23868f8db906a98624a95c6dc237b05c682c27e24"
+    },
+    {
+      "path": "tests/install_probe.gd",
+      "bytes": 1355,
+      "sha256": "5a4309d1da9ee9ba308287366acf78e91ac378f3b83af1efdd713de69900e5ce"
+    },
+    {
+      "path": "tests/measure_coordinator.gd",
+      "bytes": 1704,
+      "sha256": "b39bf7ada2ae820de50451b649b0f24b32309f1c3f41c9884e260006b95fc410"
+    },
+    {
+      "path": "tests/measure_transfer.gd",
+      "bytes": 2637,
+      "sha256": "42c1be23ba4d876b37a68367bb249522dd8d5624becb39c0f8fbc9ee8d496d05"
+    },
+    {
+      "path": "tests/test_adapter_blocked_crowd.gd",
+      "bytes": 6228,
+      "sha256": "5c7298eb7817cd55ed0baa7d70144b6a50bb6aae09790c261dcfa541a5d790a8"
+    },
+    {
+      "path": "tests/test_adapter_crowd.gd",
+      "bytes": 5254,
+      "sha256": "cc17c58f0bf1f0302a3f919f706390107d5623822d21fc505f819916ef70b2de"
+    },
+    {
+      "path": "tests/test_adapter_crowd_recovery.gd",
+      "bytes": 5287,
+      "sha256": "9a34af2364a96152a1cd3eafd7759d44bef3d62e4dbaa2b9ff360bdf580d48a3"
+    },
+    {
+      "path": "tests/test_adapter_deleted.gd",
+      "bytes": 2328,
+      "sha256": "f995e03a7224c9ebe5a79e7410d0c769fb11af6e3865a775291c7b024d87f7c4"
+    },
+    {
+      "path": "tests/test_adapter_physical_restore.gd",
+      "bytes": 6038,
+      "sha256": "241119e6abfcadc36d2311c31c2aaf96a38ce31fe7c34ab8ee8748432c6fadd7"
+    },
+    {
+      "path": "tests/test_adapter_recovery.gd",
+      "bytes": 4995,
+      "sha256": "519955f2ddcfb35e83c826f5ec35629067d247f8f13814c5d6e11bae96c418ad"
+    },
+    {
+      "path": "tests/test_adapter_recovery_restore.gd",
+      "bytes": 5903,
+      "sha256": "1ab76490c06bec8257d80515de9f6ccb4b8b297eeada681d9f910dadf9a28712"
+    },
+    {
+      "path": "tests/test_adapter_restore.gd",
+      "bytes": 2124,
+      "sha256": "1f644797d3abd16d82722644a0b912c16e017ba4b362eff2d6359bea0e871e9a"
+    },
+    {
+      "path": "tests/test_adapter_safety.gd",
+      "bytes": 4634,
+      "sha256": "a018d5e720f58207ccf1897e61e6defba6c4b6f1841fec8444944dc0cf84487b"
+    },
+    {
+      "path": "tests/test_adapter_superseded.gd",
+      "bytes": 3134,
+      "sha256": "855de4bb92794755a7a57d7a37db883a5989bada3f74b732f50cf0186150e42a"
+    },
+    {
+      "path": "tests/test_adapter_tree_lifecycle.gd",
+      "bytes": 2475,
+      "sha256": "406c810be00ccc87df428a4c7cb251fb9c8454e21e0beddd2e28e682cda8ddeb"
+    },
+    {
+      "path": "tests/test_adapter_twenty_physics.gd",
+      "bytes": 5341,
+      "sha256": "a7906759ea3eeb6b3175cce88ca6908f758fe9a706595838fb3ede133aa94d40"
+    },
+    {
+      "path": "tests/test_blocked_exit.gd",
+      "bytes": 4646,
+      "sha256": "dc7ccf8fd6671d85471a198affcc2e4ab42e6bc6901e507b3a6cf324bd64d780"
+    },
+    {
+      "path": "tests/test_collision_crowd.gd",
+      "bytes": 3524,
+      "sha256": "989c6628434e404b00b28560865db1450bd8ae73e1c7516cbc565a01bbec8ac3"
+    },
+    {
+      "path": "tests/test_collision_platform.gd",
+      "bytes": 3584,
+      "sha256": "c6d95fd22dfc63f9ed2d7b104baf48583a72be45949cc2b306ac2b44cee7e663"
+    },
+    {
+      "path": "tests/test_continuity_audit.gd",
+      "bytes": 1813,
+      "sha256": "fc705e55b13c5d9eab0ecd08be0d237ecd546204cee7c903500f27e7ab9a04f9"
+    },
+    {
+      "path": "tests/test_controller_bridge.gd",
+      "bytes": 6123,
+      "sha256": "4e4a714b8cd1b673c14e983ed82a6bfaa85a648ef3c180afe70f15a6cb7c297a"
+    },
+    {
+      "path": "tests/test_controller_bridge_lifecycle.gd",
+      "bytes": 4429,
+      "sha256": "c5901f1a457ef8076db78b55aa3bcf892dd7bf92b8fdfb55ec49fc15504e5f11"
+    },
+    {
+      "path": "tests/test_core.gd",
+      "bytes": 4444,
+      "sha256": "0734322b1d6b55ea6cbff0c037a11dff19d42f6d9c7f531bd1b18df39b2ea7c7"
+    },
+    {
+      "path": "tests/test_debug_overlay.gd",
+      "bytes": 1674,
+      "sha256": "f28c44e25c0751a44dc13edf7babd6c5752b21e18bf91b9530730d277767c1b0"
+    },
+    {
+      "path": "tests/test_demo.gd",
+      "bytes": 1854,
+      "sha256": "d5fc460fa5a7c018a1ef668987613748505df291cf327d722dd37449aaddbb7f"
+    },
+    {
+      "path": "tests/test_demo_disruption.gd",
+      "bytes": 1126,
+      "sha256": "a2982eaf460d0c5f4a732c821872144971832426a2f9878b72efecf3a6faba75"
+    },
+    {
+      "path": "tests/test_demo_hud.gd",
+      "bytes": 2068,
+      "sha256": "fcfa7dc8abe32334fab4313018e0ff6c31a8f3394621ec5c0486e5e2143c0f17"
+    },
+    {
+      "path": "tests/test_demo_layout.gd",
+      "bytes": 956,
+      "sha256": "946d9c4e988329fb37d7518e1bfe8a7017c1eb64be14c0e8ea633a947c271838"
+    },
+    {
+      "path": "tests/test_demo_viewport_input.gd",
+      "bytes": 2033,
+      "sha256": "795549140398d1fb9cfee3f6297632669ff8ef69f8d6e3b230b08e60fed1bd90"
+    },
+    {
+      "path": "tests/test_destroyed_agent.gd",
+      "bytes": 1963,
+      "sha256": "f0d75a8e4e1bc227223da44af79370f963e5254e88c5b2989c3e5c61d4ee17f2"
+    },
+    {
+      "path": "tests/test_disruption.gd",
+      "bytes": 4908,
+      "sha256": "366dfd3da43881282b1dc97acb622471619594bf3364667815ec74d9d3cabf7b"
+    },
+    {
+      "path": "tests/test_edges.gd",
+      "bytes": 6319,
+      "sha256": "1afe191dc4e47572aefa420cd0e7970d926091b749413d2e3484da68a979625d"
+    },
+    {
+      "path": "tests/test_editor_marker.gd",
+      "bytes": 333,
+      "sha256": "7c415e9574a70135b6f9292220320d5db4133011ebc4b4678fb57d77d409b755"
+    },
+    {
+      "path": "tests/test_fifo_liveness.gd",
+      "bytes": 1649,
+      "sha256": "20124cddec91a86450bf2d2cab0e77434ee8fc8d1d402b1dce061dca54f80c64"
+    },
+    {
+      "path": "tests/test_game_owned_airborne.gd",
+      "bytes": 1417,
+      "sha256": "164b66833120919813260fe30bca2b9fb5df88b85bab3936ce6afe3db67b1455"
+    },
+    {
+      "path": "tests/test_game_owned_controller.gd",
+      "bytes": 4288,
+      "sha256": "1d737e479fde32331e5b4f3f8275b26f7576e8d1260179be841d43698d4830ab"
+    },
+    {
+      "path": "tests/test_game_owned_midride_restore.gd",
+      "bytes": 6288,
+      "sha256": "bbab78716054b1db1335d99aaac70e0d2dd6f37d427de71bca07f5e464600908"
+    },
+    {
+      "path": "tests/test_game_owned_restore.gd",
+      "bytes": 5840,
+      "sha256": "4b6eef55bc5f6f5bb5ce65cc2ac4ebecef81327e2064e9bbc34825d9eb6ec3a7"
+    },
+    {
+      "path": "tests/test_journeys.gd",
+      "bytes": 6627,
+      "sha256": "319dab8329ec909ec6af9069e70d1a932a57576bdc2acdde4397348a237f8488"
+    },
+    {
+      "path": "tests/test_navigation_adapter.gd",
+      "bytes": 5087,
+      "sha256": "031461a390bc75bd6d4b5c36d13fb938cbf33458c81b56f1f7c2fd10305e82c1"
+    },
+    {
+      "path": "tests/test_navigation_boarding.gd",
+      "bytes": 5302,
+      "sha256": "ba811c754d89eb450f214da1b3bb54ce51a401f5fe43abb36ecfa4f1668dc80f"
+    },
+    {
+      "path": "tests/test_navigation_twenty.gd",
+      "bytes": 4336,
+      "sha256": "81168a0d82cdfed055f2453dcb572b98cc418778f590edbc1c4665d48ff3d0e8"
+    },
+    {
+      "path": "tests/test_node.gd",
+      "bytes": 2719,
+      "sha256": "592f75f6c192402a016792c0e4034a042e6b133bce40cabb99921e0922e1e6af"
+    },
+    {
+      "path": "tests/test_onboard_cancel.gd",
+      "bytes": 3054,
+      "sha256": "bfd390caed8ec28400a640bc4de36655f578bda5219ba12a038efa531672d8df"
+    },
+    {
+      "path": "tests/test_physical_cancel.gd",
+      "bytes": 3618,
+      "sha256": "17341fe7651128dff4478eea3a723165b82369280f6d64133966f463c07d2c83"
+    },
+    {
+      "path": "tests/test_physical_recovery.gd",
+      "bytes": 3607,
+      "sha256": "93d9ef6e1d4003602467812f9610d4b9949a50fdc9adb0147cc7f8d53ac2a901"
+    },
+    {
+      "path": "tests/test_physical_transfer.gd",
+      "bytes": 4715,
+      "sha256": "3adedb905f8972a40cb22219245be4ab88e3ece751ad405dbf03afc1b9caf2ea"
+    },
+    {
+      "path": "tests/test_physical_transfer_twenty.gd",
+      "bytes": 4957,
+      "sha256": "13b869685e8c1b860de97157b8fc748961787052832a78c0e3ce5d8ff589ff57"
+    },
+    {
+      "path": "tests/test_physics_adapter.gd",
+      "bytes": 3360,
+      "sha256": "67c457b802d39406dc829e884b4d56c2c7e38b5941ddd2095849ac408e39dd73"
+    },
+    {
+      "path": "tests/test_seeded_invariants.gd",
+      "bytes": 3013,
+      "sha256": "d10cb31b3367f6c5732f3e1443b3d805e08f2984c9c88c56fc9e6d455feb9eb8"
+    },
+    {
+      "path": "tests/test_staggered_physical_transfer.gd",
+      "bytes": 5704,
+      "sha256": "3ce7b201d6963d0b1d1b8c2fb7d8201330c7af95d9e2b780fd147dd4450bf9b0"
+    },
+    {
+      "path": "tests/test_staggered_twenty_physics.gd",
+      "bytes": 5862,
+      "sha256": "aa104800d70fa089a3fb0baec92225ee958db18ef9cb04e4e03c7aa3e3a064b0"
+    },
+    {
+      "path": "tests/test_stops.gd",
+      "bytes": 4470,
+      "sha256": "3d9ecb72d62de0b99e5bd9ec5603302431659f9ac0af8365bac61450521eacaa"
+    },
+    {
+      "path": "tests/test_vertical_lift.gd",
+      "bytes": 3612,
+      "sha256": "0225489fb0849a5644800baa813d0d74a8b572272ff56037b13c7cc370f055ac"
+    },
+    {
+      "path": "tools/run_compatibility.py",
+      "bytes": 5696,
+      "sha256": "3e9ba4cde48891574f5df00e0b8540ac604e3dc037280524bbcae76dd748711e"
+    },
+    {
+      "path": "tools/run_tests.py",
+      "bytes": 2985,
+      "sha256": "0e01f4280bb70b19d03c8098d3ed2f48ab45af4d05cf19ba0612b7d388c187cc"
+    },
+    {
+      "path": "tools/stage_install_review.py",
+      "bytes": 2988,
+      "sha256": "dfdfdbb9ea0a3f189d76797e683175a50800b4b198e276df9d504c5f27ad0251"
+    },
+    {
+      "path": "tools/stage_review.py",
+      "bytes": 2288,
+      "sha256": "ef4b8a52640eb87b160a5b90383bce22db93c18405e6ccf60ff60e497d6b8f6e"
+    },
+    {
+      "path": "tools/verify_editor.py",
+      "bytes": 3641,
+      "sha256": "f498e34b543728439752d8ba8f37ada96db512e77b3f04cad90692f9584206bf"
+    },
+    {
+      "path": "tools/verify_install.py",
+      "bytes": 2220,
+      "sha256": "ce28659056908a01bfd115834bbaddbe522f486271f775cd73c045659cfbac27"
+    },
+    {
+      "path": "VISUAL_QA.md",
+      "bytes": 3918,
+      "sha256": "167e01240a7b5b7a64f926d75cd7693480a70001bd930c8b4e873fbcadbee46d"
+    }
+  ]
+}

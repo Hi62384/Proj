@@ -81,11 +81,21 @@ func _ready() -> void:
 		people[id] = marker
 	var overlay := CanvasLayer.new()
 	add_child(overlay)
+	var backdrop := ColorRect.new()
+	backdrop.color = Color(0.02, 0.03, 0.04, 0.88)
+	backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	backdrop.position = Vector2(12, 6)
+	overlay.add_child(backdrop)
 	var panel := VBoxContainer.new()
-	panel.position = Vector2(20,14)
 	overlay.add_child(panel)
+	panel.set_anchors_preset(Control.PRESET_TOP_WIDE)
+	panel.offset_left = 20
+	panel.offset_right = -20
+	panel.offset_top = 14
+	panel.resized.connect(func(): backdrop.size = panel.size + Vector2(16, 16))
 	status = Label.new()
 	status.add_theme_font_size_override("font_size",20)
+	status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	panel.add_child(status)
 	var bar := HBoxContainer.new()
 	panel.add_child(bar)

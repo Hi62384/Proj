@@ -62,6 +62,20 @@ func run() -> void:
 	check(exit_rebind == [false],"bridge cannot rebind while exiting")
 	check(next.journey("last").state == "boarding","bridge removal does not acknowledge or release claim")
 	check(next.finish_tick() and next.journey("last").state == "queued","claim expires normally after bridge removal")
+	var another = Bridge.new()
+	var fresh = Transit.new()
+	world.add_child(another)
+	world.add_child(fresh)
+	check(fresh.configure(cfg,"fresh") and another.configure(fresh), "configure explicit detach")
+	check(fresh.request_journey("detach-rider","a","b") and fresh.begin_tick() and fresh.open_boarding(), "pending request for detach")
+	var rebind_attempts := []
+	another.request_withdrawn.connect(func(_agent,_id,_reason):
+		rebind_attempts.append(another.configure(fresh))
+		another.detach()
+	)
+	another.detach()
+	check(rebind_attempts == [false], "callback cannot reconnect during detach")
+	check(another.configure(fresh), "reconnect succeeds after detach")
 	print("Controller bridge lifecycle: ","PASS" if failures == 0 else "FAIL"," (",failures," failures)")
 	world.queue_free()
 	await process_frame

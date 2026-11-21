@@ -9,6 +9,7 @@ signal movement_result(agent: String, request_id: String, accepted: bool)
 var _transit: Node
 var _pending := {}
 var _exiting := false
+var _detaching := false
 
 func _enter_tree() -> void:
 	_exiting = false
@@ -18,7 +19,7 @@ func _exit_tree() -> void:
 	detach()
 
 func configure(transit: Node) -> bool:
-	if _exiting or not _pending.is_empty() or not is_instance_valid(transit) or not transit.has_signal("transit_event"):
+	if _exiting or _detaching or not _pending.is_empty() or not is_instance_valid(transit) or not transit.has_signal("transit_event"):
 		return false
 	for method in ["pending_request", "acknowledge_boarding", "acknowledge_alighting", "acknowledge_recovery"]:
 		if not transit.has_method(method):
@@ -36,6 +37,9 @@ func configure(transit: Node) -> bool:
 
 func detach() -> void:
 	# Withdrawal is synchronous; the game must stop its own movement.
+	if _detaching:
+		return
+	_detaching = true
 	var old = _transit
 	_transit = null
 	if is_instance_valid(old):
@@ -45,6 +49,7 @@ func detach() -> void:
 			old.disconnect("tree_exiting", Callable(self, "_on_transit_exiting"))
 	for agent in _pending.keys().duplicate():
 		_withdraw(agent, "detached")
+	_detaching = false
 
 func _on_transit_exiting() -> void:
 	detach()

@@ -1,0 +1,3 @@
+Unpublished local install review. No license or distribution approval has been granted.
+Examples, demo, tests, engine binaries and research are not included in this folder.
+Some guides reference the broader development project and support terms are a draft.

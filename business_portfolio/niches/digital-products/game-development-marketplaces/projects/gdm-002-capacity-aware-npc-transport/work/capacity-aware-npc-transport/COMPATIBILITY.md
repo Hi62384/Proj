@@ -2,6 +2,12 @@
 
 Status: unpublished development build. These are observed checks, not a promise that all games, hardware or platforms are supported. No engine executable is included in the add-on or a review snapshot.
 
+## Current recovered development source
+
+The earlier matrix below is historical. After recovery and subsequent lifecycle and demo-layout changes, the recovered review copy passed 49 product tests on standard Godot 4.4.1 and 4.5.1, with installation/reinstallation and instrumented editor marker checks. A separate 49-test run passed on 4.7.2. Following the demo layout change, four focused demo/HUD/layout/input tests passed on each of those three versions, and the full expanded 50-test suite passed on 4.7.2. The staged layout review copy passed its focused demo checks and install/reinstall on 4.7.2. These are Windows x86-64 results; the full 50-test suite has not been rerun on 4.4.1 or 4.5.1 after the layout change. The independent two-service timing fixture completed on each version; it is not a game-level performance benchmark. The 4.5.1 Mono editor check failed because the required .NET SDK was not found; standard Godot 4.5.1 passed its editor check. Physical-device input and visual editor acceptance remain open.
+
+## Earlier evidence
+
 | Engine on Windows x86-64 | Full 45-script baseline | Final-source 14-test smoke | Clean install / reinstall | Headless editor marker | Two later restore fixtures |
 |---|---|---|---|---|---|
 | Godot 4.4.1 stable (`49a5bc7b6`) | Pass | Pass | Pass | Pass | Pass individually |

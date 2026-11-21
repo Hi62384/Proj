@@ -3,11 +3,7 @@ extends EditorNode3DGizmoPlugin
 const Marker = preload("res://addons/transit_coordinator/editor/stop_marker.gd")
 
 func _init() -> void:
-	# Keep the authoring marker visible even when its node is unselected.
-	var material := StandardMaterial3D.new()
-	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	material.albedo_color = Color(0.2, 0.8, 1.0, 1.0)
-	add_material("stop", material)
+	create_material("stop",Color(0.2,0.8,1.0,0.9))
 
 func _get_gizmo_name() -> String:
 	return "Transit stop marker"
@@ -21,4 +17,4 @@ func _redraw(gizmo: EditorNode3DGizmo) -> void:
 		Vector3(-0.5,0,0),Vector3(0.5,0,0),
 		Vector3(0,0,-0.5),Vector3(0,0,0.5),
 		Vector3(0,0,0),Vector3(0,0.8,0)])
-	gizmo.add_lines(lines,get_material("stop"))
+	gizmo.add_lines(lines,get_material("stop",gizmo))

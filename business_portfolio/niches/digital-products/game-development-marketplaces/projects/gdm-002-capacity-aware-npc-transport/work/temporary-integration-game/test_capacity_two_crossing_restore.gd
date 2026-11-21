@@ -237,7 +237,7 @@ func run() -> void:
 				fleet_snapshot = dispatcher.save_snapshot()
 				positions = {"east-vehicle":vehicles["east-vehicle"].position, "north-vehicle":vehicles["north-vehicle"].position}
 			break
-	check(saved and fleet_snapshot.get("version") == 1, "save versioned dispatcher, coordinator and vehicle positions during reserved crossing")
+	check(saved and fleet_snapshot.get("version") == 2, "save versioned dispatcher, coordinator and vehicle positions during reserved crossing")
 	if not saved:
 		world.queue_free()
 		await process_frame

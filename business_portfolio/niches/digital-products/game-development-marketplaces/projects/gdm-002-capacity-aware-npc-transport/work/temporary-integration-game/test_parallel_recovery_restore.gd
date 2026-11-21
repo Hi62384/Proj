@@ -59,7 +59,7 @@ func run() -> void:
 			waits = {"retreating":dispatcher.waiting_frames("retreating"), "crossing":dispatcher.waiting_frames("crossing")}
 			break
 	check(not pre_restore_overlap, "vehicle bounds stay separate before parallel recovery save")
-	check(interrupted and snapshot.get("version") == 1, "save mixed recovery and active crossing state")
+	check(interrupted and snapshot.get("version") == 2, "save mixed recovery and active crossing state")
 	check(snapshot.get("vehicles", {}).get("retreating", {}).get("recovering", false), "saved first vehicle is recovering")
 	check(snapshot.get("vehicles", {}).get("crossing", {}).get("active", false) and waits.get("crossing", 0) > 0, "saved second vehicle is active and waiting")
 	world.queue_free()

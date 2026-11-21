@@ -63,7 +63,7 @@ func run() -> void:
 				waits[ids[index]] = dispatcher.waiting_frames(ids[index])
 			break
 	check(not pre_restore_collision, "platform bounds stay separated before saving")
-	check(snapshot.get("version") == 1, "save dispatcher while one vehicle crosses and two wait")
+	check(snapshot.get("version") == 2, "save dispatcher while one vehicle crosses and two wait")
 	check(waits.get(ids[1], 0) > 0 and waits.get(ids[2], 0) > 0, "snapshot includes both waiting vehicles")
 	world.queue_free()
 	await process_frame
@@ -84,6 +84,15 @@ func run() -> void:
 	dispatcher.vehicle_arrived.connect(func(id: String): arrivals[id] = true)
 	check(dispatcher.restore_snapshot(snapshot), "restore crossing fleet snapshot into fresh scene")
 	var restored_state: Dictionary = dispatcher.save_snapshot()
+	var wrong_radius: Dictionary = snapshot.duplicate(true)
+	wrong_radius.reservation_radius = 3.0
+	check(not dispatcher.restore_snapshot(wrong_radius), "reject changed reservation radius")
+	check(dispatcher.save_snapshot() == restored_state, "radius rejection leaves restored state untouched")
+	var legacy: Dictionary = snapshot.duplicate(true)
+	legacy.version = 1
+	legacy.erase("reservation_radius")
+	check(not dispatcher.restore_snapshot(legacy), "reject legacy snapshot without clearance radius")
+	check(dispatcher.save_snapshot() == restored_state, "legacy snapshot rejection leaves restored state untouched")
 	for id in ids:
 		check(restored_state.vehicles[id].route == snapshot.vehicles[id].route, "restore saved route for " + id)
 		check(restored_state.vehicles[id].speed == snapshot.vehicles[id].speed, "restore saved speed for " + id)

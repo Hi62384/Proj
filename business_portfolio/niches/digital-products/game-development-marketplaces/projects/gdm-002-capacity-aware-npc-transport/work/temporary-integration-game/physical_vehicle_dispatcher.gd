@@ -8,6 +8,36 @@ var reservation_radius := 3.0
 var _vehicles := {}
 var _junction_owners := {}
 
+# Advisory only; callers supply conservative planar bounding-circle radii.
+func endpoint_clearance_issues() -> Array[String]:
+	var issues: Array[String] = []
+	if not is_finite(reservation_radius) or reservation_radius <= 0.0:
+		issues.append("Reservation radius must be finite and positive")
+		return issues
+	for id in _vehicles:
+		var route: Array[Vector3] = _vehicles[id].route
+		for index in range(junctions.size()):
+			if not junctions[index].is_finite():
+				issues.append("Junction %d is not finite" % index)
+			elif _planar_distance(route[-1], junctions[index]) <= reservation_radius + 0.5:
+				issues.append("Vehicle %s ends inside junction %d release boundary" % [id, index])
+	return issues
+
+func footprint_clearance_issues(footprints: Dictionary) -> Array[String]:
+	var issues := endpoint_clearance_issues()
+	if not is_finite(reservation_radius) or reservation_radius <= 0.0:
+		return issues
+	for id in _vehicles:
+		var footprint = footprints.get(id)
+		if not (footprint is float or footprint is int) or not is_finite(float(footprint)) or float(footprint) <= 0.0:
+			issues.append("Vehicle %s needs a finite positive footprint radius" % id)
+			continue
+		var route: Array[Vector3] = _vehicles[id].route
+		for index in range(junctions.size()):
+			if junctions[index].is_finite() and _planar_distance(route[-1], junctions[index]) <= reservation_radius + 0.5 + float(footprint):
+				issues.append("Vehicle %s footprint ends inside junction %d clearance" % [id, index])
+	return issues
+
 func register_vehicle(id: String, body: AnimatableBody3D, route: Array[Vector3], speed: float, priority: int) -> bool:
 	if id.is_empty() or not is_instance_valid(body) or _vehicles.has(id) or route.size() < 2 or not is_finite(speed) or speed <= 0.0:
 		return false
@@ -46,10 +76,13 @@ func save_snapshot() -> Dictionary:
 		var route: Array[Vector3] = vehicle.route
 		saved_vehicles[id] = {"route":route.duplicate(), "speed":vehicle.speed, "priority":vehicle.priority, "active":vehicle.active, "recovering":vehicle.recovering, "index":vehicle.index, "wait_count":vehicle.wait_count}
 	var saved_junctions: Array[Vector3] = junctions.duplicate()
-	return {"version":1, "junctions":saved_junctions, "vehicles":saved_vehicles}
+	return {"version":2, "junctions":saved_junctions, "reservation_radius":reservation_radius, "vehicles":saved_vehicles}
 
 func restore_snapshot(snapshot: Dictionary) -> bool:
-	if snapshot.get("version") != 1 or not snapshot.get("junctions") is Array or not snapshot.get("vehicles") is Dictionary:
+	if snapshot.get("version") != 2 or not snapshot.get("junctions") is Array or not snapshot.get("vehicles") is Dictionary:
+		return false
+	var saved_radius = snapshot.get("reservation_radius")
+	if not (saved_radius is float or saved_radius is int) or not is_finite(float(saved_radius)) or float(saved_radius) <= 0.0 or float(saved_radius) != reservation_radius:
 		return false
 	var saved_junctions: Array = snapshot.junctions
 	if saved_junctions.size() != junctions.size():

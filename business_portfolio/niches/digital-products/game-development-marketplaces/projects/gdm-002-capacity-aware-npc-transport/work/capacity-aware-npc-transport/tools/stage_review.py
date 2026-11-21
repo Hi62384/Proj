@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 FILES = [
     "project.godot", "README.md", "API.md", "COMPATIBILITY.md", "VISUAL_QA.md", "TEST_EVIDENCE.md",
     "RELEASE_CHECKLIST.md", "SUPPORT_DRAFT.md", "STOREFRONT_DRAFT.md", "PROVENANCE_DRAFT.md",
+    "PERFORMANCE_TRANSFER_LOCAL_2026-11-20.md",
 ]
 DIRECTORIES = ["addons", "demo", "examples", "tests", "tools"]
 

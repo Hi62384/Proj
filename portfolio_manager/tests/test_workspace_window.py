@@ -197,7 +197,7 @@ class WorkspaceWindowTests(unittest.TestCase):
                 self.assertIn('post-launch TESTABLE assumptions', self.app.clipboard().text())
                 self.assertIn('For NO_GO, RESEARCH_BLOCKED, or CONDITIONAL_PROOF_ONLY', self.app.clipboard().text())
                 window._copy_megaprompt('recheck')
-                self.assertIn('**INITIAL_CONTEXT_HINT:** AUTO',self.app.clipboard().text())
+                self.assertIn('**INITIAL_CONTEXT_HINT:** business_portfolio/niches/demo',self.app.clipboard().text())
                 self.assertIn('GO_TO_PHASE_B',self.app.clipboard().text())
                 self.assertTrue(window.select('business_portfolio/niches/demo'))
                 window._copy_megaprompt('research')
@@ -236,6 +236,82 @@ class WorkspaceWindowTests(unittest.TestCase):
                 (repo/names[1]).unlink();window._copy_megaprompt('idea')
                 self.assertEqual(self.app.clipboard().text(),prior)
                 self.assertEqual(len(list((repo/'business_portfolio/niches').rglob('projects/*.md'))),2)
+            finally:
+                if window:window.close()
+                host.close()
+
+
+    def test_selected_project_phase3_research_validation_and_phase4_menu(self):
+        with TemporaryDirectory() as temp:
+            root=Path(temp);repo=root/'repo'
+            old=_record(repo,'DEMO-030')
+            folder=old.parent/'demo-030'
+            folder.mkdir()
+            record=folder/'project.md'
+            old.rename(record)
+            (folder/'work').mkdir()
+            from portfolio_manager.project_lifecycle import set_phase
+            set_phase(repo,record.relative_to(repo).as_posix(),'working_phase_3')
+            from pathlib import Path as ProjectPath
+            source=ProjectPath(__file__).resolve().parents[2]
+            for name in ('PHASE_3A_RESEARCH_MEGAPROMPT.md','PHASE_3B_VALIDATION_MEGAPROMPT.md',
+                         'PHASE_4_EXECUTION_MEGAPROMPT.md'):
+                (repo/name).write_bytes((source/name).read_bytes())
+            host=ManagerHost(repo,root/'state');window=None
+            try:
+                from portfolio_manager.workspace_window import WorkspaceWindow
+                from portfolio_manager.project_update import snapshot_sha256
+                from business_portfolio.tools.build_browser import parse_project
+                from PySide6.QtCore import QEvent
+                relative=record.relative_to(repo).as_posix()
+                window=WorkspaceWindow(host,host.workspace('a'*32,{}),
+                                       on_emergency=lambda:None,on_stop_all=lambda:None,
+                                       on_access=lambda:None,on_close=lambda _:None,
+                                       on_resume=lambda:None)
+                self.assertTrue(window.resume_after_stop.isEnabled())
+                self.assertTrue(window.select(relative))
+                self.assertEqual([a.text() for a in window.copy_prompt.menu().actions()],
+                    ['Phase 3a · Research Platforms & Plan','Phase 3b · Validate & Improve Plan'])
+                self.assertFalse(window.copy_prompt.menu().actions()[1].isEnabled())
+                window._copy_megaprompt('phase3a')
+                clip=self.app.clipboard().text()
+                self.assertIn('BASE_SHA256: '+snapshot_sha256(record.read_text()),clip)
+                self.assertIn(record.read_text(),clip)
+                def drop(heading,flags):
+                    previous=record.read_text()
+                    meta,_=parse_project(previous,relative)
+                    meta['phase3_update_base_sha256']=snapshot_sha256(previous)
+                    meta.update(flags)
+                    _,_,body=previous.partition('\n---\n')
+                    change=Path(temp)/'updated.md'
+                    change.write_text('---\n'+json.dumps(meta)+'\n---\n'+body+'\n'+heading+'\n',
+                                      encoding='utf-8')
+                    class Url:
+                        def isLocalFile(self): return True
+                        def toLocalFile(self): return str(change)
+                    class Event:
+                        def __init__(self): self.accepted=False
+                        def mimeData(self): return SimpleNamespace(urls=lambda:[Url()])
+                        def type(self): return QEvent.Type.Drop
+                        def acceptProposedAction(self): self.accepted=True
+                        def ignore(self): self.accepted=False
+                    event=Event()
+                    window._project_drop_event(event)
+                    self.assertTrue(event.accepted,window.notice.text())
+                drop('## Phase 3a — Distribution research\nhttps://example.org/market\n',
+                     {'phase3_plan_status':'researched'})
+                self.assertTrue(window.copy_prompt.menu().actions()[1].isEnabled())
+                window._copy_megaprompt('phase3b')
+                self.assertIn('## Phase 3a — Distribution research',self.app.clipboard().text())
+                drop('## Phase 3b — Independent validation\nVERDICT: APPROVED\nhttps://example.org/terms\n',
+                     {'phase3_validation_status':'approved'})
+                meta,_=parse_project(record.read_text(),relative)
+                self.assertEqual(meta['project_phase'],'working_phase_4')
+                self.assertEqual([a.text() for a in window.copy_prompt.menu().actions()],
+                                 ['Phase 4 · Execute Launch & Marketing'])
+                window._copy_megaprompt('phase4')
+                self.assertTrue(self.app.clipboard().text().startswith('/goal '))
+                self.assertIn(relative,self.app.clipboard().text())
             finally:
                 if window:window.close()
                 host.close()

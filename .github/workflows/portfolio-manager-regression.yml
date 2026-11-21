@@ -43,7 +43,31 @@ jobs:
       - name: Offline regression suites
         run: |
           python -m unittest discover -s business_portfolio/tests -v
-          python -m unittest portfolio_manager.tests.test_project_management portfolio_manager.tests.test_project_import portfolio_manager.tests.test_project_update portfolio_manager.tests.test_project_lifecycle portfolio_manager.tests.test_workspace_window portfolio_manager.tests.test_workspaces portfolio_manager.tests.test_niche_selection_migration portfolio_manager.tests.test_phase1_research_policy portfolio_manager.tests.test_coordinator -v
+          python -m unittest portfolio_manager.tests.test_project_management portfolio_manager.tests.test_project_import portfolio_manager.tests.test_project_update portfolio_manager.tests.test_project_lifecycle portfolio_manager.tests.test_workspaces portfolio_manager.tests.test_niche_selection_migration portfolio_manager.tests.test_phase1_research_policy portfolio_manager.tests.test_coordinator -v
+          # Isolate each Qt window test in a fresh Python process. Qt sometimes
+          # crashes when deferred QObject destruction from an earlier window
+          # overlaps with a later test; separate processes prevent cross-test
+          # native-object lifetime contamination without skipping any tests.
+          python - <<'PY'
+          import subprocess
+          import sys
+          import unittest
+          from portfolio_manager.tests import test_workspace_window
+
+          def cases(suite):
+              for item in suite:
+                  if isinstance(item, unittest.TestSuite):
+                      yield from cases(item)
+                  else:
+                      yield item.id()
+
+          suite = unittest.defaultTestLoader.loadTestsFromModule(test_workspace_window)
+          names = list(cases(suite))
+          print(f"Running {len(names)} isolated Qt window tests.", flush=True)
+          for name in names:
+              print(f"=== {name} ===", flush=True)
+              subprocess.run([sys.executable, "-m", "unittest", "-v", name], check=True)
+          PY
           python -m unittest portfolio_manager.tests.test_runner.WorkspaceTests.test_direct_niche_project_stages_without_exposing_work_directory -v
       - name: Commit regenerated portfolio browser and index directly to main
         if: github.ref == 'refs/heads/main'

@@ -1,3 +1,9 @@
+# LEGACY PROMPT (NOT IN THE CURRENT COPY PROMPT MENU)
+
+The former Phase 3 marketing /goal prompt was superseded. Use **PHASE_3A_RESEARCH_MEGAPROMPT.md** (ChatGPT research), then **PHASE_3B_VALIDATION_MEGAPROMPT.md** (ChatGPT recheck), import the approved updated project record, and only then use **PHASE_4_EXECUTION_MEGAPROMPT.md** (Codex /goal). Do not launch a project whose record is still at working_phase_3.
+
+---
+
 /goal Launch, distribute, market and advertise the selected verified portfolio product through every suitable, permitted channel, and create a durable completed-project record ONLY after real distribution and marketing are verifiably live.
 
 You own Phase 3 for one existing project. Continue autonomously on independent authorized work until the stated goal is genuinely complete or all remaining tasks require explicit human action, access, time or external decisions. Don't equate planned posts or drafted listings with published ones.

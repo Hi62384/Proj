@@ -22,6 +22,31 @@ If a finalist fails a real material gate, **evaluate the next-best finalist or a
 
 **Stopping rule:** Finish when the material evidence is sufficient to justify or reject the bounded candidate, not after 5, 30 or 60 minutes on a clock. If the task lacks credible evidence, say what remains unresolved instead of claiming an approved opportunity. The actual research trail matters much more than wall-clock elapsed time.
 
+## Candidate rejection and niche-wide NO_GO exit gate
+
+**Critical distinction:** A finalist failing its deep verification is an **IDEA_NO_GO**, not proof that the selected niche contains no worthwhile projects. Do not end the Phase 1 run merely because the first or most interesting candidate failed. Continue product discovery **within the same invocation**, using the reasons for failure to make the next search materially different and more informed. Do not ask the owner to send an additional prompt to recover from an ordinary failed candidate.
+
+### Discovery recovery sequence
+
+1. **Build a meaningful shortlist BEFORE fixating on a favorite.** Start with actual buyers, paid categories, recurrent tasks and creative audiences; identify several distinct jobs-to-be-done, product types or buyer segments within the selected niche. Keep a brief candidate ledger with audience, paid/free alternatives, potential value, first major concern and preliminary ranking. For a broad niche, consider roughly 12–25 quick opportunities, shortlist around 3–6, and deeply vet the strongest 2–3 as warranted. These are **coverage guides, not quotas**; narrow niches or unusually strong primary evidence can justify fewer.
+2. **When finalist A fails, explain WHY before pivoting.** Record the material disqualifier and direct support. Determine whether a significant buyer/feature/pricing/format variation actually resolves the failure; do not salvage an equivalent free clone by giving it a new name. If a credible variation remains, challenge that variation independently rather than assuming the new label fixes everything.
+3. **If no meaningful variation survives, investigate finalist B** with a *different buyer job, category, distribution angle or defensible value proposition*. Reuse relevant facts but perform fresh searches and the same substantive buyer/competition/economics/rights scrutiny. If B fails, inspect a genuinely distinct C or a newly discovered demand-led opportunity where the niche has sufficient breadth. Do not simply list rejected ideas without checking the actual potentially viable alternatives.
+4. **If many ideas fail for the same reason**, change the search strategy. Inspect who is actually paying for specialized outcomes, unmet friction in capable tools, narrower professional segments, adjacent formats and customer-acquisition routes. Do not keep generating cosmetic versions of the same commodity product. Classify each failed pathway as evidenced fatal weakness, potentially repairable, not yet verified or low-priority—not as proof that all possible ideas are impossible.
+5. **Approve the strongest TEST-FIRST opportunity only if its independent deep checks survive.** Exact sales by the not-yet-launched product are a future test; a real fatal free-equivalence, cost, technical, rights or buyer-access problem remains disqualifying. Do not relax standards after several rejections to guarantee a GO.
+
+### NO_GO must be justified at the *niche* level, not only for one product
+
+Only conclude **"NO_GO — no suitable opportunity identified in this research run"** after a meaningful search across the important **distinct buyer/product pathways** that were realistically available within the scope. As a practical guide in a broad niche, provide a clear comparison of **at least three substantively different finalist directions** that received actual evidence checks, or explain with specific sources why fewer existed or could be assessed. This is an evidence sufficiency check, **not a numeric pass/fail quota** and not a claim that every imaginable business was exhausted.
+
+A final non-approval report must include:
+- The shortlisted directions and any meaningful variations; actual buyer problem and independent evidence investigated for each.
+- For each deeply examined finalist, the strongest complete free/AI/paid alternatives, financial/customer access considerations, **specific sourced disqualifier or decisive unknown**, and how the verdict differed from the earlier candidate.
+- What new direction was explored **after** the first rejection; do not stop at "the initial product failed."
+- Why no other seriously promising candidate is reasonably identifiable from the research, which parts of the niche remain unexamined, and the strongest next lead for a later attempt.
+- A distinction between **NO_GO** (evidenced fatal fail), **RESEARCH_BLOCKED** (important presently knowable fact inaccessible), and **CONDITIONAL_PROOF_ONLY** (one small decisive technical side-by-side proof). Do not use niche-wide NO_GO merely because a product has no prelaunch conversion data or because a source was inaccessible.
+
+**If research/tool/context limits prevent properly examining the next viable finalist, say that the search is incomplete** and list the precise next candidate and required research; do not falsely report that the niche has no opportunity. Never fabricate sources, competitor findings, buyer evidence or completed searches. A truthful no-go is allowed when this exit gate is genuinely satisfied. There is no promise of eventual success and no endless background loop.
+
 ## Research the opportunity before expanding the specification
 
 1. Define the target buyer or audience, exact use or purchase situation, present alternative, and reason to pay. Search real workflows, existing paid categories, independent requests/reviews and contrary evidence before generating ideas. For original books, games or artwork, investigate audience, genre and distinctive creative quality rather than inventing software-like exclusivity requirements.

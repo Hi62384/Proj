@@ -107,6 +107,28 @@ class SixPhasePromptPolicyTests(unittest.TestCase):
                 self.assertLess(prompt.index("Mandatory finalist verification"),
                                 prompt.index("## Detailed Phase 1 specification"))
 
+    def test_initial_phase_one_does_not_end_after_first_failed_finalist(self):
+        for filename in ("PHASE_1_RESEARCH_MEGAPROMPT.md", "PHASE_1_IDEA_MEGAPROMPT.md"):
+            with self.subTest(filename=filename):
+                prompt = read(filename)
+                for requirement in (
+                    "Candidate rejection and niche-wide NO_GO exit gate",
+                    "IDEA_NO_GO", "within the same invocation",
+                    "finalist B", "distinct C", "at least three substantively different",
+                    "not a numeric pass/fail quota", "What new direction was explored",
+                    "RESEARCH_BLOCKED", "CONDITIONAL_PROOF_ONLY",
+                    "If research/tool/context limits prevent",
+                    "not a claim that every imaginable business was exhausted",
+                    "no endless background loop",
+                ):
+                    self.assertIn(requirement, prompt)
+                self.assertLess(prompt.index("Candidate rejection and niche-wide NO_GO exit gate"),
+                                prompt.index("## Detailed Phase 1 specification"))
+        owner_idea = read("PHASE_1_IDEA_MEGAPROMPT.md")
+        self.assertIn("Additional rule for owner-supplied ideas", owner_idea)
+        self.assertIn("no in-scope variation is viable", owner_idea)
+        self.assertIn("not as a stealth rewrite", owner_idea)
+
     def test_release_research_connects_adjacent_targets_to_real_build_work(self):
         prompt = read("PHASE_2_RELEASE_RESEARCH_MEGAPROMPT.md")
         for concept in ("compatibility targets", "distribution destinations",

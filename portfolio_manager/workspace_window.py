@@ -3,6 +3,7 @@ from concurrent.futures import ThreadPoolExecutor
 import os
 import json
 import html
+import hashlib
 from pathlib import Path, PurePosixPath
 import re
 import time
@@ -241,7 +242,7 @@ def niche_entries(repo):
 
 
 class WorkspaceWindow(QMainWindow):
-    def __init__(self, host, workspace, *, on_emergency, on_stop_all, on_access, on_close):
+    def __init__(self, host, workspace, *, on_emergency, on_stop_all, on_access, on_close, on_resume=None):
         super().__init__()
         self.host = host
         self.repo = Path(host.repo).resolve()
@@ -282,6 +283,7 @@ class WorkspaceWindow(QMainWindow):
         self._phase_icons = {}
         for phase, symbol, color in (('working_phase_2', '2', '#3377ad'),
                                       ('working_phase_3', '3', '#ad722a'),
+                                      ('working_phase_4', '4', '#8753a7'),
                                       ('complete', '✓', '#20865a')):
             pixmap = self._file_icon.pixmap(32, 32)
             painter = QPainter(pixmap)
@@ -329,6 +331,13 @@ class WorkspaceWindow(QMainWindow):
         self.mode.addItem('Human Available', 'human')
         self.mode.activated.connect(self._set_mode)
         header.addWidget(self.mode)
+        self.resume_after_stop = QPushButton('Resume after stop')
+        self.resume_after_stop.setAccessibleName('Resume after stop')
+        self.resume_after_stop.setToolTip('Clear the Computer Bridge stopped state without starting background workers.')
+        self.resume_after_stop.setEnabled(on_resume is not None)
+        if on_resume is not None:
+            self.resume_after_stop.clicked.connect(on_resume)
+        header.addWidget(self.resume_after_stop)
         more = QPushButton('⋯')
         more.setAccessibleName('More options')
         menu = QMenu(more)
@@ -420,14 +429,9 @@ class WorkspaceWindow(QMainWindow):
         self.research_budget.textChanged.connect(self._save_research_budget)
         self.copy_prompt = QPushButton('Copy Prompt')
         self.copy_prompt.setAccessibleName('Copy Prompt')
-        prompt_menu = QMenu(self.copy_prompt)
-        first_phase = prompt_menu.addMenu('Phase 1 · Research, Create & Recheck')
-        first_phase.addAction('Research a Business Opportunity', lambda: self._copy_megaprompt('research'))
-        first_phase.addAction('Create a Project from My Idea', lambda: self._copy_megaprompt('idea'))
-        first_phase.addAction('Recheck or Replace Current Project', lambda: self._copy_megaprompt('recheck'))
-        prompt_menu.addAction('Phase 2 · Build, Test & Prepare', lambda: self._copy_megaprompt('phase2'))
-        prompt_menu.addAction('Phase 3 · Launch & Market', lambda: self._copy_megaprompt('phase3'))
-        self.copy_prompt.setMenu(prompt_menu)
+        self.prompt_menu = QMenu(self.copy_prompt)
+        self.copy_prompt.setMenu(self.prompt_menu)
+        self._prompt_menu_state = None
         research_layout.addRow('Planning budget (CAD)', self.research_budget)
         research_layout.addRow(self.copy_prompt)
         details.addWidget(self.research_tools)
@@ -438,9 +442,11 @@ class WorkspaceWindow(QMainWindow):
         self.phase_selector = QComboBox()
         self.phase_selector.setAccessibleName('Project phase')
         self.phase_selector.addItem('Phase 2 · Build & Verify', 'working_phase_2')
-        self.phase_selector.addItem('Phase 3 · Market & Operate', 'working_phase_3')
+        self.phase_selector.addItem('Phase 3 · Plan & Validate', 'working_phase_3')
+        self.phase_selector.addItem('Phase 4 · Launch & Market (validated plan)', 'working_phase_4')
         self.phase_selector.addItem('Complete · Verified (Codex only)', 'complete')
         self.phase_selector.model().item(2).setEnabled(False)
+        self.phase_selector.model().item(3).setEnabled(False)
         phase_layout.addWidget(self.phase_selector, 1)
         self.phase_apply = QPushButton('Update Phase')
         self.phase_apply.clicked.connect(self._apply_project_phase)
@@ -491,7 +497,8 @@ class WorkspaceWindow(QMainWindow):
                 stage = project_phase(meta)
                 icon = self._phase_icons[stage]
                 tooltip = {'working_phase_2': 'Working Phase 2 · Build and test',
-                           'working_phase_3': 'Working Phase 3 · Launch and market',
+                           'working_phase_3': 'Working Phase 3 · Research and validate launch plan',
+                           'working_phase_4': 'Working Phase 4 · Publish and market',
                            'complete': 'Complete'}[stage]
             except (OSError, ValueError, KeyError, TypeError):
                 label = PurePosixPath(name).stem.replace('-', ' ').title()
@@ -674,11 +681,28 @@ class WorkspaceWindow(QMainWindow):
                 location = event.position().toPoint()
                 if watched is self.tree:
                     location = self.tree.viewport().mapFrom(self.tree, location)
-                destination = self._drop_niche_from_item(self.tree.itemAt(location))
+                item = self.tree.itemAt(location)
+                hovered = item.data(0, ROLE) if item is not None else None
+                if hovered == self.workspace_state['selection'] and project_record_leaf(hovered):
+                    destination = hovered
+                else:
+                    destination = self._drop_niche_from_item(item)
             if not destination:
-                raise ValueError('Drop onto a niche folder, not an empty area or project file.')
-            ids = import_projects(self.repo, destination, [url.toLocalFile() for url in urls])
-            self.notice.setText('Imported: ' + ', '.join(ids))
+                raise ValueError('Drop onto a selected project or active niche folder.')
+            if project_record_leaf(destination) and self._tree_mode == 'projects':
+                if destination != self.workspace_state['selection']:
+                    raise ValueError('Select the exact project before replacing its file.')
+                if len(urls) != 1:
+                    raise ValueError('Drop exactly one Markdown update onto the selected project.')
+                from .project_update import replace_project_from_file
+                outcome = replace_project_from_file(self.repo, destination, urls[0].toLocalFile())
+                self.notice.setText('Project updated: ' + outcome['id'] + '. Phase: ' + outcome['project_phase']
+                                    + '. Previous version backed up locally.')
+                self._preview(destination)
+                self._refresh_project_phase_rows()
+            else:
+                ids = import_projects(self.repo, destination, [url.toLocalFile() for url in urls])
+                self.notice.setText('Imported: ' + ', '.join(ids))
             self.notice.show()
             self._entry_future = self._pool.submit(self._load_navigation_entries, self.repo)
             self._entries_ready = False
@@ -921,7 +945,8 @@ class WorkspaceWindow(QMainWindow):
                         item.setIcon(0, self._phase_icons[stage])
                         item.setText(0, meta.get('id', path.stem.upper()) + ' · ' + meta.get('title', path.stem))
                         item.setToolTip(0, {'working_phase_2': 'Working Phase 2 · Build and test',
-                                            'working_phase_3': 'Working Phase 3 · Launch and market',
+                                            'working_phase_3': 'Working Phase 3 · Plan and validate',
+                                            'working_phase_4': 'Working Phase 4 · Launch and market',
                                             'complete': 'Complete'}[stage])
                     except (OSError, ValueError, KeyError, TypeError):
                         pass
@@ -929,6 +954,8 @@ class WorkspaceWindow(QMainWindow):
                     visit(item.child(index))
             for index in range(self.tree.topLevelItemCount()):
                 visit(self.tree.topLevelItem(index))
+        if self.workspace_state:
+            self._refresh_prompt_menu(self.workspace_state.get('selection'))
 
     def _current_working_signature(self):
         return navigation_signature(self.repo)
@@ -965,17 +992,73 @@ class WorkspaceWindow(QMainWindow):
 
     def _selected_niche(self, selection):
         prefix = 'business_portfolio/niches/'
-        if not selection.startswith(prefix):
+        if not isinstance(selection, str) or not selection.startswith(prefix):
             return None
         candidate = PurePosixPath(selection)
-        if candidate.name == 'projects' or candidate.parent.name == 'projects':
-            return None
-        metadata = self.repo / selection / 'NICHE.json'
+        if candidate.name == 'projects':
+            candidate = candidate.parent
+        metadata = self.repo / candidate / 'NICHE.json'
         try:
-            meta = json.loads(metadata.read_text(encoding='utf-8'))
+            path = context_path(self.repo, metadata)
+            meta = json.loads(path.read_text(encoding='utf-8'))
             return meta.get('title')
         except (OSError, ValueError, TypeError):
             return None
+
+    def _current_project(self, selection=None):
+        """Read the complete selected canonical project, never a truncated preview."""
+        selection = selection if selection is not None else (
+            self.workspace_state.get('selection') if self.workspace_state else '')
+        if not isinstance(selection, str) or not project_record_leaf(selection):
+            return None
+        if not selection.startswith('business_portfolio/niches/'):
+            return None
+        try:
+            from .project_lifecycle import record_path, project_phase
+            from business_portfolio.tools.build_browser import parse_project
+            path = record_path(self.repo, selection)
+            raw = path.read_text(encoding='utf-8')
+            meta, _ = parse_project(raw, selection)
+            return path, raw, meta, project_phase(meta)
+        except (ValueError, OSError, TypeError):
+            return None
+
+    def _refresh_prompt_menu(self, selection=None):
+        """Show only prompt actions appropriate to the current selection and phase."""
+        selection = selection if selection is not None else (
+            self.workspace_state.get('selection') if self.workspace_state else '')
+        current = self._current_project(selection)
+        if current:
+            _, _, meta, phase = current
+            key = ('project', selection, phase, meta.get('phase3_plan_status'))
+        else:
+            key = ('niche', selection) if self._selected_niche(selection) else ('none', selection)
+        if key == self._prompt_menu_state:
+            return
+        self._prompt_menu_state = key
+        self.prompt_menu.clear()
+        def item(title, option):
+            self.prompt_menu.addAction(title, lambda: self._copy_megaprompt(option))
+        if key[0] == 'niche':
+            item('Research a Business Opportunity', 'research')
+            item('Create a Project from My Idea', 'idea')
+            item('Recheck or Replace', 'recheck')
+        elif key[0] == 'project':
+            phase = key[2]
+            if phase == 'working_phase_2':
+                item('Build, Test & Prepare', 'phase2')
+            elif phase == 'working_phase_3':
+                item('Phase 3a · Research Platforms & Plan', 'phase3a')
+                action = self.prompt_menu.addAction('Phase 3b · Validate & Improve Plan',
+                                lambda: self._copy_megaprompt('phase3b'))
+                action.setEnabled(meta.get('phase3_plan_status') == 'researched')
+            elif phase == 'working_phase_4':
+                item('Phase 4 · Execute Launch & Marketing', 'phase4')
+            else:
+                self.prompt_menu.addAction('Project complete — no active prompt').setEnabled(False)
+        else:
+            self.prompt_menu.addAction('Select a niche, projects folder or active project').setEnabled(False)
+
 
     def _recheck_initial_hint(self):
         """Provide a safe initial project/niche hint without pinning later rechecks."""
@@ -999,7 +1082,9 @@ class WorkspaceWindow(QMainWindow):
             'idea': 'BUSINESS_IDEA_TO_PROJECT_MEGAPROMPT.md',
             'recheck': 'PHASE_1_RECHECK_REPLACE_MEGAPROMPT.md',
             'phase2': 'PHASE_2_DEVELOPMENT_MEGAPROMPT.md',
-            'phase3': 'PHASE_3_MARKETING_MEGAPROMPT.md',
+            'phase3a': 'PHASE_3A_RESEARCH_MEGAPROMPT.md',
+            'phase3b': 'PHASE_3B_VALIDATION_MEGAPROMPT.md',
+            'phase4': 'PHASE_4_EXECUTION_MEGAPROMPT.md',
         }
         filename = filenames.get(option)
         if not filename:
@@ -1017,14 +1102,40 @@ class WorkspaceWindow(QMainWindow):
             self.notice.setText(f'Could not read {filename}.')
             self.notice.show()
             return
-        if option in {'phase2', 'phase3'}:
-            if not prompt.startswith('/goal '):
-                self.notice.setText(f'{filename} must start with /goal; nothing copied.')
+        if option in {'phase2', 'phase3a', 'phase3b', 'phase4'}:
+            current = self._current_project()
+            if current is None:
+                self.notice.setText('Select a real active project first.')
                 self.notice.show()
                 return
+            _, raw, meta, phase = current
+            permitted = {'phase2': 'working_phase_2', 'phase3a': 'working_phase_3',
+                         'phase3b': 'working_phase_3', 'phase4': 'working_phase_4'}
+            if phase != permitted[option]:
+                self.notice.setText('The selected project is not at the required phase.')
+                self.notice.show()
+                return
+            if option == 'phase3b' and meta.get('phase3_plan_status') != 'researched':
+                self.notice.setText('Import the Phase 3a research update before validating.')
+                self.notice.show()
+                return
+            if option in {'phase2', 'phase4'}:
+                if not prompt.startswith('/goal '):
+                    self.notice.setText('The execution prompt must start with /goal.')
+                    self.notice.show()
+                    return
+                prompt += '\n\nSelected canonical project: ' + self.workspace_state['selection'] + '\n'
+            else:
+                from .project_update import snapshot_sha256
+                fence = '`' * (max([len(t) for t in re.findall(r'`+', raw)] + [4]) + 1)
+                prompt += ('\n\n---\n## COMPLETE CURRENT PROJECT FILE — DO NOT TRUNCATE OR REWRITE\n'
+                           'CANONICAL_PROJECT_PATH: ' + self.workspace_state['selection'] + '\n'
+                           'BASE_SHA256: ' + snapshot_sha256(raw.replace('\r\n', '\n')) + '\n\n'
+                           + fence + 'markdown\n' + raw + '\n' + fence + '\n')
             QApplication.clipboard().setText(prompt)
-            self.notice.setText(('Phase 2 development' if option == 'phase2' else
-                                 'Phase 3 marketing') + ' megaprompt copied.')
+            self.notice.setText({'phase2': 'Phase 2 development', 'phase3a': 'Phase 3a research',
+                                 'phase3b': 'Phase 3b validation', 'phase4': 'Phase 4 execution'}[option]
+                                + ' prompt copied.')
             self.notice.show()
             return
         budget = self.research_budget.text().strip()
@@ -1071,6 +1182,7 @@ class WorkspaceWindow(QMainWindow):
             self._preview(selection)
 
     def _preview(self, selection):
+        self._refresh_prompt_menu(selection)
         self._phase_project = None
         self.phase_controls.hide()
         self.image.clear()
@@ -1176,11 +1288,18 @@ class WorkspaceWindow(QMainWindow):
             if results else 'No verified public results are declared for this project.')
         done = re.findall(r'^\s*- \[[xX]\] (.+)$', body, re.M)
         remaining = re.findall(r'^\s*- \[ \] (.+)$', body, re.M)
+        stage = meta.get('project_phase', 'working_phase_2')
+        label = '2' if stage == 'working_phase_2' else ('4' if stage == 'working_phase_4' else '')
+        guesses = re.findall(r'Phase\\s*' + (label or '[24]') +
+                             r'\\s*completion estimate:\\s*(\\d{1,3})\\s*%', body, re.I)
+        estimate = ('Phase ' + label + ' completion estimate: ' + guesses[-1] + '% (best guess)'
+                    if guesses and label and int(guesses[-1]) <= 100
+                    else 'Progress percentage: not measured.')
         self.project_tasks.setPlainText('Completed\n' + ('\n'.join('• ' + item for item in done) if done else
             'No completed tasks recorded.') + '\n\nRemaining\n' +
             ('\n'.join('• ' + item for item in remaining) if remaining else
              'No remaining checklist recorded; see the next step.') +
-            '\n\nProgress percentage: not measured.')
+            '\n\n' + estimate)
         self.project_record.setPlainText(raw)
         if not archived and project_record_leaf(selection):
             from .project_lifecycle import project_phase
@@ -1213,7 +1332,7 @@ class WorkspaceWindow(QMainWindow):
             if target == 'complete':
                 raise ValueError('Codex marks projects Complete after verifying live delivery and marketing links.')
             if target not in {'working_phase_2', 'working_phase_3'}:
-                raise ValueError('Choose Phase 2 or Phase 3. Codex handles verified completion.')
+                raise ValueError('Phase 4 requires a validated Phase 3b import. Codex handles verified completion.')
             if QMessageBox.question(
                     self, 'Change project phase',
                     f'Change this project from {current} to {target}?'

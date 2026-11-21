@@ -25,3 +25,6 @@ outputs/**/qa/*.xlsx
 outputs/**/lo-profile/
 outputs/**/qa/**/cases/
 outputs/**/qa/**/recalculated/
+
+# Local Phase 3 project-file replacement backups (never sync these by default).
+business_portfolio/.local/

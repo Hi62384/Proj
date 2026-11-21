@@ -110,10 +110,14 @@ def replace_project_from_file(repo: Path, selection: str, source: str | Path) ->
                 out.write(original)
         _atomic_text(target, contents)
         try:
-            build_browser.load_portfolio(portfolio)
             build_browser.build(portfolio)
         except Exception:
             _atomic_text(target, original)
+            try:
+                build_browser.build(portfolio)
+            except Exception:
+                # Preserve the original exception; the prior record is restored.
+                pass
             raise
 
         return {

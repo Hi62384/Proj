@@ -36,9 +36,14 @@ class ProjectLifecycleTests(unittest.TestCase):
         self.assertEqual(set_phase(self.repo, self.selection, "working_phase_3")["project_phase"],
                          "working_phase_3")
         self.assertFalse(read_completions(self.repo))
+        self.assertEqual(set_phase(self.repo, self.selection, "working_phase_4")["project_phase"],
+                         "working_phase_4")
+        self.assertEqual(set_phase(self.repo, self.selection, "working_phase_3")["project_phase"],
+                         "working_phase_3")
 
     def test_completed_project_can_be_demoted_and_receipt_revoked(self):
         set_phase(self.repo, self.selection, "working_phase_3")
+        set_phase(self.repo, self.selection, "working_phase_4")
         set_phase(self.repo, self.selection, "complete", description="Verified fictional package",
                   sale_urls=["https://example.org/store"],
                   marketing_urls=["https://example.org/promo"])
@@ -51,6 +56,7 @@ class ProjectLifecycleTests(unittest.TestCase):
 
     def test_completed_project_can_return_directly_to_phase_2(self):
         set_phase(self.repo, self.selection, "working_phase_3")
+        set_phase(self.repo, self.selection, "working_phase_4")
         set_phase(self.repo, self.selection, "complete", description="Verified fictional release",
                   sale_urls=["https://example.org/store"],
                   marketing_urls=["https://example.org/promo"])
@@ -63,6 +69,7 @@ class ProjectLifecycleTests(unittest.TestCase):
 
     def test_completion_survives_original_file_deletion(self):
         set_phase(self.repo, self.selection, "working_phase_3")
+        set_phase(self.repo, self.selection, "working_phase_4")
         result = set_phase(self.repo, self.selection, "complete", description="A verified fictional release.",
                            sale_urls=["https://example.org/store"], marketing_urls=["https://example.org/promo"],
                            other_urls=["https://example.org/help"])
@@ -75,6 +82,7 @@ class ProjectLifecycleTests(unittest.TestCase):
 
     def test_invalid_links_and_duplicate_completion_preserve_snapshot(self):
         set_phase(self.repo, self.selection, "working_phase_3")
+        set_phase(self.repo, self.selection, "working_phase_4")
         with self.assertRaisesRegex(ValueError, "HTTP"):
             set_phase(self.repo, self.selection, "complete", description="Finished",
                       sale_urls=["file:///etc/passwd"], marketing_urls=["https://example.org/promo"])

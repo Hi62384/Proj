@@ -137,7 +137,13 @@ class WorkspaceWindowTests(unittest.TestCase):
 
     def test_phase2_prompt_button_copies_complete_goal(self):
         with TemporaryDirectory() as temp:
-            root=Path(temp);repo=root/'repo';_record(repo,'DEMO-012')
+            root=Path(temp);repo=root/'repo'
+            old=_record(repo,'DEMO-012')
+            folder=old.parent/'demo-012'
+            folder.mkdir()
+            project=folder/'project.md'
+            old.rename(project)
+            (folder/'work').mkdir()
             source=Path(__file__).resolve().parents[2]/'PHASE_2_DEVELOPMENT_MEGAPROMPT.md'
             (repo/source.name).write_bytes(source.read_bytes())
             host=ManagerHost(repo,root/'state');window=None
@@ -145,13 +151,17 @@ class WorkspaceWindowTests(unittest.TestCase):
                 from portfolio_manager.workspace_window import WorkspaceWindow
                 window=WorkspaceWindow(host,host.workspace('a'*32,{}),on_emergency=lambda:None,
                                        on_stop_all=lambda:None,on_access=lambda _:None,on_close=lambda _:None)
+                self.assertTrue(window.select(project.relative_to(repo).as_posix()))
+                self.assertEqual([action.text() for action in window.copy_prompt.menu().actions()],
+                                 ['Build, Test & Prepare'])
                 self.app.clipboard().setText('previous')
                 window._copy_megaprompt('phase2')
-                self.assertEqual(self.app.clipboard().text().replace('\r\n','\n'), source.read_text(encoding='utf-8'))
+                self.assertTrue(self.app.clipboard().text().replace('\r\n','\n').startswith(source.read_text(encoding='utf-8')))
                 self.assertTrue(self.app.clipboard().text().startswith('/goal '))
                 self.assertIn('working_phase_3', self.app.clipboard().text())
                 self.assertEqual(window.notice.text(), 'Phase 2 development megaprompt copied.')
-                self.assertEqual(host.get_workspace(window.workspace_id)['selection'], 'business_portfolio/niches')
+                self.assertEqual(host.get_workspace(window.workspace_id)['selection'],
+                                 project.relative_to(repo).as_posix())
             finally:
                 if window:window.close()
                 host.close()
@@ -171,11 +181,11 @@ class WorkspaceWindowTests(unittest.TestCase):
                 window=WorkspaceWindow(host,host.workspace('f'*32,{}),on_emergency=lambda:None,
                                        on_stop_all=lambda:None,on_access=lambda:None,on_close=lambda _:None)
                 self.assertEqual([a.text() for a in window.copy_prompt.menu().actions()],
-                                 ['Phase 1 · Research, Create & Recheck','Phase 2 · Build, Test & Prepare',
-                                  'Phase 3 · Launch & Market'])
-                self.assertEqual([a.text() for a in window.copy_prompt.menu().actions()[0].menu().actions()],
+                                 ['Select a niche, projects folder or active project'])
+                self.assertTrue(window.select('business_portfolio/niches/demo'))
+                self.assertEqual([a.text() for a in window.copy_prompt.menu().actions()],
                                  ['Research a Business Opportunity','Create a Project from My Idea',
-                                  'Recheck or Replace Current Project'])
+                                  'Recheck or Replace'])
                 window.research_budget.setText('50.25')
                 window._copy_megaprompt('idea')
                 original=(repo/names[1]).read_text(encoding='utf-8')
@@ -375,6 +385,7 @@ class WorkspaceWindowTests(unittest.TestCase):
                 self.assertFalse(window.project_tabs.isHidden())
                 self.assertIn('work',window.project_files.toPlainText())
                 set_phase(repo,relative,'working_phase_3')
+                set_phase(repo,relative,'working_phase_4')
                 window.sync()
                 receipt=set_phase(repo,relative,'complete',description='Fictional completed project',
                     sale_urls=['https://example.org/shop'],marketing_urls=['https://example.org/post'])
@@ -435,6 +446,7 @@ class WorkspaceWindowTests(unittest.TestCase):
                 # Verified completion itself remains Codex-only.
                 from portfolio_manager.project_lifecycle import set_phase, read_completions
                 set_phase(repo, selection, 'working_phase_3')
+                set_phase(repo, selection, 'working_phase_4')
                 set_phase(repo, selection, 'complete', description='Verified fixture',
                           sale_urls=['https://example.org/release'],
                           marketing_urls=['https://example.org/announcement'])

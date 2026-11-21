@@ -63,14 +63,22 @@ def safe_niche(path: str) -> bool:
         and p not in {'projects','private','local'} | reserved for p in path.split('/'))
 
 def project_record_path(path: Path) -> bool:
-    """Accept both old single-file projects and the canonical project-folder layout."""
+    """Identify canonical leaves without treating work/ Markdown as projects.
+
+    Six-phase projects sit directly in their niche. The two previous layouts
+    remain readable so an existing checkout can migrate without losing records.
+    """
     return ((path.parent.name == 'projects' and path.suffix.lower() == '.md') or
-            (path.name == 'project.md' and path.parent.parent.name == 'projects'))
+            (path.name == 'project.md' and
+             (path.parent.parent.name == 'projects' or
+              (path.parent.parent / 'NICHE.json').is_file())))
 
 
 def project_niche_folder(path: Path) -> Path:
     if path.name == 'project.md' and path.parent.parent.name == 'projects':
         return path.parent.parent.parent
+    if path.name == 'project.md' and (path.parent.parent / 'NICHE.json').is_file():
+        return path.parent.parent
     if path.parent.name == 'projects' and path.suffix.lower() == '.md':
         return path.parent.parent
     raise ValidationError(f'Not a project record: {path}')
@@ -96,6 +104,42 @@ def walk_files(root: Path):
             if linked_input(p):
                 raise ValidationError(f'Symlink file refused: {p}')
             yield p
+
+
+def walk_index_inputs(root: Path):
+    """Walk niche metadata and records without indexing project-owned artifacts.
+
+    A project's folder is a leaf in the portfolio, even when its work contains
+    a sample ``NICHE.json`` or ``projects/*.md`` directory. This is deliberately
+    separate from the strict recursive archive/deletion walk. A real niche named
+    ``work`` is still visited normally. Record and work-root safety is checked
+    even when a consumer uses this walk only to fingerprint its cache.
+    """
+    if linked_input(root):
+        raise ValidationError('Linked index root refused')
+    for directory, dirs, files in os.walk(root, followlinks=False):
+        folder = Path(directory)
+        record = folder / 'project.md'
+        if folder.name != 'projects' and 'project.md' in files and project_record_path(record):
+            if linked_input(record):
+                raise ValidationError(f'Symlink file refused: {record}')
+            work = folder / 'work'
+            if not work.is_dir() or linked_input(work):
+                raise ValidationError(f'{record}: project work/ folder is missing or unsafe')
+            dirs.clear()
+            yield record
+            continue
+        for name in list(dirs):
+            child = folder / name
+            if linked_input(child):
+                raise ValidationError(f'Symlink directory refused: {child}')
+            if name.startswith('.') or name in {'__pycache__', 'private'}:
+                dirs.remove(name)
+        for name in sorted(files):
+            path = folder / name
+            if linked_input(path):
+                raise ValidationError(f'Symlink file refused: {path}')
+            yield path
 
 def ensure_acyclic(mapping: dict[str, str | None], label: str):
     done: set[str] = set()
@@ -212,7 +256,8 @@ def verify_taxonomy_snapshot(root: Path, active_records: list[dict]) -> dict | N
         if not old.startswith('niches/'):
             raise ValidationError('Taxonomy project path mismatch')
         live = current.get(row['id'])
-        if live is not None and live['path'] not in {row['new_path'], migrated}:
+        if live is not None and live['path'] not in {row['new_path'], migrated,
+                                                   migrated.replace('/projects/', '/')}:
             raise ValidationError('Taxonomy project path mismatch')
         if row['preserved_snapshot']!='archive/2026-11-15-taxonomy-view-v1/'+old:
             raise ValidationError('Taxonomy snapshot path mismatch')
@@ -245,7 +290,7 @@ def load_portfolio(root: Path) -> dict:
         if not s['url'].startswith(('https://','http://','attachment:')):
             raise ValidationError(f"Unsafe source URL: {s['id']}")
         sources[s['id']] = s
-    files = list(walk_files(root/'niches'))
+    files = list(walk_index_inputs(root/'niches'))
     nodes = {}
     for p in files:
         if p.name != 'NICHE.json':
@@ -285,18 +330,28 @@ def load_portfolio(root: Path) -> dict:
             raise ValidationError(f"Duplicate project ID: {m['id']}")
         ids.add(m['id'])
         actual = project_niche_folder(p).relative_to(root/'niches').as_posix()
-        if p.name == 'project.md' and p.parent.parent.name == 'projects':
+        if p.name == 'project.md':
             if not re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', p.parent.name):
                 raise ValidationError(f'{p}: unsafe project folder name')
             if not (p.parent / 'work').is_dir() or linked_input(p.parent / 'work'):
                 raise ValidationError(f'{p}: project work/ folder is missing or unsafe')
         if m['niche_path'] != actual or m['niche_id'] != node_paths.get(actual):
             raise ValidationError(f'{p}: record niche mismatch/missing NICHE.json')
-        if m.get('project_phase', 'working_phase_2') not in {'working_phase_2', 'working_phase_3', 'working_phase_4', 'complete'}:
+        if m.get('workflow_version', 1) not in {1, 2}:
+            raise ValidationError(f'{p}: invalid workflow version')
+        if m.get('project_phase', 'working_phase_2') not in {f'working_phase_{i}' for i in range(1, 7)} | {'complete'}:
             raise ValidationError(f'{p}: invalid project phase')
+        verification = m.get('research_verification', {})
+        if (not isinstance(verification, dict) or
+                any(key not in {'phase_1', 'phase_2', 'phase_3'} or
+                    value not in {'unreviewed', 'approved', 'needs_revision', 'blocked'}
+                    for key, value in verification.items())):
+            raise ValidationError(f'{p}: invalid research verification')
         if m['work_state'] not in WORK_STATES or m['commercial_validation'] not in VALIDATIONS or m['priority'] not in PRIORITIES:
             raise ValidationError(f'{p}: unknown state/validation/priority')
-        if not isinstance(m['source_ids'],list) or not m['source_ids'] or any(x not in sources for x in m['source_ids']):
+        if (not isinstance(m['source_ids'],list) or
+                (not m['source_ids'] and m.get('workflow_version') != 2) or
+                any(not isinstance(x, str) or x not in sources for x in m['source_ids'])):
             raise ValidationError(f'{p}: missing/unknown sources')
         if not isinstance(m['related_projects'],list):
             raise ValidationError(f'{p}: related_projects must be a list')

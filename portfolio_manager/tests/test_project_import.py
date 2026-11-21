@@ -4,6 +4,7 @@ import tempfile
 import unittest
 
 from portfolio_manager.project_import import import_projects
+from portfolio_manager.project_management import create_niche, create_project, delete_niche
 from portfolio_manager.tests.test_runner import _record
 
 
@@ -36,12 +37,12 @@ class ProjectImportTests(unittest.TestCase):
         self.assertEqual(records['TEST-002']['niche_id'], 'N-demo')
         self.assertEqual(records['TEST-003']['niche_path'], 'demo')
         for ident in ids:
-            folder = self.repo / 'business_portfolio/niches/demo/projects'
+            folder = self.repo / 'business_portfolio/niches/demo'
             matching = list(folder.glob(ident.lower() + '-*/project.md'))
             self.assertEqual(len(matching), 1)
             self.assertTrue((matching[0].parent / 'work').is_dir())
             self.assertEqual(records[ident]['path'], matching[0].relative_to(self.repo / 'business_portfolio').as_posix())
-            self.assertEqual(records[ident]['project_phase'], 'working_phase_2')
+            self.assertEqual(records[ident]['project_phase'], 'working_phase_1')
 
     def test_duplicate_and_invalid_batch_leave_existing_records_untouched(self):
         original = self.example.read_bytes()
@@ -49,3 +50,41 @@ class ProjectImportTests(unittest.TestCase):
             import_projects(self.repo, self.selection, [self.make_file('TEST-002'), self.make_file('TEST-001')])
         self.assertEqual(self.example.read_bytes(), original)
         self.assertEqual(len(list(self.example.parent.glob('*.md'))), 1)
+
+    def test_import_preserves_research_phase_and_rejects_execution_phase(self):
+        source = self.make_file('TEST-004')
+        raw = source.read_text()
+        front, body = raw[4:].split('\n---\n', 1)
+        meta = json.loads(front)
+        meta.update(workflow_version=2, project_phase='working_phase_3')
+        source.write_text('---\n' + json.dumps(meta) + '\n---\n' + body)
+        import_projects(self.repo, self.selection, [source])
+        index = json.loads((self.repo / 'business_portfolio/PROJECT_INDEX.json').read_text())
+        self.assertEqual(next(row for row in index['records'] if row['id'] == 'TEST-004')['project_phase'], 'working_phase_3')
+        meta.update(id='TEST-005', project_phase='working_phase_4')
+        source.write_text('---\n' + json.dumps(meta) + '\n---\n' + body)
+        with self.assertRaisesRegex(ValueError, 'Phases 1–3'):
+            import_projects(self.repo, self.selection, [source])
+
+    def test_ambiguous_legacy_phase_is_not_silently_reinterpreted(self):
+        source = self.make_file('TEST-004')
+        front, body = source.read_text()[4:].split('\n---\n', 1)
+        meta = json.loads(front)
+        meta['project_phase'] = 'working_phase_2'
+        source.write_text('---\n' + json.dumps(meta) + '\n---\n' + body)
+        with self.assertRaisesRegex(ValueError, 'workflow_version 2'):
+            import_projects(self.repo, self.selection, [source])
+
+    def test_completed_and_deleted_project_ids_remain_reserved(self):
+        completed = self.repo / 'business_portfolio/completed_projects'
+        completed.mkdir()
+        (completed / 'TEST-004.json').write_text('{}')
+        with self.assertRaisesRegex(ValueError, 'reserved'):
+            import_projects(self.repo, self.selection, [self.make_file('TEST-004')])
+        child = create_niche(self.repo, self.selection, 'Reserved')
+        project = create_project(self.repo, child['path'])
+        source = Path(self.temp.name) / 'deleted.md'
+        source.write_bytes((self.repo / project['path']).read_bytes())
+        delete_niche(self.repo, child['path'])
+        with self.assertRaisesRegex(ValueError, 'reserved'):
+            import_projects(self.repo, self.selection, [source])

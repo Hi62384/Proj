@@ -121,6 +121,24 @@ class WorkspaceTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             _call(workspace, 'read', 'PROJECT.md')
 
+    def test_direct_niche_project_stages_without_exposing_work_directory(self):
+        target = self.record.parent.parent / 'fake-001-product' / 'project.md'
+        target.parent.mkdir()
+        self.record.rename(target)
+        work = target.parent / 'work'
+        work.mkdir()
+        private_work = work / 'not-an-input.md'
+        private_work.write_text('Private working material is not an approved input.')
+        claim = {**self.claim, 'record_path': target.relative_to(self.repo).as_posix()}
+        workspace = IsolatedWorkspace(self.repo, self.private, claim, self.cancelled)
+        self.assertEqual(_call(workspace, 'read', 'PROJECT.md')['content'], target.read_text())
+        self.assertNotIn('work/not-an-input.md', _call(workspace, 'list')['paths'])
+        with self.assertRaisesRegex(ValueError, 'Only canonical'):
+            IsolatedWorkspace(self.repo, self.private,
+                              {**claim, 'record_path': private_work.relative_to(self.repo).as_posix()},
+                              self.cancelled)
+        self.assertEqual(private_work.read_text(), 'Private working material is not an approved input.')
+
     def test_stale_record_and_invalid_draft_are_rejected(self):
         workspace = IsolatedWorkspace(self.repo, self.private, self.claim, self.cancelled)
         _call(workspace, 'write', 'draft.json', 'invalid JSON', 'new')

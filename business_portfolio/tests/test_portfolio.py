@@ -1,5 +1,6 @@
 """Offline package regression tests; these do not test real customer automations."""
 import copy
+import hashlib
 import importlib.util
 import json
 from pathlib import Path
@@ -38,43 +39,94 @@ class PortfolioTests(unittest.TestCase):
     def test_snapshot_preserves_all_awa_ids(self):
         ids={x['id'] for x in self.data['archived_records']}
         self.assertTrue({f'AWA-{i:03d}' for i in range(1,121)}<=ids)
-    def test_five_categories_twenty_five_required_niches_and_preserved_projects(self):
+    def test_immutable_taxonomy_and_archived_snapshots_remain_intact(self):
         taxonomy=json.loads((ROOT.parent/'opportunity_library/data/taxonomy.json').read_text(encoding='utf-8'))
         self.assertEqual(len(taxonomy['categories']),36)
         self.assertEqual(sum(len(c['subcategories']) for c in taxonomy['categories']),144)
-        nodes={n['path']:n for n in self.data['niches']}
-        roots=[n for n in self.data['niches'] if n['parent'] is None]
-        self.assertEqual([(n['path'],n['title']) for n in roots],[
-            ('digital-products','Digital Products'),('digital-content','Digital Content'),
-            ('services','Services'),('ecommerce','Ecommerce'),('investing','Investing')])
-        self.assertEqual([n['priority'] for n in roots],list(range(1,6)))
-        self.assertEqual(len(nodes),39)
-        required={
-            'digital-products':['game-development-marketplaces','software-apps-and-extensions','automation-products-and-templates','books-and-ebooks','digital-art-models-and-assets','games-and-interactive-products','data-products-and-apis'],
-            'digital-content':['youtube-channels','tiktok-and-short-form-video','instagram-and-social-accounts','blogs-newsletters-and-websites','original-images-video-and-entertainment'],
-            'services':['ai-assisted-freelancing','productized-services','business-automation-services','research-and-data-services','lead-generation-services'],
-            'ecommerce':['dropshipping','print-on-demand','specialized-physical-products','online-reselling'],
-            'investing':['stocks-and-etfs','bonds-gics-and-income-assets','real-estate-and-reits','alternative-and-collectible-assets']}
-        for category, slugs in required.items():
-            for slug in slugs:
-                node=nodes[f'{category}/{slug}']
-                self.assertEqual(node['parent'],nodes[category]['id'])
-        self.assertEqual(sum(len(v) for v in required.values()),25)
-        self.assertTrue(all(isinstance(n['working'],bool) for n in nodes.values()))
-        self.assertEqual({nodes[p]['id'] for p in ('digital-products/software-apps-and-extensions/advanced-online-products-and-software','digital-products/software-apps-and-extensions/platform-specific-apps-and-extensions','digital-products/automation-products-and-templates/marketplace-hosted-automations','digital-products/data-products-and-apis/usage-based-apis','digital-products/games-and-interactive-products/online-games-and-virtual-economies','digital-content/online-content-and-media','digital-content/online-content-and-media/affiliate-and-referral-businesses','digital-content/blogs-newsletters-and-websites/advertising-supported-utility-websites','digital-products/licensing-and-royalties')},{'N-business-02','N-business-04','N-business-05','N-business-07','N-business-08','N-business-09','N-business-10','N-business-11','N-business-12'})
-        self.assertTrue({'N-gdm-20261115',*(f'N-business-{i:02d}' for i in range(2,14))}
-                        <= {n['id'] for n in nodes.values()})
-        games=[r for r in self.data['records'] if r['id'] in {'GDM-001','GDM-002','GDM-003'}]
-        self.assertEqual({r['id'] for r in games},{'GDM-002'})
-        self.assertTrue(all(r['niche_path']=='digital-products/game-development-marketplaces' for r in games))
         self.assertEqual(len(self.data['archived_records']),139)
-        self.assertEqual(len(self.data['niches']),39)
         self.assertEqual(self.data['taxonomy_snapshot'],{'files':185,'projects':3})
-        self.assertEqual([r['planning_lane'] for r in games],
-                         ['queued'])
-        self.assertTrue(all(not r['execution_authorized'] and r['commercial_validation']=='unvalidated' for r in games))
-        self.assertTrue(all(r['platforms_supported'] == [] and r['platforms_proposed']
-                            for r in games))
+
+    def assert_current_catalogue_matches_files(self, root, data):
+        # The live catalogue is owner-editable. Validate identity and structure
+        # against the current files rather than freezing the original inventory.
+        files=list(b.walk_index_inputs(root/'niches'))
+        expected_nodes={p.parent.relative_to(root/'niches').as_posix():
+                        json.loads(p.read_text(encoding='utf-8'))
+                        for p in files if p.name=='NICHE.json'}
+        nodes={n['path']:n for n in data['niches']}
+        self.assertEqual(nodes,expected_nodes)
+        self.assertEqual(len(nodes),len(data['niches']))
+        self.assertEqual(len({n['id'] for n in nodes.values()}),len(nodes))
+        for path,node in nodes.items():
+            with self.subTest(niche=path):
+                self.assertRegex(node['id'],r'^N-[a-zA-Z0-9_-]+$')
+                self.assertIsInstance(node['working'],bool)
+                self.assertIsInstance(node['title'],str)
+                if '/' in path:
+                    parent_path=path.rsplit('/',1)[0]
+                    self.assertIn(parent_path,nodes)
+                    self.assertEqual(node['parent'],nodes[parent_path]['id'])
+                else:
+                    self.assertIsNone(node['parent'])
+        expected_records={p.relative_to(root).as_posix():p for p in files if b.project_record_path(p)}
+        records={r['path']:r for r in data['records']}
+        self.assertEqual(set(records),set(expected_records))
+        self.assertEqual(len(records),len(data['records']))
+        self.assertEqual(len({r['id'] for r in records.values()}),len(records))
+        for path,record in records.items():
+            with self.subTest(project=record['id']):
+                raw=expected_records[path].read_bytes()
+                metadata,body=b.parse_project(raw.decode('utf-8'),path)
+                for key,value in metadata.items():
+                    self.assertEqual(record[key],value,key)
+                self.assertEqual(record['body'],body)
+                self.assertEqual(record['content_sha256'],hashlib.sha256(raw).hexdigest())
+                self.assertRegex(record['id'],r'^[A-Z][A-Z0-9_-]*-[0-9]{3,}$')
+                actual_niche=b.project_niche_folder(expected_records[path]).relative_to(root/'niches').as_posix()
+                self.assertEqual(record['niche_path'],actual_niche)
+                self.assertEqual(record['niche_id'],nodes[actual_niche]['id'])
+                self.assertIn(record.get('project_phase','working_phase_2'),
+                              {f'working_phase_{i}' for i in range(1,7)}|{'complete'})
+                self.assertIn(record['work_state'],b.WORK_STATES)
+                self.assertIn(record['commercial_validation'],b.VALIDATIONS)
+                self.assertIsInstance(record['execution_authorized'],bool)
+                if record['commercial_validation'] in {'paid_pilot','repeat_paid','commercially_validated'}:
+                    self.assertTrue(record.get('validation_evidence_ref'))
+                for field in ('platforms_supported','platforms_proposed'):
+                    if field in record:
+                        self.assertIsInstance(record[field],list)
+                        self.assertTrue(all(isinstance(value,str) and value.strip() for value in record[field]))
+
+    def test_current_niches_and_projects_match_canonical_identity_and_structure(self):
+        self.assert_current_catalogue_matches_files(ROOT,self.data)
+
+    def test_current_catalogue_checks_allow_niche_edits_and_project_progress(self):
+        root,original,meta=self.fixture()
+        parent=root/'niches'/meta['niche_path']
+        child=parent/'new-owner-niche'
+        child.mkdir()
+        (child/'NICHE.json').write_text(json.dumps(dict(
+            id='N-owner-created',title='Owner-created subniche',parent=meta['niche_id'],
+            path=meta['niche_path']+'/new-owner-niche',priority=11,working=False)))
+        project=child/'new-001-product'/'project.md'
+        project.parent.mkdir()
+        (project.parent/'work').mkdir()
+        updated={**meta,'id':'NEW-001','title':'A researched fictional product',
+                 'niche_id':'N-owner-created','niche_path':meta['niche_path']+'/new-owner-niche',
+                 'workflow_version':2,'project_phase':'working_phase_4',
+                 'work_state':'package_ready','platforms_supported':['Fictional Engine'],
+                 'platforms_proposed':['Fictional Engine','Another fictional platform']}
+        self.write(project,updated)
+        data=b.load_portfolio(root)
+        self.assert_current_catalogue_matches_files(root,data)
+        self.assertEqual({r['id'] for r in data['records']},{meta['id'],'NEW-001'})
+        # Authorized removal changes inventory without weakening the checks on
+        # the remaining project or the immutable historical snapshots.
+        project.unlink();(project.parent/'work').rmdir();project.parent.rmdir()
+        (child/'NICHE.json').unlink();child.rmdir()
+        data=b.load_portfolio(root)
+        self.assert_current_catalogue_matches_files(root,data)
+        self.assertEqual([r['id'] for r in data['records']],[meta['id']])
     def test_taxonomy_snapshot_tampering_rejected(self):
         target=ROOT/'archive/2026-11-15-taxonomy-view-v1/niches/games-and-interactive-entertainment/game-development-marketplaces/projects/gdm-001-historical-save-regression-lab.md'
         original=Path.read_bytes
@@ -132,6 +184,39 @@ class PortfolioTests(unittest.TestCase):
     def test_deep_niche_supported(self):
         root,p,m=self.fixture(24);d=b.load_portfolio(root)
         self.assertEqual(len(d['niches']),24);self.assertEqual(d['records'][0]['niche_id'],'N-test-23')
+    def test_project_work_is_not_indexed_but_real_work_niche_is(self):
+        root,old,meta=self.fixture()
+        niche=old.parent.parent
+        project=niche/'awa-001-product'/'project.md'
+        project.parent.mkdir();old.rename(project)
+        work=project.parent/'work';work.mkdir()
+        sample=work/'projects';sample.mkdir()
+        (work/'NICHE.json').write_text('{"sample": "not a niche"}')
+        (sample/'example.md').write_text('Example product documentation, not a canonical record.')
+        actual_work_niche=niche/'work';actual_work_niche.mkdir()
+        (actual_work_niche/'NICHE.json').write_text(json.dumps(dict(
+            id='N-real-work-niche',title='Work',parent=meta['niche_id'],
+            path=meta['niche_path']+'/work',priority=9,working=False)))
+        child=actual_work_niche/'work-001-product'/'project.md'
+        child.parent.mkdir();(child.parent/'work').mkdir()
+        self.write(child,{**meta,'id':'WORK-001','niche_path':meta['niche_path']+'/work',
+                          'niche_id':'N-real-work-niche'})
+        data=b.load_portfolio(root)
+        self.assertEqual({r['id'] for r in data['records']},{meta['id'],'WORK-001'})
+        self.assertIn('N-real-work-niche',{n['id'] for n in data['niches']})
+        self.assert_current_catalogue_matches_files(root,data)
+        self.assertIn(work/'NICHE.json',list(b.walk_files(root/'niches')))
+        self.assertNotIn(work/'NICHE.json',list(b.walk_index_inputs(root/'niches')))
+
+    def test_index_still_rejects_unsafe_canonical_work_root(self):
+        root,old,meta=self.fixture()
+        project=old.parent.parent/'awa-001-product'/'project.md'
+        project.parent.mkdir();old.rename(project)
+        outside=root/'outside-work';outside.mkdir()
+        try:(project.parent/'work').symlink_to(outside,target_is_directory=True)
+        except OSError:self.skipTest('symlinks unavailable on this platform')
+        with self.assertRaisesRegex(b.ValidationError,'work/ folder is missing or unsafe'):
+            b.load_portfolio(root)
     def test_duplicate_project_rejected(self):
         root,p,m=self.fixture();(p.parent/'duplicate.md').write_text(p.read_text())
         with self.assertRaisesRegex(b.ValidationError,'Duplicate project'):b.load_portfolio(root)

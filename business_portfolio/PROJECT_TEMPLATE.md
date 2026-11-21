@@ -1,124 +1,128 @@
-# Project template — copy only when selecting a genuine new project
+# Project template — six-phase planning record
 
-Create a unique ID, preserve it across moves, choose an existing niche ID/path, replace every placeholder, and save under that niche’s `projects/` folder. Niche focus is maintained separately as the boolean `working` field in that niche’s `NICHE.json`; it is not project status or execution authorization. Do not put this template itself into the indexed tree unchanged. Price/hours are assumptions until measured. External work remains subject to actual permissions.
+Use Portfolio Manager's **New project** on the selected niche to create a valid unique record. It starts as **Empty project** in Phase 1 and already has its stable ID, niche identity, required metadata and sibling `work/`. Copy a Phase 1 research/idea prompt from that project; ChatGPT returns the full revised project as text for **Paste project text**. Do not replace the generated identity with the illustrative placeholders below.
 
-```json
+Current records live at `business_portfolio/niches/<niche>/<stable-id>-<slug>/project.md` with all project-owned artifacts in `work/`. The project appears directly under its niche in the Manager. There is no intermediary `projects/` folder.
+
+The following complete record illustrates the format; it is not an already researched product and must not be imported unchanged. Keep every actual record's protected existing field, financial evidence, permissions and work history when adapting it. Empty `source_ids` is valid with `workflow_version: 2`; put new dated research URLs in the body without inventing source-register IDs.
+
+````markdown
+---
 {
   "schema_version": 1,
-  "id": "NEW-001",
-  "title": "Replace with a distinct actionable result",
+  "workflow_version": 2,
+  "id": "EXAMPLE-001",
+  "title": "Empty project",
+  "project_phase": "working_phase_1",
+  "draft": true,
   "niche_id": "N-existing-id",
   "niche_path": "existing-niche/child",
-  "record_type": "standalone_service",
-  "origin": "revised_candidate",
-  "priority": "P3",
+  "record_type": "empty_project",
+  "origin": "owner_created",
+  "priority": "P2",
   "work_state": "planned",
   "commercial_validation": "unvalidated",
-  "evidence_basis": "capability_and_competitor_only",
-  "source_ids": [
-    "P06"
-  ],
+  "evidence_basis": "No product or market research has been performed yet.",
+  "source_ids": [],
   "parent_project": null,
   "related_projects": [],
-  "legacy_ids": [],
-  "next_action": "Replace with a concrete bounded next action",
-  "last_reviewed": "2026-11-05",
-  "offer_price_usd": null,
-  "delivery_hours_assumption": null,
-  "total_first_order_hours_assumption": null,
-  "verified_paid_pilots": 0,
-  "actual_revenue": null,
-  "actual_profit": null,
-  "owner": "unassigned",
+  "next_action": "Copy the Phase 1 research or idea prompt, then paste the researched project text.",
+  "last_reviewed": "2026-11-21",
   "execution_authorized": false,
   "privacy": "public_planning_only",
-  "commercial_revision": 2,
-  "owner_budget": {
-    "currency": "CAD",
-    "preferred_upfront": 0,
-    "planned_upfront": 0,
-    "authorized_spend": 0,
-    "hard_ceiling": 100,
-    "owner_recurring_monthly": 0,
-    "budget_window": "Cumulative incremental owner launch cash/commitments; review at first sale or 30 days, whichever comes first. No automatic cap reset after a sale or new month.",
-    "includes": [
-      "tax",
-      "currency_conversion_cost",
-      "noncancelable_commitments",
-      "proposal_credits",
-      "demo_API_cost",
-      "advertising",
-      "hosting"
-    ],
-    "unknown_cost_action": "Pause; do not treat missing costs as zero.",
-    "production_runtime": "Customer-owned and customer-paid only after explicit acceptance; limits and exact plan requirements remain a preflight gate.",
-    "budget_fit": "unassessed_costs_block_launch",
-    "optional_all_in_envelope": {},
-    "optional_total_ceiling": 0
+  "research_verification": {
+    "phase_1": "unreviewed",
+    "phase_2": "unreviewed",
+    "phase_3": "unreviewed"
   },
-  "marketing_execution_authorized": false,
-  "production_budget_verified": false,
-  "success_probability": "not_established",
-  "marketing_lane": "not_selected",
-  "launch_gate": "cost_and_buyer_preflight",
-  "pre_sale_work_cap_hours": 2,
-  "ad_test_cap_cad": 0,
-  "offer_price_cad_hypothesis": null,
-  "historical_price_usd_hypothesis": null
+  "delivery_window_days": {
+    "minimum": 2,
+    "maximum": 21
+  }
 }
-```
+---
+# Empty project
 
-In the actual project, put that JSON between two `---` delimiters, without the code fence. Use these body sections:
+## Product brief and shared limits
 
-## Buyer, problem, buying trigger
-Who can approve payment? What observed problem prompts a purchase? Why would native tools, vendor support, free templates or AI not already solve it?
+Describe the buyer/audience, problem or creative promise, proposed outcome and reason to pay. This empty record claims no research, implementation, release or marketing has been completed.
 
-## Evidence and limits
-List dated source IDs and exactly what each supports. Distinguish buyer requests, competitor features/prices, opinions and actual private paid evidence. Record unsuccessful validation too.
+Scope the entire six-phase project for 2 days to 3 weeks. Keep a realistic shared schedule and explicit accepted, conditional, deferred and rejected scope. Do not restart the time budget at each phase or claim completion to meet a deadline. Record actual allowed spending separately from the planning ceiling; this record does not grant external permissions.
 
-## Deliverable and scope cap
-Define the number of sources/objects/records/fields, output, integration boundaries, revisions and support window. State exclusions and access/cost prerequisites.
+## Phase 1 — Product research and build specification
 
-## Acceptance and failure cases
-Define expected outputs, malformed/duplicate/partial-failure behavior and independent verification. Separate mocks, staging and production results. Document uncertain side effects and recovery.
+- [ ] Research buyer context, need, alternatives, demand evidence and uncertainty.
+- [ ] Compare complete free/native/open-source/AI alternatives and capable paid substitutes, with dated direct sources and sustainable price assumptions.
+- [ ] Assess rights, technical feasibility, owner effort, costs, acquisition feasibility and the total project scope.
+- [ ] Specify product features/behavior, user flows, inputs/outputs, architecture or creative production structure, integration, assets, failure behavior and exclusions in detail.
+- [ ] Define acceptance criteria, representative tests, deliverables/documentation and the smallest decisive early proof where needed.
+- [ ] Verify the evidence. If it is already sound, say good to go without unnecessary revisions.
 
-## Economics and remaining human work
-Include search/failed proposals, optional discovery, required consent/access, build, QA, handover, support and admin. Do not make interviews or outside participation a prerequisite to a local prototype when synthetic or clearly licensed data will work. Distinguish gross revenue, cash contribution, owner time and illustrative economic surplus. Keep currencies separate.
+Evidence, decision, limits, build specification and source URLs: pending research.
 
-## Validation gate and stop condition
-Prefer a small local build-and-learn step as the first gate. What evidence permits the next stage? What would make the offer too risky, redundant or uneconomic? Require other people's participation only when consent, private access, legal review, or a real buyer's acceptance/payment is essential. Interviews and market feedback are optional follow-up evidence, not a default prerequisite to making a prototype. A management threshold is not a statistical guarantee.
+## Phase 2 — Release platforms and compatibility
 
-## Execution persistence
+- [ ] Research direct and adjacent compatibility targets separately from distribution destinations.
+- [ ] Record eligibility, fees, rights, supported versions/formats, submission requirements, assets, review delays, updates/support and direct source URLs.
+- [ ] Classify every promising route as accepted, conditional, deferred or rejected with reasons and effort estimates.
+- [ ] Update Phase 1 and Phase 4 with a genuinely compatible version and tests for every accepted target.
+- [ ] Write a concrete Phase 5 release runbook for every accepted destination.
+- [ ] Verify the plan; preserve a sound plan without forced changes.
 
-When the owner asks you to work on this project, continue autonomously through all remaining authorized tasks possible with available access and resources. Do not stop merely because a few minutes passed, after one task, a plan, or a progress update. Continue implementation, appropriate verification, evidence recording, and the next actionable task until the requested work is finished or no further authorized work can be performed. Give progress updates without ending longer work. If authorization, access, payment, another person, or external state blocks an action, complete independent authorized work first, then checkpoint and report the precise blocker and next action. Preserve completed progress, financial evidence, and uncertain external effects; respect existing scope, budget, permissions, and safety controls. Never claim unverified completion.
+Platform/variant matrix and release runbook: pending research.
 
-## Resume checkpoint
-- Completed with evidence:
-- Current task:
-- Remaining checklist:
-- Blockers/decisions needed:
-- Next concrete action:
-- Owned deliverables and hashes/versions:
-- External effect state: not_started / confirmed / uncertain; never retry uncertain effects automatically.
-- Private checkpoint reference, if appropriate and non-sensitive:
+## Phase 3 — Marketing strategy
+
+- [ ] Research audience/intent, positioning, proof, offer, content, demos, SEO/discovery, communities, partnerships and other useful tactics.
+- [ ] Verify rules, access, fees, effort, disclosures and source-backed channel suitability.
+- [ ] Define the finite initial campaign, asset needs, conversion path, measurement and stop/change rules.
+- [ ] Update earlier product/release plans where material evidence requires it.
+- [ ] Add actionable Phase 6 tasks and verify the whole execution handoff.
+
+Channel/tactic matrix, assets, sequence and measurement plan: pending research.
+
+## Phase 4 — Build and verify
+
+- [ ] Reconcile the research and existing work; assign a descriptive product title while retaining its stable ID/path.
+- [ ] Complete the decisive initial proof and all accepted compatible versions.
+- [ ] Test normal/failure/first-use cases and package the product with documentation and rights notices.
+- [ ] Prepare the accepted release/marketing assets and record actual artifact paths and verification.
+- [ ] At every checkpoint record Phase 4 completion estimate: N% (best guess), observed results, completed/remaining work, important data/URLs and the next action.
+- [ ] Codex advances to Phase 5 only when the scoped build and verification are actually complete.
+
+## Phase 5 — Release execution
+
+- [ ] Recheck current platform requirements and existing external state.
+- [ ] Prepare, submit and release each accepted required destination within actual permissions.
+- [ ] Verify public customer access, listing/version/package and practical delivery evidence.
+- [ ] Save all upload, status, sale/download, edit/admin and support links plus useful IDs and facts.
+- [ ] At every checkpoint record Phase 5 completion estimate: N% (best guess) and actual completed/remaining work.
+- [ ] Codex advances to Phase 6 after all accepted required releases are complete; pending review is a blocker, not a live release.
+
+## Phase 6 — Marketing execution
+
+- [ ] Complete and adapt the truthful assets for each accepted initial marketing tactic.
+- [ ] Execute authorized marketing and inspect the actual public result or applied change.
+- [ ] Record placements, public/edit URLs, useful IDs, actual observable outcomes and remaining work.
+- [ ] Run the finite initial review and correct material funnel/presentation failures without waiting indefinitely for first sales.
+- [ ] At every checkpoint record Phase 6 completion estimate: N% (best guess) and actual evidence.
+- [ ] Codex verifies real release/access and public marketing links, writes a factual description and creates the Complete receipt.
+
+## Important data and URLs
+
+Record useful artifact paths, versions/hashes, platform/project/submission IDs, commands, configuration, costs/results and source/docs/build/preview/live/upload/sale/download/edit/admin/marketing/analytics/support URLs as they become known. Include purpose, observed status, version and checked date. Planned destinations are not live evidence. Preserve retired links. Never store passwords, tokens, signed session links, customer data or payment records here.
+
+No project URLs or operational results have been recorded yet.
+
+## Current progress and next action
+
+Completed: this empty planning record exists. Remaining: all research and execution. Next: copy a Phase 1 prompt. Record blockers and external-effect status honestly; never replay an uncertain upload or message without checking its actual state.
 
 ## Decisions and work log
-Append date, what actually changed, result/evidence, unresolved issue and next action. Preserve historical decisions when superseded; do not silently erase them.
 
+Append dated observations, material changes and reasons, verification evidence, unresolved uncertainty and the next action. Preserve prior decisions when superseded and retain actual completed work.
+````
 
-## V2 commercial planning additions for a newly created record
-Before using this template for a new launch, add the revision-2 metadata as illustrated in an actual revised record: CAD0 preferred/authorized; CAD100 cumulative ceiling; itemized optional costs; unknown production costs; launch gate; marketing lane; all-in time cap; current price-currency hypothesis and separate historical prices. Do not clone paid evidence or completed checkmarks from another record.
+After substantive research, use an appropriate descriptive `title`, `draft: false` and `record_type: product_candidate`. Preserve identity/current phase and all protected fields. The pasted record may contain the exact copied `BASE_SHA256` in `project_update_base_sha256`; the importer validates and removes it. Updating text never advances the phase. The user advances 1→2→3→4 manually; Codex advances 4→5→6→Complete after each separate goal's actual completion.
 
-Add a buyer-specific headline, proof, draft response/CTA, primary permission-appropriate acquisition route, native alternative, qualified-attempt limit, all-in time/economics model, ad decision and measurable stop rule. Bundles/internal projects must say why they do not need independent customer acquisition. Link relevant sources and mark exact versus adjacent demand; no unsupported probability of success.
-
-
-## Customer acquisition and advertising
-- Exact buyer/request and current channel eligibility:
-- Outcome headline, proof, limitations and single call to action:
-- Native/free substitute and reason to pay:
-- Permission-appropriate primary acquisition route and tailored draft:
-- Qualified-attempt and all-owner-hour caps:
-- Conversion stages, private evidence and stop/change rule:
-- Advertising decision (default CAD0), future economics gate and verified total billing cap:
-- All-in quote sensitivity, production-cost payer and required account features:
-- Separate actual authorization before any send, publication, spend or account change:
+A research recheck can return **“Good to go — no substantive changes needed.”** with no project text to paste. Minor cosmetic suggestions are not a gate. Store completed/remaining work and best-guess percentages honestly; a phase or completion receipt never establishes paid demand.

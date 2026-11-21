@@ -159,7 +159,7 @@ class Coordinator:
         # Reuse the portfolio's validator and derived metadata. The generated JSON
         # is a view and can lag behind canonical edits, so it is not an input.
         with self._catalog_lock:
-            files = [p for p in build_browser.walk_files(self.niches)
+            files = [p for p in build_browser.walk_index_inputs(self.niches)
                      if p.name == 'NICHE.json' or build_browser.project_record_path(p)]
             files.append(self.portfolio / 'research' / 'SOURCE_REGISTER.json')
             key = tuple((str(p), info.st_mtime_ns, info.st_size) for p in files for info in (p.stat(),))

@@ -1,128 +1,125 @@
-"""Safely import a ChatGPT Phase 3a/3b ADDITIVE update to one selected project.
+"""Replace selected Phase 1–3 research records from pasted text or a file.
 
-No release, publication or marketing actions happen here. The original Markdown
-body and protected metadata must be preserved, and the source must match the
-precise project snapshot passed to ChatGPT.
+Planning sections may be rewritten and reorganized. Stable identity, phase and
+existing operational/permission metadata remain protected; prompts require body
+facts and URLs to be retained and exact-byte backups support recovery. A paste
+never advances a phase: the owner controls the research handoffs explicitly.
 """
 from __future__ import annotations
 
 from datetime import datetime, timezone
 import hashlib
-import json
 from pathlib import Path
 import re
 
 from business_portfolio.tools import build_browser
-from .project_lifecycle import PHASE_3, PHASE_4, _atomic_text, _single_writer, project_phase, record_path
+from .project_lifecycle import _single_writer, project_phase, record_path
+from .project_management import (_atomic_bytes, _backup_record, _record_text,
+                                 _restore_views, _title, _view_snapshot)
 
 
 MAX_UPDATE_BYTES = 5_000_000
 EDITABLE_FIELDS = {
-    "next_action", "last_reviewed", "phase3_plan_status",
-    "phase3_validation_status", "phase3_update_base_sha256",
+    'title', 'draft', 'record_type', 'priority', 'next_action', 'last_reviewed',
+    'evidence_basis', 'source_ids', 'research_verification', 'research_verdict',
+    'delivery_window_days', 'platforms_proposed',
 }
+TRANSPORT_FIELD = 'project_update_base_sha256'
 
 
 def snapshot_sha256(text: str) -> str:
-    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+    return hashlib.sha256(text.replace('\r\n', '\n').encode('utf-8')).hexdigest()
 
 
-def _body(raw: str) -> str:
-    raw = raw.replace("\r\n", "\n")
-    _, separator, body = raw.partition("\n---\n")
-    if not separator:
-        raise ValueError("The project Markdown has invalid JSON frontmatter.")
-    return body
+def clean_project_text(text: str) -> str:
+    if not isinstance(text, str) or len(text.encode('utf-8')) > MAX_UPDATE_BYTES:
+        raise ValueError('The project text exceeds the 5 MB limit.')
+    text = text.lstrip('\ufeff').replace('\r\n', '\n').strip()
+    first, separator, remainder = text.partition('\n')
+    match = re.fullmatch(r'(`{3,}|~{3,})(?:markdown|md|text|plaintext)?\s*', first, flags=re.I)
+    if match:
+        if not separator or not remainder.rstrip().endswith('\n' + match.group(1)):
+            raise ValueError('Copy the complete project code block, including its closing fence.')
+        text = remainder.rstrip()[:-(len(match.group(1)) + 1)].strip()
+    if not text:
+        raise ValueError('Paste the complete project text, including its JSON metadata.')
+    return text + '\n'
 
 
-def replace_project_from_file(repo: Path, selection: str, source: str | Path) -> dict:
-    """Validate lineage, safely back up, then atomically update the exact record.
-
-    A researched 3a plan stays in Phase 3. A separately appended and explicitly
-    approved 3b validation advances the project to Phase 4. Unapproved reviews
-    remain in Phase 3 for further research.
-    """
+def replace_project_text(repo, selection, text: str, *, expected_sha256: str | None = None) -> dict:
+    """Validate and back up a same-phase replacement, then rebuild atomically."""
     repo = Path(repo).resolve(strict=True)
-    target = record_path(repo, selection)
-    source = Path(source)
-    if source.suffix.lower() != ".md" or not source.is_file() or source.is_symlink():
-        raise ValueError("Drop one regular Markdown project update file.")
-    if source.stat().st_size > MAX_UPDATE_BYTES:
-        raise ValueError("The updated project file exceeds the 5 MB limit.")
-    if source.resolve() == target.resolve():
-        raise ValueError("Select an external updated project file, not the active project itself.")
-    incoming = source.read_text(encoding="utf-8-sig").replace("\r\n", "\n")
-    portfolio = repo / "business_portfolio"
-
-    with _single_writer(target.parent):
-        original = target.read_text(encoding="utf-8").replace("\r\n", "\n")
-        old_meta, _ = build_browser.parse_project(original, str(target))
-        new_meta, _ = build_browser.parse_project(incoming, str(source))
-        if project_phase(old_meta) != PHASE_3:
-            raise ValueError("Only a Phase 3 project accepts ChatGPT planning updates.")
-        if new_meta.get("phase3_update_base_sha256") != snapshot_sha256(original):
-            raise ValueError("This update is stale or belongs to another project snapshot. Copy a fresh Phase 3 prompt.")
-        if old_meta.get("id") != new_meta.get("id") or old_meta.get("niche_id") != new_meta.get("niche_id"):
-            raise ValueError("The updated project ID or niche does not match the selected project.")
-        for key, value in old_meta.items():
-            if key not in new_meta:
-                raise ValueError(f"The update removed existing project metadata: {key}.")
-            if key not in EDITABLE_FIELDS and new_meta[key] != value:
-                raise ValueError(f"The update modified protected project metadata: {key}.")
-        for key in new_meta.keys() - old_meta.keys():
+    portfolio = repo / 'business_portfolio'
+    incoming = clean_project_text(text)
+    with _single_writer(portfolio):
+        target = record_path(repo, selection)
+        original_bytes = target.read_bytes()
+        original = original_bytes.decode('utf-8-sig').replace('\r\n', '\n')
+        old, _ = build_browser.parse_project(original, str(target))
+        updated, body = build_browser.parse_project(incoming, 'Pasted project')
+        phase = project_phase(old)
+        if phase not in {f'working_phase_{i}' for i in range(1, 4)}:
+            raise ValueError('Pasting research text is available only in Phases 1–3.')
+        digest = snapshot_sha256(original)
+        supplied_digest = updated.pop(TRANSPORT_FIELD, None)
+        if ((expected_sha256 is not None and expected_sha256 != digest) or
+                (supplied_digest is not None and supplied_digest != digest)):
+            raise ValueError('This update is stale. Copy a fresh prompt or reopen Paste project text.')
+        for key, value in old.items():
+            if key not in updated:
+                raise ValueError(f'The pasted record removed existing metadata: {key}.')
+            if key not in EDITABLE_FIELDS and updated[key] != value:
+                raise ValueError(f'The pasted record changed protected metadata: {key}.')
+        for key in updated.keys() - old.keys():
             if key not in EDITABLE_FIELDS:
-                raise ValueError(f"The update added unsupported metadata: {key}. Keep research details in Markdown.")
-        old_body, updated_body = _body(original), _body(incoming)
-        if not updated_body.startswith(old_body) or len(updated_body) <= len(old_body):
-            raise ValueError("The update must preserve the entire original Markdown body unchanged and append a new section.")
-        appended = updated_body[len(old_body):]
-        if not re.search(r"https?://\S+", appended):
-            raise ValueError("The appended research must include direct source URLs.")
-        if old_meta.get("phase3_plan_status") != "researched":
-            if new_meta.get("phase3_plan_status") != "researched" or "## Phase 3a" not in appended:
-                raise ValueError("First append a Phase 3a researched plan before validation.")
-            if "phase3_validation_status" in new_meta:
-                raise ValueError("Phase 3b approval must come from a subsequent independent update.")
-            stage = "3a"
-            new_meta["project_phase"] = PHASE_3
-        else:
-            if "## Phase 3b" not in appended:
-                raise ValueError("Append a distinct Phase 3b independent validation section.")
-            verdict = new_meta.get("phase3_validation_status")
-            if verdict not in {"approved", "needs_revision"}:
-                raise ValueError("Phase 3b must explicitly set approved or needs_revision.")
-            if verdict == "approved" and "VERDICT: APPROVED" not in appended:
-                raise ValueError("An approved Phase 3b update must contain the actual final approval verdict.")
-            stage = "3b"
-            new_meta["project_phase"] = PHASE_4 if verdict == "approved" else PHASE_3
-        new_meta.pop("phase3_update_base_sha256", None)
-        new_meta["last_reviewed"] = datetime.now(timezone.utc).date().isoformat()
-        contents = "---\n" + json.dumps(new_meta, ensure_ascii=False, indent=2) + "\n---\n" + updated_body
-        if target.read_text(encoding="utf-8").replace("\r\n", "\n") != original:
-            raise ValueError("The project was edited concurrently; copy a fresh prompt.")
-
-        # Preserve the pre-update version outside the public project index.
-        backup_dir = portfolio / ".local" / "phase3_backups" / str(old_meta["id"])
-        backup_dir.mkdir(parents=True, exist_ok=True)
-        backup = backup_dir / (snapshot_sha256(original) + ".md")
-        if not backup.exists():
-            with backup.open("x", encoding="utf-8", newline="\n") as out:
-                out.write(original)
-        _atomic_text(target, contents)
+                raise ValueError(f'Keep new planning details in Markdown; unsupported metadata: {key}.')
+        if updated.get('project_phase') != phase:
+            raise ValueError('Keep the current project phase; advance it separately in Portfolio Manager.')
+        if (not isinstance(updated.get('source_ids'), list) or
+                any(not isinstance(source, str) for source in updated['source_ids']) or
+                not set(old.get('source_ids', [])).issubset(updated['source_ids'])):
+            raise ValueError('Keep the existing registered source IDs in the project.')
+        if updated.get('delivery_window_days') not in (None, {'minimum': 2, 'maximum': 21}):
+            raise ValueError('Keep the overall delivery window at 2 days to 3 weeks.')
+        if 'platforms_proposed' in updated and (not isinstance(updated['platforms_proposed'], list) or
+                any(not isinstance(value, str) or not value.strip() for value in updated['platforms_proposed'])):
+            raise ValueError('Proposed platforms must be a list of platform names.')
+        updated['title'] = _title(updated.get('title'))
+        if 'draft' in updated and not isinstance(updated['draft'], bool):
+            raise ValueError('draft must be true or false.')
+        if not body.strip():
+            raise ValueError('The project text must contain its research, plans and next action.')
+        if (updated['title'].strip().casefold() != 'empty project' and
+                updated.get('record_type') != 'empty_project' and len(body.strip()) >= 80):
+            updated['draft'] = False
+        updated['last_reviewed'] = datetime.now(timezone.utc).date().isoformat()
+        contents = _record_text(updated, body).encode('utf-8')
+        views = _view_snapshot(portfolio)
+        backup = _backup_record(portfolio, old['id'], original_bytes)
+        if target.read_bytes() != original_bytes:
+            raise ValueError('The project changed while the update was being prepared. Reopen Paste project text.')
+        _atomic_bytes(target, contents)
         try:
             build_browser.build(portfolio)
         except Exception:
-            _atomic_text(target, original)
-            try:
-                build_browser.build(portfolio)
-            except Exception:
-                # Preserve the original exception; the prior record is restored.
-                pass
+            _atomic_bytes(target, original_bytes)
+            _restore_views(views)
             raise
+        return {'id': old['id'], 'path': target.relative_to(repo).as_posix(),
+                'project_phase': phase, 'backup': str(backup)}
 
-        return {
-            "id": old_meta["id"],
-            "import_stage": stage,
-            "project_phase": new_meta["project_phase"],
-            "backup": str(backup),
-        }
+
+def replace_project_from_file(repo, selection, source, *, expected_sha256: str | None = None) -> dict:
+    """Optional file-drop equivalent of Paste project text; preserve work/."""
+    repo = Path(repo).resolve(strict=True)
+    target = record_path(repo, selection)
+    source = Path(source)
+    if (source.suffix.lower() != '.md' or not source.is_file() or
+            build_browser.linked_input(source)):
+        raise ValueError('Drop one regular Markdown project file.')
+    if source.stat().st_size > MAX_UPDATE_BYTES:
+        raise ValueError('The project file exceeds the 5 MB limit.')
+    if source.resolve() == target.resolve():
+        raise ValueError('Drop an external updated file, not the selected project itself.')
+    return replace_project_text(repo, selection, source.read_text(encoding='utf-8-sig'),
+                                expected_sha256=expected_sha256)

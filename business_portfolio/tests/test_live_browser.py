@@ -73,6 +73,25 @@ class LiveBrowserTests(unittest.TestCase):
         self.write(self.project,self.meta,'# Fictional project\n## Instructions\nUpdated scope.\n- [x] Task A')
         self.assertTrue(self.state.refresh());self.assertNotEqual(self.state.version,old);self.assertFalse(self.state.warning)
         self.assertGreater(self.state.data['records'][0]['recently_saved_at'],0)
+
+    def test_fingerprint_ignores_project_samples_and_tracks_canonical_edits(self):
+        record=self.project.parent.parent/'awa-001-product'/'project.md'
+        record.parent.mkdir();self.project.rename(record)
+        work=record.parent/'work';work.mkdir()
+        (work/'NICHE.json').write_text('{"sample":"not a portfolio niche"}')
+        samples=work/'projects';samples.mkdir()
+        (samples/'example.md').write_text('Sample instructions are not a canonical project.')
+        self.assertTrue(self.state.refresh())
+        original_signature=s.fingerprint(self.root)
+        original_version=self.state.version
+        (work/'NICHE.json').write_text('Sample changed; deliberately not JSON.')
+        self.assertEqual(s.fingerprint(self.root),original_signature)
+        self.assertTrue(self.state.refresh())
+        self.assertEqual(self.state.version,original_version)
+        record.write_text(record.read_text()+'\nSaved canonical progress.\n')
+        self.assertNotEqual(s.fingerprint(self.root),original_signature)
+        self.assertTrue(self.state.refresh())
+        self.assertNotEqual(self.state.version,original_version)
     def test_real_watcher_detects_new_edit_rename_move_and_delete(self):
         threading.Thread(target=self.state.watch,daemon=True).start();self.addCleanup(self.state.stop.set)
         def changed(action):

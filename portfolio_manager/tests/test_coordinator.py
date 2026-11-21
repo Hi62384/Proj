@@ -85,6 +85,23 @@ class CoordinatorTests(unittest.TestCase):
         with self.assertRaises(CoordinatorError):
             self.manager.register('../niches/agency')
 
+    def test_catalogue_cache_ignores_project_samples_but_observes_record_changes(self):
+        old=self.records['TST-001']
+        record=old.parent.parent/'tst-001-product'/'project.md'
+        record.parent.mkdir();old.rename(record)
+        work=record.parent/'work';work.mkdir()
+        (work/'NICHE.json').write_text('{"sample":"not a niche"}')
+        samples=work/'projects';samples.mkdir()
+        (samples/'example.md').write_text('Sample documentation, not a project.')
+        self.assertEqual(self.manager.snapshot()['counts']['total'],6)
+        previous=self.manager._catalog_key
+        (work/'NICHE.json').write_text('Changed product sample; intentionally not JSON.')
+        self.assertEqual(self.manager.snapshot()['counts']['total'],6)
+        self.assertEqual(self.manager._catalog_key,previous)
+        record.write_text(record.read_text()+'\nA newly completed fictional checkpoint.\n')
+        self.assertIn('newly completed fictional checkpoint',self.row('TST-001')['body'])
+        self.assertNotEqual(self.manager._catalog_key,previous)
+
     def test_specific_project_claim_never_falls_back_to_another_project(self):
         first = self.worker('agency')
         second = self.worker('agency')

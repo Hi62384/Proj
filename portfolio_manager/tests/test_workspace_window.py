@@ -14,6 +14,7 @@ from portfolio_manager.integration import ManagerHost
 from portfolio_manager.tests.test_runner import _record
 
 os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
+Dashboard = None
 try:
     from PySide6.QtCore import Qt
     from PySide6.QtWidgets import QApplication
@@ -41,16 +42,18 @@ class WorkspaceWindowTests(unittest.TestCase):
     def test_business_niches_show_order_and_counts(self):
         repo=Path(__file__).resolve().parents[2]
         rows=niche_entries(repo)
-        self.assertEqual(len(rows),39)
+        from business_portfolio.tools.build_browser import load_portfolio
+        metadata = load_portfolio(repo / 'business_portfolio')['niches']
+        self.assertEqual({row[4] for row in rows}, {node['id'] for node in metadata})
         roots = [row for row in rows if row[0].count('/') == 2]
-        self.assertEqual(len(roots),5)
-        self.assertEqual([row[3] for row in roots],list(range(1,6)))
+        self.assertEqual(len(roots), sum(node['parent'] is None for node in metadata))
+        self.assertEqual([row[3] for row in roots], sorted(row[3] for row in roots))
         # Derive expected totals from canonical project records, not a hardcoded
         # count. Phase 1 can add project folders without changing this test.
         expected_counts = []
         for row in roots:
             category = repo / row[0]
-            paths = list(category.glob('**/projects/*/project.md'))
+            paths = list(category.glob('**/project.md'))
             paths += list(category.glob('**/projects/*.md'))
             expected_counts.append(sum(
                 path.is_file() and 'work' not in path.relative_to(category).parts
@@ -73,7 +76,7 @@ class WorkspaceWindowTests(unittest.TestCase):
                 if window._signature_future:
                     window._signature_future.result(timeout=5);window.sync()
                 window._signature_future=None;window._next_signature_check=0
-                def slow_scan():
+                def slow_scan(repo):
                     started.set();release.wait(5);return ()
                 with patch.object(window,'_current_working_signature',side_effect=slow_scan):
                     before=perf_counter();window.sync()
@@ -106,6 +109,36 @@ class WorkspaceWindowTests(unittest.TestCase):
             self.assertEqual(rows[0][2],1)
             self.assertNotIn(work,visited)
 
+    def test_closed_window_is_released_without_waiting_for_cyclic_gc(self):
+        import weakref
+        from PySide6.QtCore import QCoreApplication, QEvent
+        from portfolio_manager.workspace_window import WorkspaceWindow
+        with TemporaryDirectory() as temp:
+            root = Path(temp); repo = root / 'repo'; _record(repo, 'DEMO-023')
+            host = ManagerHost(repo, root / 'state')
+            window = None
+            try:
+                window = WorkspaceWindow(host, host.workspace('d' * 32, {}),
+                                         on_emergency=lambda: None, on_stop_all=lambda: None,
+                                         on_access=lambda: None, on_close=lambda _: None)
+                window._entry_future.result(timeout=5); window.sync()
+                # Recursive visitor closures used to retain the entire Qt window
+                # until GC, which may run on a filesystem worker thread.
+                for _ in range(5):
+                    window._refresh_working_rows()
+                    window._refresh_project_phase_rows()
+                reference = weakref.ref(window)
+                window.close()
+                window._pool.shutdown(wait=True, cancel_futures=True)
+                QCoreApplication.sendPostedEvents(None, QEvent.Type.DeferredDelete)
+                self.app.processEvents()
+                window = None
+                self.assertIsNone(reference())
+            finally:
+                if window is not None:
+                    window.close()
+                host.close()
+
     def test_slow_folder_preview_does_not_block_or_replace_new_selection(self):
         with TemporaryDirectory() as temp:
             root=Path(temp);repo=root/'repo';_record(repo,'DEMO-022')
@@ -135,190 +168,245 @@ class WorkspaceWindowTests(unittest.TestCase):
                 if window:window.close()
                 host.close()
 
-    def test_phase2_prompt_button_copies_complete_goal(self):
-        with TemporaryDirectory() as temp:
-            root=Path(temp);repo=root/'repo'
-            old=_record(repo,'DEMO-012')
-            folder=old.parent/'demo-012'
-            folder.mkdir()
-            project=folder/'project.md'
-            old.rename(project)
-            (folder/'work').mkdir()
-            source=Path(__file__).resolve().parents[2]/'PHASE_2_DEVELOPMENT_MEGAPROMPT.md'
-            (repo/source.name).write_bytes(source.read_bytes())
-            host=ManagerHost(repo,root/'state');window=None
-            try:
-                from portfolio_manager.workspace_window import WorkspaceWindow
-                window=WorkspaceWindow(host,host.workspace('a'*32,{}),on_emergency=lambda:None,
-                                       on_stop_all=lambda:None,on_access=lambda _:None,on_close=lambda _:None)
-                self.assertTrue(window.select(project.relative_to(repo).as_posix()))
-                self.assertEqual([action.text() for action in window.copy_prompt.menu().actions()],
-                                 ['Build, Test & Prepare'])
-                self.app.clipboard().setText('previous')
-                window._copy_megaprompt('phase2')
-                self.assertTrue(self.app.clipboard().text().replace('\r\n','\n').startswith(source.read_text(encoding='utf-8')))
-                self.assertTrue(self.app.clipboard().text().startswith('/goal '))
-                self.assertIn('working_phase_3', self.app.clipboard().text())
-                self.assertEqual(window.notice.text(), 'Phase 2 development prompt copied.')
-                self.assertEqual(host.get_workspace(window.workspace_id)['selection'],
-                                 project.relative_to(repo).as_posix())
-            finally:
-                if window:window.close()
+    @staticmethod
+    def _copy_templates(repo):
+        from portfolio_manager.workspace_window import PROMPTS
+        source = Path(__file__).resolve().parents[2]
+        for _, filename, _ in PROMPTS.values():
+            (repo / filename).write_bytes((source / filename).read_bytes())
+        template = repo / 'business_portfolio/tools/browser_template.html'
+        template.parent.mkdir(parents=True, exist_ok=True)
+        template.write_bytes((source / 'business_portfolio/tools/browser_template.html').read_bytes())
+
+    def _open_window(self, repo, state):
+        from portfolio_manager.workspace_window import WorkspaceWindow
+        host = ManagerHost(repo, state)
+        window = WorkspaceWindow(host, host.workspace('a' * 32, {}),
+                                 on_emergency=lambda: None, on_stop_all=lambda: None,
+                                 on_access=lambda: None, on_close=lambda _: None,
+                                 on_resume=lambda: None)
+        closed = []
+        def close():
+            if not closed:
+                closed.append(True)
+                del window._test_close
+                window.close()
+                window._pool.shutdown(wait=True, cancel_futures=True)
+                from PySide6.QtCore import QCoreApplication, QEvent
+                QCoreApplication.sendPostedEvents(None, QEvent.Type.DeferredDelete)
+                self.app.processEvents()
                 host.close()
+        window._test_close = close
+        self.addCleanup(close)
+        window._entry_future.result(timeout=10)
+        window.sync()
+        return window
 
-
-    def test_megaprompt_menu_copies_live_templates_and_checks_settings(self):
-        with TemporaryDirectory() as temp:
-            root=Path(temp); repo=root/'repo'; _record(repo,'DEMO-011')
-            sources=Path(__file__).resolve().parents[2]
-            names=['BUSINESS_OPPORTUNITY_RESEARCH_MEGAPROMPT.md','BUSINESS_IDEA_TO_PROJECT_MEGAPROMPT.md',
-                   'PHASE_1_RECHECK_REPLACE_MEGAPROMPT.md']
-            for name in names:
-                (repo/name).write_bytes((sources/name).read_bytes())
-            host=ManagerHost(repo,root/'state'); window=None
+    def _paste_dialog(self, window, text):
+        from PySide6.QtCore import QTimer
+        from PySide6.QtWidgets import QDialogButtonBox, QPlainTextEdit
+        failures = []
+        def fill():
+            dialog = self.app.activeModalWidget()
             try:
-                from portfolio_manager.workspace_window import WorkspaceWindow
-                window=WorkspaceWindow(host,host.workspace('f'*32,{}),on_emergency=lambda:None,
-                                       on_stop_all=lambda:None,on_access=lambda:None,on_close=lambda _:None)
-                self.assertEqual([a.text() for a in window.copy_prompt.menu().actions()],
-                                 ['Select a niche, projects folder or active project'])
-                self.assertTrue(window.select('business_portfolio/niches/demo'))
-                self.assertEqual([a.text() for a in window.copy_prompt.menu().actions()],
-                                 ['Research a Business Opportunity','Create a Project from My Idea',
-                                  'Recheck or Replace'])
-                window.research_budget.setText('50.25')
+                dialog.findChild(QPlainTextEdit).setPlainText(text)
+                dialog.findChild(QDialogButtonBox).button(QDialogButtonBox.StandardButton.Save).click()
+                if dialog.isVisible():
+                    failures.append('The pasted text was rejected.')
+                    dialog.reject()
+            except Exception as error:
+                failures.append(str(error))
+                if dialog:
+                    dialog.reject()
+        QTimer.singleShot(0, fill)
+        window._paste_project()
+        self.assertEqual(failures, [])
+
+    def test_empty_project_creation_research_text_and_manual_handoffs(self):
+        with TemporaryDirectory() as temp:
+            root = Path(temp); repo = root / 'repo'
+            _record(repo, 'DEMO-011')
+            self._copy_templates(repo)
+            window = self._open_window(repo, root / 'state')
+            self.assertTrue(window.research_tools.isHidden())
+            self.assertTrue(window.select('business_portfolio/niches/demo'))
+            self.assertFalse(window.niche_tools.isHidden())
+            self.assertTrue(window.research_tools.isHidden())
+            self.assertEqual(window.prompt_menu.actions(), [])
+            window.new_project.click()
+            selection = window.workspace_state['selection']
+            self.assertNotIn('/projects/', selection)
+            from business_portfolio.tools.build_browser import parse_project
+            from portfolio_manager.project_update import snapshot_sha256
+            path = repo / selection
+            meta, body = parse_project(path.read_text())
+            self.assertEqual((meta['title'], meta['project_phase']), ('Empty project', 'working_phase_1'))
+            self.assertEqual(window.copy_prompt.text(), 'Copy research prompt')
+            self.assertFalse(window.paste_project.isHidden())
+            window.research_budget.setText('50.25')
+            window._copy_megaprompt('research')
+            copied = self.app.clipboard().text()
+            self.assertIn(path.read_text(), copied)
+            self.assertIn('BASE_SHA256: ' + snapshot_sha256(path.read_text()), copied)
+            self.assertIn('BUSINESS_NICHE: Demo', copied)
+            self.assertIn('BUDGET_CEILING_CAD: 50.25', copied)
+            self.assertFalse(copied.startswith('/goal'))
+            from PySide6.QtWidgets import QInputDialog
+            with patch.object(QInputDialog, 'getMultiLineText', return_value=('A useful pathfinding system', True)):
                 window._copy_megaprompt('idea')
-                original=(repo/names[1]).read_text(encoding='utf-8')
-                expected=original.replace('**BUDGET_CEILING_CAD:** 100','**BUDGET_CEILING_CAD:** 50.25',1)
-                self.assertTrue(self.app.clipboard().text().replace('\r\n','\n').startswith(expected.rstrip()))
-                self.assertIn('project.md', self.app.clipboard().text())
-                self.assertIn('Never create an active project simply to satisfy Phase 1.', self.app.clipboard().text())
-                self.assertIn('TEST-FIRST GO', self.app.clipboard().text())
-                self.assertIn('post-launch TESTABLE assumptions', self.app.clipboard().text())
-                self.assertIn('For NO_GO, RESEARCH_BLOCKED, or CONDITIONAL_PROOF_ONLY', self.app.clipboard().text())
-                window._copy_megaprompt('recheck')
-                self.assertIn('**INITIAL_CONTEXT_HINT:** business_portfolio/niches/demo',self.app.clipboard().text())
-                self.assertIn('GO_TO_PHASE_B',self.app.clipboard().text())
-                self.assertTrue(window.select('business_portfolio/niches/demo'))
-                window._copy_megaprompt('research')
-                original=(repo/names[0]).read_text(encoding='utf-8')
-                expected=original.replace('**BUSINESS_NICHE:** Game Development Marketplaces','**BUSINESS_NICHE:** Demo',1).replace('**BUDGET_CEILING_CAD:** 100','**BUDGET_CEILING_CAD:** 50.25',1)
-                self.assertTrue(self.app.clipboard().text().replace('\r\n','\n').startswith(expected.rstrip()))
-                self.assertIn('project.md', self.app.clipboard().text())
-                self.assertIn('Never create an active project simply to satisfy Phase 1.', self.app.clipboard().text())
-                self.assertIn('TEST-FIRST GO', self.app.clipboard().text())
-                self.assertIn('post-launch TESTABLE assumptions', self.app.clipboard().text())
-                self.assertIn('For NO_GO, RESEARCH_BLOCKED, or CONDITIONAL_PROOF_ONLY', self.app.clipboard().text())
-                window._copy_megaprompt('recheck')
-                expected_recheck=(repo/names[2]).read_text(encoding='utf-8')
-                expected_recheck=expected_recheck.replace('**BUDGET_CEILING_CAD:** 100',
-                                                         '**BUDGET_CEILING_CAD:** 50.25',1)
-                expected_recheck=expected_recheck.replace('**INITIAL_CONTEXT_HINT:** AUTO',
-                                                         '**INITIAL_CONTEXT_HINT:** business_portfolio/niches/demo',1)
-                self.assertTrue(self.app.clipboard().text().replace('\r\n','\n').startswith(expected_recheck.rstrip()))
-                self.assertIn('For NO_GO, RESEARCH_BLOCKED, or CONDITIONAL_PROOF_ONLY',self.app.clipboard().text())
-                self.assertIn('the NEXT paste must naturally target the NEW candidate',self.app.clipboard().text())
-                self.assertEqual(window.notice.text(),'Phase 1 recheck/replace prompt copied (CAD 50.25 planning ceiling).')
-                project_file=_record(repo,'DEMO-022')
-                self.assertTrue(window.select(project_file.relative_to(repo).as_posix()))
-                window._copy_megaprompt('recheck')
-                self.assertIn('**INITIAL_CONTEXT_HINT:** '+project_file.relative_to(repo).as_posix(),
-                              self.app.clipboard().text())
-                self.assertIn('It must never pin future repetitions',self.app.clipboard().text())
-                (repo/names[1]).write_text((repo/names[1]).read_text(encoding='utf-8')+'\nUpdated source.\n',encoding='utf-8')
-                window._copy_megaprompt('idea')
-                self.assertIn('Updated source.\n', self.app.clipboard().text().replace('\r\n','\n'))
-                prior=self.app.clipboard().text()
-                window.research_budget.setText('-1');window._copy_megaprompt('idea')
-                self.assertEqual(self.app.clipboard().text(),prior)
-                window.research_budget.setText('50');(repo/names[1]).write_text('malformed',encoding='utf-8')
-                window._copy_megaprompt('idea');self.assertEqual(self.app.clipboard().text(),prior)
-                (repo/names[1]).unlink();window._copy_megaprompt('idea')
-                self.assertEqual(self.app.clipboard().text(),prior)
-                self.assertEqual(len(list((repo/'business_portfolio/niches').rglob('projects/*.md'))),2)
-            finally:
-                if window:window.close()
-                host.close()
+            self.assertIn('PROJECT_IDEA:\nA useful pathfinding system', self.app.clipboard().text())
+            window._copy_megaprompt('recheck')
+            self.assertIn('Good to go', self.app.clipboard().text())
+            # Empty placeholders cannot advance just by clicking the handoff.
+            window.phase_apply.click()
+            self.assertEqual(parse_project(path.read_text())[0]['project_phase'], 'working_phase_1')
+            meta.update(title='Useful Pathfinding', record_type='software_product', draft=False,
+                        next_action='Recheck the product specification.',
+                        project_update_base_sha256=snapshot_sha256(path.read_text()))
+            research = '---\n' + json.dumps(meta) + '\n---\n# Useful Pathfinding\n' + body + (
+                '\nProduct research with concrete buyers, functionality and acceptance tests. '
+                'Evidence: https://example.org/research\n')
+            self._paste_dialog(window, '```markdown\n' + research + '\n```')
+            self.assertEqual(parse_project(path.read_text())[0]['project_phase'], 'working_phase_1')
+            self.assertEqual(parse_project(path.read_text())[0]['title'], 'Useful Pathfinding')
+            window.phase_apply.click()
+            self.assertEqual(parse_project(path.read_text())[0]['project_phase'], 'working_phase_2')
+            self.assertEqual(window.copy_prompt.text(), 'Copy release research prompt')
+            self.assertEqual(len(window.prompt_menu.actions()), 2)
+            window._copy_megaprompt('phase2')
+            self.assertIn(path.read_text(), self.app.clipboard().text())
+            window._copy_megaprompt('phase2_recheck')
+            self.assertIn('Good to go', self.app.clipboard().text())
+            window.phase_apply.click()
+            self.assertEqual(parse_project(path.read_text())[0]['project_phase'], 'working_phase_3')
+            self.assertEqual(window.copy_prompt.text(), 'Copy marketing research prompt')
+            window._copy_megaprompt('phase3_recheck')
+            self.assertIn('Good to go', self.app.clipboard().text())
+            window.phase_apply.click()
+            self.assertEqual(parse_project(path.read_text())[0]['project_phase'], 'working_phase_4')
+            self.assertEqual(window.copy_prompt.text(), 'Copy build prompt')
+            self.assertTrue(window.paste_project.isHidden())
+            self.assertFalse(window.phase_apply.isEnabled())
+            window._test_close()
 
-
-    def test_selected_project_phase3_research_validation_and_phase4_menu(self):
+    def test_execution_prompt_handoffs_and_full_record_progress(self):
         with TemporaryDirectory() as temp:
-            root=Path(temp);repo=root/'repo'
-            old=_record(repo,'DEMO-030')
-            template=Path(__file__).resolve().parents[2]/'business_portfolio/tools/browser_template.html'
-            target=repo/'business_portfolio/tools/browser_template.html'
-            target.parent.mkdir(parents=True,exist_ok=True)
-            target.write_bytes(template.read_bytes())
-            folder=old.parent/'demo-030'
-            folder.mkdir()
-            record=folder/'project.md'
-            old.rename(record)
-            (folder/'work').mkdir()
-            from portfolio_manager.project_lifecycle import set_phase
-            set_phase(repo,record.relative_to(repo).as_posix(),'working_phase_3')
-            from pathlib import Path as ProjectPath
-            source=ProjectPath(__file__).resolve().parents[2]
-            for name in ('PHASE_3A_RESEARCH_MEGAPROMPT.md','PHASE_3B_VALIDATION_MEGAPROMPT.md',
-                         'PHASE_4_EXECUTION_MEGAPROMPT.md'):
-                (repo/name).write_bytes((source/name).read_bytes())
-            host=ManagerHost(repo,root/'state');window=None
-            try:
-                from portfolio_manager.workspace_window import WorkspaceWindow
-                from portfolio_manager.project_update import snapshot_sha256
-                from business_portfolio.tools.build_browser import parse_project
-                from PySide6.QtCore import QEvent
-                relative=record.relative_to(repo).as_posix()
-                window=WorkspaceWindow(host,host.workspace('a'*32,{}),
-                                       on_emergency=lambda:None,on_stop_all=lambda:None,
-                                       on_access=lambda:None,on_close=lambda _:None,
-                                       on_resume=lambda:None)
-                self.assertTrue(window.resume_after_stop.isEnabled())
-                self.assertTrue(window.select(relative))
-                self.assertEqual([a.text() for a in window.copy_prompt.menu().actions()],
-                    ['Phase 3a · Research Platforms & Plan','Phase 3b · Validate & Improve Plan'])
-                self.assertFalse(window.copy_prompt.menu().actions()[1].isEnabled())
-                window._copy_megaprompt('phase3a')
-                clip=self.app.clipboard().text()
-                self.assertIn('BASE_SHA256: '+snapshot_sha256(record.read_text()),clip)
-                self.assertIn(record.read_text(),clip)
-                def drop(heading,flags):
-                    previous=record.read_text()
-                    meta,_=parse_project(previous,relative)
-                    meta['phase3_update_base_sha256']=snapshot_sha256(previous)
-                    meta.update(flags)
-                    _,_,body=previous.partition('\n---\n')
-                    change=Path(temp)/'updated.md'
-                    change.write_text('---\n'+json.dumps(meta)+'\n---\n'+body+'\n'+heading+'\n',
-                                      encoding='utf-8')
-                    class Url:
-                        def isLocalFile(self): return True
-                        def toLocalFile(self): return str(change)
-                    class Event:
-                        def __init__(self): self.accepted=False
-                        def mimeData(self): return SimpleNamespace(urls=lambda:[Url()])
-                        def type(self): return QEvent.Type.Drop
-                        def acceptProposedAction(self): self.accepted=True
-                        def ignore(self): self.accepted=False
-                    event=Event()
-                    window._project_drop_event(event)
-                    self.assertTrue(event.accepted,window.notice.text())
-                drop('## Phase 3a — Distribution research\nhttps://example.org/market\n',
-                     {'phase3_plan_status':'researched'})
-                self.assertTrue(window.copy_prompt.menu().actions()[1].isEnabled())
-                window._copy_megaprompt('phase3b')
-                self.assertIn('## Phase 3a — Distribution research',self.app.clipboard().text())
-                drop('## Phase 3b — Independent validation\nVERDICT: APPROVED\nhttps://example.org/terms\n',
-                     {'phase3_validation_status':'approved'})
-                meta,_=parse_project(record.read_text(),relative)
-                self.assertEqual(meta['project_phase'],'working_phase_4')
-                self.assertEqual([a.text() for a in window.copy_prompt.menu().actions()],
-                                 ['Phase 4 · Execute Launch & Marketing'])
-                window._copy_megaprompt('phase4')
+            root = Path(temp); repo = root / 'repo'
+            legacy = _record(repo, 'DEMO-012')
+            folder = legacy.parent.parent / 'demo-012'
+            (folder / 'work').mkdir(parents=True)
+            path = folder / 'project.md'
+            from business_portfolio.tools.build_browser import parse_project
+            meta, body = parse_project(legacy.read_text())
+            meta.update(workflow_version=2, project_phase='working_phase_4')
+            path.write_text('---\n' + json.dumps(meta) + '\n---\n' + body +
+                            '\n' + 'Preserved research. ' * 8000 +
+                            '\nPhase 4 completion estimate: 37% (best guess)\n')
+            legacy.unlink()
+            self._copy_templates(repo)
+            window = self._open_window(repo, root / 'state')
+            selection = path.relative_to(repo).as_posix()
+            self.assertTrue(window.select(selection))
+            self.assertIn('37%', window.project_tasks.toPlainText())
+            self.assertIn('37%', window.project_record.toPlainText())
+            from portfolio_manager.project_lifecycle import set_phase, read_completions
+            for number, label in ((4, 'build'), (5, 'release'), (6, 'marketing')):
+                window._preview(selection)
+                self.assertEqual(window.copy_prompt.text(), f'Copy {label} prompt')
+                self.assertEqual(len(window.prompt_menu.actions()), 1)
+                self.assertTrue(window.research_budget.isHidden())
+                self.assertTrue(window.paste_project.isHidden())
+                window._copy_megaprompt(f'phase{number}')
                 self.assertTrue(self.app.clipboard().text().startswith('/goal '))
-                self.assertIn(relative,self.app.clipboard().text())
-            finally:
-                if window:window.close()
-                host.close()
+                self.assertIn(selection, self.app.clipboard().text())
+                self.assertIn(f'Phase {number} completion estimate:', self.app.clipboard().text())
+                if number < 6:
+                    set_phase(repo, selection, f'working_phase_{number+1}', actor='codex',
+                              evidence=f'Fictional Phase {number} completed evidence.')
+            receipt = set_phase(repo, selection, 'complete', actor='codex', evidence='All marketing checked.',
+                                description='Fictional end-to-end completed product.',
+                                sale_urls=['https://example.org/shop'], marketing_urls=['https://example.org/post'])
+            window._preview(selection)
+            self.assertTrue(window.research_tools.isHidden())
+            self.assertEqual(len(read_completions(repo)), 1)
+            self.assertTrue(Path(receipt['snapshot']).is_file())
+            window._test_close()
+
+    def test_niche_buttons_create_child_and_delete_recoverably(self):
+        with TemporaryDirectory() as temp:
+            root = Path(temp); repo = root / 'repo'
+            _record(repo, 'DEMO-040')
+            self._copy_templates(repo)
+            window = self._open_window(repo, root / 'state')
+            parent = 'business_portfolio/niches/demo'
+            window.select(parent)
+            from PySide6.QtWidgets import QInputDialog, QMessageBox
+            with patch.object(QInputDialog, 'getText', return_value=('Work', True)):
+                window.new_niche.click()
+            child = window.workspace_state['selection']
+            self.assertEqual(child, parent + '/work')
+            self.assertTrue((repo / child / 'NICHE.json').is_file())
+            window.new_project.click()
+            project = repo / window.workspace_state['selection']
+            self.assertTrue(project.is_file())
+            window._entry_future.result(timeout=10); window.sync()
+            self.assertIn(child, [row[0] for row in window._niche_entries])
+            window.select(child)
+            with patch.object(QMessageBox, 'question', return_value=QMessageBox.StandardButton.No):
+                window.delete_niche.click()
+            self.assertTrue(project.is_file())
+            with patch.object(QMessageBox, 'question', return_value=QMessageBox.StandardButton.Yes):
+                window.delete_niche.click()
+            self.assertFalse((repo / child).exists(), window.notice.text())
+            self.assertEqual(window.workspace_state['selection'], parent)
+            recovery = repo / 'business_portfolio/.local/deleted_niches'
+            self.assertEqual(len(list(recovery.rglob('project.md'))), 1)
+            self.assertTrue(window.research_tools.isHidden())
+            window._test_close()
+
+    def test_drop_update_on_research_detail_preserves_phase_and_work(self):
+        with TemporaryDirectory() as temp:
+            root = Path(temp); repo = root / 'repo'
+            legacy = _record(repo, 'DEMO-030')
+            folder = legacy.parent.parent / 'demo-030'
+            (folder / 'work').mkdir(parents=True)
+            path = folder / 'project.md'
+            from business_portfolio.tools.build_browser import parse_project
+            meta, body = parse_project(legacy.read_text())
+            meta.update(workflow_version=2, project_phase='working_phase_3')
+            path.write_text('---\n' + json.dumps(meta) + '\n---\n' + body)
+            legacy.unlink()
+            owned = folder / 'work/keep.txt'; owned.write_text('owned work')
+            self._copy_templates(repo)
+            window = self._open_window(repo, root / 'state')
+            window.show()
+            selection = path.relative_to(repo).as_posix()
+            window.select(selection)
+            window.project_tabs.setCurrentWidget(window.project_record)
+            self.app.processEvents()
+            from portfolio_manager.project_update import snapshot_sha256
+            meta['project_update_base_sha256'] = snapshot_sha256(path.read_text())
+            update = root / 'updated.md'
+            update.write_text('---\n' + json.dumps(meta) + '\n---\n# Revised marketing plan\n'
+                              'Specific audiences, appropriate channels and measured initial actions. '
+                              'https://example.org/marketing-policy\n')
+            from PySide6.QtCore import QPoint, QPointF, QMimeData, QUrl
+            from PySide6.QtGui import QDragEnterEvent, QDropEvent
+            mime = QMimeData(); mime.setUrls([QUrl.fromLocalFile(str(update))])
+            enter = QDragEnterEvent(QPoint(10, 10), Qt.DropAction.CopyAction, mime,
+                                    Qt.MouseButton.LeftButton, Qt.KeyboardModifier.NoModifier)
+            target = window.project_record.viewport()
+            self.app.sendEvent(target, enter)
+            self.assertTrue(enter.isAccepted())
+            drop = QDropEvent(QPointF(10, 10), Qt.DropAction.CopyAction, mime,
+                              Qt.MouseButton.LeftButton, Qt.KeyboardModifier.NoModifier)
+            self.app.sendEvent(target, drop)
+            self.assertTrue(drop.isAccepted(), window.notice.text())
+            self.assertEqual(parse_project(path.read_text())[0]['project_phase'], 'working_phase_3')
+            self.assertIn('Revised marketing plan', window.project_record.toPlainText())
+            self.assertEqual(owned.read_text(), 'owned work')
+            self.assertEqual(window.copy_prompt.text(), 'Copy marketing research prompt')
+            window._test_close()
 
     def test_working_toggles_persist_and_sync_between_windows(self):
         with TemporaryDirectory() as temp:
@@ -466,8 +554,10 @@ class WorkspaceWindowTests(unittest.TestCase):
                 self.assertIn('work',window.project_files.toPlainText())
                 set_phase(repo,relative,'working_phase_3')
                 set_phase(repo,relative,'working_phase_4')
+                set_phase(repo,relative,'working_phase_5',actor='codex',evidence='Build checked.')
+                set_phase(repo,relative,'working_phase_6',actor='codex',evidence='Release checked.')
                 window.sync()
-                receipt=set_phase(repo,relative,'complete',description='Fictional completed project',
+                receipt=set_phase(repo,relative,'complete',actor='codex',evidence='Marketing checked.',description='Fictional completed project',
                     sale_urls=['https://example.org/shop'],marketing_urls=['https://example.org/post'])
                 self.assertEqual(len(read_completions(repo)),1)
                 window.sync()
@@ -527,7 +617,9 @@ class WorkspaceWindowTests(unittest.TestCase):
                 from portfolio_manager.project_lifecycle import set_phase, read_completions
                 set_phase(repo, selection, 'working_phase_3')
                 set_phase(repo, selection, 'working_phase_4')
-                set_phase(repo, selection, 'complete', description='Verified fixture',
+                set_phase(repo, selection, 'working_phase_5', actor='codex', evidence='Build checked.')
+                set_phase(repo, selection, 'working_phase_6', actor='codex', evidence='Release checked.')
+                set_phase(repo, selection, 'complete', actor='codex', evidence='Marketing checked.', description='Verified fixture',
                           sale_urls=['https://example.org/release'],
                           marketing_urls=['https://example.org/announcement'])
                 window._preview(selection)

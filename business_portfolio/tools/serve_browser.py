@@ -113,7 +113,12 @@ def public_results(root: Path, data: dict) -> tuple[dict, dict]:
 def fingerprint(root: Path) -> tuple:
     entries = []
     # Only public canonical inputs are watched; never follow links or private trees.
-    for start in [root/'niches', root/'research', root/'tools',root/'results']:
+    if (root/'niches').exists():
+        for path in builder.walk_index_inputs(root/'niches'):
+            if path.suffix.lower() in {'.md','.json','.html','.py','.txt','.csv'}:
+                stat=path.stat()
+                entries.append((str(path.relative_to(root)),stat.st_mtime_ns,stat.st_size))
+    for start in [root/'research', root/'tools',root/'results']:
         if start.exists() and builder.linked_input(start):raise ValueError('Linked input root refused')
         for directory, dirs, names in os.walk(start, followlinks=False):
             dirs[:] = sorted(d for d in dirs if not d.startswith('.') and d.lower() not in DENIED_PARTS)

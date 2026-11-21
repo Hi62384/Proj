@@ -1,6 +1,6 @@
-# Business Portfolio — 5 categories, 25 required niches
+# Business Portfolio — six-phase projects and editable niches
 
-The active portfolio is organized as **Digital Products, Digital Content, Services, Ecommerce and Investing**, with the 25 required niche folders plus nine nested legacy niches retained by stable ID. Browse Category → Niche → Project. The active portfolio contains two project records in individual project folders: [GDM-002](niches/digital-products/game-development-marketplaces/projects/gdm-002-capacity-aware-npc-transport/project.md) and [BOOK-001](niches/digital-products/books-and-ebooks/projects/book-001-free-candy-chad-bradson-original-novel-and-wide-publishing/project.md). GDM-001 and GDM-003 were explicitly deleted from the active project folders together with their project-specific results. Each project folder contains its canonical `project.md` record and a `work/` folder for project-owned artifacts. Their IDs, plans, status, and progress remain intact. Historical archived projects are intentionally not included in this active-project count.
+The active portfolio is organized as **Digital Products, Digital Content, Services, Ecommerce and Investing**, with the original 25 niche folders plus nine nested legacy niches retained by stable ID. The owner can create subniches or recoverably delete a selected subtree. Browse Category → Niche → Project. The active portfolio contains two project records in individual project folders: [GDM-002](niches/digital-products/game-development-marketplaces/gdm-002-capacity-aware-npc-transport/project.md) and [BOOK-001](niches/digital-products/books-and-ebooks/book-001-free-candy-chad-bradson-original-novel-and-wide-publishing/project.md). GDM-001 and GDM-003 were explicitly deleted from the active project folders together with their project-specific results. Each project folder contains its canonical `project.md` record and a `work/` folder for project-owned artifacts. Their IDs, plans, status, and progress remain intact. Historical archived projects are intentionally not included in this active-project count.
 
 Each category and niche has a `working` boolean in its `NICHE.json`, initially `false`. Portfolio Manager shows a checkbox and Working/Not Working label in Projects and Niches. Enabling a node enables all its parent niches; disable Working descendants before disabling a parent. Turning off a child leaves its parents enabled. A toggle never starts or stops a worker. Working folders show a green badge on their icon. Settings are atomically written and shared across windows. Category summaries count working descendant leaf niches without counting a parent and its nested legacy children twice. The generated browser displays these values read-only and updates when rebuilt or served live.
 
@@ -9,6 +9,16 @@ Open Portfolio Manager in any Codex chat to use **Projects**, **Niches**, **Hist
 The 36-category/144-subcategory taxonomy remains in [`opportunity_library/data/taxonomy.json`](../opportunity_library/data/taxonomy.json) as research, separate from the active hierarchy. The [previous 182-node view](archive/2026-11-15-taxonomy-view-v1/README.md), the 139-record archive and the older project records remain preserved and searchable in History. The independent historical snapshots were not modified.
 
 Current authorized spending is CAD0. The CAD100 planning ceiling grants no permission to spend. Existing project records retain their own evidence and authorization boundaries.
+
+## Current project workflow
+
+Select a niche to use **New project**, **New niche folder** or **Delete niche**. New projects start as **Empty project** in Phase 1 and appear directly under the niche. The disk layout is `<niche>/<stable-id>-<slug>/project.md` plus `work/`, without an intermediate `projects/` directory. Deletion moves a confirmed subtree into local recovery storage; historical archives and completed receipts remain intact.
+
+The current sequence is **1 product research → 2 release-platform/compatible-version research → 3 marketing research → 4 build → 5 release → 6 marketing → Complete**. Each research phase has its own recheck and can pass without unnecessary changes. ChatGPT returns complete copyable text; use **Paste project text** and manually advance through phases 1–3 into Phase 4. Phases 4–6 each have a separate Codex `/goal`; Codex records completed/remaining work, all important data and URLs, and an approximate phase completion percentage at every checkpoint, then advances after verified completion.
+
+Scope all six phases together for **2 days to 3 weeks**. Every accepted compatible version, release and initial marketing task must fit that finite scope; optional/deferred opportunities stay documented. Planning budgets are not spending authorization. A complete project is not proof of paid demand.
+
+See [Portfolio Manager workflow](../docs/PORTFOLIO_MANAGER_WORKFLOW.md), [record schema](SCHEMA.md), and [project template](PROJECT_TEMPLATE.md) for the full contract. Old phase references below are historical package descriptions, not instructions for the current workflow.
 
 ## Earlier 182-node view (historical description)
 

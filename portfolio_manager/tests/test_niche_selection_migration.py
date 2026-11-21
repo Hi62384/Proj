@@ -7,6 +7,39 @@ from portfolio_manager.integration import ManagerHost
 
 
 class SelectionMigrationTests(unittest.TestCase):
+    def test_removed_projects_container_keeps_exact_chat_selection(self):
+        from portfolio_manager.tests.test_runner import _record
+        from business_portfolio.tools.build_browser import parse_project
+        with TemporaryDirectory() as temp:
+            root = Path(temp); repo = root / 'repo'
+            legacy = _record(repo, 'DEMO-050')
+            old_folder = legacy.parent / 'demo-050'
+            (old_folder / 'work').mkdir(parents=True)
+            record = old_folder / 'project.md'
+            legacy.rename(record)
+            nested_work = old_folder / 'work/projects/tool.txt'
+            nested_work.parent.mkdir()
+            nested_work.write_text('Project-owned example, not a portfolio container.')
+            host = ManagerHost(repo, root / 'state')
+            try:
+                project_chat = host.workspace('a' * 32, {'path': record.relative_to(repo).as_posix()})
+                folder_chat = host.workspace('b' * 32, {'path': old_folder.parent.relative_to(repo).as_posix()})
+                work_chat = host.workspace('c' * 32, {'path': nested_work.relative_to(repo).as_posix()})
+                moved = old_folder.parent.parent / old_folder.name
+                old_folder.rename(moved)
+                old_folder.parent.rmdir()
+                selection = host.get_workspace(project_chat['id'])['selection']
+                self.assertEqual(selection, (moved / 'project.md').relative_to(repo).as_posix())
+                self.assertEqual(host.get_workspace(folder_chat['id'])['selection'],
+                                 moved.parent.relative_to(repo).as_posix())
+                self.assertEqual(host.get_workspace(work_chat['id'])['selection'],
+                                 (moved / 'work/projects/tool.txt').relative_to(repo).as_posix())
+                context = host.context_info(host.get_workspace(project_chat['id']))
+                self.assertEqual(context['project']['id'], 'DEMO-050')
+                self.assertEqual(context['project']['work_folder'], (moved / 'work').relative_to(repo).as_posix())
+            finally:
+                host.close()
+
     def test_moved_project_selection_reconnects_without_changing_other_chat(self):
         with TemporaryDirectory() as temp:
             root = Path(temp)

@@ -12,7 +12,7 @@ import time
 from types import SimpleNamespace
 import uuid
 
-from business_portfolio.tools.build_browser import parse_project
+from business_portfolio.tools.build_browser import parse_project, project_record_path
 from portfolio_autopilot.codex_relay.codex import Codex
 from portfolio_autopilot.codex_relay.config import Config, safe_path
 from portfolio_autopilot.codex_relay.diagnostics import RelayError, record, sanitize
@@ -100,9 +100,11 @@ class IsolatedWorkspace(Workspace):
         self.repo = repo
         record_path = str(claim['record_path']).replace('\\', '/')
         parts = PurePosixPath(record_path).parts
-        if parts[:2] != ('business_portfolio', 'niches') or parts[-2:-1] != ('projects',) or not record_path.endswith('.md'):
+        if parts[:2] != ('business_portfolio', 'niches') or not record_path.endswith('.md'):
             raise ValueError('Only canonical portfolio records can be staged.')
         record_file = safe_path(repo, record_path)
+        if not project_record_path(record_file):
+            raise ValueError('Only canonical portfolio records can be staged.')
         if record_file.stat().st_size > MAX_FILE_BYTES:
             raise ValueError('The canonical record exceeds the input size limit.')
         record_bytes = record_file.read_bytes()

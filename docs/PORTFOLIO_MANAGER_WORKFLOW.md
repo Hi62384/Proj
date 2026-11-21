@@ -1,89 +1,91 @@
 # Portfolio Manager workflow
 
-## Selection-aware Copy Prompt — four phases
+## Create and organize projects
 
-**When a niche or its `projects/` folder is selected:** Copy Prompt offers only **Research a Business Opportunity**, **Create a Project from My Idea**, and **Recheck or Replace**. These are Phase 1 ChatGPT research prompts; their outputs must still pass evidence and repository import checks before becoming an active project. Current budget settings are planning ceilings only and authorize no spend.
+Select a niche or subniche in **Projects**. The niche offers **New project**, **New niche folder**, and **Delete niche**. It does not display a prompt-copy button. **New project** creates and selects an **Empty project** in Phase 1, with a unique stable ID and a `work/` directory. **New niche folder** asks for a name and creates a subniche under the selected niche. New niche focus defaults to Not Working.
 
-**When an active project is selected**, Copy Prompt changes to the phase-specific task:
+Project entries appear directly under their niche; there is no intermediate `projects` node. The canonical disk layout is:
 
-1. **Phase 2 — Build, Test & Prepare:** only the Phase 2 Codex `/goal`. Work and artifacts stay in that project's `work/`, and every checkpoint records a best-guess Phase 2 completion percentage, the true next action, and important real URLs with precise statuses. Once actual selected platform packages and tests are verified, Codex advances the project to `working_phase_3` using the lifecycle CLI.
-2. **Phase 3a — Research Platforms & Plan:** a ChatGPT research prompt with the **complete current project.md** appended, along with exact original SHA-256 and path. ChatGPT evaluates actual finished assets, suitable sale/access platforms, Canadian payout eligibility, rights, costs, formats, release instructions and marketing channels, then returns one **additive** Markdown update. Drag that file onto the **selected same project** in Portfolio Manager; it remains in Phase 3.
-3. **Phase 3b — Validate & Improve Plan:** enabled only after the Phase 3a plan was imported. Copy this ChatGPT prompt to independently challenge and improve all platforms/marketing options. It includes the latest complete project file and an updated SHA-256. ChatGPT returns one **additive** Markdown update with an explicit APPROVED or NEEDS_REVISION verdict. An approved, structurally valid imported file automatically moves the selected project to `working_phase_4`; NEEDS_REVISION remains Phase 3 so the validation prompt can be repeated. No amount of repeated research guarantees market sales.
-4. **Phase 4 — Execute Launch & Marketing:** only the Phase 4 Codex `/goal`. Codex actually performs all permitted suitable releases and promotion, records live links/evidence and the best-guess Phase 4 completion percentage at **every checkpoint**, and updates the source project's Important URLs table (sale/download, submission, edit/admin, promotion, analytics, demos, documentation). Only real verified public product delivery plus public marketing can advance Phase 4 to **Complete**; completion doesn't imply paid sales.
+```text
+business_portfolio/niches/<niche>/NICHE.json
+business_portfolio/niches/<niche>/<stable-id>-<slug>/project.md
+business_portfolio/niches/<niche>/<stable-id>-<slug>/work/
+business_portfolio/niches/<niche>/<subniche>/NICHE.json
+```
 
-### Drag-and-drop UPDATE, never rewrite
+The project folder keeps its record and implementation together. Portfolio Manager presents the record as a leaf directly under the niche and hides that implementation wrapper in the Projects view. All project-owned source, content, assets, builds, tests, release packages and marketing material belong in `work/`. A descriptive project title can change without changing its stable ID or folder path.
 
-While the exact Phase 3 project leaf is selected, drop one external `.md` file onto Portfolio Manager to replace that project's canonical record with an additive ChatGPT update. The importer verifies the project/niche identity, complete verbatim original Markdown body, unchanged protected JSON metadata (including actual financial/work facts), a matching source SHA-256, the current phase, valid research/validation status, and linked sources before updating. New material must be APPENDED, not overwrite existing project details. The importer preserves `work/` and writes the prior version under `business_portfolio/.local/phase3_backups/<id>/`. Unsafe, stale or truncated files are rejected. Approved Phase 3b imports automatically advance Phase 4; draft/needs-revision imports do not. These local updates do not automatically commit or push to GitHub.
+**Delete niche** applies equally to a niche or subniche. Its confirmation identifies the subtree and included projects. Confirming moves that whole subtree to ignored `business_portfolio/.local/deleted_niches/` recovery storage, then removes it from the active view. It does not erase historical archives or independent completed-project receipts. Deletion is rejected if another active project would retain a broken parent/related-project reference. Restore recovery folders only after reviewing their original niche path, references and ID collisions; do not blindly merge over newer work.
 
-Dropping a new project Markdown onto a niche folder still creates a NEW validated `project.md` plus `work/`; it does not replace other projects. Select the intended project file before attempting replacement, rather than dropping onto an unrelated project.
+## Six phases and the prompt buttons
 
-### Resume after stop
+| Phase | Purpose | Prompt button and choices | Who advances it |
+| --- | --- | --- | --- |
+| 1 | Research a worthwhile product or an existing idea; write a detailed build specification | **Copy research prompt**: niche research, existing idea, verification/recheck | User advances to 2 after review |
+| 2 | Research release destinations and feasible direct/adjacent compatible versions; update the build specification | **Copy release research prompt**: research and verification/recheck | User advances to 3 after review |
+| 3 | Research the full marketing strategy, assets, tactics, channels and measurement; reconcile earlier plans | **Copy marketing research prompt**: research and verification/recheck | User advances to 4 after review |
+| 4 | Build, test, document and package every accepted product version | **Copy build prompt**: Codex `/goal` | Codex advances to 5 after actual completion |
+| 5 | Release the finished product on every accepted required destination and verify customer access | **Copy release prompt**: Codex `/goal` | Codex advances to 6 after actual completion |
+| 6 | Execute and verify the accepted finite initial marketing plan | **Copy marketing prompt**: Codex `/goal` | Codex marks Complete with factual evidence and URLs |
 
-The main Portfolio Manager window shows **Resume after stop** in its header, using the same Computer Bridge stop-resume logic as the existing settings option. It resets the stopped state; it does not restore deleted permissions, authorize transactions, or start workers.
+The total project is scoped for **2 days to 3 weeks**, including research, build, releases and initial marketing. This is one shared window, not three weeks for each phase and not an instruction to wait before completing useful work. Plans search broadly but select a feasible finite scope; other options remain conditional, deferred or rejected with reasons. Required external review/access delays must be recorded honestly rather than concealed by a completion estimate.
 
-### Evidence and safety
+Phases are stored as `working_phase_1` through `working_phase_6`, then `complete`, with `workflow_version: 2`. They are independent of work status, commercial validation and the niche's Working checkbox. A completed project has not necessarily made a sale.
 
-External publication, outreach, account changes and spending require actual authorization; the nominal CAD100 planning cap is not a grant. Record actual URLs with observed state, never invent live pages or store passwords/tokens in the public project file. Coordinate one writer per record, preserve original project decisions/results and source chronology, update `main` without per-project branches or force pushes, and do not report an unrun QA step as successful.
+## Research by copying and pasting text
 
-Phase 4 verified completion creates the durable `business_portfolio/completed_projects/<PROJECT-ID>.json` receipt with factual sale/access and marketing links, independent of the original work folder. User-initiated demotion may revoke an existing completion receipt; Phase 4 promotion is not a manual shortcut.
+1. Create or select a Phase 1 project and copy the niche research or existing-idea prompt. The idea option lets you supply the idea. The copied prompt includes the full current record, niche, planning budget, canonical path and a SHA-256 snapshot marker.
+2. Run it in ChatGPT. It researches the product and returns the complete revised project as one copyable block of text, including its JSON frontmatter. A download is not required.
+3. Select the same project in Portfolio Manager and choose **Paste project text**. Paste the complete block and save. The project stays in the current phase. Run that phase's recheck as needed.
+4. When the research is satisfactory, use the phase control to advance one step to the next research phase. Repeat the research/paste/recheck process for release platforms in Phase 2 and marketing in Phase 3. After Phase 3, manually advance to Phase 4.
+5. Copy the Phase 4 build `/goal` into the project's Codex chat. Once Codex finishes and advances it to Phase 5, copy that release `/goal`; repeat for Phase 6 marketing. Each goal stops at its handoff so the next phase starts from its own prompt.
 
-### Project files and folder view
+Verification is allowed to conclude **“Good to go — no substantive changes needed.”** If the plan is already good, there is no replacement text to paste. Minor cosmetic suggestions must not force changes. A meaningful defect warrants a corrected complete record and another review; a genuine blocker must not be approved simply to move on. A research verdict is not proof of future sales.
 
-Every active project is a folder named after its stable project ID and short slug:
+Phase 2 distinguishes compatibility targets from distribution destinations. It investigates adjacent useful versions, such as other engines for an engine-specific pathfinding product. Every accepted version must appear in the Phase 1 specification and Phase 4 build/tests, and every accepted release route in Phase 5. Phase 3 covers much more than website lists: audience intent, positioning, proof, content, SEO/discovery, permitted communities, partnerships, conversion and measurement, with concrete Phase 6 tasks.
 
-    business_portfolio/niches/<niche>/projects/<id>-<slug>/project.md
-    business_portfolio/niches/<niche>/projects/<id>-<slug>/work/
+### What a paste preserves and validates
 
-All project-specific code, build files, assets, tests, drafts and release packages belong in work/. In the Projects tree, Portfolio Manager hides the enclosing project folder and shows the project.md record as the selectable leaf. Dragging a valid .md project file onto a niche creates this folder layout with work/.gitkeep automatically. Existing older flat records are readable for compatibility during migration.
+Paste accepts a full strict JSON-frontmatter Markdown record, optionally wrapped in one Markdown code fence. It replaces the planning body; it is not restricted to appending duplicate sections. Identity, current phase, workflow, work state, permission and financial/evidence/history metadata remain protected. Planned title, specification and research fields can change. Old source-register IDs must remain intact; new direct research citations can be written in the body without inventing source IDs. The research prompts require preservation of important existing facts, decisions, completed work, important data and URLs when reorganizing the text.
 
-The phase icon is 2 (Working Phase 2), 3 (Research & Validation), 4 (Launch & Marketing), or a checkmark (Complete). Phases are independent of project work_state and commercial_validation; completion does not imply commercial success. The phase selector lets the owner move between Phase 2 and Phase 3 or demote Phase 4/Complete; advancement to Phase 4 requires an imported approved Phase 3b update. Demoting Complete revokes the corresponding Completed Projects receipt. The Complete choice is disabled for manual updates: Codex must automatically verify the live product and marketing URLs, save the factual description, run the completion command and create the durable receipt without asking the owner to enter links or click Complete.
+The supplied `BASE_SHA256` goes in `project_update_base_sha256`; the importer checks it against the current LF-normalized record and removes it. The dialog also guards against changes since it was opened. Invalid metadata, identity/phase changes, stale content and unsafe paths are rejected. Before replacing, the manager backs up the actual original file bytes under `business_portfolio/.local/project_backups/<ID>/`. Failed validation restores the record and previous generated views. The `work/` directory is never replaced by this action. Pasting is available only in phases 1–3 and never advances the phase or commits/pushes the local edit.
 
-To advance a project, run:
+Dragging one external Markdown file onto the selected research project remains an optional input route to the same replacement behavior. Folder import is a compatibility option for valid research project files, not the default creation workflow. Use **New project** and **Paste project text** for normal work.
 
-    python -m portfolio_manager.project_lifecycle set-phase --project "business_portfolio/niches/.../projects/<slug>/project.md" --phase working_phase_3
+## Execution checkpoints and handoffs
 
-After a verified Phase 4 public product and at least one verified public marketing placement exist, Phase 4 Codex can run:
+At every Phase 4, 5 or 6 checkpoint, Codex writes and reports an honest approximate line such as **Phase 4 completion estimate: 65% (best guess)**. It explains what is complete, what remains and why the estimate fits. Estimates may change; they are not measured completion evidence. The project record keeps completed and remaining checklists, observed results, blockers and the next action.
 
-    python -m portfolio_manager.project_lifecycle set-phase --project "business_portfolio/niches/.../projects/<slug>/project.md" --phase complete --description "Short accurate summary" --sale-url "https://real-product-link" --marketing-url "https://real-marketing-link"
+Codex records important information as it works: artifact paths, versions/hashes, project/submission IDs, commands, configuration, relevant costs/results and all source, build, preview, live, upload, sale/download, edit/admin, marketing, support and analytics URLs. Each ledger entry states purpose, observed status and verification date; planned links are not labelled live. Preserve retired links as history. Credentials, session tokens and private customer/payment information never belong in the public project file.
 
-For supported noncommercial releases, a verified public access link may be recorded with --other-url instead of --sale-url. Never invent launch evidence or URLs.
+After genuinely finishing the current phase, Codex uses the lifecycle command with its actual evidence summary:
 
-### Independent Completed Projects
+```text
+python -m portfolio_manager.project_lifecycle set-phase --project "PATH/TO/project.md" --phase working_phase_5 --actor codex --evidence "Actual build and test evidence" --title "Appropriate Product Name"
+python -m portfolio_manager.project_lifecycle set-phase --project "PATH/TO/project.md" --phase working_phase_6 --actor codex --evidence "Actual verified release evidence"
+python -m portfolio_manager.project_lifecycle set-phase --project "PATH/TO/project.md" --phase complete --actor codex --evidence "Actual verified marketing evidence" --description "Factual product and launch summary" --sale-url "VERIFIED_PRODUCT_URL" --marketing-url "VERIFIED_MARKETING_URL"
+```
 
-Each completed project has a durable standalone public receipt under business_portfolio/completed_projects/<PROJECT-ID>.json containing the project's description, verified sale/access links, verified marketing links, and other important URLs. The Completed Projects view displays them as clickable links, even after the original project folder has been deleted. There is no delete function in Portfolio Manager; to delete or correct a receipt, edit the JSON on disk. Do not put sensitive information there.
+The optional Phase 4 `--title` changes the display title while retaining the ID and path. For public delivery without a sale page, completion can use `--other-url` instead of `--sale-url`; additional verified URLs can be supplied with repeated flags. These example placeholders must be replaced with real observed URLs. `--actor codex` describes the handoff and is not a credential or permission grant; Codex must actually inspect the work and external results. The UI does not manually advance execution phases or mark Complete. Earlier phases can be reopened for corrections, which also revokes a matching completion receipt when applicable.
 
-Rebuild the generated project browser/index and run the offline tests after modifying canonical records. The GitHub Actions portfolio regression workflow also rebuilds them from the canonical filesystem after validating tests.
+Completion creates `business_portfolio/completed_projects/<ID>.json` with the factual description and verified sale/access and public marketing links. The Completed Projects view retains that receipt after the original niche/project is removed. Editing or deleting a receipt requires a deliberate filesystem action; niche deletion does not delete it. Unfinished required tasks, pending required releases or inaccessible required marketing evidence remain blockers rather than being recorded as completed.
 
-## Current business view (2026-11-15)
+## Existing-project migration
 
-Projects and Niches show five primary categories, the 25 required niches, and nine preserved legacy niches nested under their closest equivalents. Digital Products → Game Development Marketplaces contains only GDM-002 as an active project; GDM-001 and GDM-003 and their project-specific results were deleted from active folders. Books & eBooks also contains BOOK-001. Each category and niche has a Working checkbox stored in `NICHE.json`; enabling a niche also enables its parents, and a parent cannot be disabled while a descendant is Working. Working folders carry a green icon badge, leaving text colors available for the empty-folder indicator. This focus setting never starts a worker or changes project status. Changes are atomic, persist across restarts, synchronize across windows, and appear in the generated browser. Category totals count working descendant leaf niches without double-counting parent and nested nodes. History & Existing Work retains the 139 older records and prior niche-layout snapshot. Repository files remains the optional full explorer; the independent 36-category opportunity taxonomy stays in `opportunity_library`.
+The six-phase migration moves each old project directory out of its intermediary `projects/` folder without discarding `work/`. It preserves stable IDs, recorded progress and evidence. Old development Phase 2 becomes new Phase 4; old launch-research Phase 3 becomes new Phase 2; old combined execution Phase 4 becomes new Phase 5; Complete remains Complete. The migration records old phase values and source paths, updates current references and adds explicit remaining research/execution reconciliation tasks. It does not invent approvals for research that predates this workflow or reset existing work.
 
-The material below describes the prior active view and remains for migration history. Current verification is in `docs/BUSINESS_NICHES_13_REPORT_2026-11-15.md`.
+Historical archive snapshots and their original paths remain unchanged as evidence. Old phase numbers in historical text refer to the previous workflow; use the current metadata and appended migration note to resume the right stage.
 
-## Current navigation (2026-11-15)
+## Open, reconnect and stop controls
 
-Use **Projects** for the three current GDM families, **Niches** for the mostly empty taxonomy, and **History & Existing Work** for preserved prior project records. **Repository files** is the optional full file explorer for an arbitrary file or folder. Its folders load in the background when expanded, so the default project view stays small. The web project browser offers the same three primary views and separate Overview, Files & Results, Tasks & Progress and Complete record panels. History is read-only in the browser; changes to an archived plan require a reviewed restoration into an active niche. Each Codex chat retains its own selection, while AI Only/Human Available and Computer Access remain shared as before.
+In a Codex chat attached to the repository, ask to open Portfolio Manager. The chat uses the existing Computer Bridge `portfolio_open`, retrieves this chat's selection with `portfolio_context`, and changes it with `portfolio_select` when requested. Each chat has its own window/selection. Selecting an item does not start an AI worker. The optional trusted SessionStart hook supplies the private reconnect key automatically; the owner need not enter it. Keep session identity and another chat's selection separate.
 
-The test results later in this document refer to the earlier version. Consult the current completion report for this overhaul's checks; historical test counts are not a claim that the new views passed every live UI action.
+**AI Only (AFK)** / **Human Available** is shared availability information, not an execution-permission switch. The header's **Resume after stop** uses the existing Computer Bridge resume action. It clears the current stop state without granting permissions or starting a worker. Computer Access and Emergency Stop remain available through the main menu and retain their existing controls.
 
-Portfolio Manager is a visual file explorer for normal official Codex chats. It remembers one selected repository file or folder per chat and one shared availability setting. The chat does the work with its usual tools and permissions. Selecting an item does not start an AI worker.
+The Working checkbox on each niche is a shared informational focus flag. Enabling a child enables its ancestors; disable Working descendants before disabling their parent. History & Existing Work preserves prior records; Repository files remains the optional full explorer. These view choices do not authorize actions or alter commercial state.
 
-## Open and use
+## Validation and practical limits
 
-In a Codex chat attached to this repository, say “Open Portfolio Manager” or “Open the project.” The chat uses `portfolio_open` through the existing Computer Bridge integration. The controller starts if necessary and opens or focuses that chat's window. Pick a file or folder in the repository tree, then return to the same chat and ask it to explain or work on the selection. The chat calls `portfolio_context` to retrieve the path and global mode. It may call `portfolio_select` when you explicitly name a different path. Ordinary coding requests that do not refer to Portfolio Manager follow the normal Codex workflow.
+Canonical project records and `NICHE.json` files are authoritative; `PROJECT_INDEX.json` / `PROJECT_BROWSER.html` are generated views. Rebuild and validate after edits. The regression workflow also checks the canonical records and regenerated views. Use current test results when reporting changes rather than copying historical test counts.
 
-Each chat has its own window and selection. Closing a window leaves its selection saved. Reopening it in the same chat restores that selection. A SessionStart hook reserves a stable private reconnect key for a normal Codex chat. The key is passed automatically through trusted session context and never needs to be entered by the owner. `Setup_Portfolio_Session.cmd` installs the hook for this checkout if it is missing; Codex may require a one-time trust review. Without a stable hook identity, a new MCP connection cannot be proven to belong to an earlier chat, so it receives a separate workspace.
-
-## Availability and computer access
-
-The window header offers **AI Only (AFK)** and **Human Available**. This single setting lives in the controller's SQLite database, updates all open windows and survives restarts. It tells the chat whether you are available for questions. It does not change Codex execution or grant permissions. In AI Only, the chat should continue authorized work and defer actions needing you.
-
-The header's More menu opens Computer Access and keeps Emergency Stop reachable. The existing Bridge continues to enforce browser, desktop, file and action permissions. Stop and Emergency Stop retain their original effects. Legacy background-worker code and saved data are preserved, but the normal workspace has no worker controls and does not launch a separate Codex model process.
-
-## Working on a portfolio record
-
-For a selected canonical business project record, the chat reads the complete record and latest authorized private checkpoint before editing. It uses the coordinator to claim canonical record changes when required by `AGENTS.md`, compares the expected content before saving, and records verified progress. This coordination is separate from opening a file or using the explorer. External uploads, orders, publication and other consequential actions retain their existing approvals.
-
-## Verification limits
-
-On November 12, 2026, all 138 Portfolio Manager tests passed, with four legacy WSL fixtures skipped. A disposable controller passed separate MCP chat connections, selection and availability persistence after restart, and Bridge Stop checks. Three fresh official Codex chats then opened distinct live windows; a chat prompted only with “Open the project” opened its window automatically. Two chats selected different paths, ran separate ordinary coding tasks at the same time, and passed four independent fixture tests without starting workers. Closing and reopening one chat window restored its selection, while the other window stayed open. A temporary global Human Available change reached both live windows; AI Only was restored and verified. The temporary source folders were removed. The live shared controller was restarted once for this acceptance run. After the owner resumed its Stop control, a live read-only Chrome tab discovery succeeded through Computer Bridge with no pending requests. Desktop access was off, so a live desktop action was not tested. Live screenshot inspection and direct mouse interaction with the window remain unverified because window capture timed out. These results do not prove every future Codex chat or external computer action will work.
+Current planning/import actions do not authorize spending, ads, account creation, outreach or publication. Actual session authorization and Computer Bridge controls remain authoritative. The nominal CAD100 cumulative planning ceiling is separate from CAD0 default authorized spending. Keep one writer per record, preserve external-effect history and never claim an unrun test or unseen live page was verified.

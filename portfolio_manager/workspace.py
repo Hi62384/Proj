@@ -98,6 +98,25 @@ class ChatWorkspaces:
         if not selection.startswith(prefix):
             return row
         old_path = selection[len(prefix):]
+        # Remove the old projects/ container while keeping this chat attached to
+        # the exact same project, including selections inside its work/ folder.
+        parts = Path(old_path).parts
+        if 'projects' in parts:
+            container = parts.index('projects')
+            without_container = Path(*parts[:container], *parts[container + 1:])
+            flattened = Path(prefix) / without_container
+            candidates = [flattened]
+            if flattened.suffix.lower() == '.md' and flattened.name != 'project.md':
+                candidates.append(flattened.with_suffix('') / 'project.md')
+            if not (self.coordinator.repo / selection).exists() or parts[-1] == 'projects':
+                for candidate in candidates:
+                    try:
+                        context_path(self.coordinator.repo, candidate)
+                    except (ValueError, OSError):
+                        continue
+                    db.execute('UPDATE chat_workspaces SET selection=?,revision=revision+1 WHERE id=?',
+                               (candidate.as_posix(), row['id']))
+                    return db.execute('SELECT * FROM chat_workspaces WHERE id=?', (row['id'],)).fetchone()
         # Existing chat selections survive migration from projects/foo.md to
         # projects/foo/project.md; never silently select a different project.
         if old_path.endswith('.md') and '/projects/' in old_path and not (self.coordinator.repo / selection).exists():
@@ -192,8 +211,10 @@ class ChatWorkspaces:
             prefix = 'business_portfolio/niches/'
             slug = selection[len(prefix):].split('/', 1)[0] if selection.startswith(prefix) else ''
             old_path = selection[len(prefix):] if selection.startswith(prefix) else ''
-            if ((old_path not in MOVED_NICHE_PATHS and slug not in MOVED_NICHE_CATEGORIES) or
-                    (self.coordinator.repo / selection).exists()):
+            flatten = 'projects' in Path(old_path).parts and (
+                not (self.coordinator.repo / selection).exists() or Path(old_path).name == 'projects')
+            if not flatten and ((old_path not in MOVED_NICHE_PATHS and slug not in MOVED_NICHE_CATEGORIES) or
+                                (self.coordinator.repo / selection).exists()):
                 return self._public(row)
         with self.coordinator._database(write=True) as db:
             row = db.execute('SELECT * FROM chat_workspaces WHERE id=?', (ident,)).fetchone()

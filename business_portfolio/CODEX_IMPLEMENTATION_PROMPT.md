@@ -1,3 +1,11 @@
+# Historical package integration prompt — not a current phase goal
+
+The instructions below describe an earlier portfolio-package integration and are preserved for reconciliation history. Do not use their old layout, phase meanings, proposed project queue, historical test counts or execution assumptions for current work. The current canonical layout is `niches/<niche>/<stable-id>-<slug>/project.md` plus `work/`, and the active workflow is Phase 1 product research, Phase 2 release research, Phase 3 marketing research, Phase 4 build, Phase 5 release, Phase 6 marketing, then Complete.
+
+Use [the current Portfolio Manager workflow](../docs/PORTFOLIO_MANAGER_WORKFLOW.md) and the phase-specific prompt copied for the selected project. The current [Phase 4 build](../PHASE_4_BUILD_MEGAPROMPT.md), [Phase 5 release](../PHASE_5_RELEASE_MEGAPROMPT.md), and [Phase 6 marketing](../PHASE_6_MARKETING_MEGAPROMPT.md) goals require best-guess completion percentages and important data/URL checkpoints. Research uses copyable text and manual advancement. Current AGENTS.md and actual owner authorization govern all work.
+
+## Historical instructions
+
 # Codex v2 update prompt — low-budget, market-tested portfolio plans
 
 Work directly in my existing official Codex project for `Hi62384/Proj`. My expected checkout is:

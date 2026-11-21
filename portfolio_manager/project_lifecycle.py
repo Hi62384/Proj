@@ -18,16 +18,24 @@ from urllib.parse import urlsplit
 from business_portfolio.tools.build_browser import parse_project, project_record_path
 from .workspace import context_path
 
+PHASE_1 = "working_phase_1"
 PHASE_2 = "working_phase_2"
 PHASE_3 = "working_phase_3"
 PHASE_4 = "working_phase_4"
+PHASE_5 = "working_phase_5"
+PHASE_6 = "working_phase_6"
 COMPLETE = "complete"
-PHASES = (PHASE_2, PHASE_3, PHASE_4, COMPLETE)
+PHASES = (PHASE_1, PHASE_2, PHASE_3, PHASE_4, PHASE_5, PHASE_6, COMPLETE)
+PHASE_LABELS = {
+    PHASE_1: "Product Research", PHASE_2: "Release Research",
+    PHASE_3: "Marketing Research", PHASE_4: "Build & Test",
+    PHASE_5: "Release", PHASE_6: "Marketing", COMPLETE: "Complete",
+}
 
 
 def project_phase(metadata: dict) -> str:
-    """Legacy canonical records enter Phase 2 without rewriting history."""
-    value = metadata.get("project_phase", PHASE_2)
+    """Read the stored phase; migration explicitly remaps the previous workflow."""
+    value = metadata.get("project_phase", PHASE_1 if metadata.get("workflow_version") == 2 else PHASE_2)
     if value not in PHASES:
         raise ValueError("Invalid project_phase in project record.")
     return value
@@ -115,22 +123,51 @@ def read_completions(repo: Path) -> list[dict]:
 
 def set_phase(repo: Path, selection: str | Path, phase: str, *,
               description: str | None = None, sale_urls=(),
-              marketing_urls=(), other_urls=()) -> dict:
-    """Change project phase; completion stores a receipt and demotion revokes it."""
+              marketing_urls=(), other_urls=(), actor: str = "user",
+              evidence: str | None = None, title: str | None = None) -> dict:
+    """Apply one handoff; execution transitions belong to the Codex work prompt.
+
+    ``actor`` identifies the caller for the audit trail, not an authorization
+    credential. Normal tool permissions still apply. Evidence is a factual
+    checkpoint reference/summary, not a substitute for inspecting the work.
+    """
     if phase not in PHASES:
-        raise ValueError("Choose working_phase_2, working_phase_3, working_phase_4, or complete.")
+        raise ValueError("Choose working_phase_1 through working_phase_6, or complete.")
+    if actor not in {"user", "codex"}:
+        raise ValueError("Phase actor must be user or codex.")
     repo = Path(repo).resolve(strict=True)
     path = record_path(repo, selection)
-    with _single_writer(path.parent):
+    with _single_writer(repo / "business_portfolio"):
         raw = path.read_text(encoding="utf-8")
         meta, _ = parse_project(raw, str(path))
         old = project_phase(meta)
-        allowed = {PHASE_2: {PHASE_2, PHASE_3},
-                   PHASE_3: {PHASE_2, PHASE_3, PHASE_4},
-                   PHASE_4: {PHASE_2, PHASE_3, PHASE_4, COMPLETE},
-                   COMPLETE: {PHASE_2, PHASE_3, PHASE_4, COMPLETE}}
-        if phase not in allowed[old]:
+        old_number, new_number = PHASES.index(old), PHASES.index(phase)
+        if new_number > old_number + 1:
             raise ValueError(f"Invalid phase transition from {old} to {phase}.")
+        advancing = new_number > old_number
+        if advancing and old in {PHASE_1, PHASE_2, PHASE_3}:
+            if actor != "user":
+                raise ValueError("Research phases are advanced manually by the owner after rechecking.")
+            if (meta.get("draft") is True or meta.get("record_type") == "empty_project" or
+                    str(meta.get("title", "")).strip().lower() == "empty project"):
+                raise ValueError("Paste a researched project before advancing an empty project.")
+        if advancing and old in {PHASE_4, PHASE_5, PHASE_6}:
+            if actor != "codex":
+                raise ValueError("Codex advances execution phases after verifying the work.")
+            if not isinstance(evidence, str) or not evidence.strip():
+                raise ValueError("Execution handoff requires factual completion evidence in --evidence.")
+        if title is not None:
+            if actor != "codex" or old != PHASE_4:
+                raise ValueError("Codex may assign the finished product name during Phase 4.")
+            if not isinstance(title, str) or not title.strip() or len(title.strip()) > 200:
+                raise ValueError("The project title must contain 1 to 200 characters.")
+            if title.strip().lower() == "empty project":
+                raise ValueError("Choose an appropriate product name, not Empty project.")
+            meta["title"] = title.strip()
+        if advancing and old == PHASE_4 and (
+                not str(meta.get("title", "")).strip() or
+                str(meta.get("title", "")).strip().lower() == "empty project"):
+            raise ValueError("Phase 4 must assign an appropriate product name before release.")
         completion = repo / "business_portfolio" / "completed_projects" / (meta["id"] + ".json")
         if old == COMPLETE and phase != COMPLETE:
             # A demoted project must no longer appear in Completed Projects.
@@ -143,8 +180,10 @@ def set_phase(repo: Path, selection: str | Path, phase: str, *,
                     existing.get("project_phase") != COMPLETE):
                 raise ValueError("Completion receipt does not match the selected project.")
         if phase == COMPLETE:
-            if old not in {PHASE_4, COMPLETE}:
-                raise ValueError("Completion requires verified Phase 4 execution.")
+            if old not in {PHASE_6, COMPLETE}:
+                raise ValueError("Completion requires verified Phase 6 marketing.")
+            if actor != "codex":
+                raise ValueError("Codex marks Complete after verifying release and marketing evidence.")
             if not isinstance(description, str) or not description.strip():
                 raise ValueError("Completion requires a short, factual project description.")
             sale = _urls(sale_urls)
@@ -171,6 +210,15 @@ def set_phase(repo: Path, selection: str | Path, phase: str, *,
         else:
             receipt = None
         meta["project_phase"] = phase
+        meta["workflow_version"] = 2
+        if old != phase:
+            history = meta.setdefault("phase_history", [])
+            if not isinstance(history, list):
+                raise ValueError("Project phase_history must be a list.")
+            history.append({"from": old, "to": phase, "actor": actor,
+                            "at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+                            "evidence": evidence.strip() if isinstance(evidence, str) else
+                            "Owner advanced the research phase." if advancing else "Phase reopened for review."})
         before, sep, body = raw.replace("\r\n", "\n").partition("\n---\n")
         if not sep:
             raise ValueError("Project frontmatter is malformed.")
@@ -205,6 +253,9 @@ def main(argv=None):
     parser.add_argument("--repo", type=Path, default=Path(__file__).resolve().parents[1])
     parser.add_argument("--project", help="project.md path (or its project folder) relative to the checkout")
     parser.add_argument("--phase", choices=PHASES)
+    parser.add_argument("--actor", choices=("user", "codex"), default="user")
+    parser.add_argument("--evidence", help="Factual checkpoint/evidence summary required for Codex handoffs")
+    parser.add_argument("--title", help="Appropriate product name assigned by Codex during Phase 4")
     parser.add_argument("--description", help="Required factual description when completing")
     parser.add_argument("--sale-url", action="append", default=[], help="Public store or purchase URL")
     parser.add_argument("--marketing-url", action="append", default=[], help="Public promotion URL")
@@ -218,7 +269,8 @@ def main(argv=None):
         else:
             result = set_phase(args.repo, args.project, args.phase,
                                description=args.description, sale_urls=args.sale_url,
-                               marketing_urls=args.marketing_url, other_urls=args.other_url)
+                               marketing_urls=args.marketing_url, other_urls=args.other_url,
+                               actor=args.actor, evidence=args.evidence, title=args.title)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 0
     except (OSError, ValueError) as error:

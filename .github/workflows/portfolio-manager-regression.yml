@@ -43,7 +43,8 @@ jobs:
       - name: Offline regression suites
         run: |
           python -m unittest discover -s business_portfolio/tests -v
-          python -m unittest portfolio_manager.tests.test_project_import portfolio_manager.tests.test_project_update portfolio_manager.tests.test_project_lifecycle portfolio_manager.tests.test_workspace_window portfolio_manager.tests.test_workspaces portfolio_manager.tests.test_coordinator -v
+          python -m unittest portfolio_manager.tests.test_project_management portfolio_manager.tests.test_project_import portfolio_manager.tests.test_project_update portfolio_manager.tests.test_project_lifecycle portfolio_manager.tests.test_workspace_window portfolio_manager.tests.test_workspaces portfolio_manager.tests.test_niche_selection_migration portfolio_manager.tests.test_phase1_research_policy portfolio_manager.tests.test_coordinator -v
+          python -m unittest portfolio_manager.tests.test_runner.WorkspaceTests.test_direct_niche_project_stages_without_exposing_work_directory -v
       - name: Commit regenerated portfolio browser and index directly to main
         if: github.ref == 'refs/heads/main'
         run: |

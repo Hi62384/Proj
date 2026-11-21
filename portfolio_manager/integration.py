@@ -4,6 +4,7 @@ import os
 import secrets
 import threading
 from .workspace import ChatWorkspaces, context_path
+from business_portfolio.tools.build_browser import project_record_path, project_niche_folder
 
 
 OPERATIONS = {
@@ -74,8 +75,8 @@ class ManagerHost:
                 'projects': [{key: row.get(key) for key in fields} for row in projects[:50]],
                 'truncated': len(projects) > 50,
             }
-        if path.is_file() and path.parent.name == 'projects' and path.is_relative_to(self.coordinator.niches):
-            state = self.coordinator.snapshot(path.parent.parent)
+        if path.is_file() and project_record_path(path) and path.is_relative_to(self.coordinator.niches):
+            state = self.coordinator.snapshot(project_niche_folder(path))
             record = next((row for row in state['projects'] if row['record_path'] == workspace['selection']), None)
             if record:
                 data['project'] = {k: record.get(k) for k in
@@ -92,6 +93,12 @@ class ManagerHost:
                 data['project']['current_task'] = (
                     {key: current.get(key) for key in milestone_fields} if current else None
                 )
+                from business_portfolio.tools.build_browser import parse_project
+                from .project_lifecycle import project_phase
+                meta, _ = parse_project(path.read_text(encoding='utf-8'), str(path))
+                data['project']['project_phase'] = project_phase(meta)
+                data['project']['workflow_version'] = meta.get('workflow_version', 1)
+                data['project']['work_folder'] = (path.parent / 'work').relative_to(self.repo).as_posix() if path.name == 'project.md' else None
         return data
 
     def start_workspace_worker(self, ident):
@@ -102,14 +109,14 @@ class ManagerHost:
             selection = context_path(self.repo, row['selection'])
             project_id = None
             label = selection.name
-            if (selection.is_file() and selection.parent.name == 'projects'
-                    and selection.suffix.lower() == '.md' and selection.is_relative_to(self.coordinator.niches)):
+            if (selection.is_file() and project_record_path(selection)
+                    and selection.is_relative_to(self.coordinator.niches)):
                 project = self.context_info(row).get('project')
                 if not project:
                     raise ValueError('The selected file is not a recognized portfolio project.')
                 project_id = project['id']
                 label = project['title'][:120]
-                folder = selection.parent.parent
+                folder = project_niche_folder(selection)
             elif selection.is_dir() and selection.is_relative_to(self.coordinator.niches):
                 folder = selection
             else:
@@ -135,8 +142,8 @@ class ManagerHost:
             if workspace['worker_id'] and self.coordinator.worker(workspace['worker_id'])['state'] == 'running':
                 raise ValueError('This workspace already has a running worker.')
             selection = context_path(self.repo, workspace['selection'])
-            if not (selection.is_file() and selection.parent.name == 'projects'
-                    and selection.suffix.lower() == '.md' and selection.is_relative_to(self.coordinator.niches)):
+            if not (selection.is_file() and project_record_path(selection)
+                    and selection.is_relative_to(self.coordinator.niches)):
                 raise ValueError('Select a portfolio project before starting development.')
             project = self.context_info(workspace).get('project')
             if not project:
@@ -146,7 +153,7 @@ class ManagerHost:
                 raise ValueError('Choose a source folder for the selected project.')
             relative = source.relative_to(self.repo).as_posix()
             DevelopmentScope.discover(self.repo, relative)
-            worker = self.coordinator.register(selection.parent.parent, kind='manual',
+            worker = self.coordinator.register(project_niche_folder(selection), kind='manual',
                                                label='Prepare development', project_id=project['id'])
             claim = None
             try:

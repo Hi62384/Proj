@@ -1,8 +1,8 @@
 # Project format and recursive architecture
 
-## Current five-category business view
+## Current editable business view
 
-`niches/` has five primary categories: Digital Products, Digital Content, Services, Ecommerce and Investing. Each contains the 25 required niche folders; nine narrower legacy niches are nested below the closest equivalent and retain their previous stable IDs. Every node has a `working` boolean, initially false for newly created nodes. Enabling a niche also enables its ancestors. Disable Working descendants before disabling a parent. The Working flag is informational focus only and does not represent project completion, authorization or worker activity. `digital-products/game-development-marketplaces` retains stable ID `N-gdm-20261115` and owns GDM-001/002/003. Books & eBooks also contains BOOK-001. Sibling `priority` values control display order. The opportunity library's 36 categories and 144 subcategories remain independent research.
+`niches/` initially has five primary categories: Digital Products, Digital Content, Services, Ecommerce and Investing. Together they contain the original 25 niche folders; nine narrower legacy niches are nested below the closest equivalent and retain their previous stable IDs. Every node has a `working` boolean, initially false for newly created nodes. Enabling a niche also enables its ancestors. Disable Working descendants before disabling a parent. The Working flag is informational focus only and does not represent project completion, authorization or worker activity. `digital-products/game-development-marketplaces` retains stable ID `N-gdm-20261115`; active projects are read from current records, not historical fixed counts. The owner can create nested niches or recoverably delete a selected subtree through Portfolio Manager. Sibling `priority` values control display order. The opportunity library's 36 categories and 144 subcategories remain independent research.
 
 The previous 182-node active tree, including the original GDM record bytes, is preserved in `archive/2026-11-15-taxonomy-view-v1/` with a 185-file checksum manifest and GDM ID/path crosswalk. The older 139-record archive at `archive/2026-11-15-legacy/` is unchanged. The builder validates both snapshots and exposes the 139 older records under `archived_records`; the prior taxonomy snapshot remains a rollback/evidence source, not another active project list. Product implementation specifications were appended to the moved GDM records; their IDs, planned/unvalidated status, commercial permissions and original planning history remain intact.
 
@@ -33,11 +33,11 @@ business_portfolio/
   niches/
     <niche>/NICHE.json
     <niche>/README.md
-    <niche>/projects/<stable-id>-<slug>/project.md
-    <niche>/projects/<stable-id>-<slug>/work/.gitkeep
+    <niche>/<stable-id>-<slug>/project.md
+    <niche>/<stable-id>-<slug>/work/.gitkeep
     <niche>/<child>/NICHE.json
-    <niche>/<child>/projects/<stable-id>-<slug>/project.md
-    <niche>/<child>/projects/<stable-id>-<slug>/work/.gitkeep
+    <niche>/<child>/<stable-id>-<slug>/project.md
+    <niche>/<child>/<stable-id>-<slug>/work/.gitkeep
     <niche>/<child>/<grandchild>/...
   .local/                       optional private operational references; ignored
 ```
@@ -57,6 +57,10 @@ Required fields:
 - `record_type`, `origin`, `priority`, `work_state`, `commercial_validation`, `evidence_basis`.
 - `source_ids`, `parent_project` (ID or null), `related_projects` (IDs), `next_action`, `last_reviewed` (date).
 - `execution_authorized` (boolean), `privacy`.
+
+For the six-phase workflow, new records also set `workflow_version: 2`, `project_phase: "working_phase_1"`, `draft: true`, `record_type: "empty_project"`, and `delivery_window_days: {"minimum": 2, "maximum": 21}`. Empty projects are valid planning records; no GO verdict, source or completed work is invented. They cannot advance until replaced with meaningful research and a descriptive title. A researched record uses `draft: false` and an appropriate record type such as `product_candidate`.
+
+Version-2 records may use an empty `source_ids` array: direct dated research URLs can be recorded in the Markdown. Nonempty source IDs must still exist in SOURCE_REGISTER.json; preserve original IDs when updating. Optional `research_verification` uses `phase_1`, `phase_2`, `phase_3` with values `unreviewed`, `approved`, `needs_revision` or `blocked`. This is research assessment, not execution authorization or proof of commercial success. `research_verdict` records the evidence-based recommendation; inherited GO_TO_PHASE_B wording is historical, not a current phase name. `platforms_proposed` lists planning targets; `platforms_supported` requires observed product evidence.
 
 The supplied records also include historical IDs, owner, hypothetical quote/hour ranges, verified-pilot count and unknown actual revenue/profit. Null means unknown/not established, never zero. `verified_paid_pilots: 0` for candidates means this research verified none; it does not claim to inspect all user accounts.
 
@@ -90,7 +94,7 @@ Human participation is required only where the task itself depends on consent, p
 
 ## Derived views and integrity
 
-The builder recursively discovers `NICHE.json`, folder-based `projects/*/project.md` and legacy standalone `projects/*.md`, validates identifiers, paths, parents, sources, states and evidence-reference requirements, then generates the index and browser. It makes no network calls and cannot refresh market evidence. It ignores private folders, rejects symlinks, embeds escaped JSON and renders content through DOM text nodes; links allow only safe web/relative destinations. A content-security policy blocks cross-origin connections and forms; the live view polls only its own loopback service.
+The builder recursively discovers `NICHE.json` and direct niche-owned `<stable-id>-<slug>/project.md` records, while recognizing old `projects/*/project.md` and standalone `projects/*.md` layouts during migration, validates identifiers, paths, parents, sources, states and evidence-reference requirements, then generates the index and browser. It makes no network calls and cannot refresh market evidence. It ignores private folders, rejects symlinks, embeds escaped JSON and renders content through DOM text nodes; links allow only safe web/relative destinations. A content-security policy blocks cross-origin connections and forms; the live view polls only its own loopback service.
 
 Rebuild after record changes. `--check` fails on stale/missing generated views and invalid records without writing source files. Generated views include public record bodies; marking a public file “private” is not a substitute for keeping actual sensitive data outside the indexed tree.
 
@@ -126,8 +130,38 @@ The local service rejects cross-project paths, traversal, symlinks/reparse point
 
 ## Project folders, phases and retained completions
 
-New canonical projects use projects/<stable-id>-<slug>/project.md and work/. All project-specific source, artwork, binaries, builds, release files, tests, working drafts and marketing materials live under this work/ folder. The manager displays the project.md leaf directly in the Projects tree (without its parent project folder). The drag/drop importer converts validated standalone Markdown records into nested directories automatically, including a work/.gitkeep placeholder. The builder requires the work/ directory for folder-based records and rejects duplicate project IDs across old and new layouts.
+Current projects use `niches/<niche>/<stable-id>-<slug>/project.md` plus a sibling `work/`. There is no active `projects/` intermediary folder. The manager shows the record directly beneath its niche. Every niche may contain child niches and projects; the builder identifies their metadata and rejects duplicate IDs and unsafe linked paths. All project-owned implementation, content, tests, assets, builds, releases and marketing files belong in `work/`, which is required for folder-based canonical records.
 
-project_phase is separate from work_state and commercial_validation. Its values are working_phase_2, working_phase_3, working_phase_4, and complete. Legacy records lacking this field are interpreted as working_phase_2. Phase 2 builds, tests and prepares release packages; Phase 3a/3b uses ChatGPT to research and validate distribution/marketing options with append-only updates to the project record. Importing an approved Phase 3b update advances to working_phase_4, where Codex performs the actual release and marketing. Completion requires independently verified Phase 4 live release/access and marketing placements; these transitions do not imply sales.
+`workflow_version: 2` defines the six phases independently of `work_state` and `commercial_validation`:
 
-On verified Phase 4 completion, business_portfolio/completed_projects/<PROJECT-ID>.json is created with a factual description, verified public sale/distribution and marketing links, and other relevant links. This is independent of the project file, survives deletion of the source directory and appears in the Completed Projects view. The Manager cannot delete these receipts; explicit filesystem edits/deletes are required. Project phase complete does not claim any sales, profit or commercial validation. Avoid customer data or private receipts in the public completed-project JSON.
+| Value | Meaning | Forward handoff |
+| --- | --- | --- |
+| `working_phase_1` | Product research and detailed build specification | User to Phase 2 |
+| `working_phase_2` | Release platforms and direct/adjacent compatible versions | User to Phase 3 |
+| `working_phase_3` | Marketing research and execution strategy | User to Phase 4 |
+| `working_phase_4` | Build, test and package accepted versions | Codex to Phase 5 |
+| `working_phase_5` | Actually release and verify accepted destinations | Codex to Phase 6 |
+| `working_phase_6` | Actually execute and verify the finite initial marketing plan | Codex to Complete |
+| `complete` | Verified delivery/release/initial marketing receipt | Reopen explicitly for corrections |
+
+Forward transitions are sequential; pasting never advances. Manual research handoffs require a meaningful non-placeholder project. Execution handoffs require `actor="codex"` and a nonempty factual evidence summary, with an audit entry in `phase_history`. The actor label is not authentication, and the local checker cannot independently certify an external observation. Codex must actually verify the required work. A Phase 4 handoff may supply a meaningful display `title` without changing the ID or path. Reopening an earlier phase preserves work and revokes a matching completion receipt when applicable.
+
+Migration explicitly remaps the old workflow: Phase 2 build → new Phase 4; Phase 3 launch research → new Phase 2; Phase 4 combined launch/marketing → new Phase 5; Complete stays Complete. Missing legacy phase fields were historically interpreted as old Phase 2. Existing phase history and actual work remain; migration notes identify unresolved new research requirements instead of fabricating approvals. Do not reinterpret historical logs as newly completed research.
+
+### Pasted research updates
+
+Phases 1–3 accept the whole record as copyable text with strict JSON frontmatter, optionally wrapped in one Markdown fence. The body may be revised/reorganized; prompts require preservation of prior facts, decisions, work, important data and URLs. Identity, current phase, workflow, work state, financial evidence, permissions and existing history fields remain protected. Editable planning fields include title, draft, record_type, priority, evidence_basis, source_ids, research_verification, research_verdict, platforms_proposed, next_action and last_reviewed. The 2–21-day delivery window remains shared across all phases. Unknown metadata is not silently introduced by a paste.
+
+`project_update_base_sha256` is a temporary transport field copied from the prompt's BASE_SHA256. It fingerprints LF-normalized source text, is checked against current content, and is removed before storage. The UI also detects concurrent changes while its dialog is open. The actual original bytes are backed up under ignored `.local/project_backups/<ID>/`. Invalid metadata/content or rebuild failure leaves the prior record/views intact. Pasting cannot replace work artifacts, auto-advance, create permissions or fabricate paid validation. A no-change research verification may simply say good to go, without producing a record to paste.
+
+### Progress, important data and URLs
+
+Each execution-phase checkpoint records the exact plain-text line `Phase N completion estimate: X% (best guess)` for N=4,5,6. Include the basis, completed and remaining checklist, evidence, blockers, decisions, external-effect state and one next action. This is an estimate, not a measured fact or evidence of completion. The total work is scoped for 2 days to 3 weeks across all six phases; required external delays remain visible.
+
+Maintain an Important data and URLs ledger incrementally for useful artifact paths, versions/hashes, IDs, configuration/results/commands/costs and source/docs/build/preview/live/upload/purchase/download/edit/admin/marketing/support/analytics links. Record purpose, status and last checked date, preserve retired URLs, and distinguish planned destinations from observed live pages. Do not put passwords, tokens, signed session URLs or private customer/payment data in public records.
+
+### Durable completion receipts and recoverable niche deletion
+
+On verified Phase 6 completion, `completed_projects/<PROJECT-ID>.json` records a factual description, actual verified public sale/download/delivery URLs, verified public marketing links and other relevant URLs. Completion requires the factual summary plus at least one sale/access link and at least one marketing link. Codex supplies them after checking; the owner is not asked to enter links or click Complete. A receipt is independent of the original project folder and survives its removal. Completion does not assert sales, profit or commercial validation.
+
+A confirmed niche/subniche deletion moves the selected subtree to `.local/deleted_niches/` and rebuilds the active view. Historical archives and completion receipts remain independent. References from surviving active projects must be resolved before deletion; restoration requires reviewing original paths and ID collisions. New niches start Not Working. The original taxonomy counts are historical starting structure, not a restriction against owner-created or deleted niches.

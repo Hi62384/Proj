@@ -9,7 +9,7 @@
   "origin": "current_package",
   "priority": "P1",
   "work_state": "planned",
-  "project_phase": "working_phase_2",
+  "project_phase": "working_phase_4",
   "commercial_validation": "unvalidated",
   "evidence_basis": "owner_supplied_book_assets_verified_locally_and_current_official_platform_rules_without_sales_or_store_approval",
   "source_ids": [
@@ -75,6 +75,22 @@
     "budget_fit": "CAD0 local preparation fits; wide-print ISBN, proofs and paid aggregators are blocked pending cost and eligibility checks",
     "optional_all_in_envelope": {},
     "optional_total_ceiling": 0
+  },
+  "workflow_version": 2,
+  "workflow_migration": {
+    "previous_project_phase": "working_phase_2",
+    "previous_record_path": "business_portfolio/niches/digital-products/books-and-ebooks/projects/book-001-free-candy-chad-bradson-original-novel-and-wide-publishing/project.md",
+    "migrated_at": "2026-11-21T20:17:03+00:00",
+    "research_approval_inferred": false
+  },
+  "research_verification": {
+    "phase_1": "unreviewed",
+    "phase_2": "unreviewed",
+    "phase_3": "unreviewed"
+  },
+  "delivery_window_days": {
+    "minimum": 2,
+    "maximum": 21
   }
 }
 ---
@@ -763,3 +779,78 @@ The owner explicitly chose to proceed on their own review and waived this projec
 ### KDP Kindle eBook draft — 2026-11-19
 
 In the existing KDP Kindle eBook draft, verified the uploaded `FREE_CANDY_REVISED_PREFLIGHT.epub` and cover; KDP reports both uploaded successfully, the EPUB processing/check completed, and its quality panel shows zero spelling or image issues. The AI disclosure was set to entire text with minimal/no editing, one or a few generated images with minimal/no editing, and no translations; tool fields were set to ChatGPT based on the owner’s stated workflow. Previewer was opened; no manual page-by-page visual review is claimed. Saved a draft price of US$4.99 with the 70% royalty option; KDP Select remains off in accordance with the wide-release plan. No KDP eBook publication was submitted and no purchase or spend occurred. KDP’s pricing page requires selecting territories where the publisher has rights and its Publish button certifies necessary publishing rights. Owner’s title-specific rights remain unresolved; next action is for the owner to resolve that issue and personally complete the rights/territory declaration truthfully, then inspect the final preview and decide whether to authorize publication.
+
+## Current six-phase delivery plan
+
+This project now uses the six-phase workflow. Its prior `working_phase_2` was
+mapped to `working_phase_4` to preserve its actual stage of work.
+Earlier phase numbers in the dated record above describe the former workflow;
+they are history, not instructions to skip current research or repeat completed work.
+The project remains **FREE CANDY — Chad Bradson — Original Novel and Wide Publishing** with the same ID, artifacts, evidence and permissions.
+Migration is not approval of any unverified research, publication or marketing. Historical paths inside preserved work evidence may still name the old `projects/` container; resolve artifacts from the current project folder and repair only active path references when resuming, without changing historical evidence.
+
+Target the whole product/release/marketing cycle to **2 days–3 weeks**. Reuse the
+existing work. Before expanding scope, estimate the remaining time across all
+phases; prioritize compatible ports and channels that fit this total window.
+Record researched exclusions, blockers and any necessary owner scope decision.
+Do not invent progress, drop a viable selected platform silently, or leave an
+unbounded maintenance/marketing task as a completion requirement.
+
+### Phase 1 — Product research and specification
+
+- [ ] Reconcile the existing buyer, problem, differentiation, price, costs, rights,
+  detailed product specification and acceptance tests with current evidence.
+- [ ] Recheck material risks. If the idea is sound and only cosmetic changes remain,
+  record “Good to go”; no forced rewrite or new idea is required.
+
+### Phase 2 — Release platform and compatibility research
+
+- [ ] Research all appropriate direct and adjacent release platforms; document
+  eligibility, policies, costs, required formats, submission steps and sources.
+- [ ] Update the Phase 1 specification with a compatible version and acceptance
+  tests for every selected feasible platform; keep excluded/deferred options with
+  reasons and respect the total 2–21 day delivery window.
+- [ ] Independently recheck the release plan before relying on it for execution.
+
+### Phase 3 — Marketing research
+
+- [ ] Research suitable advertising/discovery platforms and non-platform tactics,
+  audiences, positioning, search, demos, content, communities, timing and measurement.
+- [ ] Save the concrete bounded marketing plan, dependencies, rules, sources and
+  an independent recheck; update earlier requirements only where necessary.
+
+### Phase 4 — Build and test
+
+- [ ] Continue from the completed work and actual remaining checklist above;
+  reconcile missing research first, then build, port, test and package every
+  selected compatible version. Assign an appropriate product title without
+  changing the stable ID or discarding the existing work directory.
+- [ ] Record acceptance evidence and advance to Phase 5 with the lifecycle CLI
+  using `--actor codex --evidence`, then stop at that handoff for the next prompt.
+
+### Phase 5 — Release
+
+- [ ] Execute the researched release plan on each selected feasible platform
+  within the current permissions; record actual live/submission/download URLs,
+  access, versions and verification. Keep outstanding approvals explicitly blocked.
+- [ ] When release work is verified, advance to Phase 6 using
+  `--actor codex --evidence`; wait for the Phase 6 prompt before marketing execution.
+
+### Phase 6 — Marketing and completion
+
+- [ ] Execute the bounded researched marketing plan and verify the actual
+  placements and relevant links. Preserve costs, results and evidence limits.
+- [ ] Mark Complete only after verified release and marketing evidence, with a
+  factual description and live release/access and marketing URLs in the receipt.
+  Completion does not establish sales or profit.
+
+### Checkpoints and important data
+
+At every execution checkpoint write and report `Phase N completion estimate: X% (best guess)`
+for N=4, 5 or 6, explaining completed work, remaining work, blockers,
+tests and the next action. Preserve all important non-secret facts, decisions,
+identifiers, artifact locations and URLs in this project file as work happens.
+Maintain an **Important URLs** ledger for source/edit/admin/build/upload/live/
+purchase/download/demo/marketing/analytics/support locations, with purpose,
+version, access/status and verification date. Keep replaced links as history.
+Never put passwords, access tokens or private customer/payment information here.

@@ -263,6 +263,10 @@ class WorkspaceWindow(QMainWindow):
         self._preview_readme = None
         self._preview_future = None
         self._pool = ThreadPoolExecutor(max_workers=2, thread_name_prefix='workspace-files')
+        # Browser/index generation can take seconds on Windows. Keep writes off
+        # the Qt event loop and separate from navigation/preview workers.
+        self._creation_pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix='workspace-create')
+        self._project_creation = None
         self._project_entries = []
         self._history_entries = []
         self._completed_entries = []
@@ -486,10 +490,6 @@ class WorkspaceWindow(QMainWindow):
         self.phase_controls.hide()
         self._phase_project = None
         details.addWidget(self.phase_controls)
-        self.phase_help = QLabel()
-        self.phase_help.setWordWrap(True)
-        self.phase_help.hide()
-        details.addWidget(self.phase_help)
         details.addWidget(self.project_tabs)
         details.addWidget(self.completed_detail)
         details.addWidget(self.preview)
@@ -649,7 +649,6 @@ class WorkspaceWindow(QMainWindow):
         self._refresh_prompt_menu()
         if self._tree_mode != 'projects':
             self.phase_controls.hide()
-            self.phase_help.hide()
         if self._tree_mode == 'completed' and not any(not entry[1] for entry in self._completed_entries):
             self.preview.setPlainText('No completed projects yet. Verified Phase 6 completions will appear here.')
             self.preview.show()
@@ -834,8 +833,35 @@ class WorkspaceWindow(QMainWindow):
         self.apply_workspace(update)
         return True
 
+    def _finish_project_creation(self):
+        """Collect completed project creation on the GUI thread only."""
+        pending = self._project_creation
+        if pending is None or not pending[1].done():
+            return
+        original_selection, future = pending
+        self._project_creation = None
+        self.new_project.setEnabled(True)
+        try:
+            result = future.result()
+        except (OSError, ValueError, RuntimeError) as error:
+            self.notice.setText('Could not create project: ' + str(error)[:400])
+            self.notice.show()
+            return
+        # User navigation during the build must be respected, not hijacked.
+        if (self.workspace_state and
+                self.workspace_state.get('selection') == original_selection and
+                self._tree_mode == 'projects'):
+            self._refresh_after_edit(result['path'])
+        else:
+            self._entry_future = self._pool.submit(self._load_navigation_entries, self.repo)
+            self._entries_ready = False
+        self.notice.setText('Empty project created in Phase 1. '
+                            'Select it to copy a research prompt.')
+        self.notice.show()
+
     def sync(self):
         try:
+            self._finish_project_creation()
             if self._entries_ready and self._tree_mode in {'projects', 'niches', 'completed'}:
                 if self._signature_future is not None and self._signature_future.done():
                     future, self._signature_future = self._signature_future, None
@@ -1170,16 +1196,21 @@ class WorkspaceWindow(QMainWindow):
             self._preview(self.workspace_state['selection'])
 
     def _new_project(self):
+        """Schedule the expensive index rebuild without freezing the GUI."""
+        if self._project_creation is not None:
+            return  # Ignore repeated clicks while the first creation is running.
         selection = self.workspace_state.get('selection') or ''
         if not self._selected_niche(selection):
             return
+        self.new_project.setEnabled(False)
         try:
             from .project_management import create_project
-            outcome = create_project(self.repo, selection)
-            self._refresh_after_edit(outcome['path'])
-            self.notice.setText('Empty project created in Phase 1. Copy a research prompt to begin.')
+            future = self._creation_pool.submit(create_project, self.repo, selection)
+            self._project_creation = (selection, future)
+            self.notice.setText('Creating project… Other controls remain usable.')
         except (OSError, ValueError, RuntimeError) as error:
-            self.notice.setText('Could not create project: ' + str(error)[:400])
+            self.new_project.setEnabled(True)
+            self.notice.setText('Could not start project creation: ' + str(error)[:400])
         self.notice.show()
 
     def _new_niche(self):
@@ -1324,7 +1355,6 @@ class WorkspaceWindow(QMainWindow):
         self._refresh_prompt_menu(selection)
         self._phase_project = None
         self.phase_controls.hide()
-        self.phase_help.hide()
         self.image.clear()
         self.image_scroll.hide()
         self.project_tabs.hide()
@@ -1457,15 +1487,6 @@ class WorkspaceWindow(QMainWindow):
             self.phase_selector.setEnabled(True)
             self._phase_choice_changed()
             self.phase_controls.show()
-            self.phase_help.setText(
-                'Research → Release platforms → Marketing plan → Build → Release → Marketing. '
-                'Target total: 2 days to 3 weeks. ' +
-                ('Paste and recheck the research, then advance when it is ready.' if phase_number <= 3 else
-                 'Codex normally advances after finishing. If blocked, you can manually advance '
-                  'Phase 4 → 5 or Phase 5 → 6. The override is recorded as NOT VERIFIED; '
-                  'reconcile missing work before release or marketing.'
-                 if phase_number <= 6 else 'Completion is backed by the saved delivery and marketing evidence.'))
-            self.phase_help.show()
         self.project_tabs.setCurrentIndex(0)
         self.project_tabs.show()
         self.preview.hide()
@@ -1556,5 +1577,6 @@ class WorkspaceWindow(QMainWindow):
         self._drop_targets = ()
         self.prompt_menu.clear()
         self._pool.shutdown(wait=False, cancel_futures=True)
+        self._creation_pool.shutdown(wait=False, cancel_futures=True)
         self.on_close(self.workspace_id)
         event.accept()

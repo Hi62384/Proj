@@ -222,6 +222,49 @@ class WorkspaceWindowTests(unittest.TestCase):
         window._paste_project()
         self.assertEqual(failures, [])
 
+
+    def test_new_project_remains_responsive_while_browser_rebuild_is_slow(self):
+        from time import perf_counter
+        with TemporaryDirectory() as temp:
+            root = Path(temp); repo = root / 'repo'
+            _record(repo, 'DEMO-060')
+            self._copy_templates(repo)
+            window = self._open_window(repo, root / 'state')
+            self.assertTrue(window.select('business_portfolio/niches/demo'))
+            from portfolio_manager.project_management import build_browser
+            original_build = build_browser.build
+            started = threading.Event()
+            release = threading.Event()
+            def slow_build(portfolio):
+                started.set()
+                if not release.wait(8):
+                    raise ValueError('simulated stalled rebuild')
+                return original_build(portfolio)
+            try:
+                with patch('portfolio_manager.project_management.build_browser.build',
+                           side_effect=slow_build):
+                    start = perf_counter()
+                    window.new_project.click()
+                    self.assertLess(perf_counter() - start, 0.6)
+                    self.assertFalse(window.new_project.isEnabled())
+                    self.assertTrue(started.wait(3))
+                    # Can still process events, select another folder, and use the UI.
+                    start = perf_counter()
+                    self.app.processEvents()
+                    self.assertTrue(window.select('business_portfolio'))
+                    self.assertLess(perf_counter() - start, 1.0)
+                    release.set()
+                    future = window._project_creation[1]
+                    result = future.result(timeout=15)
+                    window.sync()
+                    self.assertTrue(window.new_project.isEnabled())
+                    # Finishing an async create must not override newer selection.
+                    self.assertEqual(window.workspace_state['selection'], 'business_portfolio')
+                    self.assertTrue((repo / result['path']).is_file())
+            finally:
+                release.set()
+            window._test_close()
+
     def test_empty_project_creation_research_text_and_manual_handoffs(self):
         with TemporaryDirectory() as temp:
             root = Path(temp); repo = root / 'repo'
@@ -234,6 +277,9 @@ class WorkspaceWindowTests(unittest.TestCase):
             self.assertTrue(window.research_tools.isHidden())
             self.assertEqual(window.prompt_menu.actions(), [])
             window.new_project.click()
+            self.assertFalse(window.new_project.isEnabled())
+            window._project_creation[1].result(timeout=15)
+            window.sync()
             selection = window.workspace_state['selection']
             self.assertNotIn('/projects/', selection)
             from business_portfolio.tools.build_browser import parse_project
@@ -410,6 +456,8 @@ class WorkspaceWindowTests(unittest.TestCase):
             self.assertEqual(child, parent + '/work')
             self.assertTrue((repo / child / 'NICHE.json').is_file())
             window.new_project.click()
+            window._project_creation[1].result(timeout=15)
+            window.sync()
             project = repo / window.workspace_state['selection']
             self.assertTrue(project.is_file())
             window._entry_future.result(timeout=10); window.sync()

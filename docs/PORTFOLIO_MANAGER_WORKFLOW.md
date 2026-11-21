@@ -2,7 +2,7 @@
 
 ## Create and organize projects
 
-Select a niche or subniche in **Projects**. The niche offers **New project**, **New niche folder**, and **Delete niche**. It does not display a prompt-copy button. **New project** creates and selects an **Empty project** in Phase 1, with a unique stable ID and a `work/` directory. **New niche folder** asks for a name and creates a subniche under the selected niche. New niche focus defaults to Not Working.
+Select a niche or subniche in **Projects**. The niche offers **New project**, **New niche folder**, and **Delete niche**. It does not display a prompt-copy button. **New project** creates and selects an **Empty project** in Phase 1, with a unique stable ID and a `work/` directory. Project creation and portfolio browser regeneration run off the GUI thread, so the button briefly disables while the rest of the window remains responsive. If the user navigates away, creation does not steal their selection. **New niche folder** asks for a name and creates a subniche under the selected niche. New niche focus defaults to Not Working.
 
 Project entries appear directly under their niche; there is no intermediate `projects` node. The canonical disk layout is:
 

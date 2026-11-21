@@ -6,7 +6,7 @@ import unittest
 from unittest.mock import patch
 
 from business_portfolio.tools import build_browser
-from portfolio_manager.project_management import create_niche, create_project, delete_niche
+from portfolio_manager.project_management import create_niche, create_project, delete_niche, delete_project
 from portfolio_manager.tests.test_runner import _record
 
 
@@ -42,6 +42,47 @@ class ProjectManagementTests(unittest.TestCase):
         self.assertIn('## Phase 6', body)
         ids = {row['id'] for row in build_browser.load_portfolio(self.portfolio)['records']}
         self.assertEqual(ids, {'TEST-001', first['id'], second['id']})
+
+    def test_delete_project_preserves_work_and_reserves_its_id(self):
+        project = create_project(self.repo, self.selection)
+        record = self.repo / project['path']
+        original = record.read_bytes()
+        (record.parent / 'work/source.txt').write_bytes(b'preserved work')
+        sibling = create_project(self.repo, self.selection)
+        outcome = delete_project(self.repo, project['path'])
+        self.assertFalse(record.parent.exists())
+        backup = self.repo / outcome['trash_path']
+        self.assertEqual((backup / 'project.md').read_bytes(), original)
+        self.assertEqual((backup / 'work/source.txt').read_bytes(), b'preserved work')
+        self.assertTrue((self.repo / sibling['path']).is_file())
+        self.assertTrue(self.existing.is_file())
+        self.assertNotIn(project['id'], {r['id'] for r in build_browser.load_portfolio(self.portfolio)['records']})
+        successor = create_project(self.repo, self.selection)
+        self.assertNotEqual(successor['id'], project['id'])
+
+    def test_delete_project_checks_references_and_rolls_back_on_failure(self):
+        victim = create_project(self.repo, self.selection)
+        record = self.repo / victim['path']
+        original = record.read_bytes()
+        meta, body = build_browser.parse_project(self.existing.read_text())
+        meta['related_projects'] = [victim['id']]
+        self.existing.write_text('---\n' + json.dumps(meta) + '\n---\n' + body)
+        with self.assertRaisesRegex(ValueError, 'still reference'):
+            delete_project(self.repo, victim['path'])
+        meta['related_projects'] = []
+        self.existing.write_text('---\n' + json.dumps(meta) + '\n---\n' + body)
+        before_index = (self.portfolio / 'PROJECT_INDEX.json').read_bytes()
+        before_browser = (self.portfolio / 'PROJECT_BROWSER.html').read_bytes()
+        build = build_browser.build
+        def fail_after_build(p):
+            build(p)
+            raise ValueError('simulated project deletion failure')
+        with patch('portfolio_manager.project_management.build_browser.build', side_effect=fail_after_build):
+            with self.assertRaisesRegex(ValueError, 'simulated project deletion'):
+                delete_project(self.repo, victim['path'])
+        self.assertEqual(record.read_bytes(), original)
+        self.assertEqual((self.portfolio / 'PROJECT_INDEX.json').read_bytes(), before_index)
+        self.assertEqual((self.portfolio / 'PROJECT_BROWSER.html').read_bytes(), before_browser)
 
     def test_create_subniche_and_recoverable_delete_preserve_record_and_work(self):
         child = create_niche(self.repo, self.selection, '3D Tools')

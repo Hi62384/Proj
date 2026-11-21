@@ -64,11 +64,9 @@ class ProjectLifecycleTests(unittest.TestCase):
             set_phase(self.repo, self.selection, "working_phase_2")
         self.assertEqual(self.path.read_bytes(), original)
 
-    def test_execution_requires_codex_and_evidence(self):
+    def test_execution_codex_requires_evidence_and_cannot_skip(self):
         self.advance_to(4)
         original = self.path.read_bytes()
-        with self.assertRaisesRegex(ValueError, "Codex advances"):
-            set_phase(self.repo, self.selection, "working_phase_5")
         with self.assertRaisesRegex(ValueError, "completion evidence"):
             set_phase(self.repo, self.selection, "working_phase_5", actor="codex")
         with self.assertRaisesRegex(ValueError, "Invalid phase transition"):
@@ -76,6 +74,26 @@ class ProjectLifecycleTests(unittest.TestCase):
         self.assertEqual(self.path.read_bytes(), original)
         self.advance_to(6)
         self.assertEqual(project_phase(parse_project(self.path.read_text())[0]), "working_phase_6")
+
+    def test_manual_execution_handoff_is_unverified_and_does_not_complete(self):
+        self.advance_to(4)
+        set_phase(self.repo, self.selection, "working_phase_5", actor="user")
+        meta, body = parse_project(self.path.read_text())
+        self.assertEqual(meta['phase_history'][-1]['actor'], "user")
+        self.assertIn("MANUAL OVERRIDE", meta['phase_history'][-1]['evidence'])
+        self.assertIn("NOT VERIFIED", meta['phase_history'][-1]['evidence'])
+        self.assertEqual(meta['commercial_validation'], "unvalidated")
+        set_phase(self.repo, self.selection, "working_phase_6", actor="user")
+        meta, after = parse_project(self.path.read_text())
+        self.assertEqual(meta['project_phase'], "working_phase_6")
+        self.assertEqual(len([r for r in meta['phase_history'] if 'MANUAL OVERRIDE' in r['evidence']]), 2)
+        self.assertEqual(body, after)
+        self.assertFalse(read_completions(self.repo))
+        with self.assertRaisesRegex(ValueError, "Codex marks Complete"):
+            set_phase(self.repo, self.selection, "complete", actor="user",
+                      description="Unverified", sale_urls=["https://example.org/store"],
+                      marketing_urls=["https://example.org/post"])
+        self.assertFalse(read_completions(self.repo))
 
     def test_codex_renames_title_without_moving_artifacts_or_changing_id(self):
         self.advance_to(4)

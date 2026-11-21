@@ -152,10 +152,17 @@ def set_phase(repo: Path, selection: str | Path, phase: str, *,
                     str(meta.get("title", "")).strip().lower() == "empty project"):
                 raise ValueError("Paste a researched project before advancing an empty project.")
         if advancing and old in {PHASE_4, PHASE_5, PHASE_6}:
-            if actor != "codex":
-                raise ValueError("Codex advances execution phases after verifying the work.")
-            if not isinstance(evidence, str) or not evidence.strip():
-                raise ValueError("Execution handoff requires factual completion evidence in --evidence.")
+            if actor == "codex":
+                if not isinstance(evidence, str) or not evidence.strip():
+                    raise ValueError("Execution handoff requires factual completion evidence in --evidence.")
+            elif old in {PHASE_4, PHASE_5} and new_number == old_number + 1:
+                # Owner recovery is not evidence the preceding phase is finished.
+                evidence = ("MANUAL OVERRIDE — previous phase NOT VERIFIED. "
+                            "Preserve outstanding tasks, artifacts, URLs and blockers; "
+                            "reconcile prerequisites before new release/marketing actions."
+                            + (" Owner note: " + evidence.strip() if isinstance(evidence, str) and evidence.strip() else ""))
+            else:
+                raise ValueError("Only Codex can verify Phase 6 completion.")
         if title is not None:
             if actor != "codex" or old != PHASE_4:
                 raise ValueError("Codex may assign the finished product name during Phase 4.")

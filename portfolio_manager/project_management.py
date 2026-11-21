@@ -125,6 +125,13 @@ def _reserved_project_ids(portfolio: Path, data: dict) -> set[str]:
             if build_browser.project_record_path(path):
                 prior, _ = build_browser.parse_project(path.read_text(encoding='utf-8'), str(path))
                 used.add(prior['id'])
+    if private.exists() or private.is_symlink():
+        deleted_projects = _local_folder(portfolio, 'deleted_projects')
+        for prior_path in build_browser.walk_files(deleted_projects):
+            if prior_path.name == 'project.md' and build_browser.project_record_path(prior_path):
+                prior_meta, _ = build_browser.parse_project(
+                    prior_path.read_text(encoding='utf-8'), str(prior_path))
+                used.add(prior_meta['id'])
     completed = portfolio / 'completed_projects'
     if completed.exists() or completed.is_symlink():
         if not completed.is_dir() or build_browser.linked_input(completed):
@@ -291,3 +298,47 @@ receipts and historical archives remain independent and untouched.
             raise
         return {'id': meta['id'], 'path': original, 'trash_path': trash.relative_to(repo).as_posix(),
                 'project_ids': sorted(removed)}
+
+def delete_project(repo, selection) -> dict:
+    """Move only a selected project directory, with work/, into local recovery."""
+    from .project_lifecycle import record_path
+    repo = Path(repo).resolve(strict=True)
+    portfolio = repo / 'business_portfolio'
+    with _single_writer(portfolio):
+        project = record_path(repo, selection)
+        if project.name != 'project.md':
+            raise ValueError('Select a current project.md inside its own project folder.')
+        folder = project.parent
+        niche, niche_meta = _niche(repo, folder.parent.relative_to(repo).as_posix())
+        if folder == niche or folder.is_symlink() or build_browser.linked_input(folder):
+            raise ValueError('The project folder is unsafe.')
+        if (folder / '.project-phase.lock').exists():
+            raise ValueError('Another worker is editing this project; stop or finish it before deletion.')
+        meta, _ = build_browser.parse_project(project.read_text(encoding='utf-8'), str(project))
+        if meta['niche_id'] != niche_meta['id'] or meta['niche_path'] != niche_meta['path']:
+            raise ValueError('Project does not belong to the selected niche.')
+        records = build_browser.load_portfolio(portfolio)['records']
+        if not any(row['id'] == meta['id'] for row in records):
+            raise ValueError('Project is not in the active portfolio.')
+        referring = [row['id'] for row in records
+                     if row['id'] != meta['id'] and
+                     (row.get('parent_project') == meta['id'] or
+                      meta['id'] in row.get('related_projects', []))]
+        if referring:
+            raise ValueError('Other projects still reference this project: ' +
+                             ', '.join(sorted(referring)) + '. Resolve those links before deleting.')
+        list(build_browser.walk_files(folder))
+        trash_root = _local_folder(portfolio, 'deleted_projects')
+        stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
+        trash = trash_root / (stamp + '-' + uuid.uuid4().hex[:8] + '-' + folder.name)
+        views = _view_snapshot(portfolio)
+        original = project.relative_to(repo).as_posix()
+        os.replace(folder, trash)
+        try:
+            build_browser.build(portfolio)
+        except Exception:
+            os.replace(trash, folder)
+            _restore_views(views)
+            raise
+        return {'id': meta['id'], 'title': meta['title'],
+                'path': original, 'trash_path': trash.relative_to(repo).as_posix()}

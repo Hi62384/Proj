@@ -62,6 +62,15 @@ class Dashboard(QMainWindow):
     def show_computer_access(self):
         self.show_dashboard()
 
+    def resume_after_stop(self):
+        """Reuse Bridge Settings resume behavior from the Portfolio Manager header."""
+        self.store.setting('bridge_stopped', False)
+        self.permissions.resume(self.runtime.owner)
+        if self.manager is not None:
+            self.manager.coordinator.resume(clear_emergency=True)
+        self.runtime.latest = 'Ready'
+        self.refresh()
+
     def show_workspace(self, workspace):
         from portfolio_manager.workspace_window import WorkspaceWindow
 
@@ -70,7 +79,8 @@ class Dashboard(QMainWindow):
             window = WorkspaceWindow(self.manager, workspace, on_emergency=self.runtime.stop,
                                      on_stop_all=self.cancel_bridge_work,
                                      on_access=self.show_computer_access,
-                                     on_close=self.workspace_windows.pop)
+                                     on_close=self.workspace_windows.pop,
+                                     on_resume=getattr(self, 'resume_after_stop', None))
             window.setStyleSheet(self.styleSheet())
             self.workspace_windows[workspace['id']] = window
         else:
@@ -188,8 +198,7 @@ class Dashboard(QMainWindow):
             info=json.loads((self.store.directory/'chrome-host/settings.json').read_text());chrome='C:/Program Files/Google/Chrome/Application/chrome.exe'
             subprocess.Popen([chrome,'chrome-extension://'+info['extension_id']+'/popup.html'])
         layout.addWidget(button('Chrome authorization…',browser))
-        def resume():self.store.setting('bridge_stopped',False);self.permissions.resume(self.runtime.owner);self.runtime.latest='Ready';self.refresh()
-        layout.addWidget(button('Resume after Stop',resume));layout.addWidget(button('Preserved history and backups',lambda:self.open_folder(self.store.directory)))
+        layout.addWidget(button('Resume after Stop',self.resume_after_stop));layout.addWidget(button('Preserved history and backups',lambda:self.open_folder(self.store.directory)))
         layout.addWidget(button('Read archived conversations',self.history))
         layout.addWidget(button('Close',dialog.accept));dialog.exec()
 

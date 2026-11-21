@@ -683,7 +683,9 @@ class WorkspaceWindow(QMainWindow):
                     location = self.tree.viewport().mapFrom(self.tree, location)
                 item = self.tree.itemAt(location)
                 hovered = item.data(0, ROLE) if item is not None else None
-                if hovered == self.workspace_state['selection'] and project_record_leaf(hovered):
+                if hovered and project_record_leaf(hovered):
+                    if hovered != self.workspace_state['selection']:
+                        raise ValueError('Select that exact project before replacing its file.')
                     destination = hovered
                 else:
                     destination = self._drop_niche_from_item(item)
@@ -1290,8 +1292,8 @@ class WorkspaceWindow(QMainWindow):
         remaining = re.findall(r'^\s*- \[ \] (.+)$', body, re.M)
         stage = meta.get('project_phase', 'working_phase_2')
         label = '2' if stage == 'working_phase_2' else ('4' if stage == 'working_phase_4' else '')
-        guesses = re.findall(r'Phase\\s*' + (label or '[24]') +
-                             r'\\s*completion estimate:\\s*(\\d{1,3})\\s*%', body, re.I)
+        guesses = re.findall(r'Phase\s*' + (label or '[24]') +
+                             r'\s*completion estimate:\s*(\d{1,3})\s*%', body, re.I)
         estimate = ('Phase ' + label + ' completion estimate: ' + guesses[-1] + '% (best guess)'
                     if guesses and label and int(guesses[-1]) <= 100
                     else 'Progress percentage: not measured.')

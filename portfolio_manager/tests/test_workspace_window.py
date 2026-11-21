@@ -159,7 +159,7 @@ class WorkspaceWindowTests(unittest.TestCase):
                 self.assertTrue(self.app.clipboard().text().replace('\r\n','\n').startswith(source.read_text(encoding='utf-8')))
                 self.assertTrue(self.app.clipboard().text().startswith('/goal '))
                 self.assertIn('working_phase_3', self.app.clipboard().text())
-                self.assertEqual(window.notice.text(), 'Phase 2 development megaprompt copied.')
+                self.assertEqual(window.notice.text(), 'Phase 2 development prompt copied.')
                 self.assertEqual(host.get_workspace(window.workspace_id)['selection'],
                                  project.relative_to(repo).as_posix())
             finally:
@@ -245,6 +245,10 @@ class WorkspaceWindowTests(unittest.TestCase):
         with TemporaryDirectory() as temp:
             root=Path(temp);repo=root/'repo'
             old=_record(repo,'DEMO-030')
+            template=Path(__file__).resolve().parents[2]/'business_portfolio/tools/browser_template.html'
+            target=repo/'business_portfolio/tools/browser_template.html'
+            target.parent.mkdir(parents=True,exist_ok=True)
+            target.write_bytes(template.read_bytes())
             folder=old.parent/'demo-030'
             folder.mkdir()
             record=folder/'project.md'

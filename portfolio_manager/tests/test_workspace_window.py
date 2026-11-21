@@ -286,7 +286,8 @@ class WorkspaceWindowTests(unittest.TestCase):
             self.assertEqual(parse_project(path.read_text())[0]['project_phase'], 'working_phase_4')
             self.assertEqual(window.copy_prompt.text(), 'Copy build prompt')
             self.assertTrue(window.paste_project.isHidden())
-            self.assertFalse(window.phase_apply.isEnabled())
+            self.assertTrue(window.phase_apply.isEnabled())
+            self.assertEqual(window.phase_apply.text(), 'Manually advance to Phase 5')
             window._test_close()
 
     def test_execution_prompt_handoffs_and_full_record_progress(self):
@@ -330,6 +331,68 @@ class WorkspaceWindowTests(unittest.TestCase):
             self.assertTrue(window.research_tools.isHidden())
             self.assertEqual(len(read_completions(repo)), 1)
             self.assertTrue(Path(receipt['snapshot']).is_file())
+            window._test_close()
+
+    def test_manual_execution_phase_fallback_requires_confirmation(self):
+        with TemporaryDirectory() as temp:
+            root = Path(temp); repo = root / 'repo'
+            from portfolio_manager.project_management import create_project
+            _record(repo, 'DEMO-055')
+            self._copy_templates(repo)
+            created = create_project(repo, 'business_portfolio/niches/demo', 'Fictional Product')
+            path = repo / created['path']
+            from business_portfolio.tools.build_browser import parse_project
+            from portfolio_manager.project_lifecycle import set_phase, read_completions
+            from PySide6.QtWidgets import QMessageBox
+            meta, body = parse_project(path.read_text())
+            meta.update(draft=False, record_type='software_product')
+            path.write_text('---\n' + json.dumps(meta) + '\n---\n' + body)
+            for phase in (2, 3, 4):
+                set_phase(repo, created['path'], f'working_phase_{phase}')
+            window = self._open_window(repo, root / 'state')
+            self.assertTrue(window.select(created['path']))
+            self.assertTrue(window.phase_apply.isEnabled())
+            self.assertEqual(window.phase_apply.text(), 'Manually advance to Phase 5')
+            with patch.object(QMessageBox, 'question', return_value=QMessageBox.StandardButton.No):
+                window.phase_apply.click()
+            self.assertEqual(parse_project(path.read_text())[0]['project_phase'], 'working_phase_4')
+            with patch.object(QMessageBox, 'question', return_value=QMessageBox.StandardButton.Yes):
+                window.phase_apply.click()
+            meta, _ = parse_project(path.read_text())
+            self.assertEqual(meta['project_phase'], 'working_phase_5')
+            self.assertIn('NOT VERIFIED', meta['phase_history'][-1]['evidence'])
+            self.assertEqual(window.phase_apply.text(), 'Manually advance to Phase 6')
+            with patch.object(QMessageBox, 'question', return_value=QMessageBox.StandardButton.Yes):
+                window.phase_apply.click()
+            self.assertEqual(parse_project(path.read_text())[0]['project_phase'], 'working_phase_6')
+            self.assertFalse(window.phase_apply.isEnabled())
+            self.assertFalse(read_completions(repo))
+            window._test_close()
+
+    def test_delete_project_button_only_removes_selected_project(self):
+        with TemporaryDirectory() as temp:
+            root = Path(temp); repo = root / 'repo'
+            from portfolio_manager.project_management import create_project
+            _record(repo, 'DEMO-056')
+            self._copy_templates(repo)
+            created = create_project(repo, 'business_portfolio/niches/demo')
+            record = repo / created['path']
+            (record.parent / 'work/asset.txt').write_text('preserved asset')
+            window = self._open_window(repo, root / 'state')
+            self.assertTrue(window.select(created['path']))
+            self.assertFalse(window.delete_project.isHidden())
+            from PySide6.QtWidgets import QMessageBox
+            with patch.object(QMessageBox, 'question', return_value=QMessageBox.StandardButton.No):
+                window.delete_project.click()
+            self.assertTrue(record.is_file())
+            with patch.object(QMessageBox, 'question', return_value=QMessageBox.StandardButton.Yes):
+                window.delete_project.click()
+            self.assertFalse(record.exists())
+            self.assertEqual(window.workspace_state['selection'], 'business_portfolio/niches/demo')
+            backup = repo / 'business_portfolio/.local/deleted_projects'
+            self.assertEqual(len(list(backup.rglob('project.md'))), 1)
+            self.assertEqual(next(backup.rglob('asset.txt')).read_text(), 'preserved asset')
+            self.assertTrue((repo / 'business_portfolio/niches/demo/NICHE.json').is_file())
             window._test_close()
 
     def test_niche_buttons_create_child_and_delete_recoverably(self):

@@ -478,6 +478,11 @@ class WorkspaceWindow(QMainWindow):
         self.phase_apply = QPushButton('Advance phase')
         self.phase_apply.clicked.connect(self._apply_project_phase)
         phase_layout.addWidget(self.phase_apply)
+        self.delete_project = QPushButton('Delete project')
+        self.delete_project.setAccessibleName('Delete project')
+        self.delete_project.setToolTip('Recoverably delete only this project and its work/ folder.')
+        self.delete_project.clicked.connect(self._delete_project)
+        phase_layout.addWidget(self.delete_project)
         self.phase_controls.hide()
         self._phase_project = None
         details.addWidget(self.phase_controls)
@@ -1219,6 +1224,32 @@ class WorkspaceWindow(QMainWindow):
             self.notice.setText('Could not delete niche: ' + str(error)[:400])
         self.notice.show()
 
+    def _delete_project(self):
+        current = self._current_project()
+        if current is None or self._tree_mode != 'projects':
+            return
+        path, _, meta, _ = current
+        selection = path.relative_to(self.repo).as_posix()
+        answer = QMessageBox.question(
+            self, 'Delete project',
+            'Delete “' + meta['title'] + '” (' + meta['id'] + ')?\n\n'
+            'The entire project directory, including project.md and work/, '
+            'will be moved into a recoverable local backup. '
+            'Other projects and completed-project receipts remain intact.\n\n'
+            'This does not stop any independently running external Codex process.',
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            QMessageBox.StandardButton.No)
+        if answer != QMessageBox.StandardButton.Yes:
+            return
+        try:
+            from .project_management import delete_project
+            result = delete_project(self.repo, selection)
+            self._refresh_after_edit(path.parent.parent.relative_to(self.repo).as_posix())
+            self.notice.setText('Project deleted. Recoverable backup: ' + result['trash_path'])
+        except (OSError, ValueError, RuntimeError) as error:
+            self.notice.setText('Could not delete project: ' + str(error)[:400])
+        self.notice.show()
+
     def _paste_project(self):
         current = self._current_project()
         if not current or current[3] not in {'working_phase_1', 'working_phase_2', 'working_phase_3'}:
@@ -1420,7 +1451,8 @@ class WorkspaceWindow(QMainWindow):
             for index in range(self.phase_selector.count()):
                 value = self.phase_selector.itemData(index)
                 number = int(value[-1]) if value != 'complete' else 7
-                self.phase_selector.model().item(index).setEnabled(number <= 4 and number <= phase_number + 1)
+                self.phase_selector.model().item(index).setEnabled(
+                    number <= 6 and (number <= phase_number or number == phase_number + 1))
             self.phase_selector.setCurrentIndex(self.phase_selector.findData(stage))
             self.phase_selector.setEnabled(True)
             self._phase_choice_changed()
@@ -1429,7 +1461,9 @@ class WorkspaceWindow(QMainWindow):
                 'Research → Release platforms → Marketing plan → Build → Release → Marketing. '
                 'Target total: 2 days to 3 weeks. ' +
                 ('Paste and recheck the research, then advance when it is ready.' if phase_number <= 3 else
-                 'Codex records progress and advances after this phase is finished. Copy the next prompt when it advances.'
+                 'Codex normally advances after finishing. If blocked, you can manually advance '
+                  'Phase 4 → 5 or Phase 5 → 6. The override is recorded as NOT VERIFIED; '
+                  'reconcile missing work before release or marketing.'
                  if phase_number <= 6 else 'Completion is backed by the saved delivery and marketing evidence.'))
             self.phase_help.show()
         self.project_tabs.setCurrentIndex(0)
@@ -1440,17 +1474,28 @@ class WorkspaceWindow(QMainWindow):
         current = getattr(self, '_displayed_phase', None)
         target = self.phase_selector.currentData()
         if target and target != current:
-            self.phase_apply.setText('Update phase')
-            self.phase_apply.setEnabled(target in {'working_phase_1', 'working_phase_2', 'working_phase_3', 'working_phase_4'})
+            if current in {'working_phase_4', 'working_phase_5'} and target == (
+                    'working_phase_' + str(int(current[-1]) + 1)):
+                self.phase_apply.setText('Manually advance to Phase ' + str(int(current[-1]) + 1))
+                self.phase_apply.setEnabled(True)
+            else:
+                self.phase_apply.setText('Update phase')
+                self.phase_apply.setEnabled(target in {'working_phase_1', 'working_phase_2',
+                                                       'working_phase_3', 'working_phase_4',
+                                                       'working_phase_5', 'working_phase_6'} and
+                                            (current == 'complete' or int(target[-1]) < int(current[-1])))
         elif current in {'working_phase_1', 'working_phase_2', 'working_phase_3'}:
             self.phase_apply.setText('Advance to Phase ' + str(int(current[-1]) + 1))
             self.phase_apply.setEnabled(True)
+        elif current in {'working_phase_4', 'working_phase_5'}:
+            self.phase_apply.setText('Manually advance to Phase ' + str(int(current[-1]) + 1))
+            self.phase_apply.setEnabled(True)
         else:
-            self.phase_apply.setText('Codex advances this phase')
+            self.phase_apply.setText('Codex verifies completion')
             self.phase_apply.setEnabled(False)
 
     def _apply_project_phase(self):
-        """The owner advances research; execution transitions belong to Codex."""
+        """Allow owner research advances and explicitly unverified execution fallbacks."""
         selection = self._phase_project
         if not selection:
             return
@@ -1462,12 +1507,26 @@ class WorkspaceWindow(QMainWindow):
             metadata, _ = parse_project(path.read_text(encoding='utf-8'), selection)
             current = project_phase(metadata)
             if target == current:
-                if current not in {'working_phase_1', 'working_phase_2', 'working_phase_3'}:
-                    raise ValueError('Codex advances execution phases after completing their work.')
+                if current not in {'working_phase_1', 'working_phase_2', 'working_phase_3',
+                                   'working_phase_4', 'working_phase_5'}:
+                    raise ValueError('Only Codex can verify completion after Phase 6.')
                 target = 'working_phase_' + str(int(current[-1]) + 1)
-            if target not in {'working_phase_1', 'working_phase_2', 'working_phase_3', 'working_phase_4'}:
-                raise ValueError('Codex advances build, release and marketing after completing their work.')
+            if target not in {'working_phase_1', 'working_phase_2', 'working_phase_3',
+                              'working_phase_4', 'working_phase_5', 'working_phase_6'}:
+                raise ValueError('Only Codex can verify completion after Phase 6.')
             backwards = current == 'complete' or int(target[-1]) < int(current[-1])
+            override = not backwards and current in {'working_phase_4', 'working_phase_5'}
+            if override and QMessageBox.question(
+                    self, 'Manually advance unverified phase',
+                    f'Advance from {PHASE_LABELS[current]} to {PHASE_LABELS[target]} '
+                    'without verified completion of the current phase?\n\n'
+                    'This is a recovery override, NOT proof that build, release or marketing '
+                    'was finished. Any unfinished tasks and blockers must be checked '
+                    'before the next phase performs release or promotion.',
+                    QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+                    QMessageBox.StandardButton.No) != QMessageBox.StandardButton.Yes:
+                self._preview(selection)
+                return
             if backwards and QMessageBox.question(
                     self, 'Change project phase',
                     f'Move this project from {PHASE_LABELS[current]} back to {PHASE_LABELS[target]}?'
@@ -1476,7 +1535,8 @@ class WorkspaceWindow(QMainWindow):
                 self._preview(selection)
                 return
             set_phase(self.repo, selection, target, actor='user')
-            self.notice.setText(PHASE_LABELS[target] + ' is ready. Copy its prompt to continue.')
+            self.notice.setText(('Manual override recorded as NOT VERIFIED. ' if override else '') +
+                                PHASE_LABELS[target] + ' is ready. Copy its prompt to continue.')
             self.notice.show()
             self._preview(selection)
             self._refresh_project_phase_rows()

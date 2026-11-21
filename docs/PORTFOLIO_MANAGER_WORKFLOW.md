@@ -17,6 +17,12 @@ The project folder keeps its record and implementation together. Portfolio Manag
 
 **Delete niche** applies equally to a niche or subniche. Its confirmation identifies the subtree and included projects. Confirming moves that whole subtree to ignored `business_portfolio/.local/deleted_niches/` recovery storage, then removes it from the active view. It does not erase historical archives or independent completed-project receipts. Deletion is rejected if another active project would retain a broken parent/related-project reference. Restore recovery folders only after reviewing their original niche path, references and ID collisions; do not blindly merge over newer work.
 
+## Manual fallback and recoverable Delete project
+
+The selected project view includes **Delete project** next to the phase controls. Confirming removes only the selected project from its niche, moving its entire `project.md` plus `work/` to `business_portfolio/.local/deleted_projects/`. Existing completed receipts, history and other projects remain. Deletion is refused if another active project references the target or its files are unsafe. The deleted ID cannot be reused, and failed indexing restores the original directory. Deleting local records does **not** remove a published product or stop external Codex workers.
+
+Codex normally advances execution phases, but owners may manually advance **Phase 4 → 5** or **Phase 5 → 6** if the handoff gets stuck. Manual changes require an explicit Yes confirmation, appear in `phase_history` as **MANUAL OVERRIDE — previous phase NOT VERIFIED**, and preserve all remaining tasks and recorded facts. Before releasing or marketing anything, the next Codex worker must verify any unfinished prior-stage prerequisites. No phase-skipping or false completion is permitted. **Phase 6 → Complete remains Codex-only with verified product and marketing URLs.**
+
 ## Six phases and the prompt buttons
 
 | Phase | Purpose | Prompt button and choices | Who advances it |
@@ -24,8 +30,8 @@ The project folder keeps its record and implementation together. Portfolio Manag
 | 1 | Research a worthwhile product or an existing idea; write a detailed build specification | **Copy research prompt**: niche research, existing idea, verification/recheck | User advances to 2 after review |
 | 2 | Research release destinations and feasible direct/adjacent compatible versions; update the build specification | **Copy release research prompt**: research and verification/recheck | User advances to 3 after review |
 | 3 | Research the full marketing strategy, assets, tactics, channels and measurement; reconcile earlier plans | **Copy marketing research prompt**: research and verification/recheck | User advances to 4 after review |
-| 4 | Build, test, document and package every accepted product version | **Copy build prompt**: Codex `/goal` | Codex advances to 5 after actual completion |
-| 5 | Release the finished product on every accepted required destination and verify customer access | **Copy release prompt**: Codex `/goal` | Codex advances to 6 after actual completion |
+| 4 | Build, test, document and package every accepted product version | **Copy build prompt**: Codex `/goal` | Codex normally advances to 5; owner has an unverified manual fallback |
+| 5 | Release the finished product on every accepted required destination and verify customer access | **Copy release prompt**: Codex `/goal` | Codex normally advances to 6; owner has an unverified manual fallback |
 | 6 | Execute and verify the accepted finite initial marketing plan | **Copy marketing prompt**: Codex `/goal` | Codex marks Complete with factual evidence and URLs |
 
 The total project is scoped for **2 days to 3 weeks**, including research, build, releases and initial marketing. This is one shared window, not three weeks for each phase and not an instruction to wait before completing useful work. Plans search broadly but select a feasible finite scope; other options remain conditional, deferred or rejected with reasons. Required external review/access delays must be recorded honestly rather than concealed by a completion estimate.

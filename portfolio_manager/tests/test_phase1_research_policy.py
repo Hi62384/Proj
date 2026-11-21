@@ -59,6 +59,23 @@ class SixPhasePromptPolicyTests(unittest.TestCase):
                 self.assertIn("Optional cosmetic suggestions must not block", prompt)
                 self.assertIn("not an endless internal loop", prompt)
 
+    def test_phase_one_recheck_requires_source_backed_independent_depth(self):
+        prompt = read("PHASE_1_RECHECK_REPLACE_MEGAPROMPT.md")
+        for requirement in ("Minimum evidence standard — depth before approval",
+                            "Buyer-side evidence", "Competition from the buyer's perspective",
+                            "Commercial practicality", "Fresh disconfirmation",
+                            "Implementation-specification audit",
+                            "8–15 distinct, relevant direct-source pages",
+                            "coverage guide, not a mechanical quota",
+                            "three strongest material objections",
+                            "NEW", "RECHECKED", "UNVERIFIED",
+                            "not an independently verified GO",
+                            "do not prolong work to meet a time target"):
+            with self.subTest(requirement=requirement):
+                self.assertIn(requirement, prompt)
+        self.assertIn("Good to go — no substantive changes needed.", prompt)
+        self.assertIn("Do not emit a replacement record or demand a paste", prompt)
+
     def test_phase_one_preserves_evidence_led_test_first_research(self):
         for filename in RESEARCH[:3]:
             with self.subTest(filename=filename):

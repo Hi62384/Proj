@@ -20,8 +20,9 @@ from .workspace import context_path
 
 PHASE_2 = "working_phase_2"
 PHASE_3 = "working_phase_3"
+PHASE_4 = "working_phase_4"
 COMPLETE = "complete"
-PHASES = (PHASE_2, PHASE_3, COMPLETE)
+PHASES = (PHASE_2, PHASE_3, PHASE_4, COMPLETE)
 
 
 def project_phase(metadata: dict) -> str:
@@ -117,7 +118,7 @@ def set_phase(repo: Path, selection: str | Path, phase: str, *,
               marketing_urls=(), other_urls=()) -> dict:
     """Change project phase; completion stores a receipt and demotion revokes it."""
     if phase not in PHASES:
-        raise ValueError("Choose working_phase_2, working_phase_3, or complete.")
+        raise ValueError("Choose working_phase_2, working_phase_3, working_phase_4, or complete.")
     repo = Path(repo).resolve(strict=True)
     path = record_path(repo, selection)
     with _single_writer(path.parent):
@@ -125,8 +126,9 @@ def set_phase(repo: Path, selection: str | Path, phase: str, *,
         meta, _ = parse_project(raw, str(path))
         old = project_phase(meta)
         allowed = {PHASE_2: {PHASE_2, PHASE_3},
-                   PHASE_3: {PHASE_2, PHASE_3, COMPLETE},
-                   COMPLETE: {PHASE_2, PHASE_3, COMPLETE}}
+                   PHASE_3: {PHASE_2, PHASE_3, PHASE_4},
+                   PHASE_4: {PHASE_2, PHASE_3, PHASE_4, COMPLETE},
+                   COMPLETE: {PHASE_2, PHASE_3, PHASE_4, COMPLETE}}
         if phase not in allowed[old]:
             raise ValueError(f"Invalid phase transition from {old} to {phase}.")
         completion = repo / "business_portfolio" / "completed_projects" / (meta["id"] + ".json")
@@ -141,6 +143,8 @@ def set_phase(repo: Path, selection: str | Path, phase: str, *,
                     existing.get("project_phase") != COMPLETE):
                 raise ValueError("Completion receipt does not match the selected project.")
         if phase == COMPLETE:
+            if old != PHASE_4:
+                raise ValueError("Completion requires verified Phase 4 execution.")
             if not isinstance(description, str) or not description.strip():
                 raise ValueError("Completion requires a short, factual project description.")
             sale = _urls(sale_urls)

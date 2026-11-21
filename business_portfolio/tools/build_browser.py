@@ -292,7 +292,7 @@ def load_portfolio(root: Path) -> dict:
                 raise ValidationError(f'{p}: project work/ folder is missing or unsafe')
         if m['niche_path'] != actual or m['niche_id'] != node_paths.get(actual):
             raise ValidationError(f'{p}: record niche mismatch/missing NICHE.json')
-        if m.get('project_phase', 'working_phase_2') not in {'working_phase_2', 'working_phase_3', 'complete'}:
+        if m.get('project_phase', 'working_phase_2') not in {'working_phase_2', 'working_phase_3', 'working_phase_4', 'complete'}:
             raise ValidationError(f'{p}: invalid project phase')
         if m['work_state'] not in WORK_STATES or m['commercial_validation'] not in VALIDATIONS or m['priority'] not in PRIORITIES:
             raise ValidationError(f'{p}: unknown state/validation/priority')

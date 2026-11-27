@@ -265,7 +265,7 @@ class WorkspaceWindowTests(unittest.TestCase):
                 release.set()
             window._test_close()
 
-    def test_empty_project_creation_research_text_and_manual_handoffs(self):
+    def test_empty_project_creation_two_prompts_and_one_verified_paste(self):
         with TemporaryDirectory() as temp:
             root = Path(temp); repo = root / 'repo'
             _record(repo, 'DEMO-011')
@@ -309,48 +309,41 @@ class WorkspaceWindowTests(unittest.TestCase):
             self.assertIn('PROJECT_IDEA:\nA useful pathfinding system', self.app.clipboard().text())
             window._copy_megaprompt('recheck')
             self.assertIn('Good to go', self.app.clipboard().text())
-            # Empty placeholders cannot advance just by clicking the handoff.
+            # An empty record cannot advance from the phase control.
+            self.assertFalse(window.phase_apply.isEnabled())
             window.phase_apply.click()
             self.assertEqual(parse_project(path.read_text())[0]['project_phase'], 'working_phase_1')
+            self.assertEqual(len(window.prompt_menu.actions()), 3)
+            self.assertIn('Phase 1b', self.app.clipboard().text())
+            from portfolio_manager.tests.test_project_update import VERIFIED_BODY, verified_fields
             meta.update(title='Useful Pathfinding', record_type='software_product', draft=False,
-                        next_action='Recheck the product specification.',
-                        project_update_base_sha256=snapshot_sha256(path.read_text()))
-            research = '---\n' + json.dumps(meta) + '\n---\n# Useful Pathfinding\n' + body + (
-                '\nProduct research with concrete buyers, functionality and acceptance tests. '
-                'Evidence: https://example.org/research\n')
-            self._paste_dialog(window, '```markdown\n' + research + '\n```')
-            self.assertEqual(parse_project(path.read_text())[0]['project_phase'], 'working_phase_1')
-            self.assertEqual(parse_project(path.read_text())[0]['title'], 'Useful Pathfinding')
-            window.phase_apply.click()
-            self.assertEqual(parse_project(path.read_text())[0]['project_phase'], 'working_phase_2')
-            self.assertEqual(window.copy_prompt.text(), 'Copy release research prompt')
-            self.assertEqual(len(window.prompt_menu.actions()), 2)
-            window._copy_megaprompt('phase2')
-            self.assertIn(path.read_text(), self.app.clipboard().text())
-            window._copy_megaprompt('phase2_recheck')
-            self.assertIn('Good to go', self.app.clipboard().text())
-            window.phase_apply.click()
-            self.assertEqual(parse_project(path.read_text())[0]['project_phase'], 'working_phase_3')
-            self.assertEqual(window.copy_prompt.text(), 'Copy marketing research prompt')
-            window._copy_megaprompt('phase3_recheck')
-            self.assertIn('Good to go', self.app.clipboard().text())
-            window.phase_apply.click()
-            self.assertEqual(parse_project(path.read_text())[0]['project_phase'], 'working_phase_4')
+                        delivery_window_days={'minimum': 2, 'maximum': 10},
+                        project_update_base_sha256=snapshot_sha256(path.read_text()),
+                        **verified_fields())
+            research = '---\n' + json.dumps(meta) + '\n---\n' + VERIFIED_BODY
+            self._paste_dialog(window,  '```markdown\n' + research + '\n```')
+            updated, _ = parse_project(path.read_text())
+            self.assertEqual(updated['project_phase'], 'working_phase_2')
+            self.assertEqual(updated['title'], 'Useful Pathfinding')
+            self.assertEqual(updated['workflow_version'], 3)
+            self.assertEqual(updated['phase_history'][-1]['from'], 'working_phase_1')
+            self.assertEqual(updated['phase_history'][-1]['to'], 'working_phase_2')
+            self.assertNotIn('project_update_phase_1b', updated)
             self.assertEqual(window.copy_prompt.text(), 'Copy build prompt')
             self.assertFalse(window.research_budget.isHidden())
             self.assertFalse(window.budget_label.isHidden())
-            window._copy_megaprompt('phase4')
+            window._copy_megaprompt('phase2')
             self.assertTrue(self.app.clipboard().text().startswith('/goal '))
-            self.assertIn('Total project day limit across all six phases: 10 calendar days', self.app.clipboard().text())
+            self.assertIn('Total project day limit across all four phases: 10 calendar days', self.app.clipboard().text())
             self.assertIn('Planning budget ceiling (CAD): 50.25', self.app.clipboard().text())
             self.assertIn('pass this project ID or canonical project path to portfolio_open', self.app.clipboard().text())
             window.project_days.setText('0')
             before = self.app.clipboard().text()
-            window._copy_megaprompt('phase4')
+            window._copy_megaprompt('phase2')
             self.assertEqual(self.app.clipboard().text(), before)
             self.assertTrue(window.paste_project.isHidden())
             self.assertTrue(window.phase_apply.isEnabled())
-            self.assertEqual(window.phase_apply.text(), 'Manually advance to Phase 5')
+            self.assertEqual(window.phase_apply.text(), 'Manually advance to Phase 3')
             window._test_close()
             reopened = self._open_window(repo, root / 'state2')
             self.assertEqual(reopened.project_days.text(), '10')
@@ -492,7 +485,7 @@ class WorkspaceWindowTests(unittest.TestCase):
             self.assertIn('37%', window.project_tasks.toPlainText())
             self.assertIn('37%', window.project_record.toPlainText())
             from portfolio_manager.project_lifecycle import set_phase, read_completions
-            for number, label in ((4, 'build'), (5, 'release'), (6, 'marketing')):
+            for number, label in ((2, 'build'), (3, 'release'), (4, 'marketing')):
                 window._preview(selection)
                 self.assertEqual(window.copy_prompt.text(), f'Copy {label} prompt')
                 self.assertEqual(len(window.prompt_menu.actions()), 1)
@@ -504,10 +497,10 @@ class WorkspaceWindowTests(unittest.TestCase):
                 self.assertTrue(self.app.clipboard().text().startswith('/goal '))
                 self.assertIn(selection, self.app.clipboard().text())
                 self.assertIn('Planning budget ceiling (CAD): 75.50', self.app.clipboard().text())
-                self.assertIn('Total project day limit across all six phases: 12 calendar days.', self.app.clipboard().text())
+                self.assertIn('Total project day limit across all four phases: 12 calendar days.', self.app.clipboard().text())
                 self.assertIn('this planning ceiling does not authorize spending', self.app.clipboard().text())
                 self.assertIn(f'Phase {number} completion estimate:', self.app.clipboard().text())
-                if number < 6:
+                if number < 4:
                     set_phase(repo, selection, f'working_phase_{number+1}', actor='codex',
                               evidence=f'Fictional Phase {number} completed evidence.')
             receipt = set_phase(repo, selection, 'complete', actor='codex', evidence='All marketing checked.',
@@ -531,26 +524,24 @@ class WorkspaceWindowTests(unittest.TestCase):
             from portfolio_manager.project_lifecycle import set_phase, read_completions
             from PySide6.QtWidgets import QMessageBox
             meta, body = parse_project(path.read_text())
-            meta.update(draft=False, record_type='software_product')
+            meta.update(draft=False, record_type='software_product', project_phase='working_phase_2')
             path.write_text('---\n' + json.dumps(meta) + '\n---\n' + body)
-            for phase in (2, 3, 4):
-                set_phase(repo, created['path'], f'working_phase_{phase}')
             window = self._open_window(repo, root / 'state')
             self.assertTrue(window.select(created['path']))
             self.assertTrue(window.phase_apply.isEnabled())
-            self.assertEqual(window.phase_apply.text(), 'Manually advance to Phase 5')
+            self.assertEqual(window.phase_apply.text(), 'Manually advance to Phase 3')
             with patch.object(QMessageBox, 'question', return_value=QMessageBox.StandardButton.No):
                 window.phase_apply.click()
-            self.assertEqual(parse_project(path.read_text())[0]['project_phase'], 'working_phase_4')
+            self.assertEqual(parse_project(path.read_text())[0]['project_phase'], 'working_phase_2')
             with patch.object(QMessageBox, 'question', return_value=QMessageBox.StandardButton.Yes):
                 window.phase_apply.click()
             meta, _ = parse_project(path.read_text())
-            self.assertEqual(meta['project_phase'], 'working_phase_5')
+            self.assertEqual(meta['project_phase'], 'working_phase_3')
             self.assertIn('NOT VERIFIED', meta['phase_history'][-1]['evidence'])
-            self.assertEqual(window.phase_apply.text(), 'Manually advance to Phase 6')
+            self.assertEqual(window.phase_apply.text(), 'Manually advance to Phase 4')
             with patch.object(QMessageBox, 'question', return_value=QMessageBox.StandardButton.Yes):
                 window.phase_apply.click()
-            self.assertEqual(parse_project(path.read_text())[0]['project_phase'], 'working_phase_6')
+            self.assertEqual(parse_project(path.read_text())[0]['project_phase'], 'working_phase_4')
             self.assertFalse(window.phase_apply.isEnabled())
             self.assertFalse(read_completions(repo))
             window._test_close()
@@ -694,10 +685,10 @@ class WorkspaceWindowTests(unittest.TestCase):
                               Qt.MouseButton.LeftButton, Qt.KeyboardModifier.NoModifier)
             self.app.sendEvent(target, drop)
             self.assertTrue(drop.isAccepted(), window.notice.text())
-            self.assertEqual(parse_project(path.read_text())[0]['project_phase'], 'working_phase_3')
+            self.assertEqual(parse_project(path.read_text())[0]['project_phase'], 'working_phase_1')
             self.assertIn('Revised marketing plan', window.project_record.toPlainText())
             self.assertEqual(owned.read_text(), 'owned work')
-            self.assertEqual(window.copy_prompt.text(), 'Copy marketing research prompt')
+            self.assertEqual(window.copy_prompt.text(), 'Copy research prompt')
             window._test_close()
 
     def test_working_toggles_persist_and_sync_between_windows(self):
@@ -844,10 +835,8 @@ class WorkspaceWindowTests(unittest.TestCase):
                 self.assertTrue(window.select(relative))
                 self.assertFalse(window.project_tabs.isHidden())
                 self.assertIn('work',window.project_files.toPlainText())
-                set_phase(repo,relative,'working_phase_3')
-                set_phase(repo,relative,'working_phase_4')
-                set_phase(repo,relative,'working_phase_5',actor='codex',evidence='Build checked.')
-                set_phase(repo,relative,'working_phase_6',actor='codex',evidence='Release checked.')
+                set_phase(repo,relative,'working_phase_3',actor='codex',evidence='Build checked.')
+                set_phase(repo,relative,'working_phase_4',actor='codex',evidence='Release checked.')
                 window.sync()
                 receipt=set_phase(repo,relative,'complete',actor='codex',evidence='Marketing checked.',description='Fictional completed project',
                     sale_urls=['https://example.org/shop'],marketing_urls=['https://example.org/post'])
@@ -907,10 +896,8 @@ class WorkspaceWindowTests(unittest.TestCase):
                 # The owner can demote a completed project directly to Phase 2.
                 # Verified completion itself remains Codex-only.
                 from portfolio_manager.project_lifecycle import set_phase, read_completions
-                set_phase(repo, selection, 'working_phase_3')
-                set_phase(repo, selection, 'working_phase_4')
-                set_phase(repo, selection, 'working_phase_5', actor='codex', evidence='Build checked.')
-                set_phase(repo, selection, 'working_phase_6', actor='codex', evidence='Release checked.')
+                set_phase(repo, selection, 'working_phase_3', actor='codex', evidence='Build checked.')
+                set_phase(repo, selection, 'working_phase_4', actor='codex', evidence='Release checked.')
                 set_phase(repo, selection, 'complete', actor='codex', evidence='Marketing checked.', description='Verified fixture',
                           sale_urls=['https://example.org/release'],
                           marketing_urls=['https://example.org/announcement'])

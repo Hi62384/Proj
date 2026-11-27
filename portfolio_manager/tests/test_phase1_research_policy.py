@@ -1,9 +1,4 @@
-"""Prompt contract regressions for the six-phase project workflow.
-
-These tests guard the user-visible handoff contracts: research must not execute
-or auto-advance, rechecks may succeed unchanged, and each execution goal has one
-correct evidence-bearing next-phase command.
-"""
+"""Four-phase prompt contracts, stage gates, final import and execution goals."""
 from pathlib import Path
 import re
 import shlex
@@ -14,16 +9,12 @@ RESEARCH = (
     "PHASE_1_RESEARCH_MEGAPROMPT.md",
     "PHASE_1_IDEA_MEGAPROMPT.md",
     "PHASE_1_RECHECK_REPLACE_MEGAPROMPT.md",
-    "PHASE_2_RELEASE_RESEARCH_MEGAPROMPT.md",
-    "PHASE_2_RECHECK_MEGAPROMPT.md",
-    "PHASE_3_MARKETING_RESEARCH_MEGAPROMPT.md",
-    "PHASE_3_RECHECK_MEGAPROMPT.md",
 )
-RECHECKS = (RESEARCH[2], RESEARCH[4], RESEARCH[6])
+RECHECKS = (RESEARCH[2],)
 EXECUTION = {
-    4: ("PHASE_4_BUILD_MEGAPROMPT.md", "working_phase_5"),
-    5: ("PHASE_5_RELEASE_MEGAPROMPT.md", "working_phase_6"),
-    6: ("PHASE_6_MARKETING_MEGAPROMPT.md", "complete"),
+    2: ("PHASE_2_BUILD_MEGAPROMPT.md", "working_phase_3"),
+    3: ("PHASE_3_RELEASE_MEGAPROMPT.md", "working_phase_4"),
+    4: ("PHASE_4_MARKETING_MEGAPROMPT.md", "complete"),
 }
 
 
@@ -31,8 +22,8 @@ def read(filename):
     return (ROOT / filename).read_text(encoding="utf-8")
 
 
-class SixPhasePromptPolicyTests(unittest.TestCase):
-    def test_research_outputs_full_pasteable_record_without_advancing(self):
+class FourPhasePromptPolicyTests(unittest.TestCase):
+    def test_research_outputs_full_record_preserving_stored_phase(self):
         for filename in RESEARCH:
             with self.subTest(filename=filename):
                 prompt = read(filename)
@@ -40,7 +31,8 @@ class SixPhasePromptPolicyTests(unittest.TestCase):
                 self.assertIn("single copyable code block", prompt)
                 self.assertIn("full strict JSON frontmatter", prompt)
                 self.assertIn("Do not create or require a downloadable file", prompt)
-                self.assertIn("Pasting replaces the planning text but does not advance the phase", prompt)
+                self.assertIn("stored project_phase", prompt)
+                self.assertIn("project_update_phase_1b", prompt)
                 self.assertIn("project_update_base_sha256", prompt)
                 self.assertIn("BASE_SHA256", prompt)
                 self.assertIn("Preserve important previous research", prompt)
@@ -49,15 +41,35 @@ class SixPhasePromptPolicyTests(unittest.TestCase):
                 self.assertIn("commercial_validation", prompt)
                 self.assertNotIn("--phase complete", prompt)
 
-    def test_rechecks_can_approve_without_forced_rewrite_or_replacement(self):
-        for filename in RECHECKS:
+    def test_phase_one_a_checks_each_stage_before_proceeding(self):
+        for filename in RESEARCH[:2]:
             with self.subTest(filename=filename):
                 prompt = read(filename)
-                self.assertIn("Good to go — no substantive changes needed.", prompt)
-                self.assertIn("Do not emit a replacement record or demand a paste", prompt)
-                self.assertIn("Do not invent problems, force revisions, force replacement", prompt)
-                self.assertIn("Optional cosmetic suggestions must not block", prompt)
-                self.assertIn("not an endless internal loop", prompt)
+                first = prompt.index("# Stage 1 — Product research and internal verification")
+                second = prompt.index("# Stage 2 — Release research and internal verification")
+                third = prompt.index("# Stage 3 — Marketing research and internal verification")
+                self.assertLess(first, prompt.index("Stage 1 exit gate"))
+                self.assertLess(prompt.index("Stage 1 exit gate"), second)
+                self.assertLess(second, prompt.index("Stage 2 exit gate"))
+                self.assertLess(prompt.index("Stage 2 exit gate"), third)
+                self.assertLess(third, prompt.index("Stage 3 exit gate"))
+                self.assertIn("Do not set project_update_phase_1b", prompt)
+                self.assertIn('No intermediate pastes', prompt)
+                self.assertIn('on "continue"', prompt)
+
+    def test_recheck_approves_without_forced_rewrite_but_returns_full_final_record(self):
+        prompt = read(RESEARCH[2])
+        self.assertIn("Good to go — no substantive changes needed.", prompt)
+        self.assertIn("Do not invent problems, force revisions, force replacement", prompt)
+        self.assertIn("Optional cosmetic suggestions must not block", prompt)
+        self.assertIn("not an endless internal loop", prompt)
+        self.assertIn("ALWAYS return the entire final record", prompt)
+        self.assertIn('"project_update_phase_1b": "verified"', prompt)
+        self.assertIn("all three are approved", prompt)
+        self.assertIn("automatically advances to Phase 2", prompt)
+        self.assertIn("# Stage 2 — Independent release verification", prompt)
+        self.assertIn("# Stage 3 — Independent marketing verification", prompt)
+        self.assertIn("# Final cross-stage gate", prompt)
 
     def test_phase_one_recheck_requires_source_backed_independent_depth(self):
         prompt = read("PHASE_1_RECHECK_REPLACE_MEGAPROMPT.md")
@@ -74,7 +86,7 @@ class SixPhasePromptPolicyTests(unittest.TestCase):
             with self.subTest(requirement=requirement):
                 self.assertIn(requirement, prompt)
         self.assertIn("Good to go — no substantive changes needed.", prompt)
-        self.assertIn("Do not emit a replacement record or demand a paste", prompt)
+        self.assertIn("Always return the full final project record", prompt)
 
     def test_phase_one_preserves_evidence_led_test_first_research(self):
         for filename in RESEARCH[:3]:
@@ -129,23 +141,19 @@ class SixPhasePromptPolicyTests(unittest.TestCase):
         self.assertIn("no in-scope variation is viable", owner_idea)
         self.assertIn("not as a stealth rewrite", owner_idea)
 
-    def test_release_research_connects_adjacent_targets_to_real_build_work(self):
-        prompt = read("PHASE_2_RELEASE_RESEARCH_MEGAPROMPT.md")
-        for concept in ("compatibility targets", "distribution destinations",
-                        "adjacent ecosystems", "Unity pathfinding system",
-                        "Revise the Phase 1 build specification", "Phase 4 build checklist",
-                        "Phase 5 release checklist", "conditional", "deferred", "rejected"):
-            self.assertIn(concept, prompt)
-        self.assertIn("working_phase_2", prompt)
-        self.assertIn("unreviewed", prompt)
-
-    def test_marketing_research_covers_tactics_and_execution_dependencies(self):
-        prompt = read("PHASE_3_MARKETING_RESEARCH_MEGAPROMPT.md")
-        for concept in ("audiences", "positioning", "SEO", "conversion", "measurement",
-                        "Phase 6 tasks", "Update Phase 1/4", "Update Phase 2/5",
-                        "finite initial execution scope"):
-            self.assertIn(concept, prompt)
-        self.assertIn("working_phase_3", prompt)
+    def test_release_and_marketing_requirements_survive_combining(self):
+        for filename in RESEARCH[:2]:
+            prompt = read(filename)
+            for concept in ("compatibility targets", "distribution destinations",
+                            "adjacent ecosystems", "Unity pathfinding system",
+                            "Phase 2 build checklist", "Phase 3 release checklist",
+                            "conditional", "deferred", "rejected", "audiences",
+                            "positioning", "SEO", "conversion", "measurement",
+                            "Phase 4 tasks", "finite initial execution scope"):
+                self.assertIn(concept, prompt)
+        recheck = read(RESEARCH[2])
+        self.assertIn("direct/adjacent discovery matrix", recheck)
+        self.assertIn("finite tasks", recheck)
 
     def test_each_goal_has_only_its_own_sequential_evidence_handoff(self):
         for phase, (filename, next_phase) in EXECUTION.items():
@@ -161,7 +169,8 @@ class SixPhasePromptPolicyTests(unittest.TestCase):
                 self.assertTrue(argv[argv.index("--evidence") + 1].strip())
                 self.assertIn("Stop after that handoff", prompt)
                 self.assertIn("Do not silently execute the next phase", prompt)
-                if phase == 6:
+                self.assertEqual(argv[argv.index("--workflow-version") + 1], "3")
+                if phase == 4:
                     self.assertIn("--description", argv)
                     self.assertIn("--sale-url", argv)
                     self.assertIn("--marketing-url", argv)
@@ -191,6 +200,13 @@ class SixPhasePromptPolicyTests(unittest.TestCase):
             "PHASE_3B_VALIDATION_MEGAPROMPT.md",
             "PHASE_3_MARKETING_MEGAPROMPT.md",
             "PHASE_4_EXECUTION_MEGAPROMPT.md",
+            "PHASE_2_RELEASE_RESEARCH_MEGAPROMPT.md",
+            "PHASE_2_RECHECK_MEGAPROMPT.md",
+            "PHASE_3_MARKETING_RESEARCH_MEGAPROMPT.md",
+            "PHASE_3_RECHECK_MEGAPROMPT.md",
+            "PHASE_4_BUILD_MEGAPROMPT.md",
+            "PHASE_5_RELEASE_MEGAPROMPT.md",
+            "PHASE_6_MARKETING_MEGAPROMPT.md",
         )
         for filename in redirects:
             with self.subTest(filename=filename):

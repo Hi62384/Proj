@@ -806,8 +806,19 @@ class WorkspaceWindow(QMainWindow):
                     return
             if self.tree.currentItem() is not item:
                 self.tree.setCurrentItem(item)
-                if reveal:
-                    self.tree.scrollToItem(item)
+            if reveal:
+                self.tree.scrollToItem(item)
+
+    def reveal_selected_project(self):
+        """When opening a project workspace, show its actual tree selection."""
+        selection = self.workspace_state.get('selection') if self.workspace_state else None
+        if not self._current_project(selection):
+            return
+        if self._tree_mode != 'projects' or self._search_view or self._search is not None:
+            self.view_mode.setCurrentIndex(self.view_mode.findData('projects'))
+            self._change_view()
+            self._preview(selection)
+        self._focus_tree(selection)
 
     def _expand(self, node):
         if self._tree_mode != 'files' or not node.data(0, ROLE + 1):

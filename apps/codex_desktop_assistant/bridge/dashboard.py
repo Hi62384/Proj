@@ -85,6 +85,7 @@ class Dashboard(QMainWindow):
             self.workspace_windows[workspace['id']] = window
         else:
             window.apply_workspace(workspace)
+        window.reveal_selected_project()
         if window.isMinimized():
             window.showNormal()
         else:

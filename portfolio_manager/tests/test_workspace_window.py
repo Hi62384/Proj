@@ -407,11 +407,38 @@ class WorkspaceWindowTests(unittest.TestCase):
                                          on_stop_all=lambda:None, on_access=lambda:None,
                                          on_close=lambda _:None)
                 self.assertEqual(window.chat_label.text(), 'Fictional DEMO-082')
+                window._entry_future.result(timeout=10)
+                window.sync()
+                self.assertEqual(window.tree.currentItem().data(0, ROLE), project)
+                item = window.tree.currentItem()
+                while item.parent():
+                    self.assertTrue(item.parent().isExpanded())
+                    item = item.parent()
             finally:
                 if window:
                     window.close()
                     window._pool.shutdown(wait=True, cancel_futures=True)
                 host.close()
+
+    @unittest.skipUnless(Dashboard, 'Windows-only Computer Bridge integration')
+    def test_reopening_project_window_reveals_selection_from_other_view(self):
+        with TemporaryDirectory() as temp:
+            root = Path(temp); repo = root / 'repo'
+            project = _record(repo, 'DEMO-083').relative_to(repo).as_posix()
+            window = self._open_window(repo, root / 'state')
+            self.assertTrue(window.select(project))
+            window.view_mode.setCurrentIndex(window.view_mode.findData('completed'))
+            window._change_view()
+            dashboard = SimpleNamespace(workspace_windows={window.workspace_id: window})
+            Dashboard.show_workspace(dashboard, window.workspace_state)
+            self.assertEqual(window.view_mode.currentData(), 'projects')
+            self.assertEqual(window.tree.currentItem().data(0, ROLE), project)
+            self.assertEqual(window.workspace_state['selection'], project)
+            item = window.tree.currentItem()
+            while item.parent():
+                self.assertTrue(item.parent().isExpanded())
+                item = item.parent()
+            window._test_close()
 
     def test_execution_prompt_handoffs_and_full_record_progress(self):
         with TemporaryDirectory() as temp:

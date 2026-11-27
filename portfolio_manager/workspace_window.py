@@ -19,25 +19,19 @@ from .workspace import context_path
 
 ROLE = int(Qt.ItemDataRole.UserRole)
 PHASE_LABELS = {
-    'working_phase_1': 'Phase 1 · Product research',
-    'working_phase_2': 'Phase 2 · Release platform research',
-    'working_phase_3': 'Phase 3 · Marketing research',
-    'working_phase_4': 'Phase 4 · Build & test',
-    'working_phase_5': 'Phase 5 · Release',
-    'working_phase_6': 'Phase 6 · Marketing',
+    'working_phase_1': 'Phase 1 · Research',
+    'working_phase_2': 'Phase 2 · Build & test',
+    'working_phase_3': 'Phase 3 · Release',
+    'working_phase_4': 'Phase 4 · Marketing',
     'complete': 'Complete · Verified',
 }
 PROMPTS = {
-    'research': ('working_phase_1', 'PHASE_1_RESEARCH_MEGAPROMPT.md', 'Product research'),
-    'idea': ('working_phase_1', 'PHASE_1_IDEA_MEGAPROMPT.md', 'Research my idea'),
-    'recheck': ('working_phase_1', 'PHASE_1_RECHECK_REPLACE_MEGAPROMPT.md', 'Product research recheck'),
-    'phase2': ('working_phase_2', 'PHASE_2_RELEASE_RESEARCH_MEGAPROMPT.md', 'Release platform research'),
-    'phase2_recheck': ('working_phase_2', 'PHASE_2_RECHECK_MEGAPROMPT.md', 'Release platform recheck'),
-    'phase3': ('working_phase_3', 'PHASE_3_MARKETING_RESEARCH_MEGAPROMPT.md', 'Marketing research'),
-    'phase3_recheck': ('working_phase_3', 'PHASE_3_RECHECK_MEGAPROMPT.md', 'Marketing research recheck'),
-    'phase4': ('working_phase_4', 'PHASE_4_BUILD_MEGAPROMPT.md', 'Build'),
-    'phase5': ('working_phase_5', 'PHASE_5_RELEASE_MEGAPROMPT.md', 'Release'),
-    'phase6': ('working_phase_6', 'PHASE_6_MARKETING_MEGAPROMPT.md', 'Marketing'),
+    'research': ('working_phase_1', 'PHASE_1_RESEARCH_MEGAPROMPT.md', 'Phase 1a · Complete research'),
+    'idea': ('working_phase_1', 'PHASE_1_IDEA_MEGAPROMPT.md', 'Phase 1a · Research my idea'),
+    'recheck': ('working_phase_1', 'PHASE_1_RECHECK_REPLACE_MEGAPROMPT.md', 'Phase 1b · Complete verification'),
+    'phase2': ('working_phase_2', 'PHASE_2_BUILD_MEGAPROMPT.md', 'Build'),
+    'phase3': ('working_phase_3', 'PHASE_3_RELEASE_MEGAPROMPT.md', 'Release'),
+    'phase4': ('working_phase_4', 'PHASE_4_MARKETING_MEGAPROMPT.md', 'Marketing'),
 }
 
 
@@ -313,8 +307,6 @@ class WorkspaceWindow(QMainWindow):
                                       ('working_phase_2', '2', '#3377ad'),
                                       ('working_phase_3', '3', '#ad722a'),
                                       ('working_phase_4', '4', '#8753a7'),
-                                      ('working_phase_5', '5', '#256c75'),
-                                      ('working_phase_6', '6', '#b44e7a'),
                                       ('complete', '✓', '#20865a')):
             pixmap = self._file_icon.pixmap(32, 32)
             painter = QPainter(pixmap)
@@ -492,7 +484,7 @@ class WorkspaceWindow(QMainWindow):
         research_layout.addRow(self.project_days_label, self.project_days)
         research_layout.addRow(self.copy_prompt)
         self.paste_project = QPushButton('Paste project text')
-        self.paste_project.setToolTip('Replace this research record with copied text. The phase stays unchanged.')
+        self.paste_project.setToolTip('Paste the complete Phase 1b verified record to advance automatically to Phase 2.')
         self.paste_project.clicked.connect(self._paste_project)
         research_layout.addRow(self.paste_project)
         details.addWidget(self.research_tools)
@@ -677,7 +669,7 @@ class WorkspaceWindow(QMainWindow):
         if self._tree_mode != 'projects':
             self.phase_controls.hide()
         if self._tree_mode == 'completed' and not any(not entry[1] for entry in self._completed_entries):
-            self.preview.setPlainText('No completed projects yet. Verified Phase 6 completions will appear here.')
+            self.preview.setPlainText('No completed projects yet. Verified Phase 4 completions will appear here.')
             self.preview.show()
             self.project_tabs.hide()
             self.completed_detail.hide()
@@ -1176,7 +1168,7 @@ class WorkspaceWindow(QMainWindow):
         self.niche_tools.setVisible(bool(niche))
         active = current is not None and current[3] != 'complete'
         self.research_tools.setVisible(active)
-        research = active and current[3] in {'working_phase_1', 'working_phase_2', 'working_phase_3'}
+        research = active and current[3] == 'working_phase_1'
         self.research_budget.setVisible(bool(active))
         self.budget_label.setVisible(bool(active))
         self.paste_project.setVisible(bool(research))
@@ -1189,18 +1181,12 @@ class WorkspaceWindow(QMainWindow):
         phase = current[3]
         choices = {
             'working_phase_1': ('Copy research prompt', (
-                ('Research a product for this niche', 'research'),
-                ('Research a project from my idea', 'idea'),
-                ('Recheck product research', 'recheck'))),
-            'working_phase_2': ('Copy release research prompt', (
-                ('Research release platforms and compatible versions', 'phase2'),
-                ('Recheck release platform research', 'phase2_recheck'))),
-            'working_phase_3': ('Copy marketing research prompt', (
-                ('Research the marketing plan', 'phase3'),
-                ('Recheck marketing research', 'phase3_recheck'))),
-            'working_phase_4': ('Copy build prompt', (('Build and test the project · /goal', 'phase4'),)),
-            'working_phase_5': ('Copy release prompt', (('Release the project · /goal', 'phase5'),)),
-            'working_phase_6': ('Copy marketing prompt', (('Carry out the marketing plan · /goal', 'phase6'),)),
+                ('Phase 1a · Research a product for this niche', 'research'),
+                ('Phase 1a · Research my existing idea', 'idea'),
+                ('Phase 1b · Verify all research', 'recheck'))),
+            'working_phase_2': ('Copy build prompt', (('Build and test the project · /goal', 'phase2'),)),
+            'working_phase_3': ('Copy release prompt', (('Release the project · /goal', 'phase3'),)),
+            'working_phase_4': ('Copy marketing prompt', (('Carry out the marketing plan · /goal', 'phase4'),)),
         }
         label, options = choices[phase]
         self.copy_prompt.setText(label)
@@ -1252,14 +1238,14 @@ class WorkspaceWindow(QMainWindow):
                 raise ValueError('Enter a valid non-negative planning budget in CAD.')
             prompt = configure_project_day_limit(prompt, days)
             selection = self.workspace_state['selection']
-            if phase in {'working_phase_4', 'working_phase_5', 'working_phase_6'}:
+            if phase in {'working_phase_2', 'working_phase_3', 'working_phase_4'}:
                 if not prompt.startswith('/goal '):
                     raise ValueError('The execution prompt must start with /goal.')
                 prompt += ('\n\nSelected canonical project: ' + selection +
                            '\nStable project ID: ' + meta['id'] +
                            '\nPlanning budget ceiling (CAD): ' + budget +
                            '. Apply any lower existing budget or spending authorization; this planning ceiling does not authorize spending.' +
-                           '\nTotal project day limit across all six phases: ' + days_text + ' calendar days.' +
+                           '\nTotal project day limit across all four phases: ' + days_text + ' calendar days.' +
                            '\nWhen asked to open Portfolio Manager, pass this project ID or canonical project path to portfolio_open, together with this chat’s reconnect key.' +
                            '\nRead the complete current file and its sibling work/ before starting.\n')
             else:
@@ -1276,12 +1262,12 @@ class WorkspaceWindow(QMainWindow):
                 fence = '`' * (max([len(t) for t in re.findall(r'`+', raw)] + [4]) + 1)
                 prompt += ('\n\n## Selected project context\nBUSINESS_NICHE: ' + niche +
                            '\nBUDGET_CEILING_CAD: ' + budget +
-                           '\nTOTAL_PROJECT_WINDOW: Up to ' + days_text + ' calendar days across all six phases.\n'
+                           '\nTOTAL_PROJECT_WINDOW: Up to ' + days_text + ' calendar days across all four phases.\n'
                            'Use this current owner-selected limit for delivery_window_days even if the record below contains an older limit; preserve historical facts.\n'
                            'CANONICAL_PROJECT_PATH: ' + selection +
                            '\nBASE_SHA256: ' + snapshot_sha256(raw) +
                            '\nKeep the ID, niche and current project_phase exactly as supplied. '
-                           'Return complete copyable text for Paste project text; the owner advances phases.\n')
+                           'Return complete copyable text for Paste project text; Phase 1a stays in chat; Phase 1b returns the final record for verified automatic import.\n')
                 if idea:
                     prompt += '\nPROJECT_IDEA:\n' + idea.strip() + '\n'
                 prompt += ('\n## Complete current project record\n' + fence + 'markdown\n' +
@@ -1401,7 +1387,7 @@ class WorkspaceWindow(QMainWindow):
 
     def _paste_project(self):
         current = self._current_project()
-        if not current or current[3] not in {'working_phase_1', 'working_phase_2', 'working_phase_3'}:
+        if not current or current[3] != 'working_phase_1':
             return
         from .project_update import replace_project_text, snapshot_sha256
         path, raw, meta, phase = current
@@ -1411,7 +1397,7 @@ class WorkspaceWindow(QMainWindow):
         dialog.resize(760, 560)
         layout = QVBoxLayout(dialog)
         label = QLabel('Paste the complete project text, including its JSON metadata. '
-                       'This replaces the research record and keeps the current phase. '
+                       'A verified Phase 1b record advances automatically to Phase 2. Drafts stay in Phase 1. '
                        'The previous version is backed up; work/ is preserved.')
         label.setWordWrap(True)
         layout.addWidget(label)
@@ -1427,7 +1413,7 @@ class WorkspaceWindow(QMainWindow):
         error_label.setStyleSheet('color: #9a3535;')
         layout.addWidget(error_label)
         buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Save | QDialogButtonBox.StandardButton.Cancel)
-        buttons.button(QDialogButtonBox.StandardButton.Save).setText('Replace project text')
+        buttons.button(QDialogButtonBox.StandardButton.Save).setText('Save project text')
         buttons.rejected.connect(dialog.reject)
         layout.addWidget(buttons)
         saved = []
@@ -1451,8 +1437,9 @@ class WorkspaceWindow(QMainWindow):
             dialog.deleteLater()
         if result == QDialog.DialogCode.Accepted and saved:
             self._refresh_after_edit(selection)
-            self.notice.setText('Project text updated. ' + PHASE_LABELS[phase] +
-                                ' is unchanged; recheck it before advancing.')
+            self.notice.setText('Verified research saved. Phase 2 · Build & test is ready.'
+                                if saved[-1]['advanced'] else
+                                'Research draft saved in Phase 1. Run Phase 1b verification before advancing.')
             self.notice.show()
 
     def _set_workspace_label(self, title=None):
@@ -1588,8 +1575,10 @@ class WorkspaceWindow(QMainWindow):
         done = re.findall(r'^\s*- \[[xX]\] (.+)$', body, re.M)
         remaining = re.findall(r'^\s*- \[ \] (.+)$', body, re.M)
         stage = meta.get('project_phase', 'working_phase_2') if archived else project_phase(meta)
-        label = stage[-1] if stage in {'working_phase_4', 'working_phase_5', 'working_phase_6'} else ''
-        guesses = [value for value in re.findall(r'Phase\s*' + (label or '[456]') +
+        label = stage[-1] if not archived and stage in {'working_phase_2', 'working_phase_3', 'working_phase_4'} else ''
+        estimate_label = (str(meta.get('project_phase', 'working_phase_2'))[-1]
+                          if label and meta.get('workflow_version') != 3 else label)
+        guesses = [value for value in re.findall(r'Phase\s*' + (estimate_label or '[234]') +
                              r'\s*completion estimate:\s*(\d{1,3})\s*%', body, re.I) if int(value) <= 100]
         estimate = ('Phase ' + label + ' completion estimate: ' + guesses[-1] + '% (best guess)'
                     if guesses and label and int(guesses[-1]) <= 100
@@ -1604,12 +1593,13 @@ class WorkspaceWindow(QMainWindow):
             stage = project_phase(meta)
             self._phase_project = selection
             self._displayed_phase = stage
-            phase_number = int(stage[-1]) if stage != 'complete' else 7
+            phase_number = int(stage[-1]) if stage != 'complete' else 5
             for index in range(self.phase_selector.count()):
                 value = self.phase_selector.itemData(index)
-                number = int(value[-1]) if value != 'complete' else 7
+                number = int(value[-1]) if value != 'complete' else 5
                 self.phase_selector.model().item(index).setEnabled(
-                    number <= 6 and (number <= phase_number or number == phase_number + 1))
+                    number <= 4 and (number <= phase_number or
+                                     (phase_number in (2, 3) and number == phase_number + 1)))
             self.phase_selector.setCurrentIndex(self.phase_selector.findData(stage))
             self.phase_selector.setEnabled(True)
             self._phase_choice_changed()
@@ -1622,20 +1612,20 @@ class WorkspaceWindow(QMainWindow):
         current = getattr(self, '_displayed_phase', None)
         target = self.phase_selector.currentData()
         if target and target != current:
-            if current in {'working_phase_4', 'working_phase_5'} and target == (
+            if current in {'working_phase_2', 'working_phase_3'} and target == (
                     'working_phase_' + str(int(current[-1]) + 1)):
                 self.phase_apply.setText('Manually advance to Phase ' + str(int(current[-1]) + 1))
                 self.phase_apply.setEnabled(True)
             else:
                 self.phase_apply.setText('Update phase')
                 self.phase_apply.setEnabled(target in {'working_phase_1', 'working_phase_2',
-                                                       'working_phase_3', 'working_phase_4',
-                                                       'working_phase_5', 'working_phase_6'} and
-                                            (current == 'complete' or int(target[-1]) < int(current[-1])))
-        elif current in {'working_phase_1', 'working_phase_2', 'working_phase_3'}:
-            self.phase_apply.setText('Advance to Phase ' + str(int(current[-1]) + 1))
-            self.phase_apply.setEnabled(True)
-        elif current in {'working_phase_4', 'working_phase_5'}:
+                                                       'working_phase_3', 'working_phase_4'} and
+                                            (current == 'complete' or
+                                             (current is not None and int(target[-1]) < int(current[-1]))))
+        elif current == 'working_phase_1':
+            self.phase_apply.setText('Paste verified research to advance')
+            self.phase_apply.setEnabled(False)
+        elif current in {'working_phase_2', 'working_phase_3'}:
             self.phase_apply.setText('Manually advance to Phase ' + str(int(current[-1]) + 1))
             self.phase_apply.setEnabled(True)
         else:
@@ -1643,7 +1633,7 @@ class WorkspaceWindow(QMainWindow):
             self.phase_apply.setEnabled(False)
 
     def _apply_project_phase(self):
-        """Allow owner research advances and explicitly unverified execution fallbacks."""
+        """Research advances by verified paste; retain execution recovery controls."""
         selection = self._phase_project
         if not selection:
             return
@@ -1654,16 +1644,16 @@ class WorkspaceWindow(QMainWindow):
             path = record_path(self.repo, selection)
             metadata, _ = parse_project(path.read_text(encoding='utf-8'), selection)
             current = project_phase(metadata)
+            if current == 'working_phase_1':
+                raise ValueError('Paste the verified Phase 1b research record to advance.')
             if target == current:
-                if current not in {'working_phase_1', 'working_phase_2', 'working_phase_3',
-                                   'working_phase_4', 'working_phase_5'}:
-                    raise ValueError('Only Codex can verify completion after Phase 6.')
+                if current not in {'working_phase_2', 'working_phase_3'}:
+                    raise ValueError('Only Codex can verify completion after Phase 4.')
                 target = 'working_phase_' + str(int(current[-1]) + 1)
-            if target not in {'working_phase_1', 'working_phase_2', 'working_phase_3',
-                              'working_phase_4', 'working_phase_5', 'working_phase_6'}:
-                raise ValueError('Only Codex can verify completion after Phase 6.')
+            if target not in {'working_phase_1', 'working_phase_2', 'working_phase_3', 'working_phase_4'}:
+                raise ValueError('Only Codex can verify completion after Phase 4.')
             backwards = current == 'complete' or int(target[-1]) < int(current[-1])
-            override = not backwards and current in {'working_phase_4', 'working_phase_5'}
+            override = not backwards and current in {'working_phase_2', 'working_phase_3'}
             if override and QMessageBox.question(
                     self, 'Manually advance unverified phase',
                     f'Advance from {PHASE_LABELS[current]} to {PHASE_LABELS[target]} '

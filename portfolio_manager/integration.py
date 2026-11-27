@@ -117,7 +117,8 @@ class ManagerHost:
                 from .project_lifecycle import project_phase
                 meta, _ = parse_project(path.read_text(encoding='utf-8'), str(path))
                 data['project']['project_phase'] = project_phase(meta)
-                data['project']['workflow_version'] = meta.get('workflow_version', 1)
+                data['project']['workflow_version'] = 3
+                data['project']['stored_workflow_version'] = meta.get('workflow_version', 1)
                 data['project']['work_folder'] = (path.parent / 'work').relative_to(self.repo).as_posix() if path.name == 'project.md' else None
         return data
 

@@ -119,17 +119,17 @@ def migrate(repo: Path, *, rebuild: bool = True) -> list[dict]:
                 new = niche / old.parent.name / "project.md"
             else:
                 new = niche / old.stem / "project.md"
-            if row.get("workflow_version") == 2 and old == new:
+            if row.get("workflow_version") in (2, 3) and old == new:
                 continue
             if old != new and new.parent.exists():
                 raise ValueError(f"Migration destination already exists: {new.parent}")
             original = old.read_bytes()
             meta, _ = build_browser.parse_project(original.decode("utf-8"), str(old))
             old_phase = meta.get("project_phase", "working_phase_2")
-            if meta.get("workflow_version") != 2 and old_phase not in OLD_PHASES:
+            if meta.get("workflow_version") not in (2, 3) and old_phase not in OLD_PHASES:
                 raise ValueError(f"Unknown previous workflow phase: {old_phase}")
             body = original.decode("utf-8").replace("\r\n", "\n").split("\n---\n", 1)[1]
-            if meta.get("workflow_version") != 2:
+            if meta.get("workflow_version") not in (2, 3):
                 meta["project_phase"] = OLD_PHASES[old_phase]
                 meta["workflow_version"] = 2
                 meta["workflow_migration"] = {

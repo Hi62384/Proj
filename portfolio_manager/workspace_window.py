@@ -1224,6 +1224,7 @@ class WorkspaceWindow(QMainWindow):
                 prompt += ('\n\nSelected canonical project: ' + selection +
                            '\nStable project ID: ' + meta['id'] +
                            '\nTotal project day limit across all six phases: ' + days_text + ' calendar days.' +
+                           '\nWhen asked to open Portfolio Manager, pass this project ID or canonical project path to portfolio_open, together with this chat’s reconnect key.' +
                            '\nRead the complete current file and its sibling work/ before starting.\n')
             else:
                 budget = self.research_budget.text().strip()

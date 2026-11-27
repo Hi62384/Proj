@@ -48,6 +48,9 @@ def schema(operation):
         if operation in {'portfolio_open','portfolio_select'}:
             properties.update(path={'type': 'string', 'minLength': 1, 'maxLength': 1000},
                               revision={'type': 'integer', 'minimum': 0})
+        if operation == 'portfolio_open':
+            properties['project_id'] = {'type': 'string', 'minLength': 1, 'maxLength': 128,
+                'description': 'Stable ID of the project this chat is working on; use instead of path when known.'}
         arguments = {'type': 'object', 'properties': properties, 'additionalProperties': False}
         if operation == 'portfolio_select':
             arguments['required'] = ['path']

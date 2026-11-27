@@ -22,8 +22,35 @@ class WorkspaceTests(unittest.TestCase):
                      'cwd': str(ROOT), 'source': source}
             result = workspace_context(event, client)
             self.assertIn('a' * 64, result['hookSpecificOutput']['additionalContext'])
+            self.assertIn('project_id or canonical project.md path', result['hookSpecificOutput']['additionalContext'])
             client.request.assert_called_with('bridge_bind_codex_session',
                                               {'session_id': 'session_1', 'show': False})
+
+    def test_open_project_by_stable_id_keeps_other_chats_independent(self):
+        second = _record(self.root, 'FAKE-002')
+        host = ManagerHost(self.root, self.root / 'state')
+        self.addCleanup(host.close)
+        first = host.workspace('a' * 32, {'project_id': 'FAKE-001'})
+        other = host.workspace('b' * 32, {'project_id': 'FAKE-002'})
+        self.assertEqual(first['selection'], self.record.relative_to(self.root).as_posix())
+        self.assertEqual(other['selection'], second.relative_to(self.root).as_posix())
+        self.assertEqual(host.context_info(first)['project']['title'], 'Fictional FAKE-001')
+        with self.assertRaisesRegex(ValueError, 'not found'):
+            host.workspace('a' * 32, {'project_id': 'NO-SUCH-PROJECT'})
+        with self.assertRaisesRegex(ValueError, 'either'):
+            host.workspace('a' * 32, {'project_id': 'FAKE-002', 'path': str(self.record)})
+        self.assertEqual(host.get_workspace(first['id'])['selection'], first['selection'])
+        self.assertEqual(host.get_workspace(other['id'])['selection'], other['selection'])
+
+    def test_duplicate_project_id_is_not_selected(self):
+        duplicate = self.root / 'business_portfolio/niches/demo/projects/other.md'
+        duplicate.write_bytes(self.record.read_bytes())
+        host = ManagerHost(self.root, self.root / 'state')
+        self.addCleanup(host.close)
+        workspace = host.workspace('a' * 32, {})
+        with self.assertRaisesRegex(ValueError, 'ambiguous'):
+            host.workspace('a' * 32, {'project_id': 'FAKE-001'})
+        self.assertEqual(host.get_workspace(workspace['id'])['selection'], workspace['selection'])
 
     def setUp(self):
         temp = tempfile.TemporaryDirectory()

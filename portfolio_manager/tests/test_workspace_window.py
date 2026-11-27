@@ -341,6 +341,7 @@ class WorkspaceWindowTests(unittest.TestCase):
             window._copy_megaprompt('phase4')
             self.assertTrue(self.app.clipboard().text().startswith('/goal '))
             self.assertIn('Total project day limit across all six phases: 10 calendar days', self.app.clipboard().text())
+            self.assertIn('pass this project ID or canonical project path to portfolio_open', self.app.clipboard().text())
             window.project_days.setText('0')
             before = self.app.clipboard().text()
             window._copy_megaprompt('phase4')
@@ -400,7 +401,8 @@ class WorkspaceWindowTests(unittest.TestCase):
             host = ManagerHost(repo, root / 'state')
             window = None
             try:
-                workspace = host.workspace('c' * 32, {'path': project})
+                workspace = host.workspace('c' * 32, {'project_id': 'DEMO-082'})
+                self.assertEqual(workspace['selection'], project)
                 window = WorkspaceWindow(host, workspace, on_emergency=lambda:None,
                                          on_stop_all=lambda:None, on_access=lambda:None,
                                          on_close=lambda _:None)

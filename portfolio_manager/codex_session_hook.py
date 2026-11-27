@@ -31,7 +31,9 @@ def workspace_context(event, client):
         'Portfolio Manager has reserved this Codex chat’s workspace. For this chat’s Portfolio Manager calls, '
         'pass this private reconnect_key in the arguments object: ' + key + '. '
         'Keep it in working context only. Do not disclose it to the owner, include it in files, or share it with '
-        'another chat. Use portfolio_open to show this chat’s window and portfolio_context to read its selection.'
+        'another chat. When opening Portfolio Manager, if you know the current portfolio project, call '
+        'portfolio_open with its project_id or canonical project.md path as well as the reconnect_key. '
+        'If the project is unknown, omit both. Use portfolio_context to read the selection.'
     )}}
 
 

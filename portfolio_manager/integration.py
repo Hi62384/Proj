@@ -8,7 +8,7 @@ from business_portfolio.tools.build_browser import project_record_path, project_
 
 
 OPERATIONS = {
-    'portfolio_open': 'Show Portfolio Manager for an explicit owner request. If this chat already knows its current canonical project record, pass that path so its workspace opens on and is named for the project; otherwise preserve its existing selection.',
+    'portfolio_open': 'Show this chat’s Portfolio Manager window. If the chat knows which portfolio project it is working on, pass project_id or its canonical record path so the window opens on and displays that project. If unknown, omit both to preserve the current selection.',
     'portfolio_context': 'Read the selected file or folder, operating mode and bounded portfolio project summary for this chat. Read the complete canonical record and checkpoint before resuming a project. Reconnect with the private reconnect key from the original open result when the transport changes.',
     'portfolio_select': 'Change this chat selection with path and optional revision. Accepts repository-relative paths.',
     'portfolio_start_selected': 'Start a background worker for the selected portfolio folder or project record at the owner’s request.',
@@ -47,9 +47,29 @@ class ManagerHost:
     def workspace(self, client, args, *, active_clients=()):
         with self.workspace_lock:
             row = self.workspaces.attach(client, args.get('reconnect_key'), active_clients=active_clients)
-            if 'path' in args:
-                row.update(self.workspaces.select(row['id'], args['path'], args.get('revision'), client=client))
+            if 'project_id' in args and 'path' in args:
+                raise ValueError('Use either a project ID or a project path, not both.')
+            path = self.project_path_for_id(args['project_id']) if 'project_id' in args else args.get('path')
+            if path is not None:
+                row.update(self.workspaces.select(row['id'], path, args.get('revision'), client=client))
             return row
+
+    def project_path_for_id(self, project_id):
+        """Resolve only an exact, unambiguous active project, without scanning work/."""
+        from business_portfolio.tools.build_browser import parse_project, walk_index_inputs
+        if not isinstance(project_id, str) or not project_id.strip():
+            raise ValueError('Provide a project ID.')
+        matches = []
+        for path in walk_index_inputs(self.coordinator.niches):
+            if not project_record_path(path):
+                continue
+            path = context_path(self.repo, path)
+            meta, _ = parse_project(path.read_text(encoding='utf-8'), str(path))
+            if meta.get('id') == project_id.strip():
+                matches.append(path.relative_to(self.repo).as_posix())
+        if len(matches) != 1:
+            raise ValueError('Project ID was not found or is ambiguous; use the exact project record path.')
+        return matches[0]
 
     def context_info(self, workspace):
         try:

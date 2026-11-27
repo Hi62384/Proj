@@ -5,6 +5,7 @@ import shutil
 
 from business_portfolio.tools import build_browser
 from .project_lifecycle import _single_writer
+from business_portfolio.tools.project_workflow import VERSION, PHASE_1, phase_of, upgrade_record
 from .project_management import (_niche, _record_text, _reserved_project_ids,
                                  _restore_views, _slug, _view_snapshot)
 from .project_update import MAX_UPDATE_BYTES, clean_project_text
@@ -35,14 +36,16 @@ def import_projects(repo, selection, sources):
             if ident in seen:
                 raise ValueError(f'Duplicate or reserved project ID: {ident}. Select an active project to replace its text; preserve historical identities.')
             seen.add(ident)
-            phase = meta.get('project_phase', 'working_phase_1')
-            if 'project_phase' in meta and meta.get('workflow_version') != 2:
-                raise ValueError('A record with a project phase must declare workflow_version 2. Migrate legacy work before importing it.')
-            if meta.get('workflow_version', 2) != 2 or phase not in {f'working_phase_{i}' for i in range(1, 4)}:
-                raise ValueError('Only six-phase research records in Phases 1–3 can be imported; preserve existing execution work through migration.')
-            meta.update(niche_id=niche_meta['id'], niche_path=niche_meta['path'],
-                        workflow_version=2, project_phase=phase)
+            if 'project_phase' in meta and meta.get('workflow_version') not in (2, VERSION):
+                raise ValueError('A record with a project phase must declare workflow_version 2 or 3. Migrate ambiguous legacy work before importing it.')
+            if 'project_phase' not in meta:
+                meta.update(workflow_version=VERSION, project_phase=PHASE_1)
+            if phase_of(meta) != PHASE_1:
+                raise ValueError('Only Phase 1 research records can be imported; preserve existing execution work through migration.')
+            meta, body = upgrade_record(meta, body)
+            meta.update(niche_id=niche_meta['id'], niche_path=niche_meta['path'])
             meta.pop('project_update_base_sha256', None)
+            meta.pop('project_update_phase_1b', None)
             folder = niche / (ident.lower() + '-' + (_slug(str(meta.get('title', ''))) or 'project'))
             if folder.exists() or folder.is_symlink():
                 raise ValueError(f'{folder.name}: destination already exists.')

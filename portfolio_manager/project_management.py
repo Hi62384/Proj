@@ -1,4 +1,4 @@
-"""Reversible local project and niche editing for the six-phase workspace."""
+"""Reversible local project and niche editing for the four-phase workspace."""
 from __future__ import annotations
 
 from datetime import datetime, timezone
@@ -163,14 +163,14 @@ def create_project(repo, selection, title: str = 'Empty project') -> dict:
         folder = niche / (ident.lower() + '-' + (_slug(title) or 'project'))
         if folder.exists():
             raise ValueError('The new project directory already exists; refresh and try again.')
-        meta = dict(id=ident, title=title, schema_version=1, workflow_version=2,
+        meta = dict(id=ident, title=title, schema_version=1, workflow_version=3,
                     project_phase='working_phase_1', draft=True,
                     niche_id=niche_meta['id'], niche_path=niche_meta['path'],
                     record_type='empty_project', origin='owner_created', priority='P2',
                     work_state='planned', commercial_validation='unvalidated',
                     evidence_basis='No product or market research has been performed yet.',
                     source_ids=[], parent_project=None, related_projects=[],
-                    next_action='Copy the Phase 1 research or idea prompt, then paste the researched project text.',
+                    next_action='Run Phase 1a research then Phase 1b verification in the same chat; paste the final verified record to advance to Phase 2.',
                     last_reviewed=_today(), execution_authorized=False, privacy='public',
                     research_verification={f'phase_{i}': 'unreviewed' for i in range(1, 4)},
                     delivery_window_days={'minimum': 2, 'maximum': 21})
@@ -184,37 +184,39 @@ This is an empty planning record in {niche_meta['title']}. Research a worthwhile
 
 Plan the complete project, including research, build, release and initial marketing, for approximately 2 days to 3 weeks. Select a feasible scope; record constraints and deferred opportunities explicitly.
 
-## Phase 1 — Product research and specification
+## Phase 1 — Research
 
-- [ ] Research the buyer, need, alternatives, value, price and feasibility.
-- [ ] Describe the product, features, implementation, acceptance tests and constraints in detail.
-- [ ] Recheck the evidence and address material weaknesses.
+### Stage 1 — Product research
 
-## Phase 2 — Release platforms and compatibility
+- [ ] Research buyer needs, alternatives, pricing, feasibility, product specification and acceptance tests.
+- [ ] Verify the evidence and correct material weaknesses before release research.
 
-- [ ] Research appropriate release platforms and nearby compatible product ecosystems.
-- [ ] Define each feasible version, release requirements and source-backed release checklist.
-- [ ] Update the product specification and verify the release plan.
+### Stage 2 — Release research
 
-## Phase 3 — Marketing research
+- [ ] Research direct and adjacent compatible versions, destinations, fees, rights and eligibility.
+- [ ] Verify the accepted matrix and reconcile the specification before marketing research.
 
-- [ ] Research suitable channels, tactics, audiences, assets, costs and measurement.
-- [ ] Define and recheck the marketing plan; update earlier plans when needed.
+### Stage 3 — Marketing research
 
-## Phase 4 — Build the project
+- [ ] Research buyers, acquisition, content, channel rules, costs, assets and measurement.
+- [ ] Verify the plan, reconcile earlier stages and check the shared delivery window.
 
-- [ ] Build and test all accepted versions, preserving a completed/remaining checklist.
-- [ ] Save all important data, artifacts and URLs; record a best-guess completion percentage at every checkpoint.
+## Phase 1b verification
 
-## Phase 5 — Release the project
+- [ ] Independently recheck all three research stages with fresh evidence.
+- [ ] Return the complete verified record; only all-approved GO advances.
 
-- [ ] Release each accepted version through the researched distribution plan.
-- [ ] Record actual upload, listing, download, purchase and edit URLs and verified outcomes.
+## Phase 2 — Build and verify
 
-## Phase 6 — Market the project
+- [ ] Build and test all accepted versions; record evidence, artifacts, URLs and progress.
 
-- [ ] Execute the approved marketing plan, recording placements, results and remaining tasks.
-- [ ] Verify release and marketing evidence before marking the project complete.
+## Phase 3 — Release execution
+
+- [ ] Release every accepted version and record real customer access, submission and management URLs.
+
+## Phase 4 — Marketing execution
+
+- [ ] Perform the approved finite marketing plan, record placements and verify release and marketing evidence.
 
 ## Important data and URLs
 

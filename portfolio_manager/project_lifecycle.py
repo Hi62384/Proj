@@ -18,27 +18,17 @@ from urllib.parse import urlsplit
 from business_portfolio.tools.build_browser import parse_project, project_record_path
 from .workspace import context_path
 
-PHASE_1 = "working_phase_1"
-PHASE_2 = "working_phase_2"
-PHASE_3 = "working_phase_3"
-PHASE_4 = "working_phase_4"
-PHASE_5 = "working_phase_5"
-PHASE_6 = "working_phase_6"
-COMPLETE = "complete"
-PHASES = (PHASE_1, PHASE_2, PHASE_3, PHASE_4, PHASE_5, PHASE_6, COMPLETE)
-PHASE_LABELS = {
-    PHASE_1: "Product Research", PHASE_2: "Release Research",
-    PHASE_3: "Marketing Research", PHASE_4: "Build & Test",
-    PHASE_5: "Release", PHASE_6: "Marketing", COMPLETE: "Complete",
-}
+from business_portfolio.tools.project_workflow import (
+    VERSION, PHASE_1, PHASE_2, PHASE_3, PHASE_4, COMPLETE, PHASES,
+    RESEARCH_KEYS, phase_of, upgrade_record,
+)
+
+PHASE_LABELS = {PHASE_1: "Research", PHASE_2: "Build & Test",
+                PHASE_3: "Release", PHASE_4: "Marketing", COMPLETE: "Complete"}
 
 
 def project_phase(metadata: dict) -> str:
-    """Read the stored phase; migration explicitly remaps the previous workflow."""
-    value = metadata.get("project_phase", PHASE_1 if metadata.get("workflow_version") == 2 else PHASE_2)
-    if value not in PHASES:
-        raise ValueError("Invalid project_phase in project record.")
-    return value
+    return phase_of(metadata)
 
 
 def record_path(repo: Path, selection: str | Path) -> Path:
@@ -132,49 +122,45 @@ def set_phase(repo: Path, selection: str | Path, phase: str, *,
     checkpoint reference/summary, not a substitute for inspecting the work.
     """
     if phase not in PHASES:
-        raise ValueError("Choose working_phase_1 through working_phase_6, or complete.")
+        raise ValueError("Choose working_phase_1 through working_phase_4, or complete.")
     if actor not in {"user", "codex"}:
         raise ValueError("Phase actor must be user or codex.")
     repo = Path(repo).resolve(strict=True)
     path = record_path(repo, selection)
     with _single_writer(repo / "business_portfolio"):
         raw = path.read_text(encoding="utf-8")
-        meta, _ = parse_project(raw, str(path))
+        meta, body = parse_project(raw, str(path))
+        meta, body = upgrade_record(meta, body)
         old = project_phase(meta)
         old_number, new_number = PHASES.index(old), PHASES.index(phase)
         if new_number > old_number + 1:
             raise ValueError(f"Invalid phase transition from {old} to {phase}.")
         advancing = new_number > old_number
-        if advancing and old in {PHASE_1, PHASE_2, PHASE_3}:
-            if actor != "user":
-                raise ValueError("Research phases are advanced manually by the owner after rechecking.")
-            if (meta.get("draft") is True or meta.get("record_type") == "empty_project" or
-                    str(meta.get("title", "")).strip().lower() == "empty project"):
-                raise ValueError("Paste a researched project before advancing an empty project.")
-        if advancing and old in {PHASE_4, PHASE_5, PHASE_6}:
+        if advancing and old == PHASE_1:
+            raise ValueError("Paste a verified Phase 1b project record to advance to Phase 2.")
+        if advancing and old in {PHASE_2, PHASE_3, PHASE_4}:
             if actor == "codex":
                 if not isinstance(evidence, str) or not evidence.strip():
                     raise ValueError("Execution handoff requires factual completion evidence in --evidence.")
-            elif old in {PHASE_4, PHASE_5} and new_number == old_number + 1:
-                # Owner recovery is not evidence the preceding phase is finished.
+            elif old in {PHASE_2, PHASE_3} and new_number == old_number + 1:
                 evidence = ("MANUAL OVERRIDE — previous phase NOT VERIFIED. "
                             "Preserve outstanding tasks, artifacts, URLs and blockers; "
                             "reconcile prerequisites before new release/marketing actions."
                             + (" Owner note: " + evidence.strip() if isinstance(evidence, str) and evidence.strip() else ""))
             else:
-                raise ValueError("Only Codex can verify Phase 6 completion.")
+                raise ValueError("Only Codex can verify Phase 4 completion.")
         if title is not None:
-            if actor != "codex" or old != PHASE_4:
-                raise ValueError("Codex may assign the finished product name during Phase 4.")
+            if actor != "codex" or old != PHASE_2:
+                raise ValueError("Codex may assign the finished product name during Phase 2.")
             if not isinstance(title, str) or not title.strip() or len(title.strip()) > 200:
                 raise ValueError("The project title must contain 1 to 200 characters.")
             if title.strip().lower() == "empty project":
                 raise ValueError("Choose an appropriate product name, not Empty project.")
             meta["title"] = title.strip()
-        if advancing and old == PHASE_4 and (
+        if advancing and old == PHASE_2 and (
                 not str(meta.get("title", "")).strip() or
                 str(meta.get("title", "")).strip().lower() == "empty project"):
-            raise ValueError("Phase 4 must assign an appropriate product name before release.")
+            raise ValueError("Phase 2 must assign an appropriate product name before release.")
         completion = repo / "business_portfolio" / "completed_projects" / (meta["id"] + ".json")
         if old == COMPLETE and phase != COMPLETE:
             # A demoted project must no longer appear in Completed Projects.
@@ -187,8 +173,8 @@ def set_phase(repo: Path, selection: str | Path, phase: str, *,
                     existing.get("project_phase") != COMPLETE):
                 raise ValueError("Completion receipt does not match the selected project.")
         if phase == COMPLETE:
-            if old not in {PHASE_6, COMPLETE}:
-                raise ValueError("Completion requires verified Phase 6 marketing.")
+            if old not in {PHASE_4, COMPLETE}:
+                raise ValueError("Completion requires verified Phase 4 marketing.")
             if actor != "codex":
                 raise ValueError("Codex marks Complete after verifying release and marketing evidence.")
             if not isinstance(description, str) or not description.strip():
@@ -217,19 +203,18 @@ def set_phase(repo: Path, selection: str | Path, phase: str, *,
         else:
             receipt = None
         meta["project_phase"] = phase
-        meta["workflow_version"] = 2
+        meta["workflow_version"] = VERSION
+        if phase == PHASE_1 and old != PHASE_1:
+            meta["research_verification"] = {key: "unreviewed" for key in RESEARCH_KEYS}
         if old != phase:
             history = meta.setdefault("phase_history", [])
             if not isinstance(history, list):
                 raise ValueError("Project phase_history must be a list.")
-            history.append({"from": old, "to": phase, "actor": actor,
+            history.append({"from": old, "to": phase, "actor": actor, "workflow_version": VERSION,
                             "at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
                             "evidence": evidence.strip() if isinstance(evidence, str) else
-                            "Owner advanced the research phase." if advancing else "Phase reopened for review."})
-        before, sep, body = raw.replace("\r\n", "\n").partition("\n---\n")
-        if not sep:
-            raise ValueError("Project frontmatter is malformed.")
-        updated = "---\n" + json.dumps(meta, ensure_ascii=False, indent=2) + "\n---\n" + body
+                            "Phase reopened for review."})
+        updated = "---\n" + json.dumps(meta, ensure_ascii=False, indent=2) + "\n---\n\n" + body.rstrip() + "\n"
         if path.read_text(encoding="utf-8") != raw:
             raise ValueError("Project was edited by another chat; reload before changing phase.")
         if receipt is not None:
@@ -261,8 +246,9 @@ def main(argv=None):
     parser.add_argument("--project", help="project.md path (or its project folder) relative to the checkout")
     parser.add_argument("--phase", choices=PHASES)
     parser.add_argument("--actor", choices=("user", "codex"), default="user")
+    parser.add_argument("--workflow-version", type=int, choices=(VERSION,), help="Required for set-phase; prevents obsolete prompts changing a new phase.")
     parser.add_argument("--evidence", help="Factual checkpoint/evidence summary required for Codex handoffs")
-    parser.add_argument("--title", help="Appropriate product name assigned by Codex during Phase 4")
+    parser.add_argument("--title", help="Appropriate product name assigned by Codex during Phase 2")
     parser.add_argument("--description", help="Required factual description when completing")
     parser.add_argument("--sale-url", action="append", default=[], help="Public store or purchase URL")
     parser.add_argument("--marketing-url", action="append", default=[], help="Public promotion URL")
@@ -273,6 +259,8 @@ def main(argv=None):
             result = read_completions(args.repo)
         elif not args.project or not args.phase:
             parser.error("set-phase requires --project and --phase")
+        elif args.workflow_version != VERSION:
+            parser.error("Copy the current execution prompt: set-phase requires --workflow-version 3.")
         else:
             result = set_phase(args.repo, args.project, args.phase,
                                description=args.description, sale_urls=args.sale_url,

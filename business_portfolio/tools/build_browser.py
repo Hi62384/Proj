@@ -337,9 +337,10 @@ def load_portfolio(root: Path) -> dict:
                 raise ValidationError(f'{p}: project work/ folder is missing or unsafe')
         if m['niche_path'] != actual or m['niche_id'] != node_paths.get(actual):
             raise ValidationError(f'{p}: record niche mismatch/missing NICHE.json')
-        if m.get('workflow_version', 1) not in {1, 2}:
+        if m.get('workflow_version', 1) not in {1, 2, 3}:
             raise ValidationError(f'{p}: invalid workflow version')
-        if m.get('project_phase', 'working_phase_2') not in {f'working_phase_{i}' for i in range(1, 7)} | {'complete'}:
+        max_phase = 4 if m.get('workflow_version') == 3 else 6
+        if m.get('project_phase', 'working_phase_2') not in {f'working_phase_{i}' for i in range(1, max_phase + 1)} | {'complete'}:
             raise ValidationError(f'{p}: invalid project phase')
         verification = m.get('research_verification', {})
         if (not isinstance(verification, dict) or
@@ -350,7 +351,7 @@ def load_portfolio(root: Path) -> dict:
         if m['work_state'] not in WORK_STATES or m['commercial_validation'] not in VALIDATIONS or m['priority'] not in PRIORITIES:
             raise ValidationError(f'{p}: unknown state/validation/priority')
         if (not isinstance(m['source_ids'],list) or
-                (not m['source_ids'] and m.get('workflow_version') != 2) or
+                (not m['source_ids'] and m.get('workflow_version') not in {2, 3}) or
                 any(not isinstance(x, str) or x not in sources for x in m['source_ids'])):
             raise ValidationError(f'{p}: missing/unknown sources')
         if not isinstance(m['related_projects'],list):

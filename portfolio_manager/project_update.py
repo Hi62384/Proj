@@ -1,9 +1,6 @@
-"""Replace selected Phase 1–3 research records from pasted text or a file.
+"""Validate full research text and advance verified Phase 1b imports atomically.
 
-Planning sections may be rewritten and reorganized. Stable identity, phase and
-existing operational/permission metadata remain protected; prompts require body
-facts and URLs to be retained and exact-byte backups support recovery. A paste
-never advances a phase: the owner controls the research handoffs explicitly.
+Drafts stay in Phase 1. Preserve protected metadata, exact-byte backups, and work.
 """
 from __future__ import annotations
 
@@ -14,6 +11,7 @@ import re
 
 from business_portfolio.tools import build_browser
 from .project_lifecycle import _single_writer, project_phase, record_path
+from business_portfolio.tools.project_workflow import VERSION, PHASE_1, PHASE_2, RESEARCH_KEYS, upgrade_record
 from .project_management import (_atomic_bytes, _backup_record, _record_text,
                                  _restore_views, _title, _view_snapshot)
 
@@ -25,6 +23,8 @@ EDITABLE_FIELDS = {
     'delivery_window_days', 'platforms_proposed',
 }
 TRANSPORT_FIELD = 'project_update_base_sha256'
+VERIFIED_FIELD = 'project_update_phase_1b'
+VERIFIED_VALUE = 'verified'
 
 
 def snapshot_sha256(text: str) -> str:
@@ -47,7 +47,7 @@ def clean_project_text(text: str) -> str:
 
 
 def replace_project_text(repo, selection, text: str, *, expected_sha256: str | None = None) -> dict:
-    """Validate and back up a same-phase replacement, then rebuild atomically."""
+    """Validate, back up, and advance verified research in one transaction."""
     repo = Path(repo).resolve(strict=True)
     portfolio = repo / 'business_portfolio'
     incoming = clean_project_text(text)
@@ -58,10 +58,13 @@ def replace_project_text(repo, selection, text: str, *, expected_sha256: str | N
         old, _ = build_browser.parse_project(original, str(target))
         updated, body = build_browser.parse_project(incoming, 'Pasted project')
         phase = project_phase(old)
-        if phase not in {f'working_phase_{i}' for i in range(1, 4)}:
-            raise ValueError('Pasting research text is available only in Phases 1–3.')
+        if phase != PHASE_1:
+            raise ValueError('Pasting research text is available only in Phase 1.')
         digest = snapshot_sha256(original)
         supplied_digest = updated.pop(TRANSPORT_FIELD, None)
+        marker = updated.pop(VERIFIED_FIELD, None)
+        if marker not in (None, VERIFIED_VALUE):
+            raise ValueError("Invalid Phase 1b verification marker.")
         if ((expected_sha256 is not None and expected_sha256 != digest) or
                 (supplied_digest is not None and supplied_digest != digest)):
             raise ValueError('This update is stale. Copy a fresh prompt or reopen Paste project text.')
@@ -73,8 +76,8 @@ def replace_project_text(repo, selection, text: str, *, expected_sha256: str | N
         for key in updated.keys() - old.keys():
             if key not in EDITABLE_FIELDS:
                 raise ValueError(f'Keep new planning details in Markdown; unsupported metadata: {key}.')
-        if updated.get('project_phase') != phase:
-            raise ValueError('Keep the current project phase; advance it separately in Portfolio Manager.')
+        if updated.get('project_phase') != old.get('project_phase'):
+            raise ValueError('Keep the original stored phase; Portfolio Manager advances verified research.')
         if (not isinstance(updated.get('source_ids'), list) or
                 any(not isinstance(source, str) for source in updated['source_ids']) or
                 not set(old.get('source_ids', [])).issubset(updated['source_ids'])):
@@ -95,6 +98,70 @@ def replace_project_text(repo, selection, text: str, *, expected_sha256: str | N
         if (updated['title'].strip().casefold() != 'empty project' and
                 updated.get('record_type') != 'empty_project' and len(body.strip()) >= 80):
             updated['draft'] = False
+        if marker == VERIFIED_VALUE:
+            checks = updated.get('research_verification')
+            if supplied_digest != digest:
+                raise ValueError('A verified Phase 1b record must include the exact BASE_SHA256.')
+            if (not isinstance(checks, dict) or
+                    any(checks.get(key) != 'approved' for key in RESEARCH_KEYS) or
+                    updated.get('research_verdict') != 'GO' or updated.get('draft') is not False or
+                    updated.get('record_type') in (None, 'empty_project') or
+                    updated['title'].casefold() == 'empty project'):
+                raise ValueError('Phase 1b must approve product, release and marketing research with a GO verdict before advancing.')
+            required = (r'^##\s+Phase 1\s*[-—:]\s*Research\b',
+                        r'^###\s+Stage 1\s*[-—:]\s*Product research\b',
+                        r'^###\s+Stage 2\s*[-—:]\s*Release research\b',
+                        r'^###\s+Stage 3\s*[-—:]\s*Marketing research\b',
+                        r'^##\s+Phase 1b verification\s*
+        contents = _record_text(updated, body).encode('utf-8')
+        views = _view_snapshot(portfolio)
+        backup = _backup_record(portfolio, old['id'], original_bytes)
+        if target.read_bytes() != original_bytes:
+            raise ValueError('The project changed while the update was being prepared. Reopen Paste project text.')
+        _atomic_bytes(target, contents)
+        try:
+            build_browser.build(portfolio)
+        except Exception:
+            _atomic_bytes(target, original_bytes)
+            _restore_views(views)
+            raise
+        return {'id': old['id'], 'path': target.relative_to(repo).as_posix(),
+                'project_phase': phase, 'advanced': phase == PHASE_2, 'backup': str(backup)}
+
+
+def replace_project_from_file(repo, selection, source, *, expected_sha256: str | None = None) -> dict:
+    """Optional file-drop equivalent of Paste project text; preserve work/."""
+    repo = Path(repo).resolve(strict=True)
+    target = record_path(repo, selection)
+    source = Path(source)
+    if (source.suffix.lower() != '.md' or not source.is_file() or
+            build_browser.linked_input(source)):
+        raise ValueError('Drop one regular Markdown project file.')
+    if source.stat().st_size > MAX_UPDATE_BYTES:
+        raise ValueError('The project file exceeds the 5 MB limit.')
+    if source.resolve() == target.resolve():
+        raise ValueError('Drop an external updated file, not the selected project itself.')
+    return replace_project_text(repo, selection, source.read_text(encoding='utf-8-sig'),
+                                expected_sha256=expected_sha256)
+,
+                        r'^##\s+Phase 2\s*[-—:]\s*Build\b',
+                        r'^##\s+Phase 3\s*[-—:]\s*Release\b',
+                        r'^##\s+Phase 4\s*[-—:]\s*Marketing\b')
+            if any(not re.search(pattern, body, re.M | re.I) for pattern in required):
+                raise ValueError('Verified record is missing required sections. Copy the full Phase 1b project text.')
+            if not re.search(r'https?://[^\s)]+', body):
+                raise ValueError('Verified research must retain direct source URLs.')
+        updated, body = upgrade_record(updated, body)
+        if marker == VERIFIED_VALUE:
+            phase = PHASE_2
+            updated['project_phase'] = phase
+            history = updated.setdefault('phase_history', [])
+            if not isinstance(history, list):
+                raise ValueError('Project phase_history must be a list.')
+            history.append({'from': PHASE_1, 'to': PHASE_2, 'actor': 'user',
+                            'workflow_version': VERSION,
+                            'at': datetime.now(timezone.utc).isoformat(timespec='seconds'),
+                            'evidence': 'Owner imported Phase 1b record declaring all three research checks approved. Structural import validation passed; Portfolio Manager does not independently test market claims.'})
         updated['last_reviewed'] = datetime.now(timezone.utc).date().isoformat()
         contents = _record_text(updated, body).encode('utf-8')
         views = _view_snapshot(portfolio)
@@ -109,7 +176,7 @@ def replace_project_text(repo, selection, text: str, *, expected_sha256: str | N
             _restore_views(views)
             raise
         return {'id': old['id'], 'path': target.relative_to(repo).as_posix(),
-                'project_phase': phase, 'backup': str(backup)}
+                'project_phase': phase, 'advanced': phase == PHASE_2, 'backup': str(backup)}
 
 
 def replace_project_from_file(repo, selection, source, *, expected_sha256: str | None = None) -> dict:

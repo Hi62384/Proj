@@ -1,0 +1,45 @@
+{
+  "status": "local_test_only",
+  "date": "2026-11-26",
+  "engine": "Godot 4.7.2 standard Windows x86-64",
+  "fixture_sha256": "d0984e3d7ffe1310407c76a02e4f74eae9a515377b35cd899a70fd569a5445d8",
+  "limitations": "Three sequential headless scripted runs. Monitor values may repeat and are not independent per-frame measurements. High threshold indicates observations >=50 ms, not a count of slow frames. Host activity was not isolated.",
+  "runs": [
+    {
+      "elapsed_seconds": 7.876582,
+      "failures": 0,
+      "first_high_seconds": -1.0,
+      "fixture": "20 navigation agents and a scripted collision platform",
+      "high_monitor_sample_count": 0,
+      "last_high_seconds": -1.0,
+      "physics_process_ms_max": 7.629,
+      "physics_process_ms_mean": 3.58571249999999,
+      "physics_process_ms_p95": 5.914,
+      "samples": 480
+    },
+    {
+      "elapsed_seconds": 7.866461,
+      "failures": 0,
+      "first_high_seconds": -1.0,
+      "fixture": "20 navigation agents and a scripted collision platform",
+      "high_monitor_sample_count": 0,
+      "last_high_seconds": -1.0,
+      "physics_process_ms_max": 8.422,
+      "physics_process_ms_mean": 4.49100624999999,
+      "physics_process_ms_p95": 8.422,
+      "samples": 480
+    },
+    {
+      "elapsed_seconds": 7.871533,
+      "failures": 0,
+      "first_high_seconds": -1.0,
+      "fixture": "20 navigation agents and a scripted collision platform",
+      "high_monitor_sample_count": 0,
+      "last_high_seconds": -1.0,
+      "physics_process_ms_max": 9.682,
+      "physics_process_ms_mean": 4.66563958333331,
+      "physics_process_ms_p95": 9.682,
+      "samples": 480
+    }
+  ]
+}

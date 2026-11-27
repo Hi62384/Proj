@@ -1,0 +1,51 @@
+{
+  "status": "local_test_only",
+  "date": "2026-11-26",
+  "engine": "Godot 4.7.2 standard Windows x86-64",
+  "fixture_sha256": "0c65a9dd42cd0bcea897e3aa8b85bfa595419cfa216cc315d2dc5987948a6399",
+  "limitations": "Three sequential headless scripted runs; wall-clock intervals include scheduling and are not rendering FPS or add-on-only timing; coarse physics monitor values may repeat. Host activity uncontrolled.",
+  "runs": [
+    {
+      "elapsed_seconds": 7.870507,
+      "failures": 0,
+      "first_high_seconds": -1.0,
+      "fixture": "20 navigation agents and a scripted collision platform",
+      "high_monitor_sample_count": 0,
+      "last_high_seconds": -1.0,
+      "max_observed_interval_ms": 20.866,
+      "observed_intervals_over_100_ms": 0,
+      "physics_process_ms_max": 17.441,
+      "physics_process_ms_mean": 4.48607291666667,
+      "physics_process_ms_p95": 17.441,
+      "samples": 480
+    },
+    {
+      "elapsed_seconds": 7.896377,
+      "failures": 0,
+      "first_high_seconds": -1.0,
+      "fixture": "20 navigation agents and a scripted collision platform",
+      "high_monitor_sample_count": 0,
+      "last_high_seconds": -1.0,
+      "max_observed_interval_ms": 21.683,
+      "observed_intervals_over_100_ms": 0,
+      "physics_process_ms_max": 16.212,
+      "physics_process_ms_mean": 4.44325208333334,
+      "physics_process_ms_p95": 16.212,
+      "samples": 480
+    },
+    {
+      "elapsed_seconds": 7.889973,
+      "failures": 0,
+      "first_high_seconds": -1.0,
+      "fixture": "20 navigation agents and a scripted collision platform",
+      "high_monitor_sample_count": 0,
+      "last_high_seconds": -1.0,
+      "max_observed_interval_ms": 21.769,
+      "observed_intervals_over_100_ms": 0,
+      "physics_process_ms_max": 4.658,
+      "physics_process_ms_mean": 2.29515416666666,
+      "physics_process_ms_p95": 4.658,
+      "samples": 480
+    }
+  ]
+}

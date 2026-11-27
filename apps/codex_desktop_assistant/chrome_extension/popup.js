@@ -9,6 +9,7 @@ async function refresh(){
   $('scope').textContent=state.full_browser?'Full Browser Access — new agent tabs across websites':'Restricted Browser — selected tabs/sites';
   $('target').textContent=grant?`This page is authorized · ${new URL(grant.origin).hostname}`:'This tab is not authorized';
   $('manual').checked=Boolean(grant?.manual);
+  $('embedded_auto').checked=Boolean(state.auto_embedded);
   $('authorized_count').textContent=`Authorized tabs in this session: ${state.tabs.length}`;
   if(state.error&&!state.connected)$('error').textContent=state.error;
   if(state.authorization_error)$('error').textContent=state.authorization_error;
@@ -16,6 +17,10 @@ async function refresh(){
 async function guarded(action){try{$('error').textContent='';await action();await refresh();}catch(error){$('error').textContent=error.message;}}
 for(const name of ['connect','disconnect','authorize','stop','open'])$(name).onclick=()=>guarded(()=>send(name));
 $('manual').onchange=()=>guarded(()=>send('manual',{enabled:$('manual').checked}));
+$('embedded_auto').onchange=()=>guarded(async()=>{
+  if($('embedded_auto').checked&&!await chrome.permissions.contains({origins:['http://*/*','https://*/*']}))throw Error('Enable Full Browser Access first.');
+  await send('auto_embedded',{enabled:$('embedded_auto').checked});
+});
 $('site').onclick=()=>guarded(async()=>{
   const [tab]=await chrome.tabs.query({active:true,currentWindow:true});const url=new URL(tab.url);
   if(!['http:','https:'].includes(url.protocol))throw Error('Choose an ordinary HTTP or HTTPS website.');

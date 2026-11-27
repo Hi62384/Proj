@@ -1,0 +1,15 @@
+config_version=5
+
+[application]
+config/name="Transit Coordinator Development"
+run/main_scene="res://demo/transit_demo.tscn"
+
+[display]
+window/size/viewport_width=1152
+window/size/viewport_height=648
+
+[rendering]
+renderer/rendering_method="gl_compatibility"
+
+[editor_plugins]
+enabled=PackedStringArray("res://addons/transit_coordinator/plugin.cfg")

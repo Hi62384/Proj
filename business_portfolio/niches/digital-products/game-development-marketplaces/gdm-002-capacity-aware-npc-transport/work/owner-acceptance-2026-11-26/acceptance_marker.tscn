@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://addons/transit_coordinator/editor/stop_marker.gd" id="1"]
+
+[node name="AcceptanceScene" type="Node3D"]
+
+[node name="TransitStop" type="Node3D" parent="."]
+position = Vector3(2, 0, 0)
+script = ExtResource("1")
+stop_id = "hub"

@@ -47,7 +47,7 @@ func make_box(size: Vector3, color: Color) -> MeshInstance3D:
 	mesh.material_override = material
 	return mesh
 
-func add_button(bar: HBoxContainer, title: String, callback: Callable) -> void:
+func add_button(bar: HFlowContainer, title: String, callback: Callable) -> void:
 	var button := Button.new()
 	button.text = title
 	button.pressed.connect(callback)
@@ -96,17 +96,32 @@ func _ready() -> void:
 	status = Label.new()
 	status.add_theme_font_size_override("font_size",20)
 	status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	panel.add_child(status)
-	var bar := HBoxContainer.new()
+	var bar := HFlowContainer.new()
 	panel.add_child(bar)
 	add_button(bar,"Pause / resume",toggle_pause)
 	add_button(bar,"Disable B-fast",disable_service)
 	add_button(bar,"Enable B-fast",enable_service)
 	add_button(bar,"Save",save_to_disk)
 	add_button(bar,"Load",load_from_disk)
+	var details_button := Button.new()
+	details_button.text = "Hide details"
+	bar.add_child(details_button)
+	details_button.pressed.connect(func():
+		var show := not status.visible
+		status.visible = show
+		message.visible = show
+		details_button.text = "Hide details" if show else "Show details"
+		panel.size.y = 0.0
+	)
+	panel.add_child(status)
 	message = Label.new()
+	message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	message.text = "Synthetic local demo: movement is illustrative, not vehicle physics."
 	panel.add_child(message)
+	var update_status_font := func():
+		status.add_theme_font_size_override("font_size", 14 if panel.size.x < 500.0 else 20)
+	panel.resized.connect(update_status_font)
+	update_status_font.call()
 	transit = Transit.new()
 	add_child(transit)
 	transit.transit_event.connect(on_transit_event)

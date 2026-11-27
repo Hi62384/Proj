@@ -12,6 +12,9 @@ CASES = {
     "test_full_world_restore.gd": "Independent temporary game full world restore: PASS",
     "test_interruption.gd": "Independent temporary game interruption: PASS",
     "test_onboard_cancellation.gd": "Independent temporary game onboard cancellation: PASS",
+    "test_navigation_adapter.gd": "Temporary game navigation adapter ride: PASS",
+    "test_navigation_recovery.gd": "Temporary game navigation recovery: PASS",
+    "test_blocked_crowd_restore.gd": "Temporary game blocked crowd recovery restore: PASS",
 }
 
 if len(sys.argv) != 2:

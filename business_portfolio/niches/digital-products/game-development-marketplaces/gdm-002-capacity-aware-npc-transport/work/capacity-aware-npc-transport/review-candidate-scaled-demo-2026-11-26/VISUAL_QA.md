@@ -1,0 +1,23 @@
+# Visual QA notes — local development
+
+## Scaled demo review — 2026-11-26
+
+A hidden 4.7.2 render at 150% content scaling showed controls and status within the test viewport. The demo now wraps its controls, adjusts the status text at narrow widths and offers a Hide details / Show details control so the status panel can be collapsed to reveal the scene. A simulated input test at that scaling and focused demo tests passed on standard 4.4.1, 4.5.1 and 4.7.2 on Windows. This is not physical-input, assistive-technology or general DPI acceptance.
+
+## Current marker visual check — 2026-11-26
+
+The historical notes below predate the current marker. A background editor capture on Windows/NVIDIA showed the revised cyan diamond and post unselected on standard Godot 4.4.1, 4.5.1 and 4.7.2; a 4.7.2 selected capture showed the marker, transform controls and Stop ID field. This is one camera/display configuration; physical-input, accessibility, DPI, other hardware and interactive acceptance remain open. The earlier statements that the marker had not been visually inspected describe historical evidence only.
+
+These checks are scoped to a synthetic demo, not a general visual or accessibility certification. The captured source for the demo and coordinator matched the then-current review snapshot. Images and temporary capture scripts are kept in the local private workspace and are not part of the add-on.
+
+On Windows x86-64 with an NVIDIA GeForce RTX 3060 Laptop GPU, OpenGL 3.3 compatibility rendering at 1152×648 produced legible start and in-progress screens on Godot 4.4.1, 4.5.1 and 4.7.2. The three versions rendered the same basic scene geometry in the reviewed captures. The demo's pause/resume, save/load and service-enable/disable button signals were invoked programmatically and passed their state checks in each version. The standalone diagnostic overlay was also captured and inspected on 4.5.1.
+
+The graphics were captured directly from a hidden Godot viewport because the computer-use window list did not expose the launched window. These are real engine-rendered images, but the button checks emitted signals directly: they do not verify mouse/keyboard interaction, focus, accessibility, different viewport sizes, DPI scaling, other graphics drivers, or operating systems. The editor stop gizmo has passed headless registration, recognition and redraw smoke checks; its visual appearance has not been inspected. A human-facing interactive visual review remains open.
+
+A follow-up semantic probe found that the demo HUD omitted agents in `boarding` and `boarding_confirmed` from the waiting total (for example, it displayed 17 waiting while three were boarding). The underlying journey and ledger state remained correct. A code fix and regression check are required before accepting those counts; image legibility alone did not detect this issue.
+
+The HUD grouping was corrected: queued, boarding and boarding-confirmed agents count as waiting; onboard and alighting agents count as riding until exit; cancellations are shown separately. A regression checks all displayed totals against journey states through boarding, confirmation and alighting. The corrected boarding capture showed 19 waiting and one cancelled, with the full line visible at 1152×648. Corrected demo renders and scripted control-signal checks passed on all three tested Godot versions; hands-on interaction and other sizes remain unverified.
+
+A separate Godot 4.5.1 editor capture showed the stop node and viewport, but did not clearly establish the custom marker's appearance; the scene also displayed a warning indicator. Visual marker acceptance and investigation of that indicator remain open.
+
+On 2026-11-20, a hidden 4.7.2 render of the recovered demo at 800×600 exposed a clipped status line. The status panel was changed to fit the viewport and wrap its text. The fixed start view was rendered and inspected at 800×600 and 1152×648 on the same Windows/NVIDIA setup; the full status and controls were visible at those sizes. Scripted pause, resume, save, load and service toggles passed in both captures. The layout, HUD and viewport-injected input tests passed on standard 4.4.1, 4.5.1 and 4.7.2; the complete 50-script product suite passed on 4.7.2. These are synthetic input and rendered captures, not physical-device, DPI, accessibility or editor-gizmo visual acceptance. Root-certificate-store warnings persisted.

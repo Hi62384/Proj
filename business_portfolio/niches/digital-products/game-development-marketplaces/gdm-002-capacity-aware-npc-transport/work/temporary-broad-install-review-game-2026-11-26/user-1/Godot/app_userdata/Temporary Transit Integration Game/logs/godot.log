@@ -1,0 +1,8 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+FAIL: four intersecting moving walkers complete their original requests
+FAIL: south emits its own arrival
+FAIL: south reports arrival at its intended endpoint
+Temporary game four-moving-passenger crowd avoidance: FAIL (3 failures; four intersecting routes)

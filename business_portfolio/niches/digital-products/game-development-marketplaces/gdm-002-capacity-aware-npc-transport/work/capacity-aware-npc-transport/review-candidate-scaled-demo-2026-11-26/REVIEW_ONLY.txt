@@ -1,0 +1,2 @@
+Unpublished development snapshot for local review only. Not a licensed or approved release.
+Complete RELEASE_CHECKLIST.md and obtain separate owner approval before publication or spending.

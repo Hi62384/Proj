@@ -1,0 +1,27 @@
+{
+  "status": "local_test_only",
+  "date": "2026-11-26",
+  "fixture_sha256": "69374f65d17fbfe0ddaac5367a371daaafd2e4f3567a86fdf10f391348b7152f",
+  "controller_sha256": "ea84a695a09c5e417f26378534b700fb4978e92bd62fa37e3b23a8cd184f2e4f",
+  "limitations": "Twelve deterministic opposing angles, two equal-sized game-owned controllers, open flat floor; no arbitrary crowd, dynamic obstacles, or add-on-provided avoidance claim.",
+  "runs": [
+    {
+      "version": "4.4.1",
+      "passed": true,
+      "engine_sha256": "239e9d89c02c8e20f3a599da4b3efab2760b240daa889dd754e2fc2bcd8d0c7d",
+      "output": "Godot Engine v4.4.1.stable.official.49a5bc7b6 - https://godotengine.org\n\nSeeded opposing crowd avoidance: PASS (0 failures; twelve angles)\nERROR: Failed to read the root certificate store.\n   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2289)\n"
+    },
+    {
+      "version": "4.5.1",
+      "passed": true,
+      "engine_sha256": "f0336c8b2ae039d39767a64c416f01b1b49d95d8dde87724012874dd4be1c1a8",
+      "output": "Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org\n\nSeeded opposing crowd avoidance: PASS (0 failures; twelve angles)\nERROR: Failed to read the root certificate store.\n   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2548)\n"
+    },
+    {
+      "version": "4.7.2",
+      "passed": true,
+      "engine_sha256": "c8f0a6bc45a19b33541501e57f6f7cd972ab18453743266339d495cbbe846643",
+      "output": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org\n\nSeeded opposing crowd avoidance: PASS (0 failures; twelve angles)\nERROR: Failed to read the root certificate store.\n   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)\n"
+    }
+  ]
+}

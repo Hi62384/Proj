@@ -1,0 +1,51 @@
+{
+  "status": "local_test_only",
+  "date": "2026-11-26",
+  "scenario": "one scripted four-passenger blocked recovery and restore; headless, one run per engine, sequential; other host activity uncontrolled",
+  "limitations": "Godot physics-process monitor may repeat coarse values; samples are not independent per-frame timing, FPS, isolated benchmark, or general capacity guarantee.",
+  "fixture_sha256": "b3ba5c805d25c68dd117fae5bedf7bb66ed838697da61d1491a4b7f3ae9e3573",
+  "runs": [
+    {
+      "version": "4.4.1",
+      "console_sha256": "239e9d89c02c8e20f3a599da4b3efab2760b240daa889dd754e2fc2bcd8d0c7d",
+      "measurement": {
+        "elapsed_seconds": 11.888072,
+        "failures": 0,
+        "fixture": "four-passenger blocked recovery with coordinator restore",
+        "physics_process_ms_max": 8.453,
+        "physics_process_ms_mean": 1.39349237170596,
+        "physics_process_ms_p95": 8.453,
+        "samples": 721
+      },
+      "certificate_warning": true
+    },
+    {
+      "version": "4.5.1",
+      "console_sha256": "f0336c8b2ae039d39767a64c416f01b1b49d95d8dde87724012874dd4be1c1a8",
+      "measurement": {
+        "elapsed_seconds": 11.905325,
+        "failures": 0,
+        "fixture": "four-passenger blocked recovery with coordinator restore",
+        "physics_process_ms_max": 10.248,
+        "physics_process_ms_mean": 1.60402912621359,
+        "physics_process_ms_p95": 10.248,
+        "samples": 721
+      },
+      "certificate_warning": true
+    },
+    {
+      "version": "4.7.2",
+      "console_sha256": "c8f0a6bc45a19b33541501e57f6f7cd972ab18453743266339d495cbbe846643",
+      "measurement": {
+        "elapsed_seconds": 11.9088,
+        "failures": 0,
+        "fixture": "four-passenger blocked recovery with coordinator restore",
+        "physics_process_ms_max": 10.203,
+        "physics_process_ms_mean": 1.82404993065186,
+        "physics_process_ms_p95": 10.203,
+        "samples": 721
+      },
+      "certificate_warning": true
+    }
+  ]
+}

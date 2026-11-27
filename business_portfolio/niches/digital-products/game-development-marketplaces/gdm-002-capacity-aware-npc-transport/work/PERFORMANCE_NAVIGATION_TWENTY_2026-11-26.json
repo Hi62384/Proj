@@ -1,0 +1,50 @@
+{
+  "status": "local_test_only",
+  "date": "2026-11-26",
+  "engine": "Godot 4.7.2 standard Windows x86-64",
+  "executable_sha256": "c8f0a6bc45a19b33541501e57f6f7cd972ab18453743266339d495cbbe846643",
+  "fixture_sha256": "72dce14880c54ba91a029dde79f4d7400933ccd5827b4999968c88ca6c7cd5d2",
+  "scenario": "20 navigation agents; fixed parallel lanes; one scripted physical platform; passenger collisions disabled; alighting scripted",
+  "limitations": "Three sequential headless runs, uncontrolled host activity, no rendering, coarse engine physics monitor: no FPS or general workload guarantee.",
+  "runs": [
+    {
+      "run": 1,
+      "measurement": {
+        "elapsed_seconds": 9.896156,
+        "failures": 0,
+        "fixture": "20 navigation agents and a scripted collision platform",
+        "physics_process_ms_max": 783.942,
+        "physics_process_ms_mean": 133.252627083334,
+        "physics_process_ms_p95": 413.266,
+        "samples": 480
+      },
+      "certificate_warning": true
+    },
+    {
+      "run": 2,
+      "measurement": {
+        "elapsed_seconds": 8.506775,
+        "failures": 0,
+        "fixture": "20 navigation agents and a scripted collision platform",
+        "physics_process_ms_max": 564.197,
+        "physics_process_ms_mean": 80.5578249999999,
+        "physics_process_ms_p95": 265.997,
+        "samples": 480
+      },
+      "certificate_warning": true
+    },
+    {
+      "run": 3,
+      "measurement": {
+        "elapsed_seconds": 7.867913,
+        "failures": 0,
+        "fixture": "20 navigation agents and a scripted collision platform",
+        "physics_process_ms_max": 10.124,
+        "physics_process_ms_mean": 3.643,
+        "physics_process_ms_p95": 10.124,
+        "samples": 480
+      },
+      "certificate_warning": true
+    }
+  ]
+}

@@ -923,3 +923,372 @@ Maintain an **Important URLs** ledger for source/edit/admin/build/upload/live/
 purchase/download/demo/marketing/analytics/support locations, with purpose,
 version, access/status and verification date. Keep replaced links as history.
 Never put passwords, access tokens or private customer/payment information here.
+
+
+### Phase 4 checkpoint — 2026-11-26: temporary-game navigation adapter
+
+Phase 4 completion estimate: 80% (best guess)
+
+- [x] Emergency Stop was cleared by the owner. Added `work/temporary-independent-transit-game/test_navigation_adapter.gd`, adapted from the product fixture, and added it to the project's isolated runner. Standard Godot 4.4.1, 4.5.1 and 4.7.2 passed the new case individually; the six-case temporary-game runner passed on 4.7.2. Each engine reported the existing root-certificate-store warning.
+- [x] The synthetic scene exercises optional navigation-adapter boarding and a physical platform ride alongside prior game-owned controller tests. The fixture controls the final walk and alighting acknowledgment; it is not a complete adapter-driven journey or evidence from an existing external game.
+- [ ] Complete visual/editor acceptance, broader representative integration and performance confidence, rights/license and final release preparation. The owner confirmed no existing game is available and requested the temporary project. Physical-device/editor interaction remains unverified.
+- Decision and external effects: continue local Phase 4 work; no spend, account, outreach, publication or deployment occurred. Spending and publication require separate owner approval.
+- Next action: extend the temporary project's navigation-adapter scenario through physically verified alighting using the adapter, then rerun the affected checks. The estimate is a judgment based on tested core and remaining acceptance work, not measured completion.
+
+
+### Phase 4 checkpoint — 2026-11-26: adapter-controlled exit
+
+Phase 4 completion estimate: 81% (best guess)
+
+- [x] Extended `work/temporary-independent-transit-game/test_navigation_adapter.gd` so the optional navigation adapter handles physically verified boarding and alighting, with a scripted platform ride between them. The expanded navigation mesh covers one fixed straight route. Standard Godot 4.4.1, 4.5.1 and 4.7.2 passed this case individually; the complete six-case temporary-game runner passed on 4.7.2. The known root-certificate-store warning was emitted.
+- [ ] Complete hands-on demo and editor-gizmo acceptance, broader integration/performance confidence, rights/license and final release preparation. The temporary project is synthetic; no existing game was supplied. The navigation mesh and platform are fixed, and this result does not prove arbitrary dynamic navigation.
+- Decision and external effects: local Phase 4 development only; no spending, publication, outreach, accounts or external release occurred. Owner approval remains necessary for spending or publication.
+- Next action: inspect the editor marker visually in a background-friendly way and prepare a precise acceptance record; if hands-on access is needed, keep it explicitly open. Estimate is a best guess based on completed integration and remaining acceptance, not measured completion.
+
+
+### Phase 4 verification note — 2026-11-26
+
+Phase 4 completion estimate: 81% (best guess)
+
+- [x] Portfolio browser build and check and commercial checks passed after the navigation checkpoint. The business portfolio suite ran 108 tests successfully with two skips under Python UTF-8 mode. Its first run under the Windows default encoding had two `UnicodeDecodeError` errors in migration fixtures; the UTF-8 rerun passed.
+- [ ] The Portfolio Manager MCP-session regression did not pass in this environment: system Python lacked PySide6; the existing application virtual environment had PySide6 but its test failed with Windows named-pipe `PermissionError` (WinError 5). No permissions were bypassed. This is a manager test limitation, not a failed Godot navigation test.
+- No spending, publication or external action occurred. Next action: investigate the editor marker visually without taking control of the owner's desktop and keep hands-on acceptance open where background evidence cannot establish it. Estimate remains a best guess.
+
+
+### Phase 4 checkpoint — 2026-11-26: navigation recovery
+
+Phase 4 completion estimate: 82% (best guess)
+
+- [x] Added `work/temporary-independent-transit-game/test_navigation_recovery.gd`, adapted from the product fixture, to exercise one passenger's physically verified recovery using the navigation adapter after service disruption. Standard Godot 4.4.1, 4.5.1 and 4.7.2 passed the case individually; the expanded seven-case temporary-game runner passed on 4.7.2. The known root-certificate-store warning was emitted.
+- [x] Inspected the preserved earlier editor screenshot and compared the marker implementation: the image came from a different instrumented, opaque-material implementation than the current marker. It cannot establish the current marker's appearance.
+- [ ] Complete visual/editor and physical-device acceptance, broader realistic integration and performance confidence, licensing/rights and final release preparation. Navigation recovery remains one scripted platform and fixed navigation mesh, not general safe-stop selection or crowd avoidance.
+- External effects: no spending, publication, outreach, account changes or deployment. Owner approval remains required for spending or publication.
+- Next action: create a current-source, background-friendly editor marker capture or explicitly retain visual acceptance as open if that cannot be done without desktop control. Estimate is a best guess, not measured completion.
+
+
+### Phase 4 verification note — 2026-11-26: background editor capture
+
+Phase 4 completion estimate: 82% (best guess)
+
+- [x] After the recovery checkpoint, the portfolio browser build and check and commercial checks passed. The portfolio suite passed 108 tests with two skips using Python UTF-8 mode.
+- [ ] An isolated background Godot 4.7.2 editor capture using the current candidate marker timed out after 90 seconds without producing an image. The copied test plugin only instruments capture; it did not change product source. Current-marker visual acceptance therefore remains open; the earlier screenshot is not evidence for this version.
+- No spending, publishing or external deployment occurred. Next action: diagnose the background editor capture or arrange hands-on marker acceptance, then finish documented release preparation. The percentage is a best guess, not measured completion.
+
+
+### Phase 4 checkpoint — 2026-11-26: current-build compatibility and integrity
+
+Phase 4 completion estimate: 83% (best guess)
+
+- [x] The current 50-test product suite passed 50/50 on standard Godot 4.4.1 and 50/50 on standard 4.5.1 on this Windows machine, closing the previous full-suite gap for these versions. Each run emitted 50 root-certificate-store warnings. A prior full run passed 50/50 on 4.7.2; these results do not establish support on other hardware or operating systems.
+- [x] Audited all 85 entries in the historical candidate manifest: 52 byte hashes matched and 33 differed only in reconstructible line endings. Saved the present-byte hashes and per-file comparison in `work/CANDIDATE_INTEGRITY_2026-11-26.json`; all 85 present hashes remained unchanged after the tests. This inventory does not establish provenance, rights or release approval. The historical manifest remains unchanged.
+- [x] A hidden Godot 4.7.2 editor loaded the current marker and reported one gizmo, but produced no screenshot before the frame limit. This verifies loading only, not marker appearance.
+- [ ] Complete visual and physical-device acceptance, establish practical workload limits, resolve license/rights and final release preparation. The temporary game remains synthetic.
+- No spending, publication, outreach or deployment occurred. Next action: review the current marker visually without interrupting the desktop, or retain that acceptance as open; finish bounded performance and release preparation. This estimate is a best guess, not observed completion.
+
+
+### Phase 4 verification note — 2026-11-26: integration matrix
+
+Phase 4 completion estimate: 83% (best guess)
+
+- [x] The full seven-case temporary independent game runner passed 7/7 on each of standard Godot 4.4.1 and 4.5.1; the prior 4.7.2 full run also passed 7/7. These checks cover bounded synthetic transfer, restore, interruption, cancellation and navigation recovery, not arbitrary real-game behavior.
+- [x] The portfolio browser build and check, commercial checks and 108-test portfolio suite passed (two skips).
+- [ ] The Portfolio Manager MCP session test failed again with Windows named-pipe access denied (WinError 5); no permissions were bypassed. Visual editor acceptance, physical input, practical workload limits and final licensing/release review remain open.
+- No spending, publication or deployment occurred. Next action: resolve visual review and bounded performance evidence, then prepare the exact candidate and owner decisions for release. Estimate remains a best guess.
+
+
+### Phase 4 verification note — 2026-11-26: revised candidate regression
+
+Phase 4 completion estimate: 84% (best guess)
+
+- [x] The staged marker-fix candidate passed the complete 50/50 product tests on standard Godot 4.7.2. All 85 manifest entries matched their recorded byte hashes after testing. Standard 4.4.1 and 4.5.1 passed focused editor and installation checks on this candidate; their 50/50 full suites were run against the immediately preceding candidate before the editor-only change. Root-certificate-store warnings persisted.
+- [x] Portfolio suite passed 108 tests with two skips; commercial checks passed. The browser build/check is to be refreshed after this record update.
+- [ ] Hands-on and accessibility acceptance, broader game-level performance, rights and license, and final release preparation remain open. The prior manager MCP session test still has a documented Windows access-denial limitation.
+- No spending or publication occurred. Next action: finish release preparation and outstanding acceptance using the marker-fix candidate. Estimate remains a best guess.
+
+
+### Phase 4 checkpoint — 2026-11-26: blocked recovery and visual review
+
+Phase 4 completion estimate: 85% (best guess)
+
+- [x] Added `work/temporary-independent-transit-game/test_blocked_crowd_restore.gd`, extending the existing four-passenger blocked recovery fixture: three passengers reach safety while one remains stranded with a seat held; a new coordinator and adapter restore the mixed state, and the last passenger exits after the obstacle is removed. This case passed individually on standard Godot 4.4.1, 4.5.1 and 4.7.2; the expanded temporary-game runner passed 8/8 on 4.7.2. The platform and obstacle are scripted, bodies are reused, and this is not general world restoration or obstacle avoidance.
+- [x] The marker-fix candidate's unselected stop marker was inspected in hidden editor captures on 4.4.1, 4.5.1 and 4.7.2; a 4.7.2 selected capture showed its Stop ID and transform controls. The marker uses an opaque unshaded material and diamond outline to address the previously faint unselected marker. Evidence is under `work/evidence/`; each capture used marker source matching the staged candidate. This is one Windows/NVIDIA configuration and does not establish physical-input or accessibility acceptance.
+- [x] Earlier work staged `work/capacity-aware-npc-transport/review-candidate-marker-fix-2026-11-26`, passed 50/50 product tests on 4.7.2, passed editor registration/recognition/redraw and install/reinstall on 4.4.1, 4.5.1 and 4.7.2, and verified its 85-entry manifest. A single bounded physical performance sample is recorded in `work/PERFORMANCE_PHYSICAL_2026-11-26.md`. A local evidence and remaining-work review is in `work/CANDIDATE_REVIEW_2026-11-26.md`. Root-certificate-store warnings persisted.
+- [ ] Finish interactive and accessibility acceptance, broaden realistic performance evidence, reconcile outdated candidate documentation, settle rights/license and prepare the exact release for owner review. The Portfolio Manager MCP session test has a prior Windows named-pipe access-denied limitation.
+- External effects: no spending, publication, outreach or deployment. Next action: update and restage truthful candidate documentation, verify the exact resulting files and continue outstanding acceptance. Estimate is a best guess, not observed completion.
+
+
+### Phase 4 checkpoint — 2026-11-26: documentation-aligned candidate
+
+Phase 4 completion estimate: 85% (best guess)
+
+- [x] Created `work/capacity-aware-npc-transport/review-candidate-verified-2026-11-26` from the marker-fix candidate, updating the compatibility, visual QA and test-evidence documents to reflect the current checks and their limits. The other 82 manifest entries are byte-identical to the previous candidate. All 85 manifest entries matched; clean install/reinstall and editor registration/recognition/redraw passed on standard Godot 4.7.2, with the existing certificate-store warning. Its byte-identical executable files had passed the previous candidate's 50-test suite; a full suite was not rerun against the documentation-only snapshot.
+- [x] Recorded outstanding decisions, evidence and scope in `work/CANDIDATE_REVIEW_2026-11-26.md`. The temporary game's new four-passenger blocked-exit restore case passed individually on 4.4.1, 4.5.1 and 4.7.2 and the full expanded runner passed 8/8 on 4.7.2. Captures under `work/evidence/` show the unselected marker on all three tested versions and the selected marker on 4.7.2.
+- [ ] Physical-device and accessibility acceptance, broader game-level performance, definitive rights/license and final delivery preparation remain open. The earlier Portfolio Manager session test remains limited by Windows named-pipe access denial.
+- No spending, publication, outreach or deployment occurred. Next action: finish feasible acceptance and delivery preparation, preserve honest limitations and obtain separate approval before publishing or spending. Estimate is a best guess.
+
+
+### Phase 4 checkpoint — 2026-11-26: exact install-review integration
+
+Phase 4 completion estimate: 86% (best guess)
+
+- [x] Prepared unpublished, unlicensed `work/capacity-aware-npc-transport/install-review-marker-2026-11-26` with the updated marker add-on, integration and compatibility guides, draft rights/support material and an 18-file manifest. Every add-on byte matched `review-candidate-verified-2026-11-26`; its 18 manifest entries matched after testing.
+- [x] Copied that exact install-review add-on into clean isolated Godot projects and verified install/reinstall on standard 4.4.1, 4.5.1 and 4.7.2. Also copied the exact add-on into `work/temporary-install-review-game-2026-11-26` and passed the full eight-case synthetic game runner on 4.7.2; its copy still matched after testing. The existing certificate-store warning was emitted. These checks do not validate an independently developed game or arbitrary navigation/obstacles.
+- [x] Portfolio suite passed 108 tests with two skips; commercial checks and browser build/check passed. The related manager MCP-session test again failed on Windows named-pipe access denied (WinError 5); no access controls were bypassed.
+- [ ] Complete remaining physical-input/accessibility review, broader game-level performance confidence, rights/license and final delivery review. The install-review folder is not an approved or licensed release.
+- No spending, publication, outreach or deployment occurred. Next action: review unresolved acceptance and rights decisions for a final candidate; obtain separate approval before publishing or spending. The percentage is a best guess, not measured completion.
+
+
+### Phase 4 checkpoint — 2026-11-26: self-contained quickstart
+
+Phase 4 completion estimate: 87% (best guess)
+
+- [x] Created unpublished, unlicensed `work/capacity-aware-npc-transport/install-review-quickstart-2026-11-26`, adding a runnable logical-only quickstart and package-specific guidance to the previous install review. It explicitly simulates acknowledgments and warns that a real game must verify physical boarding and exit; the package references to unavailable development examples were clarified. The exact quickstart passed in clean projects on standard Godot 4.4.1, 4.5.1 and 4.7.2 on Windows.
+- [x] The 19-entry manifest matched after preparation and every add-on file matched the earlier install review byte-for-byte. That earlier add-on passed clean install/reinstall on all three versions and the eight-case temporary-game suite on 4.7.2. The known root-certificate-store warning persisted. The local review record contains the scope and open work.
+- [ ] Finish hands-on and accessibility acceptance, establish wider representative performance confidence, resolve rights/license and finalize the delivery inventory and support terms. No external game was provided; synthetic cases and a logical quickstart do not prove arbitrary integration.
+- No spending, publication, outreach, accounts or deployment occurred. Next action: complete feasible product acceptance and prepare remaining owner-dependent license and release decisions; separate approval remains required before spending or publication. Estimate is a best guess.
+
+
+### Phase 4 checkpoint — 2026-11-26: physical integration example
+
+Phase 4 completion estimate: 88% (best guess)
+
+- [x] Prepared `work/capacity-aware-npc-transport/install-review-physical-example-2026-11-26`, an unpublished, unlicensed 21-file local review that adds a logical quickstart and a scripted physical transfer with a game-owned passenger controller. The physical example is adapted from the temporary integration project and demonstrates one passenger, two moving collision platforms and verified movement callbacks. Its fixed targets are not general obstacle or crowd handling.
+- [x] Both included examples passed from clean projects on standard Godot 4.4.1, 4.5.1 and 4.7.2 on Windows. The 21-entry manifest matched and all add-on bytes matched the previously tested install review, which passed clean install/reinstall on those three versions and the eight-case temporary-game suite on 4.7.2. Root-certificate-store warnings persisted.
+- [x] Earlier this checkpoint the portfolio suite passed 108 tests with two skips, the Portfolio Manager lifecycle suite passed 12 tests, commercial checks passed, and the browser build/check passed.
+- [ ] Hands-on and accessibility acceptance, representative game-level performance confidence, rights/license, support terms and final delivery review remain open. No existing external game was supplied.
+- No spending, publication, outreach, accounts or deployment occurred. Next action: complete feasible acceptance and prepare concrete remaining license and release decisions; obtain separate owner approval before spending or publication. Estimate is a best guess.
+
+
+### Phase 4 verification note — 2026-11-26: blocked-navigation measurement
+
+Phase 4 completion estimate: 88% (best guess)
+
+- [x] Instrumented the temporary install-review game's four-passenger blocked recovery and coordinator restore. A single Godot 4.7.2 headless run passed its assertions and recorded engine physics-process monitor samples; the result, reproducible command and limits are in `work/PERFORMANCE_PHYSICAL_2026-11-26.md`. The monitor can repeat coarse values and is not an independent per-frame or FPS measure. Rendering, broad navigation and other machines remain untested.
+- [ ] Hands-on and accessibility acceptance, wider representative workload evidence, rights/license, support terms and final delivery review remain open. The local install review is unpublished and unlicensed.
+- No spending, publication or deployment occurred. Next action: resolve feasible release-preparation work and retain owner-dependent decisions for approval; percentage remains a best guess.
+
+
+### Phase 4 checkpoint — 2026-11-26: destroyed-passenger recovery
+
+Phase 4 completion estimate: 89% (best guess)
+
+- [x] Added `work/temporary-install-review-game-2026-11-26/test_crowd_destroyed_recovery.gd`: four passengers start physical disruption recovery; the game removes one body while three others reach safety. The adapter reports the missing body, the coordinator retains its occupied seat until the game explicitly calls `remove_destroyed_agent`, and cleanup cancels the journey and rejects duplicate removal. The case passed individually on standard Godot 4.4.1, 4.5.1 and 4.7.2; the exact-install temporary-game runner passed 9/9 on 4.7.2. This is one scripted scene, not automatic world reconciliation or general crowd proof.
+- [x] Verified all 21 entries in `work/capacity-aware-npc-transport/install-review-physical-example-2026-11-26/MANIFEST.json` and confirmed its add-on is byte-identical to the temporary game's tested copy. Prepared `work/RELEASE_DECISIONS_DRAFT_2026-11-26.md` to make remaining rights, licensing, support, acceptance and release choices reviewable. Root-certificate-store warnings persisted.
+- [ ] Complete physical-input and accessibility acceptance, broaden game-level performance evidence, establish rights/license and support terms, and approve the exact final delivery. The review is unlicensed and unpublished; no existing external game was supplied.
+- No spending, publication, outreach, account changes or deployment occurred. Next action: continue feasible acceptance and evidence, then obtain explicit owner approval before any publication or spending. This percentage is a best guess.
+
+
+### Phase 4 checkpoint — 2026-11-26: installation onboarding
+
+Phase 4 completion estimate: 89% (best guess)
+
+- [x] Prepared the unpublished, unlicensed `work/capacity-aware-npc-transport/install-review-onboarding-2026-11-26` with a new installation guide. It explains how to copy the add-on, enable its optional editor plugin, attach the stop-marker script, set a stop ID, run the included examples and safely remove the tool. It explicitly states that the marker is only visual and does not create graph stops or verify movement.
+- [x] The 22-entry manifest matched. Add-on and example files are byte-identical to the previous install-review copy, whose two examples passed on standard Godot 4.4.1, 4.5.1 and 4.7.2. A clean-project packaged-editor registration, recognition and redraw check also passed on each of those versions. These checks do not establish hands-on or accessibility acceptance.
+- [x] Ran the bounded four-passenger blocked-recovery measurement once on each standard 4.4.1, 4.5.1 and 4.7.2; all passed. Raw data and source/executable hashes are in `work/PERFORMANCE_BLOCKED_MATRIX_2026-11-26.json`, with limitations in `work/PERFORMANCE_PHYSICAL_2026-11-26.md`. This is one scripted headless scene with uncontrolled host activity and coarse monitor values, not a supported workload or FPS guarantee. Root-certificate-store warnings persisted.
+- [ ] Complete physical-input/accessibility acceptance, broader game-level performance confidence, rights/license, support terms and final delivery review. The selected local review remains unlicensed and unpublished.
+- No spending, publication, outreach, accounts or deployment occurred. Next action: continue feasible acceptance and prepare exact final delivery and owner decisions; separate approval is required before spending or publication. Estimate remains a best guess.
+
+
+### Phase 4 checkpoint — 2026-11-26: demo input sizes
+
+Phase 4 completion estimate: 90% (best guess)
+
+- [x] Created `work/temporary-demo-input-review-2026-11-26` from the verified review candidate's add-on and development demo. At 640×480, 800×600 and 1152×648, it checked the requested viewport size and bounds of pause, save and load controls, then injected mouse clicks and a focused keyboard action. All three sizes passed on standard Godot 4.4.1, 4.5.1 and 4.7.2 on Windows. The known certificate-store warning persisted. These are synthetic events and geometric bounds checks; they do not establish physical input, DPI scaling, accessibility, visual legibility or other-platform behavior. The development demo is not included in the small install review.
+- [x] The local onboarding review documents optional plugin activation, stop-marker setup and its visual-only semantics. The exact packaged editor registration/recognition/redraw checks passed on all three standard versions; its add-on and examples are byte-identical to the earlier tested install review. The 22-entry manifest matched.
+- [ ] Physical-device and accessibility acceptance, broader game-level performance confidence, rights/license, support terms and final delivery review remain open. The package is unpublished and unlicensed; comparative commercial advantage is unproven.
+- No spending, publication, outreach, accounts or deployment occurred. Next action: complete feasible acceptance and prepare remaining owner-dependent release decisions; obtain separate owner approval before publishing or spending. The percentage is a best guess.
+
+
+### Phase 4 checkpoint — 2026-11-26: keyboard focus coverage
+
+Phase 4 completion estimate: 90% (best guess)
+
+- [x] Extended the three temporary demo viewport tests to inject keyboard focus traversal from Save to Load and activate Load with a keyboard action, in addition to existing mouse, keyboard resume, viewport-size and control-bounds checks. All three viewport sizes passed on standard Godot 4.4.1, 4.5.1 and 4.7.2 on Windows. The development demo is not included in the smaller install review. These are synthetic events and do not establish physical-device input, DPI, assistive technology or full accessibility acceptance. Root-certificate-store warnings persisted.
+- [x] Updated `work/RELEASE_DECISIONS_DRAFT_2026-11-26.md` with the newer 22-file onboarding review and the precise limits of its evidence. It remains an unpublished, unlicensed draft.
+- [ ] Hands-on and broader accessibility acceptance, representative performance confidence, rights/license, support terms and final delivery review remain open. No existing external game was supplied.
+- No spending, publication, outreach, account changes or deployment occurred. Next action: complete feasible acceptance and prepare owner-dependent decisions; obtain separate owner approval before publishing or spending. The estimate remains a best guess.
+
+
+### Phase 4 checkpoint — 2026-11-26: scaled demo layout fix
+
+Phase 4 completion estimate: 90% (best guess)
+
+- [x] A background test at 150% Godot content scaling exposed Save and Load outside the small visible viewport. Updated the development demo to wrap its controls, reduce status font size at narrow widths, wrap its message, and allow the details panel to be hidden or shown. This retains the newer status backdrop from development source. The demo is not included in the small install review.
+- [x] Inspected 4.7.2 background captures of the scaled expanded and compact states in `work/temporary-demo-input-review-2026-11-26/`; the compact state exposes the scene. Eight focused demo, layout, keyboard/mouse-injection and scaled tests passed on each of standard Godot 4.4.1, 4.5.1 and 4.7.2 on Windows. These are synthetic checks, not physical-device or comprehensive accessibility acceptance.
+- [x] Staged `work/capacity-aware-npc-transport/review-candidate-scaled-demo-2026-11-26` with the fixed demo, an added scaled-input test and updated evidence notes. Clean install/reinstall passed on 4.7.2; its full product suite is in progress. The add-on runtime is unchanged. Root-certificate-store warnings persisted.
+- [ ] Finish the staged regression and manifest audit, physical-input and accessibility acceptance, broader representative performance confidence, rights/license, support terms and final delivery review. No existing external game was supplied.
+- No spending, publication, outreach, accounts or deployment occurred. Next action: finish the candidate regression and record its exact result; keep owner-dependent decisions and separate publication/spending approval open. Estimate remains a best guess.
+
+
+### Phase 4 checkpoint — 2026-11-26: scaled demo regression
+
+Phase 4 completion estimate: 91% (best guess)
+
+- [x] The staged `work/capacity-aware-npc-transport/review-candidate-scaled-demo-2026-11-26` passed its full 51/51 product suite on standard Godot 4.7.2; all 86 manifest entries matched after testing. Focused checks on byte-identical demo/add-on source passed on standard 4.4.1, 4.5.1 and 4.7.2, including 150% Godot content scaling, simulated input, hide/show details and normal viewport sizes. A separate scaled state-change and service-message bounds check passed on all three. The existing root-certificate-store warnings persisted.
+- [x] Inspected background 4.7.2 expanded and compact scaled renders in `work/temporary-demo-input-review-2026-11-26/`. The fix restores the dark status backdrop from the working development source; the earlier `review-candidate-verified-2026-11-26` demo did not contain that backdrop, so its prior backdrop evidence must not be attributed to that snapshot. The smaller 22-file onboarding install review does not include the development demo. The add-on runtime is unchanged.
+- [x] The portfolio suite passed 108 tests with two skips, the relevant lifecycle suite passed 12 tests and commercial checks passed.
+- [ ] Native OS DPI, physical-input and broader accessibility acceptance, representative game-level performance, rights/license, support terms and final delivery review remain open. The install review is unpublished and unlicensed.
+- No spending, publication, outreach, accounts or deployment occurred. Next action: retain the tested demo candidate, finish feasible acceptance and owner-dependent decisions, and obtain separate owner approval before publication or spending. Estimate is a best guess.
+
+
+### Phase 4 checkpoint — 2026-11-26: acceptance and provenance preparation
+
+Phase 4 completion estimate: 91% (best guess)
+
+- [x] Prepared `work/ACCEPTANCE_RUNBOOK_LOCAL_2026-11-26.md` with reproducible physical mouse/keyboard, native scaling, marker and limited accessibility checks. They are not yet performed; the owner requested background testing, so no desktop takeover or display-setting change was made.
+- [x] Saved `work/INSTALL_REVIEW_PROVENANCE_TRACE_2026-11-26.json`, tracing all 22 local install-review manifest files to their observed sources; add-on and passenger-controller byte matches and the physical example transformations were checked. This trace does not establish ownership, redistribution rights or a license. Added concrete nonbinding rights and support choices to `work/RELEASE_DECISIONS_DRAFT_2026-11-26.md`.
+- [ ] Full 51-test runs on standard Godot 4.4.1 and 4.5.1 against the scaled-demo candidate are in progress. Physical-input/accessibility acceptance, representative performance confidence, rights/license, support terms and final delivery review remain open. The prior 4.7.2 full suite passed; the product remains unlicensed and unpublished.
+- No spending, publication, outreach, accounts or deployment occurred. Next action: record the two full regression outcomes and retain the acceptance and owner-dependent decisions for review. The estimate remains a best guess.
+
+
+### Phase 4 checkpoint — 2026-11-26: full scaled-demo compatibility
+
+Phase 4 completion estimate: 92% (best guess)
+
+- [x] The exact `work/capacity-aware-npc-transport/review-candidate-scaled-demo-2026-11-26` passed its full 51/51 product tests on standard Godot 4.4.1 and 4.5.1 on Windows, matching the earlier 51/51 run on 4.7.2. All 86 candidate manifest entries matched after the later runs. The known root-certificate-store warnings were emitted. This is local Windows evidence, not a guarantee for other hardware, engines or arbitrary games.
+- [x] Prepared the unperformed physical-input, native display scaling and limited accessibility checklist at `work/ACCEPTANCE_RUNBOOK_LOCAL_2026-11-26.md`. Saved `work/INSTALL_REVIEW_PROVENANCE_TRACE_2026-11-26.json` for the 22-file local install review and added nonbinding rights and support choices to `work/RELEASE_DECISIONS_DRAFT_2026-11-26.md`. Source tracing does not establish rights or grant a license.
+- [x] Portfolio tests passed 108 with two skips, lifecycle tests passed 12 and commercial checks passed.
+- [ ] Perform hands-on physical-input/accessibility acceptance within owner-authorized access, establish an honest final performance/support scope, confirm rights and license, and review the exact final delivery. No existing external game was supplied.
+- No spending, publication, outreach, accounts or deployment occurred. Next action: complete feasible remaining acceptance and resolve owner-dependent license, support and release decisions; separate approval is required before publication or spending. This estimate is a best guess, not completion evidence.
+
+
+### Phase 4 checkpoint — 2026-11-26: twenty-agent navigation timing
+
+Phase 4 completion estimate: 92% (best guess)
+
+- [x] Added local 20-navigation-agent physical-platform measurement and diagnostic fixtures under `work/temporary-install-review-game-2026-11-26/`, using the exact previously tested add-on. Three initial, three monitor-diagnostic and three wall-interval diagnostic runs passed on standard Godot 4.7.2 on Windows. The scripted scene uses fixed parallel lanes, one platform, disabled passenger collisions and scripted alighting; rendering is excluded.
+- [ ] Two initial runs emitted very large coarse physics-monitor readings and longer elapsed times; six follow-up runs did not reproduce high readings, and the last three observed no physics-callback interval over 100 ms. The cause remains unknown. These are uncontrolled headless samples, not independent per-frame metrics, FPS, general capacity or a resolved performance guarantee. Details and fingerprints are in `work/PERFORMANCE_NAVIGATION_TWENTY_2026-11-26.json`, `work/PERFORMANCE_NAVIGATION_DIAGNOSTIC_2026-11-26.json`, `work/PERFORMANCE_NAVIGATION_INTERVALS_2026-11-26.json` and `work/PERFORMANCE_PHYSICAL_2026-11-26.md`. The known certificate-store warning persisted.
+- [ ] Hands-on physical-input and accessibility acceptance, representative performance confidence including this unexplained variability, rights/license, support terms and final delivery review remain open. No existing external game was supplied.
+- No spending, publication, outreach, accounts or deployment occurred. Next action: investigate reproducibility with controlled profiling or record the workload limit honestly, and finish remaining owner-dependent acceptance and licensing decisions. Separate owner approval is required before publication or spending. Estimate is a best guess.
+
+
+### Phase 4 verification note — 2026-11-26: performance monitor source
+
+Phase 4 completion estimate: 92% (best guess)
+
+- [x] Checked the official Godot Performance documentation on 2026-11-26: https://docs.godotengine.org/en/latest/classes/class_performance.html . It describes `TIME_PHYSICS_PROCESS` as physics-frame time and warns that some built-in monitors can lag. The source is recorded in `work/PERFORMANCE_PHYSICAL_2026-11-26.md`. This does not establish that delayed updates caused the earlier unusually high readings.
+- [ ] Controlled, representative performance acceptance remains open along with physical-input/accessibility acceptance, rights/license, support terms and final delivery review. No spending, publication or external commercial action occurred. Next action: investigate or explicitly scope the unresolved timing variability and complete the owner-dependent acceptance and release decisions. Estimate remains a best guess.
+
+
+### Phase 4 checkpoint — 2026-11-26: navigation timing follow-up
+
+Phase 4 completion estimate: 91% (best guess)
+
+- [x] Ran the 20-agent scripted navigation/platform interval diagnostic twice each on standard Godot 4.4.1, 4.5.1 and 4.7.2 on Windows; all six functional runs passed. One 4.4.1 run recorded six physics-callback intervals over 100 ms, maximum 240.286 ms. The other five had no intervals over 100 ms. Raw observations and limits are in `work/PERFORMANCE_NAVIGATION_INTERVAL_MATRIX_2026-11-26.json`.
+- [x] Added three further runs each on 4.4.1 and 4.7.2 with coarse host and Godot process-tree CPU sampling; all six functional runs passed. One 4.4.1 run recorded one callback interval over 100 ms, maximum 133.2 ms. Host CPU peaks were high during the run set, but samples were not timestamp-correlated to the gap and cannot establish cause. Details are in `work/PERFORMANCE_NAVIGATION_HOST_CORRELATION_2026-11-26.json` and `work/PERFORMANCE_PHYSICAL_2026-11-26.md`. The existing root-certificate-store warning persisted.
+- [x] Prepared `work/PERFORMANCE_SCOPE_DRAFT_2026-11-26.md` with observed workload, exact constraints, unresolved variability and proposed non-guarantee integration guidance. It is a local draft, not release approval.
+- [ ] Investigate or explicitly accept a bounded scope for the recurrent timing variability; complete physical-input/accessibility acceptance, rights/license, support terms and exact final delivery review. Callback gaps are not rendered frames; these headless uncontrolled tests do not prove a game FPS hitch, identify a cause or establish general crowd performance.
+- No spending, publication, outreach, accounts or deployment occurred. Next action: perform a more targeted investigation of the timing gaps or preserve an explicit limitation for owner review, then resolve the owner-dependent acceptance and release decisions. Estimate reduced from 92% because the gap recurred and remains unexplained.
+
+
+### Phase 4 checkpoint — 2026-11-26: isolated adapter profiling
+
+Phase 4 completion estimate: 91% (best guess)
+
+- [x] Prepared `work/temporary-adapter-profile-2026-11-26`, an isolated copy with timing instrumentation around the navigation adapter physics callback. Four sequential 20-agent fixed-lane headless runs passed on standard Godot 4.4.1 for Windows. No run reproduced a callback interval over 100 ms; adapter callback maxima were 5.781, 11.392, 10.109 and 5.954 ms, including wrapper overhead. Raw data and the instrumented source hash are in `work/PERFORMANCE_ADAPTER_PROFILE_2026-11-26.json`; the known root-certificate-store warning persisted.
+- [ ] The original long callback gaps did not recur under this instrumented run, so this does not establish or exclude the adapter as their cause. The wrapper changes copied source and excludes other engine physics, rendering, scheduling and game work. Representative performance, physical-input/accessibility acceptance, rights/license, support terms and final delivery review remain open. The install review remains unlicensed and unpublished.
+- [x] Documented the profiling result and its limits in `work/PERFORMANCE_PHYSICAL_2026-11-26.md`. Prior portfolio suite passed 108 tests with two skips; lifecycle tests passed 12, commercial checks and browser build/check passed.
+- No spending, publication, outreach, accounts or deployment occurred. Next action: retain the unresolved timing variability as a release-scope decision or reproduce under controlled profiling, and complete the owner-dependent acceptance and licensing decisions. Separate owner approval is required before spending or publication. Estimate remains a best guess.
+
+
+### Phase 4 checkpoint — 2026-11-26: broad exact-install integration
+
+Phase 4 completion estimate: 91% (best guess)
+
+- [x] Created `work/temporary-broad-install-review-game-2026-11-26` from the original synthetic broad integration project and copied the exact add-on from `install-review-onboarding-2026-11-26` into it. The product runtime was already equivalent to the older game's copy apart from the editor marker; the fresh copy was byte-checked against the install review.
+- [ ] The complete broader game integration runner is in progress on standard Godot 4.7.2. Early passenger, disruption, blocking, dispatch and cooperative-avoidance cases passed; the complete outcome has not yet been established. Avoidance and vehicle movement belong to the temporary game controller, not an automatic add-on feature, and scenarios are bounded.
+- [ ] The recurrent timing variability, physical-input/accessibility acceptance, rights/license, support terms and final delivery review remain open. No existing external game was supplied.
+- No spending, publication, outreach, accounts or deployment occurred. Next action: complete the broad runner, verify the add-on bytes after testing and record the precise results. The estimate remains a best guess.
+
+
+### Phase 4 checkpoint — 2026-11-26: broad exact-install integration result
+
+Phase 4 completion estimate: 92% (best guess)
+
+- [x] The fresh `work/temporary-broad-install-review-game-2026-11-26` passed its complete 41/41 integration runner on standard Godot 4.7.2 on Windows using the exact `install-review-onboarding-2026-11-26` add-on. All 22 package manifest entries matched and all 12 copied add-on files remained byte-identical after the run. Root-certificate-store warnings persisted.
+- [x] The bounded cases include game-owned cooperative crowd avoidance, moving crowds, multiple physical vehicles, generated dispatch, interruption, scene reconstruction, footprint and endpoint clearance, and disconnected navigation. The game owns avoidance, movement and vehicle dispatch; the add-on does not provide general automatic crowd avoidance. These synthetic fixtures do not prove arbitrary game compatibility or a performance guarantee.
+- [x] Portfolio suite passed 108 tests with two skips, the lifecycle suite passed 12 tests and commercial checks passed.
+- [ ] The recurrent timing variability, physical-input/accessibility acceptance, rights/license, support terms and final delivery review remain open. No independently developed external game was supplied.
+- No spending, publication, outreach, accounts or deployment occurred. Next action: continue feasible investigation and acceptance, then resolve owner-dependent license, support and release decisions; separate owner approval is required before spending or publication. The estimate is a best guess.
+
+
+### Phase 4 checkpoint — 2026-11-26: packaged crowd and fleet examples
+
+Phase 4 completion estimate: 93% (best guess)
+
+- [x] Prepared the separate unlicensed, unpublished `work/capacity-aware-npc-transport/install-review-fleet-example-2026-11-26` with 26 manifest files. It adds a two-passenger cooperative-yield example and a two-vehicle mapped physical-dispatch example adapted from the temporary integration game, in addition to the logical and one-passenger physical quickstarts. Documentation makes clear the game owns yielding, targets, routes and vehicle motion; these are bounded scripted scenarios, not general automatic crowd or vehicle navigation.
+- [x] All four included examples passed in clean Windows projects on standard Godot 4.4.1, 4.5.1 and 4.7.2. The 26-entry manifest, all documented `res://` package paths and the add-on byte comparison against the prior install review passed. Root-certificate-store warnings persisted. Local transformation/source observations are in `work/CROWD_EXAMPLE_PROVENANCE_TRACE_2026-11-26.json` and `work/FLEET_EXAMPLE_PROVENANCE_TRACE_2026-11-26.json`; they do not establish ownership or grant redistribution rights.
+- [ ] The recurrent timing variability, native physical-input/accessibility acceptance, rights/license, support terms and exact final delivery review remain open. No independently developed external game was supplied.
+- No spending, publication, outreach, accounts or deployment occurred. Next action: finish feasible acceptance and investigate or document the performance limitation; resolve owner-dependent rights/support decisions and obtain separate approval before publishing or spending. Estimate is a best guess, not measured completion.
+
+
+### Phase 4 checkpoint — 2026-11-26: timestamped timing follow-up and package guidance
+
+Phase 4 completion estimate: 93% (best guess)
+
+- [x] Added `work/temporary-install-review-game-2026-11-26/diagnose_navigation_host_timeline.gd` and ran five sequential headless 20-agent fixed-scene checks on standard Godot 4.4.1 for Windows with coarse host/Godot-process CPU sampling. All five functional runs passed, with no physics-callback interval over 100 ms, so there was no event to correlate with CPU. The earlier gaps remain unexplained; instrumentation, clock alignment and uncontrolled host activity limit the result. Raw summaries are in `work/PERFORMANCE_NAVIGATION_GAP_TIMELINE_2026-11-26.json`, with explanation in `work/PERFORMANCE_PHYSICAL_2026-11-26.md`. Root-certificate-store warnings persisted.
+- [x] Prepared separate unlicensed, unpublished `work/capacity-aware-npc-transport/install-review-performance-notes-2026-11-26`, adding `PERFORMANCE.md` and README guidance that disclose observed timing variability and do not promise FPS, a supported crowd size or general navigation. Its 27-entry manifest and documented `res://` paths passed; all add-on and example files are byte-identical to the previous review whose four examples passed on standard Godot 4.4.1, 4.5.1 and 4.7.2. This draft does not constitute accepted release scope or a license.
+- [ ] Resolve or explicitly review the unexplained earlier timing gaps, complete physical-input and accessibility acceptance, establish rights/license and support terms, and review the exact final delivery. No independently developed external game was supplied.
+- No spending, publication, outreach, accounts or deployment occurred. Next action: finish feasible controlled acceptance and owner-dependent scope/rights decisions; separate owner approval is required before spending or publishing. Estimate remains a best guess.
+
+
+### Phase 4 checkpoint — 2026-11-26: broad integration compatibility subset
+
+Phase 4 completion estimate: 94% (best guess)
+
+- [x] Verified that the broad temporary game's add-on is byte-identical to `work/capacity-aware-npc-transport/install-review-performance-notes-2026-11-26`; the 27-entry package manifest matched. Eight selected moving-crowd, mapped-dispatch, capacity-two reconstruction, disconnected-navigation, parallel-recovery, footprint and endpoint cases passed on each of standard Godot 4.4.1 and 4.5.1 on Windows. The full 41-case broad runner had previously passed on 4.7.2.
+- [x] Added `work/temporary-broad-install-review-game-2026-11-26/run_compatibility_subset.py`; it passed the same eight cases on 4.7.2. Per-case 4.4.1/4.5.1 results and fixture/engine fingerprints are in `work/BROAD_INTEGRATION_COMPATIBILITY_2026-11-26.json`. The known certificate-store warnings persisted.
+- [ ] The 4.4.1/4.5.1 results are a subset, not full 41-case suite results. Avoidance, vehicle movement and dispatch policy are owned by the synthetic game, and these fixed scenarios do not prove general crowd behavior or production-game compatibility. Recurrent timing variability, physical-input/accessibility acceptance, rights/license, support terms and exact final delivery review remain open.
+- No spending, publication, outreach, accounts or deployment occurred. Next action: complete feasible remaining acceptance and resolve the explicitly owner-dependent release decisions; separate owner approval is required before publication or spending. Estimate is a best guess.
+
+
+### Phase 4 checkpoint — 2026-11-26: local review artifact
+
+Phase 4 completion estimate: 95% (best guess)
+
+- [x] Added `work/prepare_local_review.py`, which builds a local-only review archive from the exact performance-notes manifest, rejects missing, unexpected, changed, unsafe or duplicate file paths and refuses to overwrite an existing artifact. The resulting `work/local-review-artifacts/GDM-002-LOCAL-REVIEW-2026-11-26.zip` has SHA-256 `7b58ad30f8e61a9a730539c5980bd56155e0495a0c23e6821461224f60fc47ee`; its 28 entries are the 27 manifest files plus the manifest, including the local-only notice. Archive entries were verified byte-for-byte against the source; repeat creation correctly refused overwrite.
+- [x] Extracted the archive's add-on and examples into isolated clean projects. All four examples passed from the archived copy on standard Godot 4.4.1, 4.5.1 and 4.7.2 on Windows. The known root-certificate-store warning persisted. `work/RELEASE_DECISIONS_DRAFT_2026-11-26.md` records the artifact and exact hash.
+- [ ] The archive is unpublished, unlicensed and not the approved final delivery. Physical-input and accessibility acceptance, recurrent timing uncertainty, rights/license, support terms and final delivery review remain open; synthetic tests do not establish arbitrary game compatibility or general crowd/vehicle navigation.
+- No spending, publication, outreach, accounts or deployment occurred. Next action: complete feasible remaining acceptance and obtain owner-dependent rights/support decisions; separate owner approval is required before publication or spending. Estimate is a best guess.
+
+
+### Phase 4 checkpoint — 2026-11-26: seeded opposing crowd angles
+
+Phase 4 completion estimate: 95% (best guess)
+
+- [x] Added `work/temporary-broad-install-review-game-2026-11-26/test_seeded_opposing_avoidance.gd`, exercising two game-owned, capsule-shaped walkers on an open flat floor at twelve deterministic randomized opposing approach angles. The case checks both original destinations, yielding by the lower-priority walker, grounding and minimum center separation. It passed individually on standard Godot 4.4.1, 4.5.1 and 4.7.2 for Windows. Raw outputs and fixture/controller/engine hashes are in `work/SEEDED_CROWD_COMPATIBILITY_2026-11-26.json`; root-certificate-store warnings persisted.
+- [x] Confirmed that the packaged cooperative-yield example's controller matches the tested game-owned controller apart from an explanatory comment. Added the new case to the broad runner for future runs; the earlier full 41/41 run did not include it, and the expanded 42-case runner has not been rerun as a whole.
+- [ ] This test has only two walkers and no transit coordinator, dynamic obstacles or arbitrary terrain; it does not establish general crowd avoidance or an add-on-provided avoidance policy. Timing variability, physical-input/accessibility acceptance, rights/license, support terms and exact final delivery review remain open.
+- No spending, publication, outreach, accounts or deployment occurred. Next action: complete feasible remaining acceptance and owner-dependent rights/support decisions; separate owner approval remains required before spending or publishing. Estimate remains a best guess.
+
+
+### Phase 4 checkpoint — 2026-11-26: expanded full integration and archive audit
+
+Phase 4 completion estimate: 95% (best guess)
+
+- [x] The expanded `work/temporary-broad-install-review-game-2026-11-26/run_checks.py` passed its complete 42/42 integration cases on standard Godot 4.7.2 on Windows, including the new twelve-angle game-owned crowd test. Root-certificate-store warnings persisted. The prior full run covered 41 cases; standard 4.4.1 and 4.5.1 have the previously recorded eight-case compatibility subset and separate seeded-angle case, not a full 42-case run.
+- [x] After testing, verified that all 27 review-manifest entries and the manifest itself match the 28 entries in `work/local-review-artifacts/GDM-002-LOCAL-REVIEW-2026-11-26.zip`, that all copied add-on files match the test game, and that the archive SHA-256 remains `7b58ad30f8e61a9a730539c5980bd56155e0495a0c23e6821461224f60fc47ee`. The archive remains unlicensed, unpublished and not an approved final delivery.
+- [x] The portfolio suite passed 108 tests with two skips, lifecycle tests passed 12 and commercial checks passed.
+- [ ] The game owns its bounded crowd avoidance, movement and dispatch; the tests do not prove general crowd handling or arbitrary production-game compatibility. Recurrent timing variability, physical-input/accessibility acceptance, rights/license, support terms and final delivery review remain open. No independently developed game was supplied.
+- No spending, publication, outreach, accounts or deployment occurred. Next action: resolve the remaining owner-dependent acceptance and rights/support decisions and review the known timing limitation; obtain separate owner approval before publication or spending. Estimate remains a best guess.
+
+
+### Phase 4 checkpoint — 2026-11-26: owner-selected terms and acceptance setup
+
+Phase 4 completion estimate: 95% (best guess)
+
+- [x] The owner selected a local draft direction allowing commercial game use and modification while prohibiting standalone redistribution. Prepared `work/LICENSE_TERMS_DRAFT_2026-11-26.md`; it is non-operative, not a rights grant or approved final license. Ownership, final wording, collaborators, source-available games, support terms and applicable rights remain to be resolved before release. The chosen restriction must not be described as an OSI-approved open-source license; see https://opensource.org/osd (checked 2026-11-26).
+- [x] The owner chose to perform physical-input acceptance personally and asked when and what to do. Prepared `work/owner-acceptance-2026-11-26` with a copy of the current scaled-demo candidate, isolated user-data launchers and `START_HERE.md`; its headless startup probe passed on standard Godot 4.7.2. No visible window was launched and no physical acceptance has yet occurred. The user will be given steps after background tests finish.
+- [ ] Full 42-case temporary-game runs on standard Godot 4.4.1 and 4.5.1 are in progress; no full result is claimed yet. Timing variability, physical/accessibility acceptance, final rights/license wording, support and exact final delivery review remain open.
+- No spending, publication, outreach, accounts or deployment occurred. Next action: finish and record the compatibility runs, then provide the owner-operated acceptance steps. Separate owner approval is required before publication or spending. Estimate remains a best guess.
+
+
+### Phase 4 checkpoint — 2026-11-26: full compatibility and owner acceptance handoff
+
+Phase 4 completion estimate: 96% (best guess)
+
+- [x] The exact broad temporary game's expanded 42/42 integration suite passed in full on standard Godot 4.4.1 and 4.5.1 on Windows, matching its earlier 42/42 run on 4.7.2. Afterward the 27-file local review, the tested add-on and the local review archive matched the manifest; archive SHA-256 remained `7b58ad30f8e61a9a730539c5980bd56155e0495a0c23e6821461224f60fc47ee`. Root-certificate-store warnings persisted. Game-owned movement, cooperative avoidance and vehicle dispatch are bounded scripted examples, not general add-on features.
+- [x] The owner selected commercial game use and modification with no standalone redistribution; prepared non-operative `work/LICENSE_TERMS_DRAFT_2026-11-26.md`. Ownership and final license/support wording remain unverified. The restrictive draft is not an OSI-approved open-source license; source checked 2026-11-26: https://opensource.org/osd .
+- [x] The owner chose to perform the physical-input check personally. Prepared isolated `work/owner-acceptance-2026-11-26`, with `START_DEMO.cmd`, `START_MARKER_EDITOR.cmd` and `START_HERE.md`. The candidate add-on and demo files were byte-checked; the demo startup and marker editor load passed headlessly on 4.7.2. No visible window was launched by the agent, and no manual pass is claimed.
+- [ ] Owner hands-on results, wider accessibility, recurrent timing variability, rights/final license, support terms and final delivery review remain open. No independent external game was supplied.
+- No spending, publication, outreach, accounts or deployment occurred. Next action: owner runs the prepared acceptance check and reports any issues; continue authorized fixes and obtain separate owner approval before publication or spending. Estimate is a best guess, not completion evidence.

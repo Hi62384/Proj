@@ -1,0 +1,110 @@
+{
+  "status": "local_diagnostic_only",
+  "date": "2026-11-26",
+  "engine": "standard Godot 4.4.1 Windows x86-64",
+  "fixture_sha256": "60f856a6d792778d33cb5bb594f1192a3be703e2ed0b7a1788273820f20e251f",
+  "sampling": "Approximate 100 ms system and Godot process-tree CPU samples matched to system-wall-clock gap intervals with 200 ms padding; tree CPU 100% means one core.",
+  "limitations": "CPU samples are coarse, instrumentation affects timing, process-tree measurement can miss short-lived children, wall-clock alignment can shift, and correlation does not establish cause. Host activity is uncontrolled, with no rendering.",
+  "runs": [
+    {
+      "run": 1,
+      "measurement": {
+        "elapsed_seconds": 7.88235,
+        "failures": 0,
+        "first_high_seconds": -1.0,
+        "fixture": "20 navigation agents and a scripted collision platform",
+        "high_monitor_sample_count": 0,
+        "last_high_seconds": -1.0,
+        "max_observed_interval_ms": 31.233,
+        "observed_intervals_over_100_ms": 0,
+        "physics_process_ms_max": 24.533,
+        "physics_process_ms_mean": 5.59972708333332,
+        "physics_process_ms_p95": 24.533,
+        "samples": 480
+      },
+      "gap_context": [],
+      "cpu_sample_count": 81,
+      "certificate_warning": true
+    },
+    {
+      "run": 2,
+      "measurement": {
+        "elapsed_seconds": 7.878664,
+        "failures": 0,
+        "first_high_seconds": -1.0,
+        "fixture": "20 navigation agents and a scripted collision platform",
+        "high_monitor_sample_count": 0,
+        "last_high_seconds": -1.0,
+        "max_observed_interval_ms": 21.291,
+        "observed_intervals_over_100_ms": 0,
+        "physics_process_ms_max": 7.22,
+        "physics_process_ms_mean": 3.07237500000001,
+        "physics_process_ms_p95": 7.22,
+        "samples": 480
+      },
+      "gap_context": [],
+      "cpu_sample_count": 68,
+      "certificate_warning": true
+    },
+    {
+      "run": 3,
+      "measurement": {
+        "elapsed_seconds": 7.883649,
+        "failures": 0,
+        "first_high_seconds": -1.0,
+        "fixture": "20 navigation agents and a scripted collision platform",
+        "high_monitor_sample_count": 0,
+        "last_high_seconds": -1.0,
+        "max_observed_interval_ms": 20.786,
+        "observed_intervals_over_100_ms": 0,
+        "physics_process_ms_max": 10.733,
+        "physics_process_ms_mean": 3.54105416666666,
+        "physics_process_ms_p95": 10.733,
+        "samples": 480
+      },
+      "gap_context": [],
+      "cpu_sample_count": 69,
+      "certificate_warning": true
+    },
+    {
+      "run": 4,
+      "measurement": {
+        "elapsed_seconds": 7.872446,
+        "failures": 0,
+        "first_high_seconds": -1.0,
+        "fixture": "20 navigation agents and a scripted collision platform",
+        "high_monitor_sample_count": 0,
+        "last_high_seconds": -1.0,
+        "max_observed_interval_ms": 54.924,
+        "observed_intervals_over_100_ms": 0,
+        "physics_process_ms_max": 14.871,
+        "physics_process_ms_mean": 6.21096041666668,
+        "physics_process_ms_p95": 14.871,
+        "samples": 480
+      },
+      "gap_context": [],
+      "cpu_sample_count": 64,
+      "certificate_warning": true
+    },
+    {
+      "run": 5,
+      "measurement": {
+        "elapsed_seconds": 7.886581,
+        "failures": 0,
+        "first_high_seconds": -1.0,
+        "fixture": "20 navigation agents and a scripted collision platform",
+        "high_monitor_sample_count": 0,
+        "last_high_seconds": -1.0,
+        "max_observed_interval_ms": 47.146,
+        "observed_intervals_over_100_ms": 0,
+        "physics_process_ms_max": 12.031,
+        "physics_process_ms_mean": 5.14731250000001,
+        "physics_process_ms_p95": 12.031,
+        "samples": 480
+      },
+      "gap_context": [],
+      "cpu_sample_count": 66,
+      "certificate_warning": true
+    }
+  ]
+}

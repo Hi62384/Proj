@@ -1,0 +1,115 @@
+{
+  "status": "unpublished_review_only",
+  "files": [
+    {
+      "path": "addons/transit_coordinator/controller_bridge.gd",
+      "bytes": 5800,
+      "sha256": "ef26a7ebcfaa77c8396e41bc869c32d29849f23b60ed9b4800476bfede2d6f8d"
+    },
+    {
+      "path": "addons/transit_coordinator/core/continuity_audit.gd",
+      "bytes": 2279,
+      "sha256": "6a1390a124d45201c6c6eef61d7313ff2232547af6056268165d502d44c12ce2"
+    },
+    {
+      "path": "addons/transit_coordinator/core/journey_coordinator.gd",
+      "bytes": 23790,
+      "sha256": "67d598478cba88425f74e77ef96943e67081b982c4b387650b8fa805efbb0e7d"
+    },
+    {
+      "path": "addons/transit_coordinator/core/seat_ledger.gd",
+      "bytes": 4352,
+      "sha256": "25bf5fd0ad062ae28932789cfb7a577b070d2766a0e7a7e6d552d39ad9ca1d8f"
+    },
+    {
+      "path": "addons/transit_coordinator/core/transit_graph.gd",
+      "bytes": 6356,
+      "sha256": "d98157ebd088feb95b6eab441779a1ac1d14691cb98146460bd3ffddf1429bcb"
+    },
+    {
+      "path": "addons/transit_coordinator/debug_overlay.gd",
+      "bytes": 1931,
+      "sha256": "f16cebffd875dd375c396b1fd58e9855e6b26cf3a8ebebb6165f3ef1315b0ce7"
+    },
+    {
+      "path": "addons/transit_coordinator/editor/plugin.gd",
+      "bytes": 350,
+      "sha256": "be72020d6e84c5f62062950ba8756e69cd5e937d3bc787ca8374cdb7a6aac25e"
+    },
+    {
+      "path": "addons/transit_coordinator/editor/stop_gizmo.gd",
+      "bytes": 905,
+      "sha256": "f232b08642083f8eb5a68a79a56b96f95089c4778c77e14e38ff1e11dda5524e"
+    },
+    {
+      "path": "addons/transit_coordinator/editor/stop_marker.gd",
+      "bytes": 129,
+      "sha256": "aee476e286d5aad7a34bdbb9b470be005896e75067cf292c7dfedce270ec52dd"
+    },
+    {
+      "path": "addons/transit_coordinator/navigation_adapter.gd",
+      "bytes": 7397,
+      "sha256": "2b804b3de9ef3d0459d7e2175ea326a83cd7327282b8b3220a8e3544c9bab349"
+    },
+    {
+      "path": "addons/transit_coordinator/plugin.cfg",
+      "bytes": 192,
+      "sha256": "dff032d7a4c92676692cc962e3632eedfcea86a5891d73a885d11f4037580026"
+    },
+    {
+      "path": "addons/transit_coordinator/transit_coordinator.gd",
+      "bytes": 4658,
+      "sha256": "078dc4c10fb3f570b24410af52378ef9c2309b90a452d18a70b5bd9f01d09359"
+    },
+    {
+      "path": "API.md",
+      "bytes": 10163,
+      "sha256": "270c95f2214b7ea5479d1191d51bc4b98724fcde2b25d748f8d2b1f94722de1d"
+    },
+    {
+      "path": "COMPATIBILITY.md",
+      "bytes": 5899,
+      "sha256": "5cb734fc0c90a32735aafa36ee1ec25153e47891b67767cb66336fbe1b04f635"
+    },
+    {
+      "path": "examples/passenger_controller.gd",
+      "bytes": 975,
+      "sha256": "b1602b4ae5b096864329ee3f75865942b7fc5df1fb17bb6590358022a6b93e70"
+    },
+    {
+      "path": "examples/physical_transfer.gd",
+      "bytes": 4457,
+      "sha256": "012d3003a9674b9fc5e2f7c4eef578639bd9be1c59e3b4def5a2efc97c300587"
+    },
+    {
+      "path": "examples/quickstart.gd",
+      "bytes": 1912,
+      "sha256": "3b0f8be23f6fd0c9712d4fac43d8e868074bd2148fb96fdd58cd2077c49b80a9"
+    },
+    {
+      "path": "INSTALLATION.md",
+      "bytes": 1925,
+      "sha256": "553d92bb73b7f1ae9ca8644bf5a889e79603d80572d59aa3e8c9722e09148ee0"
+    },
+    {
+      "path": "LOCAL_REVIEW_ONLY.txt",
+      "bytes": 82,
+      "sha256": "4e61547237a6ba5986b91f7d232f702e08d89b412a05189e2e1c5e5fc4c803dd"
+    },
+    {
+      "path": "PROVENANCE_DRAFT.md",
+      "bytes": 1768,
+      "sha256": "73da353a68a4da514631df041179d885d6bc3acc0a496373d2005b04bdf11a1c"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1092,
+      "sha256": "b816571aff6041c539c53ad3c60eb778e003da0b6a2be3fd618e3a19abd128b5"
+    },
+    {
+      "path": "SUPPORT_DRAFT.md",
+      "bytes": 3624,
+      "sha256": "407afd7ffeaf97ed2c55c9d6172caa6f7990223bdd7c6cff178fccecace80770"
+    }
+  ]
+}

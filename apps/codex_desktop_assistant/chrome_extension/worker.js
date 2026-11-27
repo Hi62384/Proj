@@ -3,7 +3,7 @@
 const HOST='com.codex.desktop_assistant';const VERSION=1;
 let port=null,session=null,connected=false,connectionError='';const grants=new Map(),cancelled=new Set(),running=new Set();
 let autoConnect=false,grantAckSupported=false,lastAuthorizationError='';const grantWaiters=new Map();
-let fullBrowser=false,trustedInput=false;
+let fullBrowser=false,trustedInput=false,autoEmbedded=false;
 const approvedSites=new Set();
 const wideOrigins=['http://*/*','https://*/*'];
 async function browserScope(){fullBrowser=fullBrowser&&await chrome.permissions.contains({origins:wideOrigins});return fullBrowser;}
@@ -191,7 +191,9 @@ async function execute(operation,args,check){
   if(operation==='show'){await chrome.tabs.update(tab.id,{active:true});await chrome.windows.update(tab.windowId,{focused:true});return {shown:true};}
   if(operation==='frames'){
     const frames=await chrome.webNavigation.getAllFrames({tabId:tab.id});
-    for(const frame of frames){const site=frameOrigin(frame,frames);if(site&&(site===grant.origin||(grant.assistant_created&&await browserScope())))grant.frames[String(frame.frameId)]=site;}
+    const automatic=await browserScope()&&(grant.assistant_created||autoEmbedded);
+    grant.auto_embedded=Boolean(autoEmbedded&&await browserScope());
+    for(const frame of frames){const site=frameOrigin(frame,frames);if(site&&(site===grant.origin||automatic))grant.frames[String(frame.frameId)]=site;}
     post({type:'event',event:'grant',tab:grant});
     return {frames:frames.map(f=>{const same=frameOrigin(f,frames)===(f.frameId===0?grant.origin:grant.frames?.[String(f.frameId)]);return {frame:f.frameId,parent:f.parentFrameId,authorized:same,url:same?(/^https?:/.test(f.url)?publicUrl(f.url):'about:blank'): 'Another site — authorization required'};})};
   }
@@ -343,10 +345,23 @@ chrome.runtime.onMessage.addListener((message,sender,reply)=>{
   if(sender.id!==chrome.runtime.id||!sender.url?.startsWith(chrome.runtime.getURL('popup.html'))||message?.popup!==true)return false;
   (async()=>{
     switch(message.operation){
-      case 'status':return {connected,full_browser:await browserScope(),trusted_input:trustedInput,tabs:[...grants.values()],error:connectionError,authorization_error:lastAuthorizationError};
+      case 'status':return {connected,full_browser:await browserScope(),trusted_input:trustedInput,auto_embedded:autoEmbedded,tabs:[...grants.values()],error:connectionError,authorization_error:lastAuthorizationError};
+      case 'auto_embedded':{
+        if(message.enabled&&!await browserScope())throw Error('Enable Full Browser Access first.');
+        autoEmbedded=message.enabled===true;await chrome.storage.local.set({autoEmbedded});
+        if(!autoEmbedded)for(const grant of grants.values()){
+          grant.auto_embedded=false;
+          for(const [frame,site] of Object.entries(grant.frames||{}))if(frame!=='0'&&site!==grant.origin)delete grant.frames[frame];
+          if(connected)post({type:'event',event:'grant',tab:grant});
+        }
+        return {};
+      }
       case 'full_access':{
         if(message.enabled&&!await chrome.permissions.contains({origins:wideOrigins}))throw Error('Approve broad HTTP/HTTPS website access in Chrome first.');
-        fullBrowser=message.enabled===true;await chrome.storage.local.set({fullBrowser});if(!fullBrowser)for(const [tab,g]of [...grants])if(g.scope==='full')await revoke(tab);scopeEvent();return {};
+        fullBrowser=message.enabled===true;await chrome.storage.local.set({fullBrowser});if(!fullBrowser)for(const [tab,g]of [...grants]){
+          if(g.scope==='full'){await revoke(tab);continue;}
+          if(g.auto_embedded){g.auto_embedded=false;for(const [frame,site] of Object.entries(g.frames||{}))if(frame!=='0'&&site!==g.origin)delete g.frames[frame];if(connected)post({type:'event',event:'grant',tab:g});}
+        }scopeEvent();return {};
       }
       case 'trusted_input':{
         if(!await chrome.permissions.contains({permissions:['debugger']}))throw Error('Chrome debugger permission was not granted.');trustedInput=true;await chrome.storage.local.set({trustedInput});scopeEvent();return {};
@@ -393,11 +408,15 @@ chrome.alarms.onAlarm.addListener(()=>{if(connected)try{post({type:'event',event
 chrome.permissions.onRemoved?.addListener(async()=>{
   await browserScope();
   for(const site of [...approvedSites])if(!await chrome.permissions.contains({origins:[patternFor(site)]}))approvedSites.delete(site);
-  for(const [tab,g]of [...grants])if((g.scope==='full'&&!fullBrowser)||(g.scope==='site'&&!await siteAllowed(g.origin)))await revoke(tab);
+  for(const [tab,g]of [...grants]){
+    if((g.scope==='full'&&!fullBrowser)||(g.scope==='site'&&!await siteAllowed(g.origin))){await revoke(tab);continue;}
+    if(!fullBrowser&&g.auto_embedded){g.auto_embedded=false;for(const [frame,site] of Object.entries(g.frames||{}))if(frame!=='0'&&site!==g.origin)delete g.frames[frame];if(connected)post({type:'event',event:'grant',tab:g});}
+  }
   await chrome.storage.local.set({approvedSites:[...approvedSites]});scopeEvent();
 });
-chrome.storage.local.get(['autoConnect','fullBrowser','trustedInput','approvedSites']).then(async settings=>{
+chrome.storage.local.get(['autoConnect','fullBrowser','trustedInput','approvedSites','autoEmbedded']).then(async settings=>{
   autoConnect=settings.autoConnect===true;fullBrowser=settings.fullBrowser===true;trustedInput=settings.trustedInput===true;
+  autoEmbedded=settings.autoEmbedded===true;
   for(const site of settings.approvedSites||[])try{approvedSites.add(exact(site));}catch{}
   if(settings.approvedSites===undefined&&chrome.permissions.getAll){
     // Migrate only individually granted hosts; broad Chrome permission is never

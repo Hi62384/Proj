@@ -79,7 +79,7 @@ class ChromeControl:
         if expected==self.grants[tab]['origin']:self.frames[key]=expected;return expected
         if self.frames.get(key)!=expected:
             if not ask:raise Denied('Embedded frame authority changed; inspect again')
-            if not (self.bridge.status().get('full_browser') and offered.get('assistant_created')) and not self.approve(conversation,'Allow embedded Chrome frame',{'website_access':True,'chrome_tab':True,'operation':'website_access','origin':expected,'reason':'Inspect or interact with this explicitly extension-authorized frame in the attached tab.'}):raise Denied('Owner denied embedded frame access')
+            if not (self.bridge.status().get('full_browser') and (offered.get('assistant_created') or offered.get('auto_embedded') is True)) and not self.approve(conversation,'Allow embedded Chrome frame',{'website_access':True,'chrome_tab':True,'operation':'website_access','origin':expected,'reason':'Inspect or interact with this explicitly extension-authorized frame in the attached tab.'}):raise Denied('Owner denied embedded frame access')
             self.tab_guard(conversation,tab,epoch);self.frames[key]=expected
         return expected
 

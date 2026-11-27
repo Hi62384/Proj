@@ -1,0 +1,5 @@
+config_version=5
+[application]
+config/name="Temporary independent transit integration"
+[rendering]
+renderer/rendering_method="gl_compatibility"

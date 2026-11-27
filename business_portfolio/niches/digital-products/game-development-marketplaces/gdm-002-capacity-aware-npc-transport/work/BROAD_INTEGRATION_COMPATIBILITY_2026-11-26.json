@@ -1,0 +1,132 @@
+{
+  "status": "local_test_only",
+  "date": "2026-11-26",
+  "game": "temporary-broad-install-review-game-2026-11-26",
+  "limitations": "Two versions run concurrently on one Windows machine; fixed synthetic game-owned controllers, routes and collision scenes; not real-game or general crowd-performance proof.",
+  "runs": [
+    {
+      "version": "4.4.1",
+      "console_sha256": "239e9d89c02c8e20f3a599da4b3efab2760b240daa889dd754e2fc2bcd8d0c7d",
+      "cases": [
+        {
+          "script": "test_moving_crowd.gd",
+          "passed": true,
+          "certificate_warning": true,
+          "failure_details": "",
+          "fixture_sha256": "a118b718903e9438f28e3251684ba54940f67f9c103bea0fbb846829203bffdd"
+        },
+        {
+          "script": "test_four_moving_crowd.gd",
+          "passed": true,
+          "certificate_warning": true,
+          "failure_details": "",
+          "fixture_sha256": "997e77b7c0e8a39d6e8163da1159f588fff95af26c22dce85f6fae3638510ed2"
+        },
+        {
+          "script": "test_mapped_physical_dispatch.gd",
+          "passed": true,
+          "certificate_warning": true,
+          "failure_details": "",
+          "fixture_sha256": "ea6ccf5203ccac1b93d14c93f4b4cb4feededc0f8e6fa5dfc9f5c6577cb67f56"
+        },
+        {
+          "script": "test_capacity_two_crossing_restore.gd",
+          "passed": true,
+          "certificate_warning": true,
+          "failure_details": "",
+          "fixture_sha256": "a130cc575ef42a057ba4658f81c98018039840e0e7194c6b685455ff35f25613"
+        },
+        {
+          "script": "test_navigation_unreachable.gd",
+          "passed": true,
+          "certificate_warning": true,
+          "failure_details": "",
+          "fixture_sha256": "d8c9b2b515e427dec0e08e4731f03f305195d1c6eae2f45bfee4c72933c9af0d"
+        },
+        {
+          "script": "test_parallel_recovery_restore.gd",
+          "passed": true,
+          "certificate_warning": true,
+          "failure_details": "",
+          "fixture_sha256": "2e34a909e2a460697cc34e9907d54e614b4c0acb76cc7ab17a2abd561532ec24"
+        },
+        {
+          "script": "test_footprint_clearance.gd",
+          "passed": true,
+          "certificate_warning": true,
+          "failure_details": "",
+          "fixture_sha256": "e35c4e9daf69ea3186faf0dd0860d1192bbefa82be4649f0549905cf89c7650e"
+        },
+        {
+          "script": "test_endpoint_clearance.gd",
+          "passed": true,
+          "certificate_warning": true,
+          "failure_details": "",
+          "fixture_sha256": "3416f81a0a9536a4c79ac26f663ac2518737ad41bb32712eeb5a684814b5551f"
+        }
+      ]
+    },
+    {
+      "version": "4.5.1",
+      "console_sha256": "f0336c8b2ae039d39767a64c416f01b1b49d95d8dde87724012874dd4be1c1a8",
+      "cases": [
+        {
+          "script": "test_moving_crowd.gd",
+          "passed": true,
+          "certificate_warning": true,
+          "failure_details": "",
+          "fixture_sha256": "a118b718903e9438f28e3251684ba54940f67f9c103bea0fbb846829203bffdd"
+        },
+        {
+          "script": "test_four_moving_crowd.gd",
+          "passed": true,
+          "certificate_warning": true,
+          "failure_details": "",
+          "fixture_sha256": "997e77b7c0e8a39d6e8163da1159f588fff95af26c22dce85f6fae3638510ed2"
+        },
+        {
+          "script": "test_mapped_physical_dispatch.gd",
+          "passed": true,
+          "certificate_warning": true,
+          "failure_details": "",
+          "fixture_sha256": "ea6ccf5203ccac1b93d14c93f4b4cb4feededc0f8e6fa5dfc9f5c6577cb67f56"
+        },
+        {
+          "script": "test_capacity_two_crossing_restore.gd",
+          "passed": true,
+          "certificate_warning": true,
+          "failure_details": "",
+          "fixture_sha256": "a130cc575ef42a057ba4658f81c98018039840e0e7194c6b685455ff35f25613"
+        },
+        {
+          "script": "test_navigation_unreachable.gd",
+          "passed": true,
+          "certificate_warning": true,
+          "failure_details": "",
+          "fixture_sha256": "d8c9b2b515e427dec0e08e4731f03f305195d1c6eae2f45bfee4c72933c9af0d"
+        },
+        {
+          "script": "test_parallel_recovery_restore.gd",
+          "passed": true,
+          "certificate_warning": true,
+          "failure_details": "",
+          "fixture_sha256": "2e34a909e2a460697cc34e9907d54e614b4c0acb76cc7ab17a2abd561532ec24"
+        },
+        {
+          "script": "test_footprint_clearance.gd",
+          "passed": true,
+          "certificate_warning": true,
+          "failure_details": "",
+          "fixture_sha256": "e35c4e9daf69ea3186faf0dd0860d1192bbefa82be4649f0549905cf89c7650e"
+        },
+        {
+          "script": "test_endpoint_clearance.gd",
+          "passed": true,
+          "certificate_warning": true,
+          "failure_details": "",
+          "fixture_sha256": "3416f81a0a9536a4c79ac26f663ac2518737ad41bb32712eeb5a684814b5551f"
+        }
+      ]
+    }
+  ]
+}

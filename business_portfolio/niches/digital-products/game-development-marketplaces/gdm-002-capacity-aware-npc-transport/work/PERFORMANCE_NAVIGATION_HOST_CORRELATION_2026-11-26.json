@@ -1,0 +1,141 @@
+{
+  "status": "local_test_only",
+  "date": "2026-11-26",
+  "fixture_sha256": "0c65a9dd42cd0bcea897e3aa8b85bfa595419cfa216cc315d2dc5987948a6399",
+  "sampling": "Approx 0.2-second host CPU and Godot process-tree CPU sampling. Tree CPU may exceed 100% for multiple cores and may miss short-lived subprocesses or peaks.",
+  "limitations": "Three sequential runs each per engine on one Windows host, uncontrolled host activity, headless fixed scripted scenario; coarse CPU samples cannot establish cause or tie a spike to an individual physics interval.",
+  "runs": [
+    {
+      "version": "4.4.1",
+      "run": 1,
+      "measurement": {
+        "elapsed_seconds": 7.861176,
+        "failures": 0,
+        "first_high_seconds": -1.0,
+        "fixture": "20 navigation agents and a scripted collision platform",
+        "high_monitor_sample_count": 0,
+        "last_high_seconds": -1.0,
+        "max_observed_interval_ms": 26.521,
+        "observed_intervals_over_100_ms": 0,
+        "physics_process_ms_max": 17.395,
+        "physics_process_ms_mean": 4.18915833333334,
+        "physics_process_ms_p95": 17.395,
+        "samples": 480
+      },
+      "host_cpu_peak_percent": 95.1,
+      "godot_tree_cpu_peak_percent_one_core_scale": 99.89,
+      "cpu_observation_samples": 42,
+      "certificate_warning": true
+    },
+    {
+      "version": "4.4.1",
+      "run": 2,
+      "measurement": {
+        "elapsed_seconds": 7.890403,
+        "failures": 0,
+        "first_high_seconds": -1.0,
+        "fixture": "20 navigation agents and a scripted collision platform",
+        "high_monitor_sample_count": 0,
+        "last_high_seconds": -1.0,
+        "max_observed_interval_ms": 26.922,
+        "observed_intervals_over_100_ms": 0,
+        "physics_process_ms_max": 4.749,
+        "physics_process_ms_mean": 2.28423125000001,
+        "physics_process_ms_p95": 4.749,
+        "samples": 480
+      },
+      "host_cpu_peak_percent": 70.8,
+      "godot_tree_cpu_peak_percent_one_core_scale": 130.21,
+      "cpu_observation_samples": 39,
+      "certificate_warning": true
+    },
+    {
+      "version": "4.4.1",
+      "run": 3,
+      "measurement": {
+        "elapsed_seconds": 7.964334,
+        "failures": 0,
+        "first_high_seconds": -1.0,
+        "fixture": "20 navigation agents and a scripted collision platform",
+        "high_monitor_sample_count": 0,
+        "last_high_seconds": -1.0,
+        "max_observed_interval_ms": 133.167,
+        "observed_intervals_over_100_ms": 1,
+        "physics_process_ms_max": 42.332,
+        "physics_process_ms_mean": 3.14463333333335,
+        "physics_process_ms_p95": 4.254,
+        "samples": 480
+      },
+      "host_cpu_peak_percent": 100.0,
+      "godot_tree_cpu_peak_percent_one_core_scale": 107.02,
+      "cpu_observation_samples": 36,
+      "certificate_warning": true
+    },
+    {
+      "version": "4.7.2",
+      "run": 1,
+      "measurement": {
+        "elapsed_seconds": 7.873191,
+        "failures": 0,
+        "first_high_seconds": -1.0,
+        "fixture": "20 navigation agents and a scripted collision platform",
+        "high_monitor_sample_count": 0,
+        "last_high_seconds": -1.0,
+        "max_observed_interval_ms": 25.998,
+        "observed_intervals_over_100_ms": 0,
+        "physics_process_ms_max": 20.42,
+        "physics_process_ms_mean": 4.20867708333333,
+        "physics_process_ms_p95": 20.42,
+        "samples": 480
+      },
+      "host_cpu_peak_percent": 100.0,
+      "godot_tree_cpu_peak_percent_one_core_scale": 64.21,
+      "cpu_observation_samples": 41,
+      "certificate_warning": true
+    },
+    {
+      "version": "4.7.2",
+      "run": 2,
+      "measurement": {
+        "elapsed_seconds": 7.880425,
+        "failures": 0,
+        "first_high_seconds": -1.0,
+        "fixture": "20 navigation agents and a scripted collision platform",
+        "high_monitor_sample_count": 0,
+        "last_high_seconds": -1.0,
+        "max_observed_interval_ms": 31.225,
+        "observed_intervals_over_100_ms": 0,
+        "physics_process_ms_max": 9.528,
+        "physics_process_ms_mean": 4.52607083333333,
+        "physics_process_ms_p95": 9.528,
+        "samples": 480
+      },
+      "host_cpu_peak_percent": 97.6,
+      "godot_tree_cpu_peak_percent_one_core_scale": 93.09,
+      "cpu_observation_samples": 38,
+      "certificate_warning": true
+    },
+    {
+      "version": "4.7.2",
+      "run": 3,
+      "measurement": {
+        "elapsed_seconds": 7.868502,
+        "failures": 0,
+        "first_high_seconds": -1.0,
+        "fixture": "20 navigation agents and a scripted collision platform",
+        "high_monitor_sample_count": 0,
+        "last_high_seconds": -1.0,
+        "max_observed_interval_ms": 26.196,
+        "observed_intervals_over_100_ms": 0,
+        "physics_process_ms_max": 7.296,
+        "physics_process_ms_mean": 3.77793541666668,
+        "physics_process_ms_p95": 7.296,
+        "samples": 480
+      },
+      "host_cpu_peak_percent": 89.8,
+      "godot_tree_cpu_peak_percent_one_core_scale": 92.75,
+      "cpu_observation_samples": 38,
+      "certificate_warning": true
+    }
+  ]
+}

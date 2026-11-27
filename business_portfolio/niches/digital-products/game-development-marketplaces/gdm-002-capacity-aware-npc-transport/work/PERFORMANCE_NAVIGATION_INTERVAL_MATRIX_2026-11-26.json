@@ -1,0 +1,129 @@
+{
+  "status": "local_test_only",
+  "date": "2026-11-26",
+  "fixture_sha256": "0c65a9dd42cd0bcea897e3aa8b85bfa595419cfa216cc315d2dc5987948a6399",
+  "scenario": "20 navigation agents; fixed lanes; one scripted collision platform; agent-to-agent collisions disabled; scripted alighting",
+  "limitations": "Two sequential headless runs per engine on one Windows machine. Host activity uncontrolled. Wall intervals include scheduling, coarse monitor values may repeat; not rendering FPS, general scalability, or add-on-only timing.",
+  "runs": [
+    {
+      "version": "4.4.1",
+      "run": 1,
+      "console_sha256": "239e9d89c02c8e20f3a599da4b3efab2760b240daa889dd754e2fc2bcd8d0c7d",
+      "measurement": {
+        "elapsed_seconds": 7.867119,
+        "failures": 0,
+        "first_high_seconds": 7.211569,
+        "fixture": "20 navigation agents and a scripted collision platform",
+        "high_monitor_sample_count": 40,
+        "last_high_seconds": 7.863478,
+        "max_observed_interval_ms": 90.991,
+        "observed_intervals_over_100_ms": 0,
+        "physics_process_ms_max": 91.283,
+        "physics_process_ms_mean": 22.5879958333333,
+        "physics_process_ms_p95": 91.283,
+        "samples": 480
+      },
+      "certificate_warning": true
+    },
+    {
+      "version": "4.4.1",
+      "run": 2,
+      "console_sha256": "239e9d89c02c8e20f3a599da4b3efab2760b240daa889dd754e2fc2bcd8d0c7d",
+      "measurement": {
+        "elapsed_seconds": 8.007477,
+        "failures": 0,
+        "first_high_seconds": 5.62477,
+        "fixture": "20 navigation agents and a scripted collision platform",
+        "high_monitor_sample_count": 135,
+        "last_high_seconds": 8.003733,
+        "max_observed_interval_ms": 240.286,
+        "observed_intervals_over_100_ms": 6,
+        "physics_process_ms_max": 185.237,
+        "physics_process_ms_mean": 45.5223062499999,
+        "physics_process_ms_p95": 149.576,
+        "samples": 480
+      },
+      "certificate_warning": true
+    },
+    {
+      "version": "4.5.1",
+      "run": 1,
+      "console_sha256": "f0336c8b2ae039d39767a64c416f01b1b49d95d8dde87724012874dd4be1c1a8",
+      "measurement": {
+        "elapsed_seconds": 7.879529,
+        "failures": 0,
+        "first_high_seconds": -1.0,
+        "fixture": "20 navigation agents and a scripted collision platform",
+        "high_monitor_sample_count": 0,
+        "last_high_seconds": -1.0,
+        "max_observed_interval_ms": 29.55,
+        "observed_intervals_over_100_ms": 0,
+        "physics_process_ms_max": 18.78,
+        "physics_process_ms_mean": 5.25936250000003,
+        "physics_process_ms_p95": 18.78,
+        "samples": 480
+      },
+      "certificate_warning": true
+    },
+    {
+      "version": "4.5.1",
+      "run": 2,
+      "console_sha256": "f0336c8b2ae039d39767a64c416f01b1b49d95d8dde87724012874dd4be1c1a8",
+      "measurement": {
+        "elapsed_seconds": 7.8745,
+        "failures": 0,
+        "first_high_seconds": 6.46792,
+        "fixture": "20 navigation agents and a scripted collision platform",
+        "high_monitor_sample_count": 85,
+        "last_high_seconds": 7.870212,
+        "max_observed_interval_ms": 66.985,
+        "observed_intervals_over_100_ms": 0,
+        "physics_process_ms_max": 67.007,
+        "physics_process_ms_mean": 15.993375,
+        "physics_process_ms_p95": 67.007,
+        "samples": 480
+      },
+      "certificate_warning": true
+    },
+    {
+      "version": "4.7.2",
+      "run": 1,
+      "console_sha256": "c8f0a6bc45a19b33541501e57f6f7cd972ab18453743266339d495cbbe846643",
+      "measurement": {
+        "elapsed_seconds": 7.873373,
+        "failures": 0,
+        "first_high_seconds": 0.601002,
+        "fixture": "20 navigation agents and a scripted collision platform",
+        "high_monitor_sample_count": 60,
+        "last_high_seconds": 1.586364,
+        "max_observed_interval_ms": 93.665,
+        "observed_intervals_over_100_ms": 0,
+        "physics_process_ms_max": 51.11,
+        "physics_process_ms_mean": 22.9885666666668,
+        "physics_process_ms_p95": 51.11,
+        "samples": 480
+      },
+      "certificate_warning": true
+    },
+    {
+      "version": "4.7.2",
+      "run": 2,
+      "console_sha256": "c8f0a6bc45a19b33541501e57f6f7cd972ab18453743266339d495cbbe846643",
+      "measurement": {
+        "elapsed_seconds": 7.87635,
+        "failures": 0,
+        "first_high_seconds": 2.495813,
+        "fixture": "20 navigation agents and a scripted collision platform",
+        "high_monitor_sample_count": 59,
+        "last_high_seconds": 3.464237,
+        "max_observed_interval_ms": 50.707,
+        "observed_intervals_over_100_ms": 0,
+        "physics_process_ms_max": 50.579,
+        "physics_process_ms_mean": 10.002475,
+        "physics_process_ms_p95": 50.579,
+        "samples": 480
+      },
+      "certificate_warning": true
+    }
+  ]
+}

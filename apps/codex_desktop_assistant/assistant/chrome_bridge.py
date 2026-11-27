@@ -141,7 +141,7 @@ class ChromeBridge:
             if origin(tab['origin'])!=tab['origin']:raise Denied('Invalid tab origin')
             frames=tab.get('frames',{'0':tab['origin']})
             if not isinstance(frames,dict) or len(frames)>32 or any(not str(k).isdigit() or not isinstance(v,str) or origin(v)!=v for k,v in frames.items()):raise Denied('Invalid Chrome frame authority')
-            with self.lock:self.offers[tab['tab']]={**{k:tab[k] for k in ('tab','window','origin','manual','assistant_created') if k in tab},'frames':frames}
+            with self.lock:self.offers[tab['tab']]={**{k:tab[k] for k in ('tab','window','origin','manual','assistant_created','auto_embedded') if k in tab},'frames':frames}
             self.send({'type':'grant_ack','session':self.session,'tab':tab['tab'],'origin':tab['origin']})
         elif kind=='scope':
             if type(message.get('full_browser')) is not bool or type(message.get('trusted_input')) is not bool:raise Denied('Invalid browser scope event')

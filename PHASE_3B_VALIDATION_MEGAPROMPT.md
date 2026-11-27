@@ -1,7 +1,5 @@
-# Retired prompt filename — six-phase workflow
+# Retired prompt filename — four-phase workflow
 
-This historical filename is retained only to resolve older links. Do not run the previous phase instructions. Use [PHASE_2_RECHECK_MEGAPROMPT.md](PHASE_2_RECHECK_MEGAPROMPT.md) for the corresponding current task.
+This historical filename remains only to resolve older links. Use [PHASE_1_RECHECK_REPLACE_MEGAPROMPT.md](PHASE_1_RECHECK_REPLACE_MEGAPROMPT.md) for the corresponding current task, or copy the correct active prompt from Portfolio Manager.
 
-The current sequence is Phase 1 product research → Phase 2 release-platform research → Phase 3 marketing research → Phase 4 build → Phase 5 release → Phase 6 marketing → Complete. Planning phases each have their own verification prompt, return copyable project text, and advance manually. Codex execution phases have separate `/goal` prompts and advance only after actual completion evidence.
-
-For the former combined launch-and-marketing task, use Phase 5 release followed by the separate [Phase 6 marketing goal](PHASE_6_MARKETING_MEGAPROMPT.md). Portfolio Manager chooses the correct active template for the selected project.
+Phase 1a researches product, release and marketing in order and verifies each stage before proceeding. Phase 1b independently rechecks all three and returns the complete final record. Paste it once; a valid verified import advances automatically to Phase 2. Separate Codex build (Phase 2), release (Phase 3) and marketing (Phase 4) goals then advance on actual evidence. Do not execute old numbered handoff commands.

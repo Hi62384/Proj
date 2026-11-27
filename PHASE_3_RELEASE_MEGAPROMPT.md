@@ -32,6 +32,8 @@ The whole project from initial research through build, release and initial marke
 
 Work persistently through all remaining authorized tasks for this phase. Progress updates and checkpoint estimates are not reasons to stop. Respect actual access, publication, outreach and spending authorization; default spending is CAD0 unless expressly approved. Research, metadata and a planning ceiling do not grant external permissions. Do not ask again for permissions already established. Before a potentially duplicate external action reconcile its actual status, and do not retry uncertain effects blindly.
 
+For migrated records, append new execution checkpoints and estimates below the `## Four-phase workflow migration` heading. Earlier estimates belong to historical phase numbering.
+
 At **every checkpoint** update project.md and report in chat:
 
 - The exact completion-estimate line prescribed for this phase, with an honest best guess even if uncertain, a short basis and what remains. Estimates may go down after discoveries; 100% requires the phase's completion conditions.

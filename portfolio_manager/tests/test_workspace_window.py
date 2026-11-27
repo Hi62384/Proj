@@ -304,8 +304,7 @@ class WorkspaceWindowTests(unittest.TestCase):
             self.assertIn('BUSINESS_NICHE: Demo', copied)
             self.assertIn('BUDGET_CEILING_CAD: 50.25', copied)
             self.assertFalse(copied.startswith('/goal'))
-            from PySide6.QtWidgets import QInputDialog
-            with patch.object(QInputDialog, 'getMultiLineText', return_value=('A useful pathfinding system', True)):
+            with patch.object(window, '_ask_idea', return_value=('A useful pathfinding system', True)):
                 window._copy_megaprompt('idea')
             self.assertIn('PROJECT_IDEA:\nA useful pathfinding system', self.app.clipboard().text())
             window._copy_megaprompt('recheck')
@@ -357,6 +356,33 @@ class WorkspaceWindowTests(unittest.TestCase):
             self.assertEqual(reopened.project_days.text(), '10')
             self.assertEqual(reopened.research_budget.text(), '50.25')
             reopened._test_close()
+
+    def test_idea_dialog_wraps_long_text_and_preserves_input(self):
+        from PySide6.QtCore import QTimer
+        from PySide6.QtGui import QTextOption
+        from PySide6.QtWidgets import QPlainTextEdit
+        with TemporaryDirectory() as temp:
+            root = Path(temp); repo = root / 'repo'; _record(repo, 'DEMO-084')
+            window = self._open_window(repo, root / 'state')
+            idea = 'A long product idea ' * 60 + '\n' + 'unbrokenword' * 50
+            observed = {}
+            def fill_and_accept():
+                dialog = self.app.activeModalWidget()
+                editor = dialog.findChild(QPlainTextEdit)
+                editor.setPlainText(idea)
+                self.app.processEvents()
+                observed['wrap'] = editor.lineWrapMode()
+                observed['word_wrap'] = editor.wordWrapMode()
+                observed['horizontal_max'] = editor.horizontalScrollBar().maximum()
+                dialog.accept()
+            QTimer.singleShot(0, fill_and_accept)
+            self.assertEqual(window._ask_idea(), (idea, True))
+            self.assertEqual(observed['wrap'], QPlainTextEdit.LineWrapMode.WidgetWidth)
+            self.assertEqual(observed['word_wrap'], QTextOption.WrapMode.WrapAtWordBoundaryOrAnywhere)
+            self.assertEqual(observed['horizontal_max'], 0)
+            QTimer.singleShot(0, lambda: self.app.activeModalWidget().reject())
+            self.assertFalse(window._ask_idea()[1])
+            window._test_close()
 
     def test_day_limit_updates_every_prompt_template(self):
         from portfolio_manager.workspace_window import PROMPTS, configure_project_day_limit

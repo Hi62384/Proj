@@ -9,7 +9,7 @@ import re
 import time
 
 from PySide6.QtCore import QEvent, QRect, QSignalBlocker, Qt, QTimer
-from PySide6.QtGui import QBrush, QColor, QIcon, QImageReader, QPainter, QPixmap
+from PySide6.QtGui import QBrush, QColor, QIcon, QImageReader, QPainter, QPixmap, QTextOption
 from PySide6.QtWidgets import (QApplication, QComboBox, QDialog, QDialogButtonBox, QFormLayout, QHBoxLayout, QInputDialog, QLabel, QLineEdit, QMainWindow,
                                QMenu, QMessageBox, QPlainTextEdit, QPushButton, QScrollArea, QSplitter, QTextBrowser,
                                QStyle, QTabWidget, QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget)
@@ -1208,6 +1208,26 @@ class WorkspaceWindow(QMainWindow):
         for title, option in options:
             self.prompt_menu.addAction(title, lambda checked=False, chosen=option: self._copy_megaprompt(chosen))
 
+    def _ask_idea(self):
+        dialog = QDialog(self)
+        dialog.setWindowTitle('Research my idea')
+        dialog.resize(560, 360)
+        layout = QVBoxLayout(dialog)
+        label = QLabel('Describe your product idea:')
+        layout.addWidget(label)
+        text = QPlainTextEdit()
+        text.setAccessibleName('Product idea')
+        text.setLineWrapMode(QPlainTextEdit.LineWrapMode.WidgetWidth)
+        text.setWordWrapMode(QTextOption.WrapMode.WrapAtWordBoundaryOrAnywhere)
+        label.setBuddy(text)
+        layout.addWidget(text)
+        buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
+        buttons.accepted.connect(dialog.accept)
+        buttons.rejected.connect(dialog.reject)
+        layout.addWidget(buttons)
+        accepted = dialog.exec() == QDialog.DialogCode.Accepted
+        return text.toPlainText(), accepted
+
     def _copy_megaprompt(self, option):
         config = PROMPTS.get(option)
         current = self._current_project()
@@ -1245,8 +1265,7 @@ class WorkspaceWindow(QMainWindow):
             else:
                 idea = ''
                 if option == 'idea':
-                    idea, accepted = QInputDialog.getMultiLineText(
-                        self, 'Research my idea', 'Describe your product idea:', '')
+                    idea, accepted = self._ask_idea()
                     if not accepted:
                         return
                     if not idea.strip():

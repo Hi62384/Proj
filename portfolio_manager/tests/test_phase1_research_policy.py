@@ -82,7 +82,7 @@ class FourPhasePromptPolicyTests(unittest.TestCase):
                             "three strongest material objections",
                             "NEW", "RECHECKED", "UNVERIFIED",
                             "not an independently verified GO",
-                            "do not prolong work to meet a time target"):
+                            "Do not prolong work to meet a time target"):
             with self.subTest(requirement=requirement):
                 self.assertIn(requirement, prompt)
         self.assertIn("Good to go — no substantive changes needed.", prompt)
@@ -152,7 +152,7 @@ class FourPhasePromptPolicyTests(unittest.TestCase):
                             "Phase 4 tasks", "finite initial execution scope"):
                 self.assertIn(concept, prompt)
         recheck = read(RESEARCH[2])
-        self.assertIn("direct/adjacent discovery matrix", recheck)
+        self.assertIn("direct/adjacent compatibility and distribution matrix", recheck)
         self.assertIn("finite tasks", recheck)
 
     def test_each_goal_has_only_its_own_sequential_evidence_handoff(self):

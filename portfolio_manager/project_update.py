@@ -79,8 +79,11 @@ def replace_project_text(repo, selection, text: str, *, expected_sha256: str | N
                 any(not isinstance(source, str) for source in updated['source_ids']) or
                 not set(old.get('source_ids', [])).issubset(updated['source_ids'])):
             raise ValueError('Keep the existing registered source IDs in the project.')
-        if updated.get('delivery_window_days') not in (None, {'minimum': 2, 'maximum': 21}):
-            raise ValueError('Keep the overall delivery window at 2 days to 3 weeks.')
+        window = updated.get('delivery_window_days')
+        if window is not None and (not isinstance(window, dict) or set(window) != {'minimum', 'maximum'} or
+                type(window['minimum']) is not int or type(window['maximum']) is not int or
+                not 1 <= window['minimum'] <= window['maximum'] <= 999999):
+            raise ValueError('The overall delivery window must contain valid positive whole-day minimum and maximum values.')
         if 'platforms_proposed' in updated and (not isinstance(updated['platforms_proposed'], list) or
                 any(not isinstance(value, str) or not value.strip() for value in updated['platforms_proposed'])):
             raise ValueError('Proposed platforms must be a list of platform names.')

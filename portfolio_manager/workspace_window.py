@@ -40,6 +40,22 @@ PROMPTS = {
     'phase6': ('working_phase_6', 'PHASE_6_MARKETING_MEGAPROMPT.md', 'Marketing'),
 }
 
+
+def configure_project_day_limit(prompt, days):
+    """Update the template's shared project window without changing a record snapshot."""
+    replacements = (
+        ('2 days to 3 weeks (2–21 calendar days total)', f'up to {days} calendar days total'),
+        ('2 days to 3 weeks total', f'up to {days} calendar days total'),
+        ('2–21-day', f'{days}-day'),
+        ('2–21 days', f'up to {days} days'),
+        ('another three weeks for each phase', 'a new full window for each phase'),
+        ('{ "minimum": 2, "maximum": 21 }',
+         '{ "minimum": ' + str(min(2, days)) + ', "maximum": ' + str(days) + ' }'),
+    )
+    for old, new in replacements:
+        prompt = prompt.replace(old, new)
+    return prompt
+
 NICHE_ID_ROLE = ROLE + 2
 WORKING_ROLE = ROLE + 3
 MAX_PREVIEW = 128_000
@@ -267,6 +283,7 @@ class WorkspaceWindow(QMainWindow):
         # the Qt event loop and separate from navigation/preview workers.
         self._creation_pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix='workspace-create')
         self._project_creation = None
+        self._project_deletion = None
         self._project_entries = []
         self._history_entries = []
         self._completed_entries = []
@@ -276,6 +293,7 @@ class WorkspaceWindow(QMainWindow):
         self._next_signature_check = 0.0
         self._research_prompt = None
         self._budget_setting = self.repo / 'business_portfolio' / '.research_prompt_budget'
+        self._days_setting = self.repo / 'business_portfolio' / '.research_prompt_days'
         self._entry_future = self._pool.submit(self._load_navigation_entries, self.repo)
         self._entries_ready = False
         self._tree_mode = 'projects'
@@ -463,6 +481,12 @@ class WorkspaceWindow(QMainWindow):
         self._prompt_menu_state = None
         self.budget_label = QLabel('Planning budget (CAD)')
         research_layout.addRow(self.budget_label, self.research_budget)
+        self.project_days = QLineEdit(self._load_project_days())
+        self.project_days.setAccessibleName('Project day limit')
+        self.project_days.setPlaceholderText('21')
+        self.project_days.textChanged.connect(self._save_project_days)
+        self.project_days_label = QLabel('Project day limit')
+        research_layout.addRow(self.project_days_label, self.project_days)
         research_layout.addRow(self.copy_prompt)
         self.paste_project = QPushButton('Paste project text')
         self.paste_project.setToolTip('Replace this research record with copied text. The phase stays unchanged.')
@@ -859,9 +883,32 @@ class WorkspaceWindow(QMainWindow):
                             'Select it to copy a research prompt.')
         self.notice.show()
 
+    def _finish_project_deletion(self):
+        """Apply a completed deletion to this window without changing another selection."""
+        pending = self._project_deletion
+        if pending is None or not pending[2].done():
+            return
+        original_selection, parent_selection, future = pending
+        self._project_deletion = None
+        self.delete_project.setEnabled(True)
+        try:
+            result = future.result()
+        except (OSError, ValueError, RuntimeError) as error:
+            self.notice.setText('Could not delete project: ' + str(error)[:400])
+            self.notice.show()
+            return
+        if self.workspace_state and self.workspace_state.get('selection') == original_selection:
+            self._refresh_after_edit(parent_selection)
+        else:
+            self._entry_future = self._pool.submit(self._load_navigation_entries, self.repo)
+            self._entries_ready = False
+        self.notice.setText('Project deleted. Recoverable backup: ' + result['trash_path'])
+        self.notice.show()
+
     def sync(self):
         try:
             self._finish_project_creation()
+            self._finish_project_deletion()
             if self._entries_ready and self._tree_mode in {'projects', 'niches', 'completed'}:
                 if self._signature_future is not None and self._signature_future.done():
                     future, self._signature_future = self._signature_future, None
@@ -1045,6 +1092,23 @@ class WorkspaceWindow(QMainWindow):
         except OSError:
             return '100'
 
+    def _load_project_days(self):
+        try:
+            value = self._days_setting.read_text(encoding='utf-8').strip()
+            return value if re.fullmatch(r'[1-9][0-9]{0,5}', value) else '21'
+        except OSError:
+            return '21'
+
+    def _save_project_days(self, value):
+        value = value.strip()
+        if not re.fullmatch(r'[1-9][0-9]{0,5}', value):
+            return
+        try:
+            self._days_setting.write_text(value, encoding='utf-8')
+        except OSError:
+            self.notice.setText('Could not save the project day limit.')
+            self.notice.show()
+
     def _save_research_budget(self, value):
         value = value.strip()
         if not re.fullmatch(r'\d+(?:\.\d{1,2})?', value):
@@ -1145,12 +1209,18 @@ class WorkspaceWindow(QMainWindow):
             prompt = (self.repo / filename).read_text(encoding='utf-8')
             if not prompt.strip():
                 raise ValueError('The prompt template is empty.')
+            days_text = self.project_days.text().strip()
+            if not re.fullmatch(r'[1-9][0-9]{0,5}', days_text):
+                raise ValueError('Enter a project day limit of at least 1 whole day.')
+            days = int(days_text)
+            prompt = configure_project_day_limit(prompt, days)
             selection = self.workspace_state['selection']
             if phase in {'working_phase_4', 'working_phase_5', 'working_phase_6'}:
                 if not prompt.startswith('/goal '):
                     raise ValueError('The execution prompt must start with /goal.')
                 prompt += ('\n\nSelected canonical project: ' + selection +
                            '\nStable project ID: ' + meta['id'] +
+                           '\nTotal project day limit across all six phases: ' + days_text + ' calendar days.' +
                            '\nRead the complete current file and its sibling work/ before starting.\n')
             else:
                 budget = self.research_budget.text().strip()
@@ -1170,7 +1240,8 @@ class WorkspaceWindow(QMainWindow):
                 fence = '`' * (max([len(t) for t in re.findall(r'`+', raw)] + [4]) + 1)
                 prompt += ('\n\n## Selected project context\nBUSINESS_NICHE: ' + niche +
                            '\nBUDGET_CEILING_CAD: ' + budget +
-                           '\nTOTAL_PROJECT_WINDOW: 2 days to 3 weeks across all six phases.\n'
+                           '\nTOTAL_PROJECT_WINDOW: Up to ' + days_text + ' calendar days across all six phases.\n'
+                           'Use this current owner-selected limit for delivery_window_days even if the record below contains an older limit; preserve historical facts.\n'
                            'CANONICAL_PROJECT_PATH: ' + selection +
                            '\nBASE_SHA256: ' + snapshot_sha256(raw) +
                            '\nKeep the ID, niche and current project_phase exactly as supplied. '
@@ -1256,11 +1327,19 @@ class WorkspaceWindow(QMainWindow):
         self.notice.show()
 
     def _delete_project(self):
+        if self._project_deletion is not None:
+            return
         current = self._current_project()
         if current is None or self._tree_mode != 'projects':
             return
         path, _, meta, _ = current
         selection = path.relative_to(self.repo).as_posix()
+        try:
+            expected_sha256 = hashlib.sha256(path.read_bytes()).hexdigest()
+        except OSError as error:
+            self.notice.setText('Could not read project: ' + str(error)[:400])
+            self.notice.show()
+            return
         answer = QMessageBox.question(
             self, 'Delete project',
             'Delete “' + meta['title'] + '” (' + meta['id'] + ')?\n\n'
@@ -1274,10 +1353,13 @@ class WorkspaceWindow(QMainWindow):
             return
         try:
             from .project_management import delete_project
-            result = delete_project(self.repo, selection)
-            self._refresh_after_edit(path.parent.parent.relative_to(self.repo).as_posix())
-            self.notice.setText('Project deleted. Recoverable backup: ' + result['trash_path'])
+            self.delete_project.setEnabled(False)
+            future = self._creation_pool.submit(delete_project, self.repo, selection,
+                                                expected_sha256=expected_sha256)
+            self._project_deletion = (selection, path.parent.parent.relative_to(self.repo).as_posix(), future)
+            self.notice.setText('Deleting project and preparing its recovery backup…')
         except (OSError, ValueError, RuntimeError) as error:
+            self.delete_project.setEnabled(True)
             self.notice.setText('Could not delete project: ' + str(error)[:400])
         self.notice.show()
 
@@ -1567,6 +1649,13 @@ class WorkspaceWindow(QMainWindow):
             self._preview(selection)
 
     def closeEvent(self, event):
+        if self._project_deletion is not None:
+            self._finish_project_deletion()
+            if self._project_deletion is not None:
+                self.notice.setText('Project deletion is still in progress. Please wait until it finishes.')
+                self.notice.show()
+                event.ignore()
+                return
         self._closing = True
         self._sync.stop()
         # Qt owns these children. Remove Python event filters and callbacks

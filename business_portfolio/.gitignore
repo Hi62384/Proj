@@ -1,4 +1,5 @@
 .local/
+.research_prompt_days
 private/
 __pycache__/
 *.pyc

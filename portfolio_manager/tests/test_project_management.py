@@ -1,5 +1,6 @@
 """Exercise real niche/project creation, recoverable removal and rollback."""
 import json
+import hashlib
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
@@ -59,6 +60,30 @@ class ProjectManagementTests(unittest.TestCase):
         self.assertNotIn(project['id'], {r['id'] for r in build_browser.load_portfolio(self.portfolio)['records']})
         successor = create_project(self.repo, self.selection)
         self.assertNotEqual(successor['id'], project['id'])
+
+    def test_delete_rejects_a_record_changed_since_confirmation(self):
+        project = create_project(self.repo, self.selection)
+        record = self.repo / project['path']
+        digest = hashlib.sha256(record.read_bytes()).hexdigest()
+        record.write_bytes(record.read_bytes() + b'\nA newer checkpoint.\n')
+        with self.assertRaisesRegex(ValueError, 'changed after confirmation'):
+            delete_project(self.repo, project['path'], expected_sha256=digest)
+        self.assertTrue(record.exists())
+
+    def test_delete_rejects_record_changed_during_file_scan(self):
+        project = create_project(self.repo, self.selection)
+        record = self.repo / project['path']
+        original_walk = build_browser.walk_files
+        def change_during_scan(folder):
+            for path in original_walk(folder):
+                yield path
+            if folder == record.parent:
+                record.write_bytes(record.read_bytes() + b'\nNewer checkpoint.\n')
+        with patch('portfolio_manager.project_management.build_browser.walk_files', side_effect=change_during_scan):
+            with self.assertRaisesRegex(ValueError, 'changed during deletion'):
+                delete_project(self.repo, project['path'])
+        self.assertTrue(record.exists())
+        self.assertIn(b'Newer checkpoint.', record.read_bytes())
 
     def test_delete_project_checks_references_and_rolls_back_on_failure(self):
         victim = create_project(self.repo, self.selection)

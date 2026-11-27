@@ -299,7 +299,7 @@ receipts and historical archives remain independent and untouched.
         return {'id': meta['id'], 'path': original, 'trash_path': trash.relative_to(repo).as_posix(),
                 'project_ids': sorted(removed)}
 
-def delete_project(repo, selection) -> dict:
+def delete_project(repo, selection, *, expected_sha256: str | None = None) -> dict:
     """Move only a selected project directory, with work/, into local recovery."""
     from .project_lifecycle import record_path
     repo = Path(repo).resolve(strict=True)
@@ -314,7 +314,10 @@ def delete_project(repo, selection) -> dict:
             raise ValueError('The project folder is unsafe.')
         if (folder / '.project-phase.lock').exists():
             raise ValueError('Another worker is editing this project; stop or finish it before deletion.')
-        meta, _ = build_browser.parse_project(project.read_text(encoding='utf-8'), str(project))
+        original_bytes = project.read_bytes()
+        if expected_sha256 is not None and hashlib.sha256(original_bytes).hexdigest() != expected_sha256:
+            raise ValueError('The project changed after confirmation. Review it and try again.')
+        meta, _ = build_browser.parse_project(original_bytes.decode('utf-8'), str(project))
         if meta['niche_id'] != niche_meta['id'] or meta['niche_path'] != niche_meta['path']:
             raise ValueError('Project does not belong to the selected niche.')
         records = build_browser.load_portfolio(portfolio)['records']
@@ -327,12 +330,15 @@ def delete_project(repo, selection) -> dict:
         if referring:
             raise ValueError('Other projects still reference this project: ' +
                              ', '.join(sorted(referring)) + '. Resolve those links before deleting.')
-        list(build_browser.walk_files(folder))
+        for _ in build_browser.walk_files(folder):
+            pass
         trash_root = _local_folder(portfolio, 'deleted_projects')
         stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
         trash = trash_root / (stamp + '-' + uuid.uuid4().hex[:8] + '-' + folder.name)
         views = _view_snapshot(portfolio)
         original = project.relative_to(repo).as_posix()
+        if project.read_bytes() != original_bytes:
+            raise ValueError('The project changed during deletion. Review it and try again.')
         os.replace(folder, trash)
         try:
             build_browser.build(portfolio)

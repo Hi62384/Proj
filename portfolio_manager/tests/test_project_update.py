@@ -61,6 +61,19 @@ class ResearchUpdateTests(unittest.TestCase):
                 outcome = replace_project_text(self.repo, self.selection, text)
                 self.assertEqual(outcome['project_phase'], f'working_phase_{number}')
 
+    def test_custom_delivery_window_is_accepted_and_invalid_windows_rejected(self):
+        original = self.path.read_bytes()
+        for value in ({'minimum': 0, 'maximum': 10}, {'minimum': True, 'maximum': 10},
+                      {'minimum': 11, 'maximum': 10}, {'minimum': 2},
+                      {'minimum': 2, 'maximum': 1000000},
+                      {'minimum': 2, 'maximum': 10, 'extra': 1}):
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                replace_project_text(self.repo, self.selection, self.replacement(change={'delivery_window_days': value}))
+            self.assertEqual(self.path.read_bytes(), original)
+        window = {'minimum': 2, 'maximum': 10}
+        replace_project_text(self.repo, self.selection, self.replacement(change={'delivery_window_days': window}))
+        self.assertEqual(build_browser.parse_project(self.path.read_text())[0]['delivery_window_days'], window)
+
     def test_accepts_outer_fence_crlf_and_external_file(self):
         text = '````markdown\n' + self.replacement() + '\n````\n'
         source = Path(self.tmp.name) / 'update.md'

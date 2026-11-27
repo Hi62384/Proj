@@ -290,10 +290,17 @@ class WorkspaceWindowTests(unittest.TestCase):
             self.assertEqual(window.copy_prompt.text(), 'Copy research prompt')
             self.assertFalse(window.paste_project.isHidden())
             window.research_budget.setText('50.25')
+            self.assertEqual(window.project_days.text(), '21')
+            window.project_days.setText('10')
             window._copy_megaprompt('research')
             copied = self.app.clipboard().text()
-            self.assertIn(path.read_text(), copied)
-            self.assertIn('BASE_SHA256: ' + snapshot_sha256(path.read_text()), copied)
+            template = copied.split('## Complete current project record')[0]
+            self.assertIn('TOTAL_PROJECT_WINDOW: Up to 10 calendar days', template)
+            self.assertNotIn('2–21', template)
+            self.assertNotIn('3 weeks', template)
+            self.assertIn('"maximum": 10', template)
+            self.assertIn(path.read_text(encoding='utf-8'), copied)
+            self.assertIn('BASE_SHA256: ' + snapshot_sha256(path.read_text(encoding='utf-8')), copied)
             self.assertIn('BUSINESS_NICHE: Demo', copied)
             self.assertIn('BUDGET_CEILING_CAD: 50.25', copied)
             self.assertFalse(copied.startswith('/goal'))
@@ -331,10 +338,34 @@ class WorkspaceWindowTests(unittest.TestCase):
             window.phase_apply.click()
             self.assertEqual(parse_project(path.read_text())[0]['project_phase'], 'working_phase_4')
             self.assertEqual(window.copy_prompt.text(), 'Copy build prompt')
+            window._copy_megaprompt('phase4')
+            self.assertTrue(self.app.clipboard().text().startswith('/goal '))
+            self.assertIn('Total project day limit across all six phases: 10 calendar days', self.app.clipboard().text())
+            window.project_days.setText('0')
+            before = self.app.clipboard().text()
+            window._copy_megaprompt('phase4')
+            self.assertEqual(self.app.clipboard().text(), before)
             self.assertTrue(window.paste_project.isHidden())
             self.assertTrue(window.phase_apply.isEnabled())
             self.assertEqual(window.phase_apply.text(), 'Manually advance to Phase 5')
             window._test_close()
+            reopened = self._open_window(repo, root / 'state2')
+            self.assertEqual(reopened.project_days.text(), '10')
+            self.assertEqual(reopened.research_budget.text(), '50.25')
+            reopened._test_close()
+
+    def test_day_limit_updates_every_prompt_template(self):
+        from portfolio_manager.workspace_window import PROMPTS, configure_project_day_limit
+        repo = Path(__file__).resolve().parents[2]
+        for _, filename, _ in PROMPTS.values():
+            with self.subTest(filename=filename):
+                source = (repo / filename).read_text(encoding='utf-8')
+                updated = configure_project_day_limit(source, 10)
+                self.assertNotIn('2–21', updated)
+                self.assertNotIn('3 weeks', updated)
+                self.assertNotIn('three weeks', updated)
+                self.assertNotIn('"maximum": 21', updated)
+                self.assertEqual((repo / filename).read_text(encoding='utf-8'), source)
 
     def test_execution_prompt_handoffs_and_full_record_progress(self):
         with TemporaryDirectory() as temp:
@@ -433,6 +464,8 @@ class WorkspaceWindowTests(unittest.TestCase):
             self.assertTrue(record.is_file())
             with patch.object(QMessageBox, 'question', return_value=QMessageBox.StandardButton.Yes):
                 window.delete_project.click()
+            window._project_deletion[2].result(timeout=15)
+            window.sync()
             self.assertFalse(record.exists())
             self.assertEqual(window.workspace_state['selection'], 'business_portfolio/niches/demo')
             backup = repo / 'business_portfolio/.local/deleted_projects'
@@ -440,6 +473,45 @@ class WorkspaceWindowTests(unittest.TestCase):
             self.assertEqual(next(backup.rglob('asset.txt')).read_text(), 'preserved asset')
             self.assertTrue((repo / 'business_portfolio/niches/demo/NICHE.json').is_file())
             window._test_close()
+
+    def test_slow_project_deletion_keeps_window_responsive_and_preserves_new_selection(self):
+        with TemporaryDirectory() as temp:
+            root = Path(temp); repo = root / 'repo'
+            from portfolio_manager.project_management import create_project, delete_project
+            _record(repo, 'DEMO-057'); self._copy_templates(repo)
+            created = create_project(repo, 'business_portfolio/niches/demo')
+            window = self._open_window(repo, root / 'state')
+            started = threading.Event(); release = threading.Event()
+            def slow_delete(*args, **kwargs):
+                started.set()
+                if not release.wait(10):
+                    raise RuntimeError('Test did not release deletion')
+                return delete_project(*args, **kwargs)
+            try:
+                self.assertTrue(window.select(created['path']))
+                from PySide6.QtWidgets import QMessageBox
+                with patch('portfolio_manager.project_management.delete_project', side_effect=slow_delete) as call:
+                    with patch.object(QMessageBox, 'question', return_value=QMessageBox.StandardButton.Yes):
+                        before = perf_counter(); window.delete_project.click()
+                        self.assertLess(perf_counter() - before, 1)
+                    self.assertTrue(started.wait(2))
+                    self.assertFalse(window.delete_project.isEnabled())
+                    window._delete_project()
+                    self.assertEqual(call.call_count, 1)
+                    self.assertTrue(window.select('business_portfolio/niches/demo'))
+                    before = perf_counter(); window.sync()
+                    self.assertLess(perf_counter() - before, 1)
+                    release.set()
+                    window._project_deletion[2].result(timeout=15)
+                    window.sync()
+                    self.assertEqual(window.workspace_state['selection'], 'business_portfolio/niches/demo')
+                    self.assertFalse((repo / created['path']).exists())
+                    self.assertTrue(window.delete_project.isEnabled())
+            finally:
+                release.set()
+                if window._project_deletion:
+                    window._project_deletion[2].result(timeout=15); window.sync()
+                window._test_close()
 
     def test_niche_buttons_create_child_and_delete_recoverably(self):
         with TemporaryDirectory() as temp:

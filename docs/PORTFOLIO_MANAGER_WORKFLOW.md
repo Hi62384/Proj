@@ -34,7 +34,7 @@ Codex normally advances execution phases, but owners may manually advance **Phas
 | 5 | Release the finished product on every accepted required destination and verify customer access | **Copy release prompt**: Codex `/goal` | Codex normally advances to 6; owner has an unverified manual fallback |
 | 6 | Execute and verify the accepted finite initial marketing plan | **Copy marketing prompt**: Codex `/goal` | Codex marks Complete with factual evidence and URLs |
 
-The total project is scoped for **2 days to 3 weeks**, including research, build, releases and initial marketing. This is one shared window, not three weeks for each phase and not an instruction to wait before completing useful work. Plans search broadly but select a feasible finite scope; other options remain conditional, deferred or rejected with reasons. Required external review/access delays must be recorded honestly rather than concealed by a completion estimate.
+Set **Project day limit** beside the planning budget before copying a prompt. It defaults to 21 days, saves between sessions, and applies to the entire project across research, build, releases and initial marketing. This is one shared window, not a new limit for each phase and not an instruction to wait before completing useful work. Plans search broadly but select a feasible finite scope; other options remain conditional, deferred or rejected with reasons. Required external review/access delays must be recorded honestly rather than concealed by a completion estimate.
 
 Phases are stored as `working_phase_1` through `working_phase_6`, then `complete`, with `workflow_version: 2`. They are independent of work status, commercial validation and the niche's Working checkbox. A completed project has not necessarily made a sale.
 

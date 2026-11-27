@@ -367,6 +367,50 @@ class WorkspaceWindowTests(unittest.TestCase):
                 self.assertNotIn('"maximum": 21', updated)
                 self.assertEqual((repo / filename).read_text(encoding='utf-8'), source)
 
+    def test_window_label_follows_project_and_preserves_full_chat_identifier(self):
+        from business_portfolio.tools.build_browser import parse_project
+        with TemporaryDirectory() as temp:
+            root = Path(temp); repo = root / 'repo'
+            first = _record(repo, 'DEMO-080')
+            second = _record(repo, 'DEMO-081')
+            window = self._open_window(repo, root / 'state')
+            fallback = 'Chat ' + window.workspace_id
+            self.assertEqual(window.chat_label.text(), fallback)
+            self.assertEqual(window.windowTitle(), 'Portfolio Manager | ' + fallback)
+            self.assertTrue(window.select(first.relative_to(repo).as_posix()))
+            self.assertEqual(window.chat_label.text(), 'Fictional DEMO-080')
+            self.assertEqual(window.windowTitle(), 'Portfolio Manager | Fictional DEMO-080')
+            self.assertTrue(window.select(second.relative_to(repo).as_posix()))
+            self.assertEqual(window.chat_label.text(), 'Fictional DEMO-081')
+            raw = second.read_text(encoding='utf-8')
+            meta, body = parse_project(raw)
+            meta['title'] = 'Renamed project'
+            second.write_text('---\n' + json.dumps(meta) + '\n---\n' + body, encoding='utf-8')
+            window.sync()
+            self.assertEqual(window.chat_label.text(), 'Renamed project')
+            self.assertTrue(window.select('business_portfolio/niches/demo'))
+            self.assertEqual(window.chat_label.text(), fallback)
+            window._test_close()
+
+    def test_project_selected_before_open_names_workspace(self):
+        from portfolio_manager.workspace_window import WorkspaceWindow
+        with TemporaryDirectory() as temp:
+            root = Path(temp); repo = root / 'repo'
+            project = _record(repo, 'DEMO-082').relative_to(repo).as_posix()
+            host = ManagerHost(repo, root / 'state')
+            window = None
+            try:
+                workspace = host.workspace('c' * 32, {'path': project})
+                window = WorkspaceWindow(host, workspace, on_emergency=lambda:None,
+                                         on_stop_all=lambda:None, on_access=lambda:None,
+                                         on_close=lambda _:None)
+                self.assertEqual(window.chat_label.text(), 'Fictional DEMO-082')
+            finally:
+                if window:
+                    window.close()
+                    window._pool.shutdown(wait=True, cancel_futures=True)
+                host.close()
+
     def test_execution_prompt_handoffs_and_full_record_progress(self):
         with TemporaryDirectory() as temp:
             root = Path(temp); repo = root / 'repo'

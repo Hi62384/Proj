@@ -329,7 +329,7 @@ class WorkspaceWindow(QMainWindow):
             painter.drawText(QRect(17, 1, 14, 14), Qt.AlignmentFlag.AlignCenter, symbol)
             painter.end()
             self._phase_icons[phase] = QIcon(pixmap)
-        self.setWindowTitle('Portfolio Manager | Chat ' + self.workspace_id[:8])
+        self.setWindowTitle('Portfolio Manager | Chat ' + self.workspace_id)
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
         self.resize(1080, 720)
         self.setMinimumSize(620, 440)
@@ -355,7 +355,10 @@ class WorkspaceWindow(QMainWindow):
         self.working_count = QLabel('0 working niches')
         self.working_count.setAccessibleName('Working niche count')
         header.addWidget(self.working_count)
-        header.addWidget(QLabel('Chat ' + self.workspace_id[:8]))
+        self.chat_label = QLabel('Chat ' + self.workspace_id)
+        self.chat_label.setTextFormat(Qt.TextFormat.PlainText)
+        self.chat_label.setAccessibleName('Current project or chat')
+        header.addWidget(self.chat_label)
         self.mode = QComboBox()
         self.mode.setAccessibleName('Global availability')
         self.mode.addItem('AI Only (AFK)', 'afk')
@@ -1419,6 +1422,12 @@ class WorkspaceWindow(QMainWindow):
                                 ' is unchanged; recheck it before advancing.')
             self.notice.show()
 
+    def _set_workspace_label(self, title=None):
+        label = title.strip() if isinstance(title, str) and title.strip() else 'Chat ' + self.workspace_id
+        self.chat_label.setText(label)
+        self.chat_label.setToolTip(label)
+        self.setWindowTitle('Portfolio Manager | ' + label)
+
     def _refresh_preview_if_changed(self, selection):
         try:
             path = context_path(self.repo, selection)
@@ -1434,6 +1443,7 @@ class WorkspaceWindow(QMainWindow):
             self._preview(selection)
 
     def _preview(self, selection):
+        self._set_workspace_label()
         self._refresh_prompt_menu(selection)
         self._phase_project = None
         self.phase_controls.hide()
@@ -1457,6 +1467,7 @@ class WorkspaceWindow(QMainWindow):
                 record = json.loads(path.read_text(encoding='utf-8'))
                 if record.get('project_phase') != 'complete' or record.get('id') != path.stem:
                     raise ValueError('Invalid completion receipt.')
+                self._set_workspace_label(record.get('title'))
                 title = html.escape(str(record.get('title', path.stem)))
                 description = html.escape(str(record.get('description', 'No description provided.')))
                 rows = [f'<h2>{title}</h2><p>{description}</p>']
@@ -1520,6 +1531,7 @@ class WorkspaceWindow(QMainWindow):
             meta, body = parse_project(raw, selection)
         except ValueError:
             return
+        self._set_workspace_label(meta.get('title'))
         purpose = re.search(r'^\*\*Purpose:\*\*\s*(.+)$', body, re.M)
         overview = [meta['title'], '', 'Preserved history' if archived else 'Current project',
                     'Niche: ' + meta['niche_path'].replace('-', ' '),

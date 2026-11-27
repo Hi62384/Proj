@@ -8,7 +8,7 @@ from pathlib import Path
 from unittest.mock import Mock,patch
 sys.path[:0]=[str(Path(__file__).resolve().parents[1]),str(Path(__file__).resolve().parents[3])]
 from PySide6.QtWidgets import QApplication,QPushButton,QComboBox,QPlainTextEdit,QSystemTrayIcon,QCheckBox
-from PySide6.QtCore import QTimer
+from PySide6.QtCore import QTimer,Qt
 from assistant.permissions import Permissions
 from assistant.storage import Store
 from bridge.dashboard import Dashboard
@@ -112,6 +112,8 @@ class BridgeDashboardTests(unittest.TestCase):
         self.window.refresh();self.app.processEvents()
         popup=self.window.request_popups['popup']
         self.assertTrue(popup.isVisible())
+        self.assertIsNone(popup.parent())
+        self.assertTrue(popup.windowFlags() & Qt.WindowType.WindowStaysOnTopHint)
         next(b for b in popup.findChildren(QPushButton) if b.text()=='Review later').click()
         self.assertFalse(request['event'].is_set())
         self.window.refresh();self.assertFalse(popup.isVisible())

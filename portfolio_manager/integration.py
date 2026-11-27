@@ -8,7 +8,7 @@ from business_portfolio.tools.build_browser import project_record_path, project_
 
 
 OPERATIONS = {
-    'portfolio_open': 'Show Portfolio Manager for an explicit owner request.',
+    'portfolio_open': 'Show Portfolio Manager for an explicit owner request. If this chat already knows its current canonical project record, pass that path so its workspace opens on and is named for the project; otherwise preserve its existing selection.',
     'portfolio_context': 'Read the selected file or folder, operating mode and bounded portfolio project summary for this chat. Read the complete canonical record and checkpoint before resuming a project. Reconnect with the private reconnect key from the original open result when the transport changes.',
     'portfolio_select': 'Change this chat selection with path and optional revision. Accepts repository-relative paths.',
     'portfolio_start_selected': 'Start a background worker for the selected portfolio folder or project record at the owner’s request.',

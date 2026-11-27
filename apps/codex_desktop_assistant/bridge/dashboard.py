@@ -147,7 +147,10 @@ class Dashboard(QMainWindow):
         request['allowed']=allowed;request['event'].set();self.refresh()
 
     def show_request_popup(self,request):
-        dialog=QDialog(self);dialog.setWindowTitle('Approval request');dialog.resize(520,220)
+        # A hidden or minimized Computer Access window must not hide the popup
+        # behind the workspace (or other applications) on Windows.
+        dialog=QDialog(None,Qt.WindowType.Dialog | Qt.WindowType.WindowStaysOnTopHint)
+        dialog.setWindowTitle('Portfolio Manager · Approval request');dialog.resize(520,220)
         layout=QVBoxLayout(dialog)
         for value in (request['label'],request['args'].get('approval_reason') or request['args'].get('reason') or request['args'].get('question','Review the specific action before allowing it.')):
             label=QLabel(str(value));label.setTextFormat(Qt.PlainText);label.setWordWrap(True);layout.addWidget(label)
@@ -274,6 +277,8 @@ class Dashboard(QMainWindow):
 
     def closeEvent(self,event):
         if not self.explicit_quit and QSystemTrayIcon.isSystemTrayAvailable():self.hide();event.ignore();return
+        for popup in self.request_popups.values():popup.close();popup.deleteLater()
+        self.request_popups.clear()
         for window in list(self.workspace_windows.values()):
             window.close()
         self.timer.stop();self.runtime.close()

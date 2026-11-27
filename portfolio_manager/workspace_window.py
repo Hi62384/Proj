@@ -1575,14 +1575,11 @@ class WorkspaceWindow(QMainWindow):
         done = re.findall(r'^\s*- \[[xX]\] (.+)$', body, re.M)
         remaining = re.findall(r'^\s*- \[ \] (.+)$', body, re.M)
         stage = meta.get('project_phase', 'working_phase_2') if archived else project_phase(meta)
+        from business_portfolio.tools.project_workflow import progress_estimate
         label = stage[-1] if not archived and stage in {'working_phase_2', 'working_phase_3', 'working_phase_4'} else ''
-        estimate_label = (str(meta.get('project_phase', 'working_phase_2'))[-1]
-                          if label and meta.get('workflow_version') != 3 else label)
-        guesses = [value for value in re.findall(r'Phase\s*' + (estimate_label or '[234]') +
-                             r'\s*completion estimate:\s*(\d{1,3})\s*%', body, re.I) if int(value) <= 100]
-        estimate = ('Phase ' + label + ' completion estimate: ' + guesses[-1] + '% (best guess)'
-                    if guesses and label and int(guesses[-1]) <= 100
-                    else 'Progress percentage: not measured.')
+        value = progress_estimate(meta, body) if label else None
+        estimate = ('Phase ' + label + ' completion estimate: ' + value + '% (best guess)'
+                    if label and value is not None else 'Progress percentage: not measured.')
         self.project_tasks.setPlainText('Completed\n' + ('\n'.join('• ' + item for item in done) if done else
             'No completed tasks recorded.') + '\n\nRemaining\n' +
             ('\n'.join('• ' + item for item in remaining) if remaining else

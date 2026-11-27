@@ -95,66 +95,47 @@ def replace_project_text(repo, selection, text: str, *, expected_sha256: str | N
             raise ValueError('draft must be true or false.')
         if not body.strip():
             raise ValueError('The project text must contain its research, plans and next action.')
-        if (updated['title'].strip().casefold() != 'empty project' and
+        if marker is None and (updated['title'].strip().casefold() != 'empty project' and
                 updated.get('record_type') != 'empty_project' and len(body.strip()) >= 80):
             updated['draft'] = False
         if marker == VERIFIED_VALUE:
             checks = updated.get('research_verification')
             if supplied_digest != digest:
                 raise ValueError('A verified Phase 1b record must include the exact BASE_SHA256.')
-            if (not isinstance(checks, dict) or
+            if (not isinstance(checks, dict) or set(checks) != set(RESEARCH_KEYS) or
                     any(checks.get(key) != 'approved' for key in RESEARCH_KEYS) or
                     updated.get('research_verdict') != 'GO' or updated.get('draft') is not False or
                     updated.get('record_type') in (None, 'empty_project') or
                     updated['title'].casefold() == 'empty project'):
                 raise ValueError('Phase 1b must approve product, release and marketing research with a GO verdict before advancing.')
-            required = (r'^##\s+Phase 1\s*[-—:]\s*Research\b',
-                        r'^###\s+Stage 1\s*[-—:]\s*Product research\b',
-                        r'^###\s+Stage 2\s*[-—:]\s*Release research\b',
-                        r'^###\s+Stage 3\s*[-—:]\s*Marketing research\b',
-                        r'^##\s+Phase 1b verification\s*
-        contents = _record_text(updated, body).encode('utf-8')
-        views = _view_snapshot(portfolio)
-        backup = _backup_record(portfolio, old['id'], original_bytes)
-        if target.read_bytes() != original_bytes:
-            raise ValueError('The project changed while the update was being prepared. Reopen Paste project text.')
-        _atomic_bytes(target, contents)
-        try:
-            build_browser.build(portfolio)
-        except Exception:
-            _atomic_bytes(target, original_bytes)
-            _restore_views(views)
-            raise
-        return {'id': old['id'], 'path': target.relative_to(repo).as_posix(),
-                'project_phase': phase, 'advanced': phase == PHASE_2, 'backup': str(backup)}
-
-
-def replace_project_from_file(repo, selection, source, *, expected_sha256: str | None = None) -> dict:
-    """Optional file-drop equivalent of Paste project text; preserve work/."""
-    repo = Path(repo).resolve(strict=True)
-    target = record_path(repo, selection)
-    source = Path(source)
-    if (source.suffix.lower() != '.md' or not source.is_file() or
-            build_browser.linked_input(source)):
-        raise ValueError('Drop one regular Markdown project file.')
-    if source.stat().st_size > MAX_UPDATE_BYTES:
-        raise ValueError('The project file exceeds the 5 MB limit.')
-    if source.resolve() == target.resolve():
-        raise ValueError('Drop an external updated file, not the selected project itself.')
-    return replace_project_text(repo, selection, source.read_text(encoding='utf-8-sig'),
-                                expected_sha256=expected_sha256)
-,
-                        r'^##\s+Phase 2\s*[-—:]\s*Build\b',
-                        r'^##\s+Phase 3\s*[-—:]\s*Release\b',
-                        r'^##\s+Phase 4\s*[-—:]\s*Marketing\b')
-            if any(not re.search(pattern, body, re.M | re.I) for pattern in required):
-                raise ValueError('Verified record is missing required sections. Copy the full Phase 1b project text.')
+            required = (r'^##[ \t]+Phase 1[ \t]*[-—:][ \t]*Research\b',
+                        r'^###[ \t]+Stage 1[ \t]*[-—:][ \t]*Product research\b',
+                        r'^###[ \t]+Stage 2[ \t]*[-—:][ \t]*Release research\b',
+                        r'^###[ \t]+Stage 3[ \t]*[-—:][ \t]*Marketing research\b',
+                        r'^##[ \t]+Phase 1b verification\b',
+                        r'^##[ \t]+Phase 2[ \t]*[-—:][ \t]*Build\b',
+                        r'^##[ \t]+Phase 3[ \t]*[-—:][ \t]*Release\b',
+                        r'^##[ \t]+Phase 4[ \t]*[-—:][ \t]*Marketing\b',
+                        r'^##[ \t]+Important data and URLs\b',
+                        r'^##[ \t]+Decisions and work log\b')
+            headings = list(re.finditer(r'^#{1,6}[ \t]+[^\n]+', body, re.M))
+            for pattern in required:
+                heading = next((h for h in headings if re.match(pattern, h.group(), re.I)), None)
+                if heading is None:
+                    raise ValueError('Verified record is missing required sections. Copy the full Phase 1b project text.')
+                # Parent research section may contain its three child headings.
+                level = len(heading.group().split()[0])
+                end = next((h.start() for h in headings if h.start() > heading.start()
+                            and len(h.group().split()[0]) <= level), len(body))
+                if not body[heading.end():end].strip():
+                    raise ValueError('Verified record contains an empty required section.')
             if not re.search(r'https?://[^\s)]+', body):
                 raise ValueError('Verified research must retain direct source URLs.')
         updated, body = upgrade_record(updated, body)
         if marker == VERIFIED_VALUE:
             phase = PHASE_2
             updated['project_phase'] = phase
+            updated['next_action'] = 'Copy the Phase 2 build prompt; implement and test the verified research plan.'
             history = updated.setdefault('phase_history', [])
             if not isinstance(history, list):
                 raise ValueError('Project phase_history must be a list.')

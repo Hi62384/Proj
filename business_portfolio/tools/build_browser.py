@@ -340,6 +340,8 @@ def load_portfolio(root: Path) -> dict:
         if m.get('workflow_version', 1) not in {1, 2, 3}:
             raise ValidationError(f'{p}: invalid workflow version')
         max_phase = 4 if m.get('workflow_version') == 3 else 6
+        if m.get('workflow_version') == 3 and 'project_phase' not in m:
+            raise ValidationError(f'{p}: current workflow requires project_phase')
         if m.get('project_phase', 'working_phase_2') not in {f'working_phase_{i}' for i in range(1, max_phase + 1)} | {'complete'}:
             raise ValidationError(f'{p}: invalid project phase')
         verification = m.get('research_verification', {})

@@ -58,3 +58,18 @@ def upgrade_record(meta: dict, body: str) -> tuple[dict, str]:
         if valid:
             body += f"\nPhase {phase[-1]} completion estimate: {valid[-1]}% (best guess)\n"
     return meta, body
+
+
+def progress_estimate(meta: dict, body: str) -> str | None:
+    """Show only estimates belonging to the current numbered workflow."""
+    phase = phase_of(meta)
+    if phase not in (PHASE_2, PHASE_3, PHASE_4):
+        return None
+    version = meta.get("workflow_version", 1)
+    if version == VERSION and meta.get("workflow_v3_migration"):
+        # Earlier identical numbers refer to different activities. New
+        # checkpoints are appended below the migration note.
+        body = body.rsplit("## Four-phase workflow migration", 1)[-1]
+    number = phase[-1] if version == VERSION else meta.get("project_phase", PHASE_2)[-1]
+    values = re.findall(r"Phase\s*" + number + r"\s*completion estimate:\s*(\d{1,3})\s*%", body, re.I)
+    return next((v for v in reversed(values) if int(v) <= 100), None)

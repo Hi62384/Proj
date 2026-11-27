@@ -10,7 +10,7 @@
   "priority": "P2",
   "planning_lane": "queued",
   "work_state": "active",
-  "project_phase": "working_phase_4",
+  "project_phase": "working_phase_2",
   "commercial_validation": "unvalidated",
   "evidence_basis": "public_official_and_competitor_research_no_verified_customer_sales",
   "source_ids": [
@@ -120,7 +120,7 @@
   ],
   "local_development_authorized": true,
   "technical_gate": "Owner revised 2026-11-18: comparative advantage is evidence to report, not a blocker to local development or testing; release still requires technical QA and separate owner approval.",
-  "workflow_version": 2,
+  "workflow_version": 3,
   "workflow_migration": {
     "previous_project_phase": "working_phase_2",
     "previous_record_path": "business_portfolio/niches/digital-products/game-development-marketplaces/projects/gdm-002-capacity-aware-npc-transport/project.md",
@@ -135,6 +135,11 @@
   "delivery_window_days": {
     "minimum": 2,
     "maximum": 21
+  },
+  "workflow_v3_migration": {
+    "previous_workflow_version": 2,
+    "previous_project_phase": "working_phase_4",
+    "research_approval_inferred": false
   }
 }
 ---
@@ -1292,3 +1297,10 @@ Phase 4 completion estimate: 96% (best guess)
 - [x] The owner chose to perform the physical-input check personally. Prepared isolated `work/owner-acceptance-2026-11-26`, with `START_DEMO.cmd`, `START_MARKER_EDITOR.cmd` and `START_HERE.md`. The candidate add-on and demo files were byte-checked; the demo startup and marker editor load passed headlessly on 4.7.2. No visible window was launched by the agent, and no manual pass is claimed.
 - [ ] Owner hands-on results, wider accessibility, recurrent timing variability, rights/final license, support terms and final delivery review remain open. No independent external game was supplied.
 - No spending, publication, outreach, accounts or deployment occurred. Next action: owner runs the prepared acceptance check and reports any issues; continue authorized fixes and obtain separate owner approval before publication or spending. Estimate is a best guess, not completion evidence.
+
+
+## Four-phase workflow migration
+
+Mapped former working_phase_4 to working_phase_2. Historical research, execution evidence, phase history, and all existing work remain intact. No research approvals or execution authorization were inferred.
+
+Phase 2 completion estimate: 96% (best guess)

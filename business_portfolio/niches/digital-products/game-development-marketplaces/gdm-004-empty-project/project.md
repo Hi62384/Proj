@@ -3,8 +3,8 @@
   "id": "GDM-004",
   "title": "Refactor Ledger — Godot Exported Property Recovery & Git Audit Toolkit",
   "schema_version": 1,
-  "workflow_version": 2,
-  "project_phase": "working_phase_2",
+  "workflow_version": 3,
+  "project_phase": "working_phase_1",
   "draft": false,
   "niche_id": "N-gdm-20261115",
   "niche_path": "digital-products/game-development-marketplaces",
@@ -17,7 +17,7 @@
   "source_ids": [],
   "parent_project": null,
   "related_projects": [],
-  "next_action": "Review and independently recheck the Phase 1 evidence, then manually advance to Phase 2 if approved. Preserve the proof-first implementation gate.",
+  "next_action": "Resume Phase 1a using the existing research; finish and verify product, release, and marketing stages, then run Phase 1b and paste the verified complete record. Preserve all prior evidence and unresolved gates.",
   "last_reviewed": "2026-11-27",
   "execution_authorized": false,
   "privacy": "public",
@@ -47,7 +47,13 @@
       "at": "2026-11-27T03:15:59+00:00",
       "evidence": "Owner advanced the research phase."
     }
-  ]
+  ],
+  "workflow_v3_migration": {
+    "previous_workflow_version": 2,
+    "previous_project_phase": "working_phase_2",
+    "research_approval_inferred": false,
+    "previous_next_action": "Review and independently recheck the Phase 1 evidence, then manually advance to Phase 2 if approved. Preserve the proof-first implementation gate."
+  }
 }
 ---
 
@@ -2122,3 +2128,8 @@ Run the separate Phase 1 verification prompt against this record.
 If the verification confirms the recommendation, manually advance to Phase 2.
 
 Do not change execution authorization, commercial validation or current project phase automatically.
+
+
+## Four-phase workflow migration
+
+Mapped former working_phase_2 to working_phase_1. Historical research, execution evidence, phase history, and all existing work remain intact. No research approvals or execution authorization were inferred.

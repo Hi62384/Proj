@@ -3,8 +3,8 @@
   "id": "BOOK-002",
   "title": "Diary of a Skibidi Kid (Working Title) — Illustrated Brainrot School Comedy",
   "schema_version": 1,
-  "workflow_version": 2,
-  "project_phase": "working_phase_2",
+  "workflow_version": 3,
+  "project_phase": "working_phase_1",
   "draft": false,
   "niche_id": "N-required-books-and-ebooks",
   "niche_path": "digital-products/books-and-ebooks",
@@ -23,7 +23,7 @@
     "Amazon Kindle eBook",
     "Kobo Writing Life eBook"
   ],
-  "next_action": "Perform independent Phase 1 verification, resolve the proposed series branding with the owner, and confirm the original illustrated school-comedy specification before advancing to Phase 2.",
+  "next_action": "Resume Phase 1a using the existing research; finish and verify product, release, and marketing stages, then run Phase 1b and paste the verified complete record. Preserve all prior evidence and unresolved gates.",
   "last_reviewed": "2026-11-27",
   "execution_authorized": false,
   "privacy": "public",
@@ -44,7 +44,13 @@
       "at": "2026-11-27T03:38:32+00:00",
       "evidence": "Owner advanced the research phase."
     }
-  ]
+  ],
+  "workflow_v3_migration": {
+    "previous_workflow_version": 2,
+    "previous_project_phase": "working_phase_2",
+    "research_approval_inferred": false,
+    "previous_next_action": "Perform independent Phase 1 verification, resolve the proposed series branding with the owner, and confirm the original illustrated school-comedy specification before advancing to Phase 2."
+  }
 }
 ---
 
@@ -2253,3 +2259,8 @@ verify Phase 1 and manually advance the project
 when satisfied.
 
 No external execution has been performed.
+
+
+## Four-phase workflow migration
+
+Mapped former working_phase_2 to working_phase_1. Historical research, execution evidence, phase history, and all existing work remain intact. No research approvals or execution authorization were inferred.

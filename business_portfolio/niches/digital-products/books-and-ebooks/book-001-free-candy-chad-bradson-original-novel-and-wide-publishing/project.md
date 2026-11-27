@@ -9,7 +9,7 @@
   "origin": "current_package",
   "priority": "P1",
   "work_state": "planned",
-  "project_phase": "working_phase_4",
+  "project_phase": "working_phase_2",
   "commercial_validation": "unvalidated",
   "evidence_basis": "owner_supplied_book_assets_verified_locally_and_current_official_platform_rules_without_sales_or_store_approval",
   "source_ids": [
@@ -76,7 +76,7 @@
     "optional_all_in_envelope": {},
     "optional_total_ceiling": 0
   },
-  "workflow_version": 2,
+  "workflow_version": 3,
   "workflow_migration": {
     "previous_project_phase": "working_phase_2",
     "previous_record_path": "business_portfolio/niches/digital-products/books-and-ebooks/projects/book-001-free-candy-chad-bradson-original-novel-and-wide-publishing/project.md",
@@ -91,6 +91,11 @@
   "delivery_window_days": {
     "minimum": 2,
     "maximum": 21
+  },
+  "workflow_v3_migration": {
+    "previous_workflow_version": 2,
+    "previous_project_phase": "working_phase_4",
+    "research_approval_inferred": false
   }
 }
 ---
@@ -854,3 +859,8 @@ Maintain an **Important URLs** ledger for source/edit/admin/build/upload/live/
 purchase/download/demo/marketing/analytics/support locations, with purpose,
 version, access/status and verification date. Keep replaced links as history.
 Never put passwords, access tokens or private customer/payment information here.
+
+
+## Four-phase workflow migration
+
+Mapped former working_phase_4 to working_phase_2. Historical research, execution evidence, phase history, and all existing work remain intact. No research approvals or execution authorization were inferred.

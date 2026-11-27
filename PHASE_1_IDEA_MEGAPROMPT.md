@@ -1,6 +1,17 @@
-# Phase 1 — Research and specify my product idea
+# Phase 1a — Complete research for my existing idea
 
 Evaluate the user's PROJECT_IDEA appended below, or the clear idea already stated in this chat and selected project, and develop it into a specific, researched product in the selected niche. Preserve the intended problem, audience and distinguishing concept; investigate concrete refinements that make it viable without silently replacing it with an unrelated business. If no clear idea is present, ask one concise question for it. Complete all applicable desk research, challenge its economics and alternatives, and produce the detailed specification and complete copyable project text. A good idea may pass as it is; improvements must follow evidence, not a requirement to change it.
+
+## Sequential research with mandatory verification before moving on
+
+Complete these three substantial internal stages of Phase 1a in order, in the same chat:
+1. Stage 1: product research and detailed specification. Independently challenge and verify the opportunity before starting Stage 2.
+2. Stage 2: release-platform and compatibility research. Verify the platform matrix, real feasibility and revised specification before starting Stage 3.
+3. Stage 3: marketing research. Verify the complete plan and reconcile all three stages and the shared time/budget before returning a draft.
+
+Do not skip a stage, compress release or marketing into superficial lists, or proceed when an unresolved material failure invalidates a prerequisite. Correct material findings and repeat affected checks. If a product fails, investigate meaningfully different viable candidates under the same research standards. For owner-supplied ideas preserve their actual premise. Keep evidence, direct links, dates, decisions and unfinished tasks in the working record after each stage. On interruption, report the last completed stage and next action; on "continue" resume from that checkpoint. No intermediate pastes or manual phase changes. Only after all three internal checks pass return a complete integrated draft for Phase 1b in the SAME chat. The owner does not paste Phase 1a into Portfolio Manager.
+
+# Stage 1 — Product research and internal verification
 
 ## Mandatory finalist verification — research depth before project creation
 
@@ -72,14 +83,70 @@ When creating or substantively revising a viable candidate, write an implementat
 
 - Product purpose, target audience, concrete scenarios, buyer value, descriptive title and a small complete first release.
 - Features and behavior: inputs/outputs, user flows, screens or commands, configuration, integration boundaries, persistence, accessibility where relevant, error cases and recovery. For content/creative products use the equivalent structure, style, production rules, audience promise and quality criteria.
-- Architecture or production approach, data/assets/content needed, licensed dependencies, supported versions and known compatibility assumptions. Phase 2 will expand the accepted port/format matrix and must update this specification accordingly.
+- Architecture or production approach, data/assets/content needed, licensed dependencies, supported versions and known compatibility assumptions. Stage 2 will expand the accepted port/format matrix and must update this specification accordingly.
 - Component-level work breakdown with dependencies, relative effort, acceptance criteria and test inputs; clear separation between a first falsification proof, production, QA, documentation and packaging.
 - Quality and verification: representative positive/negative cases, usability, performance constraints where meaningful, independent first-use checks and observable completion criteria. Do not substitute invented tests or generic “make it polished” for measurable results.
 - Exact deliverables, source/build/package locations under the existing sibling `work/`, customer documentation/demo requirements, versioning, licensing and support scope.
-- Explicit exclusions, conditional assumptions, biggest risks, mitigation, stop/pivot criteria, remaining research questions and a total schedule across phases 1–6 fitting 2–21 days.
-- Phase 4 build checklist and provisional Phase 5/6 execution checklists. Leave unresearched release and marketing specifics clearly pending their own Phase 2/3 research.
+- Explicit exclusions, conditional assumptions, biggest risks, mitigation, stop/pivot criteria, remaining research questions and a total schedule across Phases 1–4 fitting 2–21 days.
+- Phase 2 build checklist and provisional Phase 3/4 execution checklists. Complete release and marketing specifics in the next stages.
 
 If the candidate fails, keep the same selected project record, explain the evidence and the smallest appropriate next decision. A research record can document NO_GO or a blocker without pretending an active build was approved. Do not erase completed existing work or switch the project's identity.
+
+
+**Stage 1 exit gate:** Resolve decisive buyer, competition, economic, rights and feasibility concerns using direct evidence. Only a supported bounded GO proceeds. Otherwise continue viable candidate discovery or report the actual blocker.
+
+# Stage 2 — Release research and internal verification
+
+## Search both direct and adjacent opportunities
+
+1. Inventory the actual proposed product, buyer job, interfaces, source formats, content/assets, technical dependencies, rights and existing work. Distinguish **compatibility targets** (engines, runtimes, operating systems, formats, ecosystems) from **distribution destinations** (stores, registries, marketplaces, direct download/checkout and relevant other channels). A port is not a storefront, and a storefront does not prove a compatible port exists.
+2. Search all promising direct platform categories, then adjacent ecosystems that serve the same buyer job. For a Unity pathfinding system, investigate other relevant game engines and lightweight 2D/3D simulation or AI environments that could actually use it. For other product types investigate equivalent formats, devices, audiences, stores, regions, libraries or delivery models. Do not mechanically force every product onto every engine or channel.
+3. Inspect official release/submit requirements, seller eligibility and payout availability for the owner, current fees and revenue shares, taxes/currency where material, licensing/IP and AI-content policies, supported formats/version ranges, dependencies, package constraints, tests, documentation, graphics/demo requirements, account steps, review delays, updates/support and refund obligations. Record exact sources/dates and unknowns.
+4. Assess whether each adjacent version has a real user benefit, feasible implementation/maintenance cost and sensible distribution. Estimate shared core versus adapter work, platform-specific behavior, dependency/license differences, acceptance tests and the smallest genuine compatible version. Never claim support from an engine name alone.
+5. Produce a discovery matrix covering every promising platform family investigated. Classify each as **accepted**, **conditional**, **deferred** or **rejected**, with reasons, evidence, risk, costs, estimated effort and revisit trigger. Accepted means it belongs in this project's 2–21-day total delivery scope; it is not permission to publish or spend. Preserve plausible excluded routes visibly instead of quietly forgetting them. Where a platform depends on later review, explain what can be completed and what remains externally blocked.
+
+## Update the whole project coherently
+
+Create a release plan for every accepted destination: exact compatible variant, deliverable/package format, prerequisites, listing material, release/upload steps, expected verification, edit/admin/update route, support commitments, fees and explicit permission/access blockers. Include a primary release order, parallelizable tasks and fallbacks. Link target documentation URLs now; distinguish planned endpoints from real live project URLs.
+
+**Revise the Stage 1 build specification to require a compatible version for every accepted compatibility target.** Add the adapters, content formats, version constraints, integration behavior, port-specific tests, customer docs and acceptance criteria. Update the Phase 2 build checklist and Phase 3 release checklist so each accepted row has a corresponding task and completion evidence. Use a shared core where sensible while being honest about real differences. If new platform requirements change product scope or economics, update those earlier sections with reasons and mark affected verification for recheck. Do not duplicate separate projects for simple versions of the same product family.
+
+
+**Stage 2 exit gate — fresh verification:**
+
+Independently verify the selected Stage 2 release-platform research. Reopen current official sources and search for overlooked direct or adjacent ecosystems. Check that the platform matrix is based on this product's buyer job, not generic popularity. Verify eligibility, payout/access, fees, rights, policies, supported formats/versions, submission requirements, review delays, support obligations and real porting effort. Challenge both unnecessary breadth and unjustified omissions.
+
+Trace every accepted compatibility target to the Stage 1 product specification and Phase 2 build/tests, and every accepted release destination to the Phase 3 runbook. Ensure a target's customer value, packaging, distribution path and maintenance are credible. Check platform-specific costs and dependencies against the shared budget and **2 days to 3 weeks total** scope. A candidate list must not accidentally become an unlimited promise to port everywhere. Accepted, conditional, deferred and rejected options should have evidence and clear reasons. Confirm the resulting plan can be executed and verified, and that expected account/review blocks are stated honestly.
+Reopen current sources and correct material failures BEFORE Stage 3. Reverify Stage 1 if scope or economics changes.
+
+# Stage 3 — Marketing research and internal verification
+
+## Investigate audiences, routes and tactics
+
+1. Map who buys or uses the product, the situations and search terms that reveal intent, where those people already compare solutions and what proof they trust. Recheck alternatives and positioning as necessary. Distinguish purchase intent from large follower counts or general traffic.
+2. Search every plausible route category suited to the product: marketplace discovery and listing optimization, search/SEO, educational/problem-solving content, demos/video, relevant communities and forums, directories/resource lists, integrations and ecosystem pages, creator/reviewer coverage, partnerships/affiliates, opt-in email or existing owned audiences, cross-selling, bundles, localization and other credible product-specific routes. Consider paid channels only as a sourced conditional option unless actual budget and permission exist. Omit irrelevant categories with reasons rather than mechanically planning spam everywhere.
+3. For promising routes verify current rules, commercial/self-promotion allowances, posting formats, account/reputation requirements, fees, access, audience fit, geographic availability, content rights, disclosure and moderation/review delays. Name the exact relevant communities/sections or entry points when verifiable. Record direct policy and audience evidence links, not only platform homepages.
+4. Research positioning and offer: buyer outcome, honest differentiated claims, pricing/presentation, headline, screenshots, working demo, proof, call to action, objections, onboarding and conversion friction. Explain what customers should see and do next. Do not invent testimonials, performance benchmarks or scarcity.
+5. Plan the content and assets: topics, hooks, outlines/scripts, demo scenarios, platform-specific copy, screenshots/video, metadata/keywords, documentation, landing/store pages and localization where useful. Reuse an accurate central asset set, then adapt for each audience. Specify what must exist before publication and which product or release changes support it.
+6. Design a coherent sequence and lightweight measurement plan: launch dependencies, initial content/placement schedule, eligible community participation, internal links, funnel and tracking, channel-specific observable indicators, exposure versus conversion diagnosis, bounded review checkpoints and stop/change rules. Treat unknown sales and conversion figures as hypotheses. Avoid turning initial marketing into an indefinite daily content obligation.
+
+## Produce the actionable Stage 3 plan
+
+Include a channel/tactic matrix with audience, purpose, evidence, exact entry URL, eligibility/rules, content needed, expected effort/cost, priority, status (accepted/conditional/deferred/rejected), prerequisites, owner/agent task and completion evidence. Include useful tactics that have no single “platform”: product-led sharing where appropriate, documentation discoverability, packaging, bundle strategy, onboarding improvements, attribution and conversion work. State the finite initial execution scope and what is only an optional future follow-up.
+
+For **every accepted route**, add explicit Phase 4 tasks: prepare, quality-check, obtain any genuinely required access/approval, publish or place, inspect the real result, record the public and edit/admin URLs, and measure what is actually available. Outreach, posting and account actions remain subject to actual owner authorization and platform rules; a research plan is not permission to message people. Record required permission as a dependency and complete independent useful work rather than assuming it.
+
+Update Stage 1 and build if marketing needs genuine product features, demonstrations, assets or onboarding changes. Update Stage 2 and release if the new evidence changes viable releases, listing requirements or sequencing. Preserve completed work and decisions, explain material changes and mark affected earlier verification for recheck. Keep all accepted build, release and marketing work within **2 days to 3 weeks total**; reduce low-value scope explicitly, not by silently skipping tasks.
+
+
+**Stage 3 exit gate — fresh verification:**
+
+Independently challenge the selected Stage 3 marketing plan using fresh sources and actual platform/community rules. Assess real audience and intent, channel access, posting eligibility, believable positioning, proof, offer/CTA, discoverability, content quality, conversion path, measurement, cost and ongoing owner workload. Search for material missed opportunities beyond platform lists and for stronger reasons that an accepted route would fail. Do not assume large traffic or repeated posting produces customers.
+
+Trace each accepted marketing tactic to a finite Phase 4 task, required assets, publication/placement prerequisites and observable evidence. Confirm accepted release versions are supported by the Stage 1 specification, Phase 2 build/test checklist and Phase 3 release runbook. Check that product/release changes introduced by marketing are reflected coherently and no earlier required verification was silently invalidated. The entire project must still fit **2 days to 3 weeks total**, with actual current progress preserved and external review/access delays honestly identified.
+
+Verify claims, source dates, rights, permissions, fees, disclosure and safeguards against unsolicited spam or fabricated testimonials. Ensure the plan distinguishes research from actual action and drafts from real public placements. Validate useful non-platform tactics and realistic post-launch measurement without making unknown future first sales a prerequisite to building. If substantive weaknesses remain, research feasible alternatives and revise the same plan; do not force approval. If it is already sound, approve it without rewriting it.
+Resolve cross-stage inconsistencies and reverify affected stages. Return the integrated draft only when all internal gates pass; otherwise identify the incomplete stage.
 
 ## Shared research rules and project limits
 
@@ -87,18 +154,26 @@ This is a ChatGPT research task for an existing selected project, not a Codex ex
 
 Research current facts using direct sources. Use official platform documentation for eligibility, fees, requirements, policies and technical capabilities; use independent buyer/user material for demand and lived experience. Open relevant pages, record direct URLs and dates, and distinguish verified facts, reported experiences, inference and unknowns. Search synonyms, alternative workflows and contrary evidence. A review count is not a sales count, a listing is not proof of demand, and an AI-generated forecast is not a financial result. Report inaccessible or uncertain facts rather than inventing them. Do not promise exhaustive coverage of the whole internet.
 
-The entire project, including research, making every accepted version, release and initial marketing, should fit **2 days to 3 weeks (2–21 calendar days total)**. This is a scope budget, not an instruction to wait two days. Estimate effort and dependencies across all six phases, preserve the actual start/progress if present, and protect the time left for execution. Prefer a small, complete, useful product family. Search broadly; select every genuinely appropriate, feasible route that fits this window. Record other discovered routes as conditional, deferred or rejected with the actual reason, effort and revisit trigger. Do not silently erase accepted platforms or solve scope overruns by claiming unfinished work is done. Identify platform approval delays separately from active work; if a mandatory gate exceeds the window, explain the blocker and revise the bounded plan.
+The entire project, including research, making every accepted version, release and initial marketing, should fit **2 days to 3 weeks (2–21 calendar days total)**. This is a scope budget, not an instruction to wait two days. Estimate effort and dependencies across all four phases, preserve the actual start/progress if present, and protect the time left for execution. Prefer a small, complete, useful product family. Search broadly; select every genuinely appropriate, feasible route that fits this window. Record other discovered routes as conditional, deferred or rejected with the actual reason, effort and revisit trigger. Do not silently erase accepted platforms or solve scope overruns by claiming unfinished work is done. Identify platform approval delays separately from active work; if a mandatory gate exceeds the window, explain the blocker and revise the bounded plan.
 
 Use the appended planning budget and the lower applicable recorded ceiling. Authorized spending remains whatever the existing project and actual owner authorization permit (default CAD0). A planning budget does not authorize purchases, ads, new accounts, uploads, contact or publication. Favor low ongoing owner effort and sustainable costs. Never change execution permissions, actual revenue, actual profit, paid evidence, completion receipts or historical facts to make a proposal look viable. Do not require interviews, preorders or the unreleased product's first sales before a small local proof is reasonable.
 
-## Copyable project text contract
+## Output contract — complete record, no intermediate import
 
-Return the result in this chat as text. Do not create or require a downloadable file, ZIP, repository commit or external document. When there is a new project specification or a substantive revision, provide one complete Markdown project record in a single copyable code block, including the full strict JSON frontmatter between `---` delimiters and the entire revised Markdown body. Choose an outer fence longer than any fence used inside the record. Do not output a diff, patch, partial sections, placeholders for preserved content, or “unchanged sections omitted.”
+Return the entire project in a single copyable code block with full strict JSON frontmatter between --- delimiters and its complete Markdown body. Do not create or require a downloadable file, repository commit or external document. Do not use diffs, placeholders or omit unchanged text. Preserve important previous research, actual work, decisions, evidence, all important data and all important URLs.
 
-Keep `id`, `niche_id`, `niche_path`, `schema_version`, `workflow_version`, the current `project_phase`, `work_state`, `commercial_validation`, authorization, financial/evidence metadata, history metadata and every other protected existing field unchanged. Preserve all existing source IDs; put newly researched direct citations in the Markdown rather than inventing SOURCE_REGISTER IDs. Editable planning fields are `title`, `draft`, `record_type`, `priority`, `evidence_basis`, `source_ids`, `research_verification`, `research_verdict`, `platforms_proposed`, `next_action`, and `last_reviewed`. `platforms_proposed` can list researched compatibility targets; `platforms_supported` records actual verified support and must remain unchanged. Keep `delivery_window_days` at `{ "minimum": 2, "maximum": 21 }`. Use a descriptive product title; when an Empty project becomes a substantive candidate, set `draft` to false and `record_type` to `product_candidate`. Use valid JSON, no comments or trailing commas. Copy the exact appended BASE_SHA256 into a temporary `project_update_base_sha256` field; do not calculate a different hash. Portfolio Manager removes that transport field after checking the update.
+Keep all protected metadata from the appended disk record unchanged: id, niche_id, niche_path, schema_version, workflow_version, stored project_phase, work_state, commercial_validation, permissions, financial/evidence/history fields and all existing source IDs. Editable planning fields: title, draft, record_type, priority, evidence_basis, source_ids, research_verification, research_verdict, platforms_proposed, next_action, last_reviewed, delivery_window_days. Actual platforms_supported stays unchanged. Add direct citations in Markdown, not invented source-register IDs. Use the owner-selected total delivery window; default { "minimum": 2, "maximum": 21 }. For a substantive candidate set a descriptive title, draft false and record_type product_candidate. Copy the exact supplied BASE_SHA256 into temporary project_update_base_sha256; never hash the in-chat draft. Use valid JSON.
 
-Preserve important previous research, decisions, completed work, unfinished tasks, dates, artifact paths, real external effects, all important data and all important URLs. You may reorganize or revise planning sections where new evidence warrants it; identify superseded plans and why. This is an update of the same project, not a reset or a requirement to append duplicate text forever. Never turn a planned URL, task or hypothesis into an accomplished result.
+Use the following section headings with substantive findings:
+- ## Phase 1 — Research
+- ### Stage 1 — Product research
+- ### Stage 2 — Release research
+- ### Stage 3 — Marketing research
+- ## Phase 1b verification
+- ## Phase 2 — Build and verify
+- ## Phase 3 — Release execution
+- ## Phase 4 — Marketing execution
+- ## Important data and URLs
+- ## Decisions and work log
 
-Use six clearly numbered sections in the record: **Phase 1 — Product research and build specification; Phase 2 — Release platforms and compatibility; Phase 3 — Marketing strategy; Phase 4 — Build and verify; Phase 5 — Release execution; Phase 6 — Marketing execution**. Keep a shared **Important data and URLs** ledger and **Decisions and work log**. The first three sections contain the researched plans; phases 4–6 contain actionable checklists with honest completed/remaining states. Every task must have an observable result, and every accepted platform/version must be traceable to its build, release and marketing tasks.
-
-The user pastes this full text into Portfolio Manager's **Paste project text** action. Pasting replaces the planning text but does not advance the phase. The user manually advances Phase 1 → 2 → 3 → 4 after reviewing the relevant research and recheck. Leave the current `project_phase` exactly as supplied. Do not auto-advance it or claim the text was saved. For a research pass set the current `research_verification.phase_N` (N is 1, 2 or 3 for this phase) to `unreviewed`; for a substantive verification update use `approved`, `needs_revision` or `blocked` according to evidence, preserving other phases' statuses unless a material change invalidates them. No approval or phase change proves sales.
+Retain old phase references as explicitly historical evidence. Phases 2–4 contain actionable checklists and honest completed/remaining states. Every accepted version, release route and marketing tactic must trace to future tasks and observable results. The three existing research_verification keys phase_1, phase_2, phase_3 now represent product, release and marketing checks INSIDE Phase 1. In Phase 1a leave all three unreviewed for the independent Phase 1b audit, even after the internal checks pass; record internal findings in the body. Do not set project_update_phase_1b in this draft. Use GO only for a supported bounded TEST-FIRST project. Record unresolved material blockers and incomplete research honestly. The owner sends Phase 1b in this same chat next, without pasting the draft. Keep the stored project_phase unchanged.

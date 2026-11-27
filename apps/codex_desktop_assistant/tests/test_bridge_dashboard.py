@@ -103,5 +103,36 @@ class BridgeDashboardTests(unittest.TestCase):
         self.assertFalse(self.window.isVisible());self.runtime.close.assert_not_called()
         self.window.explicit_quit=True;self.window.close();self.runtime.close.assert_called_once()
 
+    def test_approval_popup_allows_or_defers_without_opening_settings(self):
+        request={'id':'popup','label':'Open a protected file','args':{'reason':'Review this file'},
+                 'event':threading.Event(),'allowed':False,'deadline':time.monotonic()+60,
+                 'generation':self.runtime.permissions.generation}
+        self.window.hide()
+        self.runtime.requests.append(request);self.state['pending_requests']=1
+        self.window.refresh();self.app.processEvents()
+        popup=self.window.request_popups['popup']
+        self.assertTrue(popup.isVisible())
+        next(b for b in popup.findChildren(QPushButton) if b.text()=='Review later').click()
+        self.assertFalse(request['event'].is_set())
+        self.window.refresh();self.assertFalse(popup.isVisible())
+        next(b for b in self.window.cards['popup'].findChildren(QPushButton) if b.text()=='Deny').click()
+        self.assertTrue(request['event'].is_set());self.assertFalse(request['allowed'])
+        self.assertNotIn('popup',self.window.request_popups)
+
+    def test_popup_approval_and_expiry(self):
+        request={'id':'popup','label':'Approve test','args':{},'event':threading.Event(),
+                 'allowed':False,'deadline':time.monotonic()+60,
+                 'generation':self.runtime.permissions.generation}
+        self.runtime.requests.append(request);self.window.refresh()
+        popup=self.window.request_popups['popup']
+        next(b for b in popup.findChildren(QPushButton) if b.text()=='Allow Once').click()
+        self.assertTrue(request['event'].is_set());self.assertTrue(request['allowed'])
+        request.update(id='expired',event=threading.Event(),allowed=False,deadline=time.monotonic()+60)
+        self.window.refresh();popup=self.window.request_popups['expired']
+        request['deadline']=time.monotonic()-1
+        next(b for b in popup.findChildren(QPushButton) if b.text()=='Allow Once').click()
+        self.assertFalse(request['allowed']);self.assertFalse(request['event'].is_set())
+        self.assertNotIn('expired',self.window.request_popups)
+
 
 if __name__=='__main__':unittest.main()

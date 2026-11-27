@@ -16,7 +16,7 @@ def button(text,slot):
 
 class Dashboard(QMainWindow):
     def __init__(self,directory,manager=None,*,restore_saved=True):
-        super().__init__();self.setWindowTitle('Codex Computer Bridge');self.resize(860,650);self.explicit_quit=False;self.cards={}
+        super().__init__();self.setWindowTitle('Codex Computer Bridge');self.resize(860,650);self.explicit_quit=False;self.cards={};self.request_popups={};self.notified_requests=set()
         self.manager=manager;self.manager_panel=None;self.saved_workers_checked=False
         self.workspace_windows={}
         self.events=Events();self.events.event.connect(self.on_event);self.browser_message='';self.browser_showing=False
@@ -123,15 +123,41 @@ class Dashboard(QMainWindow):
         show_requests=not control or (control['mode']=='human' and not control['stopped'] and not control['emergency'])
         pending={r['id']:r for r in self.runtime.requests if show_requests and not r['event'].is_set() and r['deadline']>time.monotonic() and r['generation']==self.permissions.generation}
         for key in set(self.cards)-set(pending):self.cards.pop(key).deleteLater()
+        for key in set(self.request_popups)-set(pending):
+            popup=self.request_popups.pop(key);popup.close();popup.deleteLater()
+        self.notified_requests.intersection_update(pending)
         for key,request in pending.items():
             if key in self.cards:continue
             card=QWidget();box=QVBoxLayout(card);label=QLabel(request['label']);label.setTextFormat(Qt.PlainText);label.setWordWrap(True);box.addWidget(label)
             reason=request['args'].get('approval_reason') or request['args'].get('reason') or request['args'].get('question','Review the specific action before allowing it.');label=QLabel(reason);label.setTextFormat(Qt.PlainText);label.setWordWrap(True);box.addWidget(label)
             details=button('View exact scope',lambda checked=False,r=request:self.request_details(r));box.addWidget(details)
             row=QHBoxLayout()
-            def decide(allowed,r=request):r['allowed']=allowed;r['event'].set();self.refresh()
-            row.addWidget(button('Done — Continue' if request['args'].get('manual_step') else 'Allow Once',lambda checked=False,f=decide:f(True)));row.addWidget(button('Deny',lambda checked=False,f=decide:f(False)));box.addLayout(row)
+            row.addWidget(button('Done — Continue' if request['args'].get('manual_step') else 'Allow Once',lambda checked=False,r=request:self.decide_request(r,True)));row.addWidget(button('Deny',lambda checked=False,r=request:self.decide_request(r,False)));box.addLayout(row)
             self.request_layout.insertWidget(self.request_layout.count()-1,card);self.cards[key]=card
+            if key not in self.notified_requests:
+                self.notified_requests.add(key);self.show_request_popup(request)
+
+    def decide_request(self,request,allowed):
+        # A dismissed, expired, stopped, or superseded request cannot be approved.
+        control=self.manager.control() if self.manager else None
+        if (request['event'].is_set() or request['deadline']<=time.monotonic() or
+                request['generation']!=self.permissions.generation or
+                (control and (control['mode']!='human' or control['stopped'] or control['emergency']))):
+            self.refresh();return
+        request['allowed']=allowed;request['event'].set();self.refresh()
+
+    def show_request_popup(self,request):
+        dialog=QDialog(self);dialog.setWindowTitle('Approval request');dialog.resize(520,220)
+        layout=QVBoxLayout(dialog)
+        for value in (request['label'],request['args'].get('approval_reason') or request['args'].get('reason') or request['args'].get('question','Review the specific action before allowing it.')):
+            label=QLabel(str(value));label.setTextFormat(Qt.PlainText);label.setWordWrap(True);layout.addWidget(label)
+        layout.addWidget(button('View exact scope',lambda:self.request_details(request)))
+        row=QHBoxLayout()
+        row.addWidget(button('Done — Continue' if request['args'].get('manual_step') else 'Allow Once',lambda:self.decide_request(request,True)))
+        row.addWidget(button('Deny',lambda:self.decide_request(request,False)))
+        row.addWidget(button('Review later',dialog.close));layout.addLayout(row)
+        self.request_popups[request['id']]=dialog
+        dialog.show();dialog.raise_();dialog.activateWindow()
 
     def request_details(self,request):
         dialog=QDialog(self);dialog.setWindowTitle('Exact requested authorization');dialog.resize(760,520);layout=QVBoxLayout(dialog);text=QPlainTextEdit(json.dumps(request['args'],indent=2,ensure_ascii=False));text.setReadOnly(True);layout.addWidget(text);layout.addWidget(button('Close',dialog.accept));dialog.exec()

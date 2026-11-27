@@ -40,7 +40,9 @@ class ProjectManagementTests(unittest.TestCase):
         self.assertEqual(meta['commercial_validation'], 'unvalidated')
         self.assertEqual(meta['delivery_window_days'], {'minimum': 2, 'maximum': 21})
         self.assertTrue((path.parent / 'work/.gitkeep').is_file())
-        self.assertIn('## Phase 6', body)
+        self.assertIn('## Phase 4 — Marketing execution', body)
+        self.assertEqual(meta['workflow_version'], 3)
+        self.assertIn('## Phase 1b verification', body)
         ids = {row['id'] for row in build_browser.load_portfolio(self.portfolio)['records']}
         self.assertEqual(ids, {'TEST-001', first['id'], second['id']})
 

@@ -1,4 +1,4 @@
-"""Six-phase ownership, verified handoffs and durable completion receipts."""
+"""Four-phase ownership, migration, verified handoffs and durable completion receipts."""
 import json
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -21,7 +21,7 @@ class ProjectLifecycleTests(unittest.TestCase):
         self.path.write_bytes(legacy.read_bytes())
         legacy.unlink()
         meta, body = parse_project(self.path.read_text())
-        meta.update(workflow_version=2, project_phase="working_phase_1")
+        meta.update(workflow_version=3, project_phase="working_phase_1")
         self.write(meta, body)
         self.selection = self.path.relative_to(self.repo).as_posix()
 
@@ -29,96 +29,119 @@ class ProjectLifecycleTests(unittest.TestCase):
         self.path.write_text("---\n" + json.dumps(meta, indent=2) + "\n---\n" + body)
 
     def advance_to(self, number):
-        current = int(project_phase(parse_project(self.path.read_text())[0]).rsplit('_', 1)[1])
+        # Execution-only tests seed the build-stage fixture directly. The real
+        # research-to-build transaction is exercised by ResearchUpdateTests.
+        meta, body = parse_project(self.path.read_text())
+        current = int(project_phase(meta).rsplit('_', 1)[1])
+        if current == 1 and number >= 2:
+            meta['project_phase'] = 'working_phase_2'
+            self.write(meta, body)
+            current = 2
         for n in range(current + 1, number + 1):
-            args = {} if n <= 4 else {"actor": "codex", "evidence": "Fictional phase acceptance checks passed."}
-            set_phase(self.repo, self.selection, "working_phase_" + str(n), **args)
+            set_phase(self.repo, self.selection, "working_phase_" + str(n),
+                      actor="codex", evidence="Fictional phase acceptance checks passed.")
 
     def complete(self):
-        self.advance_to(6)
+        self.advance_to(4)
         return set_phase(self.repo, self.selection, "complete", actor="codex",
                          evidence="Fictional placements independently checked.",
                          description="A verified fictional release.",
                          sale_urls=["https://example.org/store"], marketing_urls=["https://example.org/promo"])
 
     def test_new_drafts_start_at_phase_1_and_legacy_is_readable(self):
-        self.assertEqual(project_phase({"workflow_version": 2}), "working_phase_1")
+        self.assertEqual(project_phase({"workflow_version": 3}), "working_phase_1")
         self.assertEqual(project_phase({}), "working_phase_2")
+        for old, new in ((1,1), (2,1), (3,1), (4,2), (5,3), (6,4)):
+            with self.subTest(old=old):
+                self.assertEqual(project_phase({"workflow_version": 2, "project_phase": f"working_phase_{old}"}),
+                                 f"working_phase_{new}")
 
-    def test_research_advances_manually_and_cannot_skip(self):
+    def test_research_cannot_advance_manually_or_by_codex(self):
+        original = self.path.read_bytes()
+        for actor in ('user', 'codex'):
+            with self.assertRaisesRegex(ValueError, "Paste a verified Phase 1b"):
+                set_phase(self.repo, self.selection, "working_phase_2", actor=actor, evidence="Claim")
         with self.assertRaisesRegex(ValueError, "Invalid phase transition"):
             set_phase(self.repo, self.selection, "working_phase_3")
-        with self.assertRaisesRegex(ValueError, "manually"):
-            set_phase(self.repo, self.selection, "working_phase_2", actor="codex", evidence="Claim")
-        self.advance_to(4)
-        meta, _ = parse_project(self.path.read_text())
-        self.assertEqual([h["actor"] for h in meta["phase_history"]], ["user"] * 3)
-        self.assertEqual(meta["commercial_validation"], "unvalidated")
+        self.assertEqual(self.path.read_bytes(), original)
+
+    def test_migration_preserves_old_body_and_progress_without_false_marketing_estimate(self):
+        from business_portfolio.tools.project_workflow import upgrade_record, progress_estimate
+        raw = "Historical build evidence.\n\nPhase 4 completion estimate: 96% (best guess)"
+        meta = {"workflow_version": 2, "project_phase": "working_phase_4", "id": "DEMO-101"}
+        migrated, body = upgrade_record(meta, raw)
+        self.assertEqual(migrated["project_phase"], "working_phase_2")
+        self.assertTrue(body.startswith(raw))
+        self.assertEqual(progress_estimate(migrated, body), "96")
+        migrated["project_phase"] = "working_phase_4"
+        self.assertIsNone(progress_estimate(migrated, body))
+        self.assertEqual(progress_estimate(migrated, body + "\nPhase 4 completion estimate: 15%"), "15")
+        self.assertEqual(upgrade_record(migrated, body), (migrated, body))
 
     def test_empty_project_cannot_advance(self):
         meta, body = parse_project(self.path.read_text())
         meta.update(title="Empty project", record_type="empty_project", draft=True)
         self.write(meta, body)
         original = self.path.read_bytes()
-        with self.assertRaisesRegex(ValueError, "Paste a researched"):
+        with self.assertRaisesRegex(ValueError, "Paste a verified"):
             set_phase(self.repo, self.selection, "working_phase_2")
         self.assertEqual(self.path.read_bytes(), original)
 
     def test_execution_codex_requires_evidence_and_cannot_skip(self):
-        self.advance_to(4)
+        self.advance_to(2)
         original = self.path.read_bytes()
         with self.assertRaisesRegex(ValueError, "completion evidence"):
-            set_phase(self.repo, self.selection, "working_phase_5", actor="codex")
+            set_phase(self.repo, self.selection, "working_phase_3", actor="codex")
         with self.assertRaisesRegex(ValueError, "Invalid phase transition"):
-            set_phase(self.repo, self.selection, "working_phase_6", actor="codex", evidence="Claim")
+            set_phase(self.repo, self.selection, "working_phase_4", actor="codex", evidence="Claim")
         self.assertEqual(self.path.read_bytes(), original)
-        self.advance_to(6)
-        self.assertEqual(project_phase(parse_project(self.path.read_text())[0]), "working_phase_6")
+        self.advance_to(4)
+        self.assertEqual(project_phase(parse_project(self.path.read_text())[0]), "working_phase_4")
 
     def test_manual_execution_handoff_is_unverified_and_does_not_complete(self):
-        self.advance_to(4)
-        set_phase(self.repo, self.selection, "working_phase_5", actor="user")
+        self.advance_to(2)
+        set_phase(self.repo, self.selection, "working_phase_3", actor="user")
         meta, body = parse_project(self.path.read_text())
         self.assertEqual(meta['phase_history'][-1]['actor'], "user")
         self.assertIn("MANUAL OVERRIDE", meta['phase_history'][-1]['evidence'])
         self.assertIn("NOT VERIFIED", meta['phase_history'][-1]['evidence'])
         self.assertEqual(meta['commercial_validation'], "unvalidated")
-        set_phase(self.repo, self.selection, "working_phase_6", actor="user")
+        set_phase(self.repo, self.selection, "working_phase_4", actor="user")
         meta, after = parse_project(self.path.read_text())
-        self.assertEqual(meta['project_phase'], "working_phase_6")
+        self.assertEqual(meta['project_phase'], "working_phase_4")
         self.assertEqual(len([r for r in meta['phase_history'] if 'MANUAL OVERRIDE' in r['evidence']]), 2)
         self.assertEqual(body, after)
         self.assertFalse(read_completions(self.repo))
-        with self.assertRaisesRegex(ValueError, "Only Codex can verify Phase 6 completion"):
+        with self.assertRaisesRegex(ValueError, "Only Codex can verify Phase 4 completion"):
             set_phase(self.repo, self.selection, "complete", actor="user",
                       description="Unverified", sale_urls=["https://example.org/store"],
                       marketing_urls=["https://example.org/post"])
         self.assertFalse(read_completions(self.repo))
 
     def test_codex_renames_title_without_moving_artifacts_or_changing_id(self):
-        self.advance_to(4)
+        self.advance_to(2)
         artifact = self.path.parent / "work" / "finished.txt"
         artifact.write_bytes(b"Finished fictional work")
-        set_phase(self.repo, self.selection, "working_phase_5", actor="codex", evidence="Acceptance passed.",
+        set_phase(self.repo, self.selection, "working_phase_3", actor="codex", evidence="Acceptance passed.",
                   title="Fictional Useful Product")
         meta, _ = parse_project(self.path.read_text())
         self.assertEqual(meta["title"], "Fictional Useful Product")
         self.assertEqual(meta["id"], "DEMO-101")
         self.assertEqual(artifact.read_bytes(), b"Finished fictional work")
 
-    def test_phase_4_cannot_handoff_an_empty_product_name(self):
-        self.advance_to(4)
+    def test_phase_2_cannot_handoff_an_empty_product_name(self):
+        self.advance_to(2)
         meta, body = parse_project(self.path.read_text())
         meta['title'] = 'Empty project'
         self.write(meta, body)
         with self.assertRaisesRegex(ValueError, 'appropriate product name'):
-            set_phase(self.repo, self.selection, 'working_phase_5', actor='codex', evidence='Claims done')
-        result = set_phase(self.repo, self.selection, 'working_phase_5', actor='codex',
+            set_phase(self.repo, self.selection, 'working_phase_3', actor='codex', evidence='Claims done')
+        result = set_phase(self.repo, self.selection, 'working_phase_3', actor='codex',
                            evidence='Acceptance passed', title='Useful Product')
-        self.assertEqual(result['project_phase'], 'working_phase_5')
+        self.assertEqual(result['project_phase'], 'working_phase_3')
 
-    def test_completion_requires_phase_6(self):
-        self.advance_to(4)
+    def test_completion_requires_phase_4(self):
+        self.advance_to(2)
         with self.assertRaisesRegex(ValueError, "Invalid phase transition"):
             set_phase(self.repo, self.selection, "complete", actor="codex", evidence="Claim",
                       description="Released", sale_urls=["https://example.org/store"],
@@ -152,7 +175,7 @@ class ProjectLifecycleTests(unittest.TestCase):
         self.assertEqual(self.path.read_bytes(), original)
 
     def test_invalid_links_and_duplicate_completion_preserve_snapshot(self):
-        self.advance_to(6)
+        self.advance_to(4)
         with self.assertRaisesRegex(ValueError, "HTTP"):
             set_phase(self.repo, self.selection, "complete", actor="codex", evidence="Checks",
                       description="Finished", sale_urls=["file:///etc/passwd"],

@@ -60,10 +60,10 @@ class ProjectImportTests(unittest.TestCase):
         source.write_text('---\n' + json.dumps(meta) + '\n---\n' + body)
         import_projects(self.repo, self.selection, [source])
         index = json.loads((self.repo / 'business_portfolio/PROJECT_INDEX.json').read_text())
-        self.assertEqual(next(row for row in index['records'] if row['id'] == 'TEST-004')['project_phase'], 'working_phase_3')
+        self.assertEqual(next(row for row in index['records'] if row['id'] == 'TEST-004')['project_phase'], 'working_phase_1')
         meta.update(id='TEST-005', project_phase='working_phase_4')
         source.write_text('---\n' + json.dumps(meta) + '\n---\n' + body)
-        with self.assertRaisesRegex(ValueError, 'Phases 1–3'):
+        with self.assertRaisesRegex(ValueError, 'Only Phase 1'):
             import_projects(self.repo, self.selection, [source])
 
     def test_ambiguous_legacy_phase_is_not_silently_reinterpreted(self):

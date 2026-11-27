@@ -1,4 +1,4 @@
-"""Real paste/file replacements: same-phase updates, protected facts and rollback."""
+"""Real paste/file replacement, verified automatic advancement and rollback."""
 import json
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -9,6 +9,53 @@ from business_portfolio.tools import build_browser
 from portfolio_manager.project_management import create_project
 from portfolio_manager.project_update import replace_project_text, replace_project_from_file, snapshot_sha256
 from portfolio_manager.tests.test_runner import _record
+
+
+VERIFIED_BODY = """# Fictional verified product
+
+## Phase 1 — Research
+
+### Stage 1 — Product research
+
+Buyer and alternatives evidence: https://example.org/product. Bounded TEST-FIRST GO.
+
+### Stage 2 — Release research
+
+Compatible format and accepted channel evidence: https://example.org/release.
+
+### Stage 3 — Marketing research
+
+Audience, channel and policy evidence: https://example.org/marketing.
+
+## Phase 1b verification
+
+All three fictional independent evidence checks passed; no decisive blocker remains.
+
+## Phase 2 — Build and verify
+
+- [ ] Build the fixture and run its acceptance tests.
+
+## Phase 3 — Release execution
+
+- [ ] Prepare package and verify customer access.
+
+## Phase 4 — Marketing execution
+
+- [ ] Publish authorized material and inspect the real result.
+
+## Important data and URLs
+
+All example sources above are research fixtures, not real releases.
+
+## Decisions and work log
+
+Fixture research complete; execution has not begun.
+"""
+
+
+def verified_fields():
+    return {'research_verification': {f'phase_{n}': 'approved' for n in (1, 2, 3)},
+            'research_verdict': 'GO', 'project_update_phase_1b': 'verified'}
 
 
 class ResearchUpdateTests(unittest.TestCase):
@@ -50,16 +97,92 @@ class ResearchUpdateTests(unittest.TestCase):
         self.assertEqual(Path(result['backup']).read_bytes(), original)
         self.assertEqual(payload.read_text(), 'actual existing work')
 
-    def test_all_research_phases_accept_approved_reviews_without_advancing(self):
-        for number in (1, 2, 3):
-            with self.subTest(phase=number):
-                raw = self.path.read_text()
-                meta, body = build_browser.parse_project(raw)
-                meta['project_phase'] = f'working_phase_{number}'
-                self.path.write_text('---\n' + json.dumps(meta) + '\n---\n' + body)
-                text = self.replacement(change={'research_verification': {f'phase_{number}': 'approved'}})
-                outcome = replace_project_text(self.repo, self.selection, text)
-                self.assertEqual(outcome['project_phase'], f'working_phase_{number}')
+    def test_verified_final_paste_advances_once_and_preserves_work(self):
+        original = self.path.read_bytes()
+        artifact = self.path.parent / 'work/keep.txt'
+        artifact.write_bytes(b'preserved work')
+        text = self.replacement(change=verified_fields(), body=VERIFIED_BODY)
+        result = replace_project_text(self.repo, self.selection, text)
+        meta, body = build_browser.parse_project(self.path.read_text())
+        self.assertEqual(meta['workflow_version'], 3)
+        self.assertEqual(meta['project_phase'], 'working_phase_2')
+        self.assertTrue(result['advanced'])
+        self.assertEqual(meta['phase_history'][-1]['from'], 'working_phase_1')
+        self.assertEqual(meta['phase_history'][-1]['to'], 'working_phase_2')
+        self.assertEqual(meta['commercial_validation'], 'unvalidated')
+        self.assertFalse(meta['execution_authorized'])
+        self.assertNotIn('project_update_base_sha256', meta)
+        self.assertNotIn('project_update_phase_1b', meta)
+        self.assertEqual(body, VERIFIED_BODY.strip())
+        self.assertEqual(Path(result['backup']).read_bytes(), original)
+        self.assertEqual(artifact.read_bytes(), b'preserved work')
+        with self.assertRaisesRegex(ValueError, 'only in Phase 1'):
+            replace_project_text(self.repo, self.selection, text)
+        self.assertEqual(build_browser.parse_project(self.path.read_text())[0]['project_phase'], 'working_phase_2')
+
+    def test_unverified_draft_and_no_go_remain_in_phase_one(self):
+        for verdict in ('GO', 'NO_GO', 'RESEARCH_BLOCKED', 'CONDITIONAL_PROOF_ONLY'):
+            with self.subTest(verdict=verdict):
+                result = replace_project_text(self.repo, self.selection, self.replacement(
+                    change={'research_verdict': verdict,
+                            'research_verification': {f'phase_{n}': 'unreviewed' for n in (1, 2, 3)}},
+                    body=VERIFIED_BODY))
+                self.assertFalse(result['advanced'])
+                self.assertEqual(result['project_phase'], 'working_phase_1')
+
+    def test_invalid_final_review_cannot_advance_or_replace(self):
+        original = self.path.read_bytes()
+        for changes in (
+            {'research_verdict': 'NO_GO'}, {'research_verdict': 'RESEARCH_BLOCKED'},
+            {'research_verdict': 'CONDITIONAL_PROOF_ONLY'}, {'draft': True},
+            {'research_verification': {'phase_1': 'approved', 'phase_2': 'approved'}},
+            {'research_verification': {'phase_1': 'approved', 'phase_2': 'blocked', 'phase_3': 'approved'}},
+            {'project_update_base_sha256': '0' * 64},
+            {'project_update_phase_1b': 'bogus'}, {'record_type': 'empty_project'},
+            {'id': 'OTHER-001'}, {'execution_authorized': True},
+        ):
+            with self.subTest(changes=changes), self.assertRaises(ValueError):
+                replace_project_text(self.repo, self.selection,
+                    self.replacement(change={**verified_fields(), **changes}, body=VERIFIED_BODY))
+            self.assertEqual(self.path.read_bytes(), original)
+        with self.assertRaisesRegex(ValueError, 'BASE_SHA256'):
+            replace_project_text(self.repo, self.selection,
+                self.replacement(digest=False, change=verified_fields(), body=VERIFIED_BODY))
+        for body in ('Incomplete text', VERIFIED_BODY.replace('### Stage 2 — Release research', '### Missing release'),
+                     VERIFIED_BODY.replace('## Phase 1b verification', '## Missing independent check')):
+            with self.subTest(body=body[:35]), self.assertRaisesRegex(ValueError, 'missing required'):
+                replace_project_text(self.repo, self.selection,
+                    self.replacement(change=verified_fields(), body=body))
+            self.assertEqual(self.path.read_bytes(), original)
+
+    def test_verified_import_rollback_is_atomic(self):
+        original = self.path.read_bytes()
+        root = self.repo / 'business_portfolio'
+        index = (root / 'PROJECT_INDEX.json').read_bytes()
+        browser = (root / 'PROJECT_BROWSER.html').read_bytes()
+        real_build = build_browser.build
+        def fail_after_write(portfolio):
+            real_build(portfolio)
+            raise ValueError('injected verified import failure')
+        with patch('portfolio_manager.project_update.build_browser.build', side_effect=fail_after_write):
+            with self.assertRaisesRegex(ValueError, 'injected verified'):
+                replace_project_text(self.repo, self.selection,
+                    self.replacement(change=verified_fields(), body=VERIFIED_BODY))
+        self.assertEqual(self.path.read_bytes(), original)
+        self.assertEqual((root / 'PROJECT_INDEX.json').read_bytes(), index)
+        self.assertEqual((root / 'PROJECT_BROWSER.html').read_bytes(), browser)
+
+    def test_legacy_research_record_advances_with_original_snapshot(self):
+        meta, body = build_browser.parse_project(self.path.read_text())
+        meta.update(workflow_version=2, project_phase='working_phase_3')
+        self.path.write_text('---\n' + json.dumps(meta) + '\n---\n' + body)
+        result = replace_project_text(self.repo, self.selection,
+            self.replacement(change=verified_fields(), body=VERIFIED_BODY))
+        self.assertTrue(result['advanced'])
+        updated, body = build_browser.parse_project(self.path.read_text())
+        self.assertEqual(updated['project_phase'], 'working_phase_2')
+        self.assertEqual(updated['workflow_v3_migration']['previous_project_phase'], 'working_phase_3')
+        self.assertFalse(updated['workflow_v3_migration']['research_approval_inferred'])
 
     def test_custom_delivery_window_is_accepted_and_invalid_windows_rejected(self):
         original = self.path.read_bytes()
@@ -116,7 +239,7 @@ class ResearchUpdateTests(unittest.TestCase):
         meta, body = build_browser.parse_project(self.path.read_text())
         meta['project_phase'] = 'working_phase_4'
         self.path.write_text('---\n' + json.dumps(meta) + '\n---\n' + body)
-        with self.assertRaisesRegex(ValueError, 'Phases 1–3'):
+        with self.assertRaisesRegex(ValueError, 'only in Phase 1'):
             replace_project_text(self.repo, self.selection, self.replacement())
 
     def test_partial_records_and_truncated_fences_do_not_replace_record(self):

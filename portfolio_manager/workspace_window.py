@@ -482,7 +482,7 @@ class WorkspaceWindow(QMainWindow):
         self.prompt_menu = QMenu(self.copy_prompt)
         self.copy_prompt.setMenu(self.prompt_menu)
         self._prompt_menu_state = None
-        self.budget_label = QLabel('Planning budget (CAD)')
+        self.budget_label = QLabel('Budget ceiling (CAD)')
         research_layout.addRow(self.budget_label, self.research_budget)
         self.project_days = QLineEdit(self._load_project_days())
         self.project_days.setAccessibleName('Project day limit')
@@ -1177,8 +1177,8 @@ class WorkspaceWindow(QMainWindow):
         active = current is not None and current[3] != 'complete'
         self.research_tools.setVisible(active)
         research = active and current[3] in {'working_phase_1', 'working_phase_2', 'working_phase_3'}
-        self.research_budget.setVisible(bool(research))
-        self.budget_label.setVisible(bool(research))
+        self.research_budget.setVisible(bool(active))
+        self.budget_label.setVisible(bool(active))
         self.paste_project.setVisible(bool(research))
         if key == self._prompt_menu_state:
             return
@@ -1227,6 +1227,9 @@ class WorkspaceWindow(QMainWindow):
             if not re.fullmatch(r'[1-9][0-9]{0,5}', days_text):
                 raise ValueError('Enter a project day limit of at least 1 whole day.')
             days = int(days_text)
+            budget = self.research_budget.text().strip()
+            if not re.fullmatch(r'\d+(?:\.\d{1,2})?', budget):
+                raise ValueError('Enter a valid non-negative planning budget in CAD.')
             prompt = configure_project_day_limit(prompt, days)
             selection = self.workspace_state['selection']
             if phase in {'working_phase_4', 'working_phase_5', 'working_phase_6'}:
@@ -1234,13 +1237,12 @@ class WorkspaceWindow(QMainWindow):
                     raise ValueError('The execution prompt must start with /goal.')
                 prompt += ('\n\nSelected canonical project: ' + selection +
                            '\nStable project ID: ' + meta['id'] +
+                           '\nPlanning budget ceiling (CAD): ' + budget +
+                           '. Apply any lower existing budget or spending authorization; this planning ceiling does not authorize spending.' +
                            '\nTotal project day limit across all six phases: ' + days_text + ' calendar days.' +
                            '\nWhen asked to open Portfolio Manager, pass this project ID or canonical project path to portfolio_open, together with this chat’s reconnect key.' +
                            '\nRead the complete current file and its sibling work/ before starting.\n')
             else:
-                budget = self.research_budget.text().strip()
-                if not re.fullmatch(r'\d+(?:\.\d{1,2})?', budget):
-                    raise ValueError('Enter a valid non-negative planning budget in CAD.')
                 idea = ''
                 if option == 'idea':
                     idea, accepted = QInputDialog.getMultiLineText(
